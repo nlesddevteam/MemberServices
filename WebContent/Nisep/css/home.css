@@ -1,0 +1,427 @@
+/** CSS Document **/
+
+body {
+	margin:15px;
+}
+
+displayPageBorders {
+  border-top: solid 1px #FFB700;
+  border-bottom: solid 1px #FFB700; 
+}
+
+.displayWhiteDate {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-transform: uppercase;
+	color: #FFFFFF;
+}
+
+.displayWhiteDate14px {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 14px;
+  font-weight:bold;
+	text-transform: uppercase;
+	color: #FFFFFF;
+}
+
+.displayCopyright {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #545454;
+}
+
+.displaySearchBy {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 8px;
+	text-transform: uppercase;
+	color: #FFFFFF;
+}
+
+.inputSearchBox {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-transform: uppercase;
+	width: 180px;
+	color: #000000;
+}
+
+.inputBox {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+  height: 18px;
+  line-height: 20px;
+  border:solid 1px #7B9EBD;
+}
+
+.requiredInputBox {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+  line-height: 20px;
+  background-color: #FFFFCC;
+  height: 18px;
+  border:solid 1px #7B9EBD;
+}
+
+.displayBoxTitle {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #909090;
+}
+
+.displayPageTitle {
+	font-family:Arial Bold, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #003366;
+  border-bottom:solid 1px #003366;
+}
+
+.displayHeaderTitle {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold;
+	color: #333333;
+}
+
+h4.subTitle {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 13px;
+  font-weight:bold;
+	color: #000000;
+  background-color:#c0c0c0;
+}
+
+.requiredStar {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 14px;
+  font-weight:bold;
+	color: #FF0000;
+}
+
+.requiredinput_date
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border-top:solid 1px #7B9EBD;
+  border-left:solid 1px #7B9EBD;
+  border-bottom:solid 1px #7B9EBD;
+  border-right:none;
+}
+
+.requiredinput_popup_cal
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+  background-color: #FFFFCC;
+  border-top: solid 1px #7B9EBD;
+  border-right: solid 1px #7B9EBD;
+  border-bottom: solid 1px #7B9EBD;
+  border-left: none;
+  padding-top:1px;
+  padding-bottom:2px;
+  padding-right:2px;
+  padding-left:5px;
+  cursor:hand;
+}
+
+.displayText {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+}
+
+.displayTextStrikeout {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+  text-decoration: line-through;
+}
+
+.messageText {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold;
+	color: #FF0000;
+}
+
+.linkText
+{
+  font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #003366;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+.displayCategoryTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #003366;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 16px; 
+}
+
+a.homeSideNavCategoryLink:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ff0000;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+a.homeSideNavCategoryLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #003366;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 16px; 
+}
+
+a.homeSideNavSubCategoryLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #505050;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 16px;
+  padding-left:10px;
+}
+
+
+a.homeSideNavLink:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ff0000;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+a.homeSideNavLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #003366;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+}
+
+a.homeSideNavSubLink:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #ff0000;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+  padding-left:15px;
+}
+
+a.homeSideNavSubLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #003366;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+  padding-left:15px;
+}
+
+.displayPositionTitle {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 14px;
+  font-weight:bold;
+	color: #333333;
+  text-transform:uppercase;
+}
+
+.displayCompetitionNumber {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight:none;
+  font-style:italic;
+	color: #333333;
+  text-transform:capitalize;
+}
+
+.displayAdText {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight:none;
+  font-style:none;
+	color: #333333;
+  padding-top:10px;
+}
+
+.displayLocation {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight:none;
+  font-style:none;
+	color: #333333;
+}
+
+.displayEducationRequired {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight:none;
+  font-style:none;
+	color: #333333;
+}
+
+a.bodyLink:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #ff0000;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+  border-left: solid 4px #cccccc;
+  border-right: solid 4px #cccccc;
+  background-color:#FFCC00;
+  padding:4px;
+}
+
+a.bodyLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #003366;
+	font-weight: none;
+	text-decoration: none;
+	line-height: 16px;
+  border-left: solid 4px #cccccc;
+  border-right: solid 4px #cccccc;
+  background-color:#FFFFFF;
+  padding:4px;
+}
+
+fieldset {
+  width:80%;
+  border: solid 1px #B8DB7C;
+}
+
+legend {
+  padding:3px;
+  font-size: 11px;
+	font-family: Tahoma, "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: #B8DB7C;
+  text-decoration:none;
+	line-height: 20px;
+  border: solid 1px #B8DB7C;
+}
+
+#AgencyDemographicsTag table,
+#StudentDemographicsTag table{
+  border: solid 1px #c0c0c0;
+  border-collapse: collapse;
+  width:80%;
+}
+
+#AgencyContactsTag table, 
+#AgencyCurrentContractTag table,
+#StudentGuardianDemographicsTag table,
+#StudentSchoolHistoryTag table{
+  border: solid 1px #c0c0c0;
+  border-collapse: collapse;
+}
+
+#AgencyCurrentContractTag caption{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold;
+	color: #333333;
+  border: solid 1px #c0c0c0;
+  background-color:#f4f4f4;
+}
+
+#AgencyContactsTag th,
+#StudentGuardianDemographicsTag th,
+#StudentSchoolHistoryTag th{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold;
+	color: #333333;
+  border: solid 1px #c0c0c0;
+  background-color:#e0e0e0;
+}
+
+#AgencyDemographicsTag th,
+#StudentDemographicsTag th{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold;
+	color: #333333;
+  border: solid 1px #c0c0c0;
+  text-align:right;
+  padding-right:3px;
+  background-color:#f4f4f4;
+}
+
+#AgencyCurrentContractTag th{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold;
+	color: #333333;
+  border: solid 1px #c0c0c0;
+  text-align:right;
+  padding-right:3px;
+}
+
+#AgencyDemographicsTag td,
+#StudentDemographicsTag td,
+#AgencyContactsTag td, 
+#AgencyCurrentContractTag td,
+#StudentSchoolHistoryTag td{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+  border: solid 1px #c0c0c0;
+  text-align:left;
+}
+
+#StudentGuardianDemographicsTag td{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+  border: solid 1px #c0c0c0;
+  text-align:left;
+  vertical-align:top;
+}
+
+#StudentGuardianDemographicsTag td.options,
+#StudentSchoolHistoryTag td.options{
+  text-align:right;
+}
+
+#AgencyDemographicsTag input,
+#StudentDemographicsTag input,
+#AgencyContactsTag input, 
+#AgencyCurrentContractTag input,
+#StudentGuardianDemographicsTag input,
+#StudentSchoolHistoryTag input{
+  font-size:10px;
+  font-weight:none;
+  color: #EF9A48;
+}
+
+#AgencyCurrentContractTag a,
+#StudentDemographicsTag a,
+#StudentGuardianDemographicsTag a{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight:bold
+	color: #FF0000;
+  text-decoration:none;
+}
