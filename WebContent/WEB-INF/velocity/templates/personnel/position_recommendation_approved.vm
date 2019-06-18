@@ -1,0 +1,16 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$recommendName has APPROVED the recommendation of $candidateName for position $competitionNumber: $competitionTitle $location 
+</p>
+<p>
+To review this recommendation click the link below to login to Members Services and access the Personnel System.
+</p>
+<br>
+<a href='http://www.nlesd.ca/MemberServices/Personnel/viewJobTeacherRecommendation.html?u=$userName&id=$recommendationId'><b>CLICK HERE</b></a>
+<br>
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+</div>

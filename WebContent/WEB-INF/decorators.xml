@@ -1,0 +1,70 @@
+<decorators defaultdir="/">
+   
+ <decorator name="tsdoc-main" page="tsdoc/decorators/main.jsp">
+  	<pattern>/tsdoc/*</pattern>
+</decorator>
+  
+  <decorator name="scrs-main" page="scrs/decorators/main.jsp">
+  	<pattern>/scrs/*</pattern>
+  </decorator>
+  
+  <decorator name="kindergarten-registration-default" page="schools/registration/kindergarten/decorators/default.jsp">
+  	<pattern>/schools/registration/kindergarten/*</pattern>
+  </decorator>
+     
+  <decorator name="fund3" page="Fund3/decorator/main.jsp">
+  	<pattern>/Fund3/*</pattern>
+  </decorator>
+    
+  <decorator name="EECD" page="EECD/includes/decorator/main.jsp">
+  	<pattern>/EECD/*</pattern>
+  </decorator>  
+  
+    
+  <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
+      <pattern>/Personnel/applicantlogin.html</pattern>
+      <pattern>/Personnel/applicantRegistration*.html</pattern>
+      <pattern>/Personnel/applicantSubPrefs.html</pattern>
+      <pattern>/Personnel/applicantsecurity.html</pattern>
+      <pattern>/Personnel/applicant_*</pattern>      
+      <pattern>/Personnel/view_applicant*</pattern>
+      <pattern>/Personnel/logout*</pattern>
+      <pattern>/Personnel/viewLetterOfEmployment.html</pattern>
+      <pattern>/Personnel/applicantPositionOfferController.html</pattern>
+	<pattern>/Personnel/viewCriminalOffenceDeclaration.html</pattern>
+	</decorator>
+    
+<decorator name="personnel" page="Personnel/includes/decorator/main.jsp">
+  	<pattern>/Personnel/*</pattern>
+  </decorator>
+  <!-- 
+  <decorator name="personneltheme" page="Personnel/decorators/personneltheme.jsp">          
+      <pattern>/Personnel/*</pattern>    
+  </decorator>
+   -->
+   <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
+	<pattern>/PPGP/*</pattern>
+ 	</decorator>
+ 	
+  <decorator name="personnelExternal" page="Personnel/includes/decorator/external.jsp">
+  	<pattern>/Personnel/add_nlesd_external*</pattern>
+  	<pattern>/Personnel/addNLESDExternalReference.html</pattern>
+  	<pattern>/Personnel/new_appl*</pattern>
+  	<pattern>/Personnel/externalNLESDReferenceCheckRequestApp.html</pattern>
+  	<pattern>/Personnel/view_nlesd_manage_reference.jsp</pattern>
+  	<pattern>/Personnel/addNLESDManageReferenceApp.html</pattern>
+  	<pattern>/Personnel/view_nlesd_support_reference.jsp</pattern>
+  	<pattern>/Personnel/addNLESDSupportReferenceApp.html</pattern>
+  	<pattern>/Personnel/viewNLESDReferenceApp.html</pattern>
+	<pattern>/Personnel/addNLESDExternalTeacherReferenceApp.html</pattern>
+	<pattern>/Personnel/addNLESDExternalAdminReferenceApp.html</pattern>
+	<pattern>/Personnel/addNLESDExternalGuideReferenceApp.html</pattern>
+	<pattern>/Personnel/addNLESDExternalReferenceApp.html</pattern>
+</decorator>
+  
+<excludes>
+    <pattern>/EECD/eecd_menu*</pattern>
+    <pattern>/Personnel/apply*</pattern>
+    <pattern>/Personnel/unapply*</pattern>
+</excludes> 
+</decorators>

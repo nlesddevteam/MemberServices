@@ -1,0 +1,18 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+The following employee has not been approved by NLESD Bussing Contractor System
+</p>
+<p>
+$employee
+</p>
+<p>
+The reason the employee has not been approved is
+</p>
+<p>
+$rejnotes
+</p>
+<p>
+Thank You,<br />
+Newfoundland and Labrador English School District
+</p>
+</div>

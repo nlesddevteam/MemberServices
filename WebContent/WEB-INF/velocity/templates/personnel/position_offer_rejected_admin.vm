@@ -1,0 +1,15 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$candidateName has REJECTED the position $competitionNumber: $competitionTitle $location
+</p>
+<br>
+To review this recommendation click the link below.
+<br><br>
+<a href='http://www.nlesd.ca/MemberServices/Personnel/viewJobTeacherRecommendation.html?u=$userName&id=$recommendationId'><b>CLICK HERE</b></a>
+<br><br>
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+</div>

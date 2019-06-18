@@ -1,0 +1,14 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+Request To Hire submitted by $requesterName($requestTitle) has been declined.  To review this request click the link below to login to Members Services and access the Personnel System.
+</p>
+<br>
+<a href='http://www.nlesd.ca/MemberServices/Personnel/addRequestToHire.html?rid=$requestId'><b>CLICK HERE</b></a>
+<br>
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+$alevel
+</div>

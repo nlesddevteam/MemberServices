@@ -1,0 +1,23 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+	Registration Status: <b>INCOMPLETE - PROOF OF PHYSICAL ADDRESS AND MCP VERIFICATION REQUIRED.</b>
+</p>
+
+<p><b>Important Note:</b> Please disregard our previous request to provide your child's birth certificate and immunization records as part of the Kindergarten registration verification process. We apologize for any inconvenience this may have caused.</p>
+
+<p>
+Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year was 
+received at <b>$kr.registrationDate</b>. Your registration application is currently incomplete, proof of physical address and mcp verfication has not been provided.  
+</p>
+<p> 
+Please present proof of physical address and mcp for verification to the school on or before <u>$date.format('full_date', $kr.registration.addressConfirmationDeadline)</u>
+to complete the registration process.
+</p>
+<p>
+<b>If you feel you are receiving this notification in error, please contact your registration school directly to inquire about the status of your application.</b>
+</p>
+<p>
+Thank You,<br /><br />
+Newfoundland and Labrador English School District
+</p>
+</div>

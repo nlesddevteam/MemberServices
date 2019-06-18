@@ -1,0 +1,24 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$ownerfirst,
+<br />
+<br />
+Your claim for $fiscalyear has been delayed pending the receival of further travel details; more specifically:
+<br>
+<br>
+$claimnote
+<br>
+<br>
+If you need to submit receipts; send originals to the attention of $maillink
+<br />
+<br />
+To review this claim click the link below to login to Member Services and access the Travel Claim System.
+<br />
+<br />
+$alink
+<br />
+<br />
+Member Services
+</p>
+<br />
+</div>

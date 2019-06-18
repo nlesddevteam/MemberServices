@@ -1,0 +1,14 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$requesterName has approved a job ad request titled '$competitionTitle'. To review this request click the link below to login to 
+Members Services and access the Personnel System.
+</p>
+<br><br>
+<a href='http://www.nlesd.ca/MemberServices/Personnel/viewAdRequest.html?u=$userName&rid=$recommendationId'><b>CLICK HERE</b></a>
+<br>
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+</div>
