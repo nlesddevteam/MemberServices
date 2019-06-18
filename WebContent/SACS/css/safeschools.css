@@ -1,0 +1,234 @@
+	
+A:link  {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:12px;
+ 	text-decoration : none;
+ 	color : #00407A;
+ }
+
+ A:visited  {
+ 	text-decoration : none;
+  font-size:12px;
+ 	color : #00407A;
+ }
+
+ A:active  {
+ 	text-decoration : none;
+  font-size:12px;
+ 	color : #9C1F2E;
+ }
+
+
+ A:hover  {
+ 	text-decoration : none;
+  font-size:12px;
+ 	color : #9C1F2E;
+ }
+ 
+	body {
+	background: #8CBAE3 url("../images/bg-2.gif");
+	margin:10px;
+	padding: 5;
+}
+	
+	
+	.copyright {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: Gray;
+}
+
+
+		
+	a.topmenu:link
+	{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: White;
+	text-decoration: none;
+}
+		a.topmenu:visited
+	{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: White;
+	text-decoration: none;
+}
+		a.topmenu:hover
+	{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: Yellow;
+	text-decoration: underline;
+
+}
+		a.topmenu:active
+	{
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+		color: Yellow;
+		text-decoration: none;
+	}
+	
+.toptext {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: White;
+}	
+
+.copyright {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: Silver;
+}	
+	
+	.mainbody {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: Black;
+	font-size: 10px;
+
+}
+
+	
+		
+	A.menu:link {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #00407A;
+	text-decoration: none;
+}
+	A.menu:visited {
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		color: #00407A;
+		text-decoration: none;
+
+	}
+	A.menu:hover {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #9C1F2E;
+	text-decoration: underline;
+	
+}
+	A.menu:active {
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		color:#9C1F2E;
+		text-decoration: none;
+	}
+	
+.inputBox {
+	font-family:Arial, Helvetica, Verdana, sans-serif;
+	font-size: 11px;
+	color: #000000;
+  line-height: 14px;
+  border:solid 1px #7B9EBD;
+}
+
+.requiredInputBox { 
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+  line-height: 14px;
+  background-color: #FFFFCC;
+  border:solid 1px #7B9EBD;
+}
+
+#sacs_overview{
+  padding-left:5px;
+  padding-right:5px;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+#sacs_overview table {
+  border-collapse: collapse;
+}
+
+#sacs_overview th{
+  font-family: Arial, Helvetica, sans-serif;
+	color: Red;
+	font-size: 11px;
+  font-weight:bold;
+  border-bottom: solid 1px #c0c0c0;
+  border-left: solid 1px #c0c0c0;
+  white-space: nowrap;
+  padding: 2px;
+  text-align: center;
+}
+
+#sacs_overview td{
+  border-top: solid 1px #c0c0c0;
+  border-left: solid 1px #c0c0c0;
+  white-space: nowrap;
+  padding: 6px;
+  text-align: center;
+}
+
+#sacs_overview td.blank{
+  border:none;
+}
+
+#sacs_overview td.school_name{
+  border-top: solid 1px #c0c0c0;
+  border-left: none;
+  white-space: nowrap;
+  padding: 2px;
+  text-align: right;
+  font-family: Arial, Helvetica, sans-serif;
+	color: Black;
+	font-size: 11px;
+  font-weight:bold;
+  white-space: nowrap;
+}
+
+#sacs_overview td.alt{
+  background-color:#F9E2A4;
+}
+
+#sacs_overview td.my{
+  border-top: solid 2px #FF0000;
+  border-bottom: solid 2px #FF0000;
+}
+
+#sacs_overview table.legend{
+  border: solid 1px #c0c0c0;
+  border-collapse:collapse;
+}
+
+#sacs_overview table.legend  td{
+  border: none;
+  white-space: nowrap;
+  padding: 5px;
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+	color: Black;
+	font-size: 11px;
+  font-weight:none;
+}
+
+#sacs_overview table.legend  td.title{
+  border: solid 1px #c0c0c0;
+  background-color:#F9E2A4;
+  white-space: nowrap;
+  padding: 5px;
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+	color: Black;
+  font-weight:bold;
+	font-size: 14px;
+  text-transform:uppercase;
+}
+
+#sacs_overview table.legend  span.name{
+  font-family: Arial, Helvetica, sans-serif;
+	color: Red;
+  font-weight:bold;
+	font-size: 11px;
+  text-transform:uppercase;
+}
+
+
+
+

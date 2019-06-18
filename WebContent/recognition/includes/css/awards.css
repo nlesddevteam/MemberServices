@@ -1,0 +1,80 @@
+	
+	/* ESDNL.CA CSS Stylesheet September 2007. 	*/
+	/* (C) Eastern School District 			*/
+ 
+	body {
+	background: #495591 url(../images/rgnbak.jpg);
+	margin: 10;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	padding: 5;
+}
+		.date {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: Silver;
+}
+	
+	.copyright {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: Silver;
+}
+
+	A.menu:link  {
+	text-decoration: none;
+	color: #000000;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+ A.menu:visited  {
+ 	text-decoration : none;
+ 	color : #000000;
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+ }
+
+ A.menu:active  {
+ 	text-decoration : none;
+ 	color : #495591;
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+ }
+
+
+ A.menu:hover  {
+	text-decoration: underline;
+	color: #495591;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+ 
+
+	A.hmenu:link  {
+	text-decoration: none;
+	color: Silver;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+ A.hmenu:visited  {
+ 	text-decoration : none;
+ 	color : Silver;
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+ }
+
+ A.hmenu:active  {
+ 	text-decoration : none;
+ 	color : Silver;
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+ }
+
+
+ A.hmenu:hover  {
+	text-decoration: underline;
+	color: #495591;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
