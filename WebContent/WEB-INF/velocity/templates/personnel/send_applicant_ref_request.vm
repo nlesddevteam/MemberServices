@@ -1,0 +1,24 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$appName is requesting you to complete a reference check. 
+</p>
+<br><br>
+<p>
+To submit a reference click the link below to view the Reference Check Form.
+</p>
+<br>
+<p>
+$refUrl
+</p>
+<br><br>
+<p>
+If you would like to decline the request click the link below
+</p>
+<br>
+$refUrlDecline
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+</div>

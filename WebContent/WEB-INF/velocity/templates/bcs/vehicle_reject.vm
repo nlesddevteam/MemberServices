@@ -1,0 +1,21 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+The following vehicle has not been approved by NLESD Bussing Contractor System
+</p>
+<p>
+Plate Number: $pnumber
+</p>
+<p>
+Serial Number: $snumber
+</p>
+<p>
+The reason the vehicle has not been approved is
+</p>
+<p>
+$rejnotes
+</p>
+<p>
+Thank You,<br />
+Newfoundland and Labrador English School District
+</p>
+</div>

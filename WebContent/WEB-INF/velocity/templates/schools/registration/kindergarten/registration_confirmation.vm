@@ -1,0 +1,19 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year has 
+been received at <b>$kr.registrationDate</b>. 
+</p>
+<p> 
+Please present proof of address, birth certificate and immunization records to the school on or before <u>$date.format('full_date', $kr.registration.addressConfirmationDeadline)</u>
+to complete the registration process. This does not guarantee acceptance to the school or program, the District reserves the right to make 
+the final decision regarding student acceptance and placement. 
+</p>
+<p>
+Acceptance letters will follow when acceptance has been approved.
+</p>
+<p>
+Thank You,<br />
+Newfoundland and Labrador English School District
+</p>
+
+</div>

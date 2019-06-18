@@ -1,0 +1,16 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$name,
+</p>
+<p>
+Your NLESD Bussing Contractor System Account is ready to use.  
+To access the system use the link below
+</p>
+<p>
+<a href='$link'>Click Here</a>
+</p>
+<p>
+Thank You,<br />
+Newfoundland and Labrador English School District
+</p>
+</div>

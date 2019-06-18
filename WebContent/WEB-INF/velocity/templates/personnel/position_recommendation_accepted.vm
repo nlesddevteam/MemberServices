@@ -1,0 +1,16 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+$recommendName has ACCEPTED the recommendation of $candidateName for position $competitionNumber: $competitionTitle $location 
+</p>
+<p>
+To review this recommendation and send and offer to the candidate click the link below
+</p>
+<br>
+<a href='http://www.nlesd.ca/MemberServices/Personnel/viewJobTeacherRecommendation.html?u=$userName&id=$recommendationId'><b>CLICK HERE</b></a>
+<br>
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+</div>

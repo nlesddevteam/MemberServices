@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+   <tlib-version>1.2</tlib-version>
+   <jsp-version>1.2</jsp-version>
+   <short-name>awsd</short-name>
+   <uri>/MemberServices/taglib</uri>
+   <description>Eastern School District - Custom Tag Library</description>
+   
+   <tag>
+      <name>DailyCalendar</name>
+      <tag-class>com.awsd.pdreg.tag.DailyCalendarTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays a table of daily events</description>
+      <attribute>
+         <name>date</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>printable</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>uid</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>zone</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+   <tag>
+    <name>SecurityCheck</name>
+    <tag-class>com.awsd.security.tag.SecurityCheckTagHandler</tag-class>
+    <attribute>
+      <name>permissions</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>roles</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>allRequired</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>SecurityAccessRequired</name>
+    <tag-class>com.awsd.security.tag.SecurityAccessRequiredTagHandler</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>permissions</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>roles</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>npermissions</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>allRequired</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>PermissionRedirect</name>
+    <tag-class>com.awsd.security.tag.PermissionRedirectTagHandler</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>permissions</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+  
+</taglib>

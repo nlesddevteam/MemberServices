@@ -1,0 +1,22 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+Your access to the NLESD Bussing Contractor System has been approved.  
+Please use the following information below to access you account.
+</p>
+<p>
+Your temporary password is
+</p>
+<p>
+$password
+</p>
+<p>
+Please click the link below to finish registration process
+</p>
+<p>
+<a href='$link'>Click Here</a>
+</p>
+<p>
+Thank You,<br />
+Newfoundland and Labrador English School District
+</p>
+</div>

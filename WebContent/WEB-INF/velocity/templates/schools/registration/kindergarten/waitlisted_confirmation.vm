@@ -1,0 +1,15 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+	Registration Status: <b>WAITLISTED.</b>
+</p>
+
+<p>
+Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year was 
+received at <b>$kr.registrationDate</b>. Your registration application is currently waitlisted. The school will be in contact after school opens this September.
+</p>
+
+<p>
+Thank You,<br /><br />
+Newfoundland and Labrador English School District
+</p>
+</div>
