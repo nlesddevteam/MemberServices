@@ -97,7 +97,7 @@
 				        <span class="icon-bar"></span>
 				        <span class="icon-bar"></span>                        
 				      </button>   
-		      	<a class="navbar-brand" href="/index.html" onclick="loadingData()" title="NLESD Home"><img src="/MemberServices/Personnel/includes/img/myhrpsm.png" id="logoTag" border=0 /></a>
+				       <a href="#" class="navbar-left navbar-brand"><img src="/MemberServices/Personnel/includes/img/myhrpsm.png"></a> 		      	
 		    </div>    
     
   		<div class="collapse navbar-collapse" id="myNavbar" style="padding-left:0px;">
@@ -214,7 +214,7 @@ If you are experiencing technical difficulties with this system, email <a href="
 	
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">		
-		  MyHRP Applicant Profiling System App 1.0 &middot; &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved 
+		  MyHRP Applicant Profiling System App 1.1 &middot; &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved 
 		 </div>
 		  
 		</div> 
