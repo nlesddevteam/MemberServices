@@ -1,0 +1,324 @@
+/** CCS Document  **/
+
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	z-index: 0;
+}
+
+.pageContent {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+.boldWhiteTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.boldBlack10pxTitle {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.largeWhiteDate {
+	font-family: Tahoma;
+	font-size: 18px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+
+.boldBlack11pxTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+	text-transform: uppercase;
+}
+
+.boldBlack11pxLower {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+
+a.11pxB60000Display:link, a.11pxB60000Display:visited, a.11pxB60000Display:active {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: none;
+	color: #B60000;
+	text-decoration: none;
+}
+
+a.11pxB60000Display:hover {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: none;
+	color: #B60000;
+	text-decoration: underline;
+}
+
+.11pxBlueBoldTitle {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #336699;
+}
+
+.normalRed10pxText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FF0000;
+}
+
+.normalBlack10pxText {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.normalGrey10pxText {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #999999;
+}
+
+.weatherCentralStatusOpen {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #00CC00;
+}
+
+.weatherCentralStatusClosed {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FF0000;
+}
+
+.weatherCentralStatusDelayed {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FF9900;
+}
+
+.normalBlack11pxText {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.normalWhite11pxText {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+.medWhiteTitle {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+
+.navFooterLinkSelected {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.displayCopyright {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+
+.displayTopNav {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.containerTitleWhite {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.importantNotices {
+	width: 435px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #96965E;
+	background-color: #FFF7E5;
+	padding: 5px;
+}
+
+.signinBox {
+	width: 435px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #4791C5;
+	background-color: #FFFFFF;
+	padding: 5px;
+}
+
+.signinEmail {
+	width: 240px;
+	height: 40px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #999999;
+	background-image: url('../images/signin_sub_bg.jpg');
+	padding: 10px 30px 10px 30px;
+	text-align: left;
+}
+
+.signinSubmit {
+	width: 240px;
+	height: 40px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #999999;
+	background-image: url('../images/signin_sub_bg.jpg');
+	padding: 10px 30px 10px 30px;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.inputBox {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-transform: lowercase;
+	color: #333333;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	width: 220px;
+	height: 22px;
+	padding: 3px;
+}
+
+.selectBox {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-transform: normal;
+	color: #333333;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	height: 22px;
+	padding: 3px;
+}
+
+.textAreaBox {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-transform: normal;
+	color: #333333;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	width: 350px;
+	height: 100px;
+	padding: 3px;
+}
+
+.inputBoxPassword {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-transform: lowercase;
+	color: #333333;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	width: 220px;
+	height: 22px;
+	padding: 3px;
+}
+
+a.medBlueLink:link, a.medBlueLink:visited, a.medBlueLink:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #106AB8;
+	text-decoration: underline;
+}
+
+a.11pxBlueLink:link, a.11pxBlueLink:visited, a.11pxBlueLink:active {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #106AB8;
+	text-decoration: none;
+}
+
+a.11pxBlueLink:hover {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #106AB8;
+	text-decoration: underline;
+}
+
+a.navFooterLink:link, a.navFooterLink:visited, a.navFooterLink:active {
+	font-family: tahoma;
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+a.navFooterLink:hover {
+	font-family: tahoma;
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+a.navSideLink:link, a.navSideLink:visited, a.navSideLink:active {
+	font-family: tahoma;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.navSideLink:hover {
+	font-family: tahoma;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+a.navTopLink:link, a.navTopLink:visited, a.navTopLink:active {
+	font-family: tahoma;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+a.navTopLink:hover {
+	font-family: tahoma;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: bold;
+}
