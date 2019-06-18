@@ -1,0 +1,52 @@
+td.label
+{
+  padding-left: 10px;
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 13px;
+  font-weight: bold;
+	color: #D91D00;
+  text-transform: uppercase;
+  text-decoration:none;
+}
+
+td.info
+{
+  padding-left: 10px;
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 13px;
+  font-weight: bold;
+	color: #D91D00;
+  text-transform: uppercase;
+  text-decoration:none;
+  background-color:#F7F7EF; 
+  border-left: solid 1px #233154; 
+  border-right:solid 1px #233154;
+  text-align:center;
+}
+
+.requiredinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border:solid 1px #A4B97F;
+}
+
+a.option, a:link.option, a:active.option
+{
+  color:#FFFFFF;
+  font-weight:bold;
+  font-size:11px;
+  text-decoration:none;
+}
+
+a:hover.option
+{
+  color:#FF0000;
+  font-weight:bold;
+  font-size:11px;
+  text-decoration:none;
+}

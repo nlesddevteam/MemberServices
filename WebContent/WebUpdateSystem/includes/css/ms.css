@@ -1,0 +1,189 @@
+/* NLESD Member Services 2015 */
+
+body {font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;font-size:12px; color: Black; }
+.mainContainer {font-size:11px;max-width:1100px;display: block;  margin-left: auto;  margin-right: auto;  background-color:white;  border: 1px solid #ff6200; min-width:250px; }
+.topper {font-size:11px;background-color:#ff6200;width:100%; }
+.toppertextleft {color:white;font-weight:normal;width:45%; font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:left;float:left;padding-left:3px;}
+.toppertextright {color:white;font-weight:normal;width:45%;font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:right;float:right;padding-right:3px;}
+.copyright {font-size:10px;background-color:#ff6200;width:100%;color:white;font-weight:normal;font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center; }
+.date { color:white;}
+.bodyText {font-size:12px;color:Black;padding-left:30px;padding-right:10px;}
+.txtPadding {margin-left:10px;margin-right:10px;font-size:12px;}
+.headerText {font-size:15px;font-weight:bold;color:#1F4279; }
+.msHeaderLogo {width:100%;max-width:760px;text-align:center;}
+a { color:#1F4279;  text-decoration: none;}
+a:visited { color:#1F4279;  text-decoration: none;}
+a:hover {	color: #FF0000;	text-decoration: underline;} 
+a:active { color: #FF0000; text-decoration: none;}
+.accordionHeader {background:rgba(191, 0, 0, 0.2);border:0px;color:#1F4279;}
+.newsTable {width:100%;font-size:11px;}
+.newsTable .tableHeader {background-color:#1F4279;color:White;font-weight:bold;}
+
+a.logout { color:#FFFFFF;  text-decoration: none;}
+a.logout:visited { color:#FFFFFF;  text-decoration: none;}
+a.logout:hover {	color: #FFFF00;	text-decoration: underline;} 
+a.logout:active { color: #FFFF00; text-decoration: none;}
+
+.pageSectionHeader {color: #007F01;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.pageTitleHeader {color: #1F4279;	text-decoration: none;	font-weight: bold; padding-top:10px; margin-left:10px; margin-bottom:10px;}
+.pageBody {	color:#000000; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+
+.siteHeaders {font-size:16px;}
+.siteSubHeaders,.ui-accordion-header {font-size:14px;}
+.siteBodyText,.ui-accordian-content {font-size:12px;}
+.siteFootnotes,.siteFootNotes {font-size:10px;}
+
+.bgcolor1 {background-color:rgba(191, 0, 0, 0.1);}
+.bgcolor2 {background-color:rgba(0, 191, 0, 0.1);}
+.bgcolor3 {background-color:rgba(255, 132, 0, 0.1);}
+.bgcolor4 {background-color:rgba(127, 130, 255, 0.1);}
+.bgcolor5 {background-color:rgba(255, 254, 128, 0.1);}
+.openColor {color:Green;}
+.closedColor {color:Red;}
+.hold {color:#E6A75A;}
+.archivedColor {color:Grey;}
+
+.tenderFilesTable {font-size: 11px;width:100%;border:0px;}
+.tenderFilesTable .header {background-color:#007F01;color:white;font-size:11px;}
+
+
+
+/*TENDERS */
+.tenderDocLinkContainer {float:left;width:160px;text-align:center;}
+.tenderHeader {color: #007F01;font-weight: bold;}
+.tender-list .row .email a { color:#007F01;  text-decoration: none;}
+.tender-list .row .email a:visited { color:#007F01;  text-decoration: none;}
+.tender-list .row .email a:hover {	color: #FF0000;	 text-decoration: underline;}
+.tender-list .row .email a:active { color: #FF0000; text-decoration: none;}
+.tender-list {   display:table;  width:100%;}
+.tender-list .table {display:table;}
+.tender-list .rowCaption {caption-side: top; display: table-caption;width:100%;text-align:left; font-weight:bold;color:#007F01;margin-bottom:3px;}
+.tender-list .row { display:table-row; width:100%;}
+.tender-list .column { display: table-cell;border-bottom:1px solid grey;padding:2px;vertical-align:middle;}
+.tender-list .row .header { background-color: #1F4279; text-align:left; color:white; font-weight:bold; }
+.tender-list .row .division { width:100%;text-align:left; font-weight:bold;color:#007F01;}
+.tender-list .row .tenNumber {width:12%;}
+.tender-list .row .tenRegion { width:5%;text-transform: Uppercase; border-left:1px solid grey;text-align:center;}
+.tender-list .row .tenTitle { width:53%;border-left:1px solid grey;}
+.tender-list .row .tenStatus { width:5%;border-left:1px solid grey;text-align:center;}
+.tender-list .row .tenClose { width:10%;border-left:1px solid grey;text-align:center;}
+.tender-list .row .tenOpening {width:15%;text-transform: Capitalize;border-left:1px solid grey;text-align:center;}
+.tenStatusOpen {color:Green;}
+.tenStatusClosed {color:Red;}
+.tenStatusHold {color:Grey;}
+.tenderSubHeader {color:#1F4279;font-weight:bold;}
+
+
+
+.blogTable {font-size: 11px;width:100%;border:0px;}
+.blogTable .header {background-color:#007F01;color:white;font-size:11px;}
+
+
+.regionDefault {background-color: #1F4279;}
+.region1 {background-color:rgba(191, 0, 0, 0.1);}
+.region1a {border-left:10px solid rgba(191, 0, 0, 0.3);}
+.region1solid {background-color:rgba(191, 0, 0, 1);}
+.region1half {background-color:rgba(191, 0, 0, 0.5);}
+.region2 {background-color:rgba(0, 191, 0, 0.1);}
+.region2a {border-left:10px solid rgba(0, 191, 0, 0.3);}
+.region2solid {background-color:rgba(0, 191, 0, 1);}
+.region2half {background-color:rgba(0, 191, 0, 0.5);}
+.region3 {background-color:rgba(255, 132, 0, 0.1);}
+.region3solid {background-color:rgba(255, 132, 0, 1);}
+.region3half {background-color:rgba(255, 132, 0, 0.5);}
+.region3a {border-left:10px solid rgba(255, 132, 0, 0.3);}
+.region4 {background-color:rgba(127, 130, 255, 0.1);}
+.region4a {border-left:10px solid rgba(127, 130, 255, 0.3);}
+.region4solid {background-color:rgba(127, 130, 255,1);}
+.region4half {background-color:rgba(127, 130, 255, 0.5);}
+.region5 {background-color:rgb(153, 51, 51, 0.1);}
+.region5a {border-left:10px solid rgba(153, 51, 51, 0.3);}
+.regionEastern {}
+.regionCentral {}
+.regionWestern {}
+.regionLabrador {}
+.regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
+
+.menuIconImage {display:inline-block;  vertical-align:top;text-align:center;margin-left:3px;margin-top:5px;border:0px solid Silver;}
+.menuImage {max-width:100%;height:auto;}
+.requiredinput_popup_cal
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+  background-color: #FFFFCC;
+  border-top: solid 1px #A4B97F;
+  border-right: solid 1px #A4B97F;
+  border-bottom: solid 1px #A4B97F;
+  border-left: none;
+  padding-top:1px;
+  padding-bottom:2px;
+  padding-right:2px;
+  padding-left:5px;
+}
+
+.requiredinput_date
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border-top:solid 1px #A4B97F;
+  border-left:solid 1px #A4B97F;
+  border-bottom:solid 1px #A4B97F;
+  border-right:none;
+}
+
+.generic-page-header {	color: #007F01;	font-size: 13px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.generic-page-titleheader {	color: #1F4279;	font-size: 16px;	text-decoration: none;	font-weight: bold; margin-top:10px; margin-left:10px; margin-bottom:10px;}
+.container .generic-page-body {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px;color:#000000; font-size: 12px; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+.messageText {color:Red;font-size:14px;}
+
+.col {	display: block;	float:left;	margin: 0% 0% 0% 0%;padding: 0% 0% 0% 0%;}
+.col:first-child { margin-left: 0; }
+
+.group:before,.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; }
+
+
+/*  DEFAULT  */
+
+.full_block {width:100%;}
+.center {text-align:center;}
+.menuImage {max-width:100%;height:auto;}
+
+@media only screen and (max-width:2400px) {
+.full_block { width: 100%;}
+
+}
+
+@media only screen and (max-width:900px) {
+
+}
+
+@media only screen and (max-width:760px) {
+.full_block { width: 100%;}
+
+.bodyText {font-size:11px;}
+.topper {font-size:11px;}
+
+}
+
+@media only screen and (max-width: 640px) {
+	
+.full_block { width: 100%;}
+
+.bodyText {font-size:11px;}
+.topper {font-size:10px;}
+}
+
+@media only screen and (max-width: 480px) {
+	
+.full_block { width: 100%;}
+
+.bodyText {font-size:10px;}
+.topper {font-size:9px;}
+}

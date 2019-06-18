@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page import="com.awsd.common.*, java.util.*;" %>
+<%@ taglib uri='http://java.sun.com/jstl/core_rt' prefix='c' %>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn' %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+
+<esd:SecurityCheck permissions="TSDOC-ADMIN-VIEW" />
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta name='menu' content='home' />
+		<title>All Notes</title>
+		
+		<script type="text/javascript">
+			$('document').ready(function() {
+				
+				$('table.data-list').each(function(idx){
+					$(this).children().children('.note:even')
+						.filter(':not(tfoot tr)')
+						.filter(':not(thead tr)')
+						.css('background-color', '#F0F0F0');
+				});
+
+				//$('h3').click(function() {					
+				//	$('#'+$(this).html()).toggle();
+				//})
+
+				$('.myaccordion').accordion({ collapsible: true, autoHeight: false, active: false });
+				
+			});
+
+			function readnote(id) {
+				//popup('admin/viewNote.html?note-id='+id, 600, 600);
+				document.location.href = 'viewNote.html?note-id='+id;
+			}
+
+			function auditnote(id) {
+				//popup('admin/viewNote.html?note-id='+id, 600, 600);
+				document.location.href = 'viewNoteAudit.html?note-id='+id;
+			}
+
+			function deletenote(id) {
+				//popup('admin/viewNote.html?note-id='+id, 600, 600);
+				document.location.href = 'deleteNote.html?note-id='+id;
+			}
+
+		</script>
+		<style type="text/css">@import "<c:url value='/tsdoc/includes/css/custom-theme/jquery-ui-1.8.6.custom.css'/>";</style>
+	</head>
+	
+	<body>
+		<div class='title'><span>All Notes</span></div>
+		<div class='myaccordion' style='padding-top:10px;'>
+			<c:choose>
+				<c:when test="${fn:length(years) > 0}">
+					<c:forEach items="${years}"  var="y">
+							<h3 style='padding-left:25px;'>${y.key}</h3>
+							<div id='${y.key}'>
+								<div class='myaccordion'>
+									<c:forEach items="${y.value}" var="m">
+										<h4 style='padding-left:25px;'><%=Utils.getMonthString(((Integer)((Map.Entry)pageContext.getAttribute("m", PageContext.PAGE_SCOPE)).getKey()).intValue())%></h4>
+										<div style='padding:0px;'>
+											<table cellspacing='0' cellpadding='0' border='0' class='data-list'>
+												<caption></caption>
+												<thead>
+													<tr><th width='34%'>Title</th><th width='34%'>Date Added</th><th width='*'>&nbsp;</th></tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${m.value}" var="note">
+														<tr class='note'>
+															<td>${note.noteTitle}</td>
+															<td>${note.dateAdded}</td>
+															<td class='options'><a href='javascript:readnote(${note.noteId})'>read</a> | <a href='javascript:auditnote(${note.noteId})'>audit</a> | <a href='javascript:deletenote(${note.noteId})'>delete</a></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+												<tfoot>
+													<tr><td colspan='3'>&nbsp;</td></tr>
+												</tfoot>
+											</table>
+										</div>
+									</c:forEach>
+								</div>		
+							</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<table cellspacing='0' cellpadding='0' border='0' class='data-list'>
+						<tr class='user-message'><td colspan='3'>No notes found.</td></tr>
+					</table>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</body>
+
+</html>

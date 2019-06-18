@@ -1,0 +1,80 @@
+/* NLESD Member Services 2015 */
+/* District Presentation Resource Archive */
+
+body {font-family: Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;font-size:12px; color: Black; }
+.mainContainer {font-size:11px;max-width:1100px;display: block;  margin-left: auto;  margin-right: auto;  background-color:white;  border: 1px solid #ff6200; min-width:250px; }
+.topper {font-size:11px;background-color:#ff6200;width:100%; }
+.toppertextleft {color:white;font-weight:normal;width:45%; font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:left;float:left;padding-left:3px;}
+.toppertextright {color:white;font-weight:normal;width:45%;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:right;float:right;padding-right:3px;}
+.copyright {font-size:10px;background-color:#ff6200;width:100%;color:white;font-weight:normal;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center; }
+.date { color:white;}
+.bodyText {font-size:12px;color:Black;padding-left:10px;padding-right:10px;}
+.txtPadding {margin-left:10px;margin-right:10px;font-size:12px;}
+.headerText {font-size:15px;font-weight:bold;color:#1F4279; }
+.msHeaderLogo {width:100%;max-width:760px;text-align:center;}
+a { color:#1F4279;  text-decoration: none;}
+a:visited { color:#1F4279;  text-decoration: none;}
+a:hover {	color: #FF0000;	text-decoration: underline;} 
+a:active { color: #FF0000; text-decoration: none;}
+
+a.logout { color:#FFFFFF;  text-decoration: none;}
+a.logout:visited { color:#FFFFFF;  text-decoration: none;}
+a.logout:hover {	color: #FFFF00;	text-decoration: underline;} 
+a.logout:active { color: #FFFF00; text-decoration: none;}
+
+
+.generic-page-header {	color: #007F01;	font-size: 13px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.generic-page-titleheader {	color: #1F4279;	font-size: 16px;	text-decoration: none;	font-weight: bold; margin-top:10px; margin-left:10px; margin-bottom:10px;}
+.container .generic-page-body {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px;color:#000000; font-size: 12px; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+
+
+.col {	display: block;	float:left;	margin: 0% 0% 0% 0%;padding: 0% 0% 0% 0%;}
+.col:first-child { margin-left: 0; }
+
+.group:before,.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; }
+
+
+/*  DEFAULT  */
+
+.full_block {width:100%;}
+.center {text-align:center;}
+.menuImage {max-width:100%;height:auto;}
+
+@media only screen and (max-width:2400px) {
+.full_block { width: 100%;}
+
+}
+
+@media only screen and (max-width:900px) {
+	
+.menuImage {max-width:100%;height:auto;}
+}
+
+@media only screen and (max-width:760px) {
+.full_block { width: 100%;}
+.menuImage {max-width:100px;height:auto;}
+.menuIconImage {height:auto;}
+.bodyText {font-size:11px;}
+.topper {font-size:11px;}
+
+}
+
+@media only screen and (max-width: 640px) {
+	
+.full_block { width: 100%;}
+.menuImage {max-width:90px;height:auto;}
+.menuIconImage {height:auto;}
+.bodyText {font-size:11px;}
+.topper {font-size:10px;}
+}
+
+@media only screen and (max-width: 480px) {
+	
+.full_block { width: 100%;}
+.menuImage {max-width:80px;height:auto;text-align:center;}
+.menuIconImage {height:auto;}
+.bodyText {font-size:10px;}
+.topper {font-size:9px;}
+}
