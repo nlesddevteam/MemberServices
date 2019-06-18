@@ -1,0 +1,83 @@
+/* NLESD Member Services 2015 */
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+body {font-family: Verdana, Geneva, sans-serif;color: Black;-webkit-text-size-adjust: 100%;}
+/*body { background-image: url('../img/backg.jpg'); background-repeat: no-repeat;background-attachment: fixed;}
+html { background: url('') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;}*/
+
+.mainContainer {font-size:11px;max-width:1280px;display: block;  margin-left: auto;  margin-right: auto;  background-color: rgba(255, 255, 255, 0.7); border: 1px solid #ff6200; min-width:300px; }
+.topper {font-size:12px;background-color:#ff6200;width:100%;color:white;font-weight:normal;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:right; }
+.copyright {font-size:10px;background-color:#ff6200;width:100%;color:white;font-weight:normal;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center; }
+.date { font-size:11px;color:white;}
+.duplicateWarning {font-size:14px;font-weight:bold;color:White;background-color:#FF0000;width:100%;}
+.duplicateText {font-size:12px;color:Black;font-weight:bold;width:100%;border: 1px solid Red;}
+.welcomeMessage {font-size:11px;color:Grey;text-align:center;padding-bottom:5px;}
+.bodyText {font-size:12px;color:Black;}
+.txtPadding {margin-left:10px;margin-right:10px;font-size:12px;}
+.frmLabel {font-size:12px;font-weight:bold;color:#1F4279; }
+.input {width:95%; }
+.inputSelect {width:95%; }
+.submit { margin-top:3px; margin-right:3px;padding:1px 10px;-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;border:1px solid #06C; background-color:#007F01;color:#fff;font-size: 12px;font-weight:bold;}        
+.submit:hover {border: 1px solid #FFFFFF;color:#FFFFFF;background-color:#FF0000;}
+.menuIconImage {display:inline-block; height:130px; vertical-align:top;text-align:center;margin-left:3px;margin-top:5px;border:0px solid Silver;}
+.menuImage {max-width:100%;height:auto;max-height:120px;}
+.msHeaderLogo {width:100%;max-width:760px;text-align:center;}
+a { color:#1F4279;  text-decoration: none;}
+a:visited { color:#1F4279;  text-decoration: none;}
+a:hover {	color: #FF0000;	text-decoration: underline;} 
+a:active { color: #FF0000; text-decoration: none;}
+
+.section {clear: both;	padding: 0px;margin: 0px;}
+
+.col {	display: block;	float:left;	margin: 0% 0% 0% 0%;padding: 0% 0% 0% 0%;}
+.col:first-child { margin-left: 0; }
+
+.group:before,.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; }
+
+
+/*  DEFAULT  */
+
+.full_block {width:100%;}
+.menuImage {max-width:100%;height:auto;}
+
+@media only screen and (max-width:2400px) {
+.full_block { width: 100%;}
+
+}
+
+@media only screen and (max-width:900px) {
+	
+.menuImage {max-width:100%;height:auto;}
+}
+
+@media only screen and (max-width:760px) {
+.full_block { width: 100%;}
+.menuImage {max-width:90%;height:auto;}
+.menuIconImage {height:auto;}
+}
+
+@media only screen and (max-width: 640px) {
+	
+.full_block { width: 100%;}
+.menuImage {max-width:90%;height:auto;}
+.menuIconImage {height:auto;}
+.welcomeMessage {font-size:11px;}
+}
+
+@media only screen and (max-width: 480px) {
+	
+.full_block { width: 100%;}
+.menuImage {max-width:90%;height:auto;}
+.menuIconImage {height:auto;}
+.welcomeMessage {font-size:10px;}
+}
+
+
+#mslogin input[type=text] {width:150px; margin-top:4px; border:1px solid #000000; background-color:#fffddd;font-size: 11px; }
+#mslogin input[type=password] {width:150px; margin-top:4px; border:1px solid #000000; background-color:#fffddd;font-size: 11px; }
+#mslogin input[type=submit] {  margin-top:3px;margin-left:3px; margin-right:3px;padding:1px 10px;-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;border:1px solid #06C; background-color:#007F01;color:#fff;font-size: 11px;font-weight:bold;}        
+#mslogin input[type=submit]:hover {border: 1px solid #FFFFFF;color:#FFFFFF;background-color:#FF0000;}
+.container .mslogin-container {	width: 300px;	margin-bottom: 5px; 	border-top: 1px solid grey;	 padding-bottom: 5px; text-align: center;}
+.container .mslogin-container-data {	width: 280px;	margin-left: 15px;	text-align: center;}
