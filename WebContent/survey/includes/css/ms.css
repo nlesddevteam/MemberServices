@@ -1,0 +1,233 @@
+/* NLESD Member Services 2015 */
+
+body {font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;font-size:12px; color: Black;  background-image: url("/includes/img/bg/0.jpg");}
+.mainContainer {font-size:11px;max-width:1100px;display: block;  margin-left: auto;  margin-right: auto;  background-color: rgba(255, 255, 255, 0.7);  border: 1px solid #ff6200; min-width:250px; }
+.topper {font-size:11px;background-color:#ff6200;width:100%; }
+.toppertextleft {color:white;font-weight:normal;width:45%; font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:left;float:left;padding-left:3px;}
+.toppertextright {color:white;font-weight:normal;width:45%;font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:right;float:right;padding-right:3px;}
+.copyright {font-size:10px;background-color:#ff6200;width:100%;color:white;font-weight:normal;font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center; }
+.date { color:white;}
+.bodyText {font-size:12px;color:Black;padding-left:30px;padding-right:10px;}
+.txtPadding {margin-left:10px;margin-right:10px;font-size:12px;}
+.headerText {font-size:16px;font-weight:bold;color:#007F01;text-align:center;}
+.msHeaderLogo {width:100%;max-width:760px;text-align:center;}
+a { color:#1F4279;  text-decoration: none;}
+a:visited { color:#1F4279;  text-decoration: none;}
+a:hover {	color: #FF0000;	text-decoration: underline;} 
+a:active { color: #FF0000; text-decoration: none;}
+.accordionHeader {background:rgba(191, 0, 0, 0.2);border:0px;color:#1F4279;}
+.newsTable {width:100%;font-size:11px;}
+.newsTable .tableHeader {background-color:#1F4279;color:White;font-weight:bold;}
+.newsTable .title {width:70%;}
+.newsTable .newsdate {width:10%;}
+.newsTable .added {width:10%;}
+.newsTable .options {width:10%;min-width:50px;}
+
+.survey-list .header {color: #007F01;font-weight: bold;font-size:11px;}
+.survey-list .row .email a { color:#007F01; text-decoration: none;}
+.survey-list .row .email a:visited { color:#007F01; text-decoration: none;}
+.survey-list .row .email a:hover {	color: #FF0000;	text-decoration: underline;}
+.survey-list .row .email a:active { color: #FF0000; text-decoration: none;}
+.survey-list {   display:table;  width:100%;font-size:10px;}
+.survey-list .table {display:table;}
+.survey-list .rowCaption {caption-side: top; display: table-caption;width:100%;text-align:left; font-weight:bold;color:#007F01;margin-bottom:3px;}
+.survey-list .row { display:table-row; width:100%;}
+.survey-list .column { display: table-cell;border-bottom:1px solid grey;padding:2px;vertical-align:middle;}
+.survey-list .row .header { background-color: #1F4279; text-align:left; color:white; font-weight:bold; }
+.survey-list .row .division { width:100%;text-align:left; font-weight:bold;color:#007F01;}
+.survey-list .row .surveyID {width:5%;text-align:center;}
+.survey-list .row .surveyTitle {width:50%;border-left:1px solid grey;padding-left:2px;}
+.survey-list .row .surveyStart {width:10%;border-left:1px solid grey;text-align:center;vertical-align:middle;}
+.survey-list .row .surveyEnd { width:10%;text-align:center;vertical-align:middle; border-left:1px solid grey;}
+.survey-list .row .surveyResponses { width:5%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveyAdmin {width:20%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveySectionID {width:5%;text-align:center;}
+.survey-list .row .surveySectionHeading {width:55%;border-left:1px solid grey;padding-left:2px;}
+.survey-list .row .surveySectionHDisplay {width:10%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveySectionQ {width:10%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveySectionAdmin {width:20%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveyQuestionID {width:5%;text-align:center;}
+.survey-list .row .surveyQuestionType {width:25%;border-left:1px solid grey;padding-left:2px;}
+.survey-list .row .surveyQuestionStem {width:30%;border-left:1px solid grey;padding-left:2px;}
+.survey-list .row .surveyQuestionM {width:10%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveyQuestionAdmin {width:10%;border-left:1px solid grey;text-align:center;}
+.survey-list .row .surveyWord {width:90%;text-align:center;}
+.survey-list .row .surveySpanAll {width:100%;text-align:center;font-size:12px;color:Red;}
+.survey-list .row .surveyCount {width:10%;border-left:1px solid grey;text-align:center;}
+.questionText {font-size:14px;color: #007F01;font-weight: bold;}
+.messageText {font-size: 11px; font-weight:bold; color: #FF0000;padding-bottom:8px;padding-top:8px;text-align:center;}
+.requiredStar {font-size:12px;color:#FF0000;}
+.formTable {font-size:12px;width:100%;padding:2px;}
+
+
+.subheadertitle {font-size:16px;color:#007F01;font-weight:bold;}
+.sectionintro {font-size:12px;color:#000000;}
+.sectioninstr {font-size:12px;color:#000000;}
+.answer {font-size:11px;color:#000000;}
+
+.label {font-size: 12px;font-weight: bold;color: #00407A;text-transform: capitalize;padding-right:3px;width:20%;}
+.fields {width:80%;}
+
+.inputBox {	font-size: 12px;color: #000000; line-height: 14px;  border:dotted 1px #007F01;}
+.requiredInputBox { font-size: 12px; color: #000000;line_height:14px; background-color: #FFFFFF; border:dotted 1px #007F01;}
+.requiredinput_date { line-height:18px;	color: #000000; background-color: #FFFFCC; height: 18px; border-top:solid 1px #7B9EBD;  border-left:solid 1px #7B9EBD;  border-bottom:solid 1px #7B9EBD; border-right:none;}
+.requiredinput_popup_cal {font-size: 10px;color: #000000; background-color: #FFFFCC;  border-top: solid 1px #7B9EBD; border-right: solid 1px #7B9EBD; border-bottom: solid 1px #7B9EBD;  border-left: none;
+  padding-top:1px; padding-bottom:2px; padding-right:2px; padding-left:5px; cursor:hand;}
+.fieldTitle {font-size:14px;color:#1F4279;}
+
+.header {	color: #007F01;	font-size: 14px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.mainbody {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	color: Black;	font-size: 12px;	margin-left:10px;	margin-right:10px;}
+
+a.logout { color:#FFFFFF;  text-decoration: none;}
+a.logout:visited { color:#FFFFFF;  text-decoration: none;}
+a.logout:hover {	color: #FFFF00;	text-decoration: underline;} 
+a.logout:active { color: #FFFF00; text-decoration: none;}
+
+.pageSectionHeader {color: #007F01;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.pageTitleHeader {color: #1F4279;	text-decoration: none;	font-weight: bold; padding-top:10px; margin-left:10px; margin-bottom:10px;}
+.pageBody {	color:#000000; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+
+.siteHeaders {font-size:16px;}
+.siteSubHeaders,.ui-accordion-header {font-size:14px;}
+.siteBodyText,.ui-accordian-content {font-size:12px;}
+.siteFootnotes,.siteFootNotes {font-size:10px;}
+
+.bgcolor1 {background-color:rgba(191, 0, 0, 0.1);}
+.bgcolor2 {background-color:rgba(0, 191, 0, 0.1);}
+.bgcolor3 {background-color:rgba(255, 132, 0, 0.1);}
+.bgcolor4 {background-color:rgba(127, 130, 255, 0.1);}
+
+.menuIconImage {display:inline-block;  vertical-align:top;text-align:center;margin-left:3px;margin-top:5px;border:0px solid Silver;}
+.menuImage {max-width:100%;height:auto;}
+.requiredinput_popup_cal
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+  background-color: #FFFFCC;
+  border-top: solid 1px #A4B97F;
+  border-right: solid 1px #A4B97F;
+  border-bottom: solid 1px #A4B97F;
+  border-left: none;
+  padding-top:1px;
+  padding-bottom:2px;
+  padding-right:2px;
+  padding-left:5px;
+}
+
+.requiredinput_date
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border-top:solid 1px #A4B97F;
+  border-left:solid 1px #A4B97F;
+  border-bottom:solid 1px #A4B97F;
+  border-right:none;
+}
+
+.question {
+	font-size: 12px;
+	font-weight: bold;
+	color: #007F01;
+	background: #E3F1E6;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	
+}
+
+.questionbox {
+	font-size: 11px;
+	font-weight: normal;
+	background-color: #FFFFFF;
+	color: Black;
+	border: 1px solid #007F01;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+.answer {
+	font-size: 11px;
+	color: Black;	
+	padding-left:20px;
+}
+
+tbody {font-size:11px;}
+
+.generic-page-header {	color: #007F01;	font-size: 13px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.generic-page-titleheader {	color: #1F4279;	font-size: 16px;	text-decoration: none;	font-weight: bold; margin-top:10px; margin-left:10px; margin-bottom:10px;}
+.container .generic-page-body {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px;color:#000000; font-size: 12px; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+
+
+.col {	display: block;	float:left;	margin: 0% 0% 0% 0%;padding: 0% 0% 0% 0%;}
+.col:first-child { margin-left: 0; }
+
+.group:before,.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; }
+
+
+
+input.bullet-answer {
+	width: 95%;
+	height: 18px;
+}
+
+div.bullet-answers-chars {
+	width: 95%;
+	font-size: 9px;
+	color: grey;
+	text-align: right;	
+}
+
+
+
+
+
+/*  DEFAULT  */
+
+.full_block {width:100%;}
+.center {text-align:center;}
+.menuImage {max-width:100%;height:auto;}
+
+@media only screen and (max-width:2400px) {
+.full_block { width: 100%;}
+
+}
+
+@media only screen and (max-width:900px) {
+
+}
+
+@media only screen and (max-width:760px) {
+.full_block { width: 100%;}
+
+.bodyText {font-size:11px;}
+.topper {font-size:11px;}
+
+}
+
+@media only screen and (max-width: 640px) {
+	
+.full_block { width: 100%;}
+.survey-list .row .surveyStart {display:none;}
+.survey-list .row .surveyEnd { display:none;}
+.survey-list .row .surveyAdmin {width:30%;}
+.survey-list .row .surveyTitle {width:30%;}
+.bodyText {font-size:11px;}
+.topper {font-size:10px;}
+}
+
+@media only screen and (max-width: 480px) {
+	
+.full_block { width: 100%;}
+.survey-list .row .surveyID {display:none;}
+.survey-list .row .surveyTitle {width:35%;}
+.bodyText {font-size:10px;}
+.topper {font-size:9px;}
+}
+
+
