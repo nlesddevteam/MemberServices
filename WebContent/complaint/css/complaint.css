@@ -1,0 +1,152 @@
+P {
+	FONT-SIZE: 11px;
+	COLOR: #333333;
+	FONT-FAMILY: T, "Times New Roman", Times, serif;
+	background-image: none;
+	background-repeat: no-repeat;
+	line-height: 20px;
+}
+
+BODY {
+	background: #D5E4EE url("../images/backgroundf.jpg") repeat-x;
+	margin:20 0 20 0;
+	background-attachment: scroll;
+	background-position: center top;
+}
+
+TD {
+	FONT-SIZE: 11px;
+	COLOR: #333333;
+	FONT-FAMILY: Tahoma, "Times New Roman", Times, serif;
+	line-height: 20px;
+
+}
+
+TH {
+	FONT-SIZE: 11px;
+	COLOR: #333333;
+	FONT-FAMILY: Georgia, "Times New Roman", Times, serif;
+	line-height: 20px;
+
+}
+
+a {
+	color: #FF6600;
+	text-decoration: none;
+	line-height: normal;
+	font-weight: normal;
+
+}
+
+A:hover {
+	TEXT-DECORATION: underline; 
+	color: #FF6600;
+}
+
+.btmlinks {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #FFFFCC;
+}
+
+.btmtxt {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.btmtxtsm {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 9px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.quote {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 16px;
+	font-style: italic;
+	color: #000000;
+	line-height: 16px;
+}
+
+.subnav {
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 20px;
+}
+
+.hometext {
+	font-size: 16px;
+}
+
+.3lines {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 13px;
+
+}
+
+.inputBox {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+  line-height: 14px;
+  border:solid 1px #7B9EBD;
+}
+
+.requiredInputBox { 
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+  line-height: 14px;
+  background-color: #FFFFCC;
+  border:solid 1px #7B9EBD;
+}
+
+a.side_nav {
+  font-family:Tahoma, Helvetica, sans-serif;
+	color: #333333;
+	text-decoration: none;
+	line-height: normal;
+	font-weight: normal;
+
+}
+
+a.side_nav:hover {
+	TEXT-DECORATION: none; 
+	color: #FF6600;
+  font-weight: bold;
+}
+
+.side_nav_head {
+  font-family:Tahoma, Helvetica, sans-serif;
+	color: #333333;
+	line-height: normal;
+	font-weight: normal;
+  font-size:12px;
+}
+
+.small_text {
+  font-family:Tahoma, Helvetica, sans-serif;
+	color: #FF0000;
+	text-decoration: none;
+	line-height: normal;
+	font-weight: normal;
+  font-size:9px;
+}
+
+.small_text_2
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  font-weight: Normal;
+  line-height:11px;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
