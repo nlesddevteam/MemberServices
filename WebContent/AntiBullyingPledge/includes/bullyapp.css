@@ -1,0 +1,140 @@
+/* NLESD Bullying App */
+
+body {font-family: Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;font-size:12px; color: Black; background-color: #606468;}
+.mainContainer {font-size:11px;max-width:940px;display: block;  margin-left: auto;  margin-right: auto;  background-color:white;  border: 1px solid #4D4C4E; min-width:250px; }
+.topper {font-size:12px;background-color:#4D4C4E;width:100%;color:white;font-weight:normal;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:right; }
+.copyright {font-size:10px;background-color:#1F4279;width:100%;color:white;font-weight:normal;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center; }
+.date { font-size:11px;color:white;}
+
+.txtPadding {margin-left:10px;margin-right:10px;font-size:12px;}
+.frmLabel {font-size:12px;font-weight:bold;color:#1F4279; }
+.input {width:95%; }
+.inputSelect {width:95%; }
+.victimNotice {font-size:14px;background-color:red;vertical-align:top;width:100%;color:white;font-weight:bold;font-family:sans-serif;text-align:center;}
+.heading1 {font-size:24px;color:#007F01;font-weight:bold; }
+.submit { margin-top:3px; margin-right:3px;padding:1px 10px;-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;border:1px solid #06C; background-color:#007F01;color:#fff;font-size: 12px;font-weight:bold;}        
+.submit:hover {border: 1px solid #FFFFFF;color:#FFFFFF;background-color:#FF0000;}
+
+.pledgeImage {display:inline-block; vertical-align:top;text-align:center;margin-left:3px;margin-top:5px;background-color:white;border:1px solid Silver;}
+.pledgeImageAll {display:inline-block; vertical-align:top;text-align:center; margin-left:5px;margin-top:5px;background-color:white;border:1px solid Silver;}
+.pledgeTotal {font-size:20px;background-color:#1F4279;padding-top:5px;font-weight:bold;padding-bottom:5px;width:100%;color:white;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center;}
+.pledgeAreaTitle{font-size:14px;background-color:#1F4279;padding-top:5px;font-weight:bold;padding-bottom:5px;width:100%;color:white;font-family:Tahoma, Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center;}
+.pledgeIconSection {background-color: #d5e0e9;position: relative;  text-align:center;}
+
+.quotes {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	font-size: 11px; vertical-align:center; margin-top:20px; padding-right:5px; text-align: center; color: #007F01;}
+.quotes .sig {font-size: 10px; font-style: italic; color: Silver;}
+
+a { color:#1F4279;  text-decoration: none;}
+a:visited { color:#1F4279;  text-decoration: none;}
+a:hover {	color: #FF0000;	text-decoration: underline;} 
+a:active { color: #FF0000; text-decoration: none;}
+
+.section {clear: both;	padding: 0px;margin: 0px;}
+
+.col {	display: block;	float:left;	margin: 0% 0% 0% 0%;padding: 0% 0% 0% 0%;}
+.col:first-child { margin-left: 0; }
+
+.group:before,.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; }
+
+
+/*  DEFAULT  */
+.menu_block {width: 25%;}
+.content_block {width: 50%;height:100%;}
+.content_block_all {width: 75%;height:100%;}
+.pledge_display_block {	width:25%; padding-bottom:5px; }
+.full_block {width:100%;}
+.content .gt760 {display:block;}
+.content .gt640 {display:none;}
+.content .lt640 {display:none;}
+.content .menuImg {display:block;} 
+.footerAddress {display:none;}
+.pledgeIconSection {min-height:100%;}
+.pledgeTotal {font-size:20px;}
+.allPledges {display:block;}
+@media only screen and (max-width:2400px) {
+.full_block { width: 100%;}
+.menu_block { width: 25%;}
+.content_block {width: 50%;height:100%;}
+.content_block_all {width: 75%;height:100%;}
+.pledge_display_block {width:25%;}
+.pledgeImage {height:auto;width:28%;}
+.pledgeImageAll {height:125px;width:10%;font-size:11px;}
+.content .gt760 {display:block;}
+.content .gt640 {display:none;}
+.content .lt640 {display:none;}
+.content .menuImg {display:block;} 
+.footerAddress {display:none;}
+.victimNotice {font-size:12px;}
+.pledgeIconSection {min-height:725px;}
+.pledgeAreaTitle {font-size:14px;}
+.pledgeTotal {font-size:20px;}
+}
+
+@media only screen and (max-width:900px) {
+	
+	.pledgeAreaTitle {font-size:12px;}
+}
+
+@media only screen and (max-width:760px) {
+.full_block { width: 100%;}
+.menu_block { width: 30%;}
+.content_block {width: 70%;height:100%;}
+.content_block_all {width: 70%;height:100%;}
+.pledge_display_block {width:100%;padding-bottom:5px;}
+.pledgeImage {height:auto;width:8%;}
+.pledgeImageAll {height:125px;width:15%;font-size:11px;}
+.content .gt760 {display:none;}
+.content .gt640 {display:block;}
+.content .lt640 {display:none;}
+.footerAddress {display:none;}
+.victimNotice {font-size:10px;}
+.pledgeIconSection {min-height:100%;}
+.pledgeAreaTitle {font-size:14px;}
+.pledgeTotal {font-size:16px;}
+
+}
+
+@media only screen and (max-width: 640px) {
+	
+.full_block { width: 100%;}
+.menu_block { width: 100%;text-align:center;}
+.content_block {width: 100%;height:100%;}
+.content_block_all {width: 100%;height:100%;}
+.pledge_display_block {width:100%;padding-bottom:5px;}
+.pledgeImage {height:auto;width:18%;}
+.pledgeImageAll {height:110px;width:20%;font-size:11px;}
+.content .gt760{display:none;}
+.content .gt640{display:none;}
+.content .lt640{display:block;}
+.content .menuImg {display:none;} 
+.footerAddress {display:block;}
+.victimNotice {font-size:9px;}
+.img-swap{width:32%;}
+.pledgeAreaTitle {font-size:14px;}
+.pledgeTotal {font-size:14px;}
+.allPledges {display:none;}
+	
+}
+
+@media only screen and (max-width: 480px) {
+	
+.full_block { width: 100%;}
+.menu_block { width: 100%;text-align:center;}
+.content_block {width: 100%;height:100%;}
+.pledge_display_block {width:100%;}
+.pledgeImage {height:auto;width:24%;}
+.pledgeImageAll {height:110px;width:30%;font-size:10px;}
+.content .gt760{display:none;}
+.content .gt640{display:none;}
+.content .lt640{display:block;}
+.content .menuImg {display:none;} 
+.footerAddress {display:block;}
+.victimNotice {font-size:8px;}
+.img-swap{width:48%;}
+.pledgeTotal {font-size:12px;}
+.allPledges {display:none;}
+	
+}
+
