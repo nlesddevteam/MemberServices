@@ -1,0 +1,278 @@
+/* CSS Document */
+
+#maincontent td.menubar
+{
+  background: url(../images/menubar_bg.gif) top left repeat-x;
+  padding:0px;
+}
+
+#navigation td.side_bar_button
+{
+  background: url(../images/nav_bg.jpg);
+  padding:0px;
+}
+
+#button_info
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #FFFFFF;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#navigation .label
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+#maincontent .school_name
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: BOLD;
+  line-height:11px;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#navigation .field_content
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: normal;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#maincontent .header
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-right:5px;
+  border-bottom:solid 1px #E76B10;
+  border-top:solid 1px #E76B10;
+}
+
+#maincontent .footer
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight: bold;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom:solid 1px #E76B10;
+  width:100%;
+  height:1px;
+}
+
+#maincontent .label
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: underline;
+  padding-right:5px;
+}
+
+#maincontent .label_no_underline
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-right:5px;
+}
+
+#maincontent .content
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: normal;
+	color: #000000;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding:0px;
+  
+}
+
+#maincontent .applyborder 
+{
+	padding-bottom: 2px;
+  border-bottom: dashed 1px #c0c0c0;
+}
+
+#maincontent .requiredstar
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-right:3px;
+}
+
+#maincontent .requiredinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border:solid 1px #7F9dB9;
+  text-transform: uppercase;
+}
+
+#maincontent .message_info
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#maincontent .small
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  font-weight: Normal;
+  line-height:11px;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#maincontent a.admin_menu_item, #maincontent a:link.admin_menu_item,
+#maincontent a:active.admin_menu_item, #maincontent a:visited.admin_menu_item
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: Normal;
+  line-height:11px;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#maincontent a:hover.admin_menu_item
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  line-height:11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: solid 2px #E76B10;
+}
+
+
+
+#maincontent a.small, #maincontent a:link.small,
+#maincontent a:active.small, #maincontent a:visited.small
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  font-weight: Normal;
+  line-height:11px;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#maincontent a:hover.small
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  line-height:11px;
+  font-weight: bold;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#maincontent a.small_pagenum, #maincontent a:link.small_pagenum,
+#maincontent a:active.small_pagenum, #maincontent a:visited.small_pagenum
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  font-weight: bold;
+  line-height:11px;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#maincontent a:hover.small_pagenum
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  line-height:11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: underline;
+  
+}
+
+#maincontent .small_curpage
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  line-height:11px;
+  font-weight: bold;
+	color: #FF0000;
+  text-transform: uppercase;
+  text-decoration: underline overline;
+}
+
+#maincontent a.small_blue, #maincontent a:link.small_blue,
+#maincontent a:active.small_blue, #maincontent a:visited.small_blue
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  font-weight: Normal;
+  line-height:11px;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#maincontent a:hover.small_blue
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  line-height:11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
