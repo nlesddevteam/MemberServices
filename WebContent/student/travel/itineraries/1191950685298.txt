@@ -1,0 +1,13 @@
+select 
+P.PlayerID, D.ClassID, P.LeagueID, T.TeamID, P.PlayerFirstName as FirstName, P.PlayerLastName as LastName, P.PlayerGender as Gender, P.PlayerBirthDaY as BirthDate, P.PlayerCity as City, P.PlayerPostal as Postal,  
+R.RoleName as Position, D.ClassName as Division, C.CategoryName as Category, P.PlayerPreMiddleName as chaHockeyID
+FROM ITPlayer as P, ITTeamMember as T, ITRole as R, ITCategory as C, ITClass as D
+where P.PlayerID=T.PlayerID
+and T.RoleID=R.RoleID
+and T.CategoryID=C.CategoryID
+and C.ClassID=D.ClassID
+and (R.RoleTypeID=1 or R.RoleTypeID=2)
+and P.LeagueIndexID=5383
+and T.SeasonID=6387
+group by P.PlayerID
+order by D.ClassID, P.LeagueID, T.TeamID, R.RoleTypeID

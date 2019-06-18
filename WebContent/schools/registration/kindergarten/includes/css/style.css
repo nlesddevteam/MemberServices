@@ -1,0 +1,94 @@
+body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+}
+
+.copyright {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: white;
+	font-size: 9px;
+}
+
+
+.bodytext {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: 12px; 
+	color: Black;
+	}
+
+th {
+	text-align: left;	
+	text-decoration: underline;
+}
+
+.opbutton, .ui-button {
+	font-size: 10pt !important;	
+}
+
+.small {
+	font-size: 8pt !important;	
+}
+
+
+.form-panel table {
+	border: solid 1px #333333;
+	background-color: #f0f0f0;
+}
+.form-panel table caption {
+	background-color: #33cc33;
+	border: solid 1px #333333;
+	border-bottom: none;
+}
+
+.form-panel table td.label{
+	text-align:right;
+	padding-right: 3xp;
+	color: #33cc33;
+	font-weight:bold;
+}
+
+fieldset {
+	width: 60%;
+	border: solid 1px #33cc33;
+	background-color: #f4f4f4;
+	padding: 5px;
+	padding-top:0px;
+}
+
+legend {
+	font-weight: bold;
+	color: red;
+	text-align: left;
+}
+
+#add-registrant-form fieldset table {
+	border-top: solid 1px #333333;
+	border-bottom:solid 1px #333333;
+}
+
+#add-registrant-form fieldset table caption{
+	font-weight: bold;
+	text-align: left;
+	/*color: #FF8200;*/
+	color: #BF00BD;
+	/*color: #744100;*/
+}
+
+#add-registrant-form table td.label{
+	text-align:right;
+	padding-right: 3xp;
+	color: #33cc33;
+	font-weight:bold;
+}
+
+#pnl-error-msg div, p.important-note {
+	border: solid 1px red;
+	background-color: #FFC0CB;
+	color: red;
+	font-weight: bold;
+}
+
+.inline-error-msg {
+	font-size:9px;
+	color: red;
+	font-weight: bold;	
+}

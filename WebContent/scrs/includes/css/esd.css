@@ -1,0 +1,131 @@
+	
+	/* ESDNL.CA CSS Stylesheet September 2007. 	*/
+	/* (C) Eastern School District 			*/
+	/* Developed by Geoff J. Taylor 		*/
+	
+	body {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	background: #678FC2;
+	margin: 0;
+	padding: 5;
+}
+.headingtitle1{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 28px;
+	color: #FFEBCD;
+	font-weight: bold;
+	font-style: italic;
+}
+.headingtitle2 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 36px;
+	color: #FF8000;
+	font-weight: bold;
+}
+.heading1 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	color: #FF8000;
+	font-weight: bold;
+}
+
+.heading2 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #333333;
+	font-weight: bold;
+	text-align:right;
+	border-right: solid 3px #FF8000;
+}
+
+th {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #333333;
+	font-weight: bold;
+	text-align: left;
+}
+
+.smalltext {
+	font-size: 9px;
+}
+
+.submitstyle{
+	background: #FF8C00;
+	color: #678FC2;
+}
+		.date {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: White;
+}
+		.maintablebody {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: Black;
+}
+
+	.maintable {
+	background-color: White;
+	border: 2px solid #FF8000;
+}
+	.copyright {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: White;
+}
+.maintext {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: Black;
+}
+
+	A.menu:link  {
+	text-decoration: none;
+	color: #678FC2;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+}
+
+ A.menu:visited  {
+	text-decoration: none;
+	color: #678FC2;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+}
+
+ A.menu:active  {
+	text-decoration: none;
+	color: #DC853D;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+}
+
+
+ A.menu:hover  {
+	text-decoration: underline;
+	color: #DC853D;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+}
+ 
+.inputform {
+	border :solid 1px #FF8000;	
+	background-color: #FFEBCD;
+}
+
+tr.error td {
+	text-align: center;
+	color: red;
+	font-weight: bold;
+}
+
+.noSchoolResponse {
+	font-weight:bold;
+	color: red;	
+}

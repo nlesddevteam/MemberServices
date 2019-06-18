@@ -1,0 +1,556 @@
+-- phpMyAdmin SQL Dump
+-- version 2.8.2.4
+-- http://www.phpmyadmin.net
+-- 
+-- Host: localhost:3306
+-- Generation Time: Sep 04, 2007 at 03:25 PM
+-- Server version: 4.1.20
+-- PHP Version: 5.0.5
+-- 
+-- Database: `bwcentral`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_admin`
+-- 
+
+DROP TABLE IF EXISTS `realty_admin`;
+CREATE TABLE IF NOT EXISTS `realty_admin` (
+  `user_id` int(10) unsigned NOT NULL auto_increment,
+  `username` varchar(50) default NULL,
+  `password` varchar(50) default NULL,
+  `first_name` varchar(50) default NULL,
+  `last_name` varchar(50) default NULL,
+  `email` varchar(100) default NULL,
+  `phone` varchar(50) default NULL,
+  `event_date` datetime default NULL,
+  `type` enum('1','2','3','4') NOT NULL default '4',
+  `last_login` int(15) unsigned default '0',
+  `reminder_question` varchar(255) default NULL,
+  `reminder_answer` varchar(255) default NULL,
+  `enabled` tinyint(1) unsigned default '1',
+  `add_access` tinyint(1) unsigned NOT NULL default '0',
+  `edit_access` tinyint(1) unsigned NOT NULL default '0',
+  `view_access` tinyint(1) unsigned NOT NULL default '0',
+  `delete_access` tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_frm`
+-- 
+
+DROP TABLE IF EXISTS `realty_frm`;
+CREATE TABLE IF NOT EXISTS `realty_frm` (
+  `MLSNUM` int(11) NOT NULL default '0',
+  `ACRES` float default NULL,
+  `AGENTLIST` int(11) default NULL,
+  `ALSOLISTEDAS` varchar(50) default NULL,
+  `AMENITIES` varchar(50) default NULL,
+  `APPLIANCES` tinytext,
+  `BATHSFULL` int(4) default NULL,
+  `BATHSHALF` int(4) default NULL,
+  `BEDS` int(4) default NULL,
+  `BEDSMAIN` int(4) default NULL,
+  `BEDSUPPER` int(4) default NULL,
+  `CITY` varchar(100) default NULL,
+  `CONSTRUCTION` varchar(255) default NULL,
+  `COOLSYSTEM` varchar(255) default NULL,
+  `COUNTY` varchar(100) default NULL,
+  `DESCRIPTION` text,
+  `EXTERIOR` tinytext,
+  `FARMDESC` tinytext,
+  `FIREPLACEDESC` tinytext,
+  `FIREPLACES` varchar(255) default NULL,
+  `FLOORS` varchar(255) default NULL,
+  `FOUNDATION` varchar(255) default NULL,
+  `GARAGECAP` varchar(255) default NULL,
+  `GUEST` varchar(50) default NULL,
+  `GUESTDESC` varchar(255) default NULL,
+  `HANDICAP` varchar(255) default NULL,
+  `HEATSYSTEM` varchar(255) default NULL,
+  `HORSES` varchar(255) default NULL,
+  `HOUSE` varchar(255) default NULL,
+  `HOUSECONDITION` varchar(255) default NULL,
+  `IDXYN` varchar(255) default NULL,
+  `IMPROVEMENTS` varchar(255) default NULL,
+  `INTERIOR` varchar(255) default NULL,
+  `INTERNETADDRESS` enum('Y','N') default NULL,
+  `INTERNETLIST` enum('Y','N') default NULL,
+  `ISFEATURED` tinyint(1) unsigned NOT NULL default '0',
+  `LISTPRICE` float default NULL,
+  `LISTSTATUS` varchar(100) default NULL,
+  `NUMDININGROOM` int(4) default NULL,
+  `NUMLIVINGROOM` int(4) default NULL,
+  `NUMWELLS` int(11) default NULL,
+  `OFFICELIST` varchar(255) default NULL,
+  `OUTOFAREACITY` varchar(255) default NULL,
+  `PHOTOCOUNT` int(10) default NULL,
+  `POOL` enum('Y','N') default NULL,
+  `PROPERTYCONDITION` varchar(255) default NULL,
+  `PROPSUBTYPE` varchar(80) default NULL,
+  `PROPTYPE` varchar(80) default NULL,
+  `REMARKSINTERNET` text,
+  `ROOF` varchar(255) default NULL,
+  `ROOMDININGDESC` varchar(255) default NULL,
+  `ROOMKITCHENDESC` varchar(255) default NULL,
+  `ROOMS` varchar(255) default NULL,
+  `SCHOOL9GRADE` varchar(255) default NULL,
+  `SCHOOLDISTRICT` varchar(255) default NULL,
+  `SCHOOLELEM` varchar(255) default NULL,
+  `SCHOOLELEMB` varchar(255) default NULL,
+  `SCHOOLHIGH` varchar(255) default NULL,
+  `SCHOOLJUNIOR` varchar(255) default NULL,
+  `SCHOOLMIDDLE` varchar(255) default NULL,
+  `SEWER` varchar(255) default NULL,
+  `SQFTSOURCE` varchar(255) default NULL,
+  `SQFTTOTAL` varchar(255) default NULL,
+  `STORIES` varchar(255) default NULL,
+  `STREETNAME` varchar(255) default NULL,
+  `STREETNUM` varchar(50) default NULL,
+  `TAXAMOUNT` float default NULL,
+  `TAXYEAR` int(11) default NULL,
+  `TREES` varchar(255) default NULL,
+  `VIEWDESC` varchar(255) default NULL,
+  `WATER` varchar(255) default NULL,
+  `WOODED` varchar(255) default NULL,
+  `YEARBUILT` int(4) default NULL,
+  `ZIPCODE` varchar(50) default NULL,
+  `AGENTLIST_FULLNAME` varchar(100) default NULL,
+  `AGENTLIST_EMAIL` varchar(100) default NULL,
+  `AGENTLIST_FAX` varchar(30) default NULL,
+  `AGENTLIST_PHONE` varchar(30) default NULL,
+  `OFFICELIST_OFFICENAME` varchar(100) default NULL,
+  `OFFICELIST_ADDRESS` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS1` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS2` varchar(255) default NULL,
+  `OFFICELIST_CITY` varchar(50) default NULL,
+  `OFFICELIST_STATE` varchar(50) default NULL,
+  `OFFICELIST_ZIP` varchar(30) default NULL,
+  `OFFICELIST_FAX` varchar(30) default NULL,
+  `OFFICELIST_PHONE` varchar(30) default NULL,
+  `SUBDIVISION` varchar(100) default NULL,
+  PRIMARY KEY  (`MLSNUM`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_images`
+-- 
+
+DROP TABLE IF EXISTS `realty_images`;
+CREATE TABLE IF NOT EXISTS `realty_images` (
+  `MLSNUM` int(11) unsigned NOT NULL default '0',
+  `IMAGE_INDEX` int(4) unsigned NOT NULL default '0',
+  `IMAGE` varchar(100) NOT NULL default '',
+  `FEATURED` tinyint(1) unsigned NOT NULL default '0',
+  `IS_PRIMARY` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`MLSNUM`,`IMAGE_INDEX`,`FEATURED`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_lot`
+-- 
+
+DROP TABLE IF EXISTS `realty_lot`;
+CREATE TABLE IF NOT EXISTS `realty_lot` (
+  `MLSNUM` int(11) NOT NULL default '0',
+  `ACRES` float default NULL,
+  `AGENTLIST` varchar(50) default NULL,
+  `AREA` varchar(255) default NULL,
+  `BLOCKMETRO` varchar(255) default NULL,
+  `BLOCKUT` varchar(255) default NULL,
+  `CITY` varchar(50) default NULL,
+  `COUNTY` varchar(50) default NULL,
+  `DESCRIPTION` text,
+  `FENCE` varchar(255) default NULL,
+  `HORSES` enum('Y','N') default NULL,
+  `IDXYN` enum('Y','N') default NULL,
+  `IMPROVEMENTS` varchar(255) default NULL,
+  `INTERNETADDRESS` enum('Y','N') default NULL,
+  `INTERNETLIST` enum('Y','N') default NULL,
+  `ISFEATURED` tinyint(1) unsigned NOT NULL default '0',
+  `LISTPRICE` float default NULL,
+  `LISTSTATUS` varchar(255) default NULL,
+  `LOTDESC` varchar(255) default NULL,
+  `LOTDIM` varchar(255) default NULL,
+  `MOBILEHOME` varchar(255) default NULL,
+  `OFFICELIST` varchar(255) default NULL,
+  `OUTOFAREACITY` varchar(255) default NULL,
+  `PHOTOCOUNT` int(11) default NULL,
+  `PROPSUBTYPE` varchar(255) default NULL,
+  `PROPTYPE` varchar(255) default NULL,
+  `REMARKSINTERNET` text,
+  `SCHOOL9GRADE` varchar(255) default NULL,
+  `SCHOOLDISTRICT` varchar(255) default NULL,
+  `SCHOOLELEM` varchar(255) default NULL,
+  `SCHOOLELEMB` varchar(255) default NULL,
+  `SCHOOLHIGH` varchar(255) default NULL,
+  `SCHOOLJUNIOR` varchar(255) default NULL,
+  `SCHOOLMIDDLE` varchar(255) default NULL,
+  `SELLERPOINTS` varchar(255) default NULL,
+  `SEWER` varchar(255) default NULL,
+  `STREETNAME` varchar(255) default NULL,
+  `STREETNUM` int(11) default NULL,
+  `TAXAMOUNT` float default NULL,
+  `TREES` varchar(255) default NULL,
+  `VIEWDESC` varchar(255) default NULL,
+  `WATER` varchar(255) default NULL,
+  `WATERFRONT` enum('Y','N') default NULL,
+  `WATERFRONTDESC` varchar(255) default NULL,
+  `ZIPCODE` varchar(50) default NULL,
+  `AGENTLIST_FULLNAME` varchar(100) default NULL,
+  `AGENTLIST_EMAIL` varchar(100) default NULL,
+  `AGENTLIST_FAX` varchar(30) default NULL,
+  `AGENTLIST_PHONE` varchar(30) default NULL,
+  `OFFICELIST_OFFICENAME` varchar(100) default NULL,
+  `OFFICELIST_ADDRESS` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS1` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS2` varchar(255) default NULL,
+  `OFFICELIST_CITY` varchar(50) default NULL,
+  `OFFICELIST_STATE` varchar(50) default NULL,
+  `OFFICELIST_ZIP` varchar(30) default NULL,
+  `OFFICELIST_FAX` varchar(30) default NULL,
+  `OFFICELIST_PHONE` varchar(30) default NULL,
+  `SUBDIVISION` varchar(100) default NULL,
+  PRIMARY KEY  (`MLSNUM`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_lse`
+-- 
+
+DROP TABLE IF EXISTS `realty_lse`;
+CREATE TABLE IF NOT EXISTS `realty_lse` (
+  `MLSNUM` int(11) NOT NULL default '0',
+  `ACRES` varchar(255) default NULL,
+  `AGENTLIST` varchar(255) default NULL,
+  `ALSOLISTEDAS` varchar(255) default NULL,
+  `AMENITIES` varchar(255) default NULL,
+  `APPLIANCES` varchar(255) default NULL,
+  `AREA` varchar(255) default NULL,
+  `BATHSFULL` int(4) default NULL,
+  `BATHSHALF` int(4) default NULL,
+  `BEDS` int(4) default NULL,
+  `BEDSMAIN` int(4) default NULL,
+  `BEDSUPPER` varchar(255) default NULL,
+  `BLOCKMETRO` varchar(255) default NULL,
+  `BLOCKUT` varchar(255) default NULL,
+  `CITY` varchar(50) default NULL,
+  `CONSTRUCTION` varchar(255) default NULL,
+  `COOLSYSTEM` varchar(255) default NULL,
+  `COUNTY` varchar(255) default NULL,
+  `DESCRIPTION` text,
+  `EXTERIOR` varchar(255) default NULL,
+  `FENCE` varchar(255) default NULL,
+  `FIREPLACEDESC` varchar(255) default NULL,
+  `FIREPLACES` int(11) default NULL,
+  `FOUNDATION` varchar(255) default NULL,
+  `HANDICAP` varchar(255) default NULL,
+  `HEATSYSTEM` varchar(255) default NULL,
+  `IDXYN` enum('Y','N') default NULL,
+  `INTERIOR` varchar(255) default NULL,
+  `INTERNETADDRESS` enum('Y','N') default NULL,
+  `INTERNETLIST` enum('Y','N') default NULL,
+  `ISFEATURED` tinyint(1) unsigned NOT NULL default '0',
+  `LAUNDRY` varchar(255) default NULL,
+  `LAUNDRYLOCATION` varchar(255) default NULL,
+  `LISTPRICE` int(11) default NULL,
+  `LISTSTATUS` varchar(255) default NULL,
+  `LOTDESC` varchar(255) default NULL,
+  `LOTDIM` varchar(255) default NULL,
+  `NUMDININGROOM` int(4) default NULL,
+  `NUMLIVINGROOM` int(4) default NULL,
+  `OFFICELIST` varchar(50) default NULL,
+  `OUTOFAREACITY` varchar(255) default NULL,
+  `PHOTOCOUNT` int(11) default NULL,
+  `POOL` enum('Y','N') default NULL,
+  `PROPSUBTYPE` varchar(255) default NULL,
+  `PROPTYPE` varchar(255) default NULL,
+  `REMARKSINTERNET` text,
+  `ROOF` varchar(255) default NULL,
+  `ROOMDININGDESC` varchar(255) default NULL,
+  `ROOMKITCHENDESC` varchar(255) default NULL,
+  `ROOMS` varchar(255) default NULL,
+  `SCHOOL9GRADE` varchar(255) default NULL,
+  `SCHOOLDISTRICT` varchar(255) default NULL,
+  `SCHOOLELEM` varchar(255) default NULL,
+  `SCHOOLELEMB` varchar(255) default NULL,
+  `SCHOOLHIGH` varchar(255) default NULL,
+  `SCHOOLJUNIOR` varchar(255) default NULL,
+  `SCHOOLMIDDLE` varchar(255) default NULL,
+  `SECTION8` enum('Y','N') default NULL,
+  `SEWER` varchar(255) default NULL,
+  `SQFTSOURCE` varchar(255) default NULL,
+  `SQFTTOTAL` int(11) default NULL,
+  `STORIES` int(11) default NULL,
+  `STREETNAME` varchar(255) default NULL,
+  `STREETNUM` varchar(255) default NULL,
+  `TREES` varchar(255) default NULL,
+  `UNITNUM` varchar(255) default NULL,
+  `VIEWDESC` varchar(255) default NULL,
+  `WATER` varchar(255) default NULL,
+  `WATERFRONT` enum('Y','N') default NULL,
+  `WATERFRONTDESC` varchar(255) default NULL,
+  `YEARBUILT` int(4) default NULL,
+  `ZIPCODE` varchar(30) default NULL,
+  `AGENTLIST_FULLNAME` varchar(100) default NULL,
+  `AGENTLIST_EMAIL` varchar(100) default NULL,
+  `AGENTLIST_FAX` varchar(30) default NULL,
+  `AGENTLIST_PHONE` varchar(30) default NULL,
+  `OFFICELIST_OFFICENAME` varchar(100) default NULL,
+  `OFFICELIST_ADDRESS` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS1` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS2` varchar(255) default NULL,
+  `OFFICELIST_CITY` varchar(50) default NULL,
+  `OFFICELIST_STATE` varchar(50) default NULL,
+  `OFFICELIST_ZIP` varchar(30) default NULL,
+  `OFFICELIST_FAX` varchar(30) default NULL,
+  `OFFICELIST_PHONE` varchar(30) default NULL,
+  `SUBDIVISION` varchar(100) default NULL,
+  PRIMARY KEY  (`MLSNUM`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_mls_listing`
+-- 
+
+DROP TABLE IF EXISTS `realty_mls_listing`;
+CREATE TABLE IF NOT EXISTS `realty_mls_listing` (
+  `listing_id` int(11) unsigned NOT NULL auto_increment,
+  `MLSNUM` int(11) unsigned NOT NULL default '0',
+  `property_type` char(3) NOT NULL default '',
+  `listing_date` int(15) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`listing_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=357260 ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_mul`
+-- 
+
+DROP TABLE IF EXISTS `realty_mul`;
+CREATE TABLE IF NOT EXISTS `realty_mul` (
+  `MLSNUM` int(11) NOT NULL default '0',
+  `ACRES` varchar(255) default NULL,
+  `AGENTLIST` int(11) default NULL,
+  `ALSOLISTEDAS` varchar(255) default NULL,
+  `AMENITIES` varchar(255) default NULL,
+  `AREA` varchar(255) default NULL,
+  `BLOCKMETRO` varchar(255) default NULL,
+  `BLOCKUT` varchar(255) default NULL,
+  `CITY` varchar(255) default NULL,
+  `CONSTRUCTION` varchar(255) default NULL,
+  `COUNTY` varchar(255) default NULL,
+  `DESCRIPTION` text,
+  `FENCE` varchar(255) default NULL,
+  `FOUNDATION` varchar(255) default NULL,
+  `HANDICAP` varchar(255) default NULL,
+  `IDXYN` enum('Y','N') default NULL,
+  `INTERNETADDRESS` enum('Y','N') default NULL,
+  `INTERNETLIST` enum('Y','N') default NULL,
+  `ISFEATURED` tinyint(1) unsigned NOT NULL default '0',
+  `LAUNDRY` varchar(255) default NULL,
+  `LISTPRICE` float default NULL,
+  `LISTSTATUS` varchar(255) default NULL,
+  `LOTDESC` varchar(255) default NULL,
+  `LOTDIM` varchar(255) default NULL,
+  `OFFICELIST` varchar(255) default NULL,
+  `OUTOFAREACITY` varchar(255) default NULL,
+  `PHOTOCOUNT` int(11) default NULL,
+  `POOL` enum('Y','N') default NULL,
+  `PROPSUBTYPE` varchar(255) default NULL,
+  `PROPTYPE` varchar(255) default NULL,
+  `REMARKSINTERNET` text,
+  `ROOF` varchar(255) default NULL,
+  `SCHOOL9GRADE` varchar(255) default NULL,
+  `SCHOOLDISTRICT` varchar(255) default NULL,
+  `SCHOOLELEM` varchar(255) default NULL,
+  `SCHOOLELEMB` varchar(255) default NULL,
+  `SCHOOLHIGH` varchar(255) default NULL,
+  `SCHOOLJUNIOR` varchar(255) default NULL,
+  `SCHOOLMIDDLE` varchar(255) default NULL,
+  `SEWER` varchar(255) default NULL,
+  `SQFTSOURCE` varchar(255) default NULL,
+  `SQFTTOTAL` float default NULL,
+  `STREETNAME` varchar(255) default NULL,
+  `STREETNUM` varchar(255) default NULL,
+  `TAXAMOUNT` float default NULL,
+  `TAXYEAR` int(4) default NULL,
+  `TREES` varchar(255) default NULL,
+  `UNITMIX` varchar(255) default NULL,
+  `VIEWDESC` varchar(255) default NULL,
+  `WATER` varchar(255) default NULL,
+  `YEARBUILT` int(4) default NULL,
+  `ZIPCODE` varchar(30) default NULL,
+  `AGENTLIST_FULLNAME` varchar(100) default NULL,
+  `AGENTLIST_EMAIL` varchar(100) default NULL,
+  `AGENTLIST_FAX` varchar(30) default NULL,
+  `AGENTLIST_PHONE` varchar(30) default NULL,
+  `OFFICELIST_OFFICENAME` varchar(100) default NULL,
+  `OFFICELIST_ADDRESS` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS1` varchar(255) default NULL,
+  `OFFICELIST_ADDRESS2` varchar(255) default NULL,
+  `OFFICELIST_CITY` varchar(50) default NULL,
+  `OFFICELIST_STATE` varchar(50) default NULL,
+  `OFFICELIST_ZIP` varchar(30) default NULL,
+  `OFFICELIST_FAX` varchar(30) default NULL,
+  `OFFICELIST_PHONE` varchar(30) default NULL,
+  `SUBDIVISION` varchar(100) default NULL,
+  PRIMARY KEY  (`MLSNUM`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_properties`
+-- 
+
+DROP TABLE IF EXISTS `realty_properties`;
+CREATE TABLE IF NOT EXISTS `realty_properties` (
+  `MLSNUM` int(11) unsigned NOT NULL default '0',
+  `ACRES` float NOT NULL default '0',
+  `ADDRESS` tinytext NOT NULL,
+  `CITY` varchar(50) NOT NULL default '',
+  `STATE` varchar(50) NOT NULL default '',
+  `ZIP` varchar(20) NOT NULL default '',
+  `PRICE` int(10) NOT NULL default '0',
+  `STATUS` enum('sale','sold','pending') NOT NULL default 'sale',
+  `BEDS` int(4) unsigned NOT NULL default '0',
+  `BATHS` int(4) unsigned NOT NULL default '0',
+  `GARAGE` varchar(250) default NULL,
+  `SQFT` float default NULL,
+  `BUILT` varchar(50) default NULL,
+  `PROPERTY_TYPE` enum('res','frm','mul') NOT NULL default 'res',
+  `LEVELS` varchar(250) NOT NULL default '',
+  `FIREPLACES` varchar(250) NOT NULL default '',
+  `ROOF` varchar(250) NOT NULL default '',
+  `SCHOOLDISTRICT` varchar(250) default NULL,
+  `SCHOOLELEMENTARY` varchar(250) default NULL,
+  `SCHOOLMIDDLE` varchar(250) default NULL,
+  `SCHOOLHIGH` varchar(250) default NULL,
+  `COUNTY` varchar(100) default NULL,
+  `COUNTRY` varchar(100) default NULL,
+  `FLOOR` varchar(250) default NULL,
+  `LISTING_BY` varchar(250) default NULL,
+  `DESCRIPTION` text,
+  `URL1` varchar(250) default NULL,
+  `DATE_CREATED` int(15) unsigned NOT NULL default '0',
+  `URL2` varchar(250) default NULL,
+  PRIMARY KEY  (`MLSNUM`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `realty_res`
+-- 
+
+DROP TABLE IF EXISTS `realty_res`;
+CREATE TABLE IF NOT EXISTS `realty_res` (
+  `MLSNUM` int(11) unsigned NOT NULL default '0',
+  `ACRES` float default NULL,
+  `AGENTLIST` int(11) default NULL,
+  `ALSOLISTEDAS` varchar(255) default NULL,
+  `AMENITIES` varchar(255) default NULL,
+  `APPLIANCES` varchar(255) default NULL,
+  `AREA` varchar(255) default NULL,
+  `BATHSFULL` int(11) default NULL,
+  `BATHSHALF` int(11) default NULL,
+  `BEDS` int(11) default NULL,
+  `BEDSMAIN` int(11) default NULL,
+  `BEDSUPPER` varchar(255) default NULL,
+  `BLOCKMETRO` varchar(255) default NULL,
+  `BLOCKUT` varchar(255) default NULL,
+  `CITY` varchar(50) default NULL,
+  `CONSTRUCTION` varchar(255) default NULL,
+  `COOLSYSTEM` varchar(255) default NULL,
+  `COUNTY` varchar(255) default NULL,
+  `DESCRIPTION` text,
+  `EXTERIOR` varchar(255) default NULL,
+  `FENCE` varchar(255) default NULL,
+  `FIREPLACEDESC` varchar(255) default NULL,
+  `FIREPLACES` int(11) default NULL,
+  `FLOORS` varchar(255) default NULL,
+  `FOUNDATION` varchar(255) default NULL,
+  `GARAGECAP` int(11) default NULL,
+  `GARAGEDESC` varchar(255) default NULL,
+  `GUEST` varchar(255) default NULL,
+  `GUESTDESC` varchar(255) default NULL,
+  `HANDICAP` varchar(255) default NULL,
+  `HEATSYSTEM` varchar(255) default NULL,
+  `HORSES` varchar(255) default NULL,
+  `IDXYN` enum('Y','N') default NULL,
+  `INTERIOR` varchar(255) default NULL,
+  `INTERNETADDRESS` enum('Y','N') default NULL,
+  `INTERNETLIST` enum('Y','N') default NULL,
+  `ISFEATURED` tinyint(1) NOT NULL default '0',
+  `LAUNDRYLOCATION` varchar(255) default NULL,
+  `LISTPRICE` float default NULL,
+  `LISTSTATUS` varchar(255) default NULL,
+  `LOTDESC` varchar(255) default NULL,
+  `LOTDIM` varchar(255) default NULL,
+  `NUMDININGROOM` int(11) default NULL,
+  `NUMLIVINGROOM` int(11) default NULL,
+  `OFFICELIST` varchar(255) default NULL,
+  `OUTOFAREACITY` varchar(255) default NULL,
+  `PHOTOCOUNT` int(11) default NULL,
+  `POOL` enum('Y','N') default NULL,
+  `PROPSUBTYPE` varchar(255) default NULL,
+  `PROPTYPE` varchar(255) default NULL,
+  `REMARKSINTERNET` text,
+  `ROOF` varchar(255) default NULL,
+  `ROOMDININGDESC` varchar(255) default NULL,
+  `ROOMKITCHENDESC` varchar(255) default NULL,
+  `ROOMS` varchar(255) default NULL,
+  `SCHOOL9GRADE` varchar(255) default NULL,
+  `SCHOOLDISTRICT` varchar(255) default NULL,
+  `SCHOOLELEM` varchar(255) default NULL,
+  `SCHOOLELEMB` varchar(255) default NULL,
+  `SCHOOLHIGH` varchar(255) default NULL,
+  `SCHOOLJUNIOR` varchar(255) default NULL,
+  `SCHOOLMIDDLE` varchar(255) default NULL,
+  `SEWER` varchar(255) default NULL,
+  `SQFTSOURCE` varchar(255) default NULL,
+  `SQFTTOTAL` float default NULL,
+  `STORIES` varchar(255) default NULL,
+  `STREETNAME` varchar(255) default NULL,
+  `STREETNUM` varchar(255) default NULL,
+  `TAXAMOUNT` int(11) default NULL,
+  `TAXYEAR` int(11) default NULL,
+  `TREES` varchar(255) default NULL,
+  `UNITNUM` varchar(255) default NULL,
+  `VIEWDESC` varchar(255) default NULL,
+  `WATER` varchar(255) default NULL,
+  `WATERFRONT` varchar(255) default NULL,
+  `WATERFRONTDESC` tinytext,
+  `YEARBUILT` int(11) default NULL,
+  `ZIPCODE` varchar(30) default NULL,
+  `AGENTLIST_FULLNAME` varchar(100) default NULL,
+  `AGENTLIST_EMAIL` varchar(100) default NULL,
+  `AGENTLIST_FAX` varchar(30) default NULL,
+  `AGENTLIST_PHONE` varchar(30) default NULL,
+  `OFFICELIST_OFFICENAME` varchar(100) default NULL,
+  `OFFICELIST_ADDRESS` text,
+  `OFFICELIST_ADDRESS1` text,
+  `OFFICELIST_ADDRESS2` text,
+  `OFFICELIST_CITY` varchar(50) default NULL,
+  `OFFICELIST_STATE` varchar(50) default NULL,
+  `OFFICELIST_ZIP` varchar(20) default NULL,
+  `OFFICELIST_FAX` varchar(30) default NULL,
+  `OFFICELIST_PHONE` varchar(30) default NULL,
+  `SUBDIVISION` varchar(255) default NULL,
+  PRIMARY KEY  (`MLSNUM`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
