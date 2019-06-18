@@ -1,0 +1,202 @@
+/** CSS Document
+	(c) Chris Crane
+	Email: chriscrane@awsb.ca
+	Avalon West School District
+**/
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 11px; 
+	text-decoration: underline;
+	color : #010186;
+}
+
+a:hover {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 11px; 
+	text-decoration: underline; 
+	color: #FF0000;
+}
+
+.weatherCentralRegion {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+	width: 200px;
+}
+
+.weatherCentralSchoolSystem {
+	font-family: Tahoma;
+	font-size: 9px;
+	font-weight: bold;
+	color: #000000;
+	width:300px;
+	
+}
+
+.weatherCentralSchool {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: bold;
+	color: #999999;
+	width:250px;
+	border-right: solid 3px #e0e0e0;
+}
+
+.normalblack10pxText {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #333333;
+}
+
+.boldblack10pxText {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.normalGrey10pxText {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #999999;
+}
+
+.weatherCentralStatusOpen {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #33CC00;
+}
+
+.weatherCentralStatusClosed {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FF0000;
+}
+
+.weatherCentralStatusDelayed {
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FF9900;
+}
+
+
+
+div.floater_off {
+	border: 1px solid #F8F8F1;
+	background-color: #F8F8F1;
+  cursor: hand;
+  z-index:100;
+}
+
+div.floater_on {
+	border: 1px solid #B0BDEC;
+	background-color: #D5DFF5;
+  font-weight:bold;
+  cursor: hand;
+  z-index:100;
+}
+
+.requiredinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  /*line-height:18px;*/
+	color: #000000;
+  background-color: #FFFFCC;
+  /*height: 18px;*/
+  border:solid 1px #A4B97F;
+}
+
+
+
+.requiredstar
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight:bold;
+  line-height:18px;
+	color: #FF0000;
+  background-color: transparent;
+  text-decoration: none;
+  border:none;
+  text-transform:uppercase;
+}
+
+.optionalinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFFF;
+  height: 18px;
+  border:solid 1px #A4B97F;
+}
+
+.requiredinput_date
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFFF;
+  height: 19px;
+  border-top:solid 1px #b4b4b4;
+  border-left:solid 1px #b4b4b4;
+  border-bottom:solid 1px #b4b4b4;
+  border-right:none;
+}
+
+.requiredinput_popup_cal
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+  background-color: #FFFFFF;
+  border-top: solid 1px #b4b4b4;
+  border-right: solid 1px #b4b4b4;
+  border-bottom: solid 1px #b4b4b4;
+  border-left: none;
+  padding-top:1px;
+  padding-bottom:2px;
+  padding-right:2px;
+  padding-left:5px;
+}
+
+input[type="checkbox"] {
+	padding-right:30px;
+}
+
+textarea {
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  /*line-height:18px;*/
+	color: #000000;
+  background-color: #FFFFCC;
+  border:solid 1px #A4B97F;
+  width:330px;
+  height: 100px;
+}
+
+div.district { }
+div.zone { border-bottom:3px solid #333333; padding-bottom:5px;}
+div.region { padding: 10px; border-bottom:2px dashed #c4c4c4; padding-left: 25px;}
+div.schoolsystem { padding: 10px; padding-left:25px; border-bottom:solid 1px #333333; }
+div.school { padding: 10px; padding-left: 25px; }
+div.alternate { 
+	background-color: #f4f4f4;
+	border-top: solid 1px #e0e0e0;
+	border-bottom: solid 1px #e0e0e0;
+}

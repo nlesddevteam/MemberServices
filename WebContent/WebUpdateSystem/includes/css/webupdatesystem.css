@@ -1,0 +1,200 @@
+/* CSS Document */
+
+#maincontent {
+  background: url(images/webmaint_bkg.jpg) top left no-repeat;
+}
+
+#maincontent p {
+	line-height: 18px;
+}
+
+#maincontent a {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #2078A5;
+	text-decoration: none;
+}
+
+#maincontent a:hover {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FF0000;
+	text-decoration: none;
+}
+
+#maincontent h2 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+	font-weight: bold;
+	border-bottom: 1px #cccccc solid;
+	width: 100%;
+}
+
+#maincontent .label
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #015DBC;
+  text-transform: uppercase;
+  text-decoration: underline;
+  padding-right:5px;
+}
+
+#maincontent .label_no_underline
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #072B61;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-right:5px;
+}
+
+#maincontent .content
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: normal;
+	color: #000000;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding:0px;
+}
+
+#maincontent .requiredstar
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-right:3px;
+}
+#maincontent .optionalstar
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #FFFFFF;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-right:3px;
+}
+
+#maincontent .requiredinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border:solid 1px #7F9dB9;
+  text-transform: uppercase;
+}
+
+#maincontent .optionalinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFFF;
+  height: 18px;
+  border:solid 1px #7F9dB9;
+  text-transform: uppercase;
+}
+
+.requiredinput_date
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border-top:solid 1px #A4B97F;
+  border-left:solid 1px #A4B97F;
+  border-bottom:solid 1px #A4B97F;
+  border-right:none;
+}
+
+.requiredinput_popup_cal
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+  background-color: #FFFFCC;
+  border-top: solid 1px #A4B97F;
+  border-right: solid 1px #A4B97F;
+  border-bottom: solid 1px #A4B97F;
+  border-left: none;
+  padding-top:1px;
+  padding-bottom:2px;
+  padding-right:2px;
+  padding-left:5px;
+}
+
+
+#maincontent .message_info
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+  font-weight: bold;
+	color: #FF0000;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#maincontent .small
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 9px;
+  font-weight: Normal;
+  line-height:11px;
+	color: #E76B10;
+  text-transform: uppercase;
+  text-decoration: none;
+  
+}
+
+#maincontent tr.edit_row
+{
+  border: solid 1px #000000;
+  background-color:#99ccff;
+  padding: 5 5 5 5;
+  font-weight:bold;
+}
+
+#maincontent tr.view_row_0
+{
+  background-color:#FFFFFF;
+  padding: 5 5 5 5;
+  font-weight:bold;
+}
+
+#maincontent tr.view_row_1
+{
+  background-color: #E0E0E0;
+  padding: 5 5 5 5;
+  font-weight:bold;
+}
+
+.displayHeader {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 3px;
+}
+
+.displayText {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	text-align: left;
+}

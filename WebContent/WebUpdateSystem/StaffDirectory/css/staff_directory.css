@@ -1,0 +1,48 @@
+.stafflistDocLinkContainer {float:left;width:160px;text-align:center;}
+.stafflistHeader {color: #007F01;font-weight: bold;}
+.stafflist .row .email a { color:#007F01;  text-decoration: none;}
+.stafflist .row .email a:visited { color:#007F01;  text-decoration: none;}
+.stafflist .row .email a:hover {	color: #FF0000;	 text-decoration: underline;}
+.stafflist .row .email a:active { color: #FF0000; text-decoration: none;}
+.stafflist {display:table;  width:100%;font-size:11px;}
+.stafflist .table {display:table;}
+.stafflist .rowCaption {caption-side: top; display: table-caption;width:100%;text-align:left; font-weight:bold;color:#007F01;margin-bottom:3px;}
+.stafflist .row { display:table-row; width:100%;}
+.stafflist .column { display: table-cell;border-bottom:1px solid grey;padding:2px;}
+.stafflist .row .header { text-align:left; color:white; font-weight:bold; }
+.stafflist .row .StaffName {width:20%;vertical-align: text-top;}
+.stafflist .row .StaffPosition { width:50%;border-left:1px solid grey;vertical-align: text-top;}
+.stafflist .row .StaffTelephone { width:12%;border-left:1px solid grey;vertical-align: text-top;}
+.stafflist .row .StaffSort { width:8%;border-left:1px solid grey;vertical-align: text-top;text-align:center;}
+.stafflist .row .StaffOptions { width:10%;border-left:1px solid grey;vertical-align: text-top;text-align:center;}
+div.stafflist > div:nth-of-type(odd) {background: #FDF5E6;}
+
+.itemHeader {font-size:16px;color:#1F4279;font-weight:bold;}	
+.regionDefault {background-color: #1F4279;}
+.region1text {color:rgba(191, 0, 0, 1);}
+.region1 {background-color:rgba(191, 0, 0, 0.1);}
+.region1a {border-left:10px solid rgba(191, 0, 0, 0.3);}
+.region1solid {background-color:rgba(191, 0, 0, 1);}
+.region1half {background-color:rgba(191, 0, 0, 0.5);}
+.region2text {color:rgba(0, 191, 0, 1);}
+.region2 {background-color:rgba(0, 191, 0, 0.1);}
+.region2a {border-left:10px solid rgba(0, 191, 0, 0.3);}
+.region2solid {background-color:rgba(0, 191, 0, 1);}
+.region2half {background-color:rgba(0, 191, 0, 0.5);}
+.region3text {color:rgba(255, 132, 0, 1);}
+.region3 {background-color:rgba(255, 132, 0, 0.1);}
+.region3solid {background-color:rgba(255, 132, 0, 1);}
+.region3half {background-color:rgba(255, 132, 0, 0.5);}
+.region3a {border-left:10px solid rgba(255, 132, 0, 0.3);}
+.region4text {color:rgba(127, 130, 255, 1);}
+.region4 {background-color:rgba(127, 130, 255, 0.1);}
+.region4a {border-left:10px solid rgba(127, 130, 255, 0.3);}
+.region4solid {background-color:rgba(127, 130, 255,1);}
+.region4half {background-color:rgba(127, 130, 255, 0.5);}	
+.region5text {color:rgba(128, 0, 128, 1);}
+.region5 {background-color:rgba(128, 0, 128, 0.1);}
+.region5a {border-left:10px solid rgba(128, 0, 128, 0.3);}
+.region5solid {background-color:rgba(128, 0, 128,1);}
+.region5half {background-color:rgba(128, 0, 128, 0.5);}	
+.btn {color:White;}
+.inputtag { width:100px; }
