@@ -1,0 +1,1053 @@
+/* NLESD Member Services Travel Claim 2017 */
+
+body {font-family: Verdana, Arial, Geneva, Helvetica, sans-serif; color: Black;}
+.mainContainer {font-size:11px;max-width:1100px;display: block;  margin-left: auto;  margin-right: auto;  background-color: rgba(255, 255, 255, 0.7);  border: 1px solid #ffd333; min-width:250px; }
+.topper {font-size:11px;background-color:#ffd333;width:100%; }
+.toppertextleft {color:white;font-weight:normal;width:45%; font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:left;float:left;padding-left:3px;}
+.toppertextright {color:white;font-weight:normal;width:45%;font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:right;float:right;padding-right:3px;}
+.copyright {font-size:10px;background-color:#ffd333;width:100%;color:black;font-weight:normal;font-family:Verdana, Arial, Geneva, Helvetica, sans-serif;text-align:center; }
+.date { color:black;}
+.bodyText {font-size:12px;color:Black;padding-left:30px;padding-right:10px;}
+.txtPadding {margin-left:10px;margin-right:10px;font-size:12px;}
+.headerText {font-size:16px;font-weight:bold;color:#007F01;text-align:center;}
+.msHeaderLogo {width:100%;max-width:760px;text-align:center;}
+.claim a { color:#1F4279;  text-decoration: none;}
+.claim a:visited { color:#1F4279;  text-decoration: none;}
+.claim a:hover {	color: #FF0000;	text-decoration: underline;} 
+.claim a:active { color: #FF0000; text-decoration: none;}
+.accordionHeader {background:rgba(191, 0, 0, 0.2);border:0px;color:#1F4279;}
+.requiredinput {width:100%;}
+.claim-list {   display:table;  width:100%;}
+.claim-list .table {display:table;}
+.claim-list .rowCaption {caption-side: top; display: table-caption;width:100%;text-align:left; font-weight:bold;color:#007F01;margin-bottom:3px;}
+.claim-list .row { display:table-row; width:100%;}
+.claim-list .column { display: table-cell;border-bottom:1px solid grey;padding:2px;vertical-align:middle;font-size:11px;}
+.claim-list .row .header { background-color: #1F4279; text-align:left; color:white; font-weight:bold; }
+.claim-list .row .division { width:100%;text-align:left; font-weight:bold;color:#007F01;}
+.claim-list .row .date { width:10%;border-left:1px solid grey;text-align:center;}
+.claim-list .row .departure { width:10%;border-left:1px solid grey;text-align:center;}
+.claim-list .row .return { width:10%;border-left:1px solid grey;text-align:center;}
+.claim-list .row .km {width:10%;border-left:1px solid grey;text-align:center;}
+.claim-list .row .meals { width:10%;border-left:1px solid grey;text-align:center;}
+.claim-list .row .lodging { width:10%;border-left:1px solid grey;text-align:center;}
+.claim-list .row .other { width:10%;border-left:1px solid grey;text-align:center;}
+
+.claimHeaderText {color:Grey;font-size:16px;margin-top:10px;margin-bottom:5px;}
+
+.claimFundsInfoBox {float:right;width:25%;min-width:300px;padding:5px;border:1px dotted #007F01;margin-bottom:5px;}
+.claimFundsInfoBoxHTitle1 {font-weight:bold;color:#1F4279;}
+.claimFundsInfoBoxHTitle2 {color:#007F01;}
+.claimFundsInfoBoxHTitle3 {color:#4D4C4E;}
+
+.claimFundsInfoBoxInfo {color:Red;}
+
+.claimsTable {width:100%;font-size:11px;}
+
+.listdata {text-align:left;padding:2px;border-right:1px solid white;padding-top:3px;padding-bottom:3px;}
+.listHeader {background-color:#007F01;padding:2px;color:white;height:25px;text-transform:uppercase;}
+.listSubHeader {background-color:rgba(0,127,1,0.2);padding:2px;color:white;height:20px;text-transform:uppercase;}
+.claimStatusBlock {width:100%;min-width:300px;margin-bottom:10px;}
+.claimStatusInfoBlock {float:left;width:100%;min-width:300px;}
+.claimStatusSuperBlock {float:right;width:100%;min-width:300px;text-align:right;}
+.claimCategory {text-align:left; font-weight:bold;color:#007F01;margin-bottom:3px;text-transform: Capitalize;margin-top:10px;}
+#test input[type=text] {width:140px; margin-bottom:1px; padding:2px 2px; border:1px solid #4D4C4E; background-color:#FFFFFF;font-size: 11px; }
+
+.claimTabContent {padding:5px;background-color:#ffffe8;border-bottom:1px solid #ddd;border-left:1px solid #ddd;border-right:1px solid #ddd;}
+.itemsHeader {}
+
+.questionText {font-size:14px;color: #007F01;font-weight: bold;}
+.messageText {font-size: 11px; font-weight:bold; color: #FF0000;padding-bottom:8px;padding-top:8px;text-align:center;}
+.requiredStar {font-size:12px;color:#FF0000;}
+.formTable {font-size:12px;width:100%;padding:2px;}
+
+
+#loadingSpinner {position: fixed; top: 0; left: 0; width: 100%; height: 100%; text-align:center; background-color: rgba(0, 0, 0,0.5);z-index: 1000;}
+#spinner {position: fixed; text-align: center;  top: 25%;  left: 50%; transform: translate(-50%, 0);background-color:#FFFFFF;padding:10px;font-size:12px;color:Grey;}
+
+.travelNoticeBlock {border:1px solid red;width:95%;padding:5px;background-color:#f0efc2;margin-top:10px;}
+
+.colLeft {font-size:12px;float:left;padding-right:5px;}
+.colRight {font-size:12px;float:left;}
+.profileColumn {font-size:11px;float:left;padding-right:5px;margin-bottom:10px;}
+.subheadertitle {font-size:16px;color:#007F01;font-weight:bold;}
+.sectionintro {font-size:12px;color:#000000;}
+.sectioninstr {font-size:12px;color:#000000;}
+.answer {font-size:11px;color:#000000;}
+
+.label {font-size: 12px;font-weight: bold;color: #00407A;text-transform: capitalize;padding-right:3px;width:20%;}
+.fields {width:80%;}
+
+.inputBox {	border:1px solid silver;background-color:#FFFFFF;}
+.requiredInputBox { border:dotted 1px red;background-color: #FFFFFF;}
+.requiredinput_date { border:1px dotted red;background-color:#FFFFFF;}
+.requiredinput_popup_cal {font-size: 10px;color: #000000; background-color: #FFFFCC;  border-top: solid 1px #7B9EBD; border-right: solid 1px #7B9EBD; border-bottom: solid 1px #7B9EBD;  border-left: none;
+  padding-top:1px; padding-bottom:2px; padding-right:2px; padding-left:5px; cursor:hand;}
+.fieldTitle {font-size:14px;color:#1F4279;}
+
+.header {	color: #007F01;	font-size: 14px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.mainbody {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	color: Black;	font-size: 12px;	margin-left:10px;	margin-right:10px;}
+
+a.logout { color:#FFFFFF;  text-decoration: none;}
+a.logout:visited { color:#FFFFFF;  text-decoration: none;}
+a.logout:hover {	color: #FFFF00;	text-decoration: underline;} 
+a.logout:active { color: #FFFF00; text-decoration: none;}
+
+.pageSectionHeader {color: #007F01;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-bottom:5px; }
+.pageTitleHeader {color: #1F4279;	text-decoration: none;	font-weight: bold; padding-top:10px; margin-bottom:10px;}
+.pageBody {	color:#000000; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+
+.siteHeaders {font-size:16px;}
+.siteSubHeaders,.ui-accordion-header {font-size:14px;}
+.siteBodyText,.ui-accordian-content {font-size:12px;}
+.siteFootnotes,.siteFootNotes {font-size:10px;}
+
+.bgcolor1 {background-color:rgba(191, 0, 0, 0.1);}
+.bgcolor2 {background-color:rgba(0, 191, 0, 0.1);}
+.bgcolor3 {background-color:rgba(255, 132, 0, 0.1);}
+.bgcolor4 {background-color:rgba(127, 130, 255, 0.1);}
+
+.menuIconImage {display:inline-block;  vertical-align:top;text-align:center;margin-left:3px;margin-top:5px;border:0px solid Silver;}
+.menuImage {max-width:100%;height:auto;}
+
+
+.regionDefault {background-color: #1F4279;}
+.region1 {background-color:rgba(191, 0, 0, 0.1);}
+.region1a {border-left:10px solid rgba(191, 0, 0, 0.3);}
+.region1solid {background-color:rgba(191, 0, 0, 1);}
+.region1half {background-color:rgba(191, 0, 0, 0.5);}
+.region2 {background-color:rgba(0, 191, 0, 0.1);}
+.region2a {border-left:10px solid rgba(0, 191, 0, 0.3);}
+.region2solid {background-color:rgba(0, 191, 0, 1);}
+.region2half {background-color:rgba(0, 191, 0, 0.5);}
+.region3 {background-color:rgba(255, 132, 0, 0.1);}
+.region3solid {background-color:rgba(255, 132, 0, 1);}
+.region3half {background-color:rgba(255, 132, 0, 0.5);}
+.region3a {border-left:10px solid rgba(255, 132, 0, 0.3);}
+.region4 {background-color:rgba(127, 130, 255, 0.1);}
+.region4a {border-left:10px solid rgba(127, 130, 255, 0.3);}
+.region4solid {background-color:rgba(127, 130, 255,1);}
+.region4half {background-color:rgba(127, 130, 255, 0.5);}
+
+
+.optionalinput { font-size: 11px; height:20px; 	color: #000000; background-color: #FFFFFF;}
+
+.question {
+	font-size: 12px;
+	font-weight: bold;
+	color: #007F01;
+	background: #E3F1E6;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	
+}
+
+.questionbox {
+	font-size: 11px;
+	font-weight: normal;
+	background-color: #FFFFFF;
+	color: Black;
+	border: 1px solid #007F01;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+.answer {
+	font-size: 11px;
+	color: Black;	
+	padding-left:20px;
+}
+
+tbody {font-size:11px;}
+
+.generic-page-header {	color: #007F01;	font-size: 13px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+.generic-page-titleheader {	color: #1F4279;	font-size: 16px;	text-decoration: none;	font-weight: bold; margin-top:10px; margin-left:10px; margin-bottom:10px;}
+.container .generic-page-body {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px;color:#000000; font-size: 12px; text-decoration: none; margin-bottom: 10px; margin-left:10px; margin-right:10px;}	
+
+
+.col {	display: block;	float:left;	margin: 0% 0% 0% 0%;padding: 0% 0% 0% 0%;}
+.col:first-child { margin-left: 0; }
+
+.group:before,.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; }
+
+
+
+input.bullet-answer {
+	width: 95%;
+	height: 18px;
+}
+
+div.bullet-answers-chars {
+	width: 95%;
+	font-size: 9px;
+	color: grey;
+	text-align: right;	
+}
+
+/* SITE SEARCH WIDGET*/
+#search {}
+#srch_txt input[type=text] {width:140px; margin-bottom:1px; padding:2px 2px; -webkit-border-radius: 5px; -moz-border-radius: 5px;  border-radius: 5px;  border:1px solid #4D4C4E; background-color:#FFFFFF;font-size: 11px; }
+#srch_txt input[type=text]:focus{ border:1px solid #FFFFFF; -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);-moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);} 
+#srch_txt input[type=button] {  margin-top:3px;margin-left:3px; margin-right:3px;padding:1px 10px;-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;border:1px solid #06C; background-color:#007F01;color:#fff;font-size: 11px;font-weight:bold;}        
+#srch_txt input[type=button]:hover {border: 1px solid #FFFFFF;color:#FFFFFF;background-color:#FF0000;}
+
+#travel_calculate input[type=button] {  margin-top:3px;margin-left:3px; margin-right:3px;padding:1px 10px;-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;border:1px solid #06C; background-color:#007F01;color:#fff;font-size: 11px;font-weight:bold;}        
+#travel_calculate input[type=button]:hover {border: 1px solid #FFFFFF;color:#FFFFFF;background-color:#FF0000;}
+
+
+/*  DEFAULT  */
+
+.full_block {width:100%;}
+.center {text-align:center;}
+.menuImage {max-width:100%;height:auto;}
+
+.statusLogo {width:100%;max-width:200px;}
+
+@media print {
+					
+body {background-color:#FFFFFF;}		
+#printJob {font-size:10px;}
+.statusLogo {width:100px;}
+.claimTabContent {border:none;}
+}
+
+
+
+@media only screen and (max-width:2400px) {
+.full_block { width: 100%;}
+
+}
+
+@media only screen and (max-width:900px) {
+
+}
+
+@media only screen and (max-width:760px) {
+.full_block { width: 100%;}
+.bodyText {font-size:11px;}
+.topper {font-size:11px;}
+#TravelClaimMenu.small-screen {font-size:10px;}
+}
+
+@media only screen and (max-width: 640px) {
+	
+.full_block { width: 100%;}
+
+.bodyText {font-size:11px;}
+.topper {font-size:10px;}
+}
+
+@media only screen and (max-width: 480px) {
+	
+.full_block { width: 100%;}
+.bodyText {font-size:10px;}
+.topper {font-size:9px;}
+}
+
+@media only screen and (max-width: 350px) {
+	
+.full_block { width: 100%;}
+.bodyText {font-size:9px;}
+.topper {font-size:9px;}
+}
+
+
+#TravelClaimMenu,
+#TravelClaimMenu ul,
+#TravelClaimMenu ul li,
+#TravelClaimMenu ul li a,
+#TravelClaimMenu #menu-button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#TravelClaimMenu:after,
+#TravelClaimMenu > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#TravelClaimMenu #menu-button {
+  display: none;
+}
+#TravelClaimMenu {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1;
+  background:rgba(0,0,0, 1);
+  width: auto;
+}
+#menu-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #ff0000;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -ms-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+#TravelClaimMenu > ul > li {
+  float: left;
+}
+#TravelClaimMenu.align-center > ul {
+  font-size: 0;
+  text-align: center;
+}
+#TravelClaimMenu.align-center > ul > li {
+  display: inline-block;
+  float: none;
+}
+#TravelClaimMenu.align-center ul ul {
+  text-align: left;
+}
+#TravelClaimMenu.align-right > ul > li {
+  float: right;
+}
+#TravelClaimMenu.align-right ul ul {
+  text-align: right;
+}
+#TravelClaimMenu > ul > li > a {
+  padding: 10px;
+  font-size:11px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ffffff;
+  -webkit-transition: color .2s ease;
+  -moz-transition: color .2s ease;
+  -ms-transition: color .2s ease;
+  -o-transition: color .2s ease;
+  transition: color .2s ease;
+}
+#TravelClaimMenu > ul > li:hover > a,
+#TravelClaimMenu > ul > li.active > a {
+  color: #ffff00;
+}
+#TravelClaimMenu > ul > li.has-sub > a {
+  padding-right: 25px;
+}
+#TravelClaimMenu > ul > li.has-sub > a::after {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 4px;
+  height: 4px;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  content: "";
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transition: border-color 0.2s ease;
+  -moz-transition: border-color 0.2s ease;
+  -ms-transition: border-color 0.2s ease;
+  -o-transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease;
+}
+#TravelClaimMenu > ul > li.has-sub:hover > a::after {
+  border-color: #ffff00;
+}
+#TravelClaimMenu ul ul {
+  position: absolute;
+  left: -9999px;
+  
+}
+#TravelClaimMenu li:hover > ul {
+  left: auto;
+}
+#TravelClaimMenu.align-right li:hover > ul {
+  right: 0;
+}
+#TravelClaimMenu ul ul ul {
+  margin-left: 100%;
+  top: 0;
+}
+#TravelClaimMenu.align-right ul ul ul {
+  margin-left: 0;
+  margin-right: 100%;
+}
+#TravelClaimMenu ul ul li {
+  height: 0;
+  -webkit-transition: height .2s ease;
+  -moz-transition: height .2s ease;
+  -ms-transition: height .2s ease;
+  -o-transition: height .2s ease;
+  transition: height .2s ease;
+}
+#TravelClaimMenu ul li:hover > ul > li {
+  height: 32px;
+}
+#TravelClaimMenu ul ul li a {
+  padding: 10px 20px;
+  width: 200px;  
+  font-size:12px;
+   background:rgba(0,0,0, 0.6);
+  text-decoration: none;
+  color: #ffffff;
+  -webkit-transition: color .2s ease;
+  -moz-transition: color .2s ease;
+  -ms-transition: color .2s ease;
+  -o-transition: color .2s ease;
+  transition: color .2s ease;
+}
+#TravelClaimMenu ul ul li:hover > a,
+#TravelClaimMenu ul ul li a:hover {
+  color: #ffff00;
+  text-decoration: underline;
+}
+#TravelClaimMenu ul ul li.has-sub > a::after {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+  width: 4px;
+  height: 4px;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  content: "";
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transition: border-color 0.2s ease;
+  -moz-transition: border-color 0.2s ease;
+  -ms-transition: border-color 0.2s ease;
+  -o-transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease;
+}
+#TravelClaimMenu.align-right ul ul li.has-sub > a::after {
+  right: auto;
+  left: 10px;
+  border-bottom: 0;
+  border-right: 0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+}
+#TravelClaimMenu ul ul li.has-sub:hover > a::after {
+  border-color: #ffff00;
+}
+#TravelClaimMenu.small-screen {
+  width: 100%;
+  font-size: 10px;
+}
+#TravelClaimMenu.small-screen ul {
+  width: 100%;
+  display: none;
+}
+#TravelClaimMenu.small-screen.align-center > ul,
+#TravelClaimMenu.small-screen.align-right ul ul {
+  text-align: left;
+}
+#TravelClaimMenu.small-screen ul li,
+#TravelClaimMenu.small-screen ul ul li,
+#TravelClaimMenu.small-screen ul li:hover > ul > li {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid rgba(120, 120, 120, 0.15);
+}
+#TravelClaimMenu.small-screen ul li a,
+#TravelClaimMenu.small-screen ul ul li a {
+  width: 100%;
+}
+#TravelClaimMenu.small-screen > ul > li,
+#TravelClaimMenu.small-screen.align-center > ul > li,
+#TravelClaimMenu.small-screen.align-right > ul > li {
+  float: none;
+  display: block;
+}
+#TravelClaimMenu.small-screen ul ul li a {
+  padding: 10px 20px 10px 30px;
+  font-size:11px;
+  color: #ffffff;
+  background: none;
+}
+#TravelClaimMenu.small-screen ul ul li:hover > a,
+#TravelClaimMenu.small-screen ul ul li a:hover {
+  color: #ffffff;
+}
+#TravelClaimMenu.small-screen ul ul ul li a {
+  padding-left: 40px;
+}
+#TravelClaimMenu.small-screen ul ul,
+#TravelClaimMenu.small-screen ul ul ul {
+  position: relative;
+  left: 0;
+  right: auto;
+  width: 100%;
+  margin: 0;
+}
+#TravelClaimMenu.small-screen > ul > li.has-sub > a::after,
+#TravelClaimMenu.small-screen ul ul li.has-sub > a::after {
+  display: none;
+}
+#TravelClaimMenu.small-screen #menu-line {
+  display: none;
+}
+#TravelClaimMenu.small-screen #menu-button {
+  display: block;
+  padding: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+#TravelClaimMenu.small-screen #menu-button::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: block;
+  width: 15px;
+  height: 2px;
+  background: #ffffff;
+}
+#TravelClaimMenu.small-screen #menu-button::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: block;
+  width: 15px;
+  height: 7px;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+#TravelClaimMenu.small-screen .submenu-button {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  top: 0;
+  display: block;
+  border-left: 1px solid rgba(120, 120, 120, 0.15);
+  height: 52px;
+  width: 52px;
+  font-size: 10px;
+  cursor: pointer;
+}
+#TravelClaimMenu.small-screen .submenu-button::after {
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 26px;
+  display: block;
+  width: 1px;
+  height: 11px;
+  background: #ffffff;
+  z-index: 99;
+}
+#TravelClaimMenu.small-screen .submenu-button::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 16px;
+  display: block;
+  width: 11px;
+  height: 1px;
+  background: #ffffff;
+  z-index: 99;
+}
+#TravelClaimMenu.small-screen .submenu-button.submenu-opened:after {
+  display: none;
+}
+#TravelClaimMenu.small-screen.select-list {
+  padding: 5px;
+}
+
+
+#navigation
+{
+  background-image: url(../images/nav_bg.gif);
+  background-repeat: repeat;
+  border-right:solid 1px #005100;
+  padding:0px;
+}
+
+
+
+
+#server_message
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: bold;
+	color: #000000;
+  text-transform: uppercase;
+}
+
+#error_message
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: bold;
+	color: #000000;
+  text-transform: uppercase;
+  padding-left: 5px;
+}
+
+#details_error_message
+{
+  
+	font-size: 12px;  
+	
+ 
+}
+
+#notice
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 12px;
+  font-weight: bold;
+	color: #FF0000;
+  text-transform: uppercase;
+  border: solid 1px #FF0000;
+  padding:5px;
+  background-color:#FFFF99;
+}
+
+#maincontent
+{
+  padding:5px;
+}
+
+
+
+#personnel_name
+{
+  	  
+	color: #000000;
+  text-transform: Capitalize;
+  
+}
+
+a.personnel_name, a:link.personnel_name, a:active.personnel_name,  a:visited.personnel_name
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 13px;
+  font-weight: bold;
+	color: #000000;
+  text-transform: uppercase;
+  text-align:center;
+}
+
+a:hover.personnel_name
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 13px;
+  font-weight: bold;
+	color: #FF0000;
+  text-transform: uppercase;
+  text-align:center;
+  text-decoration:none;
+}
+
+#tab_content
+{
+  overflow: hidden;
+}
+
+#tab_content ul 
+{
+  
+}
+
+.title, h1.title
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 14px;
+  font-weight: bold;
+	color: #808080;
+}
+
+
+
+.total_label
+{
+  
+	font-size: 12px;
+  font-weight: bold;
+	color: #000000;
+  text-transform: uppercase;
+  padding-right:10px;
+}
+
+.total {
+	
+		font-size: 11px;
+  font-weight: bold;
+	color: #000000;  
+  text-transform: uppercase;
+	
+}
+
+
+
+ .kms_cal
+{
+  
+	font-size: 11px;
+  font-weight: normal;
+	color: #000000;
+  text-transform: uppercase;
+}
+
+.summary_total
+{
+  
+	font-size: 12px;
+  font-weight: bold;
+	color: #007F01;  
+  text-transform: uppercase;
+}
+
+.field_content
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: normal;
+	color: #000000;
+  text-transform: uppercase;
+}
+
+.travel_claim_status_1
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: bold;
+	color: #FFCC00;
+  text-transform: uppercase;
+  padding-left: 5px;
+}
+
+ .travel_claim_status_2, 
+ .travel_claim_status_3, 
+ .travel_claim_status_4,
+ .travel_claim_status_7
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: bold;
+	color: #007700;
+  text-transform: uppercase;
+  padding-left: 5px;
+}
+
+ .travel_claim_status_5, 
+ .travel_claim_status_6
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight: bold;
+	color: #FF0000;
+  text-transform: uppercase;
+  padding-left: 5px;
+}
+
+
+
+.requiredstar
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  font-weight:bold;
+  line-height:18px;
+	color: #FF0000;
+  background-color: transparent;
+  text-decoration: none;
+  border:none;
+  text-transform:uppercase;
+}
+
+
+
+.requiredinput_gl_acc
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFCC;
+  height: 18px;
+  border:none;
+}
+
+span.pending_approval,
+a.pending_approval, a:link.pending_approval, a:active.pending_approval, a:visited.pending_approval
+{
+  font-family: Arial, Helvetica, sans-serif, sans-serif;
+  font-size: 11px;
+  line-height:21px;
+  text-align:middle;
+  color: #FF0000;
+  background-color: transparent; 
+  text-decoration: none;
+  text-align:center;
+}
+
+a:hover.pending_approval
+{
+ font-family: Arial, Helvetica, sans-serif, sans-serif;
+  font-size: 11px;
+  line-height:21px;
+  text-align:middle;
+  color: #0000FF;
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+a.my_claims, a:link.my_claims, a:active.my_claims, a:visited.my_claims
+{
+  font-family: Arial, Helvetica, sans-serif, sans-serif;
+  font-size: 11px;
+  line-height:21px;
+  text-align:middle;
+  color: #000000;
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+a:hover.my_claims
+{
+ font-family: Arial, Helvetica, sans-serif, sans-serif;
+  font-size: 12px;
+  line-height:21px;
+  text-align:middle;
+  font-weight:bold;
+  color: #FF0000;
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+a.claim, a:link.claim, a:active.claim, a:visited.claim
+{
+  font-family: Arial, Helvetica, sans-serif, sans-serif;
+  font-size: 10px;
+  color: #000000;
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+a:hover.claim
+{
+ font-family: Arial, Helvetica, sans-serif, sans-serif;
+  font-size: 10px;
+  font-weight:bold;
+  color: #FF0000;
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+.small_text
+{
+  font-size: 10px;
+  color: #000000;  
+  text-decoration: none;
+  text-transform:uppercase;
+}
+
+.ytd_km_usage
+{
+ 
+	font-size: 11px;
+  font-weight:bold;
+	color: #333333;
+  
+  padding: 2px;
+  text-transform:uppercase;
+}
+
+
+.searchrequiredinput
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFFF;
+  height: 18px;
+  border:solid 1px #7F9DB9;
+}
+
+.search
+{
+  font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+  line-height:18px;
+	color: #000000;
+  background-color: #FFFFFF;
+  height: 15px;
+}
+
+.division_title td {
+	font-size:12px;
+	font-weight:bold;
+	background-color: #cce8c2;
+	border: solid 1px #37ba08;
+	color: #333333;
+}
+.ui-dialog-buttonpane { text-align: center; }
+.alphabet
+{
+    margin: 0 0 10px;
+    overflow: hidden;
+}
+
+ .alphabet a, #claims-table tr
+ {
+     transition: background-color 0.3s ease-in-out;
+     -moz-transition: background-color 0.3s ease-in-out;
+     -webkit-transition: background-color 0.3s ease-in-out;
+ }
+
+ .alphabet a
+ {
+     width: 15px;
+     float: left;
+     color: #333;
+     cursor: pointer;
+     height: 20px;
+     border: 1px solid #CCC;
+     display: block;
+     padding: 0px 2px;
+     font-size: 12px;
+     text-align: center;
+     line-height: 20px;
+     text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+     border-right: none;
+     text-decoration: none;
+     background-color: #F1F1F1;
+ }
+
+     .alphabet a.first
+     {
+         border-radius: 3px 0 0 3px;
+     }
+
+     .alphabet a.last
+     {
+         border-right: 1px solid silver;
+         border-radius: 0 3px 3px 0;
+         width: 17px;
+     }
+
+     .alphabet a:hover,
+     .alphabet a.active
+     {
+         background: Red;
+         color:White;
+         
+     }
+    
+	
+	.titlediv{
+    	margin-top:auto;
+    	margin-bottom:auto;
+    	text-align:center;
+    	width: auto;
+	}
+	
+	
+	.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ui-timepicker-wrapper {
+	overflow-y: auto;
+	max-height: 150px;
+	width: 6.5em;
+	background: #fff;
+	border: 1px solid #ddd;
+	-webkit-box-shadow:0 5px 10px rgba(0,0,0,0.2);
+	-moz-box-shadow:0 5px 10px rgba(0,0,0,0.2);
+	box-shadow:0 5px 10px rgba(0,0,0,0.2);
+	outline: none;
+	z-index: 10001;
+	margin: 0;
+}
+
+.ui-timepicker-wrapper.ui-timepicker-with-duration {
+	width: 13em;
+}
+
+.ui-timepicker-wrapper.ui-timepicker-with-duration.ui-timepicker-step-30,
+.ui-timepicker-wrapper.ui-timepicker-with-duration.ui-timepicker-step-60 {
+	width: 11em;
+}
+
+.ui-timepicker-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ui-timepicker-duration {
+	margin-left: 5px; color: #888;
+}
+
+.ui-timepicker-list:hover .ui-timepicker-duration {
+	color: #888;
+}
+
+.ui-timepicker-list li {
+	padding: 3px 0 3px 5px;
+	cursor: pointer;
+	white-space: nowrap;
+	color: #000;
+	list-style: none;
+	margin: 0;
+}
+
+.ui-timepicker-list:hover .ui-timepicker-selected {
+	background: #fff; color: #000;
+}
+
+li.ui-timepicker-selected,
+.ui-timepicker-list li:hover,
+.ui-timepicker-list .ui-timepicker-selected:hover {
+	background: #1980EC; color: #fff;
+}
+
+li.ui-timepicker-selected .ui-timepicker-duration,
+.ui-timepicker-list li:hover .ui-timepicker-duration {
+	color: #ccc;
+}
+
+.ui-timepicker-list li.ui-timepicker-disabled,
+.ui-timepicker-list li.ui-timepicker-disabled:hover,
+.ui-timepicker-list li.ui-timepicker-selected.ui-timepicker-disabled {
+	color: #888;
+	cursor: default;
+}
+
+.ui-timepicker-list li.ui-timepicker-disabled:hover,
+.ui-timepicker-list li.ui-timepicker-selected.ui-timepicker-disabled {
+	background: #f2f2f2;
+}
