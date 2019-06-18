@@ -1,0 +1,170 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+
+<taglib xmlns="http://java.sun.com/xml/ns.j2ee"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+xsi:schemaLocation="http://java.sun.com.xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" version="2.0">
+   <tlib-version>1.2</tlib-version>
+   <jsp-version>1.2</jsp-version>
+   <short-name>awsd</short-name>
+   <uri>/MemberServices/Personnel/SSS/taglib</uri>
+   <description>Eastern School District - Custom Tag Library</description>
+   
+   <function>  
+   		<name>nextSchoolYear</name>  
+    	<function-class>com.awsd.school.School</function-class>  
+   		<function-signature>  
+    		java.lang.String getNextSchoolYear()  
+    	</function-signature>  
+   </function>  
+   
+   <tag>
+      <name>Schools</name>
+      <tag-class>com.awsd.school.tag.SchoolsTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays SCHOOL Select HTML element</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>dummy</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>onchange</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>value</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+   <tag>
+      <name>SchoolYearListbox</name>
+      <tag-class>com.esdnl.personnel.sss.web.tag.SchoolYearTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays SCHOOL Select HTML element</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>value</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+   <tag>
+      <name>SchoolGradesListbox</name>
+      <tag-class>com.esdnl.school.tag.SchoolGradesTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays Listbox</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>value</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>multiple</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+   <tag>
+      <name>ExceptionalityListbox</name>
+      <tag-class>com.esdnl.personnel.sss.web.tag.ExceptionalityTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays Listbox</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>value</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+   <tag>
+      <name>PervasiveCategoryListbox</name>
+      <tag-class>com.esdnl.personnel.sss.web.tag.PervasiveCategoryTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays Listbox</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>value</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+</taglib>

@@ -1,0 +1,57 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+   <tlib-version>1.2</tlib-version>
+   <jsp-version>1.2</jsp-version>
+   <short-name>awsd</short-name>
+   <uri>/MemberServices/Personnel/taglib</uri>
+   <description>Eastern School District - Employee/Student Recognition Policy Program - Custom Tag Library</description>
+   <tag>
+      <name>RecognitionCategories</name>
+      <tag-class>com.esdnl.personnel.recognition.site.tag.RecognitionCategoriesTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays RECOGNITION CATEGORY Select HTML element</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+   
+   <tag>
+      <name>Schools</name>
+      <tag-class>com.awsd.school.tag.SchoolsTagHandler</tag-class>
+      <body-content>empty</body-content>
+      <description>Displays University Degree Select HTML element</description>
+      <attribute>
+         <name>id</name>
+         <required>true</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>cls</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>value</name>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+   </tag>
+</taglib>
