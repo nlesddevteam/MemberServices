@@ -1,0 +1,84 @@
+
+
+.displayBoxTitle {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #003366;
+}
+
+div.document-box {
+	background-color: #e4e4e4; 
+	padding:3px 3px 3px 3px;
+}
+
+div.document-box table.document-box-table {
+	background-color:white;
+	border: solid 1px #c4c4c4;
+}
+
+div.document-box table.document-box-table caption {
+	background-color: #d4d4d4; 
+	border: solid 1px #c4c4c4;
+	border-bottom: none;
+	padding: 5px 5px 5px 5px;
+	text-align: left;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#add-allocation-operation-table, #add-allocation-operation-table td{
+	border: solid 1px #A0A0A0;
+	border-collapse: collapse;
+}
+
+.total-allocation {
+	background-color: #f4f4f4; 
+	border: solid 1px #c4c4c4;
+	padding: 5px 5px 5px 5px;
+	text-align: left;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: red;
+	text-transform: uppercase;
+	text-align: right;
+}
+
+.total-allocation-outstanding-bad {
+	background-color: #FFDDDD; 
+	border: solid 1px #FF0000;
+	padding: 5px 5px 5px 5px;
+	text-align: left;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: red;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+.total-allocation-outstanding-good {
+	background-color: #DDFFDD; 
+	border: solid 1px #00FF00;
+	padding: 5px 5px 5px 5px;
+	text-align: left;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: green;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+.small-button {
+   font-size: .9em !important;
+}
+
+.extra-small-button {
+   font-size: .7em !important;
+   font-weight: bold;
+   color: red;
+}

@@ -1,0 +1,495 @@
+body {
+	background: #D5E4EE url("../images/backgroundf.jpg") repeat-x;
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+}
+
+p {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	line-height: 22px;
+}
+
+#pageContainer {
+	width: 760px;
+	height: 100%;
+	background: #ffffff;
+	/*margin-left: auto; 
+	margin-right: auto;
+	text-align: center;*/
+}
+
+#header {
+	background:  url("../images/header800x600.gif") no-repeat 1px;
+	width: 758px;
+	height: 145px;
+	padding-top: 50px;
+	padding-right: 110px;
+}
+
+.hide { 
+	display: none;
+}
+
+a.headerLink:link, a.headerLink:active, a.headerLink:visited {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #3B3A28;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+a.headerLink:hover {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #3B3A28;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+a.boldLink:link, a.boldLink:active, a.boldLink:visited {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #4A8FB9;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.boldLink:hover {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #4A8FB9;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.normal:link, a.normal:visited, a.normal:active {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #2078A5;
+	font-weight: none;
+	text-decoration: underline; 
+}
+
+a.normal:hover {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FF0000;
+	font-weight: none;
+	text-decoration: underline;
+}
+
+
+
+#maincontent {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	width: 300px;
+}
+
+#maincontent h2 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	font-weight: bold;
+	border-bottom: 1px #cccccc solid;
+	width: 280px;
+}
+
+#maincontent h3 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #999999;
+	font-weight: bold;
+	border-bottom: 1px #cccccc solid;
+	width: 280px;
+}
+
+#maincontent p {
+	line-height: 18px;
+}
+
+#maincontent a {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #2078A5;
+	text-decoration: none;
+}
+
+#maincontent a:hover {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FF0000;
+	text-decoration: none;
+}
+
+#content {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	width: 520px;
+}
+
+#content h2 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #666666;
+	font-weight: bold;
+	border-bottom: 1px #cccccc solid;
+	width: 500px;
+}
+
+#content h3 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+	font-weight: bold;
+	border-bottom: 1px #cccccc solid;
+	width: 500px;
+}
+
+#content h4 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+	font-weight: bold;
+	width: 500px;
+}
+
+#content h5 {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #CCCCCC;
+	font-weight: bold;
+	width: 500px;
+}
+
+#content p {
+	line-height: normal;
+}
+
+
+
+#content a.policy_lnk, #content a:active.policy_lnk, 
+#content a:link.policy_lnk, #content a:visited.policy_lnk{
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #2078A5;
+	text-decoration: none;
+}
+
+#content a:hover.policy_lnk {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FF0000;
+	text-decoration: underline;
+}
+
+
+#crumbNavActive {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	font-weight: none;
+	text-decoration: none;
+}
+
+#crumbNavActive a:link, a:visited, a:active {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #2078A5;
+	font-weight: none;
+	text-decoration: none;
+}
+
+#crumbNavActive a:hover {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FF0000;
+	font-weight: none;
+	text-decoration: underline;
+}
+
+.whatsHappeningTitle {
+	font-family: Tahoma, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.pageTitle {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #4A8FB9;
+	font-weight: bold;
+}
+
+.boldDate {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+/* /////////////////	SIDENAV/GLOBAL NAVIGATION							 */
+
+#sidenav {
+	background: url(../images/lg_container_bg.gif) repeat-y;
+	width: 207px;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#sidenav li { 
+	margin: 0; 
+	padding: 0; 
+	list-style: none;
+}
+
+#sidenav ul {
+	 margin: 0; 
+	 padding: 0; 
+}
+
+#sidenav li a { 
+	border-top: solid 1px #FFF;
+	margin: 0 5px; padding: 5px 12px; 
+	display: block; 
+	text-decoration: none; 
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px; 
+	color: #666;
+	width: 198px;
+}
+
+
+#sidenav li a:hover { 
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	color: #000; 
+	background: #FFF url(../images/sidenav-arrow.gif) 180px 6px no-repeat; 
+}
+
+#sidenav a.active { font-weight: bold; }
+
+/* /////////////////	TOP/GLOBAL NAVIGATION							 */
+
+#nav {
+	float: left;
+	height: 24px;
+}
+
+#topnav {
+	width: 493px; 
+	height: 24px; 
+	background:  url("../images/navigation.gif") no-repeat;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+}
+
+#topnav li { 
+	margin: 0; 
+	padding: 0; 
+	list-style: none; 
+	float: left;
+	top: 0;
+	position: absolute;
+}
+
+#topnav li, #topnav a, #topnav span {
+	height: 24px; 
+	display: block;
+}
+
+#n1 { left: 0; width: 97px;}
+#n2 { left: 98px; width: 82px;}
+#n3 { left: 180px; width: 106px;}
+#n4 { left: 286px; width: 114px;}
+#n5 { left: 401px; width: 92px;}
+
+#n1 a:hover { background: transparent url("../images/navigation.gif") 0 -24px no-repeat;}
+#n2 a:hover { background: transparent url("../images/navigation.gif") -98px -24px no-repeat;}
+#n3 a:hover { background: transparent url("../images/navigation.gif") -180px -24px no-repeat;}
+#n4 a:hover { background: transparent url("../images/navigation.gif") -286px -24px no-repeat;}
+#n5 a:hover { background: transparent url("../images/navigation.gif") -401px -24px no-repeat;}
+
+#n1 a.active { background: transparent url("../images/navigation.gif") 0 -24px no-repeat;}
+#n2 a.active { background: transparent url("../images/navigation.gif") -98px -24px no-repeat;}
+#n3 a.active { background: transparent url("../images/navigation.gif") -180px -24px no-repeat;}
+#n4 a.active { background: transparent url("../images/navigation.gif") -286px -24px no-repeat;}
+#n5 a.active { background: transparent url("../images/navigation.gif") -401px -24px no-repeat;}
+
+/* //////////////// Footer Nav ///////////////*/
+
+#bottomnav {
+	width: 493px; 
+	height: 24px; 
+	background:  url("../images/navigationb.gif") no-repeat;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+}
+
+#bottomnav li { 
+	margin: 0; 
+	padding: 0; 
+	list-style: none; 
+	float: left;
+	top: 0;
+	position: absolute;
+}
+
+#bottomnav li, #bottomnav a, #bottomnav span {
+	height: 24px; 
+	display: block;
+}
+
+#b1 { left: 0; width: 97px;}
+#b2 { left: 98px; width: 82px;}
+#b3 { left: 180px; width: 106px;}
+#b4 { left: 286px; width: 114px;}
+#b5 { left: 401px; width: 92px;}
+
+#b1 a:hover { background: transparent url("../images/navigationb.gif") 0 -24px no-repeat;}
+#b2 a:hover { background: transparent url("../images/navigationb.gif") -98px -24px no-repeat;}
+#b3 a:hover { background: transparent url("../images/navigationb.gif") -180px -24px no-repeat;}
+#b4 a:hover { background: transparent url("../images/navigationb.gif") -286px -24px no-repeat;}
+#b5 a:hover { background: transparent url("../images/navigationb.gif") -401px -24px no-repeat;}
+
+#b1 a.active { background: transparent url("../images/navigationb.gif") 0 -24px no-repeat;}
+#b2 a.active { background: transparent url("../images/navigationb.gif") -98px -24px no-repeat;}
+#b3 a.active { background: transparent url("../images/navigationb.gif") -180px -24px no-repeat;}
+#b4 a.active { background: transparent url("../images/navigationb.gif") -286px -24px no-repeat;}
+#b5 a.active { background: transparent url("../images/navigationb.gif") -401px -24px no-repeat;}
+
+/** Menu Container **/
+
+ul.droplink {
+	margin:0px;
+	padding:0px;
+	color: #ffffff;
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	filter:Alpha(Opacity=90, Style=0)
+}
+
+ul.droplink li {
+	color: #ffffff;
+	display: inline;
+	list-style: none;
+}
+
+ul.droplink li a {
+	display: block;
+	width: 175px;
+	margin: 0px;
+	padding: 6px;
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	text-decoration: none;
+	background:  url("../images/dropdowna.png");
+}
+
+ul.droplink li a:hover {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	text-decoration: none;
+	background:  url("../images/dropdownb.png");
+}
+
+ul.droplink li a:active {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color:#ffffff;
+	text-decoration: none;
+	background:  url("../images/dropdowna.png");
+}
+
+ul.droplink li a:visited {
+	font-family: Trebuchet MS, Helvetica, sans-serif;
+	font-size: 11px;
+	color:#ffffff;
+	text-decoration: none;
+}
+
+.boldBlack11pxTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+	text-transform: uppercase;
+}
+
+.boldBlack11pxLower {
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+
+a.statusCentralLink:link, a.statusCentralLink:active, a.statusCentralLink:visited 
+{
+  font-family: Tahoma, Helvetica, sans-serif;   
+  font-size: 10px;   
+  color: #3598D2;   
+  text-decoration: none;   
+  line-height: 16px;
+}
+
+a.statusCentralLink:hover 
+{
+  font-family: Tahoma, Helvetica, sans-serif;   
+  font-size: 10px;   
+  color: #3598D2;   
+  text-decoration: underline;   
+  line-height: 16px;
+}
+
+#table_list
+{
+  font-family: Tahoma, Helvetica, sans-serif;   
+  font-size: 10px;
+  line-height: 16px;
+  border:solid 1px #e0e0e0;
+}
+
+#table_list td
+{
+  border:solid 1px #D0D0D0;
+  text-align:center;
+}
+
+#table_list td.community
+{
+  font-family: Tahoma, Helvetica, sans-serif;   
+  font-size: 10px;
+  font-weight: bold;
+  color:#333333;
+  text-transform: uppercase;
+  background-color: #f4f4f4;
+}
+
+#table_list tr.header
+{
+  font-family: Tahoma, Helvetica, sans-serif;   
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration:underline;
+  background-color:#d4d4d4;
+}
