@@ -1,0 +1,53 @@
+body{
+  margin:10px;
+}
+
+#maintable{
+  border-collapse: collapse;
+}
+
+
+#sacs_overview table {
+  border-collapse: collapse;
+}
+
+#sacs_overview th{
+  glyph-orientation-vertical: 90deg;
+  azimuth: 45deg;
+  color:#FF0000;
+  border-bottom: solid 1px #c0c0c0;
+  border-right: solid 1px #c0c0c0;
+  white-space: nowrap;
+  padding: 2px;
+  text-align: center;
+}
+
+#sacs_overview td{
+  border-bottom: solid 1px #c0c0c0;
+  border-right: solid 1px #c0c0c0;
+  white-space: nowrap;
+  padding: 2px;
+  text-align: center;
+}
+
+#sacs_overview table.legend{
+  border: solid 1px #c0c0c0;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#sacs_overview table.legend  td{
+  border: none;
+  white-space: nowrap;
+  padding: 2px;
+  text-align: left;
+}
+
+#sacs_overview td.school_name{
+  border-top: solid 1px #c0c0c0;
+  border-right: solid 1px #c0c0c0;
+  white-space: nowrap;
+  padding: 2px;
+  text-align: right;
+  font-weight:bold;
+}
