@@ -1,17 +1,21 @@
 <%@ page language="java"
          session="true"
-         import="com.awsd.security.*,com.awsd.personnel.*,
+         import="com.awsd.security.*,
+         		 com.awsd.personnel.*,
                  com.awsd.travel.*,
-                 com.awsd.common.*,com.esdnl.util.*,
+                 com.awsd.common.*,
+                 com.esdnl.util.*,
                  java.util.*,
                  java.io.*,
                  java.text.*,
                  java.sql.*"
         isThreadSafe="false"%>
-<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
-<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
+        <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>   
+		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+		<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
+
 
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN" />
 
@@ -59,7 +63,7 @@
       				<tr style="border-bottom:1px dashed silver;">
       					<td class="field_content">${rule.employee}</td>
       					<td class="field_content">${rule.supervisor}</td>
-      					<td class="field_content">${rule.division}</td>
+      					<td class="field_content">${rule.division.name}</td>
       					<td align="right" class="field_content">
       						<a href='#' class="mclaims" onclick="loadMainDivPage('addSupervisorRule.html?rule_id=${rule.ruleId}');")><img src="includes/img/viewsm-off.png" class="img-swap" title="View Rule" border=0 style="padding-top:3px;padding-bottom:3px;"></a> &nbsp; 
 							<a class='edit' href="#" onclick="deleteSupervisorRule('${rule.ruleId}');"><img src="includes/img/deletesm-off.png" class="img-swap" border=0 title="Delete Rule" style="padding-top:3px;padding-bottom:3px;"></a>

@@ -87,14 +87,7 @@ $(document).ready(function() {
 				});
 				$("#scadate").change(function(){
 					checkdate('SCADATE');
-				});
-				$("#darundate").change(function(){
-					checkdate('DARUNDATE');
-				});
-				$("#prcvsqdate").change(function(){
-					checkdate('PRCVSQDATE');
 				})
-				checkEmployeeDateRanges();
 				
 });
 		</script>
@@ -383,10 +376,6 @@ $(document).ready(function() {
                 <div class="col-sm-5">
                     <input class="form-control" id="darundate" name="darundate" placeholder="MM/DD/YYYY" type="text" 
                     value="${employee.daRunDate == null ? '' : employee.daRunDateFormatted}">
-                     <br />
-	                    <div id="divdarundate" name="divdarundate" style="display:none;">
-	                    	<span id="spandarundate" name="spandarundate" style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
-	                    </div>
                 </div>
 	       </div>
       	  <div class="form-group">
@@ -486,10 +475,6 @@ $(document).ready(function() {
                 <div class="col-sm-5">
                     <input class="form-control" id="prcvsqdate" name="prcvsqdate" placeholder="MM/DD/YYYY" type="text" 
                     value="${employee.prcvsqDate == null ? '' : employee.prcvsqDateFormatted}">
-                                         <br />
-	                    <div id="divprcvsqdate" name="divprcvsqdate" style="display:none;">
-	                    	<span id="spanprcvsqdate" name="spanprcvsqdate" style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
-	                    </div>
                 </div>
 	       </div>
       	  <div class="form-group">

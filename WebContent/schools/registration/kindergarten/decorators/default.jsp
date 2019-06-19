@@ -1,19 +1,20 @@
 <%@ page language="java"
          isThreadSafe="false"%>
 
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
-<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
+<!-- LOAD JAVA TAG LIBRARIES -->
+		<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
+		<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 
-<!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
   <head>
+
     <meta http-equiv="Pragma" content="no-cache" />
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
-    <title>Member Services 3.0 - Kindergarten Registration - <decorator:title default="Home" /></title>
+    <title>Kindergarten Registration - <decorator:title default="Home" /></title>
 
     <link href="<c:url value='/schools/registration/kindergarten/includes/css/style.css' />" rel="stylesheet" />
    	<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/south-street/jquery-ui.css"
@@ -32,6 +33,13 @@
 		</script>
 		<style type="text/css">
 			
+			
+			 body {font-family: Verdana, Geneva, sans-serif;color: Black;-webkit-text-size-adjust: 100%;background:none;background-color:none;}
+html { background: radial-gradient(#ffffff,#ffffff,#FDF5E6) no-repeat center center fixed;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; } 
+.mainContainer {font-size:11px;max-width:1250px;min-width:300px;display: block;  margin-left: auto;  margin-right: auto;padding-top:10px;padding-bottom:15px; }
+    
+			
+			
 			#outer-main-table { background-color: White; border: 1px solid #00407A; }
 			
 			@media print {
@@ -45,12 +53,13 @@
 		<decorator:head />      
   </head>
 
-  <body bgcolor="#BF6200">
-
-	<table id='outer-main-table' width="955" border="0" cellspacing="0" cellpadding="0" align="center">
+  <body>
+<div class="mainContainer">	
+	
+	<table id='outer-main-table' width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 		<tr class='noprint'>
 			<td>
-				<img src="<c:url value='/schools/registration/kindergarten/includes/images/header.png' />" border="0" alt="Kindergarten Registration" />
+				<img src="<c:url value='/schools/registration/kindergarten/includes/images/header.png' />" border="0" alt="Kindergarten Registration" style="max-width:100%;"/>
 			</td>
 		</tr>
 
@@ -59,7 +68,7 @@
 		</tr>
 		<tr>
 			<td>
-				<table align="center" width="950" cellspacing="5" cellpadding="0" border="0" class="bodytext" style='min-height:600px;'>
+				<table align="center" width="100%" cellspacing="5" cellpadding="0" border="0" class="bodytext" style='min-height:600px;'>
 					<tr>
 						<td style='height: 450px;' valign='top'>
 							<decorator:body />
@@ -71,11 +80,12 @@
 		<tr bgcolor="#000000">
 			<td>
 				<div align="center">
-					<span class="copyright">Member Services 3.0 &copy; 2013
+					<span class="copyright">Member Services &copy; 2018
 						Newfoundland and Labrador English School District &middot; All Rights Reserved</span>
 				</div>
 			</td>
 		</tr>
 	</table>
+	</div>
 </body>
 </html>

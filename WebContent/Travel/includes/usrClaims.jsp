@@ -47,6 +47,8 @@ int counter5 = 0;
 int counter6 = 0;
 int counter7 = 0;
 int counter8 = 0;
+int counter9 = 0;
+int counter10 = 0;
 String graphTCItem = null;
 String graphPDItem = null;
 
@@ -217,27 +219,7 @@ List<Integer> claimAmountsToGraph = new ArrayList<Integer>();
                     			<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />        
                     		
                     		
-                    		<c:if test="${claimStatus eq 7 }">
-                    	<%   
-                    	graphTCItem = "true";
-                    	
-                    	if( Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) >= (year-7)) {  			
-                    	//if(claimCounter > 0) {
-		               claimName.add("&quot;" + Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "&quot;");
-                     claimAmount.add((int)claim.getSummaryTotals().getSummaryTotal());				
-		             
-                     claimCounter++;
-                    	}
-                    	
-                    	
-                    	overall_km_total_amount += claim.getSummaryTotals().getKMSTotal();
-                        overall_meals_total += claim.getSummaryTotals().getMealSummary();
-                        overall_lodging_total += claim.getSummaryTotals().getLodgingSummary();
-                        overall_other_total += claim.getSummaryTotals().getOtherSummary();
-                    	
-                    	
-		              %>
-                    		</c:if>	
+                    		
                     			                        
 									                                <c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">									                                	
@@ -264,12 +246,76 @@ List<Integer> claimAmountsToGraph = new ArrayList<Integer>();
 									                                		<%counter5++;%>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                		<span style="color:Blue;">PAYMENT PENDING</span>
+									                                		<span style="color:Blue;">PENDING INFO</span>
 									                                		<%counter6++;%>
 									                                	</c:when>
-									                                	<c:when test="${claimStatus eq 7 }">
-									                                		<span style="color:DarkGreen;">PAID</span>
-									                                		<%counter7++;%>
+									                                	<c:when test="${claimStatus eq 7 }">									                                	
+									                                				
+									                                		<% Date now = new java.util.Date();	%>
+									                                		<c:set var="todayDate" value="<%=new java.util.Date() %>" />									                                										                                	
+									                                		<c:set var="todayDateStamp" value="<%=now.getTime()%>" />
+									                                		
+									                                		<c:set var="claimExportDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate() :"0" %>'/>																            															               	
+																            <c:set var="claimExportDateStamp" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0" %>'/>
+																            <c:set var="claimPaidDate" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate() :"0" %>'/>	
+																            <c:set var="claimPaidDateStamp" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate().getTime() : "0" %>'/>
+																         
+																          <!-- After 30 days, set as paid for cosmetic reasons.-->
+																            <c:set var="claimCheckDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0"%>'/>															               							                
+																            <c:set var="claimCheckDateStamp" value="${(60*60*24*30*1000) + claimCheckDate}" /> 
+																               						                                  				
+                        				                                              				                              			
+								                                  		<c:choose>
+                        												
+                        												                                                                                     
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">
+                        												
+                        												<span style="color:DarkGreen;">PAID</span>
+                        												<%counter7++;%>
+                        												
+                        												<%   
+														                    graphTCItem = "true";
+														                    	
+														                    if( Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) >= (year-7)) {  			
+														                    	//if(claimCounter > 0) {
+																             claimName.add("&quot;" + Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "&quot;");
+														                     claimAmount.add((int)claim.getSummaryTotals().getSummaryTotal());				
+																             
+														                     claimCounter++;
+														                    	}
+														                    	
+														                    	
+														                    	overall_km_total_amount += claim.getSummaryTotals().getKMSTotal();
+														                        overall_meals_total += claim.getSummaryTotals().getMealSummary();
+														                        overall_lodging_total += claim.getSummaryTotals().getLodgingSummary();
+														                        overall_other_total += claim.getSummaryTotals().getOtherSummary();
+														                    	
+														                 %>
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">
+                        												
+                        												<span style="color:Blue;">PROCESSED</span>
+                        												<%counter10++;%>
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
+                        												<span style="color:Navy;">PROCESSING</span>
+                        												<%counter9++;%>
+                        												</c:when>
+                        												
+                        												<c:otherwise>
+                        												
+                        												<span style="color:Red;">ERROR!</span>
+									                                	 	<%counter8++;%>
+                        												
+                        												</c:otherwise>
+                        												</c:choose>
+									                                	
+									                                	
+									                                		
 									                                	</c:when>
 									                                	<c:otherwise>
 									                                	 	<span style="color:Red;">ERROR!</span>
@@ -348,34 +394,7 @@ List<Integer> claimAmountsToGraph = new ArrayList<Integer>();
                     			
                     			<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" /> 
                     			
-                    			                   			      
-                    		
-                    		
-                    		<c:if test="${claimStatus eq 7 }">
-                    	<%                    					
-                    	graphPDItem = "true";
-                    	    
-                    	if( Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) >= (year-7)) {		
-                    		//if(claimCounter > 0) {	
-                    			
-                    			
-		               	claimName.add("&quot;PD " + sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate()) + "&quot;");
-                     	claimAmount.add((int)claim.getSummaryTotals().getSummaryTotal());	
-                     	claimCounter++;
-		         
-                    	}
-                    	
-                    	overall_km_total_amount += claim.getSummaryTotals().getKMSTotal();
-                        overall_meals_total += claim.getSummaryTotals().getMealSummary();
-                        overall_lodging_total += claim.getSummaryTotals().getLodgingSummary();
-                        overall_other_total += claim.getSummaryTotals().getOtherSummary();
-                    	
-		              %>
-                    		</c:if>	
-                    			
-                    			
-                    			
-                    			
+                    			                   	
                     			                               
 									                                 <c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">
@@ -399,12 +418,78 @@ List<Integer> claimAmountsToGraph = new ArrayList<Integer>();
 									                                		<%counter5++;%>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                		<span style="color:Blue;">PAYMENT PENDING</span>
+									                                		<span style="color:Blue;">PENDING INFO</span>
 									                                		<%counter6++;%>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 7 }">
-									                                		<span style="color:DarkGreen;">PAID</span>
-									                                		<%counter7++;%>
+									                                		
+									                                	<% Date now = new java.util.Date();	%>
+									                                		<c:set var="todayDate" value="<%=new java.util.Date() %>" />									                                										                                	
+									                                		<c:set var="todayDateStamp" value="<%=now.getTime()%>" />
+									                                		
+									                                		<c:set var="claimExportDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate() :"0" %>'/>																            															               	
+																            <c:set var="claimExportDateStamp" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0" %>'/>
+																            <c:set var="claimPaidDate" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate() :"0" %>'/>	
+																            <c:set var="claimPaidDateStamp" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate().getTime() : "0" %>'/>
+																         
+																          <!-- After 30 days, set as paid for cosmetic reasons.-->
+																            <c:set var="claimCheckDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0"%>'/>															               							                
+																            <c:set var="claimCheckDateStamp" value="${(60*60*24*30*1000) + claimCheckDate}" /> 
+																               
+                        				                                
+                        				                                
+                        												<c:choose>
+                        												                                                                         
+                        												
+                        												                                                                                     
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">
+                        												                        												
+                        												<span style="color:DarkGreen;">PAID</span>
+                        												<%counter7++;%>
+                        												
+                        												<%                    					
+														                    	graphPDItem = "true";
+														                    	    
+														                    	if( Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) >= (year-7)) {		
+														                    		//if(claimCounter > 0) {	
+														                    			
+														                    			
+																               	claimName.add("&quot;PD " + sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate()) + "&quot;");
+														                     	claimAmount.add((int)claim.getSummaryTotals().getSummaryTotal());	
+														                     	claimCounter++;
+																         
+														                    	}
+														                    	
+														                    	overall_km_total_amount += claim.getSummaryTotals().getKMSTotal();
+														                        overall_meals_total += claim.getSummaryTotals().getMealSummary();
+														                        overall_lodging_total += claim.getSummaryTotals().getLodgingSummary();
+														                        overall_other_total += claim.getSummaryTotals().getOtherSummary();
+														                    	
+																        %>
+                        												
+                        												
+                        												
+                        												
+                        												
+                        												
+                        												</c:when>
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">
+                        												
+                        												 <span style="color:Blue;">PROCESSED</span>
+                        												<%counter10++;%>
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
+                        												<span style="color:Navy;">PROCESSING</span>
+                        												<%counter9++;%>
+                        												</c:when>
+                        												<c:otherwise>
+                        												<span style="color:Red;">ERROR!</span>
+									                                	 	<%counter8++;%>
+                        												</c:otherwise>
+                        												</c:choose>
+									                                	
 									                                	</c:when>
 									                                	<c:otherwise>
 									                                	 	<span style="color:Red;">ERROR!</span>
@@ -453,14 +538,16 @@ List<Integer> claimAmountsToGraph = new ArrayList<Integer>();
 	<br/> 
 	<table border=0 style="padding:3px;max-width:400px;min-width:300px;border:1px solid silver;">
 	<tr><td><span style="color:DarkGreen;">PAID claims</span></td><td><%=counter7 %></td></tr>	
-	<tr><td><span style="color:Blue;">PAYMENT PENDING claims</span></td><td><%=counter6 %></td></tr>
+	<tr><td><span style="color:Blue;">PROCESSED claims</span></td><td><%=counter10 %></td></tr>	
+	<tr><td><span style="color:Navy;">PROCESSING claims</span></td><td><%=counter9 %></td></tr>	
+	<tr><td><span style="color:Black;">PENDING claims</span></td><td><%=counter6 %></td></tr>
 	<tr><td><span style="color:Green;">APPROVED claims</span></td><td><%=counter4 %></td></tr>
 	<tr><td><span style="color:CornflowerBlue;">REVIEWED claims</span></td><td><%=counter3 %></td></tr>
 	<tr><td><span style="color:DarkViolet;">SUBMITTED claims</span></td><td><%=counter2 %></td></tr>
 	<tr><td><span style="color:DarkOrange;">PRE-SUBMISSION claims:</span></td><td><%=counter1 %></td></tr>
 	<tr><td><span style="color:Red;">REJECTED claims</span></td><td><%=counter5 %></td></tr>
 	<tr><td><span style="color:Red;">ERRORED claims</span></td><td><%=counter8 %></td></tr>
-	<tr style="border-top:1px solid silver;"><td><span style="color:black;font-weight:bold;">TOTAL Claims on file:</span></td><td><b><%=counter1 + counter2 + counter3 + counter4 + counter5 + counter6 + counter7 + counter8%></b></td></tr>
+	<tr style="border-top:1px solid silver;"><td><span style="color:black;font-weight:bold;">TOTAL Claims on file:</span></td><td><b><%=counter1 + counter2 + counter3 + counter4 + counter5 + counter6 + counter7 + counter8 + counter9 + counter10%></b></td></tr>
 	
 	
 	</table>

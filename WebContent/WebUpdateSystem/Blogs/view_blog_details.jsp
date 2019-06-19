@@ -1,8 +1,8 @@
-<%@ page language="java" session="true" isThreadSafe="false" import="com.awsd.security.*,java.util.*,java.io.*,java.text.*,com.esdnl.util.*;"%> 
+<%@ page language="java" session="true" isThreadSafe="false" import="com.awsd.security.*,java.util.*,java.io.*,java.text.*,com.esdnl.util.*"%> 
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  					               
-<%@ taglib uri="/taglib/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <%  User usr = (User) session.getAttribute("usr"); %>
 <html>

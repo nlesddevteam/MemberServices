@@ -52,28 +52,9 @@
 
 <html>
 	<head>
-		<title>Professional Growth Plan</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-				<link rel="stylesheet" href="css/growthplan.css">
-		<link rel="stylesheet" href="css/smoothness/jquery-ui.custom.css">
-		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-
-		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/CalendarPopup.js"></script>
-		<script type="text/javascript" src="js/common.js"></script>
-		<script type="text/javascript" src="js/ppgp.js"></script>
-		
-
-		<script type="text/javascript">
-		
-			function openWindow(id,url,w,h) {
-			       window.open(url,id,"toolbar=0,location=no,top=50,left=50,directories=0,status=0,menbar=0,scrollbars=1,resizable=0,width="+w+",height="+h);
+		<title>Professional Learning Plan</title>
+<script type="text/javascript">	
 			
-			       if (navigator.appName == 'Netscape') {
-			               popUpWin.focus();
-			       }
-			}
 			
 			$('document').ready(function() {
 				$(document).on('change','#selectdomain',function(){
@@ -84,8 +65,7 @@
 				$('#btn_submit_task').click(function(){
 					if(validatePPGP(document.GrowthPlan)){
 						
-						$('#row_task_submit').text('Saving, Please wait...')
-						
+						$('#row_task_submit').text('Saving, Please wait...');						
 						$('#frmGrowthPlan').attr('action','<%=(task == null) ? "addGrowthPlan.html" : "modifyGrowthPlanTask.html"%>');
 						$('#frmGrowthPlan').submit();
 					}
@@ -93,21 +73,16 @@
 				
 				if (${REFRESH_ARCHIVE ne null}) {
 					parent.ppgpmenu.document.location.reload();
-				}
-		
-				if (${msg ne null}) {
-					alert('<%=request.getAttribute("msg")%>');
-				}
+				}		
+				
 				$("#divgrade").hide();
 				$("#divsubject").hide();
 				$("#divtopic").hide();
-				$("#divstopic").hide();
-				$("#divstopic").hide();
+				$("#divstopic").hide();				
 				$("#divstrength").hide();
 				var test = parseInt($("#cyear").val(),10);
 				if(test > 2017){
-					$("#divnew").show();
-					$("#divoriginal").hide();
+					
 					//now we set the select objects if edit
 					$("#selectdomain").val('<%=domainid%>');
 					$("#selectstrength").val('<%=strengthid%>');
@@ -115,8 +90,7 @@
 						$("#divstrength").show();
 					}
 				}else{
-					$("#divnew").hide();
-					$("#divoriginal").show();
+					
 					//now we set the values and show the dropdown
 					$("#cat_id").val('<%=catid%>');
 					$("#grade_id").val('<%=gradeid%>');
@@ -138,17 +112,75 @@
 				}
 				var msgupdate="<%=request.getAttribute("msgupdate") %>";
 				if(!(msgupdate == "null")){
-					$("#spanerror").text(msgupdate);
-					$("#diverror").show();
+					$("#msgok").html("<b>SUCCESS:</b> "+msgupdate).delay(5000).css("display","block").fadeOut();
+					$("#msgSubmitGoal").css("display","block");
 				}
 
 			});
 		
-		</script>
+</script>	
+<script>
+var goalWordCountConf = {
+	    showParagraphs: true,
+	    showWordCount: true,
+	    showCharCount: true,
+	    countSpacesAsChars: true,
+	    countHTML: true,
+	    maxWordCount: -1,
+	    maxCharCount: 500,
+	}
+var selfRefCountConf = {
+	    showParagraphs: true,
+	    showWordCount: true,
+	    showCharCount: true,
+	    countSpacesAsChars: true,
+	    countHTML: true,
+	    maxWordCount: -1,
+	    maxCharCount: 4000,
+	}	  
+var pageWordCountConf = {
+	    showParagraphs: true,
+	    showWordCount: true,
+	    showCharCount: true,
+	    countSpacesAsChars: true,
+	    countHTML: true,
+	    maxWordCount: -1,
+	    maxCharCount: 500,
+	}
+</script>
+
+
+<script>
+    $("#loadingSpinner").css("display","none");
+</script>
+<style>
+.tableTitle {font-weight:bold; font-size:16px;}
+.tableResult {font-weight:normal;}
+.tableTitleWide {column-span: all;}
+.tableTitleL {font-weight:bold;font-size:16px;width:15%;}
+.tableResultL {font-weight:normal;width:35%;}
+.tableTitleR {font-weight:bold;font-size:16px;width:15%;}
+.tableResultR {font-weight:normal;width:35%;}
+input {border:1px solid silver;}
+
+</style>
 	</head>
 
-	<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">
-		<form id='frmGrowthPlan' name="GrowthPlan" action="addGrowthPlan.html" method="post">
+	<body>
+	<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading"><b><%=ppgp.getSchoolYear()%> Professional Learning Plan for <span style="text-transform:capitalize;"><%=usr.getPersonnel().getFullNameReverse()%></span></b>
+	               	<%if (usr.checkRole("TEACHER") || usr.checkRole("PRINCIPAL") || usr.checkRole("VICE PRINCIPAL")) { %>
+						     <%=(usr.getPersonnel().getSchool().getSchoolName() !=null)?"<br/>of "+ usr.getPersonnel().getSchool().getSchoolName():""%>
+					<%}%>
+	               	
+	               	
+	               	</div>
+      			 	<div class="panel-body"> 
+	
+	                
+	
+<form id='frmGrowthPlan' name="GrowthPlan" action="addGrowthPlan.html" method="post">
 		  <input type="hidden" name="op" value=""><input type="hidden" name="cyear" id="cyear" value="<%=cyear%>">
 			<input type="hidden" name="pgpid" value="<%=ppgp.getPPGPID()%>" />
 			
@@ -158,431 +190,257 @@
 			<%if (task != null) {%>
 			  <input type="hidden" name="tid" value="<%=task.getTaskID()%>" />
 			<%}%>
-			<!------------- Begin Main Table --------------->
-			<center>
-				<table width="620" cellpadding="0" cellspacing="0" border="0">
-					<tr>
-						<td width="620" valign="top" align="center" colspan="2">
-							<!----Begin top Logo ------>
-							<table width="620" cellpadding="0" cellspacing="0" border="0">
-								<tr>
-									<td width="620" valign="top" colspan="2">
-										<br/>
-<span style="font-size:16px;font-weight:bold;color:Navy;">Professional Learning Plan</span>
-									</td>
-								</tr>
-								<tr>
-									<td width="215" valign="top" align="left">
-										<img src="images/gp_logo_2.gif"><BR>
-									</td>
-									<td width="405" valign="middle" align="center" bgcolor="#0066CC">
-										<span class="largetext"><%=ppgp.getSchoolYear()%></span><BR>
-									</td>
-								</tr>
-							</table> 
-							<!----End Top Logo ------>
-						</td>
-					</tr>
-					<tr>
-						<td width="620" valign="top" colspan="2">
-						  <br/>
-						  <table>
-						    <tr>
-						      <td>
-						        <span class="toptitle">Name:</span>
-						      </td>
-						      <td>
-						        <%=usr.getPersonnel().getFullName()%>
-						      </td>
-						    </tr>
-						    <%if (usr.checkRole("TEACHER") || usr.checkRole("PRINCIPAL") || usr.checkRole("VICE PRINCIPAL")) { %>
-						      <tr>
-						        <td>
-						          <span class="toptitle">School:</span>
-						        </td>
-						        <td>
-						          <%=usr.getPersonnel().getSchool().getSchoolName()%>
-						        </td>
-						      </tr>
-						    <%}%>
-						  </table>
-						  <br/>
-						</td>
-					</tr>
-					<tr>
-					<td width="620" valign="top" colspan="2">
-							<div class="alert alert-danger" role="alert" style="display:none;" id="diverror" name="diverror">
-  								<font style="font-weight:bold"><span id="spanerror" name="spanerror"></span></font>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td width="620" valign="top" colspan="2">
-							<!------------------ Begin Primary Goal 1 ------------------>
-							
-							<table width="620" border='1' class="infotable" >
-							  <%if (request.getAttribute("msg") != null) {%>
-							    <tr>
-							      <td width="400" valign="middle" align="left" bgcolor="#FFFFFF" colspan="4">
-							        <span style="color:#FF0000;font-weight:bold;"><%=request.getAttribute("msg")%></span><BR />
-							      </td>
-							    </tr>  
-							  <%}%>
-							  <!-- GOAL -->
-							  <tr>
-							    <td width="220" valign="middle" align="center" bgcolor="#0066CC" rowspan="2">
-							      <span class="title">Goal</span><BR />
-							    </td>
-							    <td width="400" valign="middle" align="left" bgcolor="#F4F4F4" colspan="2">
-							      <span class="subtitle"><i>Establish a goal for learning</i></span><BR />
-							    </td>
-							  </tr>  
-							  <tr>
-							    <td width="400" valign="middle" align="left" bgcolor="#F4F4F4" colspan="2">
-							      <%if (goal == null) {%>
-							        <textarea name="Goal" cols="55" rows="5"><%=(request.getAttribute("Goal") != null) ? (String) request.getAttribute("Goal") : ""%></textarea><BR>
-							      <%}else {%>
-							        <%=goal.getPPGPGoalDescription()%> 
-							      <%}%>
-							    </td>
-							  </tr>
-							  
-							  <!-- TASK CATEGORY -->
-							  <tr>
-							    <td width="220" valign="middle" align="center" bgcolor="#003399">
-							      <span class="title">
-							      <%if(cyear <= 2017){ %>
-							 			Category
-							 	  <%}else{ %>
-							 	  		Domains and Strengths
-							 	  <%} %>
-							      </span><BR>
-							    </td>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2" style="padding:0px;">
-							    	<div id="divnew" style="display:none;">
-							    		<table cellpadding="5" cellspacing="0" width="470" border="0">
-							        		<tr>
-							          			<td width="100"><span class="subtitle"><b>Domain:</b>&nbsp;&nbsp;</span></td>
-							          			<td width="*">
-							            			<select id="selectdomain" name="selectdomain">
-							            				<option value="0">SELECT DOMAIN</option>
-							            				<c:forEach items="${domains}" var="itemrow">
-   															<option value="${ itemrow.domainID}">${ itemrow.domainTitle}</option>
-  														</c:forEach> 
-							            			</select>
-							          			</td>
-							        		</tr>
-							        		<tr>
-							        			<td colspan='2'>
-							        			<div id="divstrength">
-							        			<table>
-							        				<tr>
-							        						<td width="100"><span class="subtitle"><b>Strength:</b>&nbsp;&nbsp;</span></td>
-							          						<td width="*">
-							          						
-							            						<select id="selectstrength" name="selectstrength">
-							            							<option value="0">SELECT STRENGTH</option>
-							            							<%if (!(request.getAttribute("strengths") == null)){ %>
-							            									<c:forEach items="${strengths}" var="itemrow">
-   																				<option value="${ itemrow.strengthID}">${ itemrow.strengthTitle}</option>
-  																			</c:forEach> 
-							            							<%} %>
-							            						</select>
-							          						</td>
-							        				</tr>
-							        			</table>
-							        			</div>
-							          			</td>
-							        		</tr>							        		
-							        	</table>
-							    	</div>
-							      <div id="divoriginal" style="display:none;">
-							      <table cellpadding="5" cellspacing="0" width="470" border="0">
-							        <tr>
-							          <td width="100"><span class="subtitle"><b>Category:</b>&nbsp;&nbsp;</span></td>
-							          <td width="*">
-							            	<select id='cat_id' name='cat_id' onchange="cat_id_change();">
-							            		<option value="0">SELECT CATEGORY</option>
-							                	<c:forEach items="${cats}" var="itemrow">
-   													<option value="${ itemrow.value.categoryID}">${ itemrow.value.categoryTitle}</option>
-  												</c:forEach> 
-							                </select>
-							          </td>
-							        </tr>
-							        <tr>
-							        	<td colspan='2'>
-							        		<div id="divgrade">
-							        		<table>
-							        		<tr>
-							    				<td width="100" style="border-top: solid 1px #FFFFFF;"><span class="subtitle"><b>Grade:</b>&nbsp;&nbsp;</span></td>
-							            		<td width="*" style="border-top: solid 1px #FFFFFF;">
-							              		<select id='grade_id' name='grade_id' onchange="grade_id_change();">
-							            		<option value="0">SELECT GRADE</option>
-							                	<c:forEach items="${grades}" var="itemrow">
-   													<option value="${ itemrow.value.gradeID}">${ itemrow.value.gradeTitle}</option>
-  												</c:forEach> 
-							                </select>
-							            		</td>
-							        		</tr>
-							        		</table>
-							        		</div>
-										</td>
-							          </tr>
-							          <tr>
-							          	<td colspan='2'>
-							          		<div id="divsubject">
-							          		<table>
-							          			<tr>
-							          				<td width="100" style="border-top: solid 1px #FFFFFF;"><span class="subtitle"><b>Subject Area:</b>&nbsp;&nbsp;</span></td>
-							              			<td width="*" style="border-top: solid 1px #FFFFFF;">
-							                			<select id='subject_id' name='subject_id' onchange="subject_id_change();">
-							                				<%if (!(request.getAttribute("subjects") == null)){ %>
-							            						<c:forEach items="${subjects}" var="itemrow">
-   																	<option value="${ itemrow.subjectID}">${ itemrow.subjectTitle}</option>
-  																</c:forEach> 
-							            					<%} %>
-							                			
-							                			</select>
-							              			</td>
-							            		</tr>
-							          		</table>
-							          		</div>
-							          	</td>
-							          </tr>
-							          <tr>
-							          	<td colspan='2'>
-							          		<div id="divtopic">
-							          			<table>
-							          				<tr>
-							          					<td width="100" style="border-top: solid 1px #FFFFFF;"><span class="subtitle"><b>Topic Area:</b>&nbsp;&nbsp;</span></td>
-							                			<td width="*" style="border-top: solid 1px #FFFFFF;">
-							                  				<select id='topic_id' name='topic_id' onchange="topic_id_change();">
-							                  					<%if (!(request.getAttribute("topics") == null)){ %>
-							                  						<OPTION VALUE="0">SELECT SPECIFIC TOPIC AREA</OPTION>
-																	<OPTION VALUE="1" SELECTED>Other</OPTION>
-							                  						<c:forEach items="${topics}" var="itemrow">
-   																		<option value="${ itemrow.topicID}">${ itemrow.topicTitle}</option>
-  																	</c:forEach> 
-							            						<%} %>
-							                  				</select>
-							                			</td>
-							          				</tr>
-							          			</table>
-							          		</div>
-							          	</td>
-							          </tr>	
-							          <tr>
-							          	<td colspan='2'>
-							          		<div id="divstopic">
-							          			<table>
-							          				<tr>
-							          					<td width="100" style="border-top: solid 1px #FFFFFF;"><span class="subtitle"><b>Specific Topic:</b>&nbsp;&nbsp;</span></td>
-							                  			<td width="*" style="border-top: solid 1px #FFFFFF;">
-							                    		<select id='stopic_id' name='stopic_id'>
-							                    			<%if (!(request.getAttribute("stopics") == null)){ %>
-							                    					<OPTION VALUE="0">SELECT SPECIFIC TOPIC AREA</OPTION>
-																	<OPTION VALUE="1" SELECTED>Other</OPTION>
-							                    					<c:forEach items="${stopics}" var="itemrow">
-   																		<option value="${ itemrow.specificTopicID}">${ itemrow.specificTopicTitle}</option>
-  																	</c:forEach> 
-							            					<%} %>
-							                    		</select>
-							                  			</td>
-							          				</tr>
-							          			</table>
-							          		</div>
-							          	</td>
-							          </tr>
-							      </table>
-							      </div>
-							      
-							    </td>
-							  </tr>
-							  
-							  <!-- TASK STRATEGY -->
-							  <tr>
-							    <td width="220" valign="middle" align="center" bgcolor="#003399" rowspan="2">
-							      <span class="title">Strategies</span><BR>
-							    </td>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <span class="subtitle"><i>Choose path(s) for learning</i></span><BR>
-							      <span class="subtitle"><b>List a task and activity</b></span><BR>
-							    </td>
-							  </tr>
-							  <tr>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <textarea id='txt_task' name="Task" cols="55" rows="5"><%=(request.getAttribute("Task") != null) ? (String) request.getAttribute("Task") : ""%></textarea><BR/>
-							    </td>
-							  </tr>
-							  
-							  <!-- SUPPORTS -->
-							  <tr>
-							    <td width="220" valign="middle" align="center" bgcolor="#003399" rowspan="3">
-							      <span class="title">Supports</span><BR>
-							    </td>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <span class="subtitle"><i>What resources and support do you need?</i></span><BR>
-							    </td>
-							  </tr>
-							  <tr>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <span class="subtitle"><b>School</b></span><BR>
-							    </td>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <span class="subtitle"><b>District</b></span><BR>
-							    </td>
-							  </tr>
-							  <tr>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <textarea id='txt_school_support' name="SchoolSupport" style="width:200px;height:100px;"><%=(request.getAttribute("SchoolSupport") != null) ? (String) request.getAttribute("SchoolSupport") : ""%></textarea><BR>
-							    </td>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <textarea id='txt_district_support' name="DistrictSupport" style="width:200px;height:100px;"><%=(request.getAttribute("DistrictSupport") != null) ? (String) request.getAttribute("DistrictSupport")
-												: ""%></textarea><BR>
-							    </td>
-							  </tr>
-							  
-							  <!-- TECHNOLOGY -->
-							  <tr>
-							    <td width="220" valign="middle" align="center" bgcolor="#003399" rowspan="5">
-							      <span class="title">Techology</span><BR>
-							    </td>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <span class="subtitle"><i>How may techology support the successfully attainment of your goal?</i></span><BR>
-							    </td>
-							  </tr>
-							  <tr>
-							  	<td width="400" valign="middle" align="center" bgcolor="#CCCCCC" colspan="2">
-							      <textarea id='txt_technology' name="TechSupport" cols="55" rows="5"><%=(request.getAttribute("TechSupport") != null) ? (String) request.getAttribute("TechSupport")
-												: ""%></textarea><BR>
-							    </td>
-							  </tr>
-							  <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <span class="subtitle"><i>What technology supports are required for the successful implementation of your growth plan?</i></span><BR>
-							    </td>
-							  <tr>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <span class="subtitle"><b>School</b></span><BR>
-							    </td>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <span class="subtitle"><b>District</b></span><BR>
-							    </td>
-							  </tr>
-							  <tr>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <textarea id='txt_school_support' name="TechSchoolSupport" style="width:200px;height:100px;"><%=(request.getAttribute("TechSchoolSupport") != null) ? (String) request.getAttribute("TechSchoolSupport") : ""%></textarea><BR>
-							    </td>
-							    <td width="200" valign="middle" align="center" bgcolor="#CCCCCC">
-							      <textarea id='txt_district_support' name="TechDistrictSupport" style="width:200px;height:100px;"><%=(request.getAttribute("TechDistrictSupport") != null) ? (String) request.getAttribute("TechDistrictSupport")
-												: ""%></textarea><BR>
-							    </td>
-							  </tr>
-							  
-							  <!-- TIMELINE -->
-							  <tr>
-							    <td width="220" valign="middle" align="center" bgcolor="#003399" rowspan="2">
-							      <span class="title">Timeline</span><BR>
-							    </td>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <span class="subtitle"><i>When will the task or activity be complete?</i></span><BR>
-							    </td>
-							  </tr>
-							  <tr>
-							    <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							      <input data-provide="datepicker" id="CompletionDate" name="CompletionDate" size="20" value="<%=(request.getAttribute("CompletionDate") != null) ? (String) request.getAttribute("CompletionDate") : ""%>" READONLY>&nbsp;<img src="images/cal.gif" onmouseover="src='images/cal_on.gif';" onmouseout="src='images/cal.gif';" border="0" alt="Click Here to Pick the date">
-							    
-							    </td>
-							  </tr>
-							  
-							  <!-- SELF-REFLECTION -->
-						    <tr>
-						      <td width="220" valign="middle" align="center" bgcolor="#003399" rowspan="2">
-						        <span class="title">Self-Reflection</span><BR />
-						      </td>
-						      <td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-						        <span class="subtitle"><i>Reflect on the progress you have made on your goal(s)</i></span><BR />
-						      </td>
-						    </tr>
-						    <tr>
-						    	<td width="400" valign="middle" align="left" bgcolor="#CCCCCC" colspan="2">
-							    	<c:choose>
-							    		<c:when test="${PPGP_TASK ne null and PPGP_TASK.past}">
-							    			<textarea id='txt_self_eval' name="SelfEvaluation" cols="55" rows="5"><%=(request.getAttribute("SelfEvaluation") != null) ? (String) request.getAttribute("SelfEvaluation")
-												: ""%></textarea><BR />
-							    		</c:when>
-							    		<c:otherwise>
-							    			<span class='subtitle' style='color:red;'>Reflection will not be available until the task timeline has past.</span>
-							    		</c:otherwise>
-							    	</c:choose>
-						      </td>
-						    </tr>
-						    <tr>
-						    	<td id='row_task_submit' valign="middle" align="center" colspan="3" bgcolor="#F4F4F4" color='red'>
-							    	<img id="btn_submit_task" src="images/submit-off.png" style='cursor:pointer;' border="0" />
-										&nbsp;&nbsp;
-										<img src="images/cancel-off.png" style='cursor:pointer;' border="0"
-										  onclick="document.location.reload();" />
-						    	</td>
-								</tr>
-							</table>
-							
-							<!------------ End Primary Goal 1 ------------->
-							<br />
-						</td>
-					</tr>
-					<tr>
-						<td width="310" valign="top" align="left" colspan="1">
-							<img src="images/viewlp-off.png" border="0"
-						  	onclick="document.GrowthPlan.action='viewGrowthPlanSummary.html?ppgpid=<%=ppgp.getPPGPID()%>';document.GrowthPlan.submit();" />
-						</td>
-						<td width="310" valign="top" align="right" colspan="1">
-							<img src="images/addagoal-off.png"  border="0"
-							  onclick="document.GrowthPlan.action='addAdditionalGoal.html?sy=<%=ppgp.getSchoolYear()%>';document.GrowthPlan.submit();" />
-							  <br /><br />
-						</td>
-					</tr>
-				
-					<tr>
-						<td width="620" valign="top" align="left" colspan="2" bgcolor="#F4F4F4">
-							<img src="images/bullet.gif"><a href="javascript:openWindow('availableSupports','availableSupports.jsp',550,590)">View available supports for accomplishing goals</a><BR>
-						</td>
-					</tr>
-				
-					<tr>
-						<td width="620" valign="top" align="left" colspan="2" bgcolor="#F4F4F4">
-							<img src="images/bullet.gif"><a href="javascript:openWindow('draftGoals','draftGoals.jsp',550,400)">View/Enter Draft Goals</a><BR>
-						</td>
-					</tr>
-				
-					<tr>
-						<td width="620" valign="top" align="left" colspan="2" bgcolor="#F4F4F4">
-							<img src="images/bullet.gif"><a href="javascript:openWindow('reflection','reflection.jsp',600,500)">View Reflection and Self-Assessment Guide</a><BR>
-						</td>
-					</tr>
-					
-					<tr>
-						<td width="620" valign="top" align="center" colspan="2">
-							<BR /><BR />
-							<img src="images/bottom_line.gif" /><BR />
-						</td>
-					</tr>
-					
-					
-						<tr>
-<td width="310" valign="top" align="left">
-<a href="http://www.nlesd.ca">nlesd.ca</a>
-</td>
-<td width="310" valign="top" align="right">
-<span class="smalltext">Copyright 2014 Newfoundland and Labrador English School District.</span>
-</td>
-</tr>
 			
-				
-				</table>
-			</center>
-		
-		<!------------- End Main Table ---------------->
-		</form>
+			<div class="alert alert-warning alert-dismissible" style="text-align:center;"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<b>PLEASE NOTE:</b><br/>Due to your browser secure session, please make sure you fill out the form below within 10 minutes. 
+				Taking longer may result (like your online banking session) a timeout disconnect of your secure browsing session resulting in your data not being saved.
+				If you think you need more time, please write up your plan in Google Docs, NotePad or MS Word and then copy and paste into this form when ready. 
+				You can also fill out what you can, submit and come back to edit later. <b>You are limited to 500 characters in each text box unless otherwise specified.</b> Try to keep it simple.
+			</div>		
+					
+					<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
+					<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
+							  
+				<div id="msgSubmitGoal" style="display:none;text-align:center;" class="alert alert-info">
+				You just added a Task/Strategy to your Goal. You can add another Task to this Goal using the form below, or add a additional new Goal.<br/><br/>
+				<a href="addAdditionalGoal.html?sy=<%=ppgp.getSchoolYear()%>" class="btn btn-xs btn-success" onclick="loadingData()">Add Additional Goal</a>
+				<a href="viewGrowthPlanSummary.html?ppgpid=<%=ppgp.getPPGPID()%>" class="btn btn-xs btn-primary" onclick="loadingData()">Exit to Learning Plan</a>				
+				<br/><br/>
+				</div>  
+<table class="table table-striped table-condensed" style="font-size:11px;">							   
+<tbody>
+<tr>							  
+							  
+ <!-- GOAL -->
+			<td class="tableTitle">Goal:</td>
+			<td class="tableResult" colspan=3>
+			<%if (goal == null) {%>
+			Establish a goal for learning this year.<br/>
+			<textarea id="Goal" name="Goal" class="form-control"><%=(request.getAttribute("Goal") != null) ? (String) request.getAttribute("Goal") : ""%></textarea>
+			<script>			
+			CKEDITOR.replace('Goal', {wordcount: goalWordCountConf,height:150});			
+			</script>
+			<%}else {%>
+			<textarea id="Goal" name="Goal" class="form-control" readonly style="display:none;"><%=goal.getPPGPGoalDescription()%></textarea>
+			<%=goal.getPPGPGoalDescription()%>
+			<%}%>
+			</td>
+</tr>			
+<!-- TASK CATEGORY -->
 	
+
+<!-- 2018 and up -->	
+<%if(cyear > 2017){ %>
+
+		<tr>
+		<td class="tableTitle">Domain:</td>
+		<td class="tableResult" colspan=3>							          			
+				<select id="selectdomain" name="selectdomain" class="form-control">
+							<option value="0">SELECT DOMAIN</option>
+						<c:forEach items="${domains}" var="itemrow">
+							<option value="${ itemrow.domainID}">${ itemrow.domainTitle}</option>
+						</c:forEach> 
+				</select>
+		</td>
+		</tr>
+		
+		<tr id="divstrength">
+			<td class="tableTitle">Strength:</td>
+			<td class="tableResult" colspan=3>				          						
+				<select id="selectstrength" name="selectstrength" class="form-control">
+								<option value="0">SELECT STRENGTH</option>
+						<%if (!(request.getAttribute("strengths") == null)){ %>
+							<c:forEach items="${strengths}" var="itemrow">
+								<option value="${ itemrow.strengthID}">${ itemrow.strengthTitle}</option>
+							</c:forEach> 
+						<%} %>
+				</select>
+			</td>				          				
+		</tr>
+	 <input type="hidden" name="cat_id" value="0" />	
+<!-- 2017 and earlier  -->		
+<%}else{ %>
+				<tr>
+				<td class="tableTitle">Category:</td>
+				<td class="tableResult" colspan=3>
+		            	<select id='cat_id' name='cat_id' onchange="cat_id_change();" class="form-control">
+		            						<option value="0">SELECT CATEGORY</option>
+		                			<c:forEach items="${cats}" var="itemrow">
+											<option value="${ itemrow.value.categoryID}">${ itemrow.value.categoryTitle}</option>
+									</c:forEach> 
+		                </select>
+				</td>
+				</tr>
+							         
+				
+				<tr id="divgrade">
+				<td class="tableTitle">Grade:</td>
+				<td class="tableResult" colspan=3>			            		
+	              		<select id='grade_id' name='grade_id' onchange="grade_id_change();" class="form-control">
+	            							<option value="0">SELECT GRADE</option>
+	                				<c:forEach items="${grades}" var="itemrow">
+											<option value="${ itemrow.value.gradeID}">${ itemrow.value.gradeTitle}</option>
+									</c:forEach> 
+	                	</select>
+				</td>
+				</tr>			            	
+				
+										
+				<tr id="divsubject">
+				<td class="tableTitle">Subject Area:</td>
+				<td class="tableResult" colspan=3>
+               			<select id='subject_id' name='subject_id' onchange="subject_id_change();" class="form-control">
+               					<%if (!(request.getAttribute("subjects") == null)){ %>
+           							<c:forEach items="${subjects}" var="itemrow">
+											<option value="${ itemrow.subjectID}">${ itemrow.subjectTitle}</option>
+									</c:forEach> 
+           					<%} %>
+               			</select>
+				</td>			              			
+				</tr>
+							          	
+				<tr id="divtopic">
+				<td class="tableTitle">Topic Area:</td>
+				<td class="tableResult" colspan=3>							                			
+           				<select id='topic_id' name='topic_id' onchange="topic_id_change();" class="form-control">
+           					<%if (!(request.getAttribute("topics") == null)){ %>
+           									<OPTION VALUE="0">SELECT SPECIFIC TOPIC AREA</OPTION>
+											<OPTION VALUE="1" SELECTED>Other</OPTION>
+           							<c:forEach items="${topics}" var="itemrow">
+											<option value="${ itemrow.topicID}">${ itemrow.topicTitle}</option>
+									</c:forEach> 
+     						<%} %>
+           				</select>
+				</td>			                			
+				</tr>
+							          	
+				<tr id="divstopic">
+				<td class="tableTitle">Specific Topic:</td>
+				<td class="tableResult" colspan=3>
+                   		<select id='stopic_id' name='stopic_id' class="form-control">
+                   			<%if (!(request.getAttribute("stopics") == null)){ %>
+                   							<OPTION VALUE="0">SELECT SPECIFIC TOPIC AREA</OPTION>
+											<OPTION VALUE="1" SELECTED>Other</OPTION>
+                   						<c:forEach items="${stopics}" var="itemrow">
+											<option value="${ itemrow.specificTopicID}">${ itemrow.specificTopicTitle}</option>
+										</c:forEach> 
+           					<%} %>
+                   		</select>
+				</td>			                  			
+				</tr>
+							      
+
+<%} %>							      
+							 
+<!-- TASK STRATEGY -->
+				
+				<tr>		
+				<td class="tableTitle">Task/Strategies:</td>
+				<td class="tableResult" colspan=3>Choose path(s) for learning. List a task and activity.<br/>
+				<textarea id='txt_task' name="Task"><%=(request.getAttribute("Task") != null) ? (String) request.getAttribute("Task") : ""%></textarea>
+				</td>
+				</tr>
+							  
+<!-- SUPPORTS -->
+				<tr>		
+				<td class="tableTitleWide" colspan=4><b>Resources and Supports: What resources and support do you need?</b></td>
+				</tr>
+				<tr>
+				<td class="tableTitleL">School:</td>
+				<td class="tableResultL"><textarea id='txt_school_support' name="SchoolSupport"><%=(request.getAttribute("SchoolSupport") != null) ? (String) request.getAttribute("SchoolSupport") : ""%></textarea></td>
+				<td class="tableTitleR">District:</td>
+				<td class="tableResultR"><textarea id='txt_district_support' name="DistrictSupport"><%=(request.getAttribute("DistrictSupport") != null) ? (String) request.getAttribute("DistrictSupport"): ""%></textarea></td>
+				</tr>		
+							  
+<!-- TECHNOLOGY -->
+                <tr>
+				<td class="tableTitle">Techology:</td>
+				<td class="tableResult" colspan=3>How may techology support the successfully attainment of your goal?<br/>
+						<textarea id='txt_technology' name="TechSupport"><%=(request.getAttribute("TechSupport") != null) ? (String) request.getAttribute("TechSupport"): ""%></textarea>
+				</td>
+				</tr>
+				<tr>
+				<td class="tableTitleWide" colspan=4><b>Technology Supports: What technology supports are required for the successful implementation of your growth plan?</b></td>
+				</tr>
+				<tr>
+				<td class="tableTitleL">School:</td>
+				<td class="tableResultL"><textarea id='txt_school_support_tech' name="TechSchoolSupport"><%=(request.getAttribute("TechSchoolSupport") != null) ? (String) request.getAttribute("TechSchoolSupport") : ""%></textarea></td>
+				<td class="tableTitleR">District:</td>
+				<td class="tableResultR"><textarea id='txt_district_support_tech' name="TechDistrictSupport"><%=(request.getAttribute("TechDistrictSupport") != null) ? (String) request.getAttribute("TechDistrictSupport"): ""%></textarea></td>
+				</tr>		
+ <!-- TIMELINE -->
+                <tr>
+				<td class="tableTitle">Timeline:</td>
+				<td class="tableResult" colspan=3>When will the task or activity be complete?<br/>
+				<input data-provide="datepicker" id="CompletionDate" name="CompletionDate" class="form-control" value="<%=(request.getAttribute("CompletionDate") != null) ? (String) request.getAttribute("CompletionDate") : ""%>" READONLY>
+				</td>
+				</tr>
+									
+<!-- SELF-REFLECTION -->
+ 				<tr>
+				<td class="tableTitle">Self-Reflection:</td>
+				<td class="tableResult" colspan=3>
+				<c:choose>
+				    		<c:when test="${PPGP_TASK ne null and PPGP_TASK.past}">
+				    			Reflect on the progress you have made on your goal(s):<br/>
+				    			<textarea id='txt_self_eval' name="SelfEvaluation"><%=(request.getAttribute("SelfEvaluation") != null) ? (String) request.getAttribute("SelfEvaluation"): ""%></textarea>
+				    		    <script>				    		      	
+				    		    CKEDITOR.replace('txt_self_eval', {wordcount: selfRefCountConf,height:150});</script>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<div class="alert alert-danger"><%=(request.getAttribute("CompletionDate") != null) ? "<b>NOTE:</b> Self-Reflection will not be available until the task timeline of "+ (String) request.getAttribute("CompletionDate")+ " has past." : "<b>NOTE:</b> You have yet to specify a timeline above for completion of this task."%></div>
+				    		</c:otherwise>
+				</c:choose>
+				</td>
+				</tr>     				 
+</tbody>
+</table>
+							 
+<div align="center">
+<a href="#" class="btn btn-xs btn-success" id="btn_submit_task" title="Submit Goal" onclick="loadingData()">
+<%if (goal == null) {%>
+Submit Goal
+<%} else { %>
+Submit
+<%}%>
+</a>
+<a href="policy.jsp" class="btn btn-xs btn-danger" title="Cancel">Cancel</a>	
+<a href="viewGrowthPlanSummary.html?ppgpid=<%=ppgp.getPPGPID()%>" class="btn btn-xs btn-primary" onclick="loadingData()">View Learning Plan</a>
+<a href="addAdditionalGoal.html?sy=<%=ppgp.getSchoolYear()%>" class="btn btn-xs btn-success" onclick="loadingData()">Add Additional Goal</a>
+</div>						
+												
+						
+					
+</div></div></div>
+		</form>
+		
+<%if(request.getAttribute("msg")!=null){%>
+	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+<%}%>
+<%if(request.getAttribute("errmsg")!=null){%>
+	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+<%}%>		
+		
+<script>
+$('document').ready(function(){
+	$("#CompletionDate").datepicker({
+      	changeMonth: true,
+      	changeYear: true,
+      	dateFormat: "dd/mm/yy"
+   });	
+	
+	
+});
+
+//Configure char count for just this page. Default max is 2460. 4000 for this page.
+    
+CKEDITOR.replace('txt_task', {wordcount: pageWordCountConf,height:150});  
+CKEDITOR.replace('txt_school_support', {wordcount: pageWordCountConf,height:150});  
+CKEDITOR.replace('txt_district_support', {wordcount: pageWordCountConf,height:150});  
+CKEDITOR.replace('txt_technology', {wordcount: pageWordCountConf,height:150}); 
+CKEDITOR.replace('txt_school_support_tech', {wordcount: pageWordCountConf,height:150});  
+CKEDITOR.replace('txt_district_support_tech', {wordcount: pageWordCountConf,height:150});  
+
+</script> 
 	</body>
 </html>

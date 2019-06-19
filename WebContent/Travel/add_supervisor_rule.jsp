@@ -5,6 +5,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
+<%@ taglib uri="/WEB-INF/personnel.tld" prefix="per" %>
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN" />
 
     	

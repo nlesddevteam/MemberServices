@@ -759,9 +759,9 @@ function confirmVehicleFields(usertype) {
 		}
 	}
 	//check the date fields
-	//if(!(checkdatefields())){
-		//return false;
-	//}
+	if(!(checkdatefields())){
+		return false;
+	}
 	// all good
 	$("#mainalert").hide();
 	// updateCompanyInformation();
@@ -859,7 +859,7 @@ function updateVehicle(usertype) {
 
 								surl = "addNewVehicle.html?vid=" + vid;
 							}
-							 $("#pageContentBody").load(surl);
+							// $("#pageContentBody").load(surl);
 						} else {
 							$("#vehicleerrormessage").text(
 									$(this).find("MESSAGE").text()).css(
@@ -1376,6 +1376,158 @@ function checkemployee(usert) {
 			//$('.nav-tabs a:last').tab('show');
 			
 			$("#scadocument").focus();
+			return false;
+		}
+	}
+	//check dates to make sure they are in range
+	if(!($("#darundate").val() == "")){
+		var today = new Date();
+		var cyear = today.getFullYear();
+		var cmonth = today.getMonth();
+		var selectedDate = $('#darundate').datepicker('getDate');
+		//first we check for future dates
+		if(Date.parse(selectedDate) > Date.parse(today)){
+			$("#body_error_message_top").html(
+					"Driver Abstract Run Date must be in past").css("display",
+					"block");
+					$('#documents').tab('show');
+					$("#darundate").focus();
+					return false;
+		}
+		//now we check to see if it falls in the date range
+		if(cmonth > 5 && cmonth < 12){
+			//check current year
+			var checkdate= new Date(cyear, 4, 1);
+			if(Date.parse(selectedDate) < checkdate){
+				$("#body_error_message_top").html(
+				"Driver Abstract Run Date must be greater than " + checkdate.toLocaleDateString()).css("display",
+				"block");
+				$('#documents').tab('show');
+				$("#darundate").focus();
+				return false;
+			}
+		}else{
+			//now we check back to the previous year
+			var checkdate= new Date(cyear-1, 4, 1);
+			if(Date.parse(selectedDate) < checkdate){
+				$("#body_error_message_top").html(
+						"Driver Abstract Run Date must be greater than " + checkdate.toLocaleDateString()).css("display",
+						"block");
+						$('#documents').tab('show');
+						$("#darundate").focus();
+						return false;
+			}
+		}
+	}
+		if(!($("#prcvsqdate").val() == "")){
+			var today = new Date();
+			var cyear = today.getFullYear();
+			var cmonth = today.getMonth();
+			var selectedDate = $('#prcvsqdate').datepicker('getDate');
+			//first we check for future dates
+			if(Date.parse(selectedDate) > Date.parse(today)){
+				$("#spanprcvsqdate").html("PRC/VSQ Date must be in past");
+				$("#divprcvsqdate").show();
+				$("#body_error_message_top").html(
+						"PRC/VSQ Date must be in past").css("display",
+						"block");
+						$('#documents').tab('show');
+						$("#prvvsqdate").focus();
+						return false;
+			}
+			//now we check to see if it falls in the date range
+			if(!($("#continuousservice").val() == "") && !(isNaN($("#continuousservice").val()))){
+				if($("#continuousservice").val() < 2 ){
+					if(cmonth > 5 && cmonth < 12){
+						//check current year
+						var checkdate= new Date(cyear, 4, 1);
+						if(Date.parse(selectedDate) < checkdate){
+							$("#body_error_message_top").html(
+									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
+									"block");
+									$('#documents').tab('show');
+									$("#prcvsqdate").focus();
+									return false;
+							
+						}
+					}else{
+						//now we check back to the previous year
+						var checkdate= new Date(cyear-1, 4, 1);
+						if(Date.parse(selectedDate) < checkdate){
+							$("#body_error_message_top").html(
+									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
+									"block");
+									$('#documents').tab('show');
+									$("#prcvsqdate").focus();
+									return false;
+						}
+					}
+				}else{
+					if(cmonth > 5 && cmonth < 12){
+						//check current year
+						var checkdate= new Date(cyear-1, 4, 1);
+						if(Date.parse(selectedDate) < checkdate){
+							$("#body_error_message_top").html(
+									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
+									"block");
+									$('#documents').tab('show');
+									$("#prcvsqdate").focus();
+									return false;
+						}
+					}else{
+						//now we check back to the previous year
+						var checkdate= new Date(cyear-2, 4, 1);
+						if(Date.parse(selectedDate) < checkdate){
+							$("#body_error_message_top").html(
+									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
+									"block");
+									$('#documents').tab('show');
+									$("#prcvsqdate").focus();
+									return false;
+						}
+					}
+				}
+			}
+		}
+			
+	//now check valid date ranges
+	if(!($("#dlexpirydate").val() == "")){
+		var today = new Date();
+		var targetDate= new Date();
+		targetDate.setDate(today.getDate()+ 1825);
+		var selectedDate = $('#dlexpirydate').datepicker('getDate');
+		if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
+			$("#body_error_message_top").html(
+					"DL Expiry Date must be in future and no more than 5 years").css("display",
+					"block");
+					$('#documents').tab('show');
+					$("#dlexpirydate").focus();
+					return false;
+		}
+	}
+	if(!($("#faexpirydate").val() == "")){
+		var today = new Date();
+		var targetDate= new Date();
+		targetDate.setDate(today.getDate()+ 1095);
+		var selectedDate = $('#faexpirydate').datepicker('getDate');
+		if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
+			$("#body_error_message_top").html(
+			"First Aid/Epipen Date must be in future and no more than 3 years").css("display",
+			"block");
+			$('#documents').tab('show');
+			$("#faexpirydate").focus();
+			return false;
+		}
+	}
+	if(!($("#scadate").val() == "")){
+		var today = new Date();
+		var selectedDate = $('#scadate').datepicker('getDate');
+		if (Date.parse(selectedDate) > Date.parse(today)){
+			$("#body_error_message_top").html(
+			"Signed Date must not be in future").css("display",
+			"block");
+			$('#documents').tab('show');
+			$("#scadate").focus();
 			return false;
 		}
 	}
@@ -5833,10 +5985,6 @@ function checkfileextension(filename){
 		return true;
 	}
 }
-/*******************************************************************************
- * check employee dates on form load and show messages
- * removed from save function so they can save invalid dates
- ******************************************************************************/
 function checkdate(datetype){
 	if(datetype == 'DLEXP'){
 		$("#divdlexp").hide();
@@ -6039,19 +6187,16 @@ function checkdate(datetype){
 	}
 }
 function checkdatefields(){
+
 		if(!($("#rdate").val() == "")){
 			var today = new Date();
 			var targetDate= new Date();
 			targetDate.setDate(today.getDate()+ 365);
 			var selectedDate = $('#rdate').datepicker('getDate');
-			var errorstring="";
-			var isvalid = true;
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Registration Expiry Date must be in future and no more than 1 year")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = "Registration Expiry Date must be in future and no more than 1 year";
+				$("#display_error_message_bottom").text("Registration Expiry Date must be in future and no more than 1 year")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
 	
@@ -6061,11 +6206,9 @@ function checkdatefields(){
 			targetDate.setDate(today.getDate()+ 365);
 			var selectedDate = $('#idate').datepicker('getDate');
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Insurance Expiry Date must be in future and no more than 1 year")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = errorstring + "<br />" + "Insurance Expiry Date must be in future and no more than 1 year";
+				$("#display_error_message_bottom").text("Insurance Expiry Date must be in future and no more than 1 year")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
 	
@@ -6075,11 +6218,9 @@ function checkdatefields(){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#fidate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Fall Inspection Date must be in past and no more than 1 year ")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = errorstring + "<br />" + "Fall Inspection Date must be in past and no more than 1 year";				
+				$("#display_error_message_bottom").text("Fall Inspection Date must be in past and no more than 1 year ")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
 	
@@ -6089,11 +6230,9 @@ function checkdatefields(){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#widate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Winter Inspection Date must be in past and no more than 1 year ")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = errorstring + "<br />" + "Winter Inspection Date must be in past and no more than 1 year";	
+				$("#display_error_message_bottom").text("Winter Inspection Date must be in past and no more than 1 year ")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
 	
@@ -6103,11 +6242,9 @@ function checkdatefields(){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#fheidate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Fall H.E. Inspection Date must be in past and no more than 1 year ")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = errorstring + "<br />" + "Fall H.E. Inspection Date must be in past and no more than 1 year";				
+				$("#display_error_message_bottom").text("Fall H.E. Inspection Date must be in past and no more than 1 year ")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
 	
@@ -6117,11 +6254,9 @@ function checkdatefields(){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#mheidate1').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Misc H.E. Inspection Date 1 must be in past and no more than 1 year ")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = errorstring + "<br />" + "Misc H.E. Inspection Date 1 must be in past and no more than 1 year";					
+				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 1 must be in past and no more than 1 year ")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
 	
@@ -6131,21 +6266,12 @@ function checkdatefields(){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#mheidate2').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				//$("#vehicleerrormessage").text("Misc H.E. Inspection Date 2 must be in past and no more than 1 year ")
-				//.css("display", "block");
-				//return false;
-				isvalid=false;
-				errorstring = errorstring + "<br />" + "Misc H.E. Inspection Date 2 must be in past and no more than 1 year";				
+				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 2 must be in past and no more than 1 year ")
+				.css("display", "block").delay(4000).fadeOut();
+				return false;
 			}
 		}
-		
-		if(isvalid){
-			return true;
-		}else{
-			$("#vehicleerrormessage").html(errorstring).css("display", "block");
-			return false;
-		}
-		
+		return true;
 		
 	
 }
@@ -6157,258 +6283,4 @@ function isNumberKey(evt)
       return false;
 
    return true;
-}
-/*******************************************************************************
- * Calls submit full audit 
- ******************************************************************************/
-function getAuditLogEntries() {
-	$('#body_error_message_top').hide();
-	var aid = $.trim($('#selectaudit').val());
-	var cid = $.trim($('#selectcon').val());
-	var sdate = $.trim($('#sdate').val());
-	var edate = $.trim($('#edate').val());
-	if(aid == -1){
-		$('#body_error_message_top').html("Please select audit type");
-		$('#body_error_message_top').show();
-	}else if(cid == -1){
-		$('#body_error_message_top').html("Please select contractor");
-		$('#body_error_message_top').show();
-	}else if(sdate == ""){
-		$('#body_error_message_top').html("Please select from date");
-		$('#body_error_message_top').show();
-	}else if(edate == ""){
-		$('#body_error_message_top').html("Please select  to date");
-		$('#body_error_message_top').show();
-	}else{
-		var surl = "adminSubmitAudit.html?selectaudit=" + aid + "&selectcon=" + cid + "&sdate=" + sdate + "&edate=" + edate;
-		$("#pageContentBody").load(surl);
-		$("#loadingSpinner").css("display","inline");
-	}
-	
-}
-/*******************************************************************************
-* check employee dates on form load and show messages
-* removed from save function so they can save invalid dates
- ******************************************************************************/
-function checkEmployeeDateRanges(){
-	//check dates to make sure they are in range
-	if(!($("#darundate").val() == "")){
-		var today = new Date();
-		var cyear = today.getFullYear();
-		var cmonth = today.getMonth();
-		var selectedDate = $('#darundate').datepicker('getDate');
-		var errorstring="";
-		var isvalid=true;
-		//first we check for future dates
-		if(Date.parse(selectedDate) > Date.parse(today)){
-			//$("#body_error_message_top").html(
-					//"Driver Abstract Run Date must be in past").css("display",
-					//"block");
-					//$('#documents').tab('show');
-					//$("#darundate").focus();
-					//return false;
-					isvalid=false;
-					errorstring = "Driver Abstract Run Date must be in past";
-		}
-		//now we check to see if it falls in the date range
-		if(cmonth > 5 && cmonth < 12){
-			//check current year
-			var checkdate= new Date(cyear, 4, 1);
-			if(Date.parse(selectedDate) < checkdate){
-				//$("#body_error_message_top").html(
-				//"Driver Abstract Run Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-				//"block");
-				//$('#documents').tab('show');
-				//$("#darundate").focus();
-				//return false;
-				isvalid=false;
-				errorstring = "Driver Abstract Run Date must be greater than " + checkdate.toLocaleDateString();
-			}
-		}else{
-			//now we check back to the previous year
-			var checkdate= new Date(cyear-1, 4, 1);
-			if(Date.parse(selectedDate) < checkdate){
-				//$("#body_error_message_top").html(
-						//"Driver Abstract Run Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-						//"block");
-						//$('#documents').tab('show');
-						//$("#darundate").focus();
-						//return false;
-						isvalid=false;
-						errorstring = errorstring + "<br />" + "Driver Abstract Run Date must be greater than " + checkdate.toLocaleDateString();
-			}
-		}
-	}
-		if(!($("#prcvsqdate").val() == "")){
-			var today = new Date();
-			var cyear = today.getFullYear();
-			var cmonth = today.getMonth();
-			var selectedDate = $('#prcvsqdate').datepicker('getDate');
-			//first we check for future dates
-			if(Date.parse(selectedDate) > Date.parse(today)){
-				//$("#spanprcvsqdate").html("PRC/VSQ Date must be in past");
-				//$("#divprcvsqdate").show();
-				//$("#body_error_message_top").html(
-					//	"PRC/VSQ Date must be in past").css("display",
-						//"block");
-						//$('#documents').tab('show');
-						//$("#prvvsqdate").focus();
-						//return false;
-						isvalid=false;
-						errorstring = errorstring + "<br />" + "PRC/VSQ Date must be in past";
-			}
-			//now we check to see if it falls in the date range
-			if(!($("#continuousservice").val() == "") && !(isNaN($("#continuousservice").val()))){
-				if($("#continuousservice").val() < 2 ){
-					if(cmonth > 5 && cmonth < 12){
-						//check current year
-						var checkdate= new Date(cyear, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							//$("#body_error_message_top").html(
-									//"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									//"block");
-									//$('#documents').tab('show');
-									//$("#prcvsqdate").focus();
-									//return false;
-									isvalid=false;
-									errorstring = errorstring + "<br />" + "PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString();
-							
-						}
-					}else{
-						//now we check back to the previous year
-						var checkdate= new Date(cyear-1, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							//$("#body_error_message_top").html(
-									//"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									//"block");
-									//$('#documents').tab('show');
-									//$("#prcvsqdate").focus();
-									//return false;
-									isvalid=false;
-									errorstring = errorstring + "<br />" + "PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString();
-						}
-					}
-				}else{
-					if(cmonth > 5 && cmonth < 12){
-						//check current year
-						var checkdate= new Date(cyear-1, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							//$("#body_error_message_top").html(
-									//"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									//"block");
-									//$('#documents').tab('show');
-									//$("#prcvsqdate").focus();
-									//return false;
-							isvalid=false;
-							errorstring = errorstring + "<br />" + "PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString();
-						}
-					}else{
-						//now we check back to the previous year
-						var checkdate= new Date(cyear-2, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							//$("#body_error_message_top").html(
-									//"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									//"block");
-									//$('#documents').tab('show');
-									//$("#prcvsqdate").focus();
-									//return false;
-									isvalid=false;
-									errorstring = errorstring + "<br />" + "PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString();
-						}
-					}
-				}
-			}
-		}
-			
-	//now check valid date ranges
-	if(!($("#dlexpirydate").val() == "")){
-		var today = new Date();
-		var targetDate= new Date();
-		targetDate.setDate(today.getDate()+ 1825);
-		var selectedDate = $('#dlexpirydate').datepicker('getDate');
-		if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
-			//$("#body_error_message_top").html(
-					//"DL Expiry Date must be in future and no more than 5 years").css("display",
-					//"block");
-					//$('#documents').tab('show');
-					//$("#dlexpirydate").focus();
-					//return false;
-					isvalid=false;
-					errorstring = errorstring + "<br />" + "DL Expiry Date must be in future and no more than 5 years";
-		}
-	}
-	if(!($("#faexpirydate").val() == "")){
-		var today = new Date();
-		var targetDate= new Date();
-		targetDate.setDate(today.getDate()+ 1095);
-		var selectedDate = $('#faexpirydate').datepicker('getDate');
-		if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
-			//$("#body_error_message_top").html(
-			//"First Aid/Epipen Date must be in future and no more than 3 years").css("display",
-			//"block");
-			//$('#documents').tab('show');
-			//$("#faexpirydate").focus();
-			//return false;
-			isvalid=false;
-			errorstring = errorstring + "<br />" + "First Aid/Epipen Date must be in future and no more than 3 years";
-		}
-	}
-	if(!($("#scadate").val() == "")){
-		var today = new Date();
-		var selectedDate = $('#scadate').datepicker('getDate');
-		if (Date.parse(selectedDate) > Date.parse(today)){
-			//$("#body_error_message_top").html(
-			//"Signed Date must not be in future").css("display",
-			//"block");
-			//$('#documents').tab('show');
-			//$("#scadate").focus();
-			//return false;
-			isvalid=false;
-			errorstring = errorstring + "<br />" + "Signed Date must not be in future";
-		}
-	}
-	if(isvalid){
-		return true;
-	}else{
-		$("#employeeerrormessage").html(errorstring).css("display","block");
-	}
-}
-/*******************************************************************************
- * Calls submit date audit 
- ******************************************************************************/
-function getDateAuditLogEntries() {
-	
-	$('#body_error_message_top').hide();
-	var tid = $.trim($('#selecttype').val());
-	var cid = $.trim($('#selectcon').val());
-	var fid = $.trim($('#selectfield').val());
-	var vfid = $.trim($('#selectfieldv').val());
-	var sdate = $.trim($('#sdate').val());
-	var edate = $.trim($('#edate').val());
-	if( tid ==1){
-		
-	}else{
-		
-	}
-	if(cid == -1){
-		$('#body_error_message_top').html("Please select contractor");
-		$('#body_error_message_top').show();
-	}else if(fid == -1 && tid ==1){
-		$('#body_error_message_top').html("Please select date field");
-		$('#body_error_message_top').show();
-	}else if(vfid == -1 && tid ==2){
-		$('#body_error_message_top').html("Please select date field");
-		$('#body_error_message_top').show();
-	}else if(sdate == ""){
-		$('#body_error_message_top').html("Please select from date");
-		$('#body_error_message_top').show();
-	}else if(edate == ""){
-		$('#body_error_message_top').html("Please select  to date");
-		$('#body_error_message_top').show();
-	}else{
-		var surl = "adminSubmitDateAudit.html?selecttype=" + tid  + "&selectcon=" + cid + "&selectfield=" + fid + "&selectfieldv=" + vfid  + "&sdate=" + sdate + "&edate=" + edate;
-		$("#pageContentBody").load(surl);
-		$("#loadingSpinner").css("display","inline");
-	}
-	
 }

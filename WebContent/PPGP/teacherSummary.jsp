@@ -7,6 +7,9 @@
                 com.esdnl.personnel.v2.model.sds.bean.*"
         isThreadSafe="false"%>
 
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
 
@@ -20,7 +23,6 @@
   Personnel p = null;
   int pid;
   UserRoles roles = null;
-
   boolean bigbrother = false;
   boolean editable = false;
   EmployeeBean ebean = null;
@@ -59,26 +61,12 @@
 	<head>
 		<title>Professional Growth Plan Summary</title>
 		
-		<link rel="stylesheet" href="css/summary.css">
-		<link rel="stylesheet" href="css/smoothness/jquery-ui.custom.css">
-		<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/ppgp.js"></script>
 		<script language="JavaScript">
-			function openWindow(id,url,w,h) {
-		       window.open(url,id,"toolbar=0,location=no,top=50,left=50,directories=0,status=0,menbar=0,scrollbars=0,resizable=0,width="+w+",height="+h);
-		
-		       if (navigator.appName == 'Netscape'){ 
-		               popUpWin.focus();
-		       }
-			}
-		
+					
 			$('document').ready(function() {
 				var msgupdate="<%=request.getAttribute("msgupdate") %>";
 				if(!(msgupdate == "null")){
-					$("#spansuccess").text(msgupdate);
+					$("#divsuccess").text(msgupdate);
 					$("#divsuccess").show();
 				}
   				var totalgoals = $("#totalgoals").val();
@@ -96,246 +84,169 @@
 			
 			});
 		</script>
+<script>
+    $("#loadingSpinner").css("display","none");
+</script>
+<style>
+.tableTitle {font-weight:bold; font-size:16px;}
+.tableResult {font-weight:normal;}
+.tableTitleWide {column-span: all;}
+.tableTitleL {font-weight:bold;font-size:16px;width:15%;}
+.tableResultL {font-weight:normal;width:35%;}
+.tableTitleR {font-weight:bold;font-size:16px;width:15%;}
+.tableResultR {font-weight:normal;width:35%;}
+input {border:1px solid silver;}
+
+</style>	
 	</head>
 
-	<body topmargin="10" bottommargin="0" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">
-
-		<table cellpadding="0" cellspacing="0" border="0">
-			<tr>
-				<td valign="top" align="left">
-					<img src="images/teacherplpsummary.png"><BR>
-					<%if(ppgp != null){%>
-						<div style="padding-left: 10px;
-												font-family: Arial, Helvetica, sans-serif; 
-												font-size: 20px; 
-												font-weight: bold; 
-												color: #003399; 
-												line-height: 22px;" align="left" >
-							<%=ppgp.getSchoolYear()%>
-						</div><BR>
-					<%}%>
-				</td>
-				<td valign="top" align="left">
-				  <table cellpadding="0" cellspacing="0" border="0">
-				    <tr>
-				      <td>
-				        <b>Name:</b>
-				      </td>
-				      <td>
-				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=p.getFullName()%>
-				      </td>
-				    </tr>
-				    <%if(roles.containsKey("TEACHER") || roles.containsKey("PRINCIPAL") || roles.containsKey("VICE PRINCIPAL")){%>
-				      <tr>
-				        <td>
-				          <b>School:</b>
-				        </td>
-				        <td>
-				          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=p.getSchool().getSchoolName()%>
-				        </td>
-				      </tr>
-				    <%}%>
-				    
-				    <tr>
-				      <td>
-				        <b>Date:</b>
-				      </td>
-				      <td>
-				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=(new SimpleDateFormat("dd/MM/yyyy")).format(Calendar.getInstance().getTime())%>
-				      </td>
-				    </tr>
-				  </table>
-				</td>
-			</tr>
-		</table>
-
-		<table width="95%" cellpadding="2" cellspacing="0" border="0" align="center" class="infotable">
-				<tr>
-				    <td colspan="6" valign="middle"  align="middle">
-				      	<div class="alert alert-success" role="alert" style="display:none;" id="divsuccess">
-  							<font style="font-weight:bold"><span id="spansuccess"></span></font>
-						</div>
-				    </td>
-				 </tr>
-				 <tr>
-				    <td colspan="6" valign="middle"  align="middle">
-				      	<div class="alert alert-danger" role="alert" style="display:none;" id="divdanger">
-  							<font style="font-weight:bold">No goals added for this PLP. Please click "Return to Learning Plan" to add a goal. Minimum two goals required.</font>
-						</div>
-				    </td>
-				</tr>
-				<tr>
-				    <td colspan="6" valign="middle"  align="middle">
-				      	<div class="alert alert-warning" role="alert" style="display:none;" id="divwarning">
-  							<font style="font-weight:bold">One goal added for this PLP. Please click Return to Learning Plan to add a goal. Minimum two goals required.</font>
-						</div>
-				    </td>
-				</tr>
-				<tr>
-				    <td colspan="6" valign="middle"  align="middle">
-				      	<div class="alert alert-success" role="alert" style="display:none;" id="divcomplete">
-  							<font style="font-weight:bold">Two goals(or more) added for this PLP.  Minimum required goals completed.</font>
-						</div>
-				    </td>
-				</tr>
-			<%if((ppgp != null)){%>
-				<tr>
-					<td cospan='6'>
+	<body>
+    <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading">
+<%if(ppgp != null){%>
+					<b><%=ppgp.getSchoolYear()%> Professional Learning Plan</b> for<br/>
+<%}%>
+	               	<b><span style="text-transform:Capitalize;"><%=p.getFullNameReverse()%></span></b> 				      
+<%if(roles.containsKey("TEACHER") || roles.containsKey("PRINCIPAL") || roles.containsKey("VICE PRINCIPAL")){%>
+				     of <b><%=p.getSchool().getSchoolName()%></b>
+<%}%>
+				    <br/>
+				   <b>Date:</b> <%=(new SimpleDateFormat("dd/MM/yyyy")).format(Calendar.getInstance().getTime())%>
+	               	
+	               	</div>
+      			 	<div class="panel-body"> 
+					<div class="alert alert-success" align="center" role="alert" style="display:none;" id="divsuccess"></div>
+					<div class="alert alert-danger" align="center" role="alert" style="display:none;" id="diverror"></div>
+				    <div class="alert alert-danger" align="center" role="alert" style="display:none;" id="divdanger">
+  						No goals added for this Professional Learning Plan. <br/>Please click "ADD A GOAL" below to add a goal. Minimum two goals required.
+					</div>
+				    <div class="alert alert-warning" align="center" role="alert" style="display:none;" id="divwarning">
+  						One goal added for this Professional Learning Plan. <br/>Please click "ADD A GOAL" below to add a goal. Minimum two goals required.
+					</div>
+				    <div class="alert alert-success no-print" align="center" role="alert" style="display:none;" id="divcomplete">
+  						Two goals(or more) added for this Professional Learning Plan.  Minimum required goals completed.
+					</div>
+				    <div align="center" class="no-print">
+					    <%if((ppgp != null) && editable && !bigbrother){%>
+			  	      	<a href="viewGrowthPlan.html?sy=<%=ppgp.getSchoolYear()%>" class="no-print btn btn-success btn-xs" onclick="loadingData()">ADD A GOAL</a>
+			        	<%}%>
+						<a class="no-print btn btn-xs btn-danger" href="/MemberServices/PPGP/policy.jsp" onclick="loadingData()">HOME</a>
+				    </div> 
+				    <br/>
+<%if((ppgp != null)){%>
+				
 					<input type="hidden" name="pid" id="pid" value="<%=ppgp.getPersonnel().getPersonnelID()%>" />
 					<input type="hidden" name="totalgoals" id="totalgoals" value="<%=ppgp.entrySet().size()%>" />
-					</td>
-				</tr>
-
-				</table>
+					
 				
-				<%if((ppgp.entrySet().size() >= 1)){
-			  		for(Map.Entry<Integer, PPGPGoal> entry : ppgp.entrySet()) {
-				    goal = entry.getValue();%>
-				    <table width="95%" cellpadding="2" cellspacing="0" border="0" align="center" class="infotable">
-				  	<tr>
-				      <td colspan="<%=(editable)?6:5%>" bgcolor="#0066CC" valign="top">
-				        <table>
-				          <tr>
-				            <td>
-				              <span class="title2">Goal:&nbsp;</span>
-				            </td>
-				            <td colspan="4">
-				              <span class="title2"><%=goal.getPPGPGoalDescription()%></span>
-				            </td>
-				          </tr>
-				        </table>
-				      </td>
+<%if((ppgp.entrySet().size() >= 1)){
+int cntrg=0;
+%>
+			  		
+		<% for(Map.Entry<Integer, PPGPGoal> entry : ppgp.entrySet()) {
+				    goal = entry.getValue();
+				    cntrg++;
+				    %>
+				    
+				    <table class="table table-condensed" style="font-size:12px;">							   
+					<tbody>
+					<tr style="background-color:#0066cc;font-size:14px;color:White;">					
+				    <td colspan=4><div style="float:right;">
+				    <%if(editable){%>
+				    <a class="no-print btn-xs btn btn-success" title="Add Task/Strategy to Goal" onclick="loadingData()" href="addGrowthPlanTask.html?gid=<%=goal.getPPGPGoalID()%>&ppgpid=<%=ppgp.getPPGPID()%><%=(bigbrother)?"&pid="+p.getPersonnelID():""%>">ADD A TASK</a>
+					<a href="#" class="no-print btn-xs btn btn-primary" title="Edit Goal Name" onclick="showupdategoal('<%=goal.getPPGPGoalID()%>','<%=goal.getPPGPGoalDescription().replaceAll("<[^>]*>", "").replaceAll("\\r\\n|\\r|\\n", "").replace("</p>","").replace("<br>","").replace("<p>","")%>');">EDIT GOAL</a>
+				   	<a class="no-print btn-xs btn btn-danger" href="#" title="Delete Goal" onclick="showdeletegoal('<%=goal.getPPGPGoalID()%>','<%=ppgp.getPPGPID()%>',this);">DEL GOAL</a> 
+					<%}%>
+				    </div>
+				    <b>GOAL #<%=cntrg%>:</b><br/><%=goal.getPPGPGoalDescription()%>
+				    
+				    </td>
 				    </tr>
 				    
-				    <%if(editable){%>
-					    <tr>
-					      <td colspan="6" bgcolor="#F4F4F4" valign="middle">
-					        <span class="title">Tasks &amp; Activities</span>&nbsp;&nbsp;[<a href="addGrowthPlanTask.html?gid=<%=goal.getPPGPGoalID()%>&ppgpid=<%=ppgp.getPPGPID()%><%=(bigbrother)?"&pid="+p.getPersonnelID():""%>">ADD TASK</a>
-					        &nbsp;|&nbsp;<a href="#" onclick="showdeletegoal('<%=goal.getPPGPGoalID()%>','<%=ppgp.getPPGPID()%>','<%=goal.getPPGPGoalDescription().replaceAll("\\r\\n|\\r|\\n", " ").replaceAll("'"," ")%>',this);">REMOVE GOAL</a>| 
-					        <a href="#" onclick="showupdategoal('<%=goal.getPPGPGoalID()%>','<%=goal.getPPGPGoalDescription().replaceAll("\\r\\n|\\r|\\n", " ").replaceAll("'"," ")%>','<%=ppgp.getPPGPID()%>');">EDIT GOAL</a>]<BR>
-					      </td>
-					    </tr>
-				    <%}%>
-				    <tr>
-				      <td>
-				        <table width="100%" cellpadding="1" cellspacing="1" border="0" class="infotable">
-				          <tr>
-				            <td width="20%" bgcolor="#F4F4F4" valign="middle" align="center" rowspan='2'>
-				              <span class="title">Strategy</span>
-				            </td>
-				            <td width="20%" bgcolor="#F4F4F4" valign="middle" class="title" style='text-align:center;' align="center" colspan='2'>
-				              Resources/Support
-				            </td>
-				            
-				            <td width="20%" bgcolor="#F4F4F4" valign="middle" class="title" style='text-align:center;' align="center" colspan='2'>
-				              Technology
-				            </td>
-				            <td width="10%" bgcolor="#F4F4F4" valign="middle" align="center" rowspan='2'>
-				              <span class="title">Completion Date</span>
-				            </td>
-				            <td width="20%" bgcolor="#F4F4F4" valign="middle" align="center" rowspan='2'>
-				              <span class="title">Self Evaluation</span>
-				            </td>
-				            <%if(editable){%>
-					            <td bgcolor="#F4F4F4" valign="middle" align="center" rowspan='2'>
-					              &nbsp;
-					            </td>
-				            <%}%>
-				          </tr>
-				          
-				          <tr>
-				          	<td width="10%" bgcolor="#F4F4F4" valign="middle" class="title" style='text-align:center;'align="center">
-				              School
-				            </td>
-				          	<td width="10%" bgcolor="#F4F4F4" valign="middle" class="title" style='text-align:center;'align="center">
-				              District
-				            </td>
-				            <td width="10%" bgcolor="#F4F4F4" valign="middle" class="title" style='text-align:center;'align="center">
-				              School
-				            </td>
-				          	<td width="10%" bgcolor="#F4F4F4" valign="middle" class="title" style='text-align:center;'align="center">
-				              District
-				            </td>
-				          </tr>
-									<%if(goal.entrySet().size() < 1){%>
-				            <tr><td colspan="<%=(editable)?6:5%>" style="padding-left:10px;"><font style="color:#FF0000;font-weight:bold">No tasks added for this goal</font></td></tr>
-									<%} else {
-				            for(Map.Entry<Integer, PPGPTask> g_entry : goal.entrySet()){
-				              task = g_entry.getValue(); %>
-				            	<tr>
-				                <td width="20%" bgcolor="#E1E1E1" valign="top">
-				                  <%=task.getDescription()%><br>
-				                </td>
-				                <td width="10%" bgcolor="#E1E1E1" valign="top">
-				                  <%=task.getSchoolSupport()%>
-				                </td>
-				                <td width="10%" bgcolor="#E1E1E1" valign="top">
-				                  <%=task.getDistrictSupport()%>
-				                </td>
-				                <td width="10%" bgcolor="#E1E1E1" valign="top">
-				                	<%=!StringUtils.isEmpty(task.getTechnologySchoolSupport())?task.getTechnologySchoolSupport():""%>
-				                </td>
-				                <td width="10%" bgcolor="#E1E1E1" valign="top">
-				                	<%=!StringUtils.isEmpty(task.getTechnologyDistrictSupport())?task.getTechnologyDistrictSupport():""%>
-				                </td>
-				                <td width="10%" bgcolor="#E1E1E1" valign="top">
-				                  <%=task.getCompletionDate()%>
-				                </td>
-				                <td width="20%" bgcolor="#E1E1E1" valign="top">
-				                  <%=!StringUtils.isEmpty(task.getSelfEvaluation())?task.getSelfEvaluation():""%>
-				                </td>
-				                <%if(editable){%>
-					                <td width="20%" bgcolor="#E1E1E1" valign="top">
-					                  
-					                        <a href="editGrowthPlanTask.html?tid=<%=task.getTaskID()%>&gid=<%=goal.getPPGPGoalID()%>&ppgpid=<%=ppgp.getPPGPID()%><%=(bigbrother)?"&pid="+p.getPersonnelID():""%>">EDIT</a>
-<br>
-					                          <a href="#" onclick="showdeletetask('<%=task.getTaskID()%>','<%=goal.getPPGPGoalID()%>','<%=task.getDescription().replaceAll("'"," ")%>',this);">REMOVE</a>
-
-					                </td>
-				                <%}%>
-				              </tr>
-										<%}%>
-				         	<%}%>			        
-				        </table>
-				      </td>
-				    </tr>
-				    <tr>
-				      <td colspan="<%=(editable)?6:5%>" bgcolor="#F4F4F4" valign="middle">
-				        &nbsp;
-				      </td>
-				    </tr>
-				    </table>
-				<%} %>	
-				<%} %>	
+								<%if(goal.entrySet().size() < 1){%>
+										   	<tr>
+										   	<td colspan=4>
+										    <div class="alert alert-danger">No tasks added for this goal.</div>
+											</td>
+											</tr>
+						
+								<%} else {
+									int cntrt=0;
+								%>	
+									<tr><td>
+								
+											
+														<%for(Map.Entry<Integer, PPGPTask> g_entry : goal.entrySet()){
+														task = g_entry.getValue();	
+														cntrt++;
+														%>
+														<table class="table table-condensed table-bordered" style="font-size:12px;">							   
+														<tbody>
+														<tr class="warning">
+													    <td colspan=4><b>TASK/STRATEGY #<%=cntrt%>: </b><%=task.getDescription()%></td>
+													    </tr>
+													    <tr class="active">
+													    <td colspan=2 style="text-align:center;font-weight:bold;">RESOURCES/SUPPORT</td>
+													    <td colspan=2 style="text-align:center;font-weight:bold;">TECHNOLOGY</td>
+													    </tr>
+													    <tr class="active">
+													    <td width="25%" style="text-align:center;font-weight:bold;">School Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">District Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">School Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">District Support(s)</td>
+													   	</tr>
+													    <tr>
+													    <td><%=task.getSchoolSupport()%></td>
+													    <td><%=task.getDistrictSupport()%></td>
+													    <td><%=!StringUtils.isEmpty(task.getTechnologySchoolSupport())?task.getTechnologySchoolSupport():""%></td>
+													    <td><%=!StringUtils.isEmpty(task.getTechnologyDistrictSupport())?task.getTechnologyDistrictSupport():""%></td>
+													   	</tr>
+													 	<tr>
+													 	<td  class="active"><b>COMPLETION DATE:</b></td>
+													 	<td colspan=3><%=task.getCompletionDate()%></td>
+													 	</tr>
+													 	<tr>
+													 	<td class="active"><b>SELF EVALUATION:</b></td>
+													 	<td colspan=3>
+													 	<%=!StringUtils.isEmpty(task.getSelfEvaluation())?task.getSelfEvaluation():"N/A"%>
+													 	</td>
+													 	</tr>
+																	<%if(editable) { %>
+																     <tr class="active no-print">
+																     <td colspan=4 style="text-align:right;">					   
+																		 <a class="no-print btn btn-xs btn-primary" title="Edit this Task/Strategy" onclick="loadingData()" href="editGrowthPlanTask.html?tid=<%=task.getTaskID()%>&gid=<%=goal.getPPGPGoalID()%>&ppgpid=<%=ppgp.getPPGPID()%><%=(bigbrother)?"&pid="+p.getPersonnelID():""%>">EDIT TASK</a>
+																		 <a class="no-print btn btn-xs btn-danger" title="Delete this Task/Strategy" href="#" onclick="showdeletetask('<%=task.getTaskID()%>','<%=goal.getPPGPGoalID()%>',this);">DEL TASK</a>
+																	 </td>
+																     </tr>      
+																	<% } %>
+														</tbody>
+														</table>		
+														<%}%>
+									</td></tr>
+									<%}%>	        
+				       
+				       </tbody>
+				       </table>
+				     	<div class="pagebreak"></div>			      
+			<%}%>	
+			
+	<%}%>
+			
 			<%}else{%>
-				<table width="95%" cellpadding="2" cellspacing="0" border="0" align="center">
-				<tr><td>Choose a PGP from the Growth Plan Archive to view.</td></tr>
-				</table>
+				<div align="center" class="alert alert-info">Choose a PGP from the Growth Plan Archive to view.</div>
 			<%}%>
 		
 
-		<BR /><BR />
+	
 
-		<%if((ppgp != null) && editable && !bigbrother){%>
-		  <table cellpadding="0" cellspacing="0" border="0" align="center">
-		    <tr>
-		      <td align="center" width="100%" valign="bottom">		      	
-		        	<img src="images/return-off.png"
-			          onclick="self.location.href='viewGrowthPlan.html?sy=<%=ppgp.getSchoolYear()%>'"; /><BR />
-		      </td>
-		    </tr>
-		  </table>
-		  <BR /><BR />
-		<%}%>
+		
 
-		<table width="90%" cellpadding="0" cellspacing="0" border="0" align="center">
-			<tr>
-				<td width="100%" align="center" valign="bottom" bgcolor="#FFCC00" style='padding:0px;'>
-					<img src="images/spacer.gif" width="1" height="5"><BR />
-				</td>
-			</tr>
-		</table>
-		  <!-- Modal -->
+
+</div></div></div>
+
+		
+<!-- Modal -->
   			<div class="modal fade" id="myModal" role="dialog">
     			<div class="modal-dialog">
     			<!-- Modal content-->
@@ -349,32 +260,33 @@
           					<p><span id="spangoal" name="spangoal"></span></p>
         				</div>
         				<div class="modal-footer">
-        					<button type="button" class="btn btn-primary" id="butdelete" name="butdelete">Delete</button>
+        					<button type="button" class="btn btn-danger" id="butdelete" name="butdelete">Delete</button>
                 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 			<input type='hidden' id='wasdeleted' name='wasdeleted'>
             			</div>
       				</div>
       			</div>
   			</div>
-  			<!-- Modal -->
+
+<!-- Modal -->
   			<div class="modal fade" id="myModalUpdate" role="dialog">
     			<div class="modal-dialog">
     			<!-- Modal content-->
       				<div class="modal-content">
         				<div class="modal-header">
           					<button type="button" class="close" data-dismiss="modal">&times;</button>
-          					<h4 class="modal-title">Edit Goal</h4><input type="hidden"  id="updateid" name="updateid"><input type="hidden"  id="plpid" name="plpid">
+          					<h4 class="modal-title">Edit this Goal</h4><input type="hidden"  id="updateid" name="updateid"><input type="hidden"  id="plpid" name="plpid">
           					<br />
 				      		<div class="alert alert-danger" role="alert" style="display:none;" id="diverror" name="diverror">
   								<font style="font-weight:bold">Please enter Description</font>
 							</div>
         				</div>
         				<div class="modal-body">
-          					<p><input type="text" id="txtgoal" name="txtgoal" style="width:300px;max-width:300px"></p>
+          					<p><input type="text" id="txtgoal" name="txtgoal" class="form-control"></p>
         				</div>
         				<div class="modal-footer">
-        					<button type="button" class="btn btn-primary" id="butdelete" name="butupdate" onclick="updategoaldes();">Submit</button>
-                			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        					<button type="button" class="btn btn-success" id="butdelete" name="butupdate" onclick="updategoaldes();">Save/Update</button>
+                			<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             			</div>
       				</div>
       			</div>

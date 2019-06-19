@@ -9,7 +9,6 @@
                  java.util.*,
                  org.apache.commons.lang.*"
          isThreadSafe="false"%>
-
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <esd:SecurityCheck permissions="CALENDAR-SCHEDULE" />

@@ -102,7 +102,6 @@ $(document).ready(function() {
         	      	$("#mheidate2").change(function(){
         				checkdate('MHEIDATE2');
         			});
-        	      	checkdatefields();
 });
 </script>
 <script>

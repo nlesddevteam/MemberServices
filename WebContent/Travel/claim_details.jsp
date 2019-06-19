@@ -23,6 +23,7 @@
 
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
 
+
 <%
   User usr = null;
   TravelClaim claim = null;
@@ -57,7 +58,9 @@
   color_off = "#FFFFFF";
   color_on = "#FEF153";
   
-
+  TravelClaimNote note = null;  
+  Iterator n_items = null;  
+  n_items = claim.getNotes().iterator();
  
   
   budget = (TravelBudget) request.getAttribute("BUDGET");
@@ -98,6 +101,7 @@
 	Integer claimmonth=(Integer)request.getAttribute("fiscalmonth");
 	Integer claimyear=(Integer)request.getAttribute("fiscalyear");
 	Integer lastdaymonth=(Integer)request.getAttribute("lastdaymonth");
+ 
 	
 	 String FullName = "";
 	 
@@ -134,6 +138,7 @@
 	<script type="text/JavaScript">
 function valid(f) {
 f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
+f.value = f.value.replace('\n',' ');
 } 
 </script>
 	
@@ -159,13 +164,27 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
 	
 	<%if(claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
 	
-	<span style="color:Red;font-weight:bold;">Claim has been rejected by supervisor</span>. Please check your claim for errors <i>(amounts, wrong supervisor, or invalid claimed item)</i> or check <b>NOTES</b> tab below for possible reason. Correct any issue(s) and re-submit this claim, or delete.
+	<div class="alert alert-danger">Claim has been <b>rejected</b> by supervisor. Please check your claim for errors <i>(amounts, wrong supervisor, or invalid claimed item)</i> or check <b>NOTES</b> tab below for possible reason. Correct any issue(s) and re-submit this claim, or delete.</div>
 	<%} %>
 	
 	<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING)){%>
 	
-	<span style="color:Red;font-weight:bold;">Claim has been set to Payment Pending</span>. Travel Admins have set your claim as Pending. Please check <b>NOTES</b> tab below left for reason.
-	<%} %>
+	<div class="alert alert-info">Claim has been set to <b>Pending Information</b>. Travel Admins have set your claim as Pending. Please check NOTICES or <b>NOTES</b> tab below left for reason.</div>
+	
+	 				
+                   
+    <%} %>
+	<!-- DISPLAY NOTES (If any) IF REJECTED OR PENDING, Once processed hide. -->	
+	<%if(n_items.hasNext() && (claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED))){%>
+	                  <div class="alert alert-danger"><b>NOTICE(S) RE THIS CLAIM:</b><br/>
+	                  <ul>  
+                      <%while(n_items.hasNext()){
+                        note = (TravelClaimNote) n_items.next();%>
+                        <li><%=note.getNote()%><br/>
+                        <i>(Request Posted: <%=note.getNoteDate().toString()%> by <span style="text-transform:Capitalize;"><%=note.getPersonnel().getFullNameReverse()%>)</span>.</i>                        
+                      <%}%>                      
+                      </ul></div>
+    <%}%>
 	
 	
 	
@@ -196,7 +215,7 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
           </td>
         </tr>
         
-        
+       
         
         
         
@@ -212,10 +231,10 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
             <td>
             
          
-            
+          
             
               
-              		<div class="claimHeaderText">Claimant: <span style="text-transform:capitalize;"><%=FullName%></span> 
+              		<div class="claimHeaderText">Claimant: <span style="text-transform:capitalize;"><%=FullName%> </span>
              			
 		              <div style="float:right;">
 		               <%if(claim instanceof PDTravelClaim){%>              
@@ -229,11 +248,14 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
               		</div>    
               			<div id="statPreSub" style="display:none;float:right;"><img src="includes/img/presub_stamp.png" class="statusLogo"></div>
                     	<div id="statPaid" style="display:none;float:right;"><img src="includes/img/paid-stamp.png" class="statusLogo"></div>
+                    	<div id="statError" style="display:none;float:right;"><img src="includes/img/error-stamp.png" class="statusLogo"></div>
+                    	<div id="statProcessed" style="display:none;float:right;"><img src="includes/img/processed.png" class="statusLogo"></div>
+                    	<div id="statProcessing" style="display:none;float:right;"><img src="includes/img/processing.png" class="statusLogo"></div>
                     	<div id="statRejected" style="display:none;float:right;"><img src="includes/img/rejected_stamp.png" class="statusLogo"></div>
                      	<div id="statApproved" style="display:none;float:right;"><img src="includes/img/approved_stamp.png" class="statusLogo"></div>
               			<div id="statSubmitted" style="display:none;float:right;"><img src="includes/img/submitted_stamp.png" class="statusLogo"></div>
                     	<div id="statReviewed" style="display:none;float:right;"><img src="includes/img/reviewed_stamp.png" class="statusLogo"></div>
-                     	<div id="statPending" style="display:none;float:right;"><img src="includes/img/pending_stamp.png" class="statusLogo"></div>
+                     	<div id="statPending" style="display:none;float:right;"><img src="includes/img/pending-info.png" class="statusLogo"></div>
                       <b>Address:</b>  <%=claim.getPersonnel().getProfile().getStreetAddress() != null ? claim.getPersonnel().getProfile().getStreetAddress(): "N/A" %>, <%=claim.getPersonnel().getProfile().getCommunity() %>, <%=claim.getPersonnel().getProfile().getProvince() %> &middot; <%=claim.getPersonnel().getProfile().getPostalCode() %><br/>
 		              <b>Tel:</b> <%=(claim.getPersonnel().getProfile().getPhoneNumber() != null ? claim.getPersonnel().getProfile().getPhoneNumber() : "N/A") %> &nbsp;&middot;&nbsp; <b>Cell:</b> <%=claim.getPersonnel().getProfile().getCellPhoneNumber() != null ? claim.getPersonnel().getProfile().getCellPhoneNumber(): "N/A" %>&nbsp;&middot;&nbsp;
 		              <b>Fax:</b> <%=claim.getPersonnel().getProfile().getFaxNumber() != null ? claim.getPersonnel().getProfile().getFaxNumber() : "N/A" %><br/>
@@ -298,7 +320,15 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
                     							  <tr>
 								                     <td colspan='7'>
 								                     
-								                      
+								                     
+								               		                     
+								                     
+								                     
+								                     
+								                     
+								                     
+								                     								                       							              
+								                   
 								                     
 								                     <div class="claimStatusSuperBlock">
 						                            	
@@ -330,12 +360,70 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
 									                                		<script>$('#statRejected').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                		<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PAYMENT PENDING:</b> Claim has been submitted for payment.</div>
+									                                		<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PENDING MORE INFORMATION:</b> Claim is pending further action. Please check NOTES tab above and/or any emails from Travel Claims staff re your claim.</div>
 									                                	    <script>$('#statPending').css('display', 'inline-block');</script>
 									                                	</c:when>
-									                                	<c:when test="${claimStatus eq 7 }">
-									                                		<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>PAID:</b> Claim has been paid.</div>									                                		
+									                                	<c:when test="${claimStatus eq 7 }">						                                	
+									                                	
+									                                	
+									                                	 		<% Date now = new java.util.Date();	%>
+									                                		<c:set var="todayDate" value="<%=new java.util.Date() %>" />									                                										                                	
+									                                		<c:set var="todayDateStamp" value="<%=now.getTime()%>" />
+									                                		
+									                                		<c:set var="claimExportDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate() :"0" %>'/>																            															               	
+																            <c:set var="claimExportDateStamp" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0" %>'/>
+																            <c:set var="claimPaidDate" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate() :"0" %>'/>	
+																            <c:set var="claimPaidDateStamp" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate().getTime() : "0" %>'/>
+																         
+																          <!-- After 30 days, set as paid for cosmetic reasons.-->
+																            <c:set var="claimCheckDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0"%>'/>															               							                
+																            <c:set var="claimCheckDateStamp" value="${(60*60*24*30*1000) + claimCheckDate}" /> 
+																                 
+																               									                                  				
+								                                  			
+                        				
+                        												<c:choose>
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">
+                        												
+                        												<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>PAID</b> Claim has been processed and marked as paid. 
+                        												Please allow anywhere from 2-10 business days for deposit to show in your account. 
+                        												If you have NOT been paid, please contact support below.</div>									                                		
 									                                		<script>$('#statPaid').css('display', 'inline-block');</script>
+                        												
+                        												</c:when>
+                        												
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">
+                        												
+                        												
+                        												   <div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSED:</b> Claim has been processed and is pending payment. 
+                        												   Please allow time for processing of your payment and final deposit anywhere from <b>2-10 business days</b>. 
+                        												   Claim may show as PROCESSED for up to 30 days after any payment has been made.  
+                        												   If there is an issue with final payment, you will be notified before any deposit is made.</div>									                                		
+									                                		<script>$('#statProcessed').css('display', 'inline-block');</script>
+                        												
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
+                        												<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSING:</b> Claim is being processed. 
+                        												Please allow 2-10 business days for your claim to be processed. If there is an issue with your claim, you will be notified before it is submitted for payment.</div>									                                		
+									                                		<script>$('#statProcessing').css('display', 'inline-block');</script>
+                        												
+                        												</c:when>
+                        												                                                                                     
+                        												
+                        												
+                        												<c:otherwise>
+                        												
+                        												<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
+                        												<script>$('#statError').css('display', 'inline-block');</script>
+                        												
+                        												</c:otherwise>
+                        												</c:choose>
+                        				
+                        				
+                        				
+									                                		
 									                                	</c:when>
 									                                	<c:otherwise>
 									                                	 	<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
@@ -388,7 +476,7 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
                       </tr>          
                       <tr><td colpsan=7>&nbsp;</td></tr>           
                       <tr class="no-print">
-                      	<td colspan='7'> 
+                      	<td colspan='7'>
                       		Description (Max 500 Characters. Remaining: <span id="remainder">500</span>)<br/>
 	                      				<textarea class="requiredInputBox" name="item_desc" id="item_desc" style="width:100%;height:60px;" onfocus="this.select();" onkeyup="valid(this)" onblur="valid(this)"><%=(failed_item != null)?failed_item.getItemDescription():""%></textarea><br/>
 	                      				<span style="font-size:10px;">Description should include all nesessary information to review the claim (eg. departure and return points, and items included in other category). You are limited to 500 characters. 
@@ -666,10 +754,8 @@ f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
     			$( ".requiredinput_date" ).datepicker({
       		      	changeMonth: false,//this option for allowing user to select month
       		      	changeYear: false, //this option for allowing user to select from year range
-      		      	dateFormat: "dd/MM/yyyy",
-      		      	minDate: new Date(1,<%=claimmonth%>,<%=claimyear%>),
-  		    		maxDate: new Date(<%=lastdaymonth%>,<%=claimmonth%>,<%=claimyear%>)
-      		    	//set date range for claim
+      		      	dateFormat: "dd/mm/yy"
+      		      
       		 	});
     			$( "#item_meals" ).blur();
     			$( "#item_lodging" ).blur();

@@ -7,7 +7,7 @@
                  com.nlesd.bcs.bean.*,
                  java.util.*,
                  java.io.*,
-                 java.text.*,com.esdnl.util.*;"
+                 java.text.*,com.esdnl.util.*"
          isThreadSafe="false"%>
     
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>

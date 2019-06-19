@@ -13,9 +13,11 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
-
+<c:set var="countClaims" value="0" />
+<c:set var="countClaimants" value="0" />
 <%
   User usr = null;
   ArrayList<YearlyKmDetailReportItem> report = null;
@@ -141,7 +143,7 @@
 			                          			+ " &middot; " + item.getPersonnelPostalcode()
 			                          			+ " &middot; Tel: " + item.getPersonnelPhone1() 
 			                          	%>
-			                          	
+			                          	<c:set var="countClaimants" value="${countClaimants + 1}" />
 			                          </td>
 			                        </tr>
                       <%}else{
@@ -159,7 +161,7 @@
                       
                       </tr>
                        
-                     
+                     <c:set var="countClaims" value="${countClaims + 1}" />	
                     <%}%>
                     
                                      
@@ -190,7 +192,8 @@
 								
 					
                   </table>
-                
+           <b>Total Claimants:</b> ${countClaimants}<br/>  
+   <b>Total Claims:</b> ${countClaims}       
     </form>
 
 

@@ -5,39 +5,45 @@
                  java.util.*"
         isThreadSafe="false"%> 
 
-<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-<%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
+<%
+	User usr = (User) session.getAttribute("usr");
+  	HashMap<String, PPGP> ppgps = PPGPDB.getPPGPMap(usr.getPersonnel());
+%>
 
 <esd:SecurityCheck permissions='PPGP-VIEW' />
 
 <html>
   <head>
-    <title>Professional Growth Plan</title>
-    <link rel="stylesheet" href="css/growthplan.css">
+
+    <title>Professional Learning Plan</title>
+   
   </head>
 
   <body>
-    <table style="width:620;" cellpadding="0" cellspacing="0" border="0" align='center'>
-    	<tr>
-				<td width="620" valign="top" colspan="2"><br/>	
-				<span style="font-size:16px;font-weight:bold;color:Navy;">Professional Learning Plan</span>		
-				</td>
-			</tr>
-			<tr>
-				<td width="215" valign="top" align="left">
-					<img src="images/gp_logo_2.gif"><BR>
-				</td>
-				<td width="405" valign="middle" bgcolor="#0066CC" style='padding:5px;'>
-					<span style='color:white; font-weight:bold;'>To begin choose a PLP to view from the Learning Plan Archive on the left OR create a new PLP by clicking the "create" link also on the left, if available.</span><BR>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2' align='right'><%= PPGP.getCurrentGrowthPlanYear()%></td>
-			</tr>
-    </table>
-    
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success">   
+	               	<div class="panel-heading"><b><%= PPGP.getCurrentGrowthPlanYear()%> Learning Plan System</b></div>
+      			 	<div class="panel-body">	
+  
+  Welcome to the <%= PPGP.getCurrentGrowthPlanYear()%> Learning Plan System.
+  
+  <br/><br/>To begin choose a PLP to view from your Plan Archive above or create a new PLP by clicking the Learning Plan(s) link.
+  If you do not have your reflections completed from previous year(s) the option to create a plan will not be available until you complete your self reflection. 
+  Check your previous plans under Plan Archive to make sure they are complete. 
+  <br/><br/>
+  <%if(ppgps.containsKey(PPGP.getCurrentGrowthPlanYear())){
+	            					
+	            					if(!ppgps.containsKey(PPGP.getNextGrowthPlanYear())){
+		            				PPGP ppgp = ppgps.get(PPGP.getCurrentGrowthPlanYear());
+		            				if(!ppgp.isSelfReflectionComplete()) { %>	
+ 									<div class="alert alert-danger" style="text-align:center;"><b>NOTICE:</b><br/> You will be able to create your <%=PPGP.getNextGrowthPlanYear()%> Professional Learning Plan (PLP) after you complete the self reflections in your <%=ppgp.getSchoolYear()%> Professional Learning Plan. Check your Plan Archive above to complete the <%=ppgp.getSchoolYear()%> Plan.</div>
+  									<%}}} else {
+  									if(ppgps.containsKey(PPGP.getPreviousGrowthPlanYear())){
+									PPGP ppgp = ppgps.get(PPGP.getPreviousGrowthPlanYear());
+									if(!ppgp.isSelfReflectionComplete()) { %>
+	  								<div class="alert alert-danger" style="text-align:center;"><b>NOTICE:</b><br/>You will be able to create your <%=PPGP.getCurrentGrowthPlanYear()%> Professional Learning Plan (PLP) after you complete the self reflections in your <%=ppgp.getSchoolYear()%> Professional Learning Plan. Check your Plan Archive above to complete the <%=ppgp.getSchoolYear()%> Plan.</div>
+ <%}}} %>
+  
+  </div></div></div>  
   </body>
 </html>

@@ -114,7 +114,7 @@ $(document).ready(function() {
 			      					<td class="field_content" align="right">
 			      					
 			      					<button type="button" class="btn btn-xs btn-primary menuBCS" onclick="closeMenu();loadMainDivPage('adminViewContract.html?vid=${rule.id}');">View</button>
-		      								<button type="button" class="btn btn-xs btn-danger" onclick='opendeletedialogcontract("${fn:replace(rule.contractName, \"\'\", \" \")}","${rule.id}")'>Del</button>
+		      								<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialogcontract('${fn:replace(rule.contractName, "'", " ")}','${rule.id}');">Del</button>
 		      				
 			      					</td>
 			      				</tr>

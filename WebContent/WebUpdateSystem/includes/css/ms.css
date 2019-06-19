@@ -49,25 +49,52 @@ a.logout:active { color: #FFFF00; text-decoration: none;}
 
 
 /*TENDERS */
+.openColor {color:Black;}
+.newColor {color:Green;}
+.closedColor {color:Red;}
+.ammendedColor {color:#0000FF;}
+.awardedColor {color:black;}
+.hold {color:#E6A75A;}
+.archivedColor {color:Grey;}
 .tenderDocLinkContainer {float:left;width:160px;text-align:center;}
 .tenderHeader {color: #007F01;font-weight: bold;}
 .tender-list .row .email a { color:#007F01;  text-decoration: none;}
 .tender-list .row .email a:visited { color:#007F01;  text-decoration: none;}
 .tender-list .row .email a:hover {	color: #FF0000;	 text-decoration: underline;}
 .tender-list .row .email a:active { color: #FF0000; text-decoration: none;}
-.tender-list {   display:table;  width:100%;}
+.tender-list {   display:table;  width:100%;font-size:11px;}
 .tender-list .table {display:table;}
 .tender-list .rowCaption {caption-side: top; display: table-caption;width:100%;text-align:left; font-weight:bold;color:#007F01;margin-bottom:3px;}
 .tender-list .row { display:table-row; width:100%;}
 .tender-list .column { display: table-cell;border-bottom:1px solid grey;padding:2px;vertical-align:middle;}
 .tender-list .row .header { background-color: #1F4279; text-align:left; color:white; font-weight:bold; }
 .tender-list .row .division { width:100%;text-align:left; font-weight:bold;color:#007F01;}
-.tender-list .row .tenNumber {width:12%;}
-.tender-list .row .tenRegion { width:5%;text-transform: Uppercase; border-left:1px solid grey;text-align:center;}
-.tender-list .row .tenTitle { width:53%;border-left:1px solid grey;}
-.tender-list .row .tenStatus { width:5%;border-left:1px solid grey;text-align:center;}
+.tender-list .row .tenNumber {width:10%;text-align:center;vertical-align: text-top;border-left:1px solid grey;}
+.tender-list .row .tenTitle { border-left:1px solid grey;}
+.tender-list .row .tenRegion { width:10%;text-transform: Capitalize; border-left:1px solid grey;text-align:center;}
+.tender-list .row .tenStatus { width:10%;text-align:center;vertical-align: text-top;border-left:1px solid grey;}
 .tender-list .row .tenClose { width:10%;border-left:1px solid grey;text-align:center;}
-.tender-list .row .tenOpening {width:15%;text-transform: Capitalize;border-left:1px solid grey;text-align:center;}
+.tender-list .row .tenOpen {width:10%;text-transform:capitalize;border-left:1px solid grey;border-right:1px solid grey;text-align:center;}
+.tender-list .row .tenOptions {width:10%;text-align:center;border-left:1px solid grey;vertical-align: text-top;}
+.tender-list .row .tenderNumberDisplay {}
+
+.tenNew {
+  color:#ffffff;
+	-webkit-animation: flash linear 2s infinite;
+	animation: flash linear 2s infinite;
+}
+@-webkit-keyframes flash {
+	0% { opacity: 1; } 
+	50% { opacity: .1; } 
+	100% { opacity: 1; }
+}
+@keyframes flash {
+	0% { opacity: 1; } 
+	50% { opacity: .1; } 
+	100% { opacity: 1; }
+}
+
+
 .tenStatusOpen {color:Green;}
 .tenStatusClosed {color:Red;}
 .tenStatusHold {color:Grey;}

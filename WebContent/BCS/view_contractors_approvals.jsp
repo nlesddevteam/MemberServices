@@ -7,7 +7,8 @@
                  java.util.*,
                  java.io.*,
                  java.text.*,
-                 java.sql.*" isThreadSafe="false"%>
+                 java.sql.*"
+        isThreadSafe="false"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>

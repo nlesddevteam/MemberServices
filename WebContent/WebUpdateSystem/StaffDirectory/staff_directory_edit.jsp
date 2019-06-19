@@ -170,7 +170,16 @@
     					<span class="input-group-addon">Division:</span> 
 	                      	<select id='divisionId' name='divisionId' class="form-control">
 	                      		<c:forEach items="${ divisions }" var='division'>
-	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>${ division.name }</option>
+	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
+	                      			<c:choose>
+											<c:when test="${ (division.name eq 'Finance and Buisness Administration') or (division.name eq 'Corporate Services')  }">
+											Corporate Services
+											</c:when>
+											<c:otherwise>
+											${ division.name }
+											</c:otherwise>
+											</c:choose>
+	                      			</option>
 	                      		</c:forEach>
 	                      	</select>
 	                  </div>
@@ -224,14 +233,16 @@
 						<option value="Administrative Assistant">Administrative Assistant</option>
 						<option value="Alternate Transportation Clerk">Alternate Transportation Clerk</option>
 						<option value="Assistant Director of Education">Assistant Director of Education</option>
-						<option value="Associate Director of Education">Associate Director of Education</option>
-						<option value="Associate Director of Education">Associate Director of Education</option>
+						<option value="Associate Director of Education">Associate Director of Education</option>						
 						<option value="Audiologist">Audiologist</option>
 						<option value="Auditor">Auditor</option>
 						<option value="Auditory Verbal Therapist">Auditory Verbal Therapist</option>
 						<option value="Budget Analyst">Budget Analyst</option>
 						<option value="Bus Foreperson">Bus Foreperson</option>
+						<option value="Buyer I">Buyer I</option>
+						<option value="Buyer II">Buyer II</option>
 						<option value="CEO/Director of Education">CEO/Director of Education</option>
+						<option value="CFO/Assistant Director of Education">CFO/Assistant Director of Education</option>
 						<option value="Classroom Teacher">Classroom Teacher</option>
 						<option value="Clerk IV">Clerk IV</option>
 						<option value="Comptroller/Director of Financial Services">Comptroller/Director of Financial Services</option>
@@ -242,17 +253,20 @@
 						<option value="Curriculum Clerk">Curriculum Clerk</option>
 						<option value="Data Analyst">Data Analyst</option>
 						<option value="Director of Communications">Director of Communications</option>
+						<option value="Director of Educational Programs">Director of Educational Programs</option>
 						<option value="Director of Facilities & Custodial Management">Director of Facilities & Custodial Management</option>
 						<option value="Director of Human Resources">Director of Human Resources</option>
 						<option value="Director of Information Technology">Director of Information Technology</option>
 						<option value="Director of Learning">Director of Learning</option>
 						<option value="Director of Procurement and Business Services">Director of Procurement and Business Services</option>
-						<option value="Director of School Financial Support">Director of School Financial Support</option>
+						<option value="Director of School Financial Support">Director of School Financial Support</option>						
+						<option value="Director of Programs">Director of Programs</option>
 						<option value="Director of Schools">Director of Schools</option>
 						<option value="Director of Strategic Planning, Policy and Communications">Director of Strategic Planning, Policy and Communications</option>
 						<option value="Director of Student Support Services">Director of Student Support Services</option>
 						<option value="Director of Student Transportation">Director of Student Transportation</option>
 						<option value="Director of Student Transportation and School Financial Support">Director of Student Transportation and School Financial Support</option>
+						<option value="E-Learning Facilitator">E-Learning Facilitator</option>
 						<option value="Educational Psychologist">Educational Psychologist</option>
 						<option value="Electrician">Electrician</option>
 						<option value="Equipment Operator">Equipment Operator</option>
@@ -350,7 +364,9 @@
 							<option value="Autism Consultant">Autism Consultant</option>
 							<option value="Behavioral/Mental Health">Behavioral/Mental Health</option>
 							<option value="Behavioral/Mental Health/Guidance Counsellor">Behavioral/Mental Health/Guidance Counsellor</option>
+							<option value="Chief Financial Officer">Chief Financial Officer</option>
 							<option value="Coding">Coding</option>
+							<option value="Corporate Services">Corporate Services</option>
 							<option value="Deaf and Hard of Hearing">Deaf and Hard of Hearing</option>
 							<option value="Educational Assessment Specialist">Educational Assessment Specialist</option>
 							<option value="English Language Arts">English Language Arts</option>
@@ -381,10 +397,10 @@
 							<option value="Pension and Benefits">Pension and Benefits</option>
 							<option value="Physical Education, Health, Social Studies">Physical Education, Health, Social Studies</option>
 							<option value="PowerSchool">PowerSchool</option>							
-							<option value="Professional Learning">Professional Learning</option>
-							<option value="Professional Learning">Professional Learning</option>
+							<option value="Professional Learning">Professional Learning</option>							
 							<option value="Programs">Programs</option>
 							<option value="Programs and Operations">Programs and Operations</option>
+							<option value="Programs and Human Resources">Programs and Human Resources</option>
 							<option value="Programs/Reception">Programs/Reception</option>
 							<option value="Programs/Student Support Services">Programs/Student Support Services</option>
 							<option value="Reading">Reading</option>
@@ -485,7 +501,7 @@
 	                     	 <option value="On Leave">On Leave</option>							  
 							 <option value="Provisional">Provisional</option> 
 							 <option value="Temporary">Temporary</option> 
-							 
+							 <option value="">Permanent</option> 
 							 
 	                     </select> 
 	            </div> 

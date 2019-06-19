@@ -12,6 +12,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW,TRAVEL-CLAIM-SUPERVISOR-VIEW,TRAVEL-CLAIM-SEARCH" />
 
@@ -157,13 +158,63 @@
 									                                		<span style="color:Red;">REJECTED</span>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                		<span style="color:Blue;">PAYMENT PENDING</span>
+									                                		<span style="color:Blue;">PENDING INFO</span>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 7 }">
-									                                		<span style="color:DarkGreen;">PAID</span>
+									                                		
+									                                		
+									                                		
+									                                		<% Date now = new java.util.Date();	%>
+									                                		<c:set var="todayDate" value="<%=new java.util.Date() %>" />									                                										                                	
+									                                		<c:set var="todayDateStamp" value="<%=now.getTime()%>" />
+									                                		
+									                                		<c:set var="claimExportDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate() :"0" %>'/>																            															               	
+																            <c:set var="claimExportDateStamp" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0" %>'/>
+																            <c:set var="claimPaidDate" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate() :"0" %>'/>	
+																            <c:set var="claimPaidDateStamp" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate().getTime() : "0" %>'/>
+																         
+																          <!-- After 30 days, set as paid for cosmetic reasons.-->
+																            <c:set var="claimCheckDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0"%>'/>															               							                
+																            <c:set var="claimCheckDateStamp" value="${(60*60*24*30*1000) + claimCheckDate}" /> 
+																               						                                  				
+                        				                                                 				                              			
+								                                  		<c:choose>
+                        												
+                        												                                                                                     
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">
+                        												
+                        												<span style="color:DarkGreen;">PAID</span>
+                        												
+                        											
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">
+                        												
+                        												<span style="color:Blue;">PROCESSED</span>
+                        												
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
+                        												<span style="color:Navy;">PROCESSING</span>
+                        												
+                        												</c:when>
+                        												
+                        												<c:otherwise>
+                        												
+                        												<span style="color:Red;">ERROR!</span>
+									                                	 
+                        												
+                        												</c:otherwise>
+                        												</c:choose>
+									                                	
+									                                		
+									                                		
+									                                		
 									                                	</c:when>
 									                                	<c:otherwise>
-									                                	 	<span style="color:Green;">RED</span>
+									                                	 	<span style="color:Red;">ERROR!</span>
 									                                	</c:otherwise>                             
 									                                </c:choose>
                     			

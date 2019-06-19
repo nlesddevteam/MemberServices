@@ -534,15 +534,11 @@
     function sendtendersinfo()
     {
     	var test=checktendersfields();
-    	if(test){
-    		if(ajaxSendTendersInfo())
-        	{
-        		$.fancybox.close();
-        	}
-    	}else{
-    		return false;
-    	}
     	
+    	if(ajaxSendTendersInfo())
+    	{
+    		$.fancybox.close();
+    	}
     }
 	function checktendersfields()
 	{
@@ -590,9 +586,9 @@
             processData:false,
             success: function(xml)
             {
-            	var i=1;
+            	
+					var i=1;
 					cleartable();
-
  					$(xml).find('FILES').each(function(){
  							
  							if($(this).find("MESSAGE").text() == "SUCCESS")
@@ -605,9 +601,8 @@
  									}else{
  										newrow ="<tr style='background-color:#white;' id='" + $(this).find("ID").text() + "'>";
  									}
-									
-									$('#details_success_message').html("SUCCESS: Tender has been updated!").css("display","block").delay(6000).fadeOut();
- 									//now we add each one to the table
+ 									//alert("found");
+									//now we add each one to the table
 									newrow += "<td>" + $(this).find("TFTITLE").text() + "</td>";
 									newrow += "<td>" + $(this).find("TFDOC").text() + "</td>";
 									newrow += "<td>" + $(this).find("ADDENDUMDATE").text() + "</td>";
@@ -619,8 +614,8 @@
 									isvalid=true;
 	                   				
  								}else{
- 									//alert($(this).find("MESSAGE").text()+ "1");
- 									$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();			
+ 									alert($(this).find("MESSAGE").text()+ "1");
+ 									
  								}
 						});
             },
