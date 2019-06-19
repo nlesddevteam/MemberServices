@@ -16,13 +16,18 @@
   
   <head>
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-    <TITLE>Student Registration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
     
+    <TITLE>Kindergarten Student Registration</title>
+   
     <script type="text/javascript" src="//serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
 		<script type="text/javascript" src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>
     <script type="text/javascript">
     	// school ids of schools offering efi
-    	var efi = new Array(211, 215, 219, 287, 244, 209, 247, 229, 232, 495, 289, 387, 192, 239, 207, 241, 196, 242, 162, 464, 414, 352, 403, 330, 341, 416, 595);
+    	//var efi = new Array(211, 215, 219, 287, 244, 209, 247, 229, 232, 495, 289, 387, 192, 239, 207, 241, 196, 242, 162, 464, 414, 352, 403, 330, 341, 416, 595);
+    	  var efi = new Array(330, 211, 215, 352, 219, 287, 595, 464, 244, 209, 247, 229, 232, 495, 289, 341, 162, 192, 239, 207, 241, 403, 196, 242, 414);
+    	
     	//match email address
     	var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/; 
     	
@@ -145,8 +150,8 @@
     		
     		$('fieldset table').each(function() {
     			$(this).children().children('tr:odd').css({'background-color': "#ffffff"});
-    			$(this).children().children('tr:even').css({'background-color': "#f0f0f0"});
-    			$(this).children().children('tr:not(:first)').children('td').css({'border-top': 'solid 1px #333333'});
+    			$(this).children().children('tr:even').css({'background-color': "#ffffff"});
+    			$(this).children().children('tr:not(:first)').children('td').css({'border-top': 'solid 0px silver'});
     		});
     		
     		$('td.required').each(function(){
@@ -296,22 +301,29 @@
      		}
     	}
     </script>
+    
+
+    
+    
   </head>
 
-  <body bgcolor="#BF6200">		
-		<div align='center'>
+  <body>
+  
+   		
+		<div align='center'>	
+					Current server time is: <span style='font-weight:bold; color:red;'><fmt:formatDate type="both" dateStyle="long" value="<%=Calendar.getInstance().getTime()%>" /></span>
 		
-			<div style='padding-bottom:8px; width:75%; text-align:left;'>
+			<div style='padding-bottom:8px; width:95%; text-align:left;'>
 			
 				<c:if test="${ap eq null}">
 					<div  style="border: 1px solid #FF0000; background-color: #FFFACD; padding: 10px;">
 						<div align="center" style="COLOR: #FFFFFF;background-color:#FF0000; font-size: 14px;"><b>IMPORTANT NOTICE</b></div><br>
 						<div align="center">
-							<h1 style='text-decoration: underline;'>We are currently not accepting Kindergarten registrations at this time.</h1>
+							<h1>We are currently NOT accepting Kindergarten registrations at this time.</h1>
 						</div>
 						
 						<c:if test="${fp ne null and fn:length(fp) gt 0}">
-							<div style='margin: 0 auto; border: solid 1px #E0E0E0; padding-bottom: 5px; width: 85%;'>
+							<div style='margin: 0 auto; border: solid 1px #E0E0E0; background-color:White;padding-bottom: 5px; width: 85%;'>
 								<div style='width: 100%; text-align:center;'>
 									<h4 style='text-decoration: underline;'>Upcoming Registration Dates</h4>
 								</div>
@@ -323,7 +335,15 @@
 												<ul>
 												<c:forEach items='${f.zones}' var='z'>
 													<li style='text-transform: capitalize'>
-														${z.zoneName} Region
+													<c:choose>
+													<c:when test="${ (z.zoneName eq 'eastern') or (z.zoneName eq 'avalon') }">
+													Avalon Region													
+													</c:when>
+													<c:otherwise>
+													${z.zoneName} Region
+													</c:otherwise>
+													</c:choose>
+													
 													</li>
 												</c:forEach>
 												</ul>
@@ -359,35 +379,26 @@
 											
 				<p>
 					<b>French Immersion:</b> Please register for your zoned school if program is offered. If the program is not offered select the school closest to your residence.
-					<!-- Eastern Zone Specific Notes -->
+					<!-- Eastern Zone Specific Notes 
 					<c:if test="${ap ne null and ap.isAccessibleEasternZone eq true }">
 						<br /><br />
 						<b><u>Note:</u></b>&nbsp;<i>Mary Queen of the World, Newtown Elementary, Morris Academy, and St. Peter's Elementary school zones register for <b>French Immersion</b> at St. Peter's Elementary.</i>
-					</c:if>
+					</c:if>-->
 				</p>
 				
 				
-<p> Any parent/guardian having registration issues (questions on the registration process, details to provide, or errors in the data submitted) may contact/visit their zoned school for assistance.  <!-- Please contact your zoned school by May 6, 2015 to arrange assistance during the registration process.-->
+<!-- Any parent/guardian having registration issues (questions on the registration process, details to provide, or errors in the data submitted) may contact/visit their zoned school for assistance.  Please contact your zoned school by May 6, 2015 to arrange assistance during the registration process.-->
 
-<p> If you experience technical difficulties during the registration process please contact:
 
-<ul>
-<li><b>For Western and Labrador Regions</b><br/>
-		&middot; Rodney Batten (709) 637-4618 (<a href="mailto:rodneybatten@nlesd.ca?subject=Kindergarten Registration Support">rodneybatten@nlesd.ca</a>)
-<p><li><b>For Central Region</b><br/>
-		&middot; Gordon Moller (709) 256-2547 ext. 241 (<a href="mailto:gordonmoller@nlesd.ca?subject=Kindergarten Registration Support">gordonmoller@nlesd.ca</a>)
-
-<p><li><b>For Eastern Region</b><br/>
-	&middot; Geoff Taylor (709) 757-4646 (<a href="mailto:geofftaylor@nlesd.ca?subject=Kindergarten Registration Support">geofftaylor@nlesd.ca</a>)<br>
- 	&middot; Chris Crane (709) 758-2340 (<a href="mailto:chriscrane@nlesd.ca?subject=Kindergarten Registration Support">chriscrane@nlesd.ca</a>)
-</div>
-				</p> 
+			
 				<p>
 					Current server time is: <span style='font-weight:bold; color:red;'><fmt:formatDate type="both" dateStyle="long" value="<%=Calendar.getInstance().getTime()%>" /></span>
 				</p> 
 				
 			</div>
-		</div>
+			
+			</div>
+		
 		
 		<c:choose>
 			<c:when test="${ap ne null}">	
@@ -410,7 +421,7 @@
 							<div align='center'>
 								<fieldset>
 									<legend>Previous Student Registration</legend>
-									<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+									<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 										<tr>
 											<td class='label'>Student Name:</td>
 											<td style='font-weight:bold;' align='left'>${sibling.studentLastName}, ${sibling.studentFirstName}</td>
@@ -432,15 +443,15 @@
 						<div align='center'>
 							<fieldset>
 								<legend>Student Information</legend>
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Demographics</caption>
 									<tr>
 										<td class='label required'>First Name:</td>
-										<td align='left'><input class='required' errortext='Student Information - First Name' type='text' id='txt_StudentFirstName' name='txt_StudentFirstName' style='width: 150px;' /></td>
+										<td align='left'><input class='required' errortext='Student Information - First Name' type='text' id='txt_StudentFirstName' name='txt_StudentFirstName' style='width: 200px;' /></td>
 									</tr>
 									<tr>
 										<td class='label required'>Last Name:</td>
-										<td align='left'><input class='required' errortext='Student Information - Last Name' type='text' id='txt_StudentLastName' name='txt_StudentLastName' style='width: 150px;'/></td>
+										<td align='left'><input class='required' errortext='Student Information - Last Name' type='text' id='txt_StudentLastName' name='txt_StudentLastName' style='width: 200px;'/></td>
 									</tr>
 									<tr>
 										<td class='label required'>Gender:</td>
@@ -449,7 +460,7 @@
 									<tr>
 										<td class='label required' valign='top'>Date of Birth:</td>
 										<td align='left'>
-											<input class='required datefield' errortext='Student Information - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' style='width: 75px;'/>
+											<input class='required datefield' errortext='Student Information - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' maxlength="10" style='width: 75px;'/>
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>dd/mm/yyyy</span>
 										</td>
 									</tr>
@@ -464,25 +475,25 @@
 								</div>
 								 -->
 								<br />
-								<table id='tblStudentMCPInfo' align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table id='tblStudentMCPInfo' align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Student MCP</caption>
 									<tr>
 										<td class='label required' valign="top">MCP Number:</td>
 										<td id='tdMCPNumber' align='left'>
-											<input class='required' errortext='Student Information - MCP Number' type='text' id='txt_MCPNumber' name='txt_MCPNumber' style='width: 150px;'/>
-											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxxxxxxxxxxx (12 digits no spaces)</span>
+											<input class='required' errortext='Student Information - MCP Number' type='text' id='txt_MCPNumber' name='txt_MCPNumber' maxlength="12" style='width: 200px;'/>
+											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxxxxxxxxxxx (12 digits NO spaces)</span>
 										</td>
 									</tr>
 									<tr>
 										<td class='label required' valign='top'>MCP Expiration:</td>
 										<td align='left'>
-											<input class='required' errortext='Student Information - MCP Expiration' type='text' id='txt_MCPExpiration' name='txt_MCPExpiration' style='width: 75px;'/>
+											<input class='required' errortext='Student Information - MCP Expiration' type='text' id='txt_MCPExpiration' name='txt_MCPExpiration' maxlength="7" style='width: 75px;'/>
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>mm/yyyy</span>
 										</td>
 									</tr>
 								</table>
 								<br />
-								<table id='tblPhysicalAddress' align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table id='tblPhysicalAddress' align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Physical Address</caption>
 									<tr>
 										<td class='label required' valign='top'>Street Address:</td>
@@ -504,16 +515,16 @@
 									<tr>
 										<td class='label required' valign='top'>Postal Code:</td>
 										<td align='left'>
-											<input class='required' errortext='Physical Address - Postal Code' type='text' id='txt_PhysicalPostalCode' name='txt_PhysicalPostalCode' style='width: 75px;'/>
+											<input class='required' errortext='Physical Address - Postal Code' type='text' id='txt_PhysicalPostalCode' name='txt_PhysicalPostalCode' maxlength="7" style='width: 75px;'/>
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>x0x 0x0</span>
 										</td>
 									</tr>
 								</table>
 								<br/>							
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Mailing Address <span style='font-size:10px; color:#333333;'>(<input id='chk_MailingAddressSame' type="checkbox" />Same as physical address.)</span></caption>
 									<tr>
-										<td class='label required' valign='top'>Address:<br/><span style='color:#333333;font-size:9px;'>(street address, p.o. box, etc)</span></td>
+										<td class='label required' valign='top'>Address:<br/><span style='color:silver;font-size:9px;'>(Street Address, P.O. Box, etc)</span></td>
 										<td align='left'>
 											<div style='padding-bottom: 3px;'>
 												<input class='required' errortext='Mailing Address - Address' type='text' id='txt_MailingAddress1' name='txt_MailingAddress1' style='width: 200px;'/>
@@ -532,7 +543,7 @@
 									<tr>
 										<td class='label required' valign='top'>Postal Code:</td>
 										<td align='left'>
-											<input class='required' errortext='Mailing Address - Postal Code' type='text' id='txt_MailingPostalCode' name='txt_MailingPostalCode' style='width: 75px;'/>
+											<input class='required' errortext='Mailing Address - Postal Code' type='text' id='txt_MailingPostalCode' name='txt_MailingPostalCode' maxlength="7" style='width: 75px;'/>
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>x0x 0x0</span>
 										</td>
 									</tr>
@@ -543,7 +554,7 @@
 						<div align='center'>
 							<fieldset>
 								<legend>School Information</legend>
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<tr>
 										<td class='label'>School Year:</td>
 										<td style='font-weight:bold;' align='left'>${ap.schoolYear}</td>
@@ -563,7 +574,7 @@
 						<div align='center'>
 							<fieldset>
 								<legend>Contact Information</legend>								
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Primary Contact</caption>
 									<tr>
 										<td class='label required'>Full Name:</td>
@@ -576,21 +587,21 @@
 									<tr>
 										<td class='label one-required' valign='top'>Home Phone:</td>
 										<td align='left'>
-											<input class='one-required' errortext='Primary Contact - Home Phone' type='text' id='txt_PrimaryContactHomePhone' name='txt_PrimaryContactHomePhone' style='width: 100px;' />
+											<input class='one-required' errortext='Primary Contact - Home Phone' type='text' id='txt_PrimaryContactHomePhone' name='txt_PrimaryContactHomePhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
 									<tr>
 										<td class='label one-required' valign='top'>Work Phone:</td>
 										<td align='left'>
-											<input class='one-required' errortext='Primary Contact - Work Phone' type='text' id='txt_PrimaryContactWorkPhone' name='txt_PrimaryContactWorkPhone' style='width: 100px;' />
+											<input class='one-required' errortext='Primary Contact - Work Phone' type='text' id='txt_PrimaryContactWorkPhone' name='txt_PrimaryContactWorkPhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
 									<tr>
 										<td class='label one-required' valign='top'>Cell Phone:</td>
 										<td align='left'>
-											<input class='one-required' errortext='Primary Contact - Cell Phone' type='text' id='txt_PrimaryContactCellPhone' name='txt_PrimaryContactCellPhone' style='width: 100px;' />
+											<input class='one-required' errortext='Primary Contact - Cell Phone' type='text' id='txt_PrimaryContactCellPhone' name='txt_PrimaryContactCellPhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
@@ -599,7 +610,7 @@
 										<td align='left'><input class='required' errortext='Primary Contact - Email' type='text' id='txt_PrimaryContactEmail' name='txt_PrimaryContactEmail' style='width: 200px;' /></td>
 									</tr>
 								</table><br/>
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Optional Contact</caption>
 									<tr>
 										<td class='label optionally-required'>Full Name:</td>
@@ -612,21 +623,21 @@
 									<tr>
 										<td class='label optionally-one-required' valign='top'>Home Phone:</td>
 										<td align='left'>
-											<input class='optionally-one-required' type='text' id='txt_SecondaryContactHomePhone' name='txt_SecondaryContactHomePhone' style='width: 100px;' />
+											<input class='optionally-one-required' type='text' id='txt_SecondaryContactHomePhone' name='txt_SecondaryContactHomePhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
 									<tr>
 										<td class='label optionally-one-required' valign='top'>Work Phone:</td>
 										<td align='left'>
-											<input class='optionally-one-required' type='text' id='txt_SecondaryContactWorkPhone' name='txt_SecondaryContactWorkPhone' style='width: 100px;' />
+											<input class='optionally-one-required' type='text' id='txt_SecondaryContactWorkPhone' name='txt_SecondaryContactWorkPhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
 									<tr>
 										<td class='label optionally-one-required' valign='top'>Cell Phone:</td>
 										<td align='left'>
-											<input class='optionally-one-required' type='text' id='txt_SecondaryContactCellPhone' name='txt_SecondaryContactCellPhone' style='width: 100px;' />
+											<input class='optionally-one-required' type='text' id='txt_SecondaryContactCellPhone' name='txt_SecondaryContactCellPhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
@@ -635,13 +646,16 @@
 										<td align='left'><input class='optionally-required' type='text' id='txt_SecondaryContactEmail' name='txt_SecondaryContactEmail' style='width: 200px;' /></td>
 									</tr>
 								</table>
-								<div align='center'>
-									<div style='padding-top:8px; padding-bottom:5px; font-style:italic; width:60%; text-align:left;'>
-										All parents/guardians must provide an alternative contact in case of emergency.
-									</div>
-								</div>
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Emergency Contact</caption>
+									<tr>
+									<td colspan=2 style='font-style:italic; width:100%; text-align:left;color:Red;'>
+									All parents/guardians must provide an alternative contact in case of emergency.
+									</td>
+									</tr>
+								
+									
 									<tr>
 										<td class='label required'>Full Name:</td>
 										<td align='left'><input class='required' errortext='Emergency Contact - Full Name' type='text' id='txt_EmergencyContactName' name='txt_EmergencyContactName' style='width: 200px;' /></td>
@@ -649,7 +663,7 @@
 									<tr>
 										<td class='label required' valign='top'>Telephone:</td>
 										<td align='left'>
-											<input class='required' errortext='Emergency Contact - Telephone' type='text' id='txt_EmergencyContactPhone' name='txt_EmergencyContactPhone' style='width: 100px;' />
+											<input class='required' errortext='Emergency Contact - Telephone' type='text' id='txt_EmergencyContactPhone' name='txt_EmergencyContactPhone' maxlength="12" style='width: 100px;' />
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
 										</td>
 									</tr>
@@ -659,7 +673,7 @@
 						<div align='center'>
 							<fieldset>
 								<legend>Other Information</legend>
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<tr>
 										<td class='label required' style='width:110px;' valign='top'><sreg:YesNoRBG id='rbg_CustodyIssues' /></td>
 										<td align='left'>
@@ -684,7 +698,7 @@
 						</div>
 						<br />
 						<div align='center'>
-							<div style='padding-top:8px; padding-bottom:5px; color:red; font-weight:bold; font-style:italic; width:60%; text-align:left;'>
+							<div style='padding-top:8px; padding-bottom:5px; color:red; font-style:italic; width:80%; text-align:left;'>
 								This personal information is collected under the authority of the Schools Act, 1997 and will be used for the establishment of a student record, 
 								determination of residency, to administer educational programs and support services, and for other purposes necessary for an operating program 
 								or activity, including program placement, determination of eligibility for funding, contact and health related information in the event 
@@ -696,7 +710,7 @@
 						<c:choose>
 							<c:when test="${ap ne null}">
 								<div align='center'>
-									<div style='padding-top:8px; padding-bottom:5px; color:red; font-weight:bold; font-style:italic; width:60%; text-align:left;'>
+									<div style='padding-top:8px; padding-bottom:5px; color:red; font-style:italic; width:80%; text-align:left;'>
 										<br/><br/>
 										By submitting this form, I hereby certify that the information given on this form is accurate and complete to the best of my knowledge. 
 									</div>
@@ -718,6 +732,89 @@
 				</div>
 			</c:when>
 		</c:choose>
+		
+		
+		<p>
+		
+		
+		<!--
+	     <div align="center">
+		<div style='padding-bottom:8px; width:95%; text-align:left;'>
+		<div style="border:1px solid navy;width:100%;padding:5px;font-size:12px;background-color:#e6f7ff;">
+<b>REGISTRATION DATES/TIMES</b><p>
+
+			<ul>
+			
+								<p><li>For the <b>Avalon Region</b>, online registration will begin at 9:00 a.m. on <b>Wednesday, May 9, 2018</b> and remain open until 9:00 p.m. on Thursday, May 10, 2018.
+								
+								<p><li>For the <b>Labrador, Western and Central Region (includes Burin and Vista)</b>, online registration will begin at 9:00 a.m. (8:30 a.m. in Labrador) on <b>Monday, May 14, 2018</b> and remain open until 9:00 p.m. (8:30 p.m. in labrador) on Tuesday, May 15, 2018. 
+								
+								
+								<p><li>To complete the registration process, proof of address and confirmation of MCP number must be provided in person at the designated school on or before <b>May 31, 2018</b>. 
+								
+								<p><li>Any parents/guardians requiring Internet access or technical support may visit their zoned school during registration times for assistance. Please contact your zoned school by May 3, 2018 to arrange assistance during the registration process.
+								
+								<p><li>Any parent/guardian having registration issues (questions on the registration process, details to provide, or errors in the data submitted) while completing the form on registration day may contact/visit their zoned school for assistance. 
+
+</ul>
+
+
+</div>
+
+<p>
+
+
+
+<div style="border:1px solid grey;width:100%;padding:5px;font-size:12px;background-color:#fffae6;">
+<b>KINDERSTART/KINDERGARTEN INQUIRIES</b><p>
+<p>Any parent/guardian having registration issues (questions on the registration process, details to provide, or errors in the data submitted) may contact/visit their zoned school for assistance or contact your local regional office and the Assistant Director of Education for Programs in your region. See numbers below:
+<br/>
+<ul>
+								
+								<p><li><b>For Labrador Region</b><br/>
+										&middot; Tel: (709) 896-2431
+								
+								
+								<p><li><b>For Western Region</b><br/>
+										&middot; Tel: (709) 637-4000
+								
+								<p><li><b>For Central Region <i>(including Vista and Burin areas)</i></b><br/>
+										&middot; Tel: (709) 256-2547
+								
+								<p><li><b>For Eastern Region <i>(Avalon West, Avalon East and St. John's Metro area)</i></b><br/>
+									&middot; Tel: (709) 758-2372
+								</ul>
+
+
+
+</div>     
+
+
+
+
+<p>
+
+
+
+ <div style="border:1px solid Red;width:100%;padding:5px;font-size:12px;background-color:#ffe6e6;">
+		<b>TECHNICAL DIFFICULTIES ONLY</b><p>						
+								<p> If you experience <b>TECHNICAL DIFFICULTIES</b> during the online registration process please contact:
+								<ul>
+								<p><li><b>For Western and Labrador Regions</b><br/>
+										&middot; Rodney Batten (709) 637-4618 (<a href="mailto:rodneybatten@nlesd.ca?subject=Kindergarten Registration Support">rodneybatten@nlesd.ca</a>)
+								<p><li><b>For Central Region <i>(including Vista and Burin areas)</i></b><br/>
+										&middot; Gordon Moller (709) 256-2547 ext. 241 (<a href="mailto:gordonmoller@nlesd.ca?subject=Kindergarten Registration Support">gordonmoller@nlesd.ca</a>)
+								
+								<p><li><b>For Avalon Region <i>(Avalon West, Avalon East and St. John's Metro area)</i></b><br/>
+									&middot; Geoff Taylor (709) 757-4646 (<a href="mailto:geofftaylor@nlesd.ca?subject=Kindergarten Registration Support">geofftaylor@nlesd.ca</a>)<br>
+								 	&middot; Chris Crane (709) 758-2340 (<a href="mailto:chriscrane@nlesd.ca?subject=Kindergarten Registration Support">chriscrane@nlesd.ca</a>)<p>
+								 	
+									</ul>
+  	</div>	
+		
+		</div></div>
+		-->
+		
 	</body>
 	
 </html>

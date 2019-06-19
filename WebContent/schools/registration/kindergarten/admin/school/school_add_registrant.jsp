@@ -20,8 +20,8 @@
 		<script type="text/javascript" src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>
     <script type="text/javascript">
     	// school ids of schools offering efi
-    	var efi = new Array(211, 215, 219, 287, 244, 209, 247, 229, 232, 289, 192, 239, 207, 241, 196, 242, 162, 464, 414, 352, 403, 330, 341);
-    	
+    	//var efi = new Array(211, 215, 219, 287, 244, 209, 247, 229, 232, 289, 192, 239, 207, 241, 196, 242, 162, 464, 414, 352, 403, 330, 341);
+    	var efi = new Array(330, 211, 215, 352, 219, 287, 595, 464, 244, 209, 247, 229, 232, 495, 289, 341, 162, 192, 239, 207, 241, 403, 196, 242, 414);
     	//match email address
     	var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/; 
     	

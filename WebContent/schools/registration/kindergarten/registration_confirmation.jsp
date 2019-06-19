@@ -16,6 +16,8 @@
   
   <head>
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
     <TITLE>Student Registration</title>
     <script type='text/javascript'>
     	jQuery(function(){
@@ -28,11 +30,11 @@
     </script>
   </head>
 
-  <body bgcolor="#BF6200">
+  <body>
 		<c:choose>
 			<c:when test="${kr ne null}">
 				<div align='center'>
-					<div style='padding-bottom:8px; width:75%; text-align:left;'>
+					<div style='padding-bottom:8px; width:100%; text-align:left;'>
 						<p>
 							<span style="color:Green;font-size:14px;font-weight:bold;">Your application for Kindergarten registration for the ${kr.registration.schoolYear} school year has been received at <b><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></b>. 
 							A confirmation email has also been sent to ${kr.primaryContactEmail}.</span>
@@ -58,7 +60,7 @@
 					<div align='center'>
 						<fieldset>
 							<legend>School Information</legend>
-							<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 								<tr>
 									<td class='label'>School Year:</td>
 									<td style='font-weight:bold;' align='left'>${kr.registration.schoolYear}</td>
@@ -78,7 +80,7 @@
 					<div align='center'>
 						<fieldset>
 							<legend>Student Information</legend>
-							<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 								<tr>
 									<td class='label required'>Full Name:</td>
 									<td align='left'>${kr.studentLastName}, ${kr.studentFirstName}</td>
@@ -105,7 +107,7 @@
 								</tr>
 							</table>
 							<br />
-							<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 								<caption>Physical &amp; Mailing Addresses</caption>
 								<tr>
 									<td class='label' style='text-align:left;'>Physical Address</td>
@@ -136,7 +138,7 @@
 					<div align='center'>
 						<fieldset>
 							<legend>Contact Information</legend>								
-							<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 								<caption>Primary Contact</caption>
 								<tr>
 									<td class='label required'>Full Name:</td>
@@ -176,7 +178,7 @@
 								</tr>
 							</table><br/>
 							<c:if test='${kr.secondaryContactName ne ""}'>
-								<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 									<caption>Optional Contact</caption>
 									<tr>
 										<td class='label optionally-required'>Full Name:</td>
@@ -221,7 +223,7 @@
 									All parents/guardians must provide an alternative contact in case of emergency.
 								</div>
 							</div>
-							<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 								<caption>Emergency Contact</caption>
 								<tr>
 									<td class='label required'>Full Name:</td>
@@ -239,7 +241,7 @@
 					<div align='center'>
 						<fieldset>
 							<legend>Other Information</legend>
-							<table align='center' cellspacing='0' cellpadding='8' width='75%'>
+							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
 								<tr>
 									<td class='label required' style='width:110px;' valign='top'>${kr.custodyIssues ? "Yes" : "No"}</td>
 									<td align='left'>
@@ -274,7 +276,7 @@
 							We are current not accepting Kindergarten registrations at this time. Please try again later, thank you.
 					</fieldset>
 					<br /><br />
-					<a class='swap' href='http://www.esdnl.ca'><img border='0' src="<c:url value='/schools/registration/kindergarten/includes/images/home-off.png'/>" /></a>
+					<a class='swap' href='http://www.nlesd.ca'><img border='0' src="<c:url value='/schools/registration/kindergarten/includes/images/home-off.png'/>" /></a>
 				</div>
 			</c:otherwise>
 		</c:choose>
