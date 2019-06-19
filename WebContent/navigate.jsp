@@ -98,7 +98,7 @@
         	
 	   		<div class="col full_block content" style="position: relative;  text-align:center;">
 				 	<div class="txtPadding">
-			  <div align="center">
+			  <div align="center" style="display:none;">
 			 	<div style="border:1px solid Red;width:85%;padding:5px;font-size:10px;text-align:center;background-color:#FFFFF0;"><b>PLEASE NOTE RE NEW GOOGLE MS LOGIN AND MISSING ACCOUNT INFO</b>
 			 	<br/>If you have any issues with missing travel claims and/or growth plans once you login automatically using your NLESD Google credentials, 
 			 	please email us as you have possibly created a new account in error. Your proper MS account may have a different email address associated with it and needs to be updated. 
@@ -120,7 +120,7 @@
 			
 			
 			 <!-- Admin Planner -->
-			  	  <esd:SecurityAccessRequired roles="WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS">
+			  	  <esd:SecurityAccessRequired roles="ANNUAL-PLANNER-VIEW,WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS,ADMINISTRATIVE ASSISTANT">
 
 			  	  			<div class="menuIconImage"> 	                  	
 			            		<a href="https://sites.google.com/nlesd.ca/annualplanner/home" target="_blank">
@@ -147,12 +147,41 @@
 				</div>   
 				 </esd:SecurityAccessRequired>
 				  
+						<!-- Bus Route Update -->	  	  
+			  	  <esd:SecurityAccessRequired roles="ADMINISTRATOR,BUSROUTE-POST">
+					  	  	<div class="menuIconImage"> 	                  	
+			            		<a href="WebUpdateSystem/BusRoutes/school_directory_bus_routes.jsp">
+			            			<img src="includes/img/menu/busroute-off.png" class="img-swap menuImage" title="Bus Route Update System"  border=0>
+			            		</a>		            						
+		            		</div>
+			  	  </esd:SecurityAccessRequired>	  
+			
+			
 			<!-- Tender Posting System -->	  
 				  	<esd:SecurityAccessRequired permissions="TENDER-ADMIN,TENDER-EDIT,TENDER-VIEW">
 							<div class="menuIconImage">      
 				          		<a href="WebUpdateSystem/Tenders/viewTenders.html"><img src="includes/img/menu/tenders-off.png" class="img-swap menuImage" title="Tender Posting System" border=0></a>
 				          	</div>	
      			 	</esd:SecurityAccessRequired>	 	  
+			
+			
+			<!-- Admin School Profile Update -->	  	  
+			  	  <esd:SecurityAccessRequired roles="ADMINISTRATOR,PRINCIPAL,VICE PRINCIPAL,SCHOOL SECRETARY">
+					  	  	<div class="menuIconImage"> 	                  	
+			            		<a href="WebUpdateSystem/SchoolProfiles/school_profile.jsp">
+			            			<img src="includes/img/menu/sps-off.png" class="img-swap menuImage" title="School Profile Update System"  border=0>
+			            		</a>		            						
+		            		</div>
+			  	  </esd:SecurityAccessRequired>
+			
+			<!-- Office Staff Update -->	  	  
+			  	  <esd:SecurityAccessRequired roles="ADMINISTRATOR,OFFICE-STAFF-WEBUPDATE-ALL,OFFICE-STAFF-WEBUPDATE-AVALON,OFFICE-STAFF-WEBUPDATE-CENTRAL,OFFICE-STAFF-WEBUPDATE-WESTERN,OFFICE-STAFF-WEBUPDATE-LABRADOR">
+					  	  	<div class="menuIconImage"> 	                  	
+			            		<a href="WebUpdateSystem/StaffDirectory/staff_directory.jsp">
+			            			<img src="includes/img/menu/staffupdate-off.png" class="img-swap menuImage" title="Office Staff Update System"  border=0>
+			            		</a>		            						
+		            		</div>
+			  	  </esd:SecurityAccessRequired>	 	  
 				  
 				  
 			<!-- Web Maintenance -->	  	  
@@ -194,16 +223,22 @@
 			            		</a>		            						
 		            		</div>
 			  	  </esd:SecurityAccessRequired>
-			  ->
-			  <!-- Personnel Package -->
+			 
 			  	 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
 			  	  			<div class="menuIconImage"> 	                  	
 			            		<a href="Personnel/admin_index.jsp">
 			            			<img src="includes/img/menu/pp-off.png" class="img-swap menuImage"  border=0 title="Personnel Package">
 			            		</a>		            						
 		            		</div>
+			  	  </esd:SecurityAccessRequired>-->
+			  <!-- Personnel Package 2019-->
+			  	 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
+			  	  			<div class="menuIconImage"> 	                  	
+			            		<a href="Personnel/admin_index.jsp">
+			            			<img src="includes/img/menu/myhrp-off.png" class="img-swap menuImage"  border=0 title="Human Resources Profile System">
+			            		</a>		            						
+		            		</div>
 			  	  </esd:SecurityAccessRequired>
-			  
 			  	  
 			  <!-- PD Calendar -->
 			  	 <esd:SecurityAccessRequired permissions="CALENDAR-VIEW">
@@ -363,7 +398,18 @@
 		            		</div>
 			  	  </esd:SecurityAccessRequired>	   
 			  
-			   <!-- Growth Plan -->
+			  
+			  	 <esd:SecurityAccessRequired permissions="PPGP-VIEW">
+			  	  			<div class="menuIconImage"> 	                  	
+			            		<a href="PPGP/ppgpPolicy.html">
+			            			<img src="includes/img/menu/learningplan-off.png" class="img-swap menuImage" border=0 title="Professional Learning Plans">
+			            		</a>		            						
+		            		</div>
+			  	  </esd:SecurityAccessRequired>	 
+			  
+			  
+			  
+			   <!-- Growth Plan 
 			  	 <esd:SecurityAccessRequired permissions="PPGP-VIEW">
 			  	  			<div class="menuIconImage"> 	                  	
 			            		<a href="PPGP/ppgpPolicy.html">
@@ -389,7 +435,7 @@
 			            			<img src="includes/img/menu/learningplan-ps-off.png" class="img-swap menuImage" border=0 title="Professional Development Learning Plan Summary for Program Specialists.">
 			            		</a>		            						
 		            		</div>
-			  </esd:SecurityAccessRequired>
+			  </esd:SecurityAccessRequired>-->
 		<!-- 
 			  	 <esd:SecurityAccessRequired permissions="EFILE-VIEW">
 			  	  			<div class="menuIconImage"> 	                  	
@@ -404,6 +450,29 @@
 					<a href="BCS/index.html"><img src="includes/img/menu/bussystem-off.png" class="img-swap menuImage" title="Bussing Contractor System" border=0></a>
 				</div>	
 			  	  </esd:SecurityAccessRequired>
+				<!-- EECED
+					<esd:SecurityAccessRequired permissions="EECD-VIEW-APPROVALS">
+						<div class="menuIconImage">                              	
+							<a href="EECD/schoolAdminViewApprovals.html">
+							<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
+							</a>                                                         
+						</div>
+					</esd:SecurityAccessRequired>
+					<esd:SecurityAccessRequired permissions="EECD-VIEW">
+						<div class="menuIconImage">                              
+							<a href="EECD/viewEECD.html">
+								<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
+							</a>                                                         
+						</div>
+					</esd:SecurityAccessRequired>
+					<esd:SecurityAccessRequired permissions="EECD-VIEW-ADMIN,EECD-VIEW-SHORTLIST">
+						<div class="menuIconImage">                              
+							<a href="EECD/adminViewAreas.html">
+								<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
+							</a>                                                         
+						</div>
+					</esd:SecurityAccessRequired> 
+				-->
 			  	  
 			   <!-- 	   
 			  	   <esd:SecurityAccessRequired permissions="FUND3-SYSTEM-ACCESS">   		
