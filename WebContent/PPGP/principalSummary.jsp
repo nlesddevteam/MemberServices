@@ -4,6 +4,10 @@
                 java.util.*,com.awsd.security.*, 
                 java.text.*,com.awsd.personnel.*,com.awsd.school.*"
        isThreadSafe="false"%>
+       
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
        
@@ -13,8 +17,7 @@
   User usr = (User) session.getAttribute("usr");
   PPGP ppgp = null;  
   PPGPGoal goal = null;
-  PPGPTask task = null;
-  
+  PPGPTask task = null;  
   Vector<Personnel> teachers = null;
   Personnel p = null;
 
@@ -26,7 +29,8 @@
     }
     else
     {
-%>    <jsp:forward page="/MemberServices/PPGP/viewGrowthPlanProgramSpecialistSummary.html"/>
+%>    
+<jsp:forward page="/MemberServices/PPGP/viewGrowthPlanProgramSpecialistSummary.html"/>
 <%
 	}
   }
@@ -37,188 +41,210 @@
   
   teachers = PersonnelDB.getPersonnelList(p.getSchool());
   session.setAttribute("PPGP-POLICY", new Boolean(true));
+  
+  
+ String syear="CUR";
+  if(request.getAttribute("syear")!=null){
+	  syear=request.getAttribute("syear").toString();
+  }
+
+  
+  
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<c:set var="query" value="${ param.syear }"/>
+<c:if test="${empty param.syear}">
+	<c:set var="query" value="CUR"/>
+</c:if>
+
+
 <html>
 
 	<head>
-		<title>Principals Summary</title>
-		<link rel="stylesheet" href="css/summary.css" />
-		<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-		<script type='text/javascript'>
-			$('document').ready(function(){
-				$('.pgp-list').each(function(){ 
-					$(this).children().children('.task:odd').children().css({'background-color':"white"});
-				})
-			});
-		</script>
+		<title>Principals Summary</title>		
+<script>
+    $("#loadingSpinner").css("display","none");
+</script>
+<style>
+.tableTitle {font-weight:bold; font-size:16px;}
+.tableResult {font-weight:normal;}
+.tableTitleWide {column-span: all;}
+.tableTitleL {font-weight:bold;font-size:16px;width:15%;}
+.tableResultL {font-weight:normal;width:35%;}
+.tableTitleR {font-weight:bold;font-size:16px;width:15%;}
+.tableResultR {font-weight:normal;width:35%;}
+input {border:1px solid silver;}
+
+</style>	
+	 
 	</head>
 
-	<body topmargin="10" bottommargin="0" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">
+	<body>
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading">
+	               	<div style="float:right;font-size:36px;font-weight:bold;margin-top:-10px;color:rgba(0, 102, 153, 0.3);">
+		               	<c:choose>
+						<c:when test="${param.syear eq 'PREV'}">
+						<%=PPGP.getPreviousGrowthPlanYear()%>
+						</c:when>
+						<c:otherwise>
+						<%=PPGP.getCurrentGrowthPlanYear()%>
+						</c:otherwise>
+						</c:choose>
+	               	</div>
+	               		               	
+	               	<span style="font-size:16px;"><span style="text-transform:capitalize;font-weight:bold;"><%=p.getFullNameReverse()%></span>(Principal)<br/>
+	               	
+	               	<c:choose>
+					<c:when test="${param.syear eq 'PREV'}">
+					<%=PPGP.getPreviousGrowthPlanYear()%>
+					</c:when>
+					<c:otherwise>
+					<%=PPGP.getCurrentGrowthPlanYear()%>
+					</c:otherwise>
+					</c:choose>
+	               	 Learning Plan Summaries for <br/>
+	               	<b><%=p.getSchool().getSchoolName()%></b> Teaching Staff</span><br/>
+	               	<b>Date:</b> <%=(new SimpleDateFormat("dd/MM/yyyy")).format(Calendar.getInstance().getTime())%>
+	               	</div>
+      			 	<div class="panel-body">
+			        Below are your current school Teaching Staff's Learning Plan Summaries for 
+			        <c:choose>
+					<c:when test="${param.syear eq 'PREV'}">
+					<%=PPGP.getPreviousGrowthPlanYear()%>
+					</c:when>
+					<c:otherwise>
+					<%=PPGP.getCurrentGrowthPlanYear()%>
+					</c:otherwise>
+					</c:choose>.
+			        You can view each Learning plan, delete various Learning Plans, remove an educator from your school staff (if they no longer teach there), or retire an individual if they are officially retired.
+	<br/><br/>
 	
-		<table align="center" width="80%" cellpadding="0" cellspacing="0" border="0">
-			<tr>
-				<td width="40%" valign="top" align="left">
-					<img src="images/principalsplpsummary.png" /><br />
-				</td>
-				<td width="33%" valign="middle" align="left">
-				  <table>
-				  	<tr>
-				      <td>
-				        <b>School Year:</b>
-				      </td>
-				      <td>
-				        <%=PPGP.getCurrentGrowthPlanYear()%>
-				      </td>
-				    </tr>
-				    <tr>
-				      <td>
-				        <b>Principal:</b>
-				      </td>
-				      <td>
-				        <%=p.getFullName()%>
-				      </td>
-				    </tr>
-				    <tr>
-				      <td>
-				        <b>School:</b>
-				      </td>
-				      <td>
-				        <%=p.getSchool().getSchoolName()%>
-				      </td>
-				    </tr>
-				    <tr>
-				      <td>
-				        <b>Date:</b>
-				      </td>
-				      <td>
-				        <%=(new SimpleDateFormat("dd/MM/yyyy")).format(Calendar.getInstance().getTime())%><br />
-				      </td>
-				    </tr>
-				  </table>
-				</td>
-				<%if(usr.getUserPermissions().containsKey("PPGP-VIEW-SUMMARY-PROGRAMSPECIALIST")) { %>
-				  <td align='right'>
-				    <img style="cursor:hand;" src="images/progspecsum-off.png"
-				        onclick="self.location.href='viewGrowthPlanProgramSpecialistSummary.html';" /><br />
-				  </td>
-				<%}%>
-			</tr>
-		</table>
 	
-		<% for(Personnel teacher : teachers) { %>
-			<center>
-				<fieldset style='width:80%;padding:6px;padding-bottom:15px;'>
-					<legend style='vertical-align:top;'>
-						<% if(usr.checkPermission("PPGP-VIEW-SUMMARY-EDIT")){ %>
-					    <span class="text"><a href="viewGrowthPlanSummary.html?pid=<%=teacher.getPersonnelID()%>" style="font-weight:bold;" title="Click here to view detailed summary"><%=teacher.getFullName()%></a></span>
-					  <% } else { %>
-					    <span class="text"><%=teacher.getFullName()%></span>
-					  <% } %>
-					  &nbsp;&nbsp;
-					  <% if(usr.checkPermission("PPGP-VIEW-SUMMARY-DELETE")
-					    || usr.checkPermission("PERSONNEL-CHANGESCHOOL")
-					    || usr.checkPermission("PERSONNEL-CHANGECATEGORY")){
-					    
-					    int cnt=0;
-					  %>[&nbsp;
-					    <% if((ppgp!=null)&&usr.checkPermission("PPGP-VIEW-SUMMARY-DELETE")){ %>
-					      <span class="text"><a href='deleteGrowthPlan.html?id=<%=ppgp.getPPGPID()%>' style='color:#FF0000; font-size:10px;'>DELETE PGP</a></span>
-					    <%cnt++;}%>
-					    
-					    <% if(usr.checkPermission("PERSONNEL-CHANGESCHOOL")){ %>
-					      <span class="text"><%=(cnt > 0)?"&nbsp;|&nbsp;":""%><a href='removeTeacherFromList.html?pid=<%=teacher.getPersonnelID()%>&sid=-1&referrer=viewGrowthPlanPrincipalSummary.html' style='color:#FF0000;font-size:10px;'>REMOVE FROM LIST</a></span>
-					    <%cnt++;}%>
-					    
-					    <% if(usr.checkPermission("PERSONNEL-CHANGECATEGORY")){ %>
-					      <span class="text"><%=(cnt > 0)?"&nbsp;|&nbsp;":""%><a href='retireTeacher.html?pid=<%=teacher.getPersonnelID()%>&category=111&referrer=viewGrowthPlanPrincipalSummary.html' style='color:#FF0000;font-size:10px;'>RETIRED?</a></span>
-					    <%cnt++;}%>
-					    &nbsp;]
-					  <%}%>
-					</legend>
+		<% for(Personnel teacher : teachers) { %>		
+		
+		
+			<!-- Only display the below positions as to not allow Admin to delete secretary. -->
+			<% String position = teacher.getPersonnelCategory().getPersonnelCategoryName().toString();
+			
+			  		if (position.equalsIgnoreCase("Teacher") || 
+					  position.equalsIgnoreCase("Teaching and Learning Assistant") || 
+					  position.equalsIgnoreCase("Guidance Counsellor") ||
+					  position.equalsIgnoreCase("Substitute Teacher") ||					  
+					  position.equalsIgnoreCase("Vice Principal") ||
+					  position.equalsIgnoreCase("Principal")) {%>
+				
+				
+				<table class="table table-condensed table-bordered" style="font-size:12px;">
+					<tbody>
+					<tr style="background-color:#0066cc;color:White;">
+					<td colspan=4><span style="text-transform:capitalize;font-size:14px;"><b><%=teacher.getFullName()%></b> (<%=position%>)</span>
+			        <div style="float:right;">
+			<% if(usr.checkPermission("PPGP-VIEW-SUMMARY-EDIT")){ %>
+					    <a href="viewGrowthPlanSummary.html?pid=<%=teacher.getPersonnelID()%>&syear=${query}" title="Click here to view detailed summary of this persons Learning Plan." class="blankPLP<%=teacher.getPersonnelID()%> no-print btn btn-xs btn-info" onclick="loadingData()" style="text-transform:Capitalize;">VIEW PLP</a>
+			<% } %>
+					 
+			<% if(usr.checkPermission("PPGP-VIEW-SUMMARY-DELETE") || usr.checkPermission("PERSONNEL-CHANGESCHOOL") || usr.checkPermission("PERSONNEL-CHANGECATEGORY")){
+				
+			    	if((ppgp!=null)&&usr.checkPermission("PPGP-VIEW-SUMMARY-DELETE")){ %>
+					      <a href='deleteGrowthPlan.html?id=<%=ppgp.getPPGPID()%>&syear=${query}' class="blankPLP<%=teacher.getPersonnelID()%> no-print btn btn-xs btn-danger" title="Delete this Learning Plan?">DELETE PLP</a>
+					<%}
+			    		if(usr.checkPermission("PERSONNEL-CHANGESCHOOL")){ %>
+					      <a href='removeTeacherFromList.html?pid=<%=teacher.getPersonnelID()%>&sid=-1&referrer=viewGrowthPlanPrincipalSummary.html?syear=${query}' title="Remove this person from your school." class="no-print btn btn-warning btn-xs">REMOVE FROM LIST</a></span>
+					    <%}
+			    				if(usr.checkPermission("PERSONNEL-CHANGECATEGORY")){ %>
+					     		<a href='retireTeacher.html?pid=<%=teacher.getPersonnelID()%>&category=111&referrer=viewGrowthPlanPrincipalSummary.html?syear=${query}' title="Is this person Retired?" class="no-print btn btn-danger btn-xs">RETIRED?</a></span>
+					    <%}}%>
+					 </div>   
+					</td>
+					</tr>	
 					
-					<table class='pgp-list' width='95%' align="center" cellpadding="0" cellspacing="1" border="0">
-						<tr>
-							<th width="35%" valign="middle" align="center">
-								<span class="title">PD Requested</span><br />
-							</th>
-							<th width="25%" valign="middle" align="center">
-								<span class="title">School Support</span><br />
-							</th>
-							<th width="25%" valign="middle" align="center">
-								<span class="title">District Support</span><br />
-							</th>
-							<th width="15%" valign="middle" align="center">
-								<span class="title">Completion Date</span><br />
-							</th>
-						</tr>
-						<% ppgp = teacher.getPPGP(); %>  
-					    
-						<% if(ppgp==null) { %>
-					      <tr class='task'>
-					        <td colspan="4" valign="middle">
-					          <span class="text" align="center"><b><font color="#FF0000">NO PPGP SUBMITTED.</font></b></span><br />
-					        </td>
+					<c:choose>
+					<c:when test="${param.syear eq 'PREV'}">
+					<% ppgp = teacher.getPreviousPPGP();  %>
+					</c:when>
+					<c:otherwise>
+					<% ppgp = teacher.getPPGP(); %>
+					</c:otherwise>
+					</c:choose>
+					
+									
+					
+					<% if(ppgp==null) { %>
+					<script>
+					$(".blankPLP<%=teacher.getPersonnelID()%>").css("display","none");
+					</script>
+					      <tr>			      
+					      <td colspan=4><div class="alert alert-danger" align="center"><span style="text-transform:Capitalize;font-weight:bold;"><%=teacher.getFullNameReverse()%></span> has not yet submitted a Learning Plan.</div></td>
 					      </tr>
-						<% } else { 
-					      for(Map.Entry<Integer, PPGPGoal> entry : ppgp.entrySet()) {
-					        goal = entry.getValue(); %>
-					        <tr class='goal'>
-					          <td class='last' colspan="4" valign="top">
-					          	<span class="title2">Goal:&nbsp;<%=goal.getPPGPGoalDescription()%></span>
-					          </td>
-					        </tr>
-									<% for(Map.Entry<Integer, PPGPTask> g_entry : goal.entrySet()) {
-					          task = g_entry.getValue(); %>
-					          <tr class='task'>
-					            <td width="35%" valign="top">
-					              <span class="text">
-					              	<%=task.getDescription()%><br /><br />
-					              	<i>How may techology support the successfully attainment of your goal?</i><br />
-					              	<%= task.getTechnologySupport() %>
-					              </span><br />
-					            </td>
-					            <td width="25%" valign="top">
-					              <span class="text">
-					              	<i><U>Resource:</U></i><br />
-					              	<%=task.getSchoolSupport()%>
-					              	<br/><i><u>Technology:</u></i><br/>
-					              	<%if(task.getTechnologySchoolSupport() != null){ %>
-					              		<%=task.getTechnologySchoolSupport()%>
-					              	<%} %>
-					              </span><br />
-					            </td>
-					            <td width="25%" valign="top">
-					              <span class="text">
-					              	<i><u>Resource:</u></i><br />
-					              	<%=task.getDistrictSupport()%><br/>
-					              	<i><u>Technology:</u></i><br/>
-					              	<%if(task.getTechnologyDistrictSupport() != null){ %>
-					              		<%=task.getTechnologyDistrictSupport()%>
-					              	<%} %>
-					              </span>
-					              <br />
-					            </td>
-					            <td class='last' width="15%" valign="top" align="center">
-					              <span class="text"><%=task.getCompletionDate()%></span><br />
-					            </td>
-					          </tr>
-									<% } %>
-					      <% } %>
-					  <% } %>
+					<% } else { %>
+						<script>
+						$(".blankPLP<%=teacher.getPersonnelID()%>").css("display","inline");
+						</script>
+						<%
+						int goalNum=0;
+					   for(Map.Entry<Integer, PPGPGoal> entry : ppgp.entrySet()) {
+					    goal = entry.getValue(); 
+					    goalNum++;%>					
+					
+					<tr style="color:#0066cc;background-color:#e6f2ff;font-size:14px;">
+					<td colspan=4><b>GOAL #<%=goalNum%>:</b> <%=goal.getPPGPGoalDescription()%></td>
+					</tr>
+					
+					<%int cntrt=0; %>
+					
+					<% for(Map.Entry<Integer, PPGPTask> g_entry : goal.entrySet()) {
+					          task = g_entry.getValue(); 
+					          cntrt++;
+					          %>
+					          
+														<tr class="warning">
+													    <td colspan=4><b>TASK/STRATEGY #<%=cntrt%>:</b> <%=task.getDescription()%></td>	
+													    </tr>
+													    <tr class="active">
+													    <td colspan=4><b>How may technology support the successfully attainment of your goal?</b></td>
+													    </tr>
+													    <tr>
+													    <td colspan=4><%= task.getTechnologySupport() %></td>	
+													    </tr>
+													    <tr class="active">
+													    <td colspan=2 style="text-align:center;font-weight:bold;">RESOURCES/SUPPORT</td>
+													    <td colspan=2 style="text-align:center;font-weight:bold;">TECHNOLOGY</td>
+													    </tr>
+													    <tr class="active">
+													    <td width="25%" style="text-align:center;font-weight:bold;">School Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">District Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">School Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">District Support(s)</td>
+													   	</tr>
+													    <tr>
+													    <td><%=task.getSchoolSupport()%></td>
+													    <td><%=task.getDistrictSupport()%></td>
+													    <td><%=(task.getTechnologySchoolSupport()!=null)?task.getTechnologySchoolSupport():""%></td>
+													    <td><%=(task.getTechnologyDistrictSupport()!=null)?task.getTechnologyDistrictSupport():""%></td>
+													   	</tr>
+													 	<tr>
+													 	<td  class="active"><b>COMPLETION DATE:</b></td>
+													 	<td colspan=3><%=task.getCompletionDate()%></td>
+													 	</tr>
+													 	<tr>
+													 	<td class="active"><b>SELF EVALUATION:</b></td>
+													 	<td colspan=3>
+													 	<%=task.getSelfEvaluation() !=null?task.getSelfEvaluation():"<div class='alert alert-danger' align='center'><span style='text-transform:Capitalize;font-weight:bold;'>"+teacher.getFullNameReverse()+"</span> has not yet completed the self evaluation for this Goal. Completion Date may not have yet passed.</div>"%>
+													 	</td>
+													 	</tr>
+									
+					<% } %>
+					<% }} %>
+					
+					</tbody>
 					</table>
-				</fieldset>
-			</center>
+					<div class="pagebreak"></div>
+				<% } %>
+					
 		<%}%>
 	
-		<table width='100%'>
-			<tr>
-				<td valign="bottom" bgcolor="#FFCC00" style='padding:0;'>
-					<img src="images/spacer.gif" border='0' width="1" height="2" /><br />
-				</td>
-			</tr>
-		</table>
+	</div></div></div>	
 		
 	</body>
 </html>

@@ -4,6 +4,9 @@
                 java.util.*,com.awsd.security.*, 
                 java.text.*,com.awsd.personnel.*,com.awsd.school.*"
        isThreadSafe="false"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
        
@@ -15,143 +18,205 @@
   PPGPGoal goal = null;
   PPGPTask task = null;
   Personnel p = null;
+  
+  String syear="CUR";
+  if(request.getAttribute("syear")!=null){
+	  syear=request.getAttribute("syear").toString();
+  }
+  
 %>
+
+<c:set var="query" value="${ param.syear }"/>
+<c:if test="${empty param.syear}">
+	<c:set var="query" value="CUR"/>
+</c:if>
+
+
 <html>
-  <head>
+  <head>   
     <title>PGP Program Specialist Summary</title>
-    <link rel="stylesheet" href="css/summary.css">
-    <STYLE TYPE="text/css">
-      br.pagebreak {page-break-before: always}
-    </STYLE> 
+<script>
+    $("#loadingSpinner").css("display","none");
+</script>
+<style>
+.tableTitle {font-weight:bold; font-size:16px;}
+.tableResult {font-weight:normal;}
+.tableTitleWide {column-span: all;}
+.tableTitleL {font-weight:bold;font-size:16px;width:15%;}
+.tableResultL {font-weight:normal;width:35%;}
+.tableTitleR {font-weight:bold;font-size:16px;width:15%;}
+.tableResultR {font-weight:normal;width:35%;}
+input {border:1px solid silver;}
+
+</style>
   </head>
 
-  <body topmargin="10" bottommargin="0" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0" onload="window.print();">
-
+  <body>
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading">
+	               	<div style="float:right;font-size:36px;font-weight:bold;margin-top:-10px;color:rgba(0, 102, 153, 0.3);">
+		               	<c:choose>
+						<c:when test="${param.syear eq 'PREV'}">
+						<%=PPGP.getPreviousGrowthPlanYear()%>
+						</c:when>
+						<c:otherwise>
+						<%=PPGP.getCurrentGrowthPlanYear()%>
+						</c:otherwise>
+						</c:choose>
+	               	</div>
+	               	
+	               	Learning Plan Summaries for
+	               	<c:choose>
+					<c:when test="${param.syear eq 'PREV'}">
+					<%=PPGP.getPreviousGrowthPlanYear()%>
+					</c:when>
+					<c:otherwise>
+					<%=PPGP.getCurrentGrowthPlanYear()%>
+					</c:otherwise>
+					</c:choose>
+	               	
+	               	</div>
+      			 	<div class="panel-body">
+      			 	<span id="foundThem">Below are your detailed Learning Plan Summaries, sorted by school/teacher for your list of schools.</span>
+      			 	<br/><br/>
   <%
+  
+  int schoolFound=0;
     for(School s : new Schools()) {
       p = s.getSchoolPrincipal();
       
       if(p == null)
         continue;
-  %>  <table align="center" width="95%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td width="234" valign="top" align="left">
-            <img src="images/progspeclpsummary.png"><BR>
-          </td>
-          <td width="*" valign="middle" align="left">
-            <table>
-              <tr>
-                <td>
-                  <b>School:</b>
-                </td>
-                <td>
-                  <%=s.getSchoolName()%>
-                </td>
-              </tr>
-              
-              <tr>
-                <td>
-                  <b>Principal:</b>
-                </td>
-                <td>
-                  <%=p.getFullName()%>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+  %> 
   
-      <table align="center" width="95%" cellpadding="5" cellspacing="1" border="0">
-        <tr>
-          <td width="20%" valign="middle" align="center">
-            <span class="title">Teacher Name</span><BR>
-          </td>
-          <td width="25%" valign="middle" align="center">
-            <span class="title">PD Requested</span><BR>
-          </td>
-          <td width="20%"  valign="middle" align="center">
-            <span class="title">School Support</span><BR>
-          </td>
-          <td width="20%"  valign="middle" align="center">
-            <span class="title">District Support</span><BR>
-          </td>
-          <td width="15%" valign="middle" align="center">
-            <span class="title">Completion Date</span><BR>
-          </td>
-        </tr>
+  <%try{    
+	     if(s.getSchoolFamily().getProgramSpecialist().getFullNameReverse().equalsIgnoreCase(usr.getPersonnel().getFullNameReverse())){
+	     schoolFound=1;
+	     %>
+                	
+  				<table class="table table-condensed table-bordered" style="font-size:12px;">
+					<tbody> 
+					<tr style="background-color:#000000;color:White;font-size:14px;">
+						<th colspan=4><b>SCHOOL:</b> <%=s.getSchoolName()%> &nbsp; <b>PRINCIPAL:</b> <%=p.getFullName()%></th>
+					</tr>
+				</tbody>
+				</table>
+				
         <%
-        	for(Personnel teacher : PersonnelDB.getPersonnelList(s)) {
-                            ppgp = teacher.getPPGP();
-        %>  <tr>
-              <td  colspan="5" valign="middle" align="left">
-                <span class="title"><%=teacher.getFullName()%></span>
-              </td>
-            </tr>
+        	for(Personnel teacher : PersonnelDB.getPersonnelList(s)) {                        
+        %>  
+        
+        <c:choose>
+					<c:when test="${param.syear eq 'PREV'}">
+					<% ppgp = teacher.getPreviousPPGP();  %>
+					</c:when>
+					<c:otherwise>
+					<% ppgp = teacher.getPPGP(); %>
+					</c:otherwise>
+					</c:choose>
+        
+        
+        
+        
+        <% String position = teacher.getPersonnelCategory().getPersonnelCategoryName().toString();
+			
+			  		if (position.equalsIgnoreCase("Teacher") || 
+					  position.equalsIgnoreCase("Teaching and Learning Assistant") || 
+					  position.equalsIgnoreCase("Substitute Teacher") ||	
+					  position.equalsIgnoreCase("Guidance Counsellor") ||
+					  position.equalsIgnoreCase("Vice Principal") ||
+					  position.equalsIgnoreCase("Principal")) {%>
+             <table class="table table-condensed table-bordered" style="font-size:12px;">
+					<tbody> 
+       
+             <tr style="background-color:#0066cc;color:White;">			      
+			     <td colspan=4><span style="text-transform:capitalize;font-size:14px;">&nbsp;<b><%=teacher.getFullName()%></b> (<%=position%>)</span></td>
+			</tr> 
+          
             <%if(ppgp==null){%>
-              <tr>
-                <td width="20%" valign="middle" align="center">
-                  <span class="text" align="center"><B><font color="#FF0000">NO PPGP SUBMITTED.</font></B></span><BR>
-                </td>
-                <td colspan="4" valign="middle">
-                  <span class="text">&nbsp;</span><BR>
-                </td>
-              </tr>
+            <tr>			      
+			     <td colspan=4><div class="alert alert-danger" align="center"><span style="text-transform:Capitalize;font-weight:bold;"><%=teacher.getFullNameReverse()%></span> has not yet submitted a Learning Plan.</div></td>
+			</tr>
+
             <%}else{ 
+            	int goalNum=0;
                 for(Map.Entry<Integer, PPGPGoal> entry : ppgp.entrySet()) {
                   goal = entry.getValue();
-            %>    <tr>
-                    <td colspan="5"  valign="top">
-                      <table>
-                        <tr>
-                          <td>
-                            <span class="title">Goal:&nbsp;</span>
-                          </td>
-                          <td colspan="4">
-                            <span class="text"><%=goal.getPPGPGoalDescription()%></span>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
+                  goalNum++;
+            %>   
+            <tr style="color:#0066cc;background-color:#e6f2ff;font-size:14px;">
+					<td colspan=4><b>GOAL #<%=goalNum%>:</b> <%=goal.getPPGPGoalDescription()%></td>
+			</tr>
+            
+            
+            <%int cntrt=0; %>
+            
                   <%for(Map.Entry<Integer, PPGPTask> g_entry : goal.entrySet()) {
                       task = g_entry.getValue();
-                  %>  <tr>
-                        <td width="20%"  valign="middle" align="center">
-                          <span class="text">&nbsp;</span><BR>
-                        </td>
-                        <td width="25%"  valign="middle">
-                          <span class="text"><%=task.getDescription()%></span><BR>
-                        </td>
-                        <td width="20%"  valign="middle">
-                          <span class="text"><%=task.getSchoolSupport()%></span><BR>
-                        </td>
-                        <td width="20%"  valign="middle">
-                          <span class="text"><%=task.getDistrictSupport()%></span><BR>
-                        </td>
-                        <td width="15%"  valign="middle" align="center">
-                          <span class="text"><%=task.getCompletionDate()%></span><BR>
-                        </td>
-                      </tr>
+                      cntrt++;
+                  %>  
+                  
+                  										<tr class="warning">
+													    <td colspan=4><b>TASK/STRATEGY #<%=cntrt%>:</b> <%=task.getDescription()%></td>	
+													    </tr>
+													    <tr class="active">
+													    <td colspan=4><b>How may technology support the successfully attainment of your goal?</b></td>
+													    </tr>
+													    <tr>
+													    <td colspan=4><%= task.getTechnologySupport() %></td>	
+													    </tr>
+													    <tr class="active">
+													    <td colspan=2 style="text-align:center;font-weight:bold;">RESOURCES/SUPPORT</td>
+													    <td colspan=2 style="text-align:center;font-weight:bold;">TECHNOLOGY</td>
+													    </tr>
+													    <tr class="active">
+													    <td width="25%" style="text-align:center;font-weight:bold;">School Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">District Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">School Support(s)</td>
+													    <td width="25%" style="text-align:center;font-weight:bold;">District Support(s)</td>
+													   	</tr>
+													    <tr>
+													    <td><%=task.getSchoolSupport()%></td>
+													    <td><%=task.getDistrictSupport()%></td>
+													    <td><%=(task.getTechnologySchoolSupport()!=null)?task.getTechnologySchoolSupport():""%></td>
+													    <td><%=(task.getTechnologyDistrictSupport()!=null)?task.getTechnologyDistrictSupport():""%></td>
+													   	</tr>
+													 	<tr>
+													 	<td  class="active"><b>COMPLETION DATE:</b></td>
+													 	<td colspan=3><%=task.getCompletionDate()%></td>
+													 	</tr>
+													 	<tr>
+													 	<td class="active"><b>SELF EVALUATION:</b></td>
+													 	<td colspan=3>
+													 	<%=task.getSelfEvaluation() !=null?task.getSelfEvaluation():"<div class='alert alert-danger' align='center'><span style='text-transform:Capitalize;font-weight:bold;'>"+teacher.getFullNameReverse()+"</span> has not yet completed the self evaluation for this Goal. Completion Date may not have yet passed.</div>"%>
+													 	</td>
+													 	</tr>
                   <%}
                 }
               }%>
-              <tr>
-                <td  colspan="5" bgcolor="#E1E1E1" valign="middle" align="left">
-                  &nbsp;
-                </td>
-              </tr>
+           
           <%}%>
-      </table>
+			  		
+			  		</tbody>
+					</table>
+					<div class="pagebreak"></div>
+        	
+        	<%}%>
+       		<div class="pagebreak"></div>		
+  <%}   } catch(Exception e){ %>
   
-      <table height="5" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td width="100%" valign="bottom" bgcolor="#FFCC00">
-            <img src="images/spacer.gif" width="1" height="5"><BR>
-          </td>
-        </tr>
-        <tr><td width="100%"><br class="pagebreak"></td></tr>
-      </table>
+  <%}%>
+  
+     
+     
     <%}%>  
+    
+    <%if(schoolFound==0){ %>
+    <div class='alert alert-danger' align='center'>Sorry, no schools found with Professional Learning Plans for your viewing. Director of Schools will need to be associated with a Family of Schools for access. Program Specialists will have access to view all schools. You can still Search PLP's using the search feature in the Administration menu above.</div>
+   <script>$("#foundThem").hide();</script>
+    <%}%>
+    
+    </div></div></div>
   </body>
 </html>
