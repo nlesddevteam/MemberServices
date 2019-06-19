@@ -110,7 +110,7 @@ $(document).ready(function() {
 				$("#prcvsqdate").change(function(){
 					checkdate('PRCVSQDATE');
 				});
-				checkEmployeeDateRanges();
+				
 				
 				
 
@@ -133,7 +133,7 @@ $(document).ready(function() {
 	  		  </ul>
 	  		  <form class="form-horizontal"  id="contact-form-up" name="contact-form-up" method="post" action="" enctype='multipart/form-data'>
 	  			<div class="tab-content">
-	  			<div id="details" class="tab-pane fade in active">
+	  	<div id="details" class="tab-pane fade in active">
 	  				<div class="form-group">
 		      			<br/>
 		      			<label class="control-label col-sm-2" for="email">Status:</label>

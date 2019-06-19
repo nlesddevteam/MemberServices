@@ -105,7 +105,6 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
         <ul>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('adminViewRoute.html');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('adminViewRoutes.html');"><i class="fa fa-fw fa-tripadvisor"></i> View Routes</a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('admin_update_school_profile_route_doc.jsp');"><i class="fa fa-fw fa-tripadvisor"></i> School Profiles</a></li>
         </ul>
      </li>
      <li><a href="#"><i class="fa fa-fw fa-file-text-o"></i> Reports</a>
@@ -117,12 +116,6 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">
            		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewAllContractors.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Reports</a></li>
         	</esd:SecurityAccessRequired>
-        </ul>
-     </li>
-     <li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Audit</a>
-        <ul>
-           	<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('adminSelectAudit.html');"><i class="fa fa-fw fa-plus"></i>Run Full Audit</a></li>
-        	<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('adminSelectDateAudit.html');"><i class="fa fa-fw fa-plus"></i>Run Date Audit</a></li>
         </ul>
      </li>
   </ul>

@@ -95,7 +95,17 @@ $(document).ready(function() {
 				<th class="listdata">Status</th>
 				<th class="listdata">Business Number</th>
 				<th class="listdata">Hst Number</th>
-
+				<th class="listdata">Regular</th>
+				<th class="listdata">Alternate</th>
+				<th class="listdata">Parent</th>
+				<th class="listdata">CR Last Name</th>
+				<th class="listdata">CR First Name</th>
+				<th class="listdata">CR Phone</th>
+				<th class="listdata">CR Email</th>
+				<th class="listdata">TO Last Name</th>
+				<th class="listdata">TO First Name</th>
+				<th class="listdata">TO Phone</th>
+				<th class="listdata">TO Email</th></tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${contractors}" var="rule">
@@ -117,7 +127,17 @@ $(document).ready(function() {
 							<td class="field_content">${rule.statusText}</td>
 							<td class="field_content">${rule.businessNumber}</td>
 							<td class="field_content">${rule.hstNumber}</td>
-
+							<td class="field_content">${rule.comBean.tRegular}</td>
+							<td class="field_content">${rule.comBean.tAlternate}</td>
+							<td class="field_content">${rule.comBean.tParent}</td>
+							<td class="field_content">${rule.comBean.crLastName}</td>
+							<td class="field_content">${rule.comBean.crFirstName}</td>
+							<td class="field_content">${rule.comBean.crPhoneNumber}</td>
+							<td class="field_content">${rule.comBean.crEmail}</td>
+							<td class="field_content">${rule.comBean.toLastName}</td>
+							<td class="field_content">${rule.comBean.toFirstName}</td>
+							<td class="field_content">${rule.comBean.toPhoneNumber}</td>
+							<td class="field_content">${rule.comBean.toEmail}</td>
 							</tr>
 					</c:forEach>
 				</tbody>

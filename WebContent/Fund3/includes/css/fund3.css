@@ -1,0 +1,285 @@
+
+A:link  {
+ 	text-decoration : none;
+ 	color : #00407A;
+ 	font-size: 11px;
+ 	text-align:center;
+ }
+ A:visited  {
+ 	text-decoration : none;
+ 	color : #00407A;
+ 	font-size: 11px;
+ 	text-align:center;
+ }
+
+ A:active  {
+ 	text-decoration : none;
+ 	color : #9C1F2E;
+ 	font-size: 11px;
+ 	text-align:center;
+ }
+
+
+
+ 
+	body {
+	background: #606468;
+	margin: 20px;
+	padding: 5;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.td {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	color: Red;	font-size: 22px; }	
+.th {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	color: Black;	text-align:left; font-size: 22px;	font-weight:bold; }	
+.header {	color: #007F01;	font-size: 14px;	text-decoration: none;	font-weight: bold; margin-top: 10px; margin-left:10px; margin-bottom:5px; }
+
+.copyright {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	font-size: 9px;	color: Silver;}	
+	
+.mainbody {	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	color: Black;	font-size: 12px;	margin-left:10px;	margin-right:10px;}
+
+	A.menu:link {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #00407A;
+	text-decoration: none;
+}
+	A.menu:visited {
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+		color: #00407A;
+		text-decoration: none;
+
+	}
+	A.menu:hover {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #9C1F2E;
+	text-decoration: underline;
+	
+}
+	A.menu:active {
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+		color:#9C1F2E;
+		text-decoration: none;
+	}
+	.headertitle {
+	font-size: 16px;
+	font-weight: bold;
+	background-color: #E8ECF3;
+	color: #00407A;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-transform: capitalize;
+	white-space: normal;
+	}
+	.messageText {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 14px;
+  	font-weight:bold;
+	color: #FF0000;
+	}
+	.headerbox {
+	font-size: 16px;
+	background-color: white;
+	color: Black;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	}
+	.TFtable{
+		width:90%; 
+		border-collapse:collapse; 
+	}
+	.TFtable td{ 
+		padding:7px; border:#4e95f4 1px solid;
+	}
+	/* provide some minimal visual accomodation for IE8 and below */
+	.TFtable tr{
+		background: #b8d1f3;
+	}
+	/*  Define the background color for all the ODD background rows  */
+	.TFtable tr:nth-child(odd){ 
+		background: #b8d1f3;
+	}
+	/*  Define the background color for all the EVEN background rows  */
+	.TFtable tr:nth-child(even){
+		background: #F2F7F9;
+	}
+	.TFtable th{ 
+			font-size: 15px;
+			background-color: White;
+			color: Black;
+			font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+			font-weight:bold;
+	}
+	.displayText1 {
+	font-size: 12px;
+	color: Black;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	}
+	.displayTextTD {
+	font-size: 18px;
+	color: Black;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-align:center;
+	}
+	.displayTextMed {
+	font-size: 15px;
+	color: Black;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-align:center;
+	}
+	.inputtext {
+    	width: 300px;
+	}
+	.isinactive{
+    color: Red;
+	}
+	.fund3header{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:18px;
+  		font-weight:bold;
+  		background:lightgrey;
+  	}
+  	.fund3formtext{
+  		padding: 10px 15px;
+  		text-align:left;
+  	  	background: #F2F7F9;
+  		color: #000000;
+  		font-size:15px;
+  		font-weight:bold;
+  	}
+  	.fund3formfield,.fund3formbutton{
+  		padding: 10px 15px;
+  	}
+  	.btnExample {
+  		color: #000000;
+  		background: #e7e7e7;
+  		font-weight: bold;
+  		border: 1px solid #000000;
+	}
+ 
+	.btnExample:hover {
+  		color: #000000;
+  		background: #F2F7F9;
+	}
+	.fund3tableheader{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:15px;
+  		font-weight:bold;
+  	}
+  	.fund3exportlink{
+		font-size:15px;
+  		font-weight:bold;
+  		background: #e7e7e7;
+  	}
+    .fund3tableheader{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:15px;
+  		font-weight:bold;
+  		background:lightgrey;
+  	}
+  	.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    text-align: center;
+    float: none !important;
+	}
+	.no-close .ui-dialog-titlebar-close {
+    	display: none;
+	}
+	a.blueButtonRound {
+    border: 2px solid #006600;
+    border-radius: 5px;
+    background-color: blue;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    margin : 20px;
+    padding: 10px 20px 10px 20px;
+    display: inline-block;
+    width:175px;
+}
+a.blueButtonRound:hover {
+    border: 2px solid #009900;
+    background-color: aqua;
+    width:175px;
+}
+.fund3dropdown{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:18px;
+  		font-weight:bold;
+  		width:100%;
+}
+.datatable tr:nth-child(odd) {
+  background-color: #dfe7f2;
+  color: #000000;
+}
+.fund3headerwhite{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:18px;
+  		font-weight:bold;
+  		background:white;
+}
+a.blueButtonRoundLong {
+    border: 2px solid #006600;
+    border-radius: 5px;
+    background-color: blue;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    margin : 20px;
+    padding: 10px 20px 10px 20px;
+    display: inline-block;
+    width:400px;
+}
+a.blueButtonRoundLong:hover {
+    border: 2px solid #009900;
+    background-color: aqua;
+    width:400px;
+}
+.fund3addscreentext{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:15px;
+  		font-weight:bold;
+  		background:lightgrey;
+  		border: 2px solid darkgrey;
+}
+.fund3addscreentextnb{
+	  	padding: 10px 15px;
+  		text-align: middle;
+  	  	color: #000000;
+  		font-size:15px;
+  		font-weight:bold;
+  		background:lightgrey;
+}
+  	.btnExampleFixed {
+  		color: #000000;
+  		background: #e7e7e7;
+  		font-weight: bold;
+  		border: 1px solid #000000;
+  		width:100px;
+	}
+	blockquote.desc {
+    font-size: 11px;
+	}
+  	.fund3formtextsds{
+  		padding: 10px 15px;
+  		text-align:left;
+  	  	background: LightYellow;
+  		color: #000000;
+  		font-size:15px;
+  		font-weight:bold;
+  	}
