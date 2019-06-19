@@ -10,23 +10,19 @@
 				<ul>	
       
       <esd:SecurityAccessRequired roles="ADMINISTRATOR,EXECUTIVE ASSISTANT,DIRECTOR,TRUSTEE,MEDIA-NEWS">
-      			<li><a href="apr4-2016.jsp">Public Meeting Regarding Proposed School Reconfiguration for Cresent Collegiate School System (April 4, 2016)</a>
-      			<li><a href="apr5-2016.jsp">Public Meeting Regarding Proposed School Reconfiguration for Holy Heart High &amp; Prince of Wales Collegiate Systems (April 5, 2016)</a>
-      			<li><a href="apr6-2016.jsp">Public Meeting Regarding Proposed School Reconfiguration for Sacred Heart All Grade System (April 6, 2016)</a>
-      			<li><a href="apr7-2016.jsp">Public Meeting Regarding Proposed School Reconfiguration for Long Island Academy System (April 7, 2016)</a><p>      			
-      			<li><a href="liaschoolvisit.jsp">Long Island Academy School Visit</a>
-      			<li><a href="lib-ferry.jsp">Long Island - Beaumont Ferry</a>
-      			<li><a href="shaschoolvisit.jsp">Sacred Heart All Grade School Visit</a>
-      			<li><a href="dcschoolvisit.jsp">Dorset Collegiate School Visit</a>
-      			<li><a href="crschoolvisit.jsp">Cloud River Academy Visit</a>
-      			<li><a href="concheroad.jsp">Conche Road</a>
-      						<!-- <li><a href="mar5-2015.jsp">Public Meeting Regarding Proposed School Reconfiguration for Holy Family Elementary, paradise (March 5, 2015)</a>
-      			<li><a href="feb19-2015.jsp">Public Meeting Regarding Proposed School Reconfiguration for Grand Falls - Windsor (February 19, 2015)</a>
-				
-				<li><a href="april10-2014.jsp">Public Meeting Regarding Proposed School Reconfiguration for Mount Pearl-Paradise (Mount Pearl Intermediate, Mount Pearl - April 10, 2014)</a>
-				
-				<li><a href="march27-2014.jsp">Public Meeting Regarding Proposed School Reconfiguration for the Goulds (St. Kevin's High, Goulds - March 27, 2014)</a>
-					-->
+     
+
+<li><a href="https://youtu.be/E4F1dVYs2cA" target="_blank">Public Board Meeting - Saturday August 11, 2018</a>
+<li><a href="https://youtu.be/CB3LmFc9xBw" target="_blank">Public Board Meeting - Saturday June 16, 2018</a>
+<li><a href="https://www.youtube.com/watch?v=h9jW1bZgi2A" target="_blank">Public Board Meeting - Saturday April 14, 2018</a>
+<li><a href="https://www.youtube.com/watch?v=EYObPTnMi94" target="_blank">Public Board Meeting - Saturday February 3, 2018</a>
+<li><a href="https://www.youtube.com/watch?v=tv_XFsE66qc" target="_blank">Jan 17, 2018 @ 6:00PM - LeGallais Memorial</a>
+<li><a href="https://www.youtube.com/watch?v=oy9yOXSwRKo" target="_blank">Jan 16, 2018 @ 6:00PM - Appalachia High School</a> 
+<li>Jan 15, 2018 @ 6:00PM - James Cook Memorial (<a href="https://www.youtube.com/watch?v=19MbJQN5fXs" target="_blank">Part 1</a>, <a href="https://www.youtube.com/watch?v=KVae1atK2j8" target="_blank">Part 2</a>)
+<li><a href="https://www.youtube.com/watch?v=O4THNPCfZ00" target="_blank">Jan 10, 2018 @ 6:00PM - Leading Tickles Primary</a> 
+<li><a href="https://www.youtube.com/watch?v=XX6ZZanmBHg" target="_blank">Jan 9, 2018 @ 6:00PM - Swift Current Academy</a>
+
+
 		</esd:SecurityAccessRequired>		
 				
 				</ul>
