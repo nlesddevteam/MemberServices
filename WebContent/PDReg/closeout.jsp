@@ -2,7 +2,7 @@
           session="true" 
           import="java.util.*,  
             com.awsd.pdreg.*,com.awsd.security.*, 
-            com.awsd.common.Utils"
+            com.awsd.common.Utils;"
             isThreadSafe="false"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
