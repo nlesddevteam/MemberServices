@@ -95,8 +95,7 @@
 			        
 			        <br/>
         	</div>
-        	
-	   		<div class="col full_block content" style="position: relative;  text-align:center;">
+        	<div class="col full_block content" style="position: relative;  text-align:center;">
 				 	<div class="txtPadding">
 			  <div align="center" style="display:none;">
 			 	<div style="border:1px solid Red;width:85%;padding:5px;font-size:10px;text-align:center;background-color:#FFFFF0;"><b>PLEASE NOTE RE NEW GOOGLE MS LOGIN AND MISSING ACCOUNT INFO</b>
