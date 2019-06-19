@@ -1,11 +1,11 @@
 <%@ page language="java"
          session="true"
          isThreadSafe="false"
-         import="com.awsd.security.*,java.util.*,java.io.*,java.text.*,com.esdnl.util.*;"%>   
+         import="com.awsd.security.*,java.util.*,java.io.*,java.text.*,com.esdnl.util.*"%>   
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  					               
-<%@ taglib uri="/taglib/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <%
   User usr = (User) session.getAttribute("usr");
@@ -168,7 +168,7 @@
                    		<a href="/includes/files/highlights/doc/${meetinghighlights.mHRelDoc}">${meetinghighlights.mHRelDoc}</a><br/>
                      </c:if> 
                      <input type="file" style="width:250px;" id="mh_rel_doc" name="mh_rel_doc"  class="requiredinput"> 
-                      <p>Meeting Video:<br/>
+                      <p>Meeting Video: <br/>
                      <input type="text" class="requiredinput" id="mh_meeting_video"  name="mh_meeting_video" style="width:250px;" value="${meetinghighlights.mHMeetingVideo}">
                     
                     <%if(request.getAttribute("msg") != null){%>

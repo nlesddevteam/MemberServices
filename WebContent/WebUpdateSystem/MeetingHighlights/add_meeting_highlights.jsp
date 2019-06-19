@@ -1,11 +1,11 @@
 <%@ page language="java"
          session="true"
          isThreadSafe="false"
-         import="com.awsd.security.*,java.util.*,java.io.*,java.text.*,com.esdnl.util.*;"%>   
+         import="com.awsd.security.*,java.util.*,java.io.*,java.text.*,com.esdnl.util.*"%>   
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  					               
-<%@ taglib uri="/taglib/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <%
   User usr = (User) session.getAttribute("usr");
@@ -124,9 +124,9 @@
       <p>Presentation File:<br/>
       <input type="file" size="60" id="mh_pre_doc" name="mh_pre_doc"  class="requiredinput">      
       <p>Related Document Title:<br/>
-      <input type="text" class="requiredinput" id="mh_r_doc_title" name="mh_r_doc_title" style="width:250px;">
+      <input type="text" class="requiredinput" id="mh_rel_doc_title" name="mh_rel_doc_title" style="width:250px;">
       <p>Related Document File:<br/>
-      <input type="file" size="60" id="mh_r_doc" name="mh_r_doc"  class="requiredinput">
+      <input type="file" size="60" id="mh_rel_doc" name="mh_rel_doc"  class="requiredinput">
      	<p>Meeting Video:<br/>
       <input type="text" class="requiredinput" id="mh_meeting_video"  name="mh_meeting_video" style="width:250px;">
    

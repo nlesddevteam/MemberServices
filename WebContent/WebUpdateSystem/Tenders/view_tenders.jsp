@@ -3,7 +3,7 @@
 					java.util.*,
 					java.io.*,
 					java.text.*,		
-					java.util.Date.*,
+					java.Util.Date.*,
 					com.esdnl.webupdatesystem.tenders.bean.*,					
 					com.esdnl.webupdatesystem.tenders.dao.*,
 					com.esdnl.webupdatesystem.tenders.constants.*, 
@@ -275,8 +275,11 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
                                   		
                                   		
                                   		            <div class='column tenStatus ${statusColor} ${regionColor}'>                                  					
-                                  					
-                                  						<c:if test="${g.tenderStatus.description eq 'OPEN'}">                                 					
+                                  					<div style="display:none;">Days to Close: ${daysToClose}   - A17<br/>
+                                  						TodayHour: ${todayHour}</div> 
+                                  						<c:if test="${g.tenderStatus.description eq 'OPEN'}">     
+                                  						
+                                  						                   					
 			                                  					<c:choose>
 			                                  						    			                                  						   
 			                                  								                                  						
@@ -285,12 +288,12 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 					                                  					<div style="background-color:Green;color:White;font-weight:bold;text-align:center;width:100%;">NEW</div>
 					                                  					<div style="background-color:none;color:Black;font-weight:bold;text-align:center;width:100%;">OPEN</div>
 				                                  					</c:when> 
-				                                  					                    
-				                                  					<c:when test="${((daysToClose le 0) and (todayHour gt 14 or (todayHour eq 14 and todayMinute gt 29)))}">											
+				                                  					                 
+				                                  					<c:when test="${((daysToClose lt 0) or ((daysToClose eq 0) and (todayHour gt 14 or (todayHour eq 14 and todayMinute gt 29))))}">											
 															        	<div style="background-color:#DC143C;color:White;font-weight:bold;text-align:center;width:100%;">CLOSED</div>
 				                                  					</c:when>  
 				                                  										
-				                                  					<c:when test="${daysToClose lt 2}">											
+				                                  					<c:when test="${(daysToClose le 2) and (daysToClose ge 0)}">											
 																        <div class="tenNew" style="background-color:#FF4500;font-weight:bold;text-align:center;width:100%;">CLOSING SOON</div>
 			                                  							<div style="background-color:none;color:Black;font-weight:bold;text-align:center;width:100%;">OPEN</div>
 				                                  					</c:when>  	                                  					
@@ -309,11 +312,12 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 			                                  							 
 			                                  							 
 			                                  					<c:choose>                                  						                
-				                                  					<c:when test="${((daysToClose le 0) and (todayHour gt 14 or (todayHour eq 14 and todayMinute gt 29)))}">													
+				                                  					<c:when test="${(daysToClose lt 0) or (daysToClose eq 0 and (todayHour gt 14 or (todayHour eq 14 and todayMinute gt 29)))}">											
 															        	<div style="background-color:#DC143C;color:White;font-weight:bold;text-align:center;width:100%;">CLOSED</div>
 				                                  					</c:when> 
-				                                  					<c:when test="${(daysToClose lt 2)}">											
+				                                  					<c:when test="${(daysToClose le 2) and (daysToClose ge 0)}">												
 																        <div class="tenNew" style="background-color:#FF4500;font-weight:bold;text-align:center;width:100%;">CLOSING SOON</div>
+																        <div style="background-color:#0000FF;color:White;font-weight:bold;text-align:center;width:100%;">AMENDED</div>
 			                                  							<div style="background-color:none;color:Black;font-weight:bold;text-align:center;width:100%;">OPEN</div>
 				                                  					</c:when>  	                                  					
 				                                  					<c:otherwise>
@@ -496,7 +500,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 
 
                             				
-<c:if test="${(((daysToClose le 0 ) and (yearClosed ge todayYear)) or ((g.tenderStatus.description eq 'CLOSED') and (yearClosed eq todayYear))) and (g.tenderStatus.description ne 'CANCELLED') and (g.tenderStatus.description ne 'AWARDED') }">
+<c:if test="${(((daysToClose lt 0 ) and (yearClosed ge todayYear)) or ((g.tenderStatus.description eq 'CLOSED') and (yearClosed eq todayYear))) and (g.tenderStatus.description ne 'CANCELLED') and (g.tenderStatus.description ne 'AWARDED') }">
 
                     <c:set var="closedThisYear" value="${closedThisYear + 1}" />
                     <c:set var="statusColorText" value="textStatusClosed"/>	
@@ -537,6 +541,8 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
                                   		
                                   		<div class='row contact-row' id="" zone='${ contact.zone.zoneId }'>
                                   					<div class='column tenNumber ${statusColorText} ${regionColor}'>                                  					
+                                  					  
+                                  					
                                   					                                  					
                                   					<c:choose>
 	                                  					<c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-AR-')}"> 

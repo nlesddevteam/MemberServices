@@ -287,7 +287,7 @@
   			<div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1d">Finance and Business Administration Division</a> (<span class="avalondCount"></span>)
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1d">Corporate Services Division</a> (<span class="avalondCount"></span>)
       </h4>
     </div>
     <div id="collapse1d" class="panel-collapse collapse">
@@ -306,7 +306,7 @@
 											<div class="column header StaffOptions region1solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'eastern' or fn:containsIgnoreCase(contact.zone.zoneName, 'avalon')) and fn:containsIgnoreCase(contact.division.name,'Finance')}">
+  					<c:if test="${ (contact.zone.zoneName eq 'eastern' or fn:containsIgnoreCase(contact.zone.zoneName, 'avalon')) and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -489,7 +489,7 @@
   					
   			<div class="panel panel-default">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2d">Finance and Business Administration Division</a> (<span class="centraldCount"></span>)</h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2d">Corporate Services</a> (<span class="centraldCount"></span>)</h4>
     </div>
     <div id="collapse2d" class="panel-collapse collapse">
       <div class="panel-body">
@@ -506,7 +506,7 @@
 											<div class="column header StaffOptions region2solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'central') and fn:containsIgnoreCase(contact.division.name,'Finance')}">
+  					<c:if test="${ (contact.zone.zoneName eq 'central') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -689,7 +689,7 @@
   					
   			<div class="panel panel-default">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3d">Finance and Business Administration Division</a> (<span class="westerndCount"></span>)</h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3d">Corporate Services Division</a> (<span class="westerndCount"></span>)</h4>
     </div>
     <div id="collapse3d" class="panel-collapse collapse">
       <div class="panel-body">		
@@ -707,7 +707,7 @@
 											<div class="column header StaffOptions region3solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'western') and fn:containsIgnoreCase(contact.division.name,'Finance')}">
+  					<c:if test="${ (contact.zone.zoneName eq 'western') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -885,7 +885,7 @@
   			
   			<div class="panel panel-default">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4d">Finance and Business Administration Division</a> (<span class="labradordCount"></span>)</h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4d">Corporate Services Division</a> (<span class="labradordCount"></span>)</h4>
     </div>
     <div id="collapse4d" class="panel-collapse collapse">
       <div class="panel-body">
@@ -903,7 +903,7 @@
 											<div class="column header StaffOptions region4solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'labrador') and fn:containsIgnoreCase(contact.division.name,'Finance')}">
+  					<c:if test="${ (contact.zone.zoneName eq 'labrador') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -1130,7 +1130,7 @@
   					
   			<div class="panel panel-default">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse5d">Finance and Business Administration Division</a> (<span class="provincialdCount"></span>)</h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse5d">Corporate Services Division</a> (<span class="provincialdCount"></span>)</h4>
     </div>
     <div id="collapse5d" class="panel-collapse collapse">
       <div class="panel-body">			
@@ -1148,7 +1148,7 @@
 											<div class="column header StaffOptions region5solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'provincial') and fn:containsIgnoreCase(contact.division.name,'Finance')}">
+  					<c:if test="${ (contact.zone.zoneName eq 'provincial') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>

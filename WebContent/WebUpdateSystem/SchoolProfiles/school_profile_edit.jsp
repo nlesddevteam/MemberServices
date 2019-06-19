@@ -405,7 +405,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 			</div>	
 			<div class="input-group" style="padding-bottom:5px;">
 			   <span class="input-group-addon">Postal Code:</span>
-			   <input type='text' id='postalcode' class="form-control" name='postalcode'   autocomplete="false" value='${ school.postalZipCode }' />	             
+			   <input type='text' id='postalcode' class="form-control" name='postalcode'   autocomplete="false" value="${ school.postalZipCode }" />	             
 			</div>
 			</div>
 </div>			
@@ -423,11 +423,13 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 			</div>	
 			<div class="input-group" style="padding-bottom:5px;">
 			   <span class="input-group-addon">School Email:</span>	
-			   <input type='text' id='schoolemail' name='schoolemail'  autocomplete="false" class="form-control" value='${ school.detailsOther.schoolEmail }' />             
-			</div>	
+			   <input type='text' id='schoolemail' name='schoolemail'  autocomplete="false" class="form-control" value="${ school.detailsOther.schoolEmail }" />             
+			</div>
+			
+				
 			<div class="input-group" style="padding-bottom:5px;">
 			   <span class="input-group-addon">School Website:</span>	
-			    <input type='text' id='website' name='website'  autocomplete="false" class="form-control" placeholder="http://www.yoursite.com" value='${ school.website }' />             
+			    <input type='text' id='website' name='website'  autocomplete="false" class="form-control" placeholder="http://www.yoursite.com" value="${ school.website }" />             
 			</div>
 			<div class="input-group" style="padding-bottom:5px;">
 			   <span class="input-group-addon">Twitter Address URL:</span>
@@ -472,7 +474,7 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 			   <span class="input-group-addon">Google Map Address URL:</span>
 			   <input type='text' id='googleMapUrl' class="form-control"  autocomplete="false" name='googleMapUrl' value='${ school.details.googleMapUrl }' />	             
 			</div>
-			<div class="panel panel-default">
+			<div class="panel panel-default" >
 						  	<div class="panel-heading">Google Map Embed Code:</div>
 						  	<div class="panel-body"  style="background-color:#ecffe6;"><img src="img/google.png" border=0 style="max-height:40px;padding-right:5px;" align="left">
 						  	This is to embed a google map location on your school profile page. Embed code is available on <b><a href="https://maps.google.com/" target="_blank">Google Maps</a></b> where you get your Google Maps link. Paste the GoogleMaps embed code that you generate in the space below.
@@ -496,13 +498,18 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 			</div>
 			<div class="input-group" style="padding-bottom:5px;">
 			   <span class="input-group-addon">Secretary(s):</span>
-				<input type='text'  id='secretary'  autocomplete="false" name='secretary' class="form-control" value='${ school.details.secretaries }' />	             
+				<input type='text'  id='secretary'  autocomplete="false" name='secretary' class="form-control" value="${ school.details.secretaries }" />	             
 			</div>	
 			<div class="input-group" style="padding-bottom:5px;">
 			   <span class="input-group-addon">Guidance:</span>
-			   <input type='text' id='schoolguidancesupport'  autocomplete="false" name='schoolguidancesupport' class="form-control" value='${ school.detailsOther.schoolGuidanceSupport }' />	             
+			   <input type='text' id='schoolguidancesupport'  autocomplete="false" name='schoolguidancesupport' class="form-control" value="${ school.detailsOther.schoolGuidanceSupport }" />	             
 			</div>
-			<br/>School administrators can only be assigned at the district level. Please contact <a href="mailto:mssupport@nlesd.ca">mssupport@nlesd.ca</a> for administrator updates.
+			
+			
+			
+			
+			<br/>School Administrators and Trustee can only be assigned at the district level. Please contact <a href="mailto:mssupport@nlesd.ca">mssupport@nlesd.ca</a> for administrator updates. 
+			
 			</div>												               
 </div>	               	            
 
@@ -729,10 +736,30 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 								    <sch:RegionsDDL id="regionId" style="height:30px;width:100%;" value='${ school.region.id }' />
 								</div>	
 								
-								<div class="input-group" style="padding-bottom:5px;">
-								    <span class="input-group-addon">Electorial Zone:</span>
-								   <input type='text' id='electorialZone' name='electorialZone' class="form-control" value="${ school.details.electorialZone }" />	
-								</div>
+								<div class="input-group">
+				    				<span class="input-group-addon">Trustee/Electorial Zone:</span>     				
+				    					<select id='electorialZone' name='electorialZone' class="form-control">
+				    					<option value="0">---- Please Select (Required) ----</option>	
+				    					<option value='1' ${ school.details.electorialZone eq "1" ? "SELECTED" : "" }>Raymond Bennett (1)</option> 
+					                    <option value='2' ${ school.details.electorialZone eq "2" ? "SELECTED" : "" }>Goronwy Price (2)</option> 
+					                    <option value='3' ${ school.details.electorialZone eq "3" ? "SELECTED" : "" }>Lester Simmons (3)</option> 
+					                    <option value='4' ${ school.details.electorialZone eq "4" ? "SELECTED" : "" }>Scott Burden (4)</option> 
+					                    <option value='5' ${ school.details.electorialZone eq "5" ? "SELECTED" : "" }>Pamela Gill (5)</option> 
+					                    <option value='6' ${ school.details.electorialZone eq "6" ? "SELECTED" : "" }>Wayne Lee (6)</option> 
+					                    <option value='7' ${ school.details.electorialZone eq "7" ? "SELECTED" : "" }>Thomas Kendell (7)</option> 
+					                    <option value='8' ${ school.details.electorialZone eq "8" ? "SELECTED" : "" }>John George (8)</option> 
+					                    <option value='9' ${ school.details.electorialZone eq "9" ? "SELECTED" : "" }>Winston Carter (9)</option> 
+					                    <option value='10' ${ school.details.electorialZone eq "10" ? "SELECTED" : "" }>Eric Ayers (10)</option>
+					                    <option value='11' ${ school.details.electorialZone eq "11" ? "SELECTED" : "" }>Vacant (11)</option> 
+					                    <option value='12' ${ school.details.electorialZone eq "12" ? "SELECTED" : "" }>Hayward Blake (12)</option> 
+					                    <option value='13' ${ school.details.electorialZone eq "13" ? "SELECTED" : "" }>Kevin Ryan (13)</option> 
+					                    <option value='14' ${ school.details.electorialZone eq "14" ? "SELECTED" : "" }>Jennifer Aspell (14)</option> 
+					                    <option value='15' ${ school.details.electorialZone eq "15" ? "SELECTED" : "" }>Keith Culleton (15)</option> 
+					                    <option value='16' ${ school.details.electorialZone eq "16" ? "SELECTED" : "" }>Peter Whittle (16)</option> 
+					                    <option value='17' ${ school.details.electorialZone eq "17" ? "SELECTED" : "" }>John Smith (17)</option> 
+					                    <option value='0' ${ school.details.electorialZone eq "0" ? "SELECTED" : "" }>Not Assigned</option>
+				    					</select>    				
+	                      </div>
 								
 								
 								
@@ -868,14 +895,13 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 								
 								    <sch:SchoolZonesDDL id="zoneId" dummy="true" style="height:30px;width:100%;" value='${ school.zone }'  />								
 								    <sch:RegionsDDL id="regionId" style="height:30px;width:100%;" value='${ school.region.id }' />								
-								   <input type='text' id='electorialZone' name='electorialZone' class="form-control" value="${ school.details.electorialZone }" />	
+								   	
 								
 								<sch:SchoolZonesDDL id="zoneId" dummy="true" value='${ school.zone }'  />
 	                    <sch:RegionsDDL id="regionId" value='${ school.region.id }' />
 	                    <input type='text' id='electorialZone' name='electorialZone' style="width:100%;max-width:100px;" value="${ school.details.electorialZone }" />
 								
-								
-								
+							
 								
 				                   	<input type='file' name='busRoutesFile' />
 								

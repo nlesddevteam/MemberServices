@@ -26,6 +26,11 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about' }
 	];
 	
+	config.toolbar_Basic =
+        [
+            ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
+        ];
+	
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
 	config.removeButtons = 'Underline,Subscript,Superscript';
@@ -34,8 +39,8 @@ CKEDITOR.editorConfig = function( config ) {
 	config.format_tags = 'p;h1;h2;h3;pre';
 
 	// Simplify the dialog windows.
-	config.removeDialogTabs = 'image:advanced;link:advanced';
+	config.removeDialogTabs = 'image:advanced;link:advanced;image:Link;link:upload;image:Upload;';
 	
-	config.extraPlugins = 'youtube';
-	
+	//config.extraPlugins = 'youtube';
+	config.uploadUrl = '/upload/';
 };

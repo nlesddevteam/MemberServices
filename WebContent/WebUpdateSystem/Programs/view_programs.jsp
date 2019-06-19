@@ -1,11 +1,11 @@
 <%@ page language ="java" 
          session = "true"
          import = "java.util.*,
-         					 com.esdnl.webupdatesystem.tenders.bean.*,com.esdnl.util.*;"
+         					 com.esdnl.webupdatesystem.tenders.bean.*,com.esdnl.util.*"
          isThreadSafe="false"%><%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
-<%@ taglib uri="/taglib/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

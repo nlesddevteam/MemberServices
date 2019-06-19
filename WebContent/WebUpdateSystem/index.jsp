@@ -6,7 +6,7 @@
                  java.io.*,
                  java.text.*"%>
          
-<%@ taglib uri="/taglib/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <esd:SecurityCheck />
 <%!
@@ -31,7 +31,7 @@
 			<script src="includes/js/jquery-ui-1.10.3.custom.js"></script>
 			<script type="text/javascript" src="includes/js/common.js"></script>
 			<script src="includes/js/nlesd.js"></script>
-		<script src="includes/js/backgroundchange.js"></script>
+		
 		
 		<script>
 		jQuery(function(){
@@ -125,14 +125,21 @@
 	          		        	      
 	          		<a href="NewsPostings/viewNewsPostings.html"><img src="includes/img/viewnews-off.png" class="img-swap menuImage" title="View News Items"></a>
 	          	</div>
+	          	</esd:SecurityAccessRequired> 
+	          	 
 	          	          	
-	          	
+	          	<esd:SecurityAccessRequired permissions="WEBMAINTENANCE-BUSROUTES">
+	          	<div class="menuIconImage">      
+	          		        	      
+	          		<a href="BusRoutes/school_directory_bus_routes.jsp"><img src="includes/img/viewbusroutedoc-off.png" class="img-swap menuImage" title="View Bus Route Documents"></a>
+	          	</div>
 	          	</esd:SecurityAccessRequired>
+	          	
 	          	
 	          	<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 	          	<div class="menuIconImage">    
 	          		        	 
-	          		<a href="/MemberServices/MemberAdmin/Apps/StaffDirectory/staff_directory.jsp"><img src="includes/img/viewstaff-off.png" class="img-swap menuImage" title="View Office Staff"></a>
+	          		<a href="/MemberServices/WebUpdateSystem/StaffDirectory/staff_directory.jsp"><img src="includes/img/viewstaff-off.png" class="img-swap menuImage" title="View Office Staff"></a>
 	          	</div>
 	          	          	
 	          	
