@@ -145,7 +145,7 @@ Iterator p_iter = null;
 						          c_cnt += ((Vector)((Map.Entry)iter.next()).getValue()).size();
 						        }
 						       
-						        out.println("<li><a href='#' class='mclaims' onclick='closeMenu();loadMainDivPage(&quot;claimsPaidTodayLetter.html&quot;);'><i class='fa fa-fw fa-money'></i> Paid Today " + "(" + c_cnt +")</a></li>");
+						        out.println("<li><a href='#' class='mclaims' onclick='closeMenu();loadMainDivPage(&quot;claimsPaidTodayLetter.html&quot;);'><i class='fa fa-fw fa-money'></i> Processed Today " + "(" + c_cnt +")</a></li>");
 								
 								
 							}
@@ -162,7 +162,7 @@ Iterator p_iter = null;
 						          c_cnt += ((Vector)((Map.Entry)iter.next()).getValue()).size();
 						        }
 								
-								out.println("<li><a href='#' class='mclaims' onclick='closeMenu();loadMainDivPage(&quot;claimsPaymentPendingLetter.html&quot;);'><i class='fa fa-fw fa-warning'></i> Payment Pending " + "(" + c_cnt +")</a></li>");
+								out.println("<li><a href='#' class='mclaims' onclick='closeMenu();loadMainDivPage(&quot;claimsPaymentPendingLetter.html&quot;);'><i class='fa fa-fw fa-warning'></i> Pending Info " + "(" + c_cnt +")</a></li>");
 								
 							}
 							}
@@ -242,7 +242,7 @@ Iterator p_iter = null;
 		      <%if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-SDS-EXPORT")){%>
 		           <li class="has-sub"><a href="#"><i class="fa fa-fw fa-download"></i> Export</a>
 		              <ul>
-		                 <li><a href='#' class="mclaims" onclick="closeMenu();loadMainDivPage('exportPaidTravelClaims.html');"><i class="fa fa-fw fa-check"></i> Paid Claims (SDS)</a></li>
+		                 <li><a href='#' class="mclaims" onclick="closeMenu();loadMainDivPage('exportPaidTravelClaims.html');"><i class="fa fa-fw fa-check"></i> Claims to be Paid (SDS)</a></li>
 		              </ul>
 		           </li>
 		      <%}%>
@@ -265,9 +265,9 @@ Iterator p_iter = null;
      <li class="has-sub"><a href="#"><i class="fa fa-fw fa-question"></i> Help</a>
         <ul>
        	 <li><a href="#" class="mclaims" onclick="closeMenu();loadMainDivPage('calculatedistance.jsp');"><i class="fa fa-fw fa-car"></i> Distance Calculator</a></li>     	 
-       	  <!-- <li><a href="/includes/files/policies/doc/1504103153912.pdf" onclick="closeMenu();" target="_blank"><i class="fa fa-fw fa-calendar-minus-o"></i> Travel Policy FIN-401</a></li>
+       	  <li><a href="/includes/files/policies/doc/1504103153912.pdf" onclick="closeMenu();" target="_blank"><i class="fa fa-fw fa-calendar-minus-o"></i> Travel Policy FIN-401</a></li>
        	  <li><a href="/includes/files/policies/doc/1504103153928.pdf" onclick="closeMenu();" target="_blank"><i class="fa fa-fw fa-calendar-minus-o"></i> Travel Policy Regs</a></li>
-          <li><a href="includes/doc/TravelClaimInformationApril2013.pdf" onclick="closeMenu();" target="_blank"><i class="fa fa-fw fa-car"></i> Distances Doc (PDF)</a></li>-->
+          <!-- <li><a href="includes/doc/TravelClaimInformationApril2013.pdf" onclick="closeMenu();" target="_blank"><i class="fa fa-fw fa-car"></i> Distances Doc (PDF)</a></li>-->
           <li><a href="mailto:travelclaimsupport@nlesd.ca?subject=Travel Claim Support Request" onclick="closeMenu();"><i class="fa fa-fw fa-envelope-o"></i> Contact Us</a></li>
         </ul>
      </li>

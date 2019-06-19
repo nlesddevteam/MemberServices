@@ -9,6 +9,7 @@
                  java.sql.*"
         isThreadSafe="false"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
@@ -53,8 +54,8 @@
 %>
 <c:set var="schoolYear" value="<%=year%>" />
 
-
-			
+<c:set var="countClaims" value="0" />
+<c:set var="countClaimants" value="0" />			
     <script type="text/javascript">
     	$('document').ready(function() {
     		
@@ -146,6 +147,7 @@
                       %>
                         <tr>
                           <td style="background-color: #E3F1E6;border-bottom: solid 1px #007F01;padding-top:10px;" colspan="6">
+                          
                           	<%=
                           			"<span style='font-weight:bold;font-size:12px;'>" + item.getPersonnelLastname() 
                           			+ ", " + item.getPersonnelFirstname() + "</span>"                           			
@@ -155,6 +157,7 @@
                           			+ " &middot; " + item.getPersonnelPostalcode()
                           			+ " &middot; Tel: " + item.getPersonnelPhone1() 
                           	%>
+                          	<c:set var="countClaimants" value="${countClaimants + 1}" />
                           </td>
                         </tr>
                       <%}else{
@@ -178,6 +181,7 @@
                         <td width="15%"><%=curr_df.format(item.getTotalLodging())%></td>
                         <td width="12%"><%=curr_df.format(item.getTotalOther())%></td>
                       </tr>
+                      <c:set var="countClaims" value="${countClaims + 1}" />	
                     <%}
                     %>
                     <%if(cur_id > 0){%>
@@ -208,7 +212,8 @@
                     
                  
             </table>
-        
+            <b>Total Claimants:</b> ${countClaimants}<br/>  
+   <b>Total Claims:</b> ${countClaims}     
     </form>
  
  

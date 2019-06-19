@@ -17,7 +17,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
 
 <%
@@ -90,12 +90,13 @@
 	
 	
     <form name="add_claim_item_form" method="post" >
-       <table width="100%">
+     
        
        
         <%while(claims.hasNext()){
           claim = (TravelClaim)claims.next();
           items = claim.getItems().iterator();%>
+            <table width="100%">
           <tr>
             <td>
             
@@ -296,10 +297,12 @@
                     </table>
                   
                    </td>
-                </tr>             
-          <tr class='pagebreak'><td width="100%"><br /></td></tr>
+                </tr> 
+          
+           </table>
+           <div class="pagebreak">&nbsp;</div>
         <%}%>
-      </table>
+     
     </form>
     </div>
     <script src="includes/js/jQuery.print.js"></script>	

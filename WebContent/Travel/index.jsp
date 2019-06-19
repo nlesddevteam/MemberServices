@@ -16,6 +16,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>                 
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 
 <%
   User usr = null;
@@ -166,8 +167,7 @@
 				                <%}%>	
 				                 <img src="includes/img/bar.jpg" height="1" width="100%" style="margin-top:5px;margin-bottom:3px;"/>
 				                <div align=center style="margin-top:10px;margin-bottom:5px;">
-				               <a href="#" class="mclaims" onclick="loadMainDivPage('addTravelClaim.html');">
-				               <img src="includes/img/startclaim-off.png" title="Start a New Claim" border=0 class="img-swap"></a>&nbsp;<a href='#'  class="mclaims" onclick="loadMainDivPage('myProfile.html');"><img src="includes/img/myprofile-off.png" border=0 title="View and/or Edit your Profile and Current Claims" class="img-swap"></a>
+				               <a href="#" class="mclaims" onclick="loadMainDivPage('addTravelClaim.html');"><img src="includes/img/startclaim-off.png" title="Start a New Claim" border=0 class="img-swap"></a>&nbsp;<a href='#'  class="mclaims" onclick="loadMainDivPage('myProfile.html');"><img src="includes/img/myprofile-off.png" border=0 title="View and/or Edit your Profile and Current Claims" class="img-swap"></a>
 				               </div>
 				                <img src="includes/img/bar.jpg" height="1" width="100%" style="margin-top:5px;margin-bottom:3px;"/>
 				              	<br/><div align=center style="padding-bottom:2px;color:#1F4279;"><b>EMPLOYEE TRAVEL POLICY (FIN-401)</b></div>
@@ -203,8 +203,8 @@
 						</div>
 						
 						<div class="alert alert-info">
-<b>SUPPORT:</b> If you are have any questions regarding a travel claim entry or payments, please contact Travel Claim Support at <a href="mailto:travelclaimsupport@nlesd.ca?subject=Travel Claim Support Request">travelclaimsupport@nlesd.ca</a> or call
-<a href="mailto:GoldieGillingham@nlesd.ca?Travel Claim Support">Goldie Gillingham</a> at (709) 757-4623 or <a href="mailto:SherryMiller@nlesd.ca?Travel Claim Support">Sherry Miller</a> at (709) 758-2402. For technical assistance, please email <a href="mailto:mssupport@nlesd.ca?subject=Travel Claim Technical Support Request">mssupport@nlesd.ca</a><p>
+<b>SUPPORT:</b> If you are have any questions regarding a travel claim entry or payments, please contact Travel Claim Support <a href="mailto:GoldieGillingham@nlesd.ca?Travel Claim Support">Goldie Gillingham</a> at (709) 757-4623 or <a href="mailto:SherryMiller@nlesd.ca?Travel Claim Support">Sherry Miller</a> at (709) 758-2402. 
+For technical assistance, please email <a href="mailto:mssupport@nlesd.ca?subject=Travel Claim Technical Support Request">mssupport@nlesd.ca</a><p>
 </div>
 						
 									
@@ -216,7 +216,7 @@
 		
 
 		<div class="section group">
-			<div class="col full_block copyright">NLTravelApp 2.3 &copy; 2017-18 Newfoundland and Labrador English School District</div>
+			<div class="col full_block copyright">NLTravelApp 2.9 &copy; 2018 Newfoundland and Labrador English School District</div>
 		</div>
 </div>
 

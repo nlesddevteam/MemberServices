@@ -41,14 +41,6 @@ body {font-family: Verdana, Arial, Geneva, Helvetica, sans-serif; color: Black;}
 
 .claimFundsInfoBoxInfo {color:Red;}
 
-
- #directionsPanel {
-    color: red;
-    font-family: cursive;
-  }
-
-
-
 .claimsTable {width:100%;font-size:11px;}
 
 .listdata {text-align:left;padding:2px;border-right:1px solid white;padding-top:3px;padding-bottom:3px;}
@@ -210,8 +202,6 @@ div.bullet-answers-chars {
 .center {text-align:center;}
 .menuImage {max-width:100%;height:auto;}
 
-
-
 .statusLogo {width:100%;max-width:200px;}
 
 @media print {
@@ -235,7 +225,6 @@ body {background-color:#FFFFFF;}
 
 @media only screen and (max-width:760px) {
 .full_block { width: 100%;}
-
 .bodyText {font-size:11px;}
 .topper {font-size:11px;}
 #TravelClaimMenu.small-screen {font-size:10px;}
@@ -250,19 +239,11 @@ body {background-color:#FFFFFF;}
 }
 
 @media only screen and (max-width: 480px) {
-
+	
 .full_block { width: 100%;}
 .bodyText {font-size:10px;}
 .topper {font-size:9px;}
 }
-
-@media only screen and (max-width: 350px) {
-	
-.full_block { width: 100%;}
-.bodyText {font-size:9px;}
-.topper {font-size:9px;}
-}
-
 
 #TravelClaimMenu,
 #TravelClaimMenu ul,

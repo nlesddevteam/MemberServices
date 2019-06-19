@@ -11,7 +11,7 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
-<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/taglib/memberservices.tld" prefix="esd" %>
 
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN,TRAVEL-CLAIM-SUPERVISOR-VIEW" />
 

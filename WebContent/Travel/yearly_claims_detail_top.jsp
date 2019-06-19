@@ -11,6 +11,7 @@
                  java.sql.*"
         isThreadSafe="false"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
@@ -70,7 +71,7 @@
   else
   {
     year = Calendar.getInstance().get(Calendar.YEAR);
-    report = TravelClaimDB.yearlyClaimsDetailsTopReport("2017",20);
+    report = TravelClaimDB.yearlyClaimsDetailsTopReport("2018",20);
   }
 
   curr_df = new DecimalFormat("$#,##0.00");

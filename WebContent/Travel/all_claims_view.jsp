@@ -82,11 +82,8 @@
                     <%        y_iter = ((Vector)year_map.get("MONTHLY-CLAIMS")).iterator();
                               while(y_iter.hasNext()){
                                 claim = (TravelClaim) y_iter.next();
-                                if(claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)|| claim.getCurrentStatus().equals(TravelClaimStatus.PAID)){                                	
-                    %>          
-                  
-                    
-                    <li><a class="claim" href="#" onclick="loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');"><%=Utils.getMonthString(claim.getFiscalMonth()) + " " + Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())%></a></li>
+                                if(claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)|| claim.getCurrentStatus().equals(TravelClaimStatus.PAID)){
+                    %>          <li><a class="claim" href="#" onclick="loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');"><%=Utils.getMonthString(claim.getFiscalMonth()) + " " + Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())%></a></li>
                     <%          }
                               }
                     %>        </ul>
@@ -98,8 +95,6 @@
                               {
                                 claim = (TravelClaim) y_iter.next();
                                 if(claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)||claim.getCurrentStatus().equals(TravelClaimStatus.PAID)){
-                                	
-                                
                     %>          <li><a class="claim" href="#" onclick="loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');"><%=((PDTravelClaim)claim).getPD().getTitle() + " - " + sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%></a></li>
                     <%          }
                               }

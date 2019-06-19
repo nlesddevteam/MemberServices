@@ -12,6 +12,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW,TRAVEL-CLAIM-SUPERVISOR-VIEW,TRAVEL-CLAIM-SEARCH" />
 
@@ -27,7 +28,6 @@
   Map.Entry item = null;
   DecimalFormat df = null;
   SimpleDateFormat sdf_title = null;
-  SimpleDateFormat sdf_title_check = null;
   DecimalFormat dollar_f =  null;
   usr = (User) session.getAttribute("usr");
   int resultsCount = 0;
@@ -35,7 +35,6 @@
   df = new DecimalFormat("#,##0");
   dollar_f = new DecimalFormat("$#,##0.00");
   sdf_title = new SimpleDateFormat("EEE, MMM dd, yyyy");
-  sdf_title_check = new SimpleDateFormat("yyyy");
 %>
 
     
@@ -67,15 +66,10 @@
      
 
      Below are your <b style="text-transform: lowercase;">${param.type}</b> search results for <b>${param.txt}</b>. Click on the name tab to open to see a list of all claims and status for the search result.
-     
-    <br/><br/>
-    Claims <b>older than 2 years</b> that have NOT been <span style="color:DarkGreen;">PAID</span> and have been <span style="color:Red;">REJECTED</span> or not submitted (in <span style="color:DarkOrange;">PRE-SUBMISSION</span> status) will be marked <span style="color:Red;">EXPIRED</span> and cannot be resubmitted for payment.
     <br/><br/> 
      <div id="claimentSearchResults"> 	
  
- 								<c:set var="now" value="<%=new java.util.Date()%>" /> 								
-								<fmt:formatDate value="${now}" pattern="DDD" var="todayDay" />		
-								<fmt:formatDate value="${now}" pattern="yyyy" var="todayYear" />
+ 
   						 
             
                   
@@ -111,13 +105,8 @@
                     			
                     			<td><%if(claim instanceof PDTravelClaim){%>              
 		              <%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
-		              
-		              <c:set var="claimYear" value="<%=sdf_title_check.format(((PDTravelClaim)claim).getPD().getStartDate())%>" />
 		              <%}else if(claim instanceof TravelClaim){%>
 		              <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
-		              
-		              <c:set var="claimYear" value="<%=Utils.getYear(claim.getFiscalMonth(),claim.getFiscalYear())%>" />
-		              
 		              <%}%></td>
                     			<td>
                     			<%if(claim instanceof PDTravelClaim){%> 
@@ -139,20 +128,11 @@
                     			<td><%=dollar_f.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
                     			<td>
                     			
-                    		  
-                    			
-                    			<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />    
-                    			
-                    												<c:choose>
-									                                	<c:when test="${(claimYear lt (todayYear - 1)) and (claimStatus ne 7)}">
-									                                	<span style="color:Red;">EXPIRED</span>
-									                                	</c:when>
-                    			                            		<c:otherwise>
+                    			<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />                                
 									                                <c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">
-									                                	<span style="color:DarkOrange;">PRE-SUBMISSION</span>
-									                                	</c:when>									                                								                                	
-									                                	
+									                                		<span style="color:DarkOrange;">PRE-SUBMISSION</span>
+									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 2 }">
 									                                		<span style="color:DarkViolet;">SUBMITTED</span>						                                	
 									                                	</c:when>
@@ -166,17 +146,74 @@
 									                                		<span style="color:Red;">REJECTED</span>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                		<span style="color:Blue;">PAYMENT PENDING</span>
+									                                		<span style="color:Blue;">PENDING INFO</span>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 7 }">
-									                                		<span style="color:DarkGreen;">PAID</span>
+									                                		
+									                                		<% Date now = new java.util.Date();	%>
+									                                		<c:set var="todayDate" value="<%=new java.util.Date() %>" />									                                										                                	
+									                                		<c:set var="todayDateStamp" value="<%=now.getTime()%>" />
+									                                		
+									                                		<c:set var="claimExportDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate() :"0" %>'/>																            															               	
+																            <c:set var="claimExportDateStamp" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0" %>'/>
+																            <c:set var="claimPaidDate" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate() :"0" %>'/>	
+																            <c:set var="claimPaidDateStamp" value='<%=(claim.getPaidDate() != null) ? claim.getPaidDate().getTime() : "0" %>'/>
+																         
+																          <!-- After 30 days, set as paid for cosmetic reasons.-->
+																            <c:set var="claimCheckDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0"%>'/>															               							                
+																            <c:set var="claimCheckDateStamp" value="${(60*60*24*30*1000) + claimCheckDate}" /> 
+																               						                                  				
+                        				                                                 				                              			
+								                                  		<c:choose>
+                        												
+                        												                                                                                     
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">
+                        												
+                        												<span style="color:DarkGreen;">PAID</span>
+                        												
+                        											
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">
+                        												
+                        												<span style="color:Blue;">PROCESSED</span>
+                        												
+                        												</c:when>
+                        												
+                        												
+                        												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
+                        												<span style="color:Navy;">PROCESSING</span>
+                        												
+                        												</c:when>
+                        												
+                        												<c:otherwise>
+                        												
+                        												<span style="color:Red;">ERROR!</span>
+									                                	 
+                        												
+                        												</c:otherwise>
+                        												</c:choose>
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
+									                                		
 									                                	</c:when>
 									                                	<c:otherwise>
-									                                	 	<span style="color:Green;">RED</span>
+									                                	 	<span style="color:Red;">ERROR!</span>
 									                                	</c:otherwise>                             
 									                                </c:choose>
-                    			</c:otherwise>
-                    			</c:choose>
+                    			
+                    			
                     			
                     			</td>
                     			<td><div align="center"><a href="#" onclick="loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');">View</a></div></td>

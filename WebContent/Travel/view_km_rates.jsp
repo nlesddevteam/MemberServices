@@ -10,11 +10,12 @@
                  java.text.*,
                  java.sql.*"
         isThreadSafe="false"%>
-<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
-
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN" />
 
 
