@@ -61,7 +61,12 @@
 </style>
     <script>   
  $('document').ready(function(){
-	  $(".jobapps").DataTable({"order": [[ 0, "desc" ]]});	
+	  $(".jobapps").DataTable({
+		  "order": [[ 0, "desc" ]],
+		  "lengthMenu": [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]]
+	  
+	  
+	  });	
 	 
  });
     </script>
@@ -106,6 +111,7 @@
        
         	<div class="panel-group">		
             Below are the <%=request.getParameter("status")%> job opportunities for the selected region(s) with the total number of positions in brackets in each heading category. To see the positions in each category, click on a category name to open the list. If there are no positions in a category, the header will display Red.
+            <br/><b>To QUICKLY find jobs for a particular school or Competition number, use the search tool in each dropdown.</b>
 		             <div align="center" class="no-print" style="margin-bottom:10px;margin-top:10px;"> 				
 		          				<button class='btnRegionView btn btn-primary btn-xs' type='button' data-region-id='0'>All Regions</button>
 		          					<% for(SchoolZoneBean sz : SchoolZoneService.getSchoolZoneBeans()){ 
