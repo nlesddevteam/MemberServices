@@ -140,7 +140,7 @@
                   		<span class='displayHeaderTitle'>NAME:</span>&nbsp;&nbsp;${cod.applicant.fullName}
                   	</td>
                   	<td width='*' class='displayText' style='border: solid 1px #c4c4c4;'>
-                  		<span class='displayHeaderTitle'>DATE OF BIRTH:</span>&nbsp;&nbsp;${cod.applicant.DOBFormatted}
+                  		<span class='displayHeaderTitle'>DATE OF BIRTH:</span>&nbsp;&nbsp;${cod.applicant.DOB ne null ? cod.applicant.DOBFormatted : "NOT RECORDED"}
                   	</td>
                   </tr>
                   
