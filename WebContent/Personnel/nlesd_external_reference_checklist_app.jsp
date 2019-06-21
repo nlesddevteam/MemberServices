@@ -351,7 +351,7 @@
 													 </tr>																										
 							                        <tr>
 													    <td>2d.</td>
-													    <td>Manageing student behavior:</td>
+													    <td>Managing student behavior:</td>
 													    <td>
 														   	<input type="radio" name="Scale10" value="<%=val1%>"> <%=val1%> 
 															<input type="radio" name="Scale10" value="<%=val2%>"> <%=val2%>
