@@ -135,7 +135,8 @@
 		$("#from_date,#to_date").datepicker({
 	      	changeMonth: true,
 	      	changeYear: true,
-	      	dateFormat: "mm/yy"
+	      	dateFormat: "mm/yy",
+	      	yearRange: "-75:+5"
 	   });
  });
  </script>
