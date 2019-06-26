@@ -86,7 +86,6 @@
 .bootstrap-datetimepicker-widget table td.cw{font-size:11px;}
 .bootstrap-datetimepicker-widget table {font-size:11px;}
 
-
 </style>
 <script>
 $("#loadingSpinner").css("display","none");
@@ -144,9 +143,13 @@ var pageWordCountConf = {
 <div class="container-fluid">
 	                       	    <div class="row">
 										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                                  
-		                                    <%if(request.getAttribute("msg")!=null){%>
-		                                    	<div class="alert alert-danger"><%=(String)request.getAttribute("msg")%></div>                                     
-		                                   	<%}%>
+		                                    <%if(request.getAttribute("msgERR")!=null){%>
+		                                    	<div class="alert alert-danger"><b>ERROR:</b> <%=(String)request.getAttribute("msgERR")%></div>                                     
+		                                   	<%} else if(request.getAttribute("msgOK")!=null){%>
+		                                    	<div class="alert alert-success"><b>SUCCESS:</b> <%=(String)request.getAttribute("msgOK")%></div>                                     
+		                                   	<%} else if(request.getAttribute("msg")!=null){%>
+		                                   		<div class="alert alert-warning"><b>WARNING:</b> <%=(String)request.getAttribute("msg")%></div> 
+		                                   	<%} %>
 	                                  	</div>
                                  </div>
                                  

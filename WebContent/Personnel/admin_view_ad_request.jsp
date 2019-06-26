@@ -41,7 +41,14 @@ var pageWordCountConf = {
 	    maxCharCount: 3990,
 	}
 </script>
-
+<style>
+		.tableTitle {font-weight:bold;width:15%;}
+		.tableResult {font-weight:normal;width:85%;}
+		.tableTitleL {font-weight:bold;width:15%;}
+		.tableResultL {font-weight:normal;width:35%;}
+		.tableTitleR {font-weight:bold;width:15%;}
+		.tableResultR {font-weight:normal;width:35%;}
+</style>
 </head>
 <body>
 
@@ -53,7 +60,7 @@ var pageWordCountConf = {
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Advertisement Request (Viewing/Edit)</b></div>
       			 	<div class="panel-body">   
-  							
+  						
   							<form id="frmAdRequest" action="requestAdvertisement.html" method="post">
                                   <input type="HIDDEN" name="request_id" id="request_id" value="<%=req.getId()%>">
                                   <input type="HIDDEN" name="op" id="op" value="GET_EMPLOYEES">
@@ -64,292 +71,259 @@ var pageWordCountConf = {
 	                             </div>
 	                <%}%>
 
-                    <div class="container-fluid"> 
-      			 	       <div class="row">
-		      			 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					 
-									    <div class="input-group">
-									    <span class="input-group-addon">Position Title*:</span>
-									    			<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-		                                        	<input type="text" name="ad_title" id="ad_title" class="form-control" value="<%=((req!=null)&&!StringUtils.isEmpty(req.getTitle()))?req.getTitle():""%>">
-		                                     	 	<%}else{%>
-		                                     	 	<div class="form-control"><%=req.getTitle()%></div>
-		                                        	
-		                                      		<%}%>
-										</div>
-									</div>
-							</div>
-							<div class="row">	
-									 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">					 
-									    <div class="input-group">
-									    <span class="input-group-addon">Location*:</span>
-									    		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-		                                          <personnel:Locations id='location' cls="form-control" value='<%=(req != null)?req.getLocation().getLocationDescription():""%>' onChange="document.forms[0].submit();" />
-		                                        <%}else{%>		                                        
-		                                        <div class="form-control"><%=req.getLocation().getLocationDescription()%></div>
-		                                        <%}%>
-										</div>
-									</div>
+                    <div class="container-fluid">
+                    
+                    
+                    <table class='table table-striped table-condensed' style='font-size:12px;'>
+                    <tbody>
+                    <tr>
+			     		<td class='tableTitle'>POSITION TITLE:</td>
+			     		<td colspan=3 class='tableResult'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+		                           <input type="text" name="ad_title" id="ad_title" class="form-control" value="<%=((req!=null)&&!StringUtils.isEmpty(req.getTitle()))?req.getTitle():""%>">
+		                        <%}else{%>
+		                           <%=req.getTitle()%>
+		                        <%}%>
+			     		</td>
+			     	</tr>
+                    <tr>
+			     		<td class='tableTitleL'>LOCATION:</td>
+			     		<td class='tableResultL'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+		                           <personnel:Locations id='location' cls="form-control" value='<%=(req != null)?req.getLocation().getLocationDescription():""%>' onChange="document.forms[0].submit();" />
+		                        <%}else{%>		                                        
+		                           <%=req.getLocation().getLocationDescription()%>
+		                        <%}%>
+			     		</td>
+			     		<td class='tableTitleR'>POSITION OWNER:</td>
+			     		<td class='tableResultR'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+		                            <personnel:EmployeesByLocation id='owner' location='<%=(req != null)?req.getLocation().getLocationDescription():""%>' value='<%=((req != null)&&(req.getOwner() != null))?req.getOwner().getEmpId():""%>' multiple="false" cls='form-control' />
+		                        <%}else{%>
+		                             <%=(req.getOwner() != null)?req.getOwner().getFullnameReverse():"N/A"%>
+		                        <%}%>
+			     		</td>
+			     	</tr>
+                    <tr>
+			     		<td class='tableTitleL'>UNITS:</td>
+			     		<td class='tableResultL'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+		                             <personnel:UnitTime id="ad_unit" cls="form-control"  value='<%=(req != null)?req.getUnits():1.0%>' />
+		                        <%}else{%>
+		                             <%=req.getUnits()%>
+		                        <%}%>
+			     		</td>
+			     		<td class='tableTitleR'>JOB TYPE:</td>
+			     		<td class='tableResultR'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+                                     <job:JobType id="ad_job_type" cls="form-control" value='<%=((req != null)&&(req.getJobType() != null))?Integer.toString(req.getJobType().getValue()) :""%>' />
+                                <%}else{%>
+                                     <%=req.getJobType().getDescription()%>                                                                               
+                                <%}%>
+			     		</td>
+			     	</tr>
+                     <tr>
+			     		<td class='tableTitle'>REASON FOR VACANCY:</td>
+			     		<td colspan=3 class='tableResult'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+                                      <textarea name="vacancy_reason" id="vacancy_reason" class="form-control"><%=(req != null)?req.getVacancyReason():""%></textarea>
+                                <%}else{%>
+                                      <%=req.getVacancyReason()%>
+                                <%}%>
+			     		</td>
+			     	</tr>
+			     	 <tr>
+			     		
+			     		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+			     			<td colspan=4>
+							  <div class="panel panel-default" id="degPanel">
+							  <div class="panel-heading">
+							  <h4 class="panel-title">
+							  <a data-toggle="collapse" href="#collapse1" style="font-size:14px;color:DimGrey;">Degree(s) Selection <i>(Click to open list and select)</i>* (Selected: <span id="numDegreesSelected">0</span>)</a>
+							  </h4>
+							  </div>
+							  <div id="collapse1" class="panel-collapse collapse">
+							  <div class="panel-body">
+							  Select degree(s) from the list below required to fill this position.
+							  <job:Degrees id="ad_degree" cls="form-control" value='<%=((req!=null)&&(req.getDegrees() != null))?req.getDegrees():null%>' />
+							  </div>
+							  </div>
+							  </div>
+							</td>
+						<%}else{ %>
+								<td class='tableTitle'>DEGREE(S):</td>
+			     				<td colspan=3 class='tableResult'>
+						
+							            <% if((req.getDegrees() != null)&&(req.getDegrees().length > 0)){							             	
+							               for(int i=0; i < req.getDegrees().length; i++) {
+							                 out.println("&middot; "+req.getDegrees()[i].getTitle()+"<br/>");
+							               }							              
+							             }else{
+							               out.println("<span style='color:Red;'>None selected by requester for this position.</span>");
+							             }%>
+							  </td>           
+							<%}%>   
+					
+					</tr>
+			     	<tr>
+			     	
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+			     				<td colspan=4>
+							  		<div class="panel panel-default" id="majPanel">
+							    	<div class="panel-heading">
+							      	<h4 class="panel-title">
+							        <a data-toggle="collapse" href="#collapse2" style="font-size:14px;color:DimGrey;">Major(s) Selection <i>(Click to open list and select)</i>*: (Selected: <span id="numMajorsSelected">0</span>)</a>
+							      	</h4>
+							    	</div>
+							    	<div id="collapse2" class="panel-collapse collapse">
+							      	<div class="panel-body">
+							  		Select prefered major(s) for this position from the list below, if any:
+							      	<job:Subjects id="ad_major" cls="form-control" multiple="true" value='<%=((req != null)&&(req.getMajors() != null))?req.getMajors():null%>' />
+								    </div>
+							     	</div>
+							  		</div> 
+							  	</td>
+								   <%}else{ %>
+								   <td class='tableTitle'>MAJOR(S):</td>
+			     					<td colspan=3 class='tableResult'>
+								   
+							               <% if((req.getMajors() != null)&&(req.getMajors().length > 0)){							                   
+							                   for(int i=0; i < req.getMajors().length; i++) {
+							                     out.println("&middot; "+req.getMajors()[i].getSubjectName()+"<br/>");
+							                   }							                  
+							                 }else{
+							                   out.println("<span style='color:Red;'>None selected by requester for this position.</span>");
+							                 } %>
+							                 
+							           </td>      
+							      <%}%> 
+			     	</tr>
+			     	<tr>
+			     		
+			     		
+			     		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+							  	<td colspan=4>			
+							    <div class="panel panel-default" id="minPanel">
+							    <div class="panel-heading">
+							      <h4 class="panel-title">
+							        <a data-toggle="collapse" href="#collapse3" style="font-size:14px;color:DimGrey;">Minor(s) Selection <i>(Click to open list and select)</i>*: (Selected: <span id="numMinorsSelected">0</span>)</a>
+							      </h4>
+							    </div>
+							    <div id="collapse3" class="panel-collapse collapse">
+							      <div class="panel-body">
+							  		Select prefered minor(s) for this position from the list below, if any:
+							      	<job:Subjects id="ad_minor" cls="form-control" multiple="true" value='<%=((req != null)&&(req.getMinors() != null))?req.getMinors():null%>' />
+							     </div>
+							     
+							    </div>
+							  </div> 
+							  </td>
+							<%}else{ %>
+							 <td class='tableTitle'>MINOR(S):</td>
+			     				<td colspan=3 class='tableResult'>
 							
-		      			 	       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">					 
-									    <div class="input-group">
-									    <span class="input-group-addon">Owner of Position:</span>
-									    		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-		                                          <personnel:EmployeesByLocation id='owner' 
-		                                            location='<%=(req != null)?req.getLocation().getLocationDescription():""%>' 
-		                                            value='<%=((req != null)&&(req.getOwner() != null))?req.getOwner().getEmpId():""%>'
-		                                            multiple="false" cls='form-control' />
-		                                        <%}else{%>
-		                                         <div class="form-control"><%=(req.getOwner() != null)?req.getOwner().getFullnameReverse():"&nbsp;"%></div>
-		                                          
-		                                        <%}%>
-										</div>
-									</div>
-							</div>
-							<div class="row">		
-									 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">					 
-									    <div class="input-group">
-									    <span class="input-group-addon"> Units*:</span>
-									    		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-		                                          <personnel:UnitTime id="ad_unit" cls="form-control"  value='<%=(req != null)?req.getUnits():1.0%>' />
-		                                        <%}else{%>
-		                                        <div class="form-control"><%=req.getUnits()%></div>
-		                                          
-		                                        <%}%>
-										</div>
-									</div>
-							</div>
-							
-					       <div class="row">
-	      			 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					 
-								    <div class="input-group">
-								    <span class="input-group-addon">Reason for Vacancy*:</span>								     
-                                        <%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-                                          <textarea name="vacancy_reason" id="vacancy_reason" class="form-control"><%=(req != null)?req.getVacancyReason():""%></textarea>
+							                <% if((req.getMinors() != null)&&(req.getMinors().length > 0)){
+							                	 
+							                  for(int i=0; i < req.getMinors().length; i++) {
+							                    out.println("&middot; " + req.getMinors()[i].getSubjectName()+"<br/>");
+							                  }							                 
+							                }else{
+							                  out.println("<span style='color:Red;'>None selected by requester for this position.</span>");
+							                } %>
+							  </td>           
+							<% }%>   
+			           
+			     	 </tr>	
+			     	 <tr>
+			     		<td class='tableTitle'>TRAINING METHOD:</td>
+			     		<td colspan=3 class='tableResult'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+                                   <job:TrainingMethods id="ad_trnmtd" multiple="false" cls="form-control" value='<%=((req != null)&&(req.getTrainingMethod() != null))?Integer.toString(req.getTrainingMethod().getValue()):""%>' />
+                                <%}else{%>
+                                   <%=req.getTrainingMethod().getDescription()%>
+                                <%}%>
+			     		</td>
+			     	</tr>
+			     	 <tr>
+			     		<td class='tableTitle'>AD TEXT:</td>
+			     		<td colspan=3 class='tableResult'>
+			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+                                    <textarea name="ad_text" id="ad_text" class="form-control"><%=((req != null)&&!StringUtils.isEmpty(req.getAdText()))?req.getAdText():""%></textarea>
+                                <%}else{%>
+                                   <%=req.getAdText()%>
+                                <%}%>
+			     		</td>
+			     	</tr>
+			     	 <tr>
+			     		<td class='tableTitle'>UNADVERTISED?</td>
+			     		<td colspan=3 class='tableResult'>
+			     						<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+                                          <input type="checkbox" id="is_unadvertised" name="is_unadvertised" <%=(req.isUnadvertised()?" CHECKED":"")%> />  
                                         <%}else{%>
-                                         <div class="form-control" style="height:auto;"><%=req.getVacancyReason()%></div>
-                                          
+                                         <%=(req.isUnadvertised()?"YES":"NO")%>
                                         <%}%>
-									</div>
-								</div>								
-							</div>
-					       
-					       <div class="row">
-	      			 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					 
-								    <div class="input-group">
-								    <span class="input-group-addon">Job Type:</span>		   
-                                      
-                                        <%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-                                          <job:JobType id="ad_job_type" cls="form-control" value='<%=((req != null)&&(req.getJobType() != null))?Integer.toString(req.getJobType().getValue()) :""%>' />
-                                        <%}else{%>
-                                        <div class="form-control"><%=req.getJobType().getDescription()%></div>                                                                                 
-                                        <%}%>
-									</div>
-								</div>
-							</div>
+			     		</td>
+			     	</tr>                   
+                    
+                    
+                     <tr>
+			     		<td class='tableTitleL'>START DATE:</td>
+			     		<td class='tableResultL'>
+			     		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+			     		<input class="form-control requiredinput_date" type="text" name="start_date" value="<%=((req != null)&&(req.getStartDate() != null))?req.getFormatedStartDate():""%>" readonly>
+			     		<%} else { %>
+			     		<%=((req != null)&&(req.getStartDate() != null))?req.getFormatedStartDate():""%>
+			     		<%} %>
+			     		</td>
+			     		<td class='tableTitleR'>END DATE:</td>
+			     		<td class='tableResultR'>
+			     		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+			     		<input class="form-control requiredinput_date" type="text" name="end_date" value="<%=((req != null)&&(req.getEndDate() != null))?req.getFormatedEndDate():""%>" readonly>
+			     		<%} else { %>
+			     		<%=((req != null)&&(req.getEndDate() != null))?req.getFormatedEndDate():""%>
+			     		<%} %>
+			     		</td>
+			     	</tr>
+                    
+                    </tbody>
+                    </table>
+                   
 							
-							
-<div class="row">
-     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
-     
-     
-     			 				
-     <div class="panel-group" id="accordion">
-     <%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-  		<div class="panel panel-default" id="degPanel">
-    		<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse1" style="font-size:14px;color:DimGrey;">Degree(s) Selection <i>(Click to open list and select)</i>*: (Selected: <span id="numDegreesSelected">0</span>)</a>
-      			</h4>
-   			</div>
-    	<div id="collapse1" class="panel-collapse collapse">
-      	<div class="panel-body">Select degree(s) from the list below required to fill this position.
-      	<job:Degrees id="ad_degree" cls="form-control" value='<%=((req!=null)&&(req.getDegrees() != null))?req.getDegrees():null%>' />
-        </div>
-    	</div>
-  		</div>
-  		<%}else{
-             if((req.getDegrees() != null)&&(req.getDegrees().length > 0)){
-             	out.print("<div class='input-group'><span class='input-group-addon alert-success'>Degree(s):</span><div class='form-control' style='height:auto;'>");
-               for(int i=0; i < req.getDegrees().length; i++) {
-                 out.println(req.getDegrees()[i].getTitle()+"<br/>");
-               }
-               out.print("</div></div>");
-             }else{
-               out.println("<div class='input-group' style='height:auto;'><span class='input-group-addon alert-danger'>Degree(s):</span><div class='form-control'>None Selected.</div></div>");
-             }
-           }%>   
-  		
-  		
-  		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-  		<div class="panel panel-default" id="majPanel">
-    		<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse2" style="font-size:14px;color:DimGrey;">Major(s) Selection <i>(Click to open list and select)</i>*: (Selected: <span id="numMajorsSelected">0</span>)</a>
-      			</h4>
-   			</div>
-    	<div id="collapse2" class="panel-collapse collapse">
-      	<div class="panel-body">
-      	Select prefered major(s) for this position from the list below, if any:
-      	<job:Subjects id="ad_major" cls="form-control" multiple="true" value='<%=((req != null)&&(req.getMajors() != null))?req.getMajors():null%>' />
-	                                                                           
-      	</div>
-    	</div>
-  		</div>
-  		<%}else{
-                 if((req.getMajors() != null)&&(req.getMajors().length > 0)){
-                   out.print("<div class='input-group'><span class='input-group-addon alert-success'>Major(s):</span><div class='form-control' style='height:auto;'>");
-                   for(int i=0; i < req.getMajors().length; i++) {
-                     out.println(req.getMajors()[i].getSubjectName() + "<br>");
-                   }
-                   out.print("</div></div>");
-                 }else{
-                   out.println("<div class='input-group ' style='height:auto;'><span class='input-group-addon alert-danger'>Major(s):</span><div class='form-control'>None Selected.</div></div>");
-                 }
-               }%>  
-  		
-  		<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-  		<div class="panel panel-default" id="minPanel">
-    		<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse3" style="font-size:14px;color:DimGrey;">Minor(s) Selection <i>(Click to open list and select)</i>*: (Selected: <span id="numMinorsSelected">0</span>)</a>
-      			</h4>
-   			</div>
-    	<div id="collapse3" class="panel-collapse collapse">
-      	<div class="panel-body">
-      	Select prefered minor(s) for this position from the list below, if any:
-      	<job:Subjects id="ad_minor" cls="form-control" multiple="true" value='<%=((req != null)&&(req.getMinors() != null))?req.getMinors():null%>' />
-                                                                          
-      	</div>
-    	</div>
-  		</div>
-  		<%}else{
-                if((req.getMinors() != null)&&(req.getMinors().length > 0)){
-                	 out.print("<div class='input-group'><span class='input-group-addon alert-success'>Minor(s):</span><div class='form-control' style='height:auto;'>");
-                  for(int i=0; i < req.getMinors().length; i++) {
-                    out.println(req.getMinors()[i].getSubjectName() + "<br>");
-                  }
-                  	out.print("</div></div>");
-                }else{
-                  out.println("<div class='input-group' style='height:auto;'><span class='input-group-addon alert-danger'>Minor(s):</span><div class='form-control'>None Selected.</div></div>");
-                }
-              }%>   
-  		
-	</div>	
-	</div>
-     </div> 			 								
-							
-							
-							<div class="row">		
+					<%if(request.getAttribute("msg")!=null){%>
+	                           <div class="alert alert-warning" style="text-align:center;"><%=(String)request.getAttribute("msg")%></div>
+	                <%}%>
 								
-							
-	      			 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					 
-								    <div class="input-group">
-								    <span class="input-group-addon">Training Method:</span>								    
-                                        <%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-                                          <job:TrainingMethods id="ad_trnmtd" multiple="false" cls="form-control" value='<%=((req != null)&&(req.getTrainingMethod() != null))?Integer.toString(req.getTrainingMethod().getValue()):""%>' />
-                                        <%}else{%>
-                                          <div class='form-control' style='height:auto;'><%=req.getTrainingMethod().getDescription()%></div>
-                                        <%}%>
-									</div>
-								</div>
-								 
-							</div>
-							
-							
-							<div class="row">
-	      			 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					 
-								    <div class="input-group">
-								    <span class="input-group-addon">Ad Text*:</span>								    
-                                        <%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-                                          <textarea name="ad_text" id="ad_text" class="form-control"><%=((req != null)&&!StringUtils.isEmpty(req.getAdText()))?req.getAdText():""%></textarea>
-                                        <%}else{%>
-                                          <div class='form-control' style='height:auto;'><%=req.getAdText()%></div>
-                                        <%}%>
-									</div>
-								</div>								
-							</div>
-							
-							<div class="row">
-	      			 	       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">					 
-								    <div class="input-group">
-								    <span class="input-group-addon">Start Date*:</span>							    
-                                      <input class="form-control" type="text" name="start_date" value="<%=((req != null)&&(req.getStartDate() != null))?req.getFormatedStartDate():""%>" readonly>
-                                    </div>
-								</div>
-								 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">					 
-								    <div class="input-group">
-								    <span class="input-group-addon">End Date*:</span>								     
-                                      <input class="form-control" type="text" name="end_date" value="<%=((req != null)&&(req.getEndDate() != null))?req.getFormatedEndDate():""%>" readonly>
-                                    </div>
-								</div>
-							</div>
-							
-							
-							<div class="row" style="margin-top:5px;margin-bottom:5px;">
-      			 	       	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    							 <label class="checkbox-inline">						
-    									<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-                                          <input type="checkbox" id="is_unadvertised" name="is_unadvertised" <%=(req.isUnadvertised()?" CHECKED":"")%> /> Is position unadvertised?   
-                                        <%}else{%>
-                                         Is position unadvertised? <%=(req.isUnadvertised()?"YES":"NO")%>
-                                        <%}%>
-                                 </label>       
-    						
-    						</div>
-    						</div>
-							
-							
-							<div class="row" >
-	      			 	       	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<%if(request.getAttribute("msg")!=null){%>
-	                           <div class="alert alert-warning" style="text-align:center;">                                       
-	                               <%=(String)request.getAttribute("msg")%>
-	                             </div>
-	                			<%}%>
-								</div>
-							</div>
-							
-							
-							
-							<div class="row no-print" style="margin-top:5px;text-align:center;">
-	      			 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					 
-								 
+					<div class="row no-print" style="margin-top:5px;text-align:center;">
+	      			 	      				 
+					<a href='#' title='Print this page (pre-formatted)' class="btn btn-xs btn-primary" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a>
+		             			 
 								 
 	 <%if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-APPROVE") && req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
                         
-	     <a href="#" class="btn btn-sm btn-success" onclick="doPost('A','<%=req.getId()%>');">APPROVE</a>
-	     <a href="#" class="btn btn-sm btn-danger" onclick="doPost('D','<%=req.getId()%>');">DECLINE</a>
+	     <a href="#" class="btn btn-xs btn-success" onclick="doPost('A','<%=req.getId()%>');">APPROVE AD</a>
+	     <a href="#" class="btn btn-xs btn-danger" onclick="doPost('D','<%=req.getId()%>');">DECLINE AD</a>
 	     
      <%}else if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-APPROVE") && req.getCurrentStatus().equals(RequestStatus.POSTED)){%>
      
-      	<a class="btn btn-sm btn-warning" href="javascript:openWindow('CANCEL_POST', 'cancelPost.html?comp_num=<%=req.getCompetitionNumber()%>',390, 270, 1);">CANCEL POST</a>
+      	<a class="btn btn-xs btn-warning" href="javascript:openWindow('CANCEL_POST', 'cancelPost.html?comp_num=<%=req.getCompetitionNumber()%>',390, 270, 1);">CANCEL POST</a>
      
      <%}else if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST") && req.getCurrentStatus().equals(RequestStatus.APPROVED)){%>
                          
-        <a href="#" class="btn btn-sm btn-primary" onclick="doPost('P','<%=req.getId()%>');">POST</a>
+        <a href="#" class="btn btn-xs btn-primary" onclick="doPost('P','<%=req.getId()%>');">POST THIS AD</a>
                       
      <%}else if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST") && req.getCurrentStatus().equals(RequestStatus.POSTED)){%>
      
-     	<a href="#" class="btn btn-sm btn-primary" onclick="doPost('R','<%=req.getId()%>');">RE-POST</a>
+     	<a href="#" class="btn btn-xs btn-primary" onclick="doPost('R','<%=req.getId()%>');">RE-POST AD</a>
                          
      <%}else if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST") && req.getCurrentStatus().equals(RequestStatus.REJECTED)){%>
         
         <div class="alert alert-danger">Request has been REJECTED.</div>
       <%}%>
-      <a class="btn btn-sm btn-danger" href="javascript:history.go(-1);">Back</a>
+      <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
 								    
-						    
-								    
-								</div>								
-							</div>
+						</div>
 							
-					
-					
-					
-					</div>			
-
-
-  					</form>
+					</form>
 
 
 					</div>

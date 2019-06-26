@@ -179,7 +179,9 @@ function parseAddApplicantResponse(data){
 	                                      <div class="alert alert-warning" style="text-align:center;">                                       
 	                                          <%=(String)request.getAttribute("msg")%>
 	                                        </div>
-<%}%>				 
+<%}%>	
+
+		 
 
 <div class="panel panel-success">
   <div class="panel-heading"><b>Viewing Job Post <%=request.getParameter("comp_num")%></b></div>

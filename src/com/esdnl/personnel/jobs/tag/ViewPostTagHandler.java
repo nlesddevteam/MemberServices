@@ -110,31 +110,85 @@ public class ViewPostTagHandler extends TagSupport {
 				for (int j = 0; j < abean.length; j++) {
 					System.out.println(abean[j].getAssignmentId());
 					edu = AssignmentEducationManager.getAssignmentEducationBeans(abean[j]);
+					
 					if (edu.length > 0) {
-						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>" + DegreeManager.getDegreeBeans(edu[0].getDegreeId()).getTitle() + "</td></tr>");
-						for (int k = 1; k < edu.length; k++)
-							out.println("<tr><td class='tableTitle'>&nbsp;</td><td class='tableResult'>" + DegreeManager.getDegreeBeans(edu[k].getDegreeId()).getTitle() + "</td></tr>");
+						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'><ul><li>" + DegreeManager.getDegreeBeans(edu[0].getDegreeId()).getTitle());
+						for (int k = 1; k < edu.length; k++) {
+							out.print("<li>" + DegreeManager.getDegreeBeans(edu[k].getDegreeId()).getTitle());
+						}						
+					out.print("</ul></td></tr>");
+					} else {
+						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
 					}
 
 					mjr = AssignmentMajorMinorManager.getAssignmentMajorMinorBeans(abean[j]);
+					
 					if (mjr.length > 0) {
-						out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'>"
-								+ ((mjr[0].getMajorId() > 0) ? SubjectDB.getSubject(mjr[0].getMajorId()).getSubjectName() : "")
-								+ "</td></tr>");
+						out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'><ul>"
+								+ ((mjr[0].getMajorId() > 0) ? "<li>"+SubjectDB.getSubject(mjr[0].getMajorId()).getSubjectName() : ""));
 						for (int l = 1; l < mjr.length; l++) {
 							if (mjr[l].getMajorId() > 0)
-								out.println("<tr><td class='tableTitle'>&nbsp;</td><td class='tableResult'>"
-										+ SubjectDB.getSubject(mjr[l].getMajorId()).getSubjectName() + "</td></tr>");
+								out.print("<li>" + SubjectDB.getSubject(mjr[l].getMajorId()).getSubjectName());
 						}
+						
+						out.print("</ul></td></tr>");
+					} else {
+						out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
+						
 					}
+					
+					
 					if (mjr.length > 0) {
-						out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'>" + ((mjr[0].getMinorId() > 0) ? SubjectDB.getSubject(mjr[0].getMinorId()).getSubjectName() : "")	+ "</td></tr>");
+						out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'><ul>" + ((mjr[0].getMinorId() > 0) ? "<li>"+SubjectDB.getSubject(mjr[0].getMinorId()).getSubjectName() : ""));
 						for (int l = 1; l < mjr.length; l++) {
-							if (mjr[l].getMinorId() > 0)
-								out.println("<tr><td class='tableTitle'>&nbsp;</td><td class='tableResult'>" + SubjectDB.getSubject(mjr[l].getMinorId()).getSubjectName() + "</td></tr>");
-						}
+							if (mjr[l].getMinorId() > 0) {
+								out.print("<li>" + SubjectDB.getSubject(mjr[l].getMinorId()).getSubjectName());
+						}}
+						
+						out.print("</ul></td></tr>");
+					} else {
+						out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
+						
 					}
+					
+		// OLD CODE SNIPPLETS
+		//----------------------------------------		
+					
+				//	if (edu.length > 0) {
+				//		out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>" + DegreeManager.getDegreeBeans(edu[0].getDegreeId()).getTitle() + "</td></tr>");
+				//		for (int k = 1; k < edu.length; k++) {
+				//			out.println("<tr><td class='tableTitle'>&nbsp;</td><td class='tableResult'>" + DegreeManager.getDegreeBeans(edu[k].getDegreeId()).getTitle() + "</td></tr>");
+				//		}} else {
+				//		out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
+				//	}			
+					
+					
+		//----------------------------------------			
+					
+				//	if (mjr.length > 0) {
+				//		out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'>"+ ((mjr[0].getMajorId() > 0) ? SubjectDB.getSubject(mjr[0].getMajorId()).getSubjectName() : "") + "</td></tr>");
+				//		for (int l = 1; l < mjr.length; l++) {
+				//			if (mjr[l].getMajorId() > 0)
+				//				out.println("<tr><td class='tableTitle'>&nbsp;</td><td class='tableResult'>" + SubjectDB.getSubject(mjr[l].getMajorId()).getSubjectName() + "</td></tr>");
+				//		}
+				//	} else {
+				//		out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
+				//	}
+					
+		//--------------------------------			
+					
+				//	if (mjr.length > 0) {
+				//		out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'>" + ((mjr[0].getMinorId() > 0) ? SubjectDB.getSubject(mjr[0].getMinorId()).getSubjectName() : "")	+ "</td></tr>");
+				//		for (int l = 1; l < mjr.length; l++) {
+				//			if (mjr[l].getMinorId() > 0) {
+				//				out.println("<tr><td class='tableTitle'>&nbsp;</td><td class='tableResult'>" + SubjectDB.getSubject(mjr[l].getMinorId()).getSubjectName() + "</td></tr>");
+				//			}}
+				//	} else {
+				//		out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
+				//	}
 
+		//--------------------------------		
+					
 					trnmtd = AssignmentTrainingMethodManager.getAssignmentTrainingMethodBeans(abean[j]);
 					if (trnmtd.length > 0) {
 						try {
@@ -151,8 +205,9 @@ public class ViewPostTagHandler extends TagSupport {
 				}
 			}
 			
-			
-			out.println("<tr><td class='tableTitle'>JOB TEXT:</td><td class='tableResult'>" + opp.getJobAdText().replaceAll("\n", "<BR>") + "</td></tr>");
+			out.println("<tr><td class='tableTitle'>JOB TEXT:</td><td class='tableResult'>" + opp.getJobAdText().replaceAll("<BR><BR>", "<br/>") + "</td></tr>");
+			//Old code from old system.
+			//out.println("<tr><td class='tableTitle'>JOB TEXT:</td><td class='tableResult'>" + opp.getJobAdText().replaceAll("\n", "<BR>") + "</td></tr>");
 
 			out.println("</tbody></table>");
 		}

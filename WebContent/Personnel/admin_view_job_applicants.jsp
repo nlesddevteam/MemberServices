@@ -208,9 +208,8 @@ input { border:1px solid silver;}
 	                                   	
                                              <%if (applicants[i].getSenority() > 0) {%>
                                              <span style='color:red;'><%=applicants[i].getSenority() %></span>
-                                            <%} else {%>
-                                            <!-- Sort by number, so negative number hidden -->
-                                                <span style="color:rgba(255, 255, 255,0)">-1</span>
+                                            <%} else {%>                                           
+                                                <span style="color:DimGrey;">0</span>
                                             <%} %>
                                                
 	                                    </td>
