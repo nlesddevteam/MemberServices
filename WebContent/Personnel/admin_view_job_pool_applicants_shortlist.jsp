@@ -216,6 +216,9 @@ The applicants below are categorized by region and zone. Click on a tab to open 
                                     	position = null;
                                     	recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
                                     	
+                                    	try{
+                                    		
+                                    	
                                     	if((recs != null) && (recs.length > 0)){
                                     		if(recs[0].getJob().getJobType().equal(JobTypeConstant.REGULAR)){
                                     			if(recs[0].getTotalUnits() < 1.0){
@@ -243,6 +246,10 @@ The applicants below are categorized by region and zone. Click on a tab to open 
                                     		if(position != null) {                                    			
                                     			position += " - Accepted: " + recs[0].getOfferAcceptedDateFormatted();
                                     		}
+                                    		
+                                    	}
+                                    	}catch(Exception ec){
+                                    		System.out.println(ec.getMessage());
                                     	}
                                     %>	
                                     
