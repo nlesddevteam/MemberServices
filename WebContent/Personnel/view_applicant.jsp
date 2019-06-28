@@ -711,7 +711,7 @@ Sections with no information will display a red header. Those completed and/or w
                 
   <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section11">   
-	               	<div class="panel-heading"><b>CRIMINAL OFFENCE DECLARATIONS</b></div>
+	               	<div class="panel-heading"><b>CRIMINAL OFFENCE DECLARATIONS</b><span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10_CODF.jsp">EDIT</a></span></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive">
 									<%if((cods != null) && (cods.size() > 0))  {
