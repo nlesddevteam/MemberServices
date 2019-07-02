@@ -199,7 +199,7 @@ input {
       <div class="panel-body">
       <div class="table-responsive"> 
       									
-                                        <% if(shortlisted.length > 0){ %>
+                                        <% if(applicants.length > 0){ %>
                                         
                                         <table id='jobapps1' class="tblNewApplicants table table-condensed table-striped" style="font-size:12px;">
                                         <thead>
