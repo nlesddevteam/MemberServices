@@ -157,7 +157,7 @@
 				document.location.href=$(this).attr('href');
 			});
 
-			$('#new-app-count').html(' (' + ($('.tblNewApplicants tr:not(".noapplicant")').length - 1) + ')');
+			//$('#new-app-count').html(' (' + ($('.tblNewApplicants tr:not(".noapplicant")').length - 1) + ')');
 		});
 	</script>
 	
@@ -193,7 +193,7 @@ input {
    <div class="panel-group" id="accordion">
   	<div class="panel panel-info">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">New Applicants <span id="new-app-count" class="displayText" style="font-weight:none;"></span></a></h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">New Applicants <span class="displayText" style="font-weight:none;">(<%=applicants.length%>)</span></a></h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
       <div class="panel-body">
