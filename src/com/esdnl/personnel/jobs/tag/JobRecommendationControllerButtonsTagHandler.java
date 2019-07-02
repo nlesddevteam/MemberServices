@@ -115,9 +115,7 @@ public class JobRecommendationControllerButtonsTagHandler extends TagSupport {
 			}
 
 			if (usr.checkPermission("PERSONNEL-ADMIN-PROCESS-RECOMMENDATION") && recommendation.isProcessed()) {
-				out.println("<a class='btn btn-xs btn-info' href=\"javascript:openWindow('PRINT_RECOMMENDATION','jobRecommentationController.html?op=print_rec&id="
-						+ recommendation.getRecommendationId()
-						+ "', 150, 150, 0);\">Print Offer</a>");
+				out.println("<a class='btn btn-xs btn-info' href='jobRecommentationController.html?op=print_rec&id="+ recommendation.getRecommendationId()+"'>Print Offer</a>");
 
 			}
 

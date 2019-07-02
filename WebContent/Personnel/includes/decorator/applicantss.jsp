@@ -79,7 +79,7 @@
 
 
 
-			<div class="container-fluid" style="max-height:230px;min-height:120px;height:auto;">
+			<div class="container-fluid no-print" id="noPrintThis" style="max-height:230px;min-height:120px;height:auto;">
 				<div class="row">
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
 				   	<img class="topLogoImg" src="/MemberServices/Personnel/includes/img/myhrplogowide-app.png" title="Newfoundland and Labrador English School District">
@@ -201,7 +201,7 @@
 
 
 
-<div class="alert alert-info no-print" style="text-align:center;font-size:11px;">
+<div class="alert alert-info no-print" id="noPrintThis" style="text-align:center;font-size:11px;">
 Any questions or concerns relating to a profile should be directed to the
 proper contact(s) found under the <a href="viewContactInformation.html">Help</a> menu above or your regional HR staff.<br/>
 If you are experiencing technical difficulties with this system, email <a href="mailto:mssupport@nlesd.ca?subject=MyHRP System">mssupport@nlesd.ca</a>.
