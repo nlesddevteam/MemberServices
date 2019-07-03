@@ -54,7 +54,7 @@ $("#loadingSpinner").css("display","none");
 <script type="text/javascript">
     $(function () {
         $('#ad_comp_end_date').datetimepicker({
-        	format:'DD/MM/YYYY HH:mm:A'					                	
+        	format:'DD/MM/YYYY hh:mm:A'					                	
         	
         });
     });
