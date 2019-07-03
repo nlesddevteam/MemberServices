@@ -1269,7 +1269,7 @@ public class ApplicantProfileManager {
 				sql.append(") ");
 			}
 
-			sql.append(" ORDER BY SENORITY DESC, SURNAME, FIRSTNAME");
+			sql.append(" ORDER BY SENORITY DESC, SURNAME, FIRSTNAME ");
 
 			//in order for new fields on sub filter screen to work we to adjust the query
 			if (params.getSubList() != null) {
