@@ -238,7 +238,7 @@ input { border:1px solid silver;}
 	                        <%if(applicants[i].getProfileType().equals("T")){ %>	                        
 	                                 
 	                        <% Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(applicants[i]);
-	                        
+	                        int coursesCompleted = 0;
 	                        int UT=0; //University Transcripts 1
 	                        int TC=0; //Teaching Certificates 2
 	                        int CC=0; //Code of Conduct  doc.getType().getValue() 3
@@ -272,6 +272,16 @@ input { border:1px solid silver;}
                                 	
                               <%edu_other = ApplicantEducationOtherManager.getApplicantEducationOtherBean(applicants[i].getSIN()); %>    
                                
+                               <%if (edu_other !=null) { 
+                               coursesCompleted = edu_other.getTotalCoursesCompleted();
+                               } else {                            	   
+                            	coursesCompleted = 0;   
+                               }
+                               %>
+                               
+                               
+                               
+                                                              
 	     <!-- 
 	                                    
 If the user has Level 2 Early Childhood Education Certificate only, or just 20 plus courses, and NO Teaching Certificate they can be flagged as a TLA only
@@ -286,17 +296,17 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 	                                   <td>
                                        	<b>UT:</b> <%=UT%> &middot; <b>TC:</b> <%=TC%><br/>
 	                           		   	<b>FPD:</b> <%=FP%> &middot; <b>COC:</b> <%=CC%><br/>
-	                             		<b>ECE:</b> <%=EC%> &middot; <b>#CRS:</b> <%=edu_other.getTotalCoursesCompleted()%> 
+	                             		<b>ECE:</b> <%=EC%> &middot; <b>#CRS:</b> <%=coursesCompleted %> 
                                       </td> 
 	                                              
                                          <!-- If has 20+ courses or ECE Certificate) AND no teaching certificate -->
-                                         <% if(((edu_other.getTotalCoursesCompleted() >=20) || (EC > 0)) && (TC<1)) { %>
+                                         <% if(((coursesCompleted >=20) || (EC > 0)) && (TC<1)) { %>
                                          <td style="background-color:#DDA0DD;color:Black;text-align:center;">TLA</td>
                                          <!-- If is a Teacher AND a teaching certificate -->
                                          <%} else if ((applicants[i].getProfileType().equals("T")) && (TC > 0)) { %>
                                            <td style="background-color:#6495ED;color:Black;text-align:center;">TEACHER</td>
                                         <!-- If is a Teacher AND a Teaching Certificate AND a ECE Certificate or 20+ courses -->
-                                       <%} else if ((applicants[i].getProfileType().equals("T")) && (TC > 0) && ((EC > 0) || (edu_other.getTotalCoursesCompleted() >=20))) { %>
+                                       <%} else if ((applicants[i].getProfileType().equals("T")) && (TC > 0) && ((EC > 0) || (coursesCompleted >=20))) { %>
                                            <td style="background-color:#6495ED;color:Black;text-align:center;">TEACHER /TLA</td>
                                         
                                         <% } else { %>

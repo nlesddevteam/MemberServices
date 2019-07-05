@@ -190,10 +190,10 @@ The applicants below are categorized by region and zone. Click on a tab to open 
                                 	   <table class="jobsapp table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
 									    <thead>									    
 									      <tr>
-									        <th width='25%'>NAME</th>									        
-									        <th width='15%'>EMAIL/TELEPHONE</th>
+									        <th width='20%'>NAME</th>									        
+									        <th width='17%'>EMAIL/TELEPHONE</th>
 									        <th width='10%'>SENIORITY</th>
-									        <th width="10%">STATUS</th>				        
+									        <th width="13%">STATUS</th>				        
 									        <th width='40%'>POSITION/OPTIONS/REGIONS</th>									       					        
 									      </tr>
 									    </thead>

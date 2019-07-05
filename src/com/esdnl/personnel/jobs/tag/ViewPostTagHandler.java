@@ -112,11 +112,11 @@ public class ViewPostTagHandler extends TagSupport {
 					edu = AssignmentEducationManager.getAssignmentEducationBeans(abean[j]);
 					
 					if (edu.length > 0) {
-						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'><ul><li>" + DegreeManager.getDegreeBeans(edu[0].getDegreeId()).getTitle());
+						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>&middot; " + DegreeManager.getDegreeBeans(edu[0].getDegreeId()).getTitle() + "<br/>");
 						for (int k = 1; k < edu.length; k++) {
-							out.print("<li>" + DegreeManager.getDegreeBeans(edu[k].getDegreeId()).getTitle());
+							out.print("&middot; " + DegreeManager.getDegreeBeans(edu[k].getDegreeId()).getTitle() + "<br/>");
 						}						
-					out.print("</ul></td></tr>");
+					out.print("</td></tr>");
 					} else {
 						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
 					}
@@ -124,14 +124,14 @@ public class ViewPostTagHandler extends TagSupport {
 					mjr = AssignmentMajorMinorManager.getAssignmentMajorMinorBeans(abean[j]);
 					
 					if (mjr.length > 0) {
-						out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'><ul>"
-								+ ((mjr[0].getMajorId() > 0) ? "<li>"+SubjectDB.getSubject(mjr[0].getMajorId()).getSubjectName() : ""));
+						out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'>"
+								+ ((mjr[0].getMajorId() > 0) ? "&middot; "+SubjectDB.getSubject(mjr[0].getMajorId()).getSubjectName()+"<br/>" : "NA"));
 						for (int l = 1; l < mjr.length; l++) {
 							if (mjr[l].getMajorId() > 0)
-								out.print("<li>" + SubjectDB.getSubject(mjr[l].getMajorId()).getSubjectName());
+								out.print("&middot; " + SubjectDB.getSubject(mjr[l].getMajorId()).getSubjectName()+"<br/>");
 						}
 						
-						out.print("</ul></td></tr>");
+						out.print("</td></tr>");
 					} else {
 						out.println("<tr><td class='tableTitle'>MAJOR(S) REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
 						
@@ -139,13 +139,13 @@ public class ViewPostTagHandler extends TagSupport {
 					
 					
 					if (mjr.length > 0) {
-						out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'><ul>" + ((mjr[0].getMinorId() > 0) ? "<li>"+SubjectDB.getSubject(mjr[0].getMinorId()).getSubjectName() : ""));
+						out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'>" + ((mjr[0].getMinorId() > 0) ? "&middot; "+SubjectDB.getSubject(mjr[0].getMinorId()).getSubjectName()+"<br/>" : "NA"));
 						for (int l = 1; l < mjr.length; l++) {
 							if (mjr[l].getMinorId() > 0) {
-								out.print("<li>" + SubjectDB.getSubject(mjr[l].getMinorId()).getSubjectName());
+								out.print("&middot; " + SubjectDB.getSubject(mjr[l].getMinorId()).getSubjectName() +"<br/>");
 						}}
 						
-						out.print("</ul></td></tr>");
+						out.print("</td></tr>");
 					} else {
 						out.println("<tr><td class='tableTitle'>MINOR(S) REQUIRED:</td><td class='tableResult'>Not Applicable</td></tr>");
 						
@@ -205,7 +205,7 @@ public class ViewPostTagHandler extends TagSupport {
 				}
 			}
 			
-			out.println("<tr><td class='tableTitle'>JOB TEXT:</td><td class='tableResult'>" + opp.getJobAdText().replaceAll("<BR><BR>", "<br/>") + "</td></tr>");
+			out.println("<tr><td class='tableTitle'>JOB TEXT:</td><td class='tableResult'>" + opp.getJobAdText().replaceAll("<br><br>","<br />") + "</td></tr>");
 			//Old code from old system.
 			//out.println("<tr><td class='tableTitle'>JOB TEXT:</td><td class='tableResult'>" + opp.getJobAdText().replaceAll("\n", "<BR>") + "</td></tr>");
 
