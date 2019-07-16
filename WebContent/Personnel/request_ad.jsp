@@ -60,7 +60,7 @@ var pageWordCountConf = {
       			 	<div class="panel-body"> 
       			 	     
       			 	     
-      			 	<form id="frmAdRequest" action="requestAdvertisement.html" method="post">
+      			 	<form id="frmAdRequest" action="requestAdvertisement.html" method="post" autocomplete="off">
                        <input type="HIDDEN" name="op" id="op" value="GET_EMPLOYEES">      			 	     
       			 	
       			 	 	<div class="container-fluid">

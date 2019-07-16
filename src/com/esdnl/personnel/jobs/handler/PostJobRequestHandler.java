@@ -67,31 +67,44 @@ public class PostJobRequestHandler implements RequestHandler {
 			String issupport = request.getParameter("issupport");
 
 			if (!StringUtils.isEmpty(request.getParameter("edit")) && StringUtils.isEmpty(comp_num)) {
-				request.setAttribute("msg", "Competition number is a required field.");
+				request.setAttribute("msgERR", "Competition number is a required field.");
 				path = "admin_post_job.jsp";
 			}
 			else if (StringUtils.isEmpty(position_title)) {
-				request.setAttribute("msg", "Position title is a required field.");
+				request.setAttribute("msgERR", "Position title is a required field.");
 				path = "admin_post_job.jsp";
 			}
 			else if (StringUtils.isEmpty(location.replaceAll("-", ""))) {
-				request.setAttribute("msg", "Position location is a required field.");
+				request.setAttribute("msgERR", "Position location is a required field.");
 				path = "admin_post_job.jsp";
 			}
 			else if (StringUtils.isEmpty(ad_text)) {
-				request.setAttribute("msg", "Ad text is a required field.");
+				request.setAttribute("msgERR", "Ad text is a required field.");
 				path = "admin_post_job.jsp";
-			}
+			} 
+			else if ((degree == null) && (degree.length > 0)) {
+				request.setAttribute("msgERR", "Degree a required field.");
+				path = "admin_post_job.jsp";
+			} 
+			else if ((major == null) && (major.length > 0)) {
+				request.setAttribute("msgERR", "Major a required field.");
+				path = "admin_post_job.jsp";
+			} 
+			else if ((minor == null) && (major.length > 0)) {
+				request.setAttribute("msgERR", "Minor a required field.");
+				path = "admin_post_job.jsp";
+			} 
+			
 			else if (StringUtils.isEmpty(comp_end_date)) {
-				request.setAttribute("msg", "Competition end date is a required field.");
+				request.setAttribute("msgERR", "Competition end date is a required field.");
 				path = "admin_post_job.jsp";
 			}
 			else if (StringUtils.isEmpty(listing_date)) {
-				request.setAttribute("msg", "Listing date is a required field.");
+				request.setAttribute("msgERR", "Listing date is a required field.");
 				path = "admin_post_job.jsp";
 			}
 			else if (StringUtils.isEmpty(job_type)) {
-				request.setAttribute("msg", "Job type is a required field.");
+				request.setAttribute("msgERR", "Job type is a required field.");
 				path = "admin_post_job.jsp";
 			}
 			else {
@@ -158,7 +171,7 @@ public class PostJobRequestHandler implements RequestHandler {
 						opp.setIsSupport("N");
 					}
 					opp = JobOpportunityManager.addJobOpportunityBean(opp);
-					request.setAttribute("msg", "Job " + opp.getCompetitionNumber() + " posted successfully.");
+					request.setAttribute("msgOK", "Job " + opp.getCompetitionNumber() + " posted successfully.");
 
 					if(issupport.equals("Y")){
 						if (!StringUtils.isEmpty(request.getParameter("request_id"))) {
@@ -177,7 +190,7 @@ public class PostJobRequestHandler implements RequestHandler {
 				}
 				else {
 					JobOpportunityManager.updateJobOpportunityBean(opp);
-					request.setAttribute("msg", "Job " + opp.getCompetitionNumber() + " updated successfully.");
+					request.setAttribute("msgOK", "Job " + opp.getCompetitionNumber() + " updated successfully.");
 				}
 				
 				path = "admin_post_job.jsp";
@@ -185,11 +198,11 @@ public class PostJobRequestHandler implements RequestHandler {
 			}
 		}
 		catch (ParseException e) {
-			request.setAttribute("msg", "Invalid data format.");
+			request.setAttribute("msgERR", "Invalid data format.");
 			path = "admin_post_job.jsp";
 		}
 		catch (JobOpportunityException e) {
-			request.setAttribute("msg", "Could not post job.");
+			request.setAttribute("msgERR", "Could not post job.");
 			path = "admin_post_job.jsp";
 		}
 

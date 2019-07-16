@@ -20,14 +20,21 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+  
 	JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
+	
 	TeacherRecommendationBean[] rec = RecommendationManager.getTeacherRecommendationBean(job.getCompetitionNumber());
-  ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_SHORTLIST");
-  HashMap<String, ApplicantProfileBean> declinedInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_DECLINES_MAP");
-  AdRequestBean ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
-  User usr = (User)session.getAttribute("usr");
+  
+	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_SHORTLIST");
+  
+	HashMap<String, ApplicantProfileBean> declinedInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_DECLINES_MAP");
+  
+	AdRequestBean ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
+  
+	User usr = (User)session.getAttribute("usr");
   
   InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);
+  
   Map<String, ArrayList<InterviewSummaryBean>> interviewSummaryMap = InterviewSummaryManager.getInterviewSummaryBeansMapByShortlist(job);
   
   Calendar rec_search_cal = Calendar.getInstance();
@@ -122,7 +129,7 @@
 <script>
  $('document').ready(function(){
 	  $("#jobsapp").DataTable(
-		{"order": [[ 3, "desc" ]],
+		{"order": [[ 2, "desc" ]],
 		"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
 		
 		}	  
@@ -159,11 +166,12 @@
                                    <table id="jobsapp" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
 								    <thead>
 								      <tr>
-								      <th width="8%">STATUS</th>								       								      	
-								        <th width='18%'>NAME</th>								        
-								        <th width='18%'>EMAIL/TELEPHONE</th>
-								        <th width='14%'>SENIORITY (yrs)</th>				        
-								        <th width='*'>POSITION/OPTIONS</th>									       					        
+								     								       								      	
+								        <th width='20%'>NAME</th>									        
+									    <th width='15%'>EMAIL/TELEPHONE</th>
+									    <th width='9%'>SENIORITY</th>
+									    <th width="10%">STATUS</th>				        
+									    <th width='46%'>POSITION/OPTIONS</th>									       					        
 								      </tr>
 								    </thead>
 								    <tbody>
@@ -239,35 +247,24 @@
                                    
 	                                    <tr>
 	                                    <%statusi++; %>
-	                                        <td style="text-align:center;vertical-align:middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>"><%=cssText%></td>
-	                                    	<td style="vertical-align:middle;"><%=applicants[i].getFullNameReverse() %></td>	                                    	
+	                                        
+	                                    	<td style="vertical-align:middle;"><%=applicants[i].getSurname()%>, <%=applicants[i].getFirstname()%></td>	                                    	
 	                                    	<td style="vertical-align:middle;">
 	                                    	<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br/>
 	                                    	Tel: <%=applicants[i].getHomephone()%>
 	                                    	</td>
 	                                    	<td style="vertical-align:middle;">
-	                                    	
-                                             <%if (applicants[i].getSenority() > 0) {%>
+	                                    	<%if (applicants[i].getSenority() > 0) {%>
                                                       <span style='color:red;'><%= applicants[i].getSenority()%></span>
-                                            <%} else {%>                                               
-                                                <!-- Sort by number, so negative number hidden -->
-                                                <span style="color:rgba(255, 255, 255,0)">-1</span>
+                                            <%} else {%>
+                                            <span style="color:DimGrey;">0</span>
                                                 <%}%>
-	                                    	
-	                                    	
 	                                    	</td>
-	                                    	
+	                                    	<td style="text-align:center;vertical-align:middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>"><%=cssText%></td>
 	                                    		                                    	
 	                                    	
 	                                    	<td>
-	                                    	<div style="float:left;color:DimGrey;">
-	                                    			<%if(!StringUtils.isEmpty(position)){ %>
-				                                 		<%=position %>
-				                                 	<%} else {%>
-				                                 		No current position information available for <%=applicants[i].getFirstname()%>.
-				                                 	<%} %>
-	                                    	<br/>
-	                                    	<div style="padding-top:5px;">	                                    	
+	                                    	<div style="padding-top:5px;text-align:right;">	                                    	
 	                                        <a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>" >Profile</a>
 	                                        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 	                                        	<%
@@ -334,7 +331,16 @@
 		                                      	<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference Request</a>
 		                                      <% } %>
 		                                     
-		                                      </div></div>
+		                                      </div>
+	                                    	
+	                                    	  <div style="float:left;color:DimGrey;padding-top:3px;">
+	                                    			<%if(!StringUtils.isEmpty(position)){ %>
+				                                 		<b><%=cssText%> Position:</b> <%=position %>
+				                                 	<%} else {%>
+				                                 		No current position information available for <%=applicants[i].getFirstname()%>.
+				                                 	<%} %>
+	                                    	  <br/>
+	                                    	  </div>
 	                                      </td>
 	                                     
 	                                    </tr>

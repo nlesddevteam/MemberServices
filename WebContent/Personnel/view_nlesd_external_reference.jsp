@@ -241,7 +241,7 @@
 													 </tr>																										
 							                        <tr>
 													    <td>2d.</td>
-													    <td>Manageing student behavior:</td>
+													    <td>Managing student behavior:</td>
 													    <td><span class="tableAnswer"><%=ref.getScale10()%></span></td>
 													 </tr>
 													 <tr>

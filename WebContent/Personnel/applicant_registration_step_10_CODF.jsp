@@ -177,7 +177,8 @@ SECTION 10A: Editing your Teacher/Educator HR Application Profile
                   					
                    							<div align="center">
                    							<input id='btn-add-offence' class="btn btn-xs btn-info" type='button' value='Add Offence Listing' /> 
-                   							<input type="submit" class="btn btn-xs btn-success" value="Submit Declaration" /></div>
+                   							<input type="submit" class="btn btn-xs btn-success" value="Submit Declaration" />
+                   							 <a class="btn btn-xs btn-danger" href="view_applicant.jsp">Back to Profile</a></div>
 	                                  			
 	                                </form>
 	                          
