@@ -1130,7 +1130,7 @@ public class ApplicantProfileManager {
 			sql.append(
 					"APPLICANT_ESD_EXP.PERM_SCHOOL,APPLICANT_ESD_EXP.PERM_POSITION,APPLICANT_ESD_EXP.REPL_TIME,APPLICANT_ESD_EXP.SUB_TIME,"
 							+ "APPLICANT_ESD_EXP.PK_ID,APPLICANT_ESD_EXP.CONTRACT_SCHOOL,APPLICANT_ESD_EXP.CONTRACT_ENDDATE,APPLICANT_ESD_EXP.PERM_TIME,");
-			//APPLICANT_ESD_EXP.*, 
+			//APPLICANT_ESD_EXP.*,
 			sql.append(" NVL(sen.\"SENORITY\", 0) SENORITY FROM AWSD_USER.APPLICANT LEFT JOIN ");
 			sql.append(
 					"(SELECT REPLACE(REPLACE(TRIM(mas.\"SIN\"),' ', ''), '-', '') \"SENSIN\", SEN.\"Seniority_Numeric\" \"SENORITY\", MAS.\"EMAIL\" \"SENEMAIL\" FROM AWSD_USER.SDS_PREMPMAS mas JOIN AWSD_USER.SDS_PRSENMAS sen ON mas.EMP_ID = sen.\"Employee\") sen ");
@@ -1269,7 +1269,7 @@ public class ApplicantProfileManager {
 				sql.append(") ");
 			}
 
-			sql.append(" ORDER BY SENORITY DESC, SURNAME, FIRSTNAME ");
+			sql.append(" ORDER BY SENORITY DESC, SURNAME, FIRSTNAME");
 
 			//in order for new fields on sub filter screen to work we to adjust the query
 			if (params.getSubList() != null) {
