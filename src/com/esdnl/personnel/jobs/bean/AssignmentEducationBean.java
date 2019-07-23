@@ -2,6 +2,8 @@ package com.esdnl.personnel.jobs.bean;
 
 import java.io.Serializable;
 
+import com.esdnl.personnel.jobs.dao.DegreeManager;
+
 public class AssignmentEducationBean implements Serializable {
 
 	private static final long serialVersionUID = -1847767379549247916L;
@@ -27,5 +29,10 @@ public class AssignmentEducationBean implements Serializable {
 	public String getDegreeId() {
 
 		return this.degree_id;
+	}
+
+	public DegreeBean getDegree() throws JobOpportunityException {
+
+		return DegreeManager.getDegreeBeans(degree_id);
 	}
 }

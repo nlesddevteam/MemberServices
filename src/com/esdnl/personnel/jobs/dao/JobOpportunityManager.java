@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.Vector;
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
+
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.AssignmentEducationBean;
@@ -24,6 +23,9 @@ import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
 import com.esdnl.util.StringUtils;
 import com.nlesd.school.bean.SchoolZoneBean;
+
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class JobOpportunityManager {
 
@@ -193,7 +195,9 @@ public class JobOpportunityManager {
 
 		return v_opps;
 	}
-	public static JobOpportunityBean[] getJobOpportunityBeans(String status, int job_type) throws JobOpportunityException {
+
+	public static JobOpportunityBean[] getJobOpportunityBeans(String status, int job_type)
+			throws JobOpportunityException {
 
 		Vector<JobOpportunityBean> v_opps = null;
 		JobOpportunityBean jBean = null;
@@ -252,7 +256,9 @@ public class JobOpportunityManager {
 
 		return (JobOpportunityBean[]) v_opps.toArray(new JobOpportunityBean[0]);
 	}
-	public static JobOpportunityBean[] getJobOpportunityBeans(String status, int job_type, int zone) throws JobOpportunityException {
+
+	public static JobOpportunityBean[] getJobOpportunityBeans(String status, int job_type, int zone)
+			throws JobOpportunityException {
 
 		Vector<JobOpportunityBean> v_opps = null;
 		JobOpportunityBean jBean = null;
@@ -264,87 +270,99 @@ public class JobOpportunityManager {
 			v_opps = new Vector<JobOpportunityBean>(5);
 
 			con = DAOUtils.getConnection();
-			if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("OPEN")){
-				if(zone ==0){
+			if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("OPEN")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps_zone(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-				
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CLOSED")){
-				if(zone ==0){
+
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CLOSED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_closed_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_closed_job_opps_zone(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("AWARDED")){
-				if(zone ==0){
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("AWARDED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_awarded_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_awarded_job_opps_zone(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CANCELLED")){
-				if(zone ==0){
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CANCELLED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_cancelled_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_cancelled_job_opps_zn(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}				
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("NOSHORTLIST")){
-				if(zone ==0){
+				}
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("NOSHORTLIST")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_noshortlist_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_noshortlist_job_opps_zn(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}					
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("UNADVERTISED")){
-				if(zone ==0){
+				}
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("UNADVERTISED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_unadvertised_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_unadvertised_job_opps_zn(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}					
-			}else{
-				if(zone ==0){
+				}
+			}
+			else {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_all_job_opps(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_all_job_opps_zone(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}					
+				}
 			}
-				
-			
+
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, job_type);
 			stat.execute();
@@ -377,7 +395,9 @@ public class JobOpportunityManager {
 
 		return (JobOpportunityBean[]) v_opps.toArray(new JobOpportunityBean[0]);
 	}
-	public static JobOpportunityBean[] getJobOpportunityBeansSupport(String status, int job_type, int zone) throws JobOpportunityException {
+
+	public static JobOpportunityBean[] getJobOpportunityBeansSupport(String status, int job_type, int zone)
+			throws JobOpportunityException {
 
 		Vector<JobOpportunityBean> v_opps = null;
 		JobOpportunityBean jBean = null;
@@ -389,87 +409,99 @@ public class JobOpportunityManager {
 			v_opps = new Vector<JobOpportunityBean>(5);
 
 			con = DAOUtils.getConnection();
-			if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("OPEN")){
-				if(zone ==0){
+			if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("OPEN")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps_zone_ss(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-				
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CLOSED")){
-				if(zone ==0){
+
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CLOSED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_closed_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_closed_job_opps_zone_ss(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("AWARDED")){
-				if(zone ==0){
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("AWARDED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_awarded_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_awarded_job_opps_zone_ss(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CANCELLED")){
-				if(zone ==0){
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CANCELLED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_cancelled_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_cancelled_job_opps_zn_ss(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}				
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("NOSHORTLIST")){
-				if(zone ==0){
+				}
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("NOSHORTLIST")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_noshortlist_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_noshortlist_job_opps_zn_ss(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}					
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("UNADVERTISED")){
-				if(zone ==0){
+				}
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("UNADVERTISED")) {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_unadvertised_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_unadvertised_job_opps_zn_s(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}					
-			}else{
-				if(zone ==0){
+				}
+			}
+			else {
+				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_all_job_opps_ss(?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
-				}else{
+				}
+				else {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_all_job_opps_zone_ss(?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
-				}					
+				}
 			}
-				
-			
+
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, job_type);
 			stat.execute();
@@ -482,7 +514,8 @@ public class JobOpportunityManager {
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("JobOpportunityBean[] getJobOpportunityBeansSupport(String status, int job_type, int zone): " + e);
+			System.err.println(
+					"JobOpportunityBean[] getJobOpportunityBeansSupport(String status, int job_type, int zone): " + e);
 			throw new JobOpportunityException("Can not extract JobOpportunityBean from DB.", e);
 		}
 		finally {
@@ -502,6 +535,7 @@ public class JobOpportunityManager {
 
 		return (JobOpportunityBean[]) v_opps.toArray(new JobOpportunityBean[0]);
 	}
+
 	public static JobOpportunityBean[] getJobOpportunityBeans(int location_id) throws JobOpportunityException {
 
 		Vector<JobOpportunityBean> v_opps = null;
@@ -705,8 +739,7 @@ public class JobOpportunityManager {
 
 		Connection con = null;
 		CallableStatement stat = null;
-		Iterator<?> iter = null;
-		JobOpportunityAssignmentBean ass = null;
+
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
@@ -722,8 +755,8 @@ public class JobOpportunityManager {
 			if (jbean.isUnadvertise()) {
 				jbean.setCompetitionNumber(jbean.getCompetitionNumber() + "UA");
 			}
-			
-			if(jbean.getIsSupport().equals("Y")){
+
+			if (jbean.getIsSupport().equals("Y")) {
 				jbean.setCompetitionNumber(jbean.getCompetitionNumber() + "SS");
 			}
 
@@ -740,10 +773,8 @@ public class JobOpportunityManager {
 			stat.execute();
 			stat.close();
 
-			iter = jbean.iterator();
-			while (iter.hasNext()) {
+			for (JobOpportunityAssignmentBean ass : jbean) {
 				// add opportunty assignment info
-				ass = (JobOpportunityAssignmentBean) iter.next();
 				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_job_opp_assign(?,?); end;");
 				stat.registerOutParameter(1, OracleTypes.NUMBER);
 				stat.setString(2, jbean.getCompetitionNumber());
@@ -757,46 +788,42 @@ public class JobOpportunityManager {
 				stat.close();
 
 				// get education requirements
-				AssignmentEducationBean[] edu = ass.getRequiredEducation();
-				for (int i = 0; i < edu.length; i++) {
+				for (AssignmentEducationBean edu : ass.getRequiredEducation()) {
 					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_edu(?,?); end;");
 					stat.setInt(1, ass.getAssignmentId());
-					stat.setString(2, edu[i].getDegreeId());
+					stat.setString(2, edu.getDegreeId());
 					stat.execute();
 					stat.close();
 				}
 
 				// get major/minor info
-				AssignmentMajorMinorBean[] mjr = ass.getRequiredMajors();
-				for (int i = 0; i < mjr.length; i++) {
-					if (mjr[i].getMajorId() != -1) {
-						stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mjr(?,?); end;");
-						stat.setInt(1, ass.getAssignmentId());
-						stat.setInt(2, mjr[i].getMajorId());
-						stat.execute();
-						stat.close();
-					}
-					else if (mjr[i].getMinorId() != -1) {
-						stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mnrr(?,?); end;");
-						stat.setInt(1, ass.getAssignmentId());
-						stat.setInt(2, mjr[i].getMinorId());
-						stat.execute();
-						stat.close();
-					}
+				for (AssignmentMajorMinorBean mjr : ass.getRequiredMajorsOnly()) {
+					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mjr(?,?); end;");
+					stat.setInt(1, ass.getAssignmentId());
+					stat.setInt(2, mjr.getMajorId());
+					stat.execute();
+					stat.close();
+				}
+
+				for (AssignmentMajorMinorBean mir : ass.getRequiredMinorsOnly()) {
+					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mnrr(?,?); end;");
+					stat.setInt(1, ass.getAssignmentId());
+					stat.setInt(2, mir.getMinorId());
+					stat.execute();
+					stat.close();
 				}
 
 				// get trnmtd info
-				TrainingMethodConstant[] trnmtd = ass.getRequriedTrainingMethods();
-				for (int i = 0; i < trnmtd.length; i++) {
+				for (TrainingMethodConstant trnmtd : ass.getRequriedTrainingMethods()) {
 					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_trnmtd(?,?); end;");
 					stat.setInt(1, ass.getAssignmentId());
-					stat.setInt(2, trnmtd[i].getValue());
+					stat.setInt(2, trnmtd.getValue());
 					stat.execute();
 					stat.close();
 				}
 			}
-			con.commit();
 
+			con.commit();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -829,8 +856,7 @@ public class JobOpportunityManager {
 
 		Connection con = null;
 		CallableStatement stat = null;
-		Iterator<?> iter = null;
-		JobOpportunityAssignmentBean ass = null;
+
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
@@ -851,10 +877,8 @@ public class JobOpportunityManager {
 			stat.execute();
 			stat.close();
 
-			iter = jbean.iterator();
-			while (iter.hasNext()) {
+			for (JobOpportunityAssignmentBean ass : jbean) {
 				// add opportunty assignment info
-				ass = (JobOpportunityAssignmentBean) iter.next();
 				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_job_opp_assign(?,?); end;");
 				stat.registerOutParameter(1, OracleTypes.NUMBER);
 				stat.setString(2, jbean.getCompetitionNumber());
@@ -868,40 +892,36 @@ public class JobOpportunityManager {
 				stat.close();
 
 				// get education requirements
-				AssignmentEducationBean[] edu = ass.getRequiredEducation();
-				for (int i = 0; i < edu.length; i++) {
+				for (AssignmentEducationBean edu : ass.getRequiredEducation()) {
 					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_edu(?,?); end;");
 					stat.setInt(1, ass.getAssignmentId());
-					stat.setString(2, edu[i].getDegreeId());
+					stat.setString(2, edu.getDegreeId());
 					stat.execute();
 					stat.close();
 				}
 
 				// get major/minor info
-				AssignmentMajorMinorBean[] mjr = ass.getRequiredMajors();
-				for (int i = 0; i < mjr.length; i++) {
-					if (mjr[i].getMajorId() != -1) {
-						stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mjr(?,?); end;");
-						stat.setInt(1, ass.getAssignmentId());
-						stat.setInt(2, mjr[i].getMajorId());
-						stat.execute();
-						stat.close();
-					}
-					else if (mjr[i].getMinorId() != -1) {
-						stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mnrr(?,?); end;");
-						stat.setInt(1, ass.getAssignmentId());
-						stat.setInt(2, mjr[i].getMinorId());
-						stat.execute();
-						stat.close();
-					}
+				for (AssignmentMajorMinorBean mjr : ass.getRequiredMajorsOnly()) {
+					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mjr(?,?); end;");
+					stat.setInt(1, ass.getAssignmentId());
+					stat.setInt(2, mjr.getMajorId());
+					stat.execute();
+					stat.close();
+				}
+
+				for (AssignmentMajorMinorBean mir : ass.getRequiredMinorsOnly()) {
+					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_mnrr(?,?); end;");
+					stat.setInt(1, ass.getAssignmentId());
+					stat.setInt(2, mir.getMinorId());
+					stat.execute();
+					stat.close();
 				}
 
 				// get trnmtd info
-				TrainingMethodConstant[] trnmtd = ass.getRequriedTrainingMethods();
-				for (int i = 0; i < trnmtd.length; i++) {
+				for (TrainingMethodConstant trnmtd : ass.getRequriedTrainingMethods()) {
 					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp_assign_trnmtd(?,?); end;");
 					stat.setInt(1, ass.getAssignmentId());
-					stat.setInt(2, trnmtd[i].getValue());
+					stat.setInt(2, trnmtd.getValue());
 					stat.execute();
 					stat.close();
 				}
@@ -1061,15 +1081,19 @@ public class JobOpportunityManager {
 			catch (Exception e) {}
 		}
 	}
-	public static TreeMap getInternalOnlyOtherJobOpportunityBeans2() throws JobOpportunityException {
-		TreeMap regions = null;
+
+	public static TreeMap<String, Collection<JobOpportunityBean>> getInternalOnlyOtherJobOpportunityBeans2()
+			throws JobOpportunityException {
+
+		TreeMap<String, Collection<JobOpportunityBean>> regions = null;
 		JobOpportunityBean jBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
-		Vector opps = null;
+		Collection<JobOpportunityBean> opps = null;
+
 		try {
-			regions = new TreeMap();
+			regions = new TreeMap<String, Collection<JobOpportunityBean>>();
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps_ss(?); end;");
@@ -1080,12 +1104,14 @@ public class JobOpportunityManager {
 
 			while (rs.next()) {
 				jBean = createJobOpportunityBean(rs);
-				String keyname = jBean.getAssignments()[0].getLocationZone().getZoneName() + " - " + jBean.getAssignments()[0].getRegionText();
+				String keyname = jBean.getAssignments()[0].getLocationZone().getZoneName() + " - "
+						+ jBean.getAssignments()[0].getRegionText();
 
-				if (regions.containsKey(keyname)){
-					opps = (Vector) regions.get(keyname);
-				}else{
-					opps = new Vector();
+				if (regions.containsKey(keyname)) {
+					opps = regions.get(keyname);
+				}
+				else {
+					opps = new Vector<JobOpportunityBean>();
 					regions.put(keyname, opps);
 				}
 				opps.add(jBean);
@@ -1109,18 +1135,22 @@ public class JobOpportunityManager {
 			}
 			catch (Exception e) {}
 		}
-		
+
 		return regions;
 	}
-	public static TreeMap getExternalOnlyOtherJobOpportunityBeans2() throws JobOpportunityException {
-		TreeMap regions = null;
+
+	public static TreeMap<String, Collection<JobOpportunityBean>> getExternalOnlyOtherJobOpportunityBeans2()
+			throws JobOpportunityException {
+
+		TreeMap<String, Collection<JobOpportunityBean>> regions = null;
 		JobOpportunityBean jBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
-		Vector opps = null;
+		Collection<JobOpportunityBean> opps = null;
+
 		try {
-			regions = new TreeMap();
+			regions = new TreeMap<String, Collection<JobOpportunityBean>>();
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps_ss(?); end;");
@@ -1131,12 +1161,14 @@ public class JobOpportunityManager {
 
 			while (rs.next()) {
 				jBean = createJobOpportunityBean(rs);
-				String keyname = jBean.getAssignments()[0].getLocationZone().getZoneName() + " - " + jBean.getAssignments()[0].getRegionText();
-				
-				if (regions.containsKey(keyname)){
-					opps = (Vector) regions.get(keyname);
-				}else{
-					opps = new Vector();
+				String keyname = jBean.getAssignments()[0].getLocationZone().getZoneName() + " - "
+						+ jBean.getAssignments()[0].getRegionText();
+
+				if (regions.containsKey(keyname)) {
+					opps = regions.get(keyname);
+				}
+				else {
+					opps = new Vector<JobOpportunityBean>();
 					regions.put(keyname, opps);
 				}
 				opps.add(jBean);
@@ -1160,18 +1192,22 @@ public class JobOpportunityManager {
 			}
 			catch (Exception e) {}
 		}
-		
+
 		return regions;
 	}
-	public static TreeMap getInternalExternalOtherJobOpportunityBeans() throws JobOpportunityException {
-		TreeMap regions = null;
+
+	public static TreeMap<String, Collection<JobOpportunityBean>> getInternalExternalOtherJobOpportunityBeans()
+			throws JobOpportunityException {
+
+		TreeMap<String, Collection<JobOpportunityBean>> regions = null;
 		JobOpportunityBean jBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
-		Vector opps = null;
+		Collection<JobOpportunityBean> opps = null;
+
 		try {
-			regions = new TreeMap();
+			regions = new TreeMap<String, Collection<JobOpportunityBean>>();
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps_ss(?); end;");
@@ -1182,12 +1218,14 @@ public class JobOpportunityManager {
 
 			while (rs.next()) {
 				jBean = createJobOpportunityBean(rs);
-				String keyname = jBean.getAssignments()[0].getLocationZone().getZoneName() + " - " + jBean.getAssignments()[0].getRegionText();
-				
-				if (regions.containsKey(keyname)){
-					opps = (Vector) regions.get(keyname);
-				}else{
-					opps = new Vector();
+				String keyname = jBean.getAssignments()[0].getLocationZone().getZoneName() + " - "
+						+ jBean.getAssignments()[0].getRegionText();
+
+				if (regions.containsKey(keyname)) {
+					opps = regions.get(keyname);
+				}
+				else {
+					opps = new Vector<JobOpportunityBean>();
 					regions.put(keyname, opps);
 				}
 				opps.add(jBean);
@@ -1211,14 +1249,17 @@ public class JobOpportunityManager {
 			}
 			catch (Exception e) {}
 		}
-		
+
 		return regions;
-	}	
-	public static java.util.Date checkApplicantAppliedFor(ApplicantProfileBean abean, String jobid) throws JobOpportunityException {
+	}
+
+	public static java.util.Date checkApplicantAppliedFor(ApplicantProfileBean abean, String jobid)
+			throws JobOpportunityException {
+
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
-		java.util.Date applieddate=null;
+		java.util.Date applieddate = null;
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
@@ -1229,8 +1270,8 @@ public class JobOpportunityManager {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			if (rs.next())
-				applieddate=new java.util.Date(rs.getTimestamp("APPLIED_DATE").getTime());
-}
+				applieddate = new java.util.Date(rs.getTimestamp("APPLIED_DATE").getTime());
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 			try {
@@ -1238,8 +1279,7 @@ public class JobOpportunityManager {
 			}
 			catch (Exception ex) {}
 
-			System.err.println("static boolean checkApplicantAppliedFor(ApplicantProfileBean abean, String jobid) : "
-					+ e);
+			System.err.println("static boolean checkApplicantAppliedFor(ApplicantProfileBean abean, String jobid) : " + e);
 			throw new JobOpportunityException("Can not check for position.", e);
 		}
 		finally {
@@ -1253,7 +1293,8 @@ public class JobOpportunityManager {
 			catch (Exception e) {}
 		}
 		return applieddate;
-	}	
+	}
+
 	public static JobOpportunityBean createJobOpportunityBean(ResultSet rs) {
 
 		JobOpportunityBean jBean = null;
