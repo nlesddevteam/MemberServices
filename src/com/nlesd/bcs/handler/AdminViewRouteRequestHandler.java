@@ -54,6 +54,7 @@ public class AdminViewRouteRequestHandler extends RequestHandlerImpl
 	    
 	    if(docid > 0){
 	    	bcbean = BussingContractorSystemRouteManager.getBussingContractorSystemRouteById(docid);
+	    	
 	    }else{
 	    	bcbean = new BussingContractorSystemRouteBean();
 	    }

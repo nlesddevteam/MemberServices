@@ -13,6 +13,7 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
+import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
@@ -20,6 +21,7 @@ import com.nlesd.bcs.constants.VehicleStatusConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
 import com.nlesd.bcs.dao.BussingContractorVehicleManager;
+import com.nlesd.bcs.dao.FileHistoryManager;
 public class AddNewContractorVehicleAdminRequestHandler extends RequestHandlerImpl {
 	public AddNewContractorVehicleAdminRequestHandler() {
 
@@ -113,8 +115,111 @@ public class AddNewContractorVehicleAdminRequestHandler extends RequestHandlerIm
 				vbean.setWinterInsStation(form.get("winterinsstation"));
 				vbean.setUnitNumber(form.get("unitnumber"));
 				vbean.setInsurancePolicyNumber(form.get("insurancepolicynumber"));
+				//now we do the documents
+				String filelocation="/../MemberServices/BCS/documents/vehicledocs/";
+				String docfilename = "";
+				if(form.getUploadFile("fallInsFile").getFileSize() > 0){
+					docfilename=save_file("fallInsFile", filelocation);
+					vbean.setFallInsFile(docfilename);
+				}
+				if(form.getUploadFile("winterInsFile").getFileSize() > 0){
+					docfilename=save_file("winterInsFile", filelocation);
+					vbean.setWinterInsFile(docfilename);
+				}
+				if(form.getUploadFile("fallHEInsFile").getFileSize() > 0){
+					docfilename=save_file("fallHEInsFile", filelocation);
+					vbean.setFallHEInsFile(docfilename);
+				}
+				if(form.getUploadFile("miscHEInsFile1").getFileSize() > 0){
+					docfilename=save_file("miscHEInsFile1", filelocation);
+					vbean.setMiscHEInsFile1(docfilename);
+				}
+				if(form.getUploadFile("miscHEInsFile2").getFileSize() > 0){
+					docfilename=save_file("miscHEInsFile2", filelocation);
+					vbean.setMiscHEInsFile2(docfilename);
+				}
+				if(form.getUploadFile("regFile").getFileSize() > 0){
+					docfilename=save_file("regFile", filelocation);
+					vbean.setRegFile(docfilename);
+				}
+				if(form.getUploadFile("insFile").getFileSize() > 0){
+					docfilename=save_file("insFile", filelocation);
+					vbean.setInsFile(docfilename);
+				}
+				
 				//now we add the record
 				BussingContractorVehicleManager.addBussingContractorVehicle(vbean);
+				//now that we have an id we can update the file history objects
+				if(!(vbean.getRegFile() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getRegFile());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(8);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getInsFile() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getInsFile());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(9);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getFallInsFile() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getFallInsFile());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(10);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getWinterInsFile() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getWinterInsFile());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(11);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getFallHEInsFile() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getFallHEInsFile());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(12);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getMiscHEInsFile1() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getMiscHEInsFile1());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(13);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getMiscHEInsFile2() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getMiscHEInsFile2());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(14);
+					FileHistoryManager.addFileHistory(fhb);
+				}
 				//update audit trail
 				AuditTrailBean atbean = new AuditTrailBean();
 				atbean.setEntryType(EntryTypeConstant.CONTRACTORVEHICLEADDED);

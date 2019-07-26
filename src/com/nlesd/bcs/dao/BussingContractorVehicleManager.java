@@ -20,7 +20,7 @@ public class BussingContractorVehicleManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_vehicle(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_vehicle(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(2, vbean.getvMake() );
 			stat.setInt(3, vbean.getvModel());
@@ -76,6 +76,13 @@ public class BussingContractorVehicleManager {
 			stat.setString(25,vbean.getWinterInsStation());
 			stat.setString(26,vbean.getUnitNumber());
 			stat.setString(27,vbean.getInsurancePolicyNumber());
+			stat.setString(28,vbean.getFallInsFile());
+			stat.setString(29,vbean.getWinterInsFile());
+			stat.setString(30,vbean.getFallHEInsFile());
+			stat.setString(31,vbean.getMiscHEInsFile1());
+			stat.setString(32,vbean.getMiscHEInsFile2());
+			stat.setString(33,vbean.getRegFile());
+			stat.setString(34,vbean.getInsFile());
 			stat.execute();
 			Integer sid= ((OracleCallableStatement) stat).getInt(1);
 			vbean.setId(sid);
@@ -185,7 +192,7 @@ public class BussingContractorVehicleManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_vehicle_by_id(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_vehicle_by_id(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setInt(1, vbean.getvMake() );
 			stat.setInt(2, vbean.getvModel());
 			stat.setString(3, vbean.getvYear());
@@ -240,6 +247,13 @@ public class BussingContractorVehicleManager {
 			stat.setString(24,vbean.getWinterInsStation());
 			stat.setString(25,vbean.getUnitNumber());
 			stat.setString(26,vbean.getInsurancePolicyNumber());
+			stat.setString(27, vbean.getFallInsFile());
+			stat.setString(28, vbean.getWinterInsFile());
+			stat.setString(29, vbean.getFallHEInsFile());
+			stat.setString(30, vbean.getMiscHEInsFile1());
+			stat.setString(31, vbean.getMiscHEInsFile2());
+			stat.setString(32, vbean.getRegFile());
+			stat.setString(33, vbean.getInsFile());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -685,8 +699,9 @@ public class BussingContractorVehicleManager {
 			 searchby="BCS_CONTRACTOR_VEHICLE.vstatus";
 		 }else if(ddvalue.equals("Insurance Provider")){
 			 searchby="BCS_CONTRACTOR_VEHICLE.insuranceprovider";
+		 }else if(ddvalue.equals("Unit Number")){
+			 searchby="BCS_CONTRACTOR_VEHICLE.unitnumber";
 		 }
-		
 		return searchby;
 	}
 	public static ArrayList<BussingContractorVehicleBean> getApprovedContractorsVehicles(int id) {
@@ -1025,6 +1040,13 @@ public class BussingContractorVehicleManager {
 				abean.setWinterInsStation(rs.getString("WINTERINSSTATION"));
 				abean.setUnitNumber(rs.getString("UNITNUMBER"));
 				abean.setInsurancePolicyNumber(rs.getString("IPOLICYNUMBER"));
+				abean.setFallInsFile(rs.getString("FALLINSFILE"));
+				abean.setWinterInsFile(rs.getString("WINTERINSFILE"));
+				abean.setFallHEInsFile(rs.getString("FALLHEINSFILE"));
+				abean.setMiscHEInsFile1(rs.getString("MISCHEINSFILE1"));
+				abean.setMiscHEInsFile2(rs.getString("MISCHEINSFILE2"));
+				abean.setRegFile(rs.getString("REGFILE"));
+				abean.setInsFile(rs.getString("INSFILE"));
 		}
 		catch (SQLException e) {
 				abean = null;

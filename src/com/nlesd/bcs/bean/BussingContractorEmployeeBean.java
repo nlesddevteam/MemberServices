@@ -2,8 +2,8 @@ package com.nlesd.bcs.bean;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-
 import com.nlesd.bcs.constants.EmployeeStatusConstant;
 import com.nlesd.bcs.dao.DropdownManager;
 
@@ -79,7 +79,29 @@ public class BussingContractorEmployeeBean implements Serializable {
 		this.startDate = startDate;
 	}
 	public String getContinuousService() {
-		return continuousService;
+		//now we check to see if a value has been saved
+		//if yes then return it, if not try to calculate it
+		if(continuousService == null) {
+			if(startDate ==  null) {
+				return "0.00";
+			}else {
+				//now we calculate the years of service
+				Date today = new Date();
+				Calendar cal = Calendar.getInstance();
+				String[] test = startDate.split("-");
+				cal.set(Calendar.YEAR,Integer.parseInt(test[1]));
+				cal.set(Calendar.MONTH,Integer.parseInt(test[0]));
+				cal.set(Calendar.DAY_OF_MONTH,1);
+				long diff = today.getTime() - cal.getTimeInMillis();
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+				float stime = diffDays/365;
+				String displaytime = String.format("%.02f", stime);
+				return displaytime;
+			}
+			
+		}else {
+			return continuousService;
+		}
 	}
 	public void setContinuousService(String continuousService) {
 		this.continuousService = continuousService;

@@ -989,6 +989,7 @@ public class BussingContractorEmployeeManager {
 			}
 			stat = con.createStatement();
 			rs = stat.executeQuery(sb.toString());
+			System.out.println(sb.toString());
 			while (rs.next()) {
 				ebean = createBussingContractorEmployeeBean(rs);
 				list.add(ebean);

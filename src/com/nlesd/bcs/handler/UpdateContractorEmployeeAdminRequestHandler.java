@@ -13,6 +13,7 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
+import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
@@ -20,6 +21,7 @@ import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDateHistoryManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
+import com.nlesd.bcs.dao.FileHistoryManager;
 public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerImpl {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException,
@@ -123,42 +125,126 @@ public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerI
 				if(form.getUploadFile("dlfront").getFileSize() > 0){
 					docfilename=save_file("dlfront", filelocation);
 					vbean.setDlFront(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getDlFront() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getDlFront());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(1);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setDlFront(origbean.getDlFront());
 				}
 				if(form.getUploadFile("dlback").getFileSize() > 0){
 					docfilename=save_file("dlback", filelocation);
 					vbean.setDlBack(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getDlBack() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getDlBack());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(2);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setDlBack(origbean.getDlBack());
 				}
 				if(form.getUploadFile("dadocument").getFileSize() > 0){
 					docfilename=save_file("dadocument", filelocation);
 					vbean.setDaDocument(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getDaDocument() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getDaDocument());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(3);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setDaDocument(origbean.getDaDocument());
 				}
 				if(form.getUploadFile("fadocument").getFileSize() > 0){
 					docfilename=save_file("fadocument", filelocation);
 					vbean.setFaDocument(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getFaDocument() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getFaDocument());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(4);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setFaDocument(origbean.getFaDocument());
 				}
 				if(form.getUploadFile("prcvsqdocument").getFileSize() > 0){
 					docfilename=save_file("prcvsqdocument", filelocation);
 					vbean.setPrcvsqDocument(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getPrcvsqDocument() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getPrcvsqDocument());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(5);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setPrcvsqDocument(origbean.getPrcvsqDocument());
 				}
 				if(form.getUploadFile("pccdocument").getFileSize() > 0){
 					docfilename=save_file("pccdocument", filelocation);
 					vbean.setPccDocument(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getPccDocument() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getPccDocument());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(6);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setPccDocument(origbean.getPccDocument());
 				}
 				if(form.getUploadFile("scadocument").getFileSize() > 0){
 					docfilename=save_file("scadocument", filelocation);
 					vbean.setScaDocument(docfilename);
+					//now we update the history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					if(origbean.getScaDocument() == null) {
+						fhb.setFileName("No Previous File");
+					}else {
+						fhb.setFileName(origbean.getScaDocument());
+					}
+					fhb.setFileAction("DOCUMENT REPLACED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(7);
+					FileHistoryManager.addFileHistory(fhb);
 				}else{
 					vbean.setScaDocument(origbean.getScaDocument());
 				}

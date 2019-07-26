@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
-import com.nlesd.bcs.constants.StatusConstant;
+import com.nlesd.bcs.constants.VehicleStatusConstant;
 import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 public class SearchVehiclesAjaxRequestHandler extends RequestHandlerImpl {
 	public SearchVehiclesAjaxRequestHandler() {
@@ -79,7 +79,7 @@ public class SearchVehiclesAjaxRequestHandler extends RequestHandlerImpl {
 					sb.append("<COMPANY>" + ebean.getBcBean().getCompany()+ "</COMPANY>");
 					sb.append("<PLATENUMBER>" + ebean.getvPlateNumber() + "</PLATENUMBER>");
 					sb.append("<SERIALNUMBER>" + ebean.getvSerialNumber() + "</SERIALNUMBER>");
-					sb.append("<STATUS>" + StatusConstant.get(ebean.getvStatus()).getDescription() + "</STATUS>");
+					sb.append("<STATUS>" + VehicleStatusConstant.get(ebean.getvStatus()).getDescription() + "</STATUS>");
 					sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 					sb.append("</CONTRACTOR>");
 				}
