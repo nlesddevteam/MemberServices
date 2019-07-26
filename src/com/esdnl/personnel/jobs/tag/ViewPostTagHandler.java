@@ -89,7 +89,7 @@ public class ViewPostTagHandler extends TagSupport {
 						out.println(abean.getLocationText());
 					}
 					out.println("</td></tr>");
-
+          
 					if (abean.getRequiredEducationSize() > 0) {
 						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>");
 						for (AssignmentEducationBean edu : abean.getRequiredEducation()) {
