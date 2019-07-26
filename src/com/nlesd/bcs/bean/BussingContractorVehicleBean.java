@@ -43,6 +43,56 @@ public class BussingContractorVehicleBean implements Serializable {
 	private String winterInsStation;
 	private String unitNumber;
 	private String insurancePolicyNumber;
+	private String fallInsFile;
+	private String winterInsFile;
+	private String fallHEInsFile;
+	private String miscHEInsFile1;
+	private String miscHEInsFile2;
+	private String regFile;
+	private String insFile;
+	public String getFallInsFile() {
+		return fallInsFile;
+	}
+	public void setFallInsFile(String fallInsFIle) {
+		this.fallInsFile = fallInsFIle;
+	}
+	public String getWinterInsFile() {
+		return winterInsFile;
+	}
+	public void setWinterInsFile(String winterInsFile) {
+		this.winterInsFile = winterInsFile;
+	}
+	public String getFallHEInsFile() {
+		return fallHEInsFile;
+	}
+	public void setFallHEInsFile(String fallHEInsFile) {
+		this.fallHEInsFile = fallHEInsFile;
+	}
+	public String getMiscHEInsFile1() {
+		return miscHEInsFile1;
+	}
+	public void setMiscHEInsFile1(String miscHEInsFile1) {
+		this.miscHEInsFile1 = miscHEInsFile1;
+	}
+	public String getMiscHEInsFile2() {
+		return miscHEInsFile2;
+	}
+	public void setMiscHEInsFile2(String miscHEInsFile2) {
+		this.miscHEInsFile2 = miscHEInsFile2;
+	}
+	public String getRegFile() {
+		return regFile;
+	}
+	public void setRegFile(String regFile) {
+		this.regFile = regFile;
+	}
+	public String getInsFile() {
+		return insFile;
+	}
+	public void setInsFile(String insFile) {
+		this.insFile = insFile;
+	}
+
 	public int getvMake() {
 		return vMake;
 	}

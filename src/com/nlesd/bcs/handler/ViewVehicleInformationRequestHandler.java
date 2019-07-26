@@ -48,7 +48,8 @@ public class ViewVehicleInformationRequestHandler extends BCSApplicationRequestH
 	    	  request.setAttribute("documents",BussingContractorVehicleDocumentManager.getBussingContractorVehicleDocumentsById(vbean.getId()));
 	    	  request.setAttribute("dtypes", DropdownManager.getDropdownValues(DropdownTypeConstant.VDOCUMENT.getValue()));
 	    	  //now we set the rel path
-	    	  request.setAttribute("spath",request.getContextPath());
+	       	  request.setAttribute("spath",request.getContextPath());
+	    	  request.setAttribute("dpath","/BCS/documents/vehicledocs/");
 	  		path = "view_vehicle_info.jsp";
 	      }
 		

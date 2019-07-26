@@ -262,7 +262,7 @@ $(document).ready(function() {
 		      <label class="control-label col-sm-3" for="email">Start Date With Contractor</label>
 		      <div class="col-sm-5">
 		      <div class="form-inline">
-		      		<select id="vmonth" name="vmonth"  class="form-control"  style="width:auto;">
+		      		<select id="vmonth" name="vmonth"  class="form-control"  style="width:auto;" onchange="adjustServiceTime();">
 						<option value="-1">Please select month</option>
 			            <c:forEach begin="1" end="12" var="val">
 			                <c:set var="decr" value="${val}"/>
@@ -270,7 +270,7 @@ $(document).ready(function() {
 			        	</c:forEach>
 			        </select>
 	        	    <fmt:formatDate value="${now}" pattern="yyyy" var="startdate"/>
-                	<select id="vyear" name="vyear"  class="form-control"  style="width:auto;">
+                	<select id="vyear" name="vyear"  class="form-control"  style="width:auto;" onchange="adjustServiceTime();">
 						<option value="-1">Please select year</option>
 			            <c:forEach begin="0" end="46" var="val">
 			                <c:set var="decr" value="${startdate - val}"/>
@@ -283,7 +283,7 @@ $(document).ready(function() {
 		    <div class="form-group">
 		      <label class="control-label col-sm-3" for="email">Years of Continuous Service</label>
 		      <div class="col-sm-5">
-		        <input class="form-control" id="continuousservice" name="continuousservice" type="text" placeholder="Enter years of continuous service" value="${employee.continuousService}">
+		        <input class="form-control" id="continuousservice" name="continuousservice" type="text" placeholder="Enter years of continuous service" value="${employee.continuousService}" readonly>
 		      </div>
 		    </div>
 		</div>
@@ -306,7 +306,7 @@ $(document).ready(function() {
 	                    value="${employee.dlExpiryDate == null ? '' : employee.dlExpiryDateFormatted}">
 	                     <br />
 	                    <div id="divdlexp" name="divdlexp" style="display:none;">
-	                    	<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">&nbsp; Date must be in future and no more than 5 years &nbsp;</span>
+	                    	<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">&nbsp; Date must be in future and no more than 10 years &nbsp;</span>
 	                    </div>
 	                </div>
 	       </div>
@@ -336,8 +336,9 @@ $(document).ready(function() {
                 <div class="col-sm-5">					
  		    	 <c:choose>
                 	<c:when test = "${employee.dlFront != null}">                	
-                	<img src="${spath}${dpath}${employee.dlFront}"  border=0 class="zoomimg" style="width:100px;">  
-                	<br/>Hover mouse over to enlarge above image.    
+                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A front image is currently on file &nbsp;</span>
+	                	<br/><br/><a href="${spath}${dpath}${employee.dlFront}" title="Click to open"  target="_blank">Current Document (${employee.dlFront})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('1','${employee.id}','${employee.dlFront}');">Delete File</button>   
                 	<br/>To Update         	
                 	</c:when>
                 	
@@ -356,8 +357,9 @@ $(document).ready(function() {
                 <div class="col-sm-5">
                  <c:choose>
                 	<c:when test = "${employee.dlBack != null}">                	
-                	<img src="${spath}${dpath}${employee.dlBack}"  border=0 class="zoomimg" style="width:100px;"> 
-                	<br/>Hover mouse over to enlarge above image.    
+                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A back image is currently on file &nbsp;</span>
+	                	<br/><br/><a href="${spath}${dpath}${employee.dlBack}" title="Click to open"  target="_blank">Current Document (${employee.dlBack})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('2','${employee.id}','${employee.dlBack}');">Delete File</button>    
                 	<br/>To Update            	
                 	</c:when>
                 <c:otherwise>
@@ -384,7 +386,8 @@ $(document).ready(function() {
                  <c:choose>
 	                	<c:when test = "${employee.daDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span> 
-	                	<br/><br/><a href="${spath}${dpath}${employee.daDocument}" title="Click to open" target="_blank">Current Document (${employee.daDocument})</a>
+		                	<br/><br/><a href="${spath}${dpath}${employee.daDocument}" title="Click to open" target="_blank">Current Document (${employee.daDocument})</a>
+		                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('3','${employee.id}','${employee.daDocument}');">Delete File</button>
 	                	<br/><br/>To Update	                		               	
 	                	</c:when>
 	                	<c:otherwise>
@@ -446,6 +449,7 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.faDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A certificate is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.faDocument}" title="Click to open"  target="_blank">Current Document (${employee.faDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('4','${employee.id}','${employee.faDocument}');">Delete File</button>
 	                	<br/><br/>To Update	 
 	                	</c:when>
 	                	<c:otherwise>
@@ -482,8 +486,9 @@ $(document).ready(function() {
                 <div class="col-sm-5">
                 <c:choose>
 	                	<c:when test = "${employee.prcvsqDocument != null}">
-	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A PRC/VSQ is currently on file &nbsp;</span>
+	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; PRC/VSQ currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.prcvsqDocument}" title="Click to open" target="_blank">Current Document (${employee.prcvsqDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('5','${employee.id}','${employee.prcvsqDocument}');">Delete File</button>
 	                	<br/><br/>To Update	               	
 	                	</c:when>
 	                	<c:otherwise>
@@ -521,6 +526,7 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.pccDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.pccDocument}" title="Click to open" target="_blank">Current Document (${employee.pccDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('6','${employee.id}','${employee.pccDocument}');">Delete File</button>
 	                	<br/><br/>To Update		               	
 	                	</c:when>
 	                	<c:otherwise>
@@ -561,6 +567,7 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.scaDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.scaDocument}" title="Click to open" target="_blank">Current Document (${employee.scaDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('7','${employee.id}','${employee.scaDocument}');">Delete File</button>
 	                	<br/><br/>To Update		               	
 	                	</c:when>
 	                	<c:otherwise>
@@ -659,7 +666,7 @@ $(document).ready(function() {
     				<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>	      	
 		      	
 		      	
-		        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="checkemployee('U');">Update Employee</button>
+		        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="checkemployee('U','Y');">Update Employee</button>
 		      </div>
 		    </div>
 			 
@@ -752,3 +759,4 @@ $(document).ready(function() {
             </div>
    		</div>
    	</div>
+

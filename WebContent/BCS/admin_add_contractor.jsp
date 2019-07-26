@@ -145,25 +145,25 @@ $(document).ready(function() {
 				      </div>
 				    </div>
 				    <div class="form-group">
-		                <label class="control-label col-sm-2" for="email">Business Number:</label>
+		                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Business Number:</label>
 		                <div class="col-sm-5">
 		                    <input class="form-control" id="busnumber" name="busnumber" type="text" placeholder="Enter business number">
 		                </div>
 		            </div>
 				    <div class="form-group">
-		                <label class="control-label col-sm-2" for="email">HST Number:</label>
+		                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>HST Number:</label>
 		                <div class="col-sm-5">
 		                    <input class="form-control" id="hstnumber" name="hstnumber" type="text" placeholder="Enter hst number">
 		                </div>
 		            </div> 
 	  				<div class="form-group">
-				      <label class="control-label col-sm-2" for="email">First Name:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>First Name:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="firstname" name="firstname" type="text" placeholder="Enter first name">
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Last Name:</label><input type="hidden" id="hidfullname">
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Last Name:</label><input type="hidden" id="hidfullname">
 				      <div class="col-sm-5">
 				        <input class="form-control" id="lastname" name="lastname" type="text" placeholder="Enter last name">
 				      </div>
@@ -175,7 +175,7 @@ $(document).ready(function() {
 				      </div>
 				    </div>    
 				    <div class="form-group">
-		                <label class="control-label col-sm-2" for="email">Email:</label>
+		                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Email:</label>
 		                <div class="col-sm-5">
 		                    <input class="form-control" id="conemail" name="conemail" type="text" placeholder="Enter email">
 		                </div>
@@ -186,7 +186,7 @@ $(document).ready(function() {
 		            
 				  
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Address 1:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Address 1:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="address1" name="address1" type="text" placeholder="Enter address 1">
 				      </div>
@@ -198,13 +198,13 @@ $(document).ready(function() {
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Town/City:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Town/City:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="city" name="city" type="text" placeholder="Enter city">
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Province:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Province:</label>
 				      <div class="col-sm-5">
 				        <select class="form-control"  id="province" name="province">
 							<option value=" ">Select province</option>
@@ -225,7 +225,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Postal Code</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Postal Code</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="postalcode" name="postalcode" type="text" placeholder="Enter postal code">
 				      </div>
@@ -242,7 +242,7 @@ $(document).ready(function() {
 				      	
 					</div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Address 1:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Address 1:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="maddress1" name="maddress1" type="text" placeholder="Enter mailing address 1">
 				         <input type="hidden" id="maddresstemp1">
@@ -257,14 +257,14 @@ $(document).ready(function() {
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Town/City:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Town/City:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="mcity" name="mcity" type="text" placeholder="Enter mailing city">
 				      <input type="hidden" id="mcitytemp">
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Province:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Province:</label>
 				      <div class="col-sm-5">
 				        <select class="form-control"  id="mprovince" name="mprovince">
 							<option value=" ">Select province</option>
@@ -286,7 +286,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Postal Code:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Postal Code:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="mpostalcode" name="mpostalcode" type="text" placeholder="Enter mailing postal code">
 				        <input type="hidden" id="mpostalcodetemp">
@@ -294,7 +294,7 @@ $(document).ready(function() {
 				    </div>		    
 				    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Home Phone:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Home Phone:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="homephone" name="homephone" type="text" placeholder="Enter home phone">
 				      </div>
@@ -315,7 +315,7 @@ $(document).ready(function() {
 				<div id="company" class="tab-pane fade">
 					<br />
 			 		<div class="form-group">
-		                <label class="control-label col-sm-4" for="email">Types of Transportation:</label>
+		                <label class="control-label col-sm-4" for="email"><img src='includes/css/images/asterisk-small.png'/>Types of Transportation:</label>
 		                <label class="checkbox-inline">
 		      				<input type="checkbox"  id="tregular" name="tregular">Regular 
 		    			</label>

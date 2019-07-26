@@ -314,7 +314,7 @@ $(document).ready(function() {
 		      <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Start Date With Contractor</label>
 		      <div class="col-sm-5">
 		      <div class="form-inline">
-		      		<select id="vmonth" name="vmonth"  class="form-control"  style="width:auto;">
+		      		<select id="vmonth" name="vmonth"  class="form-control"  style="width:auto;" onchange="adjustServiceTime();">
 						<option value="-1">Please select month</option>
 			            <c:forEach begin="1" end="12" var="val">
 			                <c:set var="decr" value="${val}"/>
@@ -322,7 +322,7 @@ $(document).ready(function() {
 			        	</c:forEach>
 			        </select>
 	        	    <fmt:formatDate value="${now}" pattern="yyyy" var="startdate"/>
-                	<select id="vyear" name="vyear"  class="form-control"  style="width:auto;">
+                	<select id="vyear" name="vyear"  class="form-control"  style="width:auto;" onchange="adjustServiceTime();">
 						<option value="-1">Please select year</option>
 			            <c:forEach begin="0" end="46" var="val">
 			                <c:set var="decr" value="${startdate - val}"/>
@@ -336,7 +336,7 @@ $(document).ready(function() {
 		      <label class="control-label col-sm-3" for="email">Years of Continuous Service</label>
 		      <div class="col-sm-5">
 		        <input class="form-control" id="continuousservice" name="continuousservice" type="text" 
-		        placeholder="Enter years of continuous service" value="${employee.continuousService}" onkeypress="return isNumberKey(event)" >
+		        placeholder="Enter years of continuous service" value="${employee.continuousService}" readonly>
 		      </div>
 		    </div>
 		</div>
@@ -381,46 +381,56 @@ $(document).ready(function() {
 		  		</div>
 		  		</div>
 		  </div>
-			<div class="form-group">
-                <label class="control-label col-sm-3" for="email">Licence Image Front:</label> 
-                <div class="col-sm-5">					
- 		    	 <c:choose>
-                	<c:when test = "${employee.dlFront != null}">                	
-                	<img src="${spath}${dpath}${employee.dlFront}"  border=0 class="zoomimg" style="width:100px;">    
-                	<br/>Hover mouse over to enlarge above image.  
-                	<br/>To Update         	
-                	</c:when>
-                	
-                <c:otherwise>
-                	<span style="background-color:Red;color:white;padding:3px;text-transform:uppercase;">NO FRONT IMAGE CURRENTLY ON FILE</span>
-                	<br/>To Add
-                	</c:otherwise>	
-                </c:choose>	
-                	 image of license front, choose file below to upload:<br/><br/>
-    				<input type="file" id="dlfront" name="dlfront" accept="application/pdf">
-					(pdf only)
- 		    	
-                </div>
-           </div>
-	      <div class="form-group">
-                <label class="control-label col-sm-3" for="email">Licence Image Back:</label> 
+           <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Licence Image Front:</label>  
                 <div class="col-sm-5">
-                 <c:choose>
-                	<c:when test = "${employee.dlBack != null}">                	
-                	<img src="${spath}${dpath}${employee.dlBack}"  border=0 class="zoomimg" style="width:100px;">  
-                	<br/>Hover mouse over to enlarge above image.   
-                	<br/>To Update            	
-                	</c:when>
-                <c:otherwise>
-                	<span style="background-color:Red;color:white;padding:3px;text-transform:uppercase;">NO BACK IMAGE CURRENTLY ON FILE</span>
-                	<br/>To Add
-                	</c:otherwise>	
-                </c:choose>	
-                 image of license back, choose file below to upload:<br/><br/>                
-                <input type="file" id="dlback" name="dlback" accept="application/pdf">
-				(pdf only)	
-                </div>
-          </div>
+				
+				<c:choose>
+	                	<c:when test = "${employee.dlFront != null}">
+	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A front image is currently on file &nbsp;</span>
+	                	<br/><br/><a href="${spath}${dpath}${employee.dlFront}" title="Click to open"  target="_blank">Current Document (${employee.dlFront})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('1','${employee.id}','${employee.dlFront}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','1');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','1');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="dlfront" name="dlfront" accept="application/pdf">
+					(PDF file format only)<br/>
+				
+				
+                </div>                
+	       </div>
+           <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Licence Image Back:</label>  
+                <div class="col-sm-5">
+				
+				<c:choose>
+	                	<c:when test = "${employee.dlBack != null}">
+	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A back image is currently on file &nbsp;</span>
+	                	<br/><br/><a href="${spath}${dpath}${employee.dlBack}" title="Click to open"  target="_blank">Current Document (${employee.dlBack})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('2','${employee.id}','${employee.dlBack}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','2');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','2');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="dlback" name="dlback" accept="application/pdf">
+					(PDF file format only)<br/>
+				
+				
+                </div>                
+	       </div>
             <img src="includes/img/bar.png" height=1 width=100%><br/>
 				   	<span style="font-size:14px;color:Grey;margin-bottom:10px;">Driver Abstract Information</span>
 	       
@@ -442,9 +452,12 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.daDocument != null}">
 		                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span> 
 		                	<br/><br/><a href="${spath}${dpath}${employee.daDocument}" title="Click to open" target="_blank">Current Document (${employee.daDocument})</a>
+		                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('3','${employee.id}','${employee.daDocument}');">Delete File</button>
+	                		&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','3');">View History</button>
 		                	<br/><br/>To Update
 	                	</c:when>
 	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','3');">View History</button>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
 	                	</c:otherwise>
                 	</c:choose>
@@ -496,9 +509,12 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.faDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A certificate is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.faDocument}" title="Click to open"  target="_blank">Current Document (${employee.faDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('4','${employee.id}','${employee.faDocument}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','4');">View History</button>
 	                	<br/><br/>To Update	 
 	                	</c:when>
 	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','4');">View History</button>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
 	                	</c:otherwise>
                 	</c:choose>   
@@ -531,9 +547,12 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.prcvsqDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; PRC/VSQ currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.prcvsqDocument}" title="Click to open" target="_blank">Current Document (${employee.prcvsqDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('5','${employee.id}','${employee.prcvsqDocument}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','5');">View History</button>
 	                	<br/><br/>To Update	               	
 	                	</c:when>
 	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','5');">View History</button>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
 	                	</c:otherwise>
                 	</c:choose>  
@@ -564,9 +583,12 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.pccDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.pccDocument}" title="Click to open" target="_blank">Current Document (${employee.pccDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('6','${employee.id}','${employee.pccDocument}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','6');">View History</button>
 	                	<br/><br/>To Update		               	
 	                	</c:when>
 	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','6');">View History</button>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
 	                	</c:otherwise>
                 	</c:choose>  
@@ -597,9 +619,12 @@ $(document).ready(function() {
 	                	<c:when test = "${employee.scaDocument != null}">
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.scaDocument}" title="Click to open" target="_blank">Current Document (${employee.scaDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('7','${employee.id}','${employee.scaDocument}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','7');">View History</button>
 	                	<br/><br/>To Update		               	
 	                	</c:when>
 	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','7');">View History</button>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
 	                	</c:otherwise>
                 	</c:choose> 
@@ -733,8 +758,8 @@ $(document).ready(function() {
 		      	<br />
 		      		<div class="alert alert-danger" id="employeeerrormessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     				<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
-		      	<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="checkemployee('A');">Update Employee</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        <c:if test = "${employee.status != 2}">
+		      	<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="checkemployee('A','Y');">Update Employee</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <c:if test = "${employee.status != 2 && employee.status != 0}">
 		        	<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         				<button type="button" class="btn btn-xs btn-success" onclick="openApproveEmp();">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         			</esd:SecurityAccessRequired>
@@ -922,6 +947,51 @@ $(document).ready(function() {
                 <div class="modal-footer">
                     <button type="button" class="btn btn-xs btn-default"  id="buttonlefttrd"></button>
                     <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrighttrd"></button>
+                </div>
+            </div>
+   		</div>
+   	</div>
+   	   	    <div id="myModal3" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitled">Bypass Date Validations</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-warning" id="title1dby"><span id="spantitle1by" name="spantitle1by"></span></p>
+                    <p class="text-warning" id="title2dby"><span id="spantitle2by" name="spantitle2by"></span></p>
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-xs btn-default"  id="buttonleftby"></button>
+                    <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrightby"></button>
+                </div>
+            </div>
+   		</div>
+   	</div>
+   	   	   	<div id="myModalFHistory" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitledd"><span id="spantitlemainfh" name="spantitlemainfh"></span></h4>
+                </div>
+                <div class="modal-body">
+                 <table id="fhtable" width="100%" class="BCSTable">
+			  		<thead>
+			  			<tr class="listHeader">
+			  				<th width="25%" class="listdata" style="padding:2px;">Action</th>
+			  				<th width="25%" class="listdata" style="padding:2px;">Action By</th>
+			  				<th width="25%" class="listdata" style="padding:2px;">Action Date</th>
+			  				<th width="25%" class="listdata" style="padding:2px;">Link</th>
+			  			</tr>
+			  		</thead>
+			  		<tbody>
+					</tbody>
+			  	</table>
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrightdd">Close</button>
                 </div>
             </div>
    		</div>

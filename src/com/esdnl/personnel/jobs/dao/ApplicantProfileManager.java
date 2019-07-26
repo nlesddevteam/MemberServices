@@ -1133,7 +1133,7 @@ public class ApplicantProfileManager {
 			//APPLICANT_ESD_EXP.*,
 			sql.append(" NVL(sen.\"SENORITY\", 0) SENORITY FROM AWSD_USER.APPLICANT LEFT JOIN ");
 			sql.append(
-					"(SELECT REPLACE(REPLACE(TRIM(mas.\"SIN\"),' ', ''), '-', '') \"SENSIN\", SEN.\"Seniority_Numeric\" \"SENORITY\", MAS.\"EMAIL\" \"SENEMAIL\" FROM AWSD_USER.SDS_PREMPMAS mas JOIN AWSD_USER.SDS_PRSENMAS sen ON mas.EMP_ID = sen.\"Employee\") sen ");
+					"(SELECT REPLACE(REPLACE(TRIM(mas.\"SIN\"),' ', ''), '-', '') \"SENSIN\", SEN.\"Seniority_Numeric\" \"SENORITY\", MAS.\"EMAIL\" \"SENEMAIL\" FROM AWSD_USER.SDS_PREMPMAS mas JOIN AWSD_USER.SDS_PRSENMAS sen ON trim(mas.EMP_ID) = trim(sen.\"Employee\")) sen ");
 			sql.append(
 					"ON (REPLACE(REPLACE(TRIM(APPLICANT.SIN2),' ', ''), '-', '') = sen.\"SENSIN\" OR REPLACE(REPLACE(TRIM(APPLICANT.\"SIN\"),' ', ''), '-', '') = sen.\"SENSIN\" OR LOWER(APPLICANT.EMAIL) = LOWER(sen.\"SENEMAIL\")) ");
 			sql.append(" LEFT JOIN AWSD_USER.APPLICANT_ESD_EXP ON APPLICANT.SIN =  APPLICANT_ESD_EXP.SIN WHERE ");
@@ -1285,7 +1285,6 @@ public class ApplicantProfileManager {
 				sql.append(
 						" from (select * from applicant_edu, subject where applicant_edu.MINOR_ID=subject.SUBJECT_ID) group by sin) test1 on slistdata.sin=test1.sin999");
 			}
-
 			v_opps = new Vector<ApplicantProfileBean>(5);
 
 			con = DAOUtils.getConnection();
