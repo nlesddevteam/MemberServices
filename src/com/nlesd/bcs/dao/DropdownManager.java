@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -95,6 +96,44 @@ public class DropdownManager {
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_dropdown_items_by_pid(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2,id);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				hmap.put(rs.getInt("ID"), rs.getString("DD_TEXT"));
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("TreeMap<Integer,String> getDropdownValuesTMP(int id): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return hmap;
+	}
+	public static LinkedHashMap<Integer,String> getDropdownValuesHM(int id) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		LinkedHashMap<Integer, String> hmap = new LinkedHashMap<Integer, String>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_dropdown_items_by_id_ss(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2,id);
 			stat.execute();

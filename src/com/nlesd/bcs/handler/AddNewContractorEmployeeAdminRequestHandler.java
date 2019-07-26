@@ -13,6 +13,7 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
+import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.constants.EmployeeStatusConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
@@ -20,6 +21,7 @@ import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
+import com.nlesd.bcs.dao.FileHistoryManager;
 public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerImpl {
 	public AddNewContractorEmployeeAdminRequestHandler() {
 
@@ -151,6 +153,77 @@ public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerI
 				//now we add the record
 				BussingContractorEmployeeManager.addBussingContractorEmployee(vbean);
 				
+				//now that we have an id we can update the file history objects
+				if(!(vbean.getDlFront() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getDlFront());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(1);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getDlBack() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getDlBack());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(2);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getDaDocument() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getDaDocument());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(3);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getFaDocument() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getFaDocument());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(4);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getPrcvsqDocument() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getPrcvsqDocument());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(5);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getPccDocument() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getPccDocument());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(6);
+					FileHistoryManager.addFileHistory(fhb);
+				}
+				if(!(vbean.getScaDocument() ==  null)) {
+					//now we save document history record
+					FileHistoryBean fhb = new FileHistoryBean();
+					fhb.setFileName(vbean.getScaDocument());
+					fhb.setFileAction("UPLOADED");
+					fhb.setActionBy(usr.getLotusUserFullName());
+					fhb.setParentObjectId(vbean.getId());
+					fhb.setParentObjectType(7);
+					FileHistoryManager.addFileHistory(fhb);
+				}
 				//update audit trail
 				AuditTrailBean atbean = new AuditTrailBean();
 				atbean.setEntryType(EntryTypeConstant.CONTRACTOREMPLOYEEADDED);

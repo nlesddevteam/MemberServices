@@ -247,6 +247,31 @@ $(document).ready(function() {
 						
 				    </div>
 				    <div class="form-group">
+		      			<label class="control-label col-sm-2" for="email">Operator:</label>
+		      			<div class="col-sm-8">
+		      				<div class="form-inline">
+		        				
+		        			<c:choose>
+				      			<c:when test="${route ne null}">
+				      				<c:choose>
+				      					<c:when test="${route.contractorName ne ''}">
+				      						<p class="form-control-static">${route.contractorName} &nbsp;&nbsp;
+				      					</c:when>
+				      					<c:otherwise>
+				      						<p class="form-control-static">&nbsp;&nbsp;
+				      					</c:otherwise>
+				      				</c:choose>
+				      				
+				      			</c:when>
+				      			<c:otherwise>
+				      				<p class="form-control-static"> &nbsp;&nbsp;
+				      				</c:otherwise>
+			      			</c:choose>
+		        				
+		        				</div>
+		      			</div>
+		    			</div>				    
+				    <div class="form-group">
 		      			<label class="control-label col-sm-2" for="email">Assigned Driver:</label>
 		      			<div class="col-sm-8">
 		      				<div class="form-inline">

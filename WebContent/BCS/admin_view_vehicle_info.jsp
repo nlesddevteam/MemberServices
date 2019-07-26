@@ -118,10 +118,11 @@ $(document).ready(function() {
     			<li class="active"><a data-toggle="tab" href="#details">Vehicle Details</a></li>
     			<li><a data-toggle="tab" href="#documents">Documents</a></li>
   			</ul>
+  			<form class="form-horizontal"  id="contact-form-up" name="contact-form-up" method="post" action="">
   			<div class="tab-content">
   			<div id="details" class="tab-pane fade in active">
   			<br/>
-	  			<form class="form-horizontal"  id="contact-form-up" name="contact-form-up" method="post" action="">
+	  			
 	  				<div class="form-group">
 		      			<label class="control-label col-sm-2" for="email">Status:</label>
 		      			<div class="col-sm-5">
@@ -300,6 +301,23 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 	            <div class="form-group">
+	                <label class="control-label col-sm-2" for="email">Unit Number:</label>
+	                <div class="col-sm-5">
+        				<p>
+        				<input class="form-control" id="unitnumber" name="unitnumber" type="text" placeholder="Enter unit number" value="${vehicle.unitNumber}">
+        				</p>
+      		  		</div>
+	            </div>	            
+                                                                         
+				
+			  
+			  </div>
+			  <div id="documents" class="tab-pane fade">
+				  
+				   <div class="alert alert-danger" id="doc_details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
+    				<div class="alert alert-success" id="doc_details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
+				  	<p>
+				<div class="form-group">
 	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Registered Owner:</label>
 	                <div class="col-sm-5">
         				<p><input class="form-control" id="vrowner" name="vrowner" type="text" placeholder="Enter registered owner" value="${vehicle.vOwner}"></p>
@@ -318,6 +336,30 @@ $(document).ready(function() {
         				</p>
       		  		</div>
 	            </div>
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Registration File:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.regFile != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.regFile}" title="Click to open"  target="_blank">Current Document (${vehicle.regFile})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('8','${vehicle.id}','${vehicle.regFile}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','8');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','8');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="regFile" name="regFile" accept="application/pdf">
+					(PDF file format only)<br/>
+ 		    	
+                </div>
+           </div>
+           <img src="includes/img/bar.png" height=1 width=100%><br/><br/>	            
 	            <div class="form-group">
 	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Insurance Expiry Date:</label> 
 	                <div class="col-sm-5">
@@ -347,14 +389,30 @@ $(document).ready(function() {
         				</p>
       		  		</div>
 	            </div>
-	            <div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Unit Number:</label>
-	                <div class="col-sm-5">
-        				<p>
-        				<input class="form-control" id="unitnumber" name="unitnumber" type="text" placeholder="Enter unit number" value="${vehicle.unitNumber}">
-        				</p>
-      		  		</div>
-	            </div>	            
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Proof of Insurance File:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.insFile != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.insFile}" title="Click to open"  target="_blank">Current Document (${vehicle.insFile})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('9','${vehicle.id}','${vehicle.insFile}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','9');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','9');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="insFile" name="insFile" accept="application/pdf">
+					(PDF file format only)<br/>
+ 		    	
+                </div>
+           </div>
+            <img src="includes/img/bar.png" height=1 width=100%><br/><br/>	            
 	           <div class="form-group">
 	                <label class="control-label col-sm-2" for="email">Fall Inspection Date:</label>
 	                <div class="col-sm-5">
@@ -384,6 +442,30 @@ $(document).ready(function() {
         				</p>
       		  		</div>
 	            </div>
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Fall Inspection File:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.fallInsFile != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.fallInsFile}" title="Click to open"  target="_blank">Current Document (${vehicle.fallInsFile})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('10','${vehicle.id}','${vehicle.fallInsFile}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','10');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','10');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="fallInsFile" name="fallInsFile" accept="application/pdf">
+					(PDF file format only)<br/>
+ 		    	
+                </div>
+           </div>
+           <img src="includes/img/bar.png" height=1 width=100%><br/><br/>	            
  				<div class="form-group">
 	                <label class="control-label col-sm-2" for="email">Winter Inspection Date:</label>
 	                <div class="col-sm-5">
@@ -412,7 +494,31 @@ $(document).ready(function() {
         				<input class="form-control" id="winterinsstation" name="winterinsstation" type="text" placeholder="Enter winter official inspection" value="${vehicle.winterInsStation}">
         				</p>
       		  		</div>
-	            </div>  
+	            </div>
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Winter Inspection File:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.winterInsFile != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.winterInsFile}" title="Click to open"  target="_blank">Current Document (${vehicle.winterInsFile})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('11','${vehicle.id}','${vehicle.winterInsFile}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','11');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','11');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="winterInsFile" name="winterInsFile" accept="application/pdf">
+					(PDF file format only)<br/>
+ 		    	
+                </div>
+           </div>
+           <img src="includes/img/bar.png" height=1 width=100%><br/><br/>	              
 	           <div class="form-group">
 	                <label class="control-label col-sm-2" for="email">Fall H.E. Inspection Date:</label>
 	                <div class="col-sm-5">
@@ -425,7 +531,31 @@ $(document).ready(function() {
 	                    </div>
         				</p>
       		  		</div>
-	            </div>            
+	            </div>
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Fall H.E. Inspection File:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.fallHEInsFile != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.fallHEInsFile}" title="Click to open"  target="_blank">Current Document (${vehicle.fallHEInsFile})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('12','${vehicle.id}','${vehicle.fallHEInsFile}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','12');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','12');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="fallHEInsFile" name="fallHEInsFile" accept="application/pdf">
+					(PDF file format only)<br/>
+                </div>
+           </div>
+           <img src="includes/img/bar.png" height=1 width=100%><br/><br/>
+           
 	           <div class="form-group">
 	                <label class="control-label col-sm-2" for="email">Misc H.E. Inspection Date1:</label>
 	                <div class="col-sm-5">
@@ -439,6 +569,30 @@ $(document).ready(function() {
         				</p>
       		  		</div>
 	            </div>
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Misc H.E. Inspection File1:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.miscHEInsFile1 != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.miscHEInsFile1}" title="Click to open"  target="_blank">Current Document (${vehicle.miscHEInsFile1})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('13','${vehicle.id}','${vehicle.miscHEInsFile1}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','13');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                		<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','13');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="miscHEInsFile1" name="miscHEInsFile1" accept="application/pdf">
+					(PDF file format only)<br/>
+ 		    	
+                </div>
+           </div>
+            <img src="includes/img/bar.png" height=1 width=100%><br/><br/>           	                        
 	           <div class="form-group">
 	                <label class="control-label col-sm-2" for="email">Misc H.E. Inspection Date2:</label>
 	                <div class="col-sm-5">
@@ -451,50 +605,33 @@ $(document).ready(function() {
 	                    </div>
         				</p>
       		  		</div>
-	            </div>                                                                           
-				
-			  </form>
+	            </div>  
+			<div class="form-group">
+                <label class="control-label col-sm-2" for="email">Misc H.E. Inspection File2:</label> 
+                <div class="col-sm-5">					
+					<c:choose>
+	                	<c:when test = "${vehicle.miscHEInsFile2 != null}">
+	                	
+	                	<br/><br/><a href="${spath}${dpath}${vehicle.miscHEInsFile2}" title="Click to open"  target="_blank">Current Document (${vehicle.miscHEInsFile2})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('14','${vehicle.id}','${vehicle.miscHEInsFile1}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','14');">View History</button>
+	                	<br/><br/>To Update	 
+	                	</c:when>
+	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${vehicle.id}','14');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
+	                	</c:otherwise>
+                	</c:choose>   
+                    document, choose file below to upload:
+                	<br/><br/>                
+					<input type="file" id="miscHEInsFile2" name="miscHEInsFile2" accept="application/pdf">
+					(PDF file format only)<br/>
+ 		    	
+                </div>
+           </div>				  	
+				 <img src="includes/img/bar.png" height=1 width=100%><br/><br/> 	
+				  	
 			  </div>
-				  <div id="documents" class="tab-pane fade">
-				  
-				   <div class="alert alert-danger" id="doc_details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-    				<div class="alert alert-success" id="doc_details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
-				  	<p>
-				  	<div align="right"><button type="button" class="btn btn-xs btn-success" onclick="openaddnewdialogadmin('A');">Add Document</button></div>			  	
-				  	<br/>
-				   <div id="BCS-Search">
-				  	<table id="BCS-table" width="100%" class="BCSTable">
-		     		<thead>
-		     		<tr style="border-bottom:1px solid silver;" class="listHeader">
-		      		<th width="20%" class="listdata">Document Title</th>
-		      		<th width="20%" class="listdata">Document Type</th>
-		      		<th width="20%" class="listdata">Date Uploaded</th>
-		      		<th class="listdata">Options</th>
-		      		</tr>
-		      		</thead>
-		      		<tbody>
-		      		<c:choose>
-		      		<c:when test="${fn:length(documents) > 0}">
-			      		<c:forEach items="${documents}" var="rule">
-			      		<c:set var="countDocs" value="${countDocs + 1}" />
-		 					<tr style="border-bottom:1px solid silver;">
-		      					<td class="field_content">${rule.documentTitle}</td>
-		      					<td class="field_content">${rule.typeString}</td>
-		      					<td class="field_content">${rule.dateUploadedFormatted}</td>
-		      					<td align="right" class="field_content">
-		      						<button type="button" class="btn btn-xs btn-primary menuBCS" onclick="window.open('${spath}${rule.viewPath}','_blank');">View</button>
-		      					<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedocdialogadmin('${rule.documentTitle}','${rule.id}','A');">Del</button>
-		      					</td>
-		      				</tr>
-		        		</c:forEach>
-		        		</c:when>
-		        		<c:otherwise>
-		        			<tr><td colspan='5' style="color:Red;">No documents found.</td></tr>
-		        		</c:otherwise>
-		        		</c:choose>
-		        		</tbody>
-	      		</table>
-			  </div></div>
 			  <div class="form-group">        
 		      		<div class="col-sm-offset-2 col-sm-10" id="divbuttons">
 		      		
@@ -502,8 +639,8 @@ $(document).ready(function() {
     				<div class="alert alert-success" id="vehiclesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 		      		<div class="col-sm-offset-2 col-sm-10" id="divbuttons">
       					<br />
-      					<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="confirmVehicleFields('A');">Update Information</button>
-      					<c:if test = "${vehicle.vStatus != 2}">
+      					<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="confirmVehicleFields('A','Y');">Update Information</button>
+      					<c:if test = "${vehicle.vStatus != 2 && vehicle.vStatus != 0}">
       						<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         					<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;<button type="button" class="btn btn-xs btn-danger" onclick="openRejectVeh();">Reject</button>
       						</esd:SecurityAccessRequired>
@@ -519,15 +656,8 @@ $(document).ready(function() {
 		  </div>
 		
 	</div>
-	
-	<c:choose>
-      	<c:when test="${countDocs >0 }">
-      		<script>$('#doc_details_success_message').html("There are <b>${countDocs}</b> vehicle document(s).").css("display","block").delay(4000).fadeOut();</script>
-      	</c:when>
-      	<c:otherwise>
-      		<script>$('#BCS-Search').css("display","none");$('#doc_details_error_message').html("Sorry, there are no vehicle documents at this time.").css("display","block");</script>
-      	</c:otherwise>
-      	</c:choose>
+	</form>
+
 	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -555,62 +685,50 @@ $(document).ready(function() {
 
   </div>
 </div>
-	<div id="myModalDoc" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="maintitle">Add New Document</h4>
-                    	<div class="alert alert-danger" style="display:none;" id="dalert" align="center">
-  							<span id="demessage"></span>
-						</div>
-						<div class="alert alert-success" style="display:none;" id="dalerts" align="center">
-  							<span id="dsmessage"></span>
-						</div>
-                </div>
-                <div class="modal-body">
-                    <p class="text-warning" id="title1">Document Type:</p>
-                    <p>
-                    <select id="documenttype" name="documenttype">
-                    	<option value="-1">Please Select Document Type</option>
-						<c:forEach var="entry" items="${dtypes}">
-							<option value='${entry.key}'>${entry.value}</option>
-						</c:forEach>
-                    </select>
-                    </p>
-                    <p class="text-warning" id="title2">Document Title:</p>
-                    <p>
-                    <input class="form-control" id="documenttitle" name="documenttitle" placeholder="document title" type="text">
-                    </p>
- 		    		<p class="text-warning" id="title3">Document:</p>
- 		    		<p>
- 		    		<input type="file" id="documentname" name="documentname" accept="application/pdf">(PDF file format only)					
- 		    		</p>
-				</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-xs btn-success"  id="buttonleftad"></button>
-                    <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal" id="buttonrightad"></button>
-                </div>
-            </div>
-   		</div>
-   	</div>
-   	<div id="myModalDocD" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="maintitledd">Delete Document</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="text-warning" id="title1dd"><span id="spantitle1dd" name="spantitle1dd"></span></p>
-                    <p class="text-warning" id="title2dd"><span id="spantitle2dd" name="spantitle2dd"></span></p>
-				</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-xs btn-default"  id="buttonleftdd"></button>
-                    <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrightdd"></button>
-                </div>
-            </div>
-   		</div>
-   	</div>
 
+   	<div id="myModal3" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitled">Bypass Date Validations</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-warning" id="title1dby"><span id="spantitle1by" name="spantitle1by"></span></p>
+                    <p class="text-warning" id="title2dby"><span id="spantitle2by" name="spantitle2by"></span></p>
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-xs btn-default"  id="buttonleftby"></button>
+                    <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrightby"></button>
+                </div>
+            </div>
+   		</div>
+   	</div>
+   	   	<div id="myModalFHistory" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitledd"><span id="spantitlemainfh" name="spantitlemainfh"></span></h4>
+                </div>
+                <div class="modal-body">
+                 <table id="fhtable" width="100%" class="BCSTable">
+			  		<thead>
+			  			<tr class="listHeader">
+			  				<th width="25%" class="listdata" style="padding:2px;">Action</th>
+			  				<th width="25%" class="listdata" style="padding:2px;">Action By</th>
+			  				<th width="25%" class="listdata" style="padding:2px;">Action Date</th>
+			  				<th width="25%" class="listdata" style="padding:2px;">Link</th>
+			  			</tr>
+			  		</thead>
+			  		<tbody>
+					</tbody>
+			  	</table>
+				</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrightdd">Close</button>
+                </div>
+            </div>
+   		</div>
+   	</div>	 
    	

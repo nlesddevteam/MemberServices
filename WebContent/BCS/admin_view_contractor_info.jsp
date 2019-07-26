@@ -280,13 +280,13 @@ $(document).ready(function() {
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Business Number:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Business Number:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="businessnumber" name="businessnumber" type="text" placeholder="Enter business number" value="${contractor.businessNumber}">
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">HST Number:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>HST Number:</label>
 				      <div class="col-sm-5">
 				        <p class="form-control-static">${contractor.hstNumber}</p>
 				          <input class="form-control" id="hstnumber" name="hstnumber" type="text" placeholder="Enter hst number" value="${contractor.hstNumber}">
@@ -294,14 +294,14 @@ $(document).ready(function() {
 				      </div>
 				    </div>  
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">First Name:</label><input type="hidden" id="cid" name="cid" value="${contractor.id}">
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>First Name:</label><input type="hidden" id="cid" name="cid" value="${contractor.id}">
 				      <input type="hidden" id="settab1" name="settab1" value="${settab1}">
 				      <div class="col-sm-5">
 				        <input class="form-control" id="firstname" name="firstname" type="text" placeholder="Enter first name" value="${contractor.firstName}">
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Last Name:</label><input type="hidden" id="hidfullname" value="${contractor.lastName},${contractor.firstName}">
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Last Name:</label><input type="hidden" id="hidfullname" value="${contractor.lastName},${contractor.firstName}">
 				      <div class="col-sm-5">
 				        <input class="form-control" id="lastname" name="lastname" type="text" placeholder="Enter last name"  value="${contractor.lastName}">
 				      </div>
@@ -313,7 +313,7 @@ $(document).ready(function() {
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Email:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Email:</label>
 				      <div class="col-sm-5">
 				        <p class="form-control-static">${contractor.email}</p>
 				      </div>
@@ -321,7 +321,7 @@ $(document).ready(function() {
 				   	<img src="includes/img/bar.png" height=1 width=100%><br/>
 				   	<span style="font-size:14px;color:Grey;">Physical Address</span>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Address 1:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Address 1:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="address1" name="address1" type="text" placeholder="Enter address 1" value="${contractor.address1}">
 				      </div>
@@ -333,13 +333,13 @@ $(document).ready(function() {
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Town/City:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Town/City:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="city" name="city" type="text" placeholder="Enter city" value="${contractor.city}">
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Province:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Province:</label>
 				      <div class="col-sm-5">
 				        <select class="form-control"  id="province" name="province">
 							<option value=" ">Select province</option>
@@ -360,7 +360,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Postal Code:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Postal Code:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="postalcode" name="postalcode" type="text" placeholder="Enter postal code" value="${contractor.postalCode}">
 				      </div>
@@ -390,7 +390,7 @@ $(document).ready(function() {
 				      		      	
 					</div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Address 1:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Address 1:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="maddress1" name="maddress1" type="text" placeholder="Enter mailing address 1" value='${contractor.maddress1}'>
 				        <input type="hidden" id="maddresstemp1" value="${contractor.maddress1}">
@@ -404,14 +404,14 @@ $(document).ready(function() {
 				      </div>
 				    </div>    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">City:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>City:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="mcity" name="mcity" type="text" placeholder="Enter mailing city" value="${contractor.mcity}">
 				        <input type="hidden" id="mcitytemp" value="${contractor.mcity}">
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Province:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Province:</label>
 				      <div class="col-sm-5">
 				        <select class="form-control"  id="mprovince" name="mprovince">
 							<option value=" ">Select province</option>
@@ -433,7 +433,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 										<div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Postal Code:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Postal Code:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="mpostalcode" name="mpostalcode" type="text" placeholder="Enter mailing postal code" value="${contractor.mpostalCode}">
 				        <input type="hidden" id="mpostalcodetemp" value="${contractor.mpostalCode}">
@@ -441,7 +441,7 @@ $(document).ready(function() {
 				    </div>		    
 				    
 				    <div class="form-group">
-				      <label class="control-label col-sm-2" for="email">Home Phone:</label>
+				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Home Phone:</label>
 				      <div class="col-sm-5">
 				        <input class="form-control" id="homephone" name="homephone" type="text" placeholder="Enter home phone" value="${contractor.homePhone}">
 				      </div>
@@ -462,7 +462,7 @@ $(document).ready(function() {
 				<div id="company" class="tab-pane fade">
 					<br />
 					<div class="form-group">
-		                <label class="control-label col-sm-4" for="email">Types of Transportation:</label>
+		                <label class="control-label col-sm-4" for="email"><img src='includes/css/images/asterisk-small.png'/>Types of Transportation:</label>
 		                <label class="checkbox-inline">
 		      				<input type="checkbox"  id="tregular" name="tregular" <c:out value="${company.tRegular eq 'Y' ? 'CHECKED' : ''}"/>>Regular 
 		    			</label>

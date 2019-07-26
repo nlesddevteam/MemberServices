@@ -654,7 +654,7 @@ function updateCompanyInformation() {
 /*******************************************************************************
  * Check add new vehicle fields
  ******************************************************************************/
-function confirmVehicleFields(usertype) {
+function confirmVehicleFields(usertype,validatedates) {
 
 	var vmake = $("#vmake").val();
 	var vmodel = $("#vmodel").val();
@@ -759,8 +759,10 @@ function confirmVehicleFields(usertype) {
 		}
 	}
 	//check the date fields
-	if(!(checkdatefields())){
-		return false;
+	if(validatedates == "Y"){
+		if(!(checkdatefields())){
+			return false;
+		}
 	}
 	// all good
 	$("#mainalert").hide();
@@ -777,7 +779,8 @@ function confirmVehicleFields(usertype) {
  ******************************************************************************/
 function addNewVehicle(usertype) {
 	var isvalid = false;
-	var frm = $('#contact-form-up');
+	var form = $('#contact-form-up')[0];
+	var formData = new FormData(form);
 	var poststring = "";
 	if (usertype == "A") {
 		poststring = "addNewVehicleAdminSubmit.html"
@@ -787,7 +790,9 @@ function addNewVehicle(usertype) {
 	$.ajax({
 		url : poststring,
 		type : 'POST',
-		data : frm.serialize(),
+		data : formData,
+		processData : false,
+		contentType : false,
 		success : function(xml) {
 			$(xml).find('CONTRACTOR').each(
 					function() {
@@ -835,11 +840,14 @@ function addNewVehicle(usertype) {
  ******************************************************************************/
 function updateVehicle(usertype) {
 	var isvalid = false;
-	var frm = $('#contact-form-up');
+	var form = $('#contact-form-up')[0];
+	var formData = new FormData(form);
 	$.ajax({
 		url : 'updateVehicleSubmit.html',
 		type : 'POST',
-		data : frm.serialize(),
+		data : formData,
+		processData : false,
+		contentType : false,
 		success : function(xml) {
 			$(xml).find('CONTRACTOR').each(
 					function() {
@@ -860,6 +868,7 @@ function updateVehicle(usertype) {
 								surl = "addNewVehicle.html?vid=" + vid;
 							}
 							// $("#pageContentBody").load(surl);
+							$("#pageContentBody").load(surl);
 						} else {
 							$("#vehicleerrormessage").text(
 									$(this).find("MESSAGE").text()).css(
@@ -1163,7 +1172,7 @@ function deletevehicledocument(docname, id,trantype) {
 /*******************************************************************************
  * add new/update employee check
  ******************************************************************************/
-function checkemployee(usert) {
+function checkemployee(usert,validatedates) {
 	$("#mainalert").hide();
 	$("#mainalerts").hide();
 	var selected = $("#employeeposition").val();
@@ -1380,6 +1389,11 @@ function checkemployee(usert) {
 		}
 	}
 	//check dates to make sure they are in range
+	//check to see if the employee selected to by pass date checks
+	
+	if(validatedates == "Y"){
+		
+	
 	if(!($("#darundate").val() == "")){
 		var today = new Date();
 		var cyear = today.getFullYear();
@@ -1392,6 +1406,7 @@ function checkemployee(usert) {
 					"block");
 					$('#documents').tab('show');
 					$("#darundate").focus();
+					showBypassDialog();
 					return false;
 		}
 		//now we check to see if it falls in the date range
@@ -1404,6 +1419,7 @@ function checkemployee(usert) {
 				"block");
 				$('#documents').tab('show');
 				$("#darundate").focus();
+				showBypassDialog();
 				return false;
 			}
 		}else{
@@ -1415,6 +1431,7 @@ function checkemployee(usert) {
 						"block");
 						$('#documents').tab('show');
 						$("#darundate").focus();
+						showBypassDialog();
 						return false;
 			}
 		}
@@ -1433,6 +1450,7 @@ function checkemployee(usert) {
 						"block");
 						$('#documents').tab('show');
 						$("#prvvsqdate").focus();
+						showBypassDialog();
 						return false;
 			}
 			//now we check to see if it falls in the date range
@@ -1447,6 +1465,7 @@ function checkemployee(usert) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
+									showBypassDialog();
 									return false;
 							
 						}
@@ -1459,6 +1478,7 @@ function checkemployee(usert) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
+									showBypassDialog();
 									return false;
 						}
 					}
@@ -1472,6 +1492,7 @@ function checkemployee(usert) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
+									showBypassDialog();
 									return false;
 						}
 					}else{
@@ -1483,6 +1504,7 @@ function checkemployee(usert) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
+									showBypassDialog();
 									return false;
 						}
 					}
@@ -1502,6 +1524,7 @@ function checkemployee(usert) {
 					"block");
 					$('#documents').tab('show');
 					$("#dlexpirydate").focus();
+					showBypassDialog();
 					return false;
 		}
 	}
@@ -1516,6 +1539,7 @@ function checkemployee(usert) {
 			"block");
 			$('#documents').tab('show');
 			$("#faexpirydate").focus();
+			showBypassDialog();
 			return false;
 		}
 	}
@@ -1528,8 +1552,10 @@ function checkemployee(usert) {
 			"block");
 			$('#documents').tab('show');
 			$("#scadate").focus();
+			showBypassDialog();
 			return false;
 		}
+	}
 	}
 	if (usert == "A") {
 		var selectedc = $("#contractor").val();
@@ -5991,7 +6017,7 @@ function checkdate(datetype){
 		if(!($("#dlexpirydate").val() == "")){
 			var today = new Date();
 			var targetDate= new Date();
-			targetDate.setDate(today.getDate()+ 1825);
+			targetDate.setDate(today.getDate()+ 3650);
 			var selectedDate = $('#dlexpirydate').datepicker('getDate');
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#divdlexp").show();
@@ -6196,6 +6222,7 @@ function checkdatefields(){
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Registration Expiry Date must be in future and no more than 1 year")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6208,6 +6235,7 @@ function checkdatefields(){
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Insurance Expiry Date must be in future and no more than 1 year")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6220,6 +6248,7 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Fall Inspection Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6232,6 +6261,7 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Winter Inspection Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6244,6 +6274,7 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Fall H.E. Inspection Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6256,6 +6287,7 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 1 must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6268,6 +6300,7 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 2 must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
+				showBypassDialogV();
 				return false;
 			}
 		}
@@ -6283,4 +6316,229 @@ function isNumberKey(evt)
       return false;
 
    return true;
+}
+function showBypassDialog(){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		$('#spantitle2by').text("Some dates are invalid, do you still want to save employee information?");
+		$('#buttonleftby').text("YES");
+		$('#buttonrightby').text("NO");
+		// now we add the onclick event
+		$("#buttonleftby").click(function(event) {
+			event.preventDefault();
+			checkemployee('A','N');
+			$('#myModal3').modal('hide');
+
+		});
+		$('#myModal3').modal(options);
+}
+function showBypassDialogV(){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		$('#spantitle2by').text("Some dates are invalid, do you still want to save vehicle information?");
+		$('#buttonleftby').text("YES");
+		$('#buttonrightby').text("NO");
+		// now we add the onclick event
+		$("#buttonleftby").click(function(event) {
+			event.preventDefault();
+			confirmVehicleFields('A','N');
+			$('#myModal3').modal('hide');
+
+		});
+		$('#myModal3').modal(options);
+}
+/*******************************************************************************
+ * Calls ajax post for deleting file
+ ******************************************************************************/
+function deleteFile(ftype,oid,fname) {
+	$.ajax({
+		url : 'deleteFileAjax.html',
+		type : 'POST',
+		data : {
+			did : oid,
+			dtype : ftype,
+			filename: fname
+		},
+		success : function(xml) {
+			$(xml).find('FILE').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#display_success_message_bottom").html(
+							"File has been deleted").css("display", "block")
+							.delay(6000).fadeOut();
+
+							var surl = "adminViewVehicle.html?cid="+ oid;
+							var surl="";
+							if($(this).find("DTYPE").text() == "E"){
+								var surl = "adminViewEmployee.html?vid="+ oid;
+							}else{
+								var surl =  "adminViewVehicle.html?cid="+ oid;
+							}
+							$("#pageContentBody").load(surl);
+							$('#modalnewrun').modal('hide');
+
+						} else {
+							$("#display_error_message_bottom").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+							$('#modalnewrun').modal('hide');
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_bottom").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Calls ajax post for searching contractors
+ ******************************************************************************/
+function getFileHistoryAjax(objectid,objecttype) {
+	$("#fhtable").find("tr:gt(0)").remove();
+	var isvalid = false;
+	var cnt = 0;
+	$
+			.ajax({
+				type : "POST",
+				url : "getFileHistoryAjax.html",
+
+				data : {
+					cid : objectid,
+					ftype : objecttype,
+				},
+				success : function(xml) {
+					$(xml)
+							.find('FILE')
+							.each(
+									function() {
+										if ($(this).find("MESSAGE").text() == "SUCCESS") {
+
+											var newrow = "<tr style='border-bottom:1px solid silver;'>";
+											newrow += "<td class='field_content'>"
+													+ $(this).find("FILEACTION")
+															.text() + "</td>";
+											newrow += "<td class='field_content'>"
+													+ $(this).find("ACTIONBY")
+															.text() + "</td>";
+											newrow += "<td class='field_content'>"
+													+ $(this).find("ACTIONDATE")
+															.text() + "</td>";
+											newrow += "<td align='right' class='field_content'>";
+											if($(this).find("FILENAME").text() == "No Previous File"){
+												newrow += "No Previous File</TD>"
+											}
+											newrow += "<a href='" + $(this).find("FILEPATH").text() + $(this).find("FILENAME").text() +"' target='_blank' class='menuBCS'>VIEW</A></TD>";
+											newrow += "</tr>";
+											cnt = cnt + 1;
+											$('table#fhtable tr:last').after(
+													newrow);
+											isvalid = true;
+
+										} else {
+											var newrow = "<tr style='border-bottom:1px dashed silver;'><td colspan='4'>";
+											newrow += $(this).find("MESSAGE")
+													.text();
+											newrow += "</td></tr>";
+											$('table#fhtable tr:last').after(
+													newrow);
+
+										}
+									});
+					var options = {
+							"backdrop" : "static",
+							"show" : true
+						};
+						$('#spantitlemainfh').text("View File History");
+
+						$('#myModalFHistory').modal(options);
+					
+				},
+				error : function(xhr, textStatus, error) {
+					alert(xhr.statusText);
+					alert(textStatus);
+					alert(error);
+				},
+				dataType : "text",
+			// async: false
+			});
+	
+
+
+	return isvalid;
+}
+/*******************************************************************************
+ * Calls ajax post for deleting file
+ ******************************************************************************/
+function deleteFileC(ftype,oid,fname) {
+	$.ajax({
+		url : 'contractorDeleteFileAjax.html',
+		type : 'POST',
+		data : {
+			did : oid,
+			dtype : ftype,
+			filename: fname
+		},
+		success : function(xml) {
+			$(xml).find('FILE').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#display_success_message_bottom").html(
+							"File has been deleted").css("display", "block")
+							.delay(6000).fadeOut();
+							var surl="";
+							if($(this).find("DTYPE").text() == "E"){
+								var surl = "addNewEmployee.html?vid="+ oid;
+							}else{
+								var surl = "addNewVehicle.html?vid="+ oid;
+							}	
+							
+							$("#pageContentBody").load(surl);
+							$('#modalnewrun').modal('hide');
+
+						} else {
+							$("#display_error_message_bottom").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+							$('#modalnewrun').modal('hide');
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_bottom").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+function adjustServiceTime(){
+	var stime=0;
+	var smonth = $("#vmonth").val();
+	var syear  = $("#vyear").val();
+	//check to make sure both have a value selected
+	if(smonth > 0 && syear >0){
+		var sdate = new Date(syear,smonth-1,1);
+		var today = new Date();
+		
+		var days = (today - sdate) / (1000 * 60 * 60 * 24);
+		var tdays = stime = days/365;
+		
+		stime = Math.round(tdays * 100) / 100;
+	}
+	$("#continuousservice").val(stime);
 }

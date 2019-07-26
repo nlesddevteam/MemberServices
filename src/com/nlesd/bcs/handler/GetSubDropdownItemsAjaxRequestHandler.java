@@ -1,8 +1,8 @@
 package com.nlesd.bcs.handler;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ public class GetSubDropdownItemsAjaxRequestHandler extends PublicAccessRequestHa
 			// generate XML for candidate details.
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-			TreeMap<Integer,String> list = DropdownManager.getDropdownValuesTMP(pid);
+			LinkedHashMap<Integer,String> list = DropdownManager.getDropdownValuesHM(pid);
 			sb.append("<FIELDLIST>");
 			
 			for(Map.Entry<Integer,String> entry : list.entrySet()) {

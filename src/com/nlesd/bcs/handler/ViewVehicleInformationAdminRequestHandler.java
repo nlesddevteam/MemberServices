@@ -54,13 +54,17 @@ public class ViewVehicleInformationAdminRequestHandler  extends RequestHandlerIm
     	  request.setAttribute("vtypes", DropdownManager.getDropdownValues(DropdownTypeConstant.VTYPE.getValue()));
     	  if(vbean != null){
     		  //get the dropdown values based on the type selected
-    		  request.setAttribute("vsizes", DropdownManager.getDropdownValuesTMP(vbean.getvType()));
+    		  if(vbean.getvType() > 0) {
+    			  request.setAttribute("vsizes", DropdownManager.getDropdownValuesTMP(vbean.getvType()));
+    		  }
+    		  
     	  }
     	//now we get the documents
     	  request.setAttribute("documents",BussingContractorVehicleDocumentManager.getBussingContractorVehicleDocumentsById(vbean.getId()));
     	  request.setAttribute("dtypes", DropdownManager.getDropdownValues(DropdownTypeConstant.VDOCUMENT.getValue()));
     	  //now we set the rel path
     	  request.setAttribute("spath",request.getContextPath());
+    	  request.setAttribute("dpath","/BCS/documents/vehicledocs/");
     	  request.setAttribute("contractors", BussingContractorManager.getAllContractors());
     	  if((usr.getUserPermissions().containsKey("BCS-VIEW-WESTERN"))){
   	        request.setAttribute("contractorid", BoardOwnedContractorsConstant.WESTERN.getValue());
