@@ -279,10 +279,15 @@
       <name>ViewPost</name>
       <tag-class>com.esdnl.personnel.jobs.tag.ViewPostTagHandler</tag-class>
       <body-content>empty</body-content>
-      <description>Displays University Degree Select HTML element</description>
+      <description>Displays Job Post Details</description>
       <attribute>
          <name>competitionNumber</name>
-         <required>true</required>
+         <required>false</required>
+         <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+         <name>job</name>
+         <required>false</required>
          <rtexprvalue>true</rtexprvalue>
       </attribute>
    </tag>

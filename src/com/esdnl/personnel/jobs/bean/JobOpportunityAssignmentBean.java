@@ -1,9 +1,12 @@
 package com.esdnl.personnel.jobs.bean;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -130,15 +133,22 @@ public class JobOpportunityAssignmentBean implements Serializable {
 			break;
 		default:
 			School s = ((School) school_names.get(new Integer(this.location)));
-			if (s != null)
+			if (s != null) {
 				txt = ((School) school_names.get(new Integer(this.location))).getSchoolName();
-			else
+			}
+			else {
 				txt = "UNKNOWN SCHOOL [id=" + this.location + "]";
+			}
 
 			break;
 		}
 
 		return txt;
+	}
+
+	public School getSchool() {
+
+		return ((School) school_names.get(new Integer(this.location)));
 	}
 
 	public SchoolZoneBean getLocationZone() {
@@ -217,13 +227,13 @@ public class JobOpportunityAssignmentBean implements Serializable {
 				EmailBean email = new EmailBean();
 				email.setFrom("error@nlesd.ca");
 				email.setTo(PersonnelDB.getPersonnelByRole("ADMINISTRATOR"));
-				if(this.comp_num != null){
+				if (this.comp_num != null) {
 					email.setSubject("Member Services Processing Error Comp Number:" + this.comp_num);
-				}else{
+				}
+				else {
 					email.setSubject("Member Services Processing Error");
 				}
-				
-				
+
 				email.setBody("School Zone not found for location ID [" + this.location + "]");
 
 				email.send();
@@ -311,9 +321,19 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		this.edureqs.add(edu);
 	}
 
+	public void addRequiredEducation(Collection<AssignmentEducationBean> edus) {
+
+		this.edureqs.addAll(edus);
+	}
+
 	public AssignmentEducationBean[] getRequiredEducation() {
 
 		return (AssignmentEducationBean[]) this.edureqs.toArray(new AssignmentEducationBean[0]);
+	}
+
+	public int getRequiredEducationSize() {
+
+		return this.edureqs.size();
 	}
 
 	public void addRequiredMajor(AssignmentMajorMinorBean major) {
@@ -321,9 +341,43 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		this.majors.add(major);
 	}
 
+	public void addRequiredMajor(Collection<AssignmentMajorMinorBean> majors) {
+
+		this.majors.addAll(majors);
+	}
+
+	@Deprecated
 	public AssignmentMajorMinorBean[] getRequiredMajors() {
 
 		return (AssignmentMajorMinorBean[]) this.majors.toArray(new AssignmentMajorMinorBean[0]);
+	}
+
+	@Deprecated
+	public int getRequiredMajorsSize() {
+
+		return this.majors.size();
+	}
+
+	public int getRequriedMajorsOnlySize() {
+
+		return (int) this.majors.stream().filter(p -> p.getMajorId() > 0).count();
+	}
+
+	public List<AssignmentMajorMinorBean> getRequiredMajorsOnly() {
+
+		return (List<AssignmentMajorMinorBean>) this.majors.stream().filter(p -> p.getMajorId() > 0).collect(
+				Collectors.toList());
+	}
+
+	public int getRequriedMinorsOnlySize() {
+
+		return (int) this.majors.stream().filter(p -> p.getMinorId() > 0).count();
+	}
+
+	public List<AssignmentMajorMinorBean> getRequiredMinorsOnly() {
+
+		return (List<AssignmentMajorMinorBean>) this.majors.stream().filter(p -> p.getMinorId() > 0).collect(
+				Collectors.toList());
 	}
 
 	public void addRequiredSubject(Subject subject) {
@@ -336,13 +390,30 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		return (Subject[]) this.subjects.toArray(new Subject[0]);
 	}
 
+	public int getRequiredSubjectsSize() {
+
+		return this.subjects.size();
+	}
+
 	public void addRequiredTrainingMethod(TrainingMethodConstant method) {
 
 		this.trnmthds.add(method);
 	}
 
+	public void addRequiredTrainingMethod(Collection<AssignmentTrainingMethodBean> methods) {
+
+		for (AssignmentTrainingMethodBean b : methods) {
+			addRequiredTrainingMethod(b.getTrainingMethod());
+		}
+	}
+
 	public TrainingMethodConstant[] getRequriedTrainingMethods() {
 
 		return (TrainingMethodConstant[]) this.trnmthds.toArray(new TrainingMethodConstant[0]);
+	}
+
+	public int getRequriedTrainingMethodsSize() {
+
+		return this.trnmthds.size();
 	}
 }

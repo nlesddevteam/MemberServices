@@ -2,6 +2,10 @@ package com.esdnl.personnel.jobs.bean;
 
 import java.io.Serializable;
 
+import com.awsd.school.Subject;
+import com.awsd.school.SubjectDB;
+import com.awsd.school.SubjectException;
+
 public class AssignmentMajorMinorBean implements Serializable {
 
 	private static final long serialVersionUID = -3583973216551733955L;
@@ -36,6 +40,11 @@ public class AssignmentMajorMinorBean implements Serializable {
 		return this.minor_id;
 	}
 
+	public Subject getMinorSubject() throws SubjectException {
+
+		return this.getMinorId() > 0 ? SubjectDB.getSubject(this.getMinorId()) : null;
+	}
+
 	public void setMinorId(int minor_id) {
 
 		this.minor_id = minor_id;
@@ -44,6 +53,11 @@ public class AssignmentMajorMinorBean implements Serializable {
 	public int getMajorId() {
 
 		return this.major_id;
+	}
+
+	public Subject getMajorSubject() throws SubjectException {
+
+		return this.getMajorId() > 0 ? SubjectDB.getSubject(this.getMajorId()) : null;
 	}
 
 	public void setMajorId(int major_id) {

@@ -176,18 +176,16 @@ function parseAddApplicantResponse(data){
 <body><br/>
 
 <%if(request.getAttribute("msg")!=null){%>
-	                                      <div class="alert alert-warning" style="text-align:center;">                                       
-	                                          <%=(String)request.getAttribute("msg")%>
-	                                        </div>
+	<div class="alert alert-warning" style="text-align:center;">                                       
+		<%=(String)request.getAttribute("msg")%>
+	</div>
 <%}%>	
-
-		 
 
 <div class="panel panel-success">
   <div class="panel-heading"><b>Viewing Job Post <%=request.getParameter("comp_num")%></b></div>
   <div class="panel-body">
   				<div class="table-responsive">      			 	       
-      			<job:ViewPost competitionNumber='<%=request.getParameter("comp_num")%>' />
+      			<job:ViewPost job="<%= opp %>" />
    				<input type="hidden" id="filtertype" name="fitlertype" value="<%=opp != null ? opp.getIsSupport() : "T"%>">
    				<table class='table table-striped table-condensed' style='font-size:12px;'>
    				

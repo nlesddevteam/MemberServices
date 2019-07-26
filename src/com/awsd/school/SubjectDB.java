@@ -4,12 +4,28 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Vector;
 
 import com.awsd.personnel.Personnel;
 import com.esdnl.dao.DAOUtils;
 
 public class SubjectDB {
+
+	private static HashMap<Integer, Subject> subjectMap = null;
+
+	// optomize subject lookup
+	static {
+		subjectMap = new HashMap<Integer, Subject>();
+		try {
+			for (Subject tmp : getSubjects()) {
+				subjectMap.put(tmp.getSubjectID(), tmp);
+			}
+		}
+		catch (SubjectException e) {
+			e.printStackTrace(System.err);
+		}
+	}
 
 	public static Vector<Subject> getSubjects() throws SubjectException {
 
@@ -114,17 +130,24 @@ public class SubjectDB {
 		String sql;
 
 		try {
-			sql = "SELECT SUBJECT_ID, SUBJECT_NAME FROM SUBJECT " + "WHERE SUBJECT_ID=" + id;
-
-			con = DAOUtils.getConnection();
-			stat = con.createStatement();
-			rs = stat.executeQuery(sql);
-
-			if (rs.next()) {
-				s = new Subject(rs.getInt("SUBJECT_ID"), rs.getString("SUBJECT_NAME"));
+			if (subjectMap.containsKey(id)) {
+				s = subjectMap.get(id);
 			}
 			else {
-				throw new SubjectException("No Subject matching ID: " + id);
+				sql = "SELECT SUBJECT_ID, SUBJECT_NAME FROM SUBJECT " + "WHERE SUBJECT_ID=" + id;
+
+				con = DAOUtils.getConnection();
+				stat = con.createStatement();
+				rs = stat.executeQuery(sql);
+
+				if (rs.next()) {
+					s = new Subject(rs.getInt("SUBJECT_ID"), rs.getString("SUBJECT_NAME"));
+
+					subjectMap.put(s.getSubjectID(), s);
+				}
+				else {
+					throw new SubjectException("No Subject matching ID: " + id);
+				}
 			}
 		}
 		catch (SQLException e) {
