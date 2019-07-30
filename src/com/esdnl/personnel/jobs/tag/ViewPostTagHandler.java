@@ -55,6 +55,8 @@ public class ViewPostTagHandler extends TagSupport {
 					+ "</td></tr>");
 			out.println("<tr><td class='tableTitle'>COMPETITION #:</td><td class='tableResult'>" + opp.getCompetitionNumber()
 					+ "</td></tr>");
+			out.println("<tr><td class='tableTitle'>COMPETITION END DATE:</td><td class='tableResult'>"
+					+ opp.getFormatedCompetitionEndDate() + "</td></tr>");
 
 			if (opp.size() > 0) {
 
@@ -89,7 +91,7 @@ public class ViewPostTagHandler extends TagSupport {
 						out.println(abean.getLocationText());
 					}
 					out.println("</td></tr>");
-          
+
 					if (abean.getRequiredEducationSize() > 0) {
 						out.println("<tr><td class='tableTitle'>EDUCATION REQUIRED:</td><td class='tableResult'>");
 						for (AssignmentEducationBean edu : abean.getRequiredEducation()) {
