@@ -17,10 +17,10 @@
     							//set is firstsave to no so they will now update
     							$('#firstsave').val('N');
     							//show save message
-    							$('#successMsg').text("Areas have been updated").css("display", "block").delay(5000).fadeOut();    							
+    							$('#successMsg').text("Areas have been updated").css("display", "block").delay(5000);    							
     						} else {
     							//show error message
-    							$('#errorMsg').text($(this).find("MESSAGE").text()).css("display", "block").delay(5000).fadeOut();    							
+    							$('#errorMsg').text($(this).find("MESSAGE").text()).css("display", "block").delay(5000);    							
     						}
 
     					});

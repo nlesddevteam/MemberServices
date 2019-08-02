@@ -9,12 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.awsd.common.Utils;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
 import com.esdnl.velocity.VelocityUtils;
+import com.nlesd.eecd.bean.EECDShortlistBean;
 import com.nlesd.eecd.bean.EECDTeacherAreaBean;
 import com.nlesd.eecd.dao.EECDAreaManager;
+import com.nlesd.eecd.dao.EECDShortlistManager;
 import com.nlesd.eecd.dao.EECDTeacherAreaManager;
 public class ShortlistCompletedAjaxRequestHandler implements RequestHandler
 {
@@ -41,7 +44,8 @@ public class ShortlistCompletedAjaxRequestHandler implements RequestHandler
 	    	int id = Integer.parseInt(request.getParameter("aid"));
 	    	String stype = request.getParameter("stype");
 	    	if(stype.equals("C")){
-	    		EECDAreaManager.shortlistCompleted(id, usr.getLotusUserFullName());
+	    		EECDShortlistBean slbean = EECDShortlistManager.getShortlistByAreaId(id, Utils.getCurrentSchoolYear());
+	    		EECDAreaManager.shortlistCompletedNew(slbean.getId(), usr.getLotusUserFullName());
 	    		//send emails to list members
 	    		//get the shortlisted staff
 	    		ArrayList<EECDTeacherAreaBean> list = EECDTeacherAreaManager.getEECDTAShortListById(id);
@@ -65,7 +69,8 @@ public class ShortlistCompletedAjaxRequestHandler implements RequestHandler
 	    		
 	    		
 	    	}else{
-	    		EECDAreaManager.unlockShortlist(id, usr.getLotusUserFullName());
+	    		EECDShortlistBean slbean = EECDShortlistManager.getShortlistByAreaId(id, Utils.getCurrentSchoolYear());
+	    		EECDAreaManager.unlockShortlistNew(slbean.getId(), usr.getLotusUserFullName());
 	    	}
 	    	message="COMPLETED";
 	    }catch(Exception e){

@@ -73,8 +73,16 @@ $("#loadingSpinner").css("display","none");
                     					<tr id="div${area.id}"> 
 	     									<td>${ area.teacherName}</td>	
 									        <td>${ area.schoolName}</td>
-									       	<td>${ area.areaDescription }</td>    
-											<td>${ area.currentStatus.description }</td>   
+									       	<td>${ area.areaDescription }</td>
+									       	<c:choose>
+									       	 	<c:when test = "${area.selected eq true}">
+									       	 		<td>Shortlisted</td>
+									       	 	</c:when>
+									       	 	<c:otherwise>
+									       	 		<td>${ area.currentStatus.description }</td>
+									       	 	</c:otherwise>
+									       	</c:choose>
+											   
 										</tr>
 								</c:forEach>
 								     </tbody>
