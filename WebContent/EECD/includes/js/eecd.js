@@ -189,7 +189,7 @@ function approvedeclinearea(taid,tstatus) {
 /*******************************************************************************
  * Opens dialog for adding to shortlist
  ******************************************************************************/
-function openaddtoshortlistdialog(taid,tname,adescription,sname) {
+function openaddtoshortlistdialog(taid,tname,adescription,sname,areaid) {
 	var tstatus=-1;
 	var options = {
 		"backdrop" : "static",
@@ -203,7 +203,7 @@ function openaddtoshortlistdialog(taid,tname,adescription,sname) {
 	$('#myModal').modal(options);
 	// now we add the onclick event
 	$('#btnok').unbind('click').bind('click', function (e) {
-		addtoshortlist(taid);
+		addtoshortlist(taid,areaid);
 		});
 	//$("#btnok").click(function() {
 		//approvedeclinearea(taid,tstatus);
@@ -215,12 +215,12 @@ function openaddtoshortlistdialog(taid,tname,adescription,sname) {
 /*******************************************************************************
  * Calls ajax post for approving/declining teacher areas
  ******************************************************************************/
-function addtoshortlist(taid) {
+function addtoshortlist(taid,vareaid) {
 	$.ajax({
 		url : 'addToShortlistAjax.html',
 		type : 'POST',
 		data : {
-				aid: taid
+				aid: taid,areaid:vareaid
 		},success : function(xml) {
 			$(xml).find('TAREA').each(
 					function() {

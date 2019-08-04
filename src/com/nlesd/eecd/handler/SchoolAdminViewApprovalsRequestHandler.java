@@ -17,7 +17,7 @@ public class SchoolAdminViewApprovalsRequestHandler extends RequestHandlerImpl {
 				IOException {
 		super.handleRequest(request, response);
 		ArrayList<EECDTAApprovalBean> list = new ArrayList<EECDTAApprovalBean>();
-		list = EECDTAApprovalManager.getAdminApprovals(usr.getPersonnel().getPersonnelID());
+		list = EECDTAApprovalManager.getAdminApprovals(usr.getPersonnel().getSchool().getSchoolID());
 		request.setAttribute("areas", list);
 		
 			
