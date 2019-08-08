@@ -72,16 +72,23 @@ public class JobOpportunityAssignmentManager {
 
 	public static JobOpportunityAssignmentBean createJobOpportunityAssignmentBean(ResultSet rs) {
 
+		return createJobOpportunityAssignmentBean(rs, true);
+	}
+
+	public static JobOpportunityAssignmentBean createJobOpportunityAssignmentBean(ResultSet rs, boolean loadMetaData) {
+
 		JobOpportunityAssignmentBean aBean = null;
 		try {
 			aBean = new JobOpportunityAssignmentBean(rs.getInt("ASSIGN_ID"), rs.getString("COMP_NUM"), rs.getInt(
 					"LOCATION"), rs.getDouble("UNITS"));
 
 			try {
-				aBean.addRequiredEducation(AssignmentEducationManager.getAssignmentEducationBeanCollection(aBean));
-				aBean.addRequiredMajor(AssignmentMajorMinorManager.getAssignmentMajorMinorBeanCollection(aBean));
-				aBean.addRequiredTrainingMethod(
-						AssignmentTrainingMethodManager.getAssignmentTrainingMethodBeanCollection(aBean));
+				if (loadMetaData) {
+					aBean.addRequiredEducation(AssignmentEducationManager.getAssignmentEducationBeanCollection(aBean));
+					aBean.addRequiredMajor(AssignmentMajorMinorManager.getAssignmentMajorMinorBeanCollection(aBean));
+					aBean.addRequiredTrainingMethod(
+							AssignmentTrainingMethodManager.getAssignmentTrainingMethodBeanCollection(aBean));
+				}
 			}
 			catch (JobOpportunityException e) {
 				e.printStackTrace();

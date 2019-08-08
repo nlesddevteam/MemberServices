@@ -169,7 +169,7 @@ public class JobOpportunityManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				jBean = createJobOpportunityBean(rs);
+				jBean = createJobOpportunityBean(rs, false);
 
 				v_opps.add(jBean);
 			}
@@ -369,7 +369,7 @@ public class JobOpportunityManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				jBean = createJobOpportunityBean(rs);
+				jBean = createJobOpportunityBean(rs, false);
 
 				v_opps.add(jBean);
 			}
@@ -607,7 +607,7 @@ public class JobOpportunityManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				jBean = createJobOpportunityBean(rs);
+				jBean = createJobOpportunityBean(rs, false);
 
 				v_opps.add(jBean);
 			}
@@ -1297,6 +1297,11 @@ public class JobOpportunityManager {
 
 	public static JobOpportunityBean createJobOpportunityBean(ResultSet rs) {
 
+		return createJobOpportunityBean(rs, true);
+	}
+
+	public static JobOpportunityBean createJobOpportunityBean(ResultSet rs, boolean loadMetaData) {
+
 		JobOpportunityBean jBean = null;
 
 		try {
@@ -1329,7 +1334,7 @@ public class JobOpportunityManager {
 			if (rs.getDate("SHORTLIST_COMPLETE_DATE") != null)
 				jBean.setShortlistCompleteDate(new java.util.Date(rs.getTimestamp("SHORTLIST_COMPLETE_DATE").getTime()));
 
-			jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs));
+			jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, loadMetaData));
 			jBean.setIsSupport(rs.getString("IS_SUPPORT"));
 		}
 		catch (SQLException e) {

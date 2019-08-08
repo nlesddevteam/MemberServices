@@ -14,6 +14,13 @@ public class EECDTeacherAreaBean implements Serializable {
 	private String teacherName;
 	private String schoolName;
 	private String teacherEmail;
+	private String schoolYear;
+	public String getSchoolYear() {
+		return schoolYear;
+	}
+	public void setSchoolYear(String schoolYear) {
+		this.schoolYear = schoolYear;
+	}
 	public int getId() {
 		return id;
 	}

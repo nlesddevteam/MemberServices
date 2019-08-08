@@ -188,6 +188,38 @@ public class EECDAreaManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void shortlistCompletedNew(int aid,String completedby) {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			stat = con.prepareCall("begin awsd_user.eecd_pkg.shortlist_completed_n(?,?); end;");
+			stat.setInt(1, aid);
+			stat.setString(2, completedby);
+			stat.execute();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("shortlistCompletedNew(int aid,String completedby): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 	public static EECDAreaBean getEECDAreaById(int pid) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -258,6 +290,38 @@ public class EECDAreaManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void unlockShortlistNew(int aid,String completedby) {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			stat = con.prepareCall("begin awsd_user.eecd_pkg.unlock_shortlist_n(?,?); end;");
+			stat.setInt(1, aid);
+			stat.setString(2, completedby);
+			stat.execute();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static void unlockShortlistNew(int aid,String completedby): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 	public static ArrayList<EECDAreaBean> getAllEECDAreasShortlisted() {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -283,6 +347,46 @@ public class EECDAreaManager {
 			}
 			catch (Exception ex) {}
 			System.err.println("ArrayList<EECDAreaBean> getAllEECDAreasShortlisted(): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<EECDAreaBean> getAllEECDAreasShortlistedNew(String schoolyear) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<EECDAreaBean> list = new ArrayList<EECDAreaBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_all_areas_sl_n(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2,schoolyear);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				EECDAreaBean abean = new EECDAreaBean();
+				abean = createEECDAreaBean(rs,false);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<EECDAreaBean> getAllEECDAreasShortlistedNew(String schoolyear) "
 					+ e);
 		}
 		finally {
@@ -336,7 +440,46 @@ public class EECDAreaManager {
 			catch (Exception e) {}
 		}
 		return list;
-	}		
+	}
+	public static ArrayList<String> getTeacherSelectedAreasByPIDNew(int pid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_teacher_selected_for_n(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, pid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				String display = rs.getString("AREA_DESCRIPTION") + " - " + rs.getString("SCHOOL_YEAR");
+				list.add(display);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<EECDAreaBean> getTeacherSelectedAreasByPID(int pid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static EECDAreaBean createEECDAreaBean(ResultSet rs,boolean extendeddata) {
 		EECDAreaBean abean = null;
 		try {
