@@ -48,7 +48,7 @@
 						<c:when test='${fn:length(areas) gt 0}'>
             					<ul id="check-list-box" class="list-group checked-list-box">
                   					<c:forEach items='${ areas }' var='area'>
-                  						<li class="list-group-item" id="${ area.id }"> ${ area.areaDescription }</li>
+                  						<li class="list-group-item" id="${ area}"> ${ area}</li>
                   					</c:forEach>                  					
                   				</ul>
                 		 </c:when>

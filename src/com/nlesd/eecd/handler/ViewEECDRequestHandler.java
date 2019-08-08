@@ -6,6 +6,8 @@ import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awsd.common.Utils;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.eecd.bean.EECDAreaBean;
 import com.nlesd.eecd.bean.EECDTeacherAreaBean;
@@ -25,7 +27,7 @@ public class ViewEECDRequestHandler extends RequestHandlerImpl {
 		request.setAttribute("areas", list);
 		//now we get their selections if any
 		TreeMap<Integer,EECDTeacherAreaBean>talist = new TreeMap<Integer,EECDTeacherAreaBean>();
-		talist=EECDTeacherAreaManager.getAllEECDAreas(usr.getPersonnel().getPersonnelID());
+		talist=EECDTeacherAreaManager.getAllEECDAreasSchoolYear(usr.getPersonnel().getPersonnelID(),Utils.getCurrentSchoolYear());
 		if(talist.isEmpty()){
 			request.setAttribute("firstsave", "Y");
 		}else{

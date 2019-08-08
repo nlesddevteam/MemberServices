@@ -76,7 +76,7 @@ $("#loadingSpinner").css("display","none");
 									       	<td>${ area.areaDescription }</td>    
 											<td>
 												<c:if test = "${iscompleted eq false}">
-													<a href="#" class="btn btn-primary btn-xs" onclick="openaddtoshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}');">ADD TO SHORTLIST</a>
+													<a href="#" class="btn btn-primary btn-xs" onclick="openaddtoshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}','${area.areaId}');">ADD TO SHORTLIST</a>
 												</c:if>
 											</td>   
 										</tr>

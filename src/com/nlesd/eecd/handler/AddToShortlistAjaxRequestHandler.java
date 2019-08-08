@@ -5,8 +5,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.awsd.common.Utils;
 import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
+import com.nlesd.eecd.bean.EECDShortlistBean;
+import com.nlesd.eecd.dao.EECDShortlistManager;
 import com.nlesd.eecd.dao.EECDTeacherAreaManager;
 public class AddToShortlistAjaxRequestHandler implements RequestHandler
 {
@@ -31,7 +35,18 @@ public class AddToShortlistAjaxRequestHandler implements RequestHandler
 	    }
 	    try{
 	    	int id = Integer.parseInt(request.getParameter("aid"));
-	    	EECDTeacherAreaManager.addToShortlist(id);
+	    	int aid = Integer.parseInt(request.getParameter("areaid"));
+	    	int shortlistid=-1;
+	    	//first we check to see if shortlist alreay started
+	    	EECDShortlistBean ebean = EECDShortlistManager.getShortlistByAreaId(aid, Utils.getCurrentSchoolYear());
+	    	if(ebean.getId() == 0) {
+	    		//add the shortlist
+	    		shortlistid = EECDShortlistManager.addAreaShortList(Utils.getCurrentSchoolYear(), aid);
+	    	}else {
+	    		shortlistid=ebean.getId();
+	    	}
+	    	//next we update that they were shortlist with list id
+	    	EECDTeacherAreaManager.addToShortlistNew(id,shortlistid);
 		    message="ADDED";
 	    }catch(Exception e){
 	    	message=e.toString();

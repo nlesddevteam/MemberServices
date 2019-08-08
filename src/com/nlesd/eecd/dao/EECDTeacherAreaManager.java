@@ -18,10 +18,11 @@ public class EECDTeacherAreaManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.add_teacher_area(?,?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.add_teacher_area(?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(2, vbean.getPersonnelId());
 			stat.setInt(3, vbean.getAreaId());
+			stat.setString(4, vbean.getSchoolYear());
 			stat.execute();
 			sid= ((OracleCallableStatement) stat).getInt(1);
 			
@@ -87,6 +88,47 @@ public class EECDTeacherAreaManager {
 		}
 		return list;
 	}
+	public static TreeMap<Integer,EECDTeacherAreaBean> getAllEECDAreasSchoolYear(int pid,String syear) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<Integer,EECDTeacherAreaBean> list = new TreeMap<Integer,EECDTeacherAreaBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_all_ta_areas_sy(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, pid);
+			stat.setString(3,syear);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				EECDTeacherAreaBean abean = new EECDTeacherAreaBean();
+				abean = createEECDTeacherAreaBean(rs,false);
+				list.put(abean.getAreaId(),abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("TreeMap<Integer,EECDTeacherAreaBean> getAllEECDAreas(int pid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static void deleteTeacherArea(int aid) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -259,6 +301,38 @@ public class EECDTeacherAreaManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void addToShortlistNew(int aid,int sid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			stat = con.prepareCall("begin awsd_user.eecd_pkg.add_to_shortlist_n(?,?); end;");
+			stat.setInt(1, aid);
+			stat.setInt(2, sid);
+			stat.execute();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static void addToShortlist(int aid)): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 	public static ArrayList<EECDTeacherAreaBean> getEECDTAShortListById(int listid) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -299,6 +373,47 @@ public class EECDTeacherAreaManager {
 		}
 		return list;
 	}
+	public static ArrayList<EECDTeacherAreaBean> getEECDTAShortListByIdNew(int listid,int sid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		EECDTeacherAreaBean abean=null;
+		ArrayList<EECDTeacherAreaBean> list = new ArrayList<EECDTeacherAreaBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_ta_short_list_n(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, listid);
+			stat.setInt(3, sid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				abean = createEECDTeacherAreaBean(rs,true);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<EECDTeacherAreaBean> getEECDTAShortListByIdNew(int listid,int sid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static void removeFromShortlist(int aid) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -409,6 +524,47 @@ public class EECDTeacherAreaManager {
 			catch (Exception e) {}
 		}
 		return list;
+	}
+	public static ArrayList<EECDTeacherAreaBean> getEECDTAListStatusByIdSchoolYear(int listid,String syear) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		EECDTeacherAreaBean abean=null;
+		ArrayList<EECDTeacherAreaBean> list = new ArrayList<EECDTeacherAreaBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_ta_list_status_sy(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, listid);
+			stat.setString(3, syear);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				abean = createEECDTeacherAreaBean(rs,true);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<EECDTeacherAreaBean> getEECDTAShortListById(int listid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
 	}	
 	public static EECDTeacherAreaBean createEECDTeacherAreaBean(ResultSet rs,boolean extendedinfo) {
 		EECDTeacherAreaBean abean = null;
@@ -421,7 +577,7 @@ public class EECDTeacherAreaManager {
 					abean.setDateSubmitted(new java.util.Date(rs.getTimestamp("DATE_SUBMITTED").getTime()));
 				}
 				abean.setCurrentStatus(TeacherAreaStatus.get(rs.getInt("CURRENT_STATUS")));
-				if(rs.getInt("IS_SELECTED") == 0){
+				if(rs.getInt("IS_SELECTED") > 0){
 					abean.setSelected(true);
 				}else{
 					abean.setSelected(false);

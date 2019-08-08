@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.awsd.common.Utils;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
@@ -59,6 +60,7 @@ public class AddUpdateTeacherAreaAjaxRequestHandler implements RequestHandler
 		    			ebean.setPersonnelId(usr.getPersonnel().getPersonnelID());
 		    			ebean.setAreaId(Integer.parseInt(s));
 		    			ebean.setCurrentStatus(TeacherAreaStatus.SUBMITTED);
+		    			ebean.setSchoolYear(Utils.getCurrentSchoolYear());
 		    			int taid = EECDTeacherAreaManager.addTeacherArea(ebean);
 		    			//update teacher status
 			    		EECDTeacherAreaStatusBean sbean = new EECDTeacherAreaStatusBean();
@@ -106,6 +108,7 @@ public class AddUpdateTeacherAreaAjaxRequestHandler implements RequestHandler
 	    			ebean.setPersonnelId(usr.getPersonnel().getPersonnelID());
 	    			ebean.setAreaId(Integer.parseInt(s));
 	    			ebean.setCurrentStatus(TeacherAreaStatus.SUBMITTED);
+	    			ebean.setSchoolYear(Utils.getCurrentSchoolYear());
 	    			int taid = EECDTeacherAreaManager.addTeacherArea(ebean);
 	    			//update teacher status
 		    		EECDTeacherAreaStatusBean sbean = new EECDTeacherAreaStatusBean();

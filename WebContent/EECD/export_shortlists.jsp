@@ -60,18 +60,24 @@
 								<table id="exportdatatable" class="table table-condensed table-striped" style="font-size:12px;background-color:#FFFFFF;">								
 					  				<thead>
 					            		<tr>
-					                		<th width="25%">TEACHER</th>
-					                		<th width="25%">SCHOOL</th>
-					                		<th width="50%;">AREA</th>
+					                		<th width="20%">AREA</th>
+					                		<th width="15%">TEACHER</th>
+					                		<th width="15%">SCHOOL</th>
+					                		<th width="20%">ASSIGNMENT</th>
+					                		<th width="10%">YEARS TEACHING</th>
+					                		<th width="20%">EECD EXPERIENCE</th>
 					            		</tr>
 					            	</thead>
 					            	<tbody>							
 								 
 								<c:forEach items='${ areas }' var='area'>
 									<tr>
-										<td>${ area.teacherName}</td>
-										<td>${ area.schoolName}</td>
-										<td>${ area.areaDescription }</td>
+										<td>${ area.areaDescription}</td>
+										<td>${ area.teacherName }</td>
+										<td>${ area.currentSchool}</td>
+										<td>${ area.currentAssignment}</td>
+										<td>${ area.seniority }</td>
+										<td>${ area.committees }</td>
                     				</tr>
 								</c:forEach>
 								
