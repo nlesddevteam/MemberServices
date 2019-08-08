@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <project name="MemberServices" default="dist" basedir=".">
     <description>
         MemberServices build file
@@ -46,17 +48,19 @@
         description="generate the distribution" >
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/lib"/>
+  	
+  	<copy file="${src}/com/connection.properties" todir="${build}/com"/>
 
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/lib/${ant.project.name}-${DSTAMP}.jar" basedir="${build}"/>
 	
-	<delete verbose="true">
-	  <fileset dir="${web.dir}/WEB-INF/lib" includes="${ant.project.name}-*.jar"/>
-	  <fileset dir="${nlesdweb.repo.dir}/WebContent/WEB-INF/lib" includes="${ant.project.name}*.jar"/>
-	</delete>
+		<delete verbose="true">
+		  <fileset dir="${web.dir}/WEB-INF/lib" includes="${ant.project.name}-*.jar"/>
+		  <fileset dir="${nlesdweb.repo.dir}/WebContent/WEB-INF/lib" includes="${ant.project.name}*.jar"/>
+		</delete>
 	
-	<copy file="${dist}/lib/${ant.project.name}-${DSTAMP}.jar" todir="${web.dir}/WEB-INF/lib"/>
-	<copy file="${dist}/lib/${ant.project.name}-${DSTAMP}.jar" todir="${nlesdweb.repo.dir}/WebContent/WEB-INF/lib"/>
+		<copy file="${dist}/lib/${ant.project.name}-${DSTAMP}.jar" todir="${web.dir}/WEB-INF/lib"/>
+		<copy file="${dist}/lib/${ant.project.name}-${DSTAMP}.jar" todir="${nlesdweb.repo.dir}/WebContent/WEB-INF/lib"/>
   </target>
 
   <target name="clean"
