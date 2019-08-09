@@ -65,7 +65,11 @@
   	int totalScore=0;  		
   	totalRates = ref.getPossibleTotal()*3; 	
 	totalScore = ref.getTotalScore().intValue();
-  	double resultScore = 100 * totalScore / totalRates;  	
+	double resultScore = 0;
+	if(totalRates > 0){
+	
+  		resultScore = 100 * totalScore / totalRates;
+	}  	
 	%>	
   	<div class="alert alert-info">The total score for <%= profile.getFullNameReverse() %> on this reference from <%= ref.getProvidedBy() %> is <%=resultScore %>%. (<%=totalScore %> out of <%=totalRates %>).</div>
   	

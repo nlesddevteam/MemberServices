@@ -26,15 +26,7 @@
 	String val4="3";
 	String val5="4";
 	String refscale="4";
-	if(!(refReq == null)){
-		if(refReq.getReferenceScale() == "4"){
-			val1="1";
-			val2="2";
-			val3="3";
-			val4="4";
-			refscale="4";
-		}
-	}
+	
 %>
 <html>
 	<head>
