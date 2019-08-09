@@ -48,10 +48,10 @@ public class AddAnnouncementRequestHandler extends RequestHandlerImpl {
 					try {
 
 						if (form.uploadFileExists("msg_img"))
-							msg.setImage(save_file("msg_img", "/../ROOT/announcements/img/"));
+							msg.setImage(save_file("msg_img", "/../../nlesdweb/WebContent/announcements/img/"));
 
 						if (form.uploadFileExists("msg_full_story"))
-							msg.setFullStoryLink(save_file("msg_full_story", "/../ROOT/announcements/doc/"));
+							msg.setFullStoryLink(save_file("msg_full_story", "/../../nlesdweb/WebContent/announcements/doc/"));
 
 						msg.setType(form.getInt("msg_type"));
 						msg.setDate(form.getDate("msg_date"));

@@ -1,8 +1,10 @@
 package com.nlesd.bcs.worker;
+
 import java.util.TimerTask;
+
 public class ScheduleReportsWorker extends TimerTask {
 
-	//private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../ROOT/";
+	//private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
 	public ScheduleReportsWorker() {
 
@@ -15,12 +17,11 @@ public class ScheduleReportsWorker extends TimerTask {
 		try {
 			//EmailBean emailbean = new EmailBean();
 			//Date d = new Date();
-			
+
 			// Note: code built into main page to show warnings to contractor
 			//schedule reports not being used currently
 			//stub left here in case changes requsted in future
-			
-			
+
 		}
 		catch (Exception e) {
 			System.err.println(e);

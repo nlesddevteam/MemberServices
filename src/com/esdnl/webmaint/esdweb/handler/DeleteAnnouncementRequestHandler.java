@@ -26,7 +26,7 @@ public class DeleteAnnouncementRequestHandler extends RequestHandlerImpl {
 		};
 
 		validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("id")
+				new RequiredFormElement("id")
 		});
 	}
 
@@ -47,21 +47,22 @@ public class DeleteAnnouncementRequestHandler extends RequestHandlerImpl {
 						AnnouncementManager.deleteAnnouncementBean(msg.getID());
 
 						if (!StringUtils.isEmpty(msg.getImage())) {
-							File f = new File(ROOT_DIR + "/../ROOT/images/" + msg.getImage());
+							File f = new File(ROOT_DIR + "/../../nlesdweb/WebContent/images/" + msg.getImage());
 
 							if (f.exists())
 								f.delete();
 						}
 
 						if (!StringUtils.isEmpty(msg.getFullStoryLink())) {
-							File f = new File(ROOT_DIR + "/../ROOT/pdf/" + msg.getFullStoryLink());
+							File f = new File(ROOT_DIR + "/../../nlesdweb/WebContent/pdf/" + msg.getFullStoryLink());
 
 							if (f.exists())
 								f.delete();
 						}
 
 						request.setAttribute("edit_msg", "Announcement DELETED SUCCESSFULLY");
-						request.setAttribute("MESSAGES", AnnouncementManager.getAnnouncementBeans(msg.getType().getTypeID(), false));
+						request.setAttribute("MESSAGES",
+								AnnouncementManager.getAnnouncementBeans(msg.getType().getTypeID(), false));
 						request.setAttribute("VIEW_TYPE", new Integer(msg.getType().getTypeID()));
 					}
 				}
