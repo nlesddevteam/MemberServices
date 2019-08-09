@@ -29,7 +29,7 @@ import com.nlesd.school.service.SchoolZoneService;
 
 public class OpenJobsWorker extends TimerTask {
 
-	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../ROOT/";
+	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
 	public OpenJobsWorker() {
 
@@ -106,7 +106,8 @@ public class OpenJobsWorker extends TimerTask {
 				writer.println("<TABLE width='100%' cellpadding='3' cellspacing='0' align='center'>");
 				writer.println("\t<TR><TD colspan='4' style='color:#FF0000;' class='displayHeaderTitle'>"
 						+ JobTypeConstant.ALL[ii].getDescription() + "</TD></TR>");
-				writer.println("\t<TR><TD class='displayHeaderTitle'>Competition #</TD><TD class='displayHeaderTitle'>Position Title</TD><TD class='displayHeaderTitle'>Competition End Date</TD><TD>&nbsp;</TD></TR>");
+				writer.println(
+						"\t<TR><TD class='displayHeaderTitle'>Competition #</TD><TD class='displayHeaderTitle'>Position Title</TD><TD class='displayHeaderTitle'>Competition End Date</TD><TD>&nbsp;</TD></TR>");
 
 				int jcnt = 0;
 				String bg_color = "";
@@ -128,8 +129,8 @@ public class OpenJobsWorker extends TimerTask {
 
 							writer.println("\t<TR id='" + jobs[i].getCompetitionNumber()
 									+ "' style='padding-top:3px;padding-bottom:3px;background-color:" + bg_color + ";'");
-							writer.println("\t\tonmouseover=\"toggleTableRowHighlight('" + jobs[i].getCompetitionNumber()
-									+ "', '#FFCC00');\"");
+							writer.println(
+									"\t\tonmouseover=\"toggleTableRowHighlight('" + jobs[i].getCompetitionNumber() + "', '#FFCC00');\"");
 							writer.println("\t\tonmouseout=\"toggleTableRowHighlight('" + jobs[i].getCompetitionNumber() + "', '"
 									+ bg_color + "');\">");
 							writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
@@ -143,30 +144,33 @@ public class OpenJobsWorker extends TimerTask {
 							writer.println("\t\t\t" + jobs[i].getPositionTitle());
 							writer.println("\t\t</TD>");
 							if (!jobs[i].isCancelled()) {
-								writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ")
-										+ bd_color + ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
+								writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
+										+ ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
 										+ ";' class='displayText'>" + jobs[i].getFormatedCompetitionEndDate() + "</TD>");
-								writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ")
-										+ bd_color + ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
+								writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
+										+ ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
 										+ " ;' class='displayText'>");
-								writer.println("\t\t\t<A style='color:#FF0000;font-weight:bold;text-decoration:none;' href='/employment/view_job_post.jsp?comp_num="
-										+ jobs[i].getCompetitionNumber() + "'>View</A>");
+								writer.println(
+										"\t\t\t<A style='color:#FF0000;font-weight:bold;text-decoration:none;' href='/employment/view_job_post.jsp?comp_num="
+												+ jobs[i].getCompetitionNumber() + "'>View</A>");
 								writer.println("\t\t</TD>");
 							}
 							else {
-								writer.println("\t\t<TD align='center' style='border-top:solid "
-										+ (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color + ";border-bottom:solid "
-										+ (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-										+ ";color:#FF0000;font-weight:bold;' colspan='2' class='displayText'>POSITION CANCELLED</TD>");
+								writer.println(
+										"\t\t<TD align='center' style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ")
+												+ bd_color + ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
+												+ ";color:#FF0000;font-weight:bold;' colspan='2' class='displayText'>POSITION CANCELLED</TD>");
 							}
 							writer.println("\t</TR>");
 						}
 					}
 					if (jcnt <= 0)
-						writer.println("\t<TR><TD colspan='4' class='displayText'>No positions available at this time. Thank you.</TD></TR>");
+						writer.println(
+								"\t<TR><TD colspan='4' class='displayText'>No positions available at this time. Thank you.</TD></TR>");
 				}
 				else {
-					writer.println("\t<TR><TD colspan='4' class='displayText'>No positions available at this time. Thank you.</TD></TR>");
+					writer.println(
+							"\t<TR><TD colspan='4' class='displayText'>No positions available at this time. Thank you.</TD></TR>");
 				}
 				writer.println("</TABLE>");
 				writer.println("</BODY>");
@@ -263,8 +267,9 @@ public class OpenJobsWorker extends TimerTask {
 							if (regions != null && regions.size() > 0) {
 								for (RegionBean region : regions) {
 									writer.println("<TABLE width='98%' cellpadding='3' cellspacing='0' align='center'>");
-									writer.println("\t<TR><TD colspan='2' style='color:#FF0000;text-transform:capitalize;' class='displayHeaderTitle'>"
-											+ region.getName() + "</TD></TR>");
+									writer.println(
+											"\t<TR><TD colspan='2' style='color:#FF0000;text-transform:capitalize;' class='displayHeaderTitle'>"
+													+ region.getName() + "</TD></TR>");
 									writer.println("\t<TR><TD class='displayHeaderTitle'>List Title</TD><TD>&nbsp;</TD></TR>");
 
 									jcnt = 0;
@@ -280,21 +285,23 @@ public class OpenJobsWorker extends TimerTask {
 										writer.println("\t<TR id='" + list.getId()
 												+ "' style='padding-top:3px;padding-bottom:3px;background-color:" + bg_color + ";'");
 										writer.println("\t\tonmouseover=\"toggleTableRowHighlight('" + list.getId() + "', '#FFCC00');\"");
-										writer.println("\t\tonmouseout=\"toggleTableRowHighlight('" + list.getId() + "', '" + bg_color
-												+ "');\">");
-										writer.println("\t\t<TD align='left' style='border-top:solid 1px " + bd_color
-												+ " ;border-bottom:solid 1px " + bd_color + ";' class='displayText'>" + list.getTitle()
-												+ " </TD>");
+										writer.println(
+												"\t\tonmouseout=\"toggleTableRowHighlight('" + list.getId() + "', '" + bg_color + "');\">");
+										writer.println(
+												"\t\t<TD align='left' style='border-top:solid 1px " + bd_color + " ;border-bottom:solid 1px "
+														+ bd_color + ";' class='displayText'>" + list.getTitle() + " </TD>");
 										writer.println("\t\t<TD align='right' style='border-top:solid 1px " + bd_color
 												+ " ;border-bottom:solid 1px " + bd_color + ";' class='displayText'>");
-										writer.println("\t\t\t<A style='color:#FF0000;font-weight:bold;text-decoration:none;' href='/employment/view_sub_list.jsp?list_id="
-												+ list.getId() + "'>View</A>");
+										writer.println(
+												"\t\t\t<A style='color:#FF0000;font-weight:bold;text-decoration:none;' href='/employment/view_sub_list.jsp?list_id="
+														+ list.getId() + "'>View</A>");
 										writer.println("\t\t</TD>");
 
 										writer.println("\t</TR>");
 									}
 									if (jcnt <= 0)
-										writer.println("\t<TR><TD colspan='2' class='displayText'>No lists available at this time. Thank you.</TD></TR>");
+										writer.println(
+												"\t<TR><TD colspan='2' class='displayText'>No lists available at this time. Thank you.</TD></TR>");
 
 									writer.println("</TABLE>");
 									writer.println("<BR><BR>");

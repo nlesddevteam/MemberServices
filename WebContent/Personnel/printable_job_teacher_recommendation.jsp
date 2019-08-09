@@ -95,31 +95,31 @@ input {border:1px solid silver;}
 			
 		</style>
 		<script type='text/javascript'>
-			//var interval_id;
+			var interval_id;
 			$('document').ready(function(){
 				
+	      window.print();
 	      
-	      
-	    //  interval_id = setInterval(printPDFs, 5000);
+	      interval_id = setInterval(printPDFs, 5000);
 			});
 			
-			//function printPDFs(){
-			//	var coc = document.getElementById('coc-doc');
-			//	if(coc)
-			//		coc.printAll();
+			function printPDFs(){
+				var coc = document.getElementById('coc-doc');
+				if(coc)
+					coc.printAll();
 				
-			//	var tc = document.getElementById('tc-doc');
-		//		if(tc)
-			//		tc.printAll();	
+				var tc = document.getElementById('tc-doc');
+				if(tc)
+					tc.printAll();	
 				
-			//	var trans = document.getElementById('trans-doc');
-			//	if(trans)
-			//		trans.printAll();
+				var trans = document.getElementById('trans-doc');
+				if(trans)
+					trans.printAll();
 				
-			//	clearInterval(interval_id);
+				clearInterval(interval_id);
 				
 				//window.close();
-			//}
+			}
 		</script>
 	</head>
 	
@@ -1028,14 +1028,14 @@ input {border:1px solid silver;}
 			<td class="tableResultL">${cod.applicant.fullName}</td>
 			<td class="tableTitleR">DATE OF BIRTH:</td>
 			<td class="tableResultR">
-				<c:choose>
+			<c:choose>
 				<c:when test="${cod.applicant.DOB eq null}">
-				Currently not on file.
+					Currently not on file.
 				</c:when>
 				<c:otherwise>
-				${cod.applicant.DOBFormatted}
+					${cod.applicant.DOBFormatted}
 				</c:otherwise>
-				</c:choose>
+			</c:choose>
 			</td>
 			</tr>
 			<tr>
@@ -1114,13 +1114,7 @@ input {border:1px solid silver;}
   
  <jsp:include page="print_privacy.jsp" />
   
-  <script>
-  $('document').ready(function(){
-	  window.print();
- });
- 
   
-  </script>
   
 	</body>
 </html>
