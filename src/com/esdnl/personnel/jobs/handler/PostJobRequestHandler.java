@@ -81,20 +81,19 @@ public class PostJobRequestHandler implements RequestHandler {
 			else if (StringUtils.isEmpty(ad_text)) {
 				request.setAttribute("msgERR", "Ad text is a required field.");
 				path = "admin_post_job.jsp";
-			} 
-			else if ((degree == null) && (degree.length > 0)) {
+			}
+			else if ((degree == null) || (degree.length < 1)) {
 				request.setAttribute("msgERR", "Degree a required field.");
 				path = "admin_post_job.jsp";
-			} 
-			else if ((major == null) && (major.length > 0)) {
+			}
+			else if ((major == null) || (major.length < 1)) {
 				request.setAttribute("msgERR", "Major a required field.");
 				path = "admin_post_job.jsp";
-			} 
-			else if ((minor == null) && (major.length > 0)) {
+			}
+			else if ((minor == null) || (minor.length < 1)) {
 				request.setAttribute("msgERR", "Minor a required field.");
 				path = "admin_post_job.jsp";
-			} 
-			
+			}
 			else if (StringUtils.isEmpty(comp_end_date)) {
 				request.setAttribute("msgERR", "Competition end date is a required field.");
 				path = "admin_post_job.jsp";
@@ -125,7 +124,8 @@ public class PostJobRequestHandler implements RequestHandler {
 				else if (!StringUtils.isEmpty(request.getParameter("candidatelist_private")))
 					opp.setPrivateCandidateList(true);
 
-				JobOpportunityAssignmentBean ass = new JobOpportunityAssignmentBean(opp.getCompetitionNumber(), Integer.parseInt(location), 0.0);
+				JobOpportunityAssignmentBean ass = new JobOpportunityAssignmentBean(opp.getCompetitionNumber(), Integer.parseInt(
+						location), 0.0);
 				opp.add(ass);
 
 				if ((degree != null) && (degree.length > 0)) {
@@ -162,37 +162,39 @@ public class PostJobRequestHandler implements RequestHandler {
 						else {
 							opp.setUnadvertise(false);
 						}
-					}else{
+					}
+					else {
 						opp.setUnadvertise(false);
 					}
-					if(issupport.equals("Y")){
+					if (issupport.equals("Y")) {
 						opp.setIsSupport("Y");
-					}else{
+					}
+					else {
 						opp.setIsSupport("N");
 					}
 					opp = JobOpportunityManager.addJobOpportunityBean(opp);
 					request.setAttribute("msgOK", "Job " + opp.getCompetitionNumber() + " posted successfully.");
 
-					if(issupport.equals("Y")){
+					if (issupport.equals("Y")) {
 						if (!StringUtils.isEmpty(request.getParameter("request_id"))) {
-							AdRequestManager.postAdRequestSSBean(
-									Integer.parseInt(request.getParameter("request_id")),
+							AdRequestManager.postAdRequestSSBean(Integer.parseInt(request.getParameter("request_id")),
 									usr.getPersonnel(), opp.getCompetitionNumber());
 						}
-					}else{
+					}
+					else {
 						if (!StringUtils.isEmpty(request.getParameter("request_id"))) {
 							AdRequestManager.postAdRequestBean(
 									AdRequestManager.getAdRequestBean(Integer.parseInt(request.getParameter("request_id"))),
 									usr.getPersonnel(), opp.getCompetitionNumber());
 						}
 					}
-					
+
 				}
 				else {
 					JobOpportunityManager.updateJobOpportunityBean(opp);
 					request.setAttribute("msgOK", "Job " + opp.getCompetitionNumber() + " updated successfully.");
 				}
-				
+
 				path = "admin_post_job.jsp";
 
 			}
