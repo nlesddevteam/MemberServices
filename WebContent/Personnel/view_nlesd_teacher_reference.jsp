@@ -63,7 +63,11 @@ $("#loadingSpinner").css("display","none");
   	int totalScore=0;  		
   	totalRates = ref.getPossibleTotal()*4; 	
 	totalScore = ref.getTotalScore().intValue();
-  	double resultScore = 100 * totalScore / totalRates;  	
+  	double resultScore = 0;
+	if(totalRates > 0){
+	
+  		resultScore = 100 * totalScore / totalRates;
+	}    	
 	%>	
   	
   	  	

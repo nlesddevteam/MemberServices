@@ -26,7 +26,7 @@
 	}catch (Exception e){
 		p=null;
 	}
-	System.out.println(refReq.getEmailAddress());
+	
 	
 %>
 <html>
