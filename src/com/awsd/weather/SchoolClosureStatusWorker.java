@@ -15,9 +15,9 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 	private Vector<SchoolSystem> systems = null;
 
-	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../../webapps/nlesdweb/ROOT/";
+	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../ROOT/";
+	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
 	public SchoolClosureStatusWorker(Vector<SchoolSystem> systems) {
 
@@ -109,8 +109,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 				writer.println("<div class='school-system'>");
 
-				writer.println("<div class='school-system-name'>" + sys.getSchoolSystemName().replaceAll("'", "&#39;")
-						+ "</div>");
+				writer.println(
+						"<div class='school-system-name'>" + sys.getSchoolSystemName().replaceAll("'", "&#39;") + "</div>");
 
 				for (School school : sys.getSchoolSystemSchools()) {
 					isOffice = (school.getSchoolName().endsWith("Office") || (school.getSchoolID() == 220));
@@ -122,8 +122,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 					writer.println("<div class='school-name'>" + school.getSchoolName().replaceAll("'", "&#39;") + "</div>");
 
 					writer.print("<div class='school-status " + cssClass(stat.getClosureStatusID()) + "'>");
-					writer.print(!isOffice ? stat.getClosureStatusDescription() : stat.getClosureStatusDescription().replaceAll(
-							"School", "Office"));
+					writer.print(!isOffice ? stat.getClosureStatusDescription()
+							: stat.getClosureStatusDescription().replaceAll("School", "Office"));
 					writer.println("</div>");
 
 					if (stat.getSchoolClosureNote() != null) {
@@ -249,7 +249,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			writer.println("<div id=\"tempholder\"></div>");
 			writer.println("<script type=\"text/javascript\">");
 			writer.println("//SET SCROLLER APPEARANCE AND MESSAGES");
-			writer.println("var myScroller1 = new Scroller(0, 0, parseInt($('#tempholder').width()), parseInt($('#tempholder').height()), 0, 10, false); //(xpos, ypos, width, height, border, padding, rounded)");
+			writer.println(
+					"var myScroller1 = new Scroller(0, 0, parseInt($('#tempholder').width()), parseInt($('#tempholder').height()), 0, 10, false); //(xpos, ypos, width, height, border, padding, rounded)");
 			writer.println("myScroller1.setColors(\"#333333\", \"#F8F8F1\", \"#F8F8F1\"); //(fgcolor, bgcolor, bdcolor)");
 			writer.println("myScroller1.setFont(\"Tahoma\", 1);");
 
@@ -276,51 +277,41 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 					writer.println("if((cookie_val==null) || cookie_val == \"\" || cookie_val == \"|\"){");
 					if ((stat.getSchoolClosureNote() != null) && !stat.getSchoolClosureNote().equalsIgnoreCase("")) {
-						writer.println("myScroller1.addItem('<div id=\"status_"
-								+ school.getSchoolID()
+						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
 								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;")
-								+ "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID())
-								+ "\">"
-								+ (!isOffice ? stat.getClosureStatusDescription() : stat.getClosureStatusDescription().replaceAll(
-										"School", "Office")) + "</span><BR><span style=\"font-size:10px;color:#333333;\"><b>Note</b>: "
+								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
+								+ cssClass(stat.getClosureStatusID()) + "\">"
+								+ (!isOffice ? stat.getClosureStatusDescription()
+										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
+								+ "</span><BR><span style=\"font-size:10px;color:#333333;\"><b>Note</b>: "
 								+ encodeHTML(stat.getSchoolClosureNote()) + "</span></div>');");
 					}
 					else {
-						writer.println("myScroller1.addItem('<div id=\"status_"
-								+ school.getSchoolID()
+						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
 								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;")
-								+ "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID())
-								+ "\">"
-								+ (!isOffice ? stat.getClosureStatusDescription() : stat.getClosureStatusDescription().replaceAll(
-										"School", "Office")) + "</span></div>');");
+								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
+								+ cssClass(stat.getClosureStatusID()) + "\">" + (!isOffice ? stat.getClosureStatusDescription()
+										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
+								+ "</span></div>');");
 					}
 					writer.println("}else if(cookie_val.indexOf(\"|" + school.getSchoolID() + "|\") >= 0){");
 					if ((stat.getSchoolClosureNote() != null) && !stat.getSchoolClosureNote().equalsIgnoreCase("")) {
-						writer.println("myScroller1.addItem('<div id=\"status_"
-								+ school.getSchoolID()
+						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
 								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;")
-								+ "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID())
-								+ "\">"
-								+ (!isOffice ? stat.getClosureStatusDescription() : stat.getClosureStatusDescription().replaceAll(
-										"School", "Office")) + "</span><BR><span style=\"font-size:10px;color:#333333;\"><b>Note</b>: "
+								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
+								+ cssClass(stat.getClosureStatusID()) + "\">"
+								+ (!isOffice ? stat.getClosureStatusDescription()
+										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
+								+ "</span><BR><span style=\"font-size:10px;color:#333333;\"><b>Note</b>: "
 								+ encodeHTML(stat.getSchoolClosureNote()) + "</span></div>');}");
 					}
 					else {
-						writer.println("myScroller1.addItem('<div id=\"status_"
-								+ school.getSchoolID()
+						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
 								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;")
-								+ "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID())
-								+ "\">"
-								+ (!isOffice ? stat.getClosureStatusDescription() : stat.getClosureStatusDescription().replaceAll(
-										"School", "Office")) + "</span></div>');}");
+								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
+								+ cssClass(stat.getClosureStatusID()) + "\">" + (!isOffice ? stat.getClosureStatusDescription()
+										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
+								+ "</span></div>');}");
 					}
 				}
 			}
@@ -396,7 +387,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			writer.println(this.getGoogleAnalytics());
 			writer.println("</head>");
 			writer.println("<body>");
-			writer.println("<table width='100%' cellpadding='0' cellspacing='0' border='0' style='border:1px solid #C1CDD8;'>");
+			writer.println(
+					"<table width='100%' cellpadding='0' cellspacing='0' border='0' style='border:1px solid #C1CDD8;'>");
 			writer.println("<tr id='bodyContainer'>");
 			writer.println("<td width='100%' align='left' valign='top'>");
 			writer.println("<table width='100%' cellpadding='0' cellspacing='0' border='0'>");
@@ -415,7 +407,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 				writer.println("</td>");
 				writer.println("</tr>");
 				writer.println("<tr>");
-				writer.println("<td width='100%' height='1' align='left' valign='middle' colspan='4' style='background-color: #C1CDD8;'>");
+				writer.println(
+						"<td width='100%' height='1' align='left' valign='middle' colspan='4' style='background-color: #C1CDD8;'>");
 				writer.println("<img src='http://www.nlesd.ca/images/spacer.gif' width='1' height='1'><BR>");
 				writer.println("</td>");
 				writer.println("</tr>");
@@ -436,8 +429,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 					writer.print("<span class='" + cssClass(stat.getClosureStatusID()) + "'>");
 
-					writer.print(!isOffice ? stat.getClosureStatusDescription() : stat.getClosureStatusDescription().replaceAll(
-							"School", "Office"));
+					writer.print(!isOffice ? stat.getClosureStatusDescription()
+							: stat.getClosureStatusDescription().replaceAll("School", "Office"));
 					writer.println("</span>");
 					if (stat.getSchoolClosureNote() != null) {
 						writer.print("<BR><span style='font-size:11px;color:#333333;'><b>Note</b>:&nbsp;"
@@ -520,17 +513,17 @@ public class SchoolClosureStatusWorker extends TimerTask {
 	private String encodeHTML(String raw) {
 
 		return raw.replaceAll(new String(new char[] {
-			(char) 39
+				(char) 39
 		}), "&#39;") // single quote
-		.replaceAll(new String(new char[] {
-			(char) 44
-		}), "&#44;") // comma
-		.replaceAll(new String(new char[] {
-			(char) 10
-		}), "") // line feed
-		.replaceAll(new String(new char[] {
-			(char) 13
-		}), ""); // cartiage return;
+				.replaceAll(new String(new char[] {
+						(char) 44
+				}), "&#44;") // comma
+				.replaceAll(new String(new char[] {
+						(char) 10
+				}), "") // line feed
+				.replaceAll(new String(new char[] {
+						(char) 13
+				}), ""); // cartiage return;
 	}
 
 	private String getGoogleAnalytics() {
@@ -545,7 +538,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 		buf.append("(function() {");
 		buf.append(" var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;");
-		buf.append("ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';");
+		buf.append(
+				"ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';");
 		buf.append("var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);");
 		buf.append("})();");
 		buf.append("</script>");

@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javazoom.upload.UploadFile;
+
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -16,56 +17,56 @@ import com.esdnl.webupdatesystem.blogs.bean.BlogsBean;
 import com.esdnl.webupdatesystem.blogs.constants.BlogStatus;
 import com.esdnl.webupdatesystem.blogs.dao.BlogsManager;
 
+import javazoom.upload.UploadFile;
+
 public class AddNewBlogRequestHandler extends RequestHandlerImpl {
+
 	public AddNewBlogRequestHandler() {
+
 		this.validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("blog_title", "Blog Title is required."),
 				new RequiredFormElement("blog_date", "Blog Date is required."),
 				new RequiredFormElement("blog_content", "Blog Content is required.")
 		});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR","WEB DESIGNER","WEBANNOUNCMENTS-POST"
-			};
+				"ADMINISTRATOR", "WEB DESIGNER", "WEBANNOUNCMENTS-POST"
+		};
 	}
+
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse reponse)
 			throws ServletException,
 				IOException {
+
 		super.handleRequest(request, reponse);
-		boolean fileok=false;
-    	String filelocation="";
-    	String contentfilename = "";
-    	String photofilename="";
-    	
+		boolean fileok = false;
+		String filelocation = "";
+		String contentfilename = "";
+		String photofilename = "";
+
 		UploadFile file = null;
 		try {
-			if(form.get("op") == null)
-			{
-				Map<Integer,String> statuslist = new HashMap<Integer,String>();
-				for(BlogStatus t : BlogStatus.ALL)
-				{
-					statuslist.put(t.getValue(),t.getDescription());
+			if (form.get("op") == null) {
+				Map<Integer, String> statuslist = new HashMap<Integer, String>();
+				for (BlogStatus t : BlogStatus.ALL) {
+					statuslist.put(t.getValue(), t.getDescription());
 				}
 				request.setAttribute("statuslist", statuslist);
 				path = "add_new_blog.jsp";
-				
+
 			}
-			else{
+			else {
 				//check file
-				if (form.uploadFileExists("blog_document"))
-				{
+				if (form.uploadFileExists("blog_document")) {
 					//save the file
-	                filelocation="/../ROOT/includes/files/blog/doc/";
-	                contentfilename = save_file("blog_document", filelocation);
-	                	
-	                
+					filelocation = "/../../nlesdweb/WebContent/includes/files/blog/doc/";
+					contentfilename = save_file("blog_document", filelocation);
+
 				}
-				if (form.uploadFileExists("blog_photo"))
-				{
-					filelocation="/../ROOT/includes/files/blog/img/";
-                	photofilename = save_file("blog_photo", filelocation);
-	               
-	                
+				if (form.uploadFileExists("blog_photo")) {
+					filelocation = "/../../nlesdweb/WebContent/includes/files/blog/img/";
+					photofilename = save_file("blog_photo", filelocation);
+
 				}
 				//check mandatory fields
 				if (validate_form()) {
@@ -81,26 +82,24 @@ public class AddNewBlogRequestHandler extends RequestHandlerImpl {
 					bb.setAddedBy(usr.getPersonnel().getFullNameReverse());
 					bb.setBlogPhotoCaption(form.get("blog_photo_caption"));
 					int id = BlogsManager.addBlog(bb);
-					Map<Integer,String> statuslist = new HashMap<Integer,String>();
-					
-					for(BlogStatus t : BlogStatus.ALL)
-					{
-						statuslist.put(t.getValue(),t.getDescription());
+					Map<Integer, String> statuslist = new HashMap<Integer, String>();
+
+					for (BlogStatus t : BlogStatus.ALL) {
+						statuslist.put(t.getValue(), t.getDescription());
 					}
 					request.setAttribute("statuslist", statuslist);
 					path = "add_new_blog.jsp";
 					request.setAttribute("msg", "Blog has been added");
-				}else{
-					Map<Integer,String> statuslist = new HashMap<Integer,String>();
-					
-					for(BlogStatus t : BlogStatus.ALL)
-					{
-						statuslist.put(t.getValue(),t.getDescription());
+				}
+				else {
+					Map<Integer, String> statuslist = new HashMap<Integer, String>();
+
+					for (BlogStatus t : BlogStatus.ALL) {
+						statuslist.put(t.getValue(), t.getDescription());
 					}
 					request.setAttribute("statuslist", statuslist);
-					
-					if(! validate_form())
-					{
+
+					if (!validate_form()) {
 						request.setAttribute("msg", validator.getErrorString());
 					}
 					path = "add_new_blog.jsp";

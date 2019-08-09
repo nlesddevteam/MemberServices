@@ -19,11 +19,7 @@ import com.esdnl.webmaint.esdweb.dao.AnnouncementSettingsManager;
 
 public class AnnouncementExportTimerTask extends TimerTask {
 
-	//private String esdnl_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../ROOT/";
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH
-	//		+ "/../../../webapps/nlesdweb/ROOT/announcements/";
-
-	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../ROOT/";
+	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
 	public AnnouncementExportTimerTask() {
 
@@ -55,21 +51,21 @@ public class AnnouncementExportTimerTask extends TimerTask {
 
 	/*
 	private void exportAnnouncementsESDNL() {
-
+	
 		File announcement_tmp = null, announcement_real = null;
 		PrintWriter writer = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
-
+	
 		try {
-
+	
 			AnnouncementBean[] msgs = AnnouncementManager.getFrontPageAnnouncementBeans(AnnouncementTypeConstant.ANNOUNCEMENT.getTypeID());
-
+	
 			announcement_tmp = new File(esdnl_rootbasepath + "announcements_"
 					+ AnnouncementTypeConstant.ANNOUNCEMENT.getTypeID() + ".tmp");
-
+	
 			if (announcement_tmp.exists()) {
 				System.err.println("<<<<< " + announcement_tmp.getName() + " FILE ALREADY EXIST >>>>>");
-
+	
 				if (announcement_tmp.delete()) {
 					System.err.println("<<<<< " + announcement_tmp.getName() + " FILE DELETED >>>>>");
 				}
@@ -77,11 +73,11 @@ public class AnnouncementExportTimerTask extends TimerTask {
 					System.err.println("<<<<< " + announcement_tmp.getName() + " FILE COULD NOT BE DELETED >>>>>");
 				}
 			}
-
+	
 			writer = new PrintWriter(new FileWriter(announcement_tmp), true);
-
+	
 			for (int i = 0; ((msgs != null) && (i < msgs.length)); i++) {
-
+	
 				writer.println("<table width='405'><tr valign='top'><td>");
 				writer.println("<h4 class='newsheader'>" + msgs[i].getHeader() + "</h4>");
 				writer.println("<div align='left' class='mainbody'>");
@@ -94,7 +90,7 @@ public class AnnouncementExportTimerTask extends TimerTask {
 					//out.println("<tr valign='top'><td><div align='center'><img src='/images/" + msgs[i].getImage() + "' align='center' border='0' alt='' width='200'></div></td></tr>");
 					writer.println("<tr valign='top'><td style='border: 1px solid Silver; padding: 3px 3px 3px 3px;'><div align='center'><img src='/images/"
 							+ msgs[i].getImage() + "' align='center' border='0' alt='' width='200'></div></td></tr>");
-
+	
 					//close the table
 					writer.println("</table>");
 				}
@@ -102,7 +98,7 @@ public class AnnouncementExportTimerTask extends TimerTask {
 						"<a class='menu'"));
 				// Just in case to limit the amount of characters displayed in story
 				//out.print(msgs[i].getBody().substring(0,155));
-
+	
 				if (!StringUtils.isEmpty(msgs[i].getImage())) {
 					if (!StringUtils.isEmpty(msgs[i].getImageCaption())) {
 						writer.println("<p><a href=\"/news/fullstory.jsp?NewsTitle="
@@ -123,31 +119,31 @@ public class AnnouncementExportTimerTask extends TimerTask {
 								+ "&NewsBody="
 								+ msgs[i].getBody().replaceAll("\n", "<BR>")
 								+ "\" onclick=\"NewWindow(this.href,'mywin','640','450','yes','center');return false\" onfocus=\"this.blur()\" class=\"menu\"><img src='/includes/images/fullstory-off.gif' alt='Open Full Story Page' name='fp2' id='fp2' width='102' height='27' border='0'></a>");
-
+	
 					}
 				}
 				else {
 					writer.println("<p>");
 				}
-
+	
 				if (!StringUtils.isEmpty(msgs[i].getFullStoryLink()))
 					writer.println("<a href='/pdf/"
 							+ msgs[i].getFullStoryLink()
 							+ "' class='menu'><img src='/includes/images/seeattachment-off.gif' alt='See Attachment' name='fp1' id='fp1' width='102' height='27' border='0'></a>&nbsp;");
-
+	
 				writer.println("</div>");
-
+	
 				writer.println("</td></tr><tr><td colspan=2>");
-
+	
 				if (i < (msgs.length - 1)) {
 					writer.println("<br><img src='/includes/images/redbar.gif' alt='' width='405' height='1' border='0'><p>");
 				}
 				writer.println("</td></tr></table>");
 			}
-
+	
 			writer.flush();
 			writer.close();
-
+	
 			announcement_real = new File(esdnl_rootbasepath + "announcements_"
 					+ AnnouncementTypeConstant.ANNOUNCEMENT.getTypeID() + ".html");
 			if (announcement_real.exists()) {
@@ -155,7 +151,7 @@ public class AnnouncementExportTimerTask extends TimerTask {
 				System.err.println("<<<<<< EXISTING " + announcement_real.getName() + " FILE DELETED >>>>>>");
 			}
 			announcement_tmp.renameTo(announcement_real);
-
+	
 		}
 		catch (Exception e) {
 			System.err.println(e);
@@ -163,23 +159,23 @@ public class AnnouncementExportTimerTask extends TimerTask {
 			System.err.flush();
 		}
 	}
-
+	
 	private void exportBulletinBoardESDNL() {
-
+	
 		File announcement_tmp = null, announcement_real = null;
 		PrintWriter writer = null;
 		SimpleDateFormat sdfbb = new SimpleDateFormat("MM/d/y");
-
+	
 		try {
-
+	
 			AnnouncementBean[] bboard = AnnouncementManager.getCurrentAnnouncementBeans(AnnouncementTypeConstant.BULLETIN_BOARD.getTypeID());
-
+	
 			announcement_tmp = new File(esdnl_rootbasepath + "announcements_"
 					+ AnnouncementTypeConstant.BULLETIN_BOARD.getTypeID() + ".tmp");
-
+	
 			if (announcement_tmp.exists()) {
 				System.err.println("<<<<< " + announcement_tmp.getName() + " FILE ALREADY EXIST >>>>>");
-
+	
 				if (announcement_tmp.delete()) {
 					System.err.println("<<<<< " + announcement_tmp.getName() + " FILE DELETED >>>>>");
 				}
@@ -187,17 +183,17 @@ public class AnnouncementExportTimerTask extends TimerTask {
 					System.err.println("<<<<< " + announcement_tmp.getName() + " FILE COULD NOT BE DELETED >>>>>");
 				}
 			}
-
+	
 			writer = new PrintWriter(new FileWriter(announcement_tmp), true);
-
+	
 			if (bboard.length < 1) {
 				writer.println("<p><img src='includes/images/bluebar.jpg' alt='' width='170' height='1' border='0'><p>");
 			}
 			else {
 				writer.println("<p><table width='160' border='0' cellspacing='0' cellpadding='0' align='center' style='background: #FFFFFF;'><tr><td><img src='includes/images/bbtop-y.png' alt='' width='160' height='30' border='0'></td></tr><tr><td style='background-image: url(/includes/images/bbback-y.png); background-repeat: repeat-y;'><table width='145' border='0' cellspacing='2' cellpadding='2' align='center'><tr><td><div align='center' style='font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color: #00407A;'>");
-
+	
 				for (int i = 0; ((bboard != null) && (i < bboard.length)); i++) {
-
+	
 					//Does Message have image?
 					if (!StringUtils.isEmpty(bboard[i].getImage())) {
 						writer.println("<div align='center'><img src='/images/" + bboard[i].getImage()
@@ -214,13 +210,13 @@ public class AnnouncementExportTimerTask extends TimerTask {
 						writer.println("<br><img src='/includes/images/bluebar.jpg' alt='' width='100' height='1' vspace='10' border='0'><br>");
 					}
 				}
-
+	
 				writer.println("</div></td></tr></table></td></tr><tr><td><img src='includes/images/bbbot-y.png' alt='' width='160' height='7' border='0'></td></tr></table><p><img src='includes/images/bluebar.jpg' alt='' width='170' height='1' border='0'><p>");
 			}
-
+	
 			writer.flush();
 			writer.close();
-
+	
 			announcement_real = new File(esdnl_rootbasepath + "announcements_"
 					+ AnnouncementTypeConstant.BULLETIN_BOARD.getTypeID() + ".html");
 			if (announcement_real.exists()) {
@@ -228,7 +224,7 @@ public class AnnouncementExportTimerTask extends TimerTask {
 				System.err.println("<<<<<< EXISTING " + announcement_real.getName() + " FILE DELETED >>>>>>");
 			}
 			announcement_tmp.renameTo(announcement_real);
-
+	
 		}
 		catch (Exception e) {
 			System.err.println(e);
@@ -303,31 +299,21 @@ public class AnnouncementExportTimerTask extends TimerTask {
 
 						if (!StringUtils.isEmpty(msg.getImage())) {
 							if (!StringUtils.isEmpty(msg.getImageCaption())) {
-								writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle="
-										+ msg.getHeader()
-										+ "&NewsImage="
-										+ msg.getImage()
-										+ "&NewsCaption="
-										+ msg.getImageCaption()
-										+ "&NewsBody="
+								writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle=" + msg.getHeader() + "&NewsImage="
+										+ msg.getImage() + "&NewsCaption=" + msg.getImageCaption() + "&NewsBody="
 										+ msg.getBody().replaceAll("\n", "<BR />")
 										+ "\"><img src='/announcements/img/viewfullstory-off.png' class='img-swap' alt='Open Full Story Page' border='0'></a>");
 							}
 							else {
-								writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle="
-										+ msg.getHeader()
-										+ "&NewsImage="
-										+ msg.getImage()
-										+ "&NewsBody="
-										+ msg.getBody().replaceAll("\n", "<BR />")
+								writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle=" + msg.getHeader() + "&NewsImage="
+										+ msg.getImage() + "&NewsBody=" + msg.getBody().replaceAll("\n", "<BR />")
 										+ "\"><img src='/announcements/img/viewfullstory-off.png' class='img-swap' alt='Open Full Story Page' border='0'></a>");
 							}
 							writer.println("<br />");
 						}
 
 						if (!StringUtils.isEmpty(msg.getFullStoryLink())) {
-							writer.println("<a href='/announcements/doc/"
-									+ msg.getFullStoryLink()
+							writer.println("<a href='/announcements/doc/" + msg.getFullStoryLink()
 									+ "'><img src='/announcements/img/viewattachment-off.png' class='img-swap' alt='See Attachment' border='0'></a>&nbsp;<br/>");
 						}
 
@@ -368,7 +354,8 @@ public class AnnouncementExportTimerTask extends TimerTask {
 
 		try {
 
-			Collection<AnnouncementBean> bboard = AnnouncementManager.getCurrentAnnouncementBeans(AnnouncementTypeConstant.BULLETIN_BOARD.getTypeID());
+			Collection<AnnouncementBean> bboard = AnnouncementManager.getCurrentAnnouncementBeans(
+					AnnouncementTypeConstant.BULLETIN_BOARD.getTypeID());
 
 			announcement_tmp = new File(nlesd_rootbasepath + "announcements/announcements_"
 					+ AnnouncementTypeConstant.BULLETIN_BOARD.getTypeID() + ".tmp");
@@ -402,14 +389,15 @@ public class AnnouncementExportTimerTask extends TimerTask {
 					}
 					writer.println("\t<div class='item-header'>" + ab.getHeader() + "</div>");
 					writer.println("\t<div class='item-date'>Posted: " + sdfbb.format(ab.getDate()) + "</div>");
-					writer.println("\t<div class='item-body'>\n"
-							+ ab.getBody().replaceAll("\"", "&quot;").replaceAll("\n", "<BR>"));
+					writer.println(
+							"\t<div class='item-body'>\n" + ab.getBody().replaceAll("\"", "&quot;").replaceAll("\n", "<BR>"));
 					if (!StringUtils.isEmpty(ab.getFullStoryLink()))
 						writer.println(" (<a href='/announcements/doc/" + ab.getFullStoryLink() + "'>More details...</a>)");
 					writer.println("\t</div>");
 					writer.println("</div>");
 					if (i++ < (bboard.size() - 1)) {
-						writer.println("<div class='item-separator'><img src='/includes/images/bluebar.jpg' alt='' width='100' height='1' vspace='10' border='0'></div>");
+						writer.println(
+								"<div class='item-separator'><img src='/includes/images/bluebar.jpg' alt='' width='100' height='1' vspace='10' border='0'></div>");
 					}
 				}
 			}
@@ -486,31 +474,21 @@ public class AnnouncementExportTimerTask extends TimerTask {
 
 				if (!StringUtils.isEmpty(msg.getImage())) {
 					if (!StringUtils.isEmpty(msg.getImageCaption())) {
-						writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle="
-								+ msg.getHeader()
-								+ "&NewsImage="
-								+ msg.getImage()
-								+ "&NewsCaption="
-								+ msg.getImageCaption()
-								+ "&NewsBody="
+						writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle=" + msg.getHeader() + "&NewsImage="
+								+ msg.getImage() + "&NewsCaption=" + msg.getImageCaption() + "&NewsBody="
 								+ msg.getBody().replaceAll("\n", "<BR />")
 								+ "\"><img src='/announcements/img/viewfullstory-off.png' alt='Open Full Story Page' class='img-swap' border='0'></a>");
 					}
 					else {
-						writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle="
-								+ msg.getHeader()
-								+ "&NewsImage="
-								+ msg.getImage()
-								+ "&NewsBody="
-								+ msg.getBody().replaceAll("\n", "<BR />")
+						writer.println("<a href=\"/announcements/fullstory.jsp?NewsTitle=" + msg.getHeader() + "&NewsImage="
+								+ msg.getImage() + "&NewsBody=" + msg.getBody().replaceAll("\n", "<BR />")
 								+ "\"><img src='/announcements/img/viewfullstory-off.png' alt='Open Full Story Page' class='img-swap' border='0'></a>");
 
 					}
 				}
 
 				if (!StringUtils.isEmpty(msg.getFullStoryLink())) {
-					writer.println("<a href='/announcements/doc/"
-							+ msg.getFullStoryLink()
+					writer.println("<a href='/announcements/doc/" + msg.getFullStoryLink()
 							+ "'><img src='/announcements/img/viewattachment-off.png' alt='See Attachment' class='img-swap' border='0'></a><br />");
 				}
 

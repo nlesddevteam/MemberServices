@@ -59,24 +59,25 @@ public class EditArchivedAnnouncementRequestHandler extends RequestHandlerImpl {
 						message.setBody(form.get("msg_body"));
 
 						if (form.exists("delete-image")) {
-							File img = new File(ROOT_DIR + "/../ROOT/announcements/img/" + message.getImage());
+							File img = new File(ROOT_DIR + "/../../nlesdweb/WebContent/announcements/img/" + message.getImage());
 							if (img.exists())
 								img.delete();
 							message.setImage(null);
 						}
 
 						if (form.exists("delete-pdf")) {
-							File pdf = new File(ROOT_DIR + "/../ROOT/announcements/doc/" + message.getFullStoryLink());
+							File pdf = new File(ROOT_DIR + "/../../nlesdweb/WebContent/announcements/doc/"
+									+ message.getFullStoryLink());
 							if (pdf.exists())
 								pdf.delete();
 							message.setFullStoryLink(null);
 						}
 
 						if (form.uploadFileExists("msg_img"))
-							message.setImage(save_file("msg_img", "/../ROOT/announcements/img/"));
+							message.setImage(save_file("msg_img", "/../../nlesdweb/WebContent/announcements/img/"));
 
 						if (form.uploadFileExists("msg_full_story"))
-							message.setFullStoryLink(save_file("msg_full_story", "/../ROOT/announcements/doc/"));
+							message.setFullStoryLink(save_file("msg_full_story", "/../../nlesdweb/WebContent/announcements/doc/"));
 
 						message.setImageCaption(form.get("msg_img_caption"));
 
@@ -123,7 +124,7 @@ public class EditArchivedAnnouncementRequestHandler extends RequestHandlerImpl {
 			}
 			else {
 				validator = new FormValidator(new FormElement[] {
-					new RequiredFormElement("id")
+						new RequiredFormElement("id")
 				});
 
 				if (validate_form()) {

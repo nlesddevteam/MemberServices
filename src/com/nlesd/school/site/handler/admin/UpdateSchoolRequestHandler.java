@@ -29,13 +29,14 @@ import com.nlesd.school.service.SchoolZoneService;
 
 public class UpdateSchoolRequestHandler extends RequestHandlerImpl {
 
-	private String nlesd_schools_rootbasepath = "/../../../webapps/nlesdweb/ROOT/schools/";
+	private String nlesd_schools_rootbasepath = "/../../nlesdweb/WebContent/schools/";
 
 	public UpdateSchoolRequestHandler() {
 
 		//********* EDITED BY GEOFF TO ALLOW BUS STAFF TO UPDATE SCHOOL ROUTE DOCS IN SCHOOL PROFILES ONLY ******
 		this.requiredPermissions = new String[] {
-			"MEMBERADMIN-VIEW","WEBMAINTENANCE-BUSROUTES","WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL","WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY","WEBMAINTENANCE-SCHOOLPROFILE-ADMIN"
+				"MEMBERADMIN-VIEW", "WEBMAINTENANCE-BUSROUTES", "WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL",
+				"WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY", "WEBMAINTENANCE-SCHOOLPROFILE-ADMIN"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {
@@ -52,6 +53,8 @@ public class UpdateSchoolRequestHandler extends RequestHandlerImpl {
 		super.handleRequest(request, response);
 
 		if (validate_form()) {
+
+			nlesd_schools_rootbasepath = request.getContextPath() + nlesd_schools_rootbasepath;
 
 			School school = null;
 
@@ -258,30 +261,33 @@ public class UpdateSchoolRequestHandler extends RequestHandlerImpl {
 					SchoolStreamSchoolsService.getSchoolStreamSchoolsFrenchBean(ssdb.getId()));
 			request.setAttribute("school", school);
 			request.setAttribute("msg", "School updated successfully.");
-            
+
 			//Redirect to the proper area updating is for. System Admin, Principals, or Busing.
-			
+
 			//********* ADDED BY GEOFF TO ALLOW BUS STAFF TO UPDATE SCHOOL ROUTE DOCS IN SCHOOL PROFILES ONLY AND REDIRECT ACCORDINGLY ******
-			
-			if((usr.checkRole("BUSROUTE-POST"))) {
+
+			if ((usr.checkRole("BUSROUTE-POST"))) {
 				request.setAttribute("msg", "School Bus Route Document updated successfully.");
 				path = "/WebUpdateSystem/BusRoutes/school_directory_bus_routes.jsp";
-				
-			} else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL")) || (usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY"))){
-					request.setAttribute("msg", "Your School profile has been updated successfully.");
-					path = "/WebUpdateSystem/SchoolProfiles/school_profile.jsp";	
-				
-				
-			} else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-ADMIN")) && (!usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL"))){
+
+			}
+			else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL"))
+					|| (usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY"))) {
+				request.setAttribute("msg", "Your School profile has been updated successfully.");
+				path = "/WebUpdateSystem/SchoolProfiles/school_profile.jsp";
+
+			}
+			else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-ADMIN"))
+					&& (!usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL"))) {
 				request.setAttribute("msg", "School profile has been updated successfully.");
 				path = "/WebUpdateSystem/SchoolProfiles/school_profile.jsp";
-			} 
-			
+			}
+
 			else {
 				request.setAttribute("msg", "School updated successfully.");
 				path = "school_profile.jsp";
 			}
-			
+
 		}
 		else {
 			path = "school_profile.jsp";
