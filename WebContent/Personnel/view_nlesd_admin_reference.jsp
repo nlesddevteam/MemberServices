@@ -62,7 +62,11 @@
 	totalRates = Integer.parseInt(val4)*ref.getPossibleTotal();
 	 	
   	totalScore = ref.getTotalScore().intValue();
-  	double resultScore = 100 * totalScore / totalRates;  	
+  	double resultScore = 0;
+	if(totalRates > 0){
+	
+  		resultScore = 100 * totalScore / totalRates;
+	}  	
 	%>	
   	
   	  	
