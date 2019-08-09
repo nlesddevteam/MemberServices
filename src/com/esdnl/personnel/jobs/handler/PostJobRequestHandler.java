@@ -82,6 +82,7 @@ public class PostJobRequestHandler implements RequestHandler {
 				request.setAttribute("msgERR", "Ad text is a required field.");
 				path = "admin_post_job.jsp";
 			}
+			/*
 			else if ((degree == null) || (degree.length < 1)) {
 				request.setAttribute("msgERR", "Degree a required field.");
 				path = "admin_post_job.jsp";
@@ -94,6 +95,7 @@ public class PostJobRequestHandler implements RequestHandler {
 				request.setAttribute("msgERR", "Minor a required field.");
 				path = "admin_post_job.jsp";
 			}
+			*/
 			else if (StringUtils.isEmpty(comp_end_date)) {
 				request.setAttribute("msgERR", "Competition end date is a required field.");
 				path = "admin_post_job.jsp";
