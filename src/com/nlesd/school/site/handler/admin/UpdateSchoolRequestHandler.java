@@ -54,8 +54,6 @@ public class UpdateSchoolRequestHandler extends RequestHandlerImpl {
 
 		if (validate_form()) {
 
-			nlesd_schools_rootbasepath = request.getContextPath() + nlesd_schools_rootbasepath;
-
 			School school = null;
 
 			int schoolId = form.getInt("schoolId");
