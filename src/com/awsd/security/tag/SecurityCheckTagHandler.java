@@ -32,7 +32,7 @@ public class SecurityCheckTagHandler extends TagSupport {
 		this.roles = roles;
 	}
 
-	public int doStartTag() throws JspException {
+	public int doEndTag() throws JspException {
 
 		User usr = null;
 
@@ -100,11 +100,15 @@ public class SecurityCheckTagHandler extends TagSupport {
 				if (!valid) {
 					this.pageContext.setAttribute("msg", "Secure Resource! Login Required.", PageContext.REQUEST_SCOPE);
 					this.pageContext.forward("/signin.jsp");
+
+					return SKIP_PAGE;
 				}
 			}
 			else {
 				this.pageContext.setAttribute("msg", "Secure Resource! Login Required.", PageContext.REQUEST_SCOPE);
 				this.pageContext.forward("/signin.jsp");
+
+				return SKIP_PAGE;
 			}
 		}
 		catch (SecurityException e) {
@@ -117,6 +121,6 @@ public class SecurityCheckTagHandler extends TagSupport {
 			throw new JspException(e.getMessage());
 		}
 
-		return EVAL_BODY_INCLUDE;
+		return EVAL_PAGE;
 	}
 }
