@@ -19,49 +19,43 @@
 		
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+		
+<job:ApplicantLoggedOn/>
 
 <%
-    ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
+  ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
 	JobOpportunityBean[] jobs = null;
-	if(profile == null)
-  	request.getRequestDispatcher("applicant_login.jsp").forward(request, response);
-
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
-    SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-    
-    ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(profile.getSIN());
-    ApplicantEducationBean[] edu = ApplicantEducationManager.getApplicantEducationBeans(profile.getSIN());
-    ApplicantEducationOtherBean edu_oth = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());
-    ApplicantEsdReplacementExperienceBean[] rpl = ApplicantEsdReplExpManager.getApplicantEsdReplacementExperienceBeans(profile.getSIN());
-    ApplicantSubstituteTeachingExpBean[] sub = ApplicantSubExpManager.getApplicantSubstituteTeachingExpBeans(profile.getSIN());
-    ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
-    ApplicantOtherInformationBean other_info = ApplicantOtherInfoManager.getApplicantOtherInformationBean(profile.getSIN());
-    ApplicantSupervisorBean[] refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
-    RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
-    Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
-    Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
-    ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
-    
-    ApplicantPositionOfferBean[] current_offers = null;
-    Collection<ApplicantPositionOfferBean> emp_letters = null;
-   
-    
-    jobs = JobOpportunityManager.getApplicantOpenJobOpportunityBeans(profile.getSIN());
-    HashMap sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
-    
-    if(profile != null){       
-        current_offers = ApplicantPositionOfferManager.getApplicantPositionOfferBeans(profile);
-        emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile);
-      }
-    EmployeeBean empbean = null;
-    if(!StringUtils.isEmpty(profile.getSIN2())){
-    	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
-    }
-    
-    
+	
+  SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+  SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+  
+  ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(profile.getSIN());
+  ApplicantEducationBean[] edu = ApplicantEducationManager.getApplicantEducationBeans(profile.getSIN());
+  ApplicantEducationOtherBean edu_oth = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());
+  ApplicantEsdReplacementExperienceBean[] rpl = ApplicantEsdReplExpManager.getApplicantEsdReplacementExperienceBeans(profile.getSIN());
+  ApplicantSubstituteTeachingExpBean[] sub = ApplicantSubExpManager.getApplicantSubstituteTeachingExpBeans(profile.getSIN());
+  ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
+  ApplicantOtherInformationBean other_info = ApplicantOtherInfoManager.getApplicantOtherInformationBean(profile.getSIN());
+  ApplicantSupervisorBean[] refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
+  RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
+  Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+  Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
+  ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
+  
+  ApplicantPositionOfferBean[] current_offers = null;
+  Collection<ApplicantPositionOfferBean> emp_letters = null;
+  
+  jobs = JobOpportunityManager.getApplicantOpenJobOpportunityBeans(profile.getSIN());
+  HashMap sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
+  
+  current_offers = ApplicantPositionOfferManager.getApplicantPositionOfferBeans(profile);
+  emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile);
+  
+  EmployeeBean empbean = null;
+  if(!StringUtils.isEmpty(profile.getSIN2())){
+  	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
+  }
 %>
-
-
 
 <html>
 <head>
