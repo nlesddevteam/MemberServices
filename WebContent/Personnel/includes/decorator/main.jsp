@@ -8,23 +8,21 @@
                  com.esdnl.personnel.jobs.dao.*,
                  com.awsd.security.*"%>
 
-
 <!-- LOAD JAVA TAG LIBRARIES -->
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
-		<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-		<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
-		<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-		<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
-        <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR"/>
+
 <%
 User usr = (User) session.getAttribute("usr");
 boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REPRESENTATIVE");
 %>
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR"/>
 
-
-
-<html lang="en">
+<html>
 
   <head>
 
