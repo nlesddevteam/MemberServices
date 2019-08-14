@@ -221,7 +221,7 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
           border:0px;
           }
 
-
+	.no-print { display: none; }
 }
 
 .searchNoticeError {
