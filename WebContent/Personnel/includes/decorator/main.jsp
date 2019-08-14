@@ -22,7 +22,7 @@ User usr = (User) session.getAttribute("usr");
 boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REPRESENTATIVE");
 %>
 
-<html lang="en">
+<html>
 
   <head>
 
