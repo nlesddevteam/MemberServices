@@ -9,10 +9,12 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
+<job:ApplicantLoggedOn/>
+<job:ApplicantViewPositionOfferAuthorization/>  
+
 <%
-  	TeacherRecommendationBean rec = (TeacherRecommendationBean) request.getAttribute("RECOMMENDATION_BEAN");
+  TeacherRecommendationBean rec = (TeacherRecommendationBean) request.getAttribute("RECOMMENDATION_BEAN");
 	ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
-	
 %>
 
 <html>
@@ -83,8 +85,7 @@
   
 </head>
 <body>
-<job:ApplicantLoggedOn/>
-<job:ApplicantViewPositionOfferAuthorization/>  
+
 
 <br/>
 <div class="panel panel-success">
