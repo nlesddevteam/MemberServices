@@ -15,7 +15,7 @@
 	<property name="appserver.home.5" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker5"/>
 	<property name="appserver.home.6" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker6"/>
 	
-	<property name="appserver.working" location="work/Catalina/localhost/${ant.project.name}"/>
+	<property name="appserver.working" value="work/Catalina/localhost/${ant.project.name}"/>
 	
   <property name="repo.dir" location="."/>
   <property name="nlesdweb.repo.dir" location="../nlesdweb"/>
