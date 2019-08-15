@@ -26,11 +26,13 @@ import com.awsd.mail.service.PersistentEmailService;
 import com.awsd.navigation.handler.MemberServicesLoginRequestHandler;
 import com.awsd.navigation.handler.MemberServicesLogoutRequestHandler;
 import com.awsd.navigation.handler.ViewMemberServicesLoginRequestHandler;
+import com.awsd.security.PersonnelApplicantSecurityException;
 import com.awsd.security.SecurityException;
 import com.awsd.security.User;
 import com.awsd.security.addressbook.handler.ViewAddressBookRequestHandler;
 import com.awsd.travel.handler.ViewTravelClaimSystemRequestHandler;
 import com.esdnl.audit.IAuditable;
+import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 
 public class ControllerServlet extends HttpServlet {
 
@@ -236,7 +238,8 @@ public class ControllerServlet extends HttpServlet {
 			Properties vprops = new Properties();
 
 			vprops.setProperty("resource.loader", "file");
-			vprops.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+			vprops.setProperty("file.resource.loader.class",
+					"org.apache.velocity.runtime.resource.loader.FileResourceLoader");
 			vprops.setProperty("file.resource.loader.path", CONTEXT_BASE_PATH + "/WEB-INF/velocity/templates");
 			vprops.setProperty("file.resource.loader.cache", "false");
 			vprops.setProperty("file.resource.loader.modificationCheckInterval", "0");
@@ -281,10 +284,10 @@ public class ControllerServlet extends HttpServlet {
 				response.sendRedirect("/MemberServices/memberServices.html");
 			}
 			else {
-				if (!((rh instanceof MemberServicesLoginRequestHandler)
-						|| (rh instanceof ViewMemberServicesLoginRequestHandler)
+				if (!((rh instanceof MemberServicesLoginRequestHandler) || (rh instanceof ViewMemberServicesLoginRequestHandler)
 						|| (rh instanceof MemberServicesLogoutRequestHandler) || (rh instanceof ViewAddressBookRequestHandler)
-						|| (rh instanceof ViewTravelClaimSystemRequestHandler) || (rh instanceof LoginNotRequiredRequestHandler))) {
+						|| (rh instanceof ViewTravelClaimSystemRequestHandler) || (rh instanceof LoginNotRequiredRequestHandler)
+						|| (rh instanceof PersonnelApplicationRequestHandler))) {
 					session = request.getSession(false);
 					if ((session != null) && (session.getAttribute("usr") != null)) {
 						usr = (User) session.getAttribute("usr");
@@ -298,6 +301,16 @@ public class ControllerServlet extends HttpServlet {
 						response.getWriter().println("</BODY></HTML>");
 						response.getWriter().flush();
 						return;
+					}
+				}
+				else if (rh instanceof PersonnelApplicationRequestHandler) {
+					session = request.getSession(false);
+					if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
+						viewURL = rh.handleRequest(request, response);
+						System.err.println(((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail() + ": " + viewURL);
+					}
+					else {
+						throw new PersonnelApplicantSecurityException("Illegal Access Attempt [" + request.getRequestURI() + "]");
 					}
 				}
 				else if (rh instanceof MemberServicesLogoutRequestHandler) {
@@ -322,11 +335,13 @@ public class ControllerServlet extends HttpServlet {
 
 					return;
 				}
-				else
+				else {
 					viewURL = rh.handleRequest(request, response);
+				}
 
-				if (rh instanceof IAuditable)
+				if (rh instanceof IAuditable) {
 					((IAuditable) rh).auditRequest();
+				}
 
 				if (viewURL != null) {
 					if (request.getAttribute("REDIRECT") == null)
@@ -335,6 +350,10 @@ public class ControllerServlet extends HttpServlet {
 						response.sendRedirect(viewURL);
 				}
 			}
+		}
+		catch (PersonnelApplicantSecurityException e) {
+			System.err.println(e.getMessage());
+			response.sendRedirect("/MemberServices/Personnel/applicantlogin.html");
 		}
 		catch (SecurityException e) {
 			System.err.println(e);
