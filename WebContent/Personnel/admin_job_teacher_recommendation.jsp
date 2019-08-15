@@ -20,6 +20,12 @@
 
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+
+	if(job == null) {
+		response.sendRedirect("/MemberService/Personnel/admin_index.jsp");
+		return;
+	}
+	
   JobOpportunityAssignmentBean[] ass = JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(job);
   AdRequestBean ad = null;
   RequestToHireBean rth = null;
@@ -27,10 +33,11 @@
   
   Form f = (Form) request.getAttribute("FORM");
   
-  if(job.getIsSupport().equals("N")){
+  if(job.getIsSupport().equals("N")) {
 	  ad = AdRequestManager.getAdRequestBean(job.getCompetitionNumber());
 	  
-  }else{
+  }
+  else {
 	  rth = RequestToHireManager.getRequestToHireByCompNum(job.getCompetitionNumber());
   }
 %>
