@@ -17,6 +17,8 @@
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
+<job:ApplicantLoggedOn/>
+
 <%
   Collection<SchoolZoneBean> zones = SchoolZoneService.getSchoolZoneBeans();
   School[] schools = null;

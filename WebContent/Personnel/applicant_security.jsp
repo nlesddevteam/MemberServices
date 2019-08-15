@@ -13,6 +13,9 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="personnel" %>
+
+<job:ApplicantLoggedOn/>
+
 <%
   	ApplicantSecurityBean security_question = null;
 	ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
