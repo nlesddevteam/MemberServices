@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
-				 import="java.util.*;"%>
+				 import="java.util.*"%>
 				 
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>

@@ -1,5 +1,5 @@
 <%@ page language="java"
-         import="java.util.*;"
+         import="java.util.*"
          isThreadSafe="false" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
