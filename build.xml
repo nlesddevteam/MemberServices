@@ -78,7 +78,12 @@
 	
 	<target name="clean-working"
 	        description="clean up appserver working directory" >
-	    <delete dir="${appserver.home.1}/${appserver.working}"/>
+	  <delete dir="${appserver.home.1}/${appserver.working}"/>
+		<delete dir="${appserver.home.2}/${appserver.working}"/>
+		<delete dir="${appserver.home.3}/${appserver.working}"/>
+		<delete dir="${appserver.home.4}/${appserver.working}"/>
+		<delete dir="${appserver.home.5}/${appserver.working}"/>
+		<delete dir="${appserver.home.6}/${appserver.working}"/>
 	</target>
 	
 </project>
