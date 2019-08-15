@@ -16,6 +16,8 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
+<job:ApplicantLoggedOn/>
+
 <c:set var='prefs' value='<%= ApplicantRegionalPreferenceManager
 		.getApplicantRegionalPreferencesMap((ApplicantProfileBean)session.getAttribute("APPLICANT")) %>' />
 

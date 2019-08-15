@@ -13,6 +13,8 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
+<job:ApplicantLoggedOn/>
+
 <%
     ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
     ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(profile.getSIN());

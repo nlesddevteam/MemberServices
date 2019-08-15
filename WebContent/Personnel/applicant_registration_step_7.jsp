@@ -12,6 +12,8 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
+<job:ApplicantLoggedOn/>
+
 <%
   ApplicantProfileBean profile = null;
   ApplicantOtherInformationBean other_info = null;
