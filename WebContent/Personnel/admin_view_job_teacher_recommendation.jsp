@@ -20,6 +20,12 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
 <%
+	JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+	if(job == null) {
+		response.sendRedirect("/MemberService/Personnel/admin_index.jsp");
+		return;
+	}
+
 	TeacherRecommendationBean rec = (TeacherRecommendationBean) request.getAttribute("RECOMMENDATION_BEAN");
   	ApplicantProfileBean candidate = ApplicantProfileManager.getApplicantProfileBean(rec.getCandidateId());
   	ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(rec.getCandidateId());
@@ -38,7 +44,7 @@
   		candidateCount++;
   }
 	
-  JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+  
   JobOpportunityAssignmentBean[] ass = JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(job);
   AdRequestBean ad = null;
   RequestToHireBean rth = null;
@@ -46,9 +52,11 @@
   if(job.getIsSupport().equals("N")){
 	  ad = AdRequestManager.getAdRequestBean(job.getCompetitionNumber());
 	  
-  }else{
+  }
+  else{
 	  rth = RequestToHireManager.getRequestToHireByCompNum(job.getCompetitionNumber());
   }
+  
   User usr = (User)session.getAttribute("usr");
   InterviewGuideBean interviewGuide = InterviewGuideManager.getInterviewGuideBean(job);
   //ReferenceCheckRequestBean[] refReq = ReferenceCheckRequestManager.getReferenceCheckRequestBeans(job, candidate);
