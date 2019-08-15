@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ page import="com.awsd.common.*, java.util.*;" %>
+<%@ page import="com.awsd.common.*, java.util.*" %>
 <%@ taglib uri='http://java.sun.com/jstl/core_rt' prefix='c' %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
