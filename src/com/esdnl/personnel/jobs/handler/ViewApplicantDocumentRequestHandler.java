@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 
+import com.awsd.security.PersonnelApplicantSecurityException;
 import com.esdnl.audit.bean.ApplicationObjectAuditBean;
 import com.esdnl.audit.constant.ActionTypeConstant;
 import com.esdnl.audit.constant.ApplicationConstant;
@@ -27,7 +28,7 @@ public class ViewApplicantDocumentRequestHandler extends PersonnelApplicationReq
 	public ViewApplicantDocumentRequestHandler() {
 
 		this.validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("id")
+				new RequiredFormElement("id")
 		});
 	}
 
@@ -41,22 +42,26 @@ public class ViewApplicantDocumentRequestHandler extends PersonnelApplicationReq
 			try {
 				ApplicantDocumentBean doc = ApplicantDocumentManager.getApplicantDocumentBean(form.getInt("id"));
 
-				if (!doc.getApplicant().getUID().equalsIgnoreCase(profile.getUID())) {
+				if (doc == null || !doc.getApplicant().getUID().equalsIgnoreCase(profile.getUID())) {
 					request.setAttribute("msg", "Illegal access attempt to view document, access auditing established.");
 
 					ApplicationObjectAuditBean audit = new ApplicationObjectAuditBean();
 
 					audit.setActionType(ActionTypeConstant.ILLEGAL_ACCESS);
-					audit.setAction("Illegal access attempt to view document - " + doc.getType().getDescription());
+					audit.setAction("Illegal access attempt to view document - "
+							+ ((doc != null)
+									? ((doc.getType() != null) ? doc.getType().getDescription()
+											: ((doc.getTypeSS() != null) ? doc.getTypeSS().getDescription() : "UNKNOWN"))
+									: "UNKNOWN"));
 					audit.setApplication(ApplicationConstant.PERSONNEL);
 					audit.setObjectType(ApplicantDocumentBean.class.toString());
-					audit.setObjectId(Integer.toString(doc.getDocumentId()));
+					audit.setObjectId(doc != null ? Integer.toString(doc.getDocumentId()) : null);
 					audit.setWhen(Calendar.getInstance().getTime());
 					audit.setWho(profile.getUID());
 
 					audit.saveBean();
 
-					return "applicant_registration_step_10.jsp";
+					throw new PersonnelApplicantSecurityException("Illegal Access Attempt [" + request.getRequestURI() + "]");
 				}
 
 				response.setHeader("Pragma", "private");
@@ -77,10 +82,11 @@ public class ViewApplicantDocumentRequestHandler extends PersonnelApplicationReq
 				ApplicationObjectAuditBean audit = new ApplicationObjectAuditBean();
 
 				audit.setActionType(ActionTypeConstant.VIEW);
-				if(doc.getType() == null){
+				if (doc.getType() == null) {
 					//support staff doc
 					audit.setAction("Applicant Document Viewed - " + doc.getTypeSS().getDescription());
-				}else{
+				}
+				else {
 					audit.setAction("Applicant Document Viewed - " + doc.getType().getDescription());
 				}
 				audit.setApplication(ApplicationConstant.PERSONNEL);
@@ -95,8 +101,9 @@ public class ViewApplicantDocumentRequestHandler extends PersonnelApplicationReq
 				e.printStackTrace(System.err);
 			}
 		}
-		else
+		else {
 			request.setAttribute("msg", this.validator.getErrorString());
+		}
 
 		return null;
 	}

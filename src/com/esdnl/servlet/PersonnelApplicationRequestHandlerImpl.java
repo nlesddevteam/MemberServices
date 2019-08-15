@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.awsd.servlet.PersonnelApplicationRequestHandler;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 
-public class PersonnelApplicationRequestHandlerImpl extends BypassLoginRequestHandlerImpl {
+public class PersonnelApplicationRequestHandlerImpl extends RequestHandlerImpl
+		implements PersonnelApplicationRequestHandler {
 
 	protected ApplicantProfileBean profile;
 
@@ -18,7 +20,7 @@ public class PersonnelApplicationRequestHandlerImpl extends BypassLoginRequestHa
 		super();
 	}
 
-	public String handleRequest(HttpServletRequest request, HttpServletResponse reponse)
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
@@ -26,16 +28,16 @@ public class PersonnelApplicationRequestHandlerImpl extends BypassLoginRequestHa
 		form = new Form(request);
 
 		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("APPLICANT") != null))
+		if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
 			validated = true;
+		}
 
-		if (!validated)
-			request.getRequestDispatcher("/MemberServices/Personnel/applicant_login.jsp").forward(request, reponse);
-		else {
+		if (validated) {
 			ROOT_DIR = new File(session.getServletContext().getRealPath("/"));
 
 			profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
 		}
+
 		return null;
 	}
 }
