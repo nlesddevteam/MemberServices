@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <project name="MemberServices" default="dist" basedir=".">
-    <description>
-        MemberServices build file
-    </description>
+  <description>MemberServices build file</description>
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="dist"  location="dist"/>
   <property name="web.dir" location="WebContent"/>
-  <property name="appserver.home" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker1"/>
+	
+  <property name="appserver.home.1" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker1"/>
+	<property name="appserver.home.2" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker2"/>
+	<property name="appserver.home.3" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker3"/>
+	<property name="appserver.home.4" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker4"/>
+	<property name="appserver.home.5" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker5"/>
+	<property name="appserver.home.6" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker6"/>
+	
+	<property name="appserver.working" value="work/Catalina/localhost/${ant.project.name}"/>
+	
   <property name="repo.dir" location="."/>
   <property name="nlesdweb.repo.dir" location="../nlesdweb"/>
   
@@ -18,10 +25,10 @@
 		<include name="*.jar"/>
 	  </fileset>
 
-	  <fileset dir="${appserver.home}/lib">
+	  <fileset dir="${appserver.home.1}/lib">
 		<include name="*.jar"/>
 	  </fileset>
-</path>
+	</path>
 
   <target name="init">
     <!-- Create the time stamp -->
@@ -65,8 +72,18 @@
 
   <target name="clean"
         description="clean up" >
-    <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
   </target>
+	
+	<target name="clean-working"
+	        description="clean up appserver working directory" >
+	  <delete dir="${appserver.home.1}/${appserver.working}"/>
+		<delete dir="${appserver.home.2}/${appserver.working}"/>
+		<delete dir="${appserver.home.3}/${appserver.working}"/>
+		<delete dir="${appserver.home.4}/${appserver.working}"/>
+		<delete dir="${appserver.home.5}/${appserver.working}"/>
+		<delete dir="${appserver.home.6}/${appserver.working}"/>
+	</target>
+	
 </project>

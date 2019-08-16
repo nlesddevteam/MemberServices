@@ -1,6 +1,6 @@
 <%@ page language="java"
         session="true"
-        import="java.util.*,com.awsd.security.*,com.awsd.personnel.*;"%>
+        import="java.util.*,com.awsd.security.*,com.awsd.personnel.*"%>
                 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>

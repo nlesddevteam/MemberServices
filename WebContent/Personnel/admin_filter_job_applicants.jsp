@@ -25,6 +25,11 @@
 
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+
+	if(job == null) {
+		response.sendRedirect("/MemberServices/Personnel/admin_index.jsp");
+		return;
+	}
 %>
 
 
