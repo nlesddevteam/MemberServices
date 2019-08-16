@@ -307,7 +307,8 @@ public class ControllerServlet extends HttpServlet {
 					session = request.getSession(false);
 					if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
 						viewURL = rh.handleRequest(request, response);
-						System.err.println(((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail() + ": " + viewURL);
+						System.err.println(
+								"[MyHRP]" + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail() + ": " + viewURL);
 					}
 					else {
 						throw new PersonnelApplicantSecurityException("Illegal Access Attempt [" + request.getRequestURI() + "]");
@@ -356,7 +357,7 @@ public class ControllerServlet extends HttpServlet {
 			response.sendRedirect("/MemberServices/Personnel/applicantlogin.html");
 		}
 		catch (SecurityException e) {
-			System.err.println(e);
+			System.err.println(e.getMessage());
 			response.sendRedirect("/MemberServices/memberServices.html");
 		}
 		catch (ClassNotFoundException e) {
