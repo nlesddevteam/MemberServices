@@ -16,14 +16,20 @@
 <%
 	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("REFREQUEST");
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("PROFILE");
-  	String val1="0";
+	
+	if((refReq == null) || (profile == null)) {
+		response.sendRedirect("/MemberServices/memberservices.html");
+	}
+	
+  String val1="0";
 	String val2="1";
 	String val3="2";
 	String val4="3";
 	Personnel p = null;
 	try{
 		p = PersonnelDB.getPersonnelByEmail(refReq.getEmailAddress());
-	}catch (Exception e){
+	}
+	catch (Exception e){
 		p=null;
 	}
 	
