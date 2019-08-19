@@ -128,13 +128,10 @@ input {
 }
 </style>
 
-
-
 <script>
 	$("#loadingSpinner").css("display","none");
-</script>
-<script language="JavaScript">
-			$('document').ready(function() {
+
+	$(function() {
 				$('.datefield').datepicker({
 					autoSize: true,
 					showOn: 'focus',
@@ -153,27 +150,26 @@ input {
 				});
 				
 				$('.resend-notifications').click(function(){
-					
 					var params = {};
 					
-					params.id = '<%=rec.getRecommendationId()%>
-	';
+					params.id = '<%=rec.getRecommendationId()%>';
 
-											$
-													.post(
-															'/MemberServices/Personnel/ajax/resendRecommendationNotifications.html',
-															params,
-															function(data) {
-																alert($(data)
-																		.find(
-																				'RESEND-TEACHER-RECOMMENDATION-NOTIFICATIONS-RESPONSE')
-																		.attr(
-																				'msg'));
-															});
+						$.post('/MemberServices/Personnel/ajax/resendRecommendationNotifications.html', params,
+								function(data) {
+									alert($(data).find('RESEND-TEACHER-RECOMMENDATION-NOTIFICATIONS-RESPONSE').attr('msg'));
+								}
+						);
+				});
+				
+				$('.modal.printable').on('shown.bs.modal', function() {
+					$('.modal-dialog', this).addClass('focused');
+					$('body').addClass('modalprinter');
 
-										});
-
-					});
+				}).on('hidden.bs.modal', function() {
+					$('.modal-dialog', this).removeClass('focused');
+					$('body').removeClass('modalprinter');
+				});
+		});
 
 	function COC_Check(chkbox) {
 		if (chkbox.checked == true)
@@ -188,18 +184,6 @@ input {
 		else
 			document.getElementById('offer_btn').style.display = 'none';
 	}
-</script>
-<script>
-	$().ready(function() {
-		$('.modal.printable').on('shown.bs.modal', function() {
-			$('.modal-dialog', this).addClass('focused');
-			$('body').addClass('modalprinter');
-
-		}).on('hidden.bs.modal', function() {
-			$('.modal-dialog', this).removeClass('focused');
-			$('body').removeClass('modalprinter');
-		});
-	});
 </script>
 </head>
 
