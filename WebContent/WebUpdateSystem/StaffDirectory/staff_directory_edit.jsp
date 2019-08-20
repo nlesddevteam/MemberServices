@@ -418,6 +418,7 @@
 							<option value="Student Assistants/Teachers (Schools F-Le)">Student Assistants/Teachers (Schools F-Le)</option>
 							<option value="Student Assistants/Teachers (Schools Lf-Sp)">Student Assistants/Teachers (Schools Lf-Sp)</option>
 							<option value="Student Assistants/Teachers (Schools Sq-Z)">Student Assistants/Teachers (Schools Sq-Z)</option>
+							<option value="Student Services">Student Services</option>
 							<option value="Student Support Services">Student Support Services</option>
 							<option value="Student Transportation">Student Transportation</option>
 							<option value="Support Staff">Support Staff</option>
