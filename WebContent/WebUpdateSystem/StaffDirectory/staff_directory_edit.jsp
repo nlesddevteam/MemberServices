@@ -20,7 +20,6 @@
   User usr = (User) session.getAttribute("usr");
 %>
 
-
 <c:set var='divisions' value='<%= StaffDirectoryContactBean.STAFF_DIRECTORY_DIVISION.values()  %>' />
 
 <html>
@@ -279,6 +278,8 @@
 						<option value="Hospital Teacher">Hospital Teacher</option>
 						<option value="Human Resources Assistant">Human Resources Assistant</option>
 						<option value="Internal Auditor">Internal Auditor</option>
+						<option value="Itinerant">Itinerant</option>
+						<option value="Itinerant Services">Itinerant Services</option>
 						<option value="Itinerant Teacher">Itinerant Teacher</option>
 						<option value="LAN Administrator">LAN Administrator</option>
 						<option value="Lead Driver">Lead Driver</option>
@@ -381,6 +382,7 @@
 							<option value="Hearing/Visually Impaired">Hearing/Visually Impaired</option>
 							<option value="Human Resources">Human Resources</option>
 							<option value="Inclusive Education">Inclusive Education</option>
+							<option value="Indigenous Education">Indigenous Education</option>					
 							<option value="Information Systems">Information Systems</option>
 							<option value="Instructional Materials Centre">Instructional Materials Centre</option>
 							<option value="K-6 Programming">K-6 Programming</option>
@@ -388,6 +390,7 @@
 							<option value="Literacy/Numeracy">Literacy/Numeracy</option>
 							<option value="Literacy/Numeracy Teacher">Literacy/Numeracy Teacher</option>
 							<option value="Mathematics">Mathematics</option>
+							<option value="Multiculturalism">Multiculturalism</option>							
 							<option value="Numeracy Support Teacher">Numeracy Support Teacher</option>
 							<option value="Numeracy Teacher">Numeracy Teacher</option>
 							<option value="OH&S">OH&S</option>
@@ -402,7 +405,8 @@
 							<option value="Programs and Operations">Programs and Operations</option>
 							<option value="Programs and Human Resources">Programs and Human Resources</option>
 							<option value="Programs/Reception">Programs/Reception</option>
-							<option value="Programs/Student Support Services">Programs/Student Support Services</option>
+							<option value="Programs/Multiculturalism">Programs/Multiculturalism</option>
+							<option value="Programs/Student Support Services">Programs/Student Support Services</option>							
 							<option value="Reading">Reading</option>
 							<option value="Safe and Inclusive Schools">Safe and Inclusive Schools</option>
 							<option value="School Support">School Support</option>
@@ -413,6 +417,7 @@
 							<option value="Student Assistants/Teachers (Schools F-Le)">Student Assistants/Teachers (Schools F-Le)</option>
 							<option value="Student Assistants/Teachers (Schools Lf-Sp)">Student Assistants/Teachers (Schools Lf-Sp)</option>
 							<option value="Student Assistants/Teachers (Schools Sq-Z)">Student Assistants/Teachers (Schools Sq-Z)</option>
+							<option value="Student Services">Student Services</option>
 							<option value="Student Support Services">Student Support Services</option>
 							<option value="Student Transportation">Student Transportation</option>
 							<option value="Support Staff">Support Staff</option>
