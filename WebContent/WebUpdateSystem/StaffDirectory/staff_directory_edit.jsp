@@ -20,7 +20,6 @@
   User usr = (User) session.getAttribute("usr");
 %>
 
-
 <c:set var='divisions' value='<%= StaffDirectoryContactBean.STAFF_DIRECTORY_DIVISION.values()  %>' />
 
 <html>
