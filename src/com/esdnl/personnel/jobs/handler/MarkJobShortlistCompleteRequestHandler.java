@@ -39,20 +39,30 @@ public class MarkJobShortlistCompleteRequestHandler extends RequestHandlerImpl {
 		try {
 			if (validate_form()) {
 				JobOpportunityBean opp = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
-				if (form.getBoolean("closed")) {
-					opp.setShortlistCompleteDate(new Date());
+
+				if (opp != null) {
+					if (form.getBoolean("closed")) {
+						opp.setShortlistCompleteDate(new Date());
+					}
+					else {
+						opp.setShortlistCompleteDate(null);
+					}
+
+					JobOpportunityManager.updateJobOpportunityBean(opp);
+
+					session.setAttribute("JOB", opp);
+					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
+					session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
+							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+					request.setAttribute("AD_REQUEST", AdRequestManager.getAdRequestBean(form.get("comp_num")));
+
+					path = "admin_view_job_applicants_shortlist.jsp";
 				}
 				else {
-					opp.setShortlistCompleteDate(null);
+					request.setAttribute("msg", "Invalid reques.");
+
+					path = "admin_index.jsp";
 				}
-
-				JobOpportunityManager.updateJobOpportunityBean(opp);
-
-				session.setAttribute("JOB", opp);
-				session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
-				request.setAttribute("AD_REQUEST", AdRequestManager.getAdRequestBean(form.get("comp_num")));
-
-				path = "admin_view_job_applicants_shortlist.jsp";
 			}
 			else {
 				request.setAttribute("msg", "Cometition number required to view applicant shortlist.");
