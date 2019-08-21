@@ -18,6 +18,13 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "JOB", "JOB_SHORTLIST", "JOB_SHORTLIST_DECLINES_MAP" }%>'
+	scope='<%=PageContext.SESSION_SCOPE%>'
+	redirectTo="/Personnel/admin_index.jsp" />
+<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "AD_REQUEST" }%>'
+	scope='<%=PageContext.REQUEST_SCOPE%>'
+	redirectTo="/Personnel/admin_index.jsp" />
+	
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
   
