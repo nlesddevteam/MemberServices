@@ -30,7 +30,7 @@ public class ViewTeacherRecommendationRequestHandler extends RequestHandlerImpl 
 		};
 
 		validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("id")
+				new RequiredFormElement("id")
 		});
 
 	}
@@ -46,58 +46,67 @@ public class ViewTeacherRecommendationRequestHandler extends RequestHandlerImpl 
 		if (validate_form()) {
 			try {
 				TeacherRecommendationBean rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
-				JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(rec.getCompetitionNumber());
 
-				ApplicantProfileBean[] shortlist = ApplicantProfileManager.getApplicantShortlistExcludingInterviewDeclines(job);
+				if (rec != null) {
+					JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(rec.getCompetitionNumber());
 
-				//retrieve the recommendation tracking form information, right now max three candidates on screen
-				int sidx = 0;
-				//adjust array to account for the declined interviews that is causing array out of bounds
-				String[][] test = new String[shortlist.length + 3][2];
+					ApplicantProfileBean[] shortlist = ApplicantProfileManager.getApplicantShortlistExcludingInterviewDeclines(
+							job);
 
-				//primary candidate
-				test[0][0] = rec.getCandidateId();
-				test[0][1] = rec.getCandidateComments();
+					//retrieve the recommendation tracking form information, right now max three candidates on screen
+					int sidx = 0;
+					//adjust array to account for the declined interviews that is causing array out of bounds
+					String[][] test = new String[shortlist.length + 3][2];
 
-				if (StringUtils.isNotBlank(rec.getCandidate2()) && !StringUtils.equals(rec.getCandidate2(), "-1")) {
-					test[1][0] = rec.getCandidate2();
-					test[1][1] = rec.getCandidateComments2();
+					//primary candidate
+					test[0][0] = rec.getCandidateId();
+					test[0][1] = rec.getCandidateComments();
 
-					sidx = 1;
-				}
-				else {
-					test[1][0] = "None Selected";
-					test[1][1] = "None Selected";
-					sidx = 1;
-				}
+					if (StringUtils.isNotBlank(rec.getCandidate2()) && !StringUtils.equals(rec.getCandidate2(), "-1")) {
+						test[1][0] = rec.getCandidate2();
+						test[1][1] = rec.getCandidateComments2();
 
-				if (StringUtils.isNotBlank(rec.getCandidate3()) && !StringUtils.equals(rec.getCandidate3(), "-1")) {
-					test[2][0] = rec.getCandidate3();
-					test[2][1] = rec.getCandidateComments3();
+						sidx = 1;
+					}
+					else {
+						test[1][0] = "None Selected";
+						test[1][1] = "None Selected";
+						sidx = 1;
+					}
 
-					sidx = 2;
-				}
-				else {
-					test[2][0] = "None Selected";
-					test[2][1] = "None Selected";
-					sidx = 2;
-				}
+					if (StringUtils.isNotBlank(rec.getCandidate3()) && !StringUtils.equals(rec.getCandidate3(), "-1")) {
+						test[2][0] = rec.getCandidate3();
+						test[2][1] = rec.getCandidateComments3();
 
-				for (ApplicantProfileBean profile : shortlist) {
-					if (!isRecommendedCandidate(rec, profile)) {
-						if (sidx + 1 < test.length) {
-							test[++sidx][0] = profile.getUID();
+						sidx = 2;
+					}
+					else {
+						test[2][0] = "None Selected";
+						test[2][1] = "None Selected";
+						sidx = 2;
+					}
+
+					for (ApplicantProfileBean profile : shortlist) {
+						if (!isRecommendedCandidate(rec, profile)) {
+							if (sidx + 1 < test.length) {
+								test[++sidx][0] = profile.getUID();
+							}
 						}
 					}
+
+					request.setAttribute("TFORM", NLESDRecommendationTrackingFormManager.getNLESDTrackingFormList(test, rec));
+					request.setAttribute("RECOMMENDATION_BEAN", rec);
+					request.setAttribute("JOB_SHORTLIST_INTERVIEW_DECLINES",
+							ApplicantProfileManager.getApplicantShortlistInterviewDeclines(job));
+
+					session.setAttribute("JOB", job);
+					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(job));
 				}
+				else {
+					request.setAttribute("msg", "Invalid request.");
 
-				request.setAttribute("TFORM", NLESDRecommendationTrackingFormManager.getNLESDTrackingFormList(test, rec));
-				request.setAttribute("RECOMMENDATION_BEAN", rec);
-				request.setAttribute("JOB_SHORTLIST_INTERVIEW_DECLINES",
-						ApplicantProfileManager.getApplicantShortlistInterviewDeclines(job));
-
-				session.setAttribute("JOB", job);
-				session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(job));
+					path = "admin_index.jsp";
+				}
 			}
 			catch (JobOpportunityException e) {
 				e.printStackTrace(System.err);
@@ -120,8 +129,8 @@ public class ViewTeacherRecommendationRequestHandler extends RequestHandlerImpl 
 
 		String applicantId = profile.getUID();
 
-		if (!StringUtils.equals(applicantId, "-1")
-				&& (applicantId.equals(rec.getCandidateId()) || applicantId.equals(rec.getCandidate2()) || applicantId.equals(rec.getCandidate3()))) {
+		if (!StringUtils.equals(applicantId, "-1") && (applicantId.equals(rec.getCandidateId())
+				|| applicantId.equals(rec.getCandidate2()) || applicantId.equals(rec.getCandidate3()))) {
 			recommended = true;
 		}
 
