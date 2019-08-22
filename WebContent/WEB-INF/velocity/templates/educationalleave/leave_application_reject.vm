@@ -1,0 +1,8 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+Your Educational Leave Application was rejected on $adate
+</p>
+<br />
+$snotes
+<p>
+</div>
