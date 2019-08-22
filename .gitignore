@@ -1,1 +1,4 @@
 /build/
+/dist/
+/WebContent/WEB-INF/uploads/
+/WebContent/WEB-INF/trustee-documents/
