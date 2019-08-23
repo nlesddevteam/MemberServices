@@ -7,15 +7,20 @@
                   com.esdnl.personnel.jobs.constants.*,
                   com.esdnl.util.*,com.awsd.personnel.*" 
          isThreadSafe="false"%>
-		<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
-		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
-		
-			<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-			<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>		
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+
+<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "REFREQUEST", "PROFILE" }%>'
+	scope='<%=PageContext.REQUEST_SCOPE%>'
+	redirectTo="/Personnel/admin_index.jsp" />
+	
 <%
-	ApplicantRefRequestBean refReq = refReq = (ApplicantRefRequestBean) request.getAttribute("REFREQUEST");
+	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("REFREQUEST");
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("PROFILE");
+	
 	String val1="5";
 	String val2="4";
 	String val3="3";
