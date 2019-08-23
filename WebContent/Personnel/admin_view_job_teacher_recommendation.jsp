@@ -57,7 +57,14 @@
 	if (job.getIsSupport().equals("N")) {
 		ad = AdRequestManager.getAdRequestBean(job.getCompetitionNumber());
 
-	} else {
+		if(ad == null) {
+			request.setAttribute("msg", job.getCompetitionNumber() + " does not have an associated Ad Request. Please contact a system administrator");
+			request.getRequestDispatcher("admin_index.jsp").forward(request, response);
+			
+			return;
+		}
+	} 
+	else {
 		rth = RequestToHireManager.getRequestToHireByCompNum(job.getCompetitionNumber());
 	}
 
