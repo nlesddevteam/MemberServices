@@ -115,8 +115,8 @@ public class EmailBean {
 		this.to = new ArrayList<String>(tmp.length);
 
 		for (int i = 0; i < tmp.length; i++) {
-			if (EmailBean.isValidEmailAddress(tmp[i]))
-				this.to.add(tmp[i]);
+			if (EmailBean.isValidEmailAddress(tmp[i].trim()))
+				this.to.add(tmp[i].trim());
 			else
 				this.smtp_error += "Invalid address format [" + tmp[i] + "] ";
 		}
@@ -130,8 +130,8 @@ public class EmailBean {
 		this.to = new ArrayList<String>(to.length);
 
 		for (int i = 0; i < to.length; i++) {
-			if (EmailBean.isValidEmailAddress(to[i]))
-				this.to.add(to[i]);
+			if (EmailBean.isValidEmailAddress(to[i].trim()))
+				this.to.add(to[i].trim());
 			else
 				this.smtp_error += "Invalid address format [" + to[i] + "] ";
 		}
@@ -144,8 +144,8 @@ public class EmailBean {
 
 		this.to = new ArrayList<String>(to.size());
 		for (int i = 0; i < to.size(); i++) {
-			if (EmailBean.isValidEmailAddress(((Personnel) to.get(i)).getEmailAddress()))
-				this.to.add(((Personnel) to.get(i)).getEmailAddress());
+			if (EmailBean.isValidEmailAddress(((Personnel) to.get(i)).getEmailAddress().trim()))
+				this.to.add(((Personnel) to.get(i)).getEmailAddress().trim());
 			else
 				this.smtp_error += "Invalid address format [" + ((Personnel) to.get(i)).getEmailAddress() + "] ";
 		}
@@ -158,8 +158,8 @@ public class EmailBean {
 
 		this.to = new ArrayList<String>(to.length);
 		for (int i = 0; i < to.length; i++) {
-			if (EmailBean.isValidEmailAddress(to[i].getEmailAddress()))
-				this.to.add(to[i].getEmailAddress());
+			if (EmailBean.isValidEmailAddress(to[i].getEmailAddress().trim()))
+				this.to.add(to[i].getEmailAddress().trim());
 			else
 				this.smtp_error += "Invalid address format [" + to[i].getEmailAddress() + "] ";
 		}
@@ -201,8 +201,8 @@ public class EmailBean {
 		this.cc = new ArrayList<String>(tmp.length);
 
 		for (int i = 0; i < tmp.length; i++) {
-			if (EmailBean.isValidEmailAddress(tmp[i]))
-				this.cc.add(tmp[i]);
+			if (EmailBean.isValidEmailAddress(tmp[i].trim()))
+				this.cc.add(tmp[i].trim());
 			else
 				this.smtp_error += "Invalid address format [" + tmp[i] + "] ";
 		}
@@ -216,8 +216,8 @@ public class EmailBean {
 		this.cc = new ArrayList<String>(cc.length);
 
 		for (int i = 0; i < cc.length; i++) {
-			if (EmailBean.isValidEmailAddress(cc[i]))
-				this.cc.add(cc[i]);
+			if (EmailBean.isValidEmailAddress(cc[i].trim()))
+				this.cc.add(cc[i].trim());
 			else
 				this.smtp_error += "Invalid address format [" + cc[i] + "] ";
 		}
@@ -261,8 +261,8 @@ public class EmailBean {
 		this.bcc = new ArrayList<String>(tmp.length);
 
 		for (int i = 0; i < tmp.length; i++) {
-			if (EmailBean.isValidEmailAddress(tmp[i]))
-				this.bcc.add(tmp[i]);
+			if (EmailBean.isValidEmailAddress(tmp[i].trim()))
+				this.bcc.add(tmp[i].trim());
 			else
 				this.smtp_error += "Invalid address format [" + tmp[i] + "] ";
 		}
@@ -277,8 +277,8 @@ public class EmailBean {
 		this.bcc = new ArrayList<String>(bcc.length);
 
 		for (int i = 0; i < bcc.length; i++) {
-			if (EmailBean.isValidEmailAddress(bcc[i]))
-				this.bcc.add(bcc[i]);
+			if (EmailBean.isValidEmailAddress(bcc[i].trim()))
+				this.bcc.add(bcc[i].trim());
 			else
 				this.smtp_error += "Invalid address format [" + bcc[i] + "] ";
 		}
