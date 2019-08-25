@@ -4,9 +4,7 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
-import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.personnel.jobs.dao.RequestToHireEmailManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -14,11 +12,11 @@ import com.esdnl.util.StringUtils;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequiredFormElement;
-public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandlerImpl {
+public class ResendRTHApprovalAjaxRequestHandler extends RequestHandlerImpl {
 
-	public ApproveDeclineRequestToHireAjaxRequestHandler() {
+	public ResendRTHApprovalAjaxRequestHandler() {
 		validator = new FormValidator(new FormElement[] {
-				new RequiredFormElement("rid"),new RequiredFormElement("status")
+				new RequiredFormElement("rid")
 			});
 	}
 
@@ -31,29 +29,8 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 
 		try {
 				int rid = form.getInt("rid");
-				int status = form.getInt("status");
-				String statustype = form.get("rtype");
 				RequestToHireBean rth = RequestToHireManager.getRequestToHireById(rid);
-				if(statustype.equals("A")){
-					if(rth.getDivision() == 6) {
-						//division is hr then one less approval
-						if(status == 4) {
-							//by pass one of the validations for ad-hr
-							RequestToHireManager.approveRequestToHire(rid,5, Integer.toString(usr.getPersonnel().getPersonnelID()));
-						}else {
-							RequestToHireManager.approveRequestToHire(rid,status, Integer.toString(usr.getPersonnel().getPersonnelID()));
-						}
-					}else {
-						RequestToHireManager.approveRequestToHire(rid,status, Integer.toString(usr.getPersonnel().getPersonnelID()));
-					}
-					
-					//send email to next approval
-					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid));
-				}else{
-					RequestToHireManager.approveRequestToHire(rid,RequestToHireStatus.REJECTED.getValue(), Integer.toString(usr.getPersonnel().getPersonnelID()));
-					//send email to next approval
-					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid));
-				}
+				RequestToHireEmailManager.sendRequestToHireEmail(rth);
 				
 				String xml = null;
 				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
@@ -62,7 +39,6 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 				sb.append("<STATUS>SUCCESS</STATUS>");
 				sb.append("</RTH>");
 				sb.append("</REQUESTTOHIRE>");
-				
 				xml = StringUtils.encodeXML(sb.toString());
 
 				PrintWriter out = response.getWriter();
@@ -82,8 +58,6 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 				sb.append("<STATUS>" + e.getMessage() + "</STATUS>");
 				sb.append("</RTH>");
 				sb.append("</REQUESTTOHIRE>");
-				
-
 				xml = StringUtils.encodeXML(sb.toString());
 
 				System.out.println(xml);

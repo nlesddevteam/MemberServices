@@ -80,7 +80,7 @@
 									<label class="radio-inline"><input type="radio" name="perm" value="A" id="perm-any" checked>Any</label>
 								    </div>
 							   </div> 	                          
-	                           <div class="input-group">
+	                           <div class="input-group" style="display:none;">
 								    <span class="input-group-addon">Senority Date</span>
 								    <div class="form-control">
 								    		<label class="radio-inline"><input type="radio" name="sfilter" value="before" >Before</label>

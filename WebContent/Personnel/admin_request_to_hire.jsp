@@ -63,7 +63,7 @@ $(document).ready(function() {
 <script>
 $("#loadingSpinner").css("display","none");
 </script>
-<script type="text/javascript" src="js/changepopup.js"></script> 
+
 
 <script>
 var pageWordCountConf = {
@@ -99,7 +99,7 @@ var pageWordCountConf = {
                                   
                                       
  <div class="alert alert-danger" id="errorMessage" style="display:none;"><span id="spanmessage"></span></div>
-                                        
+                                       
                                       
 <div class="input-group" id="positionTitleGroup">
 
@@ -667,9 +667,13 @@ var pageWordCountConf = {
                                       					<c:if test="${rbean.status.value eq 6 }">
                                       						<a class="btn btn-warning" href="view_job_post.jsp?comp_num=${rbean.competitionNumber }">View Competition ${rbean.competitionNumber }</a>
                                       					</c:if>
+                                      					<c:if test="${rbean.status.value lt 6 }">
+                                      					<input type="button" class="btn btn-danger" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
+                                      					</c:if>
                                       				                                 		
                                     	</c:otherwise>
                                     </c:choose>
+                                      <div class="alert alert-success" id="errorMessageS" style="display:none;"><span id="spanmessageS"></span></div>
                                    <a class="btn btn-danger" href="javascript:history.go(-1);">Back</a>
 
  </div>                       
