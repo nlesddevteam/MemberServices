@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -42,6 +44,7 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 
 				JobOpportunityBean opp = null;
 				AdRequestBean ad = null;
+				RequestToHireBean rth = null;
 
 				opp = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
 				if (!opp.isCandidateListPrivate() || usr.checkPermission("PERSONNEL-ADMIN-VIEW-PRIVATE-CANDIDATE-LIST")) {
@@ -66,11 +69,16 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 									ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
 							path = "admin_view_job_applicants_shortlist.jsp";
 						}
+						if(opp.getIsSupport().contentEquals("Y")) {
+							rth = RequestToHireManager.getRequestToHireByCompNum(form.get("comp_num"));
+							request.setAttribute("AD_REQUEST", rth);
+						}else {
+							ad = AdRequestManager.getAdRequestBean(form.get("comp_num"));
+							request.setAttribute("AD_REQUEST", ad);
+						}
 
-						ad = AdRequestManager.getAdRequestBean(form.get("comp_num"));
-						request.setAttribute("AD_REQUEST", ad);
-
-					}
+						
+}
 				}
 				else {
 					request.setAttribute("msg", "Applicant List for competition  " + form.get("comp_num") + " is private.");
