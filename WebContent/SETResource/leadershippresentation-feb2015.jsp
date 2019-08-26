@@ -1,6 +1,6 @@
 <%@ page language ="java" 
          session = "true"
-         import = "com.awsd.security.*;"
+         import = "com.awsd.security.*"
          isThreadSafe="false"%>
 
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
