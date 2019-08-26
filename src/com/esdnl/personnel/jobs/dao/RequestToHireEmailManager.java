@@ -19,7 +19,40 @@ public class RequestToHireEmailManager {
 		int zoneid;
 		String zonename="";
 		try {
-			zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation())).getSchoolName());
+			Integer test =Integer.parseInt(rbean.getWorkLocation());
+			switch (test) {
+			case 0: // District Office
+				zoneid = 1;
+				break;
+			case 4007: // Burin Satellite Office
+				zoneid = 1;
+				break;
+			case 449: // St. Augustine's Primary
+				zoneid = 1;
+				break;
+			case 455: // Janeway Hospital School
+				zoneid = 1;
+				break;
+			case 1000: //Labrador Regional Office
+				zoneid = 4;
+				break;
+			case 1009: // Avalon West Satellite Office
+				zoneid = 1;
+				break;
+			case 2008: // Vista Satellite Office
+				zoneid = -1;
+				break;
+			case 2000: //Western Regional Office
+				zoneid = 3;
+				break;
+			case 3000: //Nova Central Regional Office
+				zoneid = 2;
+				break;
+			default:
+
+				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation())).getSchoolName());
+			}
+			
 			
 			switch(zoneid){
 			case 1://Eastern
@@ -34,8 +67,8 @@ public class RequestToHireEmailManager {
 			case 4://Labrador
 				zonename="LABR";
 				break;	
-			default://nlesd
-				zonename="NLESD";
+			default:
+				zonename="EAST";
 				break;
 			}
 			//now we see what the status is and send the correct emails
@@ -145,7 +178,7 @@ public class RequestToHireEmailManager {
 		} catch (SchoolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		
 	}
 }

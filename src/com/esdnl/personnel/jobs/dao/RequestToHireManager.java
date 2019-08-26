@@ -472,8 +472,39 @@ public class RequestToHireManager {
 		StringBuilder sb = new StringBuilder();
 		sb.append("RTH-");
 		try {
-			zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation())).getSchoolName());
-			
+			Integer test =Integer.parseInt(rbean.getWorkLocation());
+			switch (test) {
+			case 0: // District Office
+				zoneid = 1;
+				break;
+			case 4007: // Burin Satellite Office
+				zoneid = 1;
+				break;
+			case 449: // St. Augustine's Primary
+				zoneid = 1;
+				break;
+			case 455: // Janeway Hospital School
+				zoneid = 1;
+				break;
+			case 1000: //Labrador Regional Office
+				zoneid = 4;
+				break;
+			case 1009: // Avalon West Satellite Office
+				zoneid = 1;
+				break;
+			case 2008: // Vista Satellite Office
+				zoneid = -1;
+				break;
+			case 2000: //Western Regional Office
+				zoneid = 3;
+				break;
+			case 3000: //Nova Central Regional Office
+				zoneid = 2;
+				break;
+			default:
+
+				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation())).getSchoolName());
+			}
 			
 			switch(rbean.getStatus().getValue()){
 			case 1://submitted
@@ -631,7 +662,7 @@ public class RequestToHireManager {
 				sb.append("<UPOSITION>");
 				sb.append("<ID>" + rs.getInt("ID") + "</ID>");
 				sb.append("<PDESCRIPTION>" + rs.getString("PDESCRIPTION") + "</PDESCRIPTION>");
-				sb.append("<JESPAY>" + rs.getString("JES_PAY") + "</JESPAY>");
+				sb.append("<JESPAY>" + rs.getString("JES_PAY") ==  null?"":rs.getString("JES_PAY") + "</JESPAY>");
 				sb.append("<UNIONCODE>" + rs.getInt("UNION_CODE") + "</UNIONCODE>");
 				sb.append("</UPOSITION>");
 			}

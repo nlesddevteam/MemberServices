@@ -21,9 +21,10 @@
 <esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "JOB", "JOB_SHORTLIST", "JOB_SHORTLIST_DECLINES_MAP" }%>'
 	scope='<%=PageContext.SESSION_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />
-<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "AD_REQUEST" }%>'
+	<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "AD_REQUEST" }%>'
 	scope='<%=PageContext.REQUEST_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />
+
 	
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
@@ -36,7 +37,7 @@
   
 	HashMap<String, ApplicantProfileBean> declinedInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_DECLINES_MAP");
   
-	AdRequestBean ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
+	AdRequestBean ad = null;
   
 	User usr = (User)session.getAttribute("usr");
   
@@ -51,7 +52,13 @@
   int statusi=0;
   RequestToHireBean rth = null;
   if(!(job == null)){
-	  rth = RequestToHireManager.getRequestToHireByCompNum(job.getCompetitionNumber());
+	  if(job.getIsSupport().equals("Y")){
+		  rth = (RequestToHireBean) request.getAttribute("AD_REQUEST");
+		  System.out.println("SUPPORT");
+	  }else{
+		  ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
+	  }
+	  
   }
 %>
 

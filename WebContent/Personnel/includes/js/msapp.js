@@ -964,5 +964,75 @@ function validateEmail(fld)
 {
     return /^[\w.\-]+@[\w\-]+\.[a-zA-Z0-9]+$/.test(fld.value);
 }
+// call approve request to hire ajax
+function updaterequeststatuscomp(vrtype,vstatus,vrid)
+{
+	var pnum = $("#position_number").val();
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "approveRequestToHireComp.html",
+ 				data: {
+ 					rid: vrid, rtype:vrtype, status: vstatus, pnumber:pnum
+ 				}, 
+ 				success: function(xml){
+ 					$(xml).find('RTH').each(function(){
+ 							
+ 							
+ 							if($(this).find("STATUS").text() == "SUCCESS")
+ 								{
+									window.location="addRequestToHire.html?rid=" + vrid;
+ 								}else{
+ 									alert("Error updating request.");
+ 									
+ 								}
+					});
 
+ 					
+ 				},
+ 				  error: function(xhr, textStatus, error){
+ 				      alert("Status:" + xhr.statusText + "  " + "Text:" +textStatus + "  " + "Error:" + error );
 
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
+//call approve request to hire ajax
+function resendrthmessage(vrid)
+{
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "resendRequestToHireMessage.html",
+ 				data: {
+ 					rid: vrid
+ 				}, 
+ 				success: function(xml){
+ 					$(xml).find('RTH').each(function(){
+ 							
+ 							
+ 							if($(this).find("STATUS").text() == "SUCCESS")
+ 								{
+									//window.location="addRequestToHire.html?rid=" + vrid;
+ 									$("#spanmessageS").html("Notification has been resent").css("display","block");
+ 									$("#errorMessageS").show();
+ 								}else{
+ 									$("#spanmessage").html("Error sending notification").css("display","block");
+ 									$("#errorMessage").show();
+ 									
+ 								}
+					});
+
+ 					
+ 				},
+ 				  error: function(xhr, textStatus, error){
+ 				      alert("Status:" + xhr.statusText + "  " + "Text:" +textStatus + "  " + "Error:" + error );
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
