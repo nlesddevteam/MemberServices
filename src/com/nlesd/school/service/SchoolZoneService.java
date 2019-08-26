@@ -9,9 +9,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 import com.awsd.mail.bean.AlertBean;
 import com.awsd.mail.bean.EmailException;
 import com.awsd.school.School;
@@ -20,9 +17,12 @@ import com.awsd.school.SchoolException;
 import com.esdnl.dao.DAOUtils;
 import com.nlesd.school.bean.SchoolZoneBean;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
 public class SchoolZoneService {
 
-	private static Map<Integer, SchoolZoneBean> preLoadedSchoolZones = null;
+	private static Map<Integer, SchoolZoneBean> preLoadedSchoolZones = new HashMap<Integer, SchoolZoneBean>(4);
 
 	static {
 		try {
@@ -52,10 +52,10 @@ public class SchoolZoneService {
 
 		/*
 		Collections.sort((List<SchoolZoneBean>) zones, new Comparator<SchoolZoneBean>() {
-
+		
 			@Override
 			public int compare(SchoolZoneBean o1, SchoolZoneBean o2) {
-
+		
 				if (o1.getZoneId() == 5)
 					return 1;
 				else if (o2.getZoneId() == 5)
@@ -64,7 +64,7 @@ public class SchoolZoneService {
 					return o1.compareTo(o2);
 				}
 			}
-
+		
 		});
 		*/
 
@@ -234,13 +234,18 @@ public class SchoolZoneService {
 
 				abean.setZoneId(rs.getInt("zone_id"));
 				abean.setZoneName(rs.getString("zone_name"));
-				abean.setAddress1(rs.getString("zone_address1"));
-				abean.setAddress2(rs.getString("zone_address2"));
-				abean.setTownCity(rs.getString("zone_towncity"));
-				abean.setProvince(rs.getString("zone_province"));
-				abean.setPostalCode(rs.getString("zone_postalcode"));
-				abean.setTelephone(rs.getString("zone_telephone"));
-				abean.setFax(rs.getString("zone_fax"));
+				try {
+					abean.setAddress1(rs.getString("zone_address1"));
+					abean.setAddress2(rs.getString("zone_address2"));
+					abean.setTownCity(rs.getString("zone_towncity"));
+					abean.setProvince(rs.getString("zone_province"));
+					abean.setPostalCode(rs.getString("zone_postalcode"));
+					abean.setTelephone(rs.getString("zone_telephone"));
+					abean.setFax(rs.getString("zone_fax"));
+				}
+				catch (SQLException e) {
+					// zone metadata may not always be available.
+				}
 
 				if (loadZoneSchools) {
 					abean.setSchools(SchoolDB.getSchools(abean));

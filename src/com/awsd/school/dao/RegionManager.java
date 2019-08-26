@@ -8,9 +8,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 import com.awsd.school.School;
 import com.awsd.school.bean.RegionBean;
 import com.awsd.school.bean.RegionException;
@@ -18,16 +15,19 @@ import com.esdnl.dao.DAOUtils;
 import com.nlesd.school.bean.SchoolZoneBean;
 import com.nlesd.school.service.SchoolZoneService;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
 public class RegionManager {
 
-	private static HashMap<Integer, RegionBean> preLoadedRegions = null;
+	private static HashMap<Integer, RegionBean> preLoadedRegions = new HashMap<Integer, RegionBean>(4);
 
 	static {
 		try {
 			preLoadedRegions = getRegionBeansMap();
 		}
 		catch (RegionException e) {
-			preLoadedRegions = null;
+			preLoadedRegions = new HashMap<Integer, RegionBean>(4);
 		}
 	}
 
@@ -272,6 +272,16 @@ public class RegionManager {
 				}
 				catch (Exception ex) {
 					aBean.setZone(null);
+				}
+
+				//some querys have zone_id in a different case.
+				if (aBean.getZone() == null) {
+					try {
+						aBean.setZone(SchoolZoneService.getSchoolZoneBean(rs.getInt("zone_id")));
+					}
+					catch (Exception ex) {
+						aBean.setZone(null);
+					}
 				}
 			}
 		}
