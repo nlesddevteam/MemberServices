@@ -662,7 +662,11 @@ public class RequestToHireManager {
 				sb.append("<UPOSITION>");
 				sb.append("<ID>" + rs.getInt("ID") + "</ID>");
 				sb.append("<PDESCRIPTION>" + rs.getString("PDESCRIPTION") + "</PDESCRIPTION>");
-				sb.append("<JESPAY>" + rs.getString("JES_PAY") ==  null?"":rs.getString("JES_PAY") + "</JESPAY>");
+				if(rs.getString("JES_PAY") ==  null) {
+					sb.append("<JESPAY></JESPAY>");
+				}else {
+					sb.append("</JESPAY>" + rs.getString("JES_PAY") + "</JESPAY>");
+				}
 				sb.append("<UNIONCODE>" + rs.getInt("UNION_CODE") + "</UNIONCODE>");
 				sb.append("</UPOSITION>");
 			}

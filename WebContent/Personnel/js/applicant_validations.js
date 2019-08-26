@@ -431,7 +431,7 @@ function getPositionsApp()
 		$.ajax(
      			{
      				type: "POST",  
-     				url: "getRTHUnionPositions.html",
+     				url: "getRTHUnionPositionsApp.html",
      				data: {
      					unioncode: uc
      				}, 
