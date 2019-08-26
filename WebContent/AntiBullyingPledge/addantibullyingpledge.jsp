@@ -3,7 +3,7 @@
          import="java.util.*,
                  java.text.*,
                  com.esdnl.util.*,
-                 com.nlesd.antibullyingpledge.bean.*;" 
+                 com.nlesd.antibullyingpledge.bean.*" 
          isThreadSafe="false"%>
 
 

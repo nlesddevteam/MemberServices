@@ -2,7 +2,7 @@
          import="java.util.*,
                  java.text.*,
                  com.awsd.school.*,
-                 com.awsd.security.*;"
+                 com.awsd.security.*"
          isThreadSafe="false" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

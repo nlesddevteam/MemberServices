@@ -1,7 +1,7 @@
 <%@ page language ="java" 
          session = "true"
          import="com.esdnl.criticalissues.bean.*,
-                 com.esdnl.criticalissues.constant.*;"
+                 com.esdnl.criticalissues.constant.*"
          isThreadSafe="false"%>
 
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>

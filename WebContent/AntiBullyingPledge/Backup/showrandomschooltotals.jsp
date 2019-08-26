@@ -2,7 +2,7 @@
          session = "true"
          import = "java.util.*,java.text.DateFormat,
          					 com.nlesd.antibullyingpledge.bean.*,
-         					 com.nlesd.antibullyingpledge.dao.*,com.esdnl.util.*;"
+         					 com.nlesd.antibullyingpledge.dao.*,com.esdnl.util.*"
          isThreadSafe="false"%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>

@@ -5,7 +5,7 @@
                  com.esdnl.util.*,
                  com.esdnl.personnel.jobs.bean.*,
                  com.esdnl.personnel.jobs.dao.*,
-                 com.esdnl.personnel.jobs.constants.*;" 
+                 com.esdnl.personnel.jobs.constants.*" 
 				 isThreadSafe="false"%>
 
 <%
