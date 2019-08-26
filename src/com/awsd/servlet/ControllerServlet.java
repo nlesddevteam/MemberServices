@@ -307,8 +307,8 @@ public class ControllerServlet extends HttpServlet {
 					session = request.getSession(false);
 					if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
 						viewURL = rh.handleRequest(request, response);
-						System.err.println(
-								"[MyHRP]" + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail() + ": " + viewURL);
+						System.err.println("**[MyHRP]** " + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail()
+								+ ": " + viewURL);
 					}
 					else {
 						throw new PersonnelApplicantSecurityException("Illegal Access Attempt [" + request.getRequestURI() + "]");
