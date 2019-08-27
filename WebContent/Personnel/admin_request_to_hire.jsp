@@ -63,7 +63,7 @@ $(document).ready(function() {
 <script>
 $("#loadingSpinner").css("display","none");
 </script>
-
+<script type="text/javascript" src="includes/js/changepopup.js"></script>
 
 <script>
 var pageWordCountConf = {

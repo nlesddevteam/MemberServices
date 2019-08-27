@@ -3768,6 +3768,10 @@
     <Request-Handler>
     <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.ResendRTHApprovalAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/resendRequestToHireMessage.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.GetRTHUnionPositionsAppAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/getRTHUnionPositionsApp.html</URL-Pattern>
     </Request-Handler>                                                
   </Request-Handlers>
 </Member-Services-Config>
