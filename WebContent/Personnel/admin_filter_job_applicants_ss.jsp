@@ -61,7 +61,8 @@
 			    $( "#sdate" ).datepicker(pickerOpts);
 			});
 		</script>
-		<script src="js/applicant_validations.js"></script>
+		
+		<script src="includes/js/changepopup.js"></script>
 	</head>
 	
 	<body>
@@ -94,7 +95,7 @@
 	                           <div class="input-group">
 								    <span class="input-group-addon">Current Union</span>
 								    <c:set var='unioncodes' value='<%=RequestToHireManager.getUnionCodes()%>'/>
-			                    	<SELECT name="union_code" id="union_code" class="form-control" style="width:250px;" onchange="getPositionsApp()">
+			                    	<SELECT name="union_code" id="union_code" class="form-control" style="width:250px;" onchange="getPositionsFilter();">
 										<OPTION VALUE='-1'>N/A</OPTION>
 										<%
 											TreeMap<String,Integer> ucodes = RequestToHireManager.getUnionCodes();

@@ -295,23 +295,19 @@ public class ControllerServlet extends HttpServlet {
 						System.err.println(usr.getUsername() + ": " + viewURL);
 					}
 					else {
-						response.getWriter().println("<HTML><HEAD><TITLE></TITLE></HEAD><BODY>");
-						response.getWriter().println(
-								"<SCRIPT>self.parent.location.href='/MemberServices/login.html?msg=Secure Resource!<br>Please Login.'</SCRIPT>");
-						response.getWriter().println("</BODY></HTML>");
-						response.getWriter().flush();
-						return;
+						throw new SecurityException("**[MS]** User login required [" + request.getRequestURI() + "].");
 					}
 				}
 				else if (rh instanceof PersonnelApplicationRequestHandler) {
 					session = request.getSession(false);
 					if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
 						viewURL = rh.handleRequest(request, response);
-						System.err.println(
-								"[MyHRP]" + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail() + ": " + viewURL);
+						System.err.println("**[MyHRP]** " + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail()
+								+ ": " + viewURL);
 					}
 					else {
-						throw new PersonnelApplicantSecurityException("Illegal Access Attempt [" + request.getRequestURI() + "]");
+						throw new PersonnelApplicantSecurityException("**[MyHRP]** User login required [" + request.getRequestURI()
+								+ "]");
 					}
 				}
 				else if (rh instanceof MemberServicesLogoutRequestHandler) {

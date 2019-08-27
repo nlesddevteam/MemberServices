@@ -7,11 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -54,8 +57,14 @@ public class MarkJobShortlistCompleteRequestHandler extends RequestHandlerImpl {
 					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 					session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
 							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
-					request.setAttribute("AD_REQUEST", AdRequestManager.getAdRequestBean(form.get("comp_num")));
-
+					if(opp.getIsSupport().contentEquals("Y")) {
+						RequestToHireBean rth = RequestToHireManager.getRequestToHireByCompNum(form.get("comp_num"));
+						request.setAttribute("AD_REQUEST", rth);
+					}else {
+						AdRequestBean ad = AdRequestManager.getAdRequestBean(form.get("comp_num"));
+						request.setAttribute("AD_REQUEST", ad);
+					}
+					
 					path = "admin_view_job_applicants_shortlist.jsp";
 				}
 				else {
