@@ -350,11 +350,11 @@ public class ControllerServlet extends HttpServlet {
 		}
 		catch (PersonnelApplicantSecurityException e) {
 			System.err.println(e.getMessage());
-			response.sendRedirect("/MemberServices/Personnel/applicantlogin.html");
+			response.sendRedirect("/MemberServices/Personnel/applicant_login.jsp?errmsg=Secure Resource. Please login!");
 		}
 		catch (SecurityException e) {
 			System.err.println(e.getMessage());
-			response.sendRedirect("/MemberServices/memberServices.html");
+			response.sendRedirect("/MemberServices/login.html?msg=Secure Resource. Please login!");
 		}
 		catch (ClassNotFoundException e) {
 			System.err.println("NO HANDLER: " + request.getServletPath());
