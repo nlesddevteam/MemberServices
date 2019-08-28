@@ -1,6 +1,8 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +48,10 @@ public class ApplicantLoginRequestHandler implements LoginNotRequiredRequestHand
 					ApplicantProfileManager.applicantLoggedIn(profile);
 					request.setAttribute("msg", "Login Successful!");
 					path = "applicant_login.jsp";
+
+					System.err.println("LOGON SERVICES [MyHRP] - " + "User Login @ "
+							+ new SimpleDateFormat("MMMM dd, yyyy hh:mm a").format(Calendar.getInstance().getTime()) + " ["
+							+ profile.getEmail() + "].");
 				}
 			}
 		}
