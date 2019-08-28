@@ -183,9 +183,14 @@ input {
 					<%
 						}
 					%>
+					<%
+						if (job.isClosed()) {
+					%>
+					
 					<a onclick="loadingData()" class="btn btn-xs btn-info"
 						href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>'>View
 						Shortlist</a>
+					<%}%>	
 					<button type="button" class="btn btn-warning btn-xs"
 						data-toggle="modal" data-target="#emailModal">Email
 						Applicants</button>
@@ -456,9 +461,13 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 		<%
 			}
 		%>
+		<%
+			if (job.isClosed()) {
+		%>		
 		<a onclick="loadingData()" class="btn btn-xs btn-info"
 			href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>'>View
-			Shortlist</a>
+			Shortlist</a>		
+		<%}%>	
 		<button type="button" class="btn btn-warning btn-xs"
 			data-toggle="modal" data-target="#emailModal">Email
 			Applicants</button>
