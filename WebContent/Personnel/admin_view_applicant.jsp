@@ -1201,7 +1201,7 @@ input {
                                   		}
                                   %>
                                     <a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
-                                   	<% if(!job.isShortlistComplete()) { %>
+                                   	<% if(!job.isShortlistComplete() && job.isClosed()) { %>
                                    			<%if(guide != null){ %>
                                    				<%if(validReference){ %>
                                    					<a href='shortListApplicant.html?sin=<%=profile.getSIN() %>'" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
