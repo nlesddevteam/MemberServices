@@ -1,9 +1,11 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.constants.SubstituteListConstant;
@@ -25,7 +27,7 @@ public class ViewApplicantProfileRequestHandler extends RequestHandlerImpl {
 		};
 
 		validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("sin")
+				new RequiredFormElement("sin")
 		});
 	}
 
@@ -38,31 +40,38 @@ public class ViewApplicantProfileRequestHandler extends RequestHandlerImpl {
 		if (validate_form()) {
 			try {
 				ApplicantProfileBean abean = ApplicantProfileManager.getApplicantProfileBean(form.get("sin"));
-				request.setAttribute("APPLICANT", abean);
-				if(abean.getProfileType().equals("S")){
-					path = "admin_view_applicant_ss.jsp";
-				}else{
-					request.setAttribute("SUBLISTBEANS_BY_REGION", SubListManager.getSubListBeansByRegion(
-							com.awsd.common.Utils.getCurrentSchoolYear(), SubstituteListConstant.TEACHER));
-					path = "admin_view_applicant.jsp";
+
+				if (abean != null) {
+					if (abean.getProfileType().equals("S")) {
+						path = "admin_view_applicant_ss.jsp";
+					}
+					else {
+						request.setAttribute("SUBLISTBEANS_BY_REGION", SubListManager.getSubListBeansByRegion(
+								com.awsd.common.Utils.getCurrentSchoolYear(), SubstituteListConstant.TEACHER));
+						path = "admin_view_applicant.jsp";
+					}
+
+					request.setAttribute("APPLICANT", abean);
+					request.setAttribute("jobs", ApplicantJobAppliedManager.getApplicantJobsApplied(form.get("sin")));
 				}
-					
-				
-				//set the collection of applied jobs
-				request.setAttribute("jobs", ApplicantJobAppliedManager.getApplicantJobsApplied(form.get("sin")));
+				else {
+					request.setAttribute("msg", "Invalid request.");
+
+					path = "admin_index.jsp";
+				}
 			}
 			catch (JobOpportunityException e) {
 				e.printStackTrace();
 				request.setAttribute("msg", "Could not retrieve applicant record.");
 
-				path = "admin_view_job_applicants.jsp";
+				path = "admin_index.jsp";
 			}
 		}
 		else {
 			request.setAttribute("FORM", form);
 			request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
 
-			path = "admin_view_job_applicants.jsp";
+			path = "admin_index.jsp";
 		}
 
 		return path;
