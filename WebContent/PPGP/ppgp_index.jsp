@@ -3,14 +3,20 @@
          import="com.awsd.ppgp.*,com.awsd.security.*,
                  java.text.*,
                  java.util.*"
-        isThreadSafe="false"%> 
+        isThreadSafe="false"%>
+        
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
+
+<esd:SecurityCheck permissions='PPGP-VIEW' />
 
 <%
 	User usr = (User) session.getAttribute("usr");
   	HashMap<String, PPGP> ppgps = PPGPDB.getPPGPMap(usr.getPersonnel());
 %>
-
-<esd:SecurityCheck permissions='PPGP-VIEW' />
 
 <html>
   <head>
