@@ -110,7 +110,10 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 							System.err.println("LOGON SERVICES [GOOGLE] - " + "User Login @ "
 									+ new SimpleDateFormat("MMMM dd, yyyy hh:mm a").format(Calendar.getInstance().getTime()) + " ["
 									+ email + " *"
-									+ usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryDescription().toUpperCase() + "*].");
+									+ (usr.getPersonnel() != null && usr.getPersonnel().getPersonnelCategory() != null
+											? usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName()
+											: "UNKNOWN")
+									+ "*].");
 
 							session.setAttribute("usr", usr);
 
