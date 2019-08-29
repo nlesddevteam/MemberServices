@@ -8,13 +8,17 @@
                   com.esdnl.util.*" 
          isThreadSafe="false"%>
 		
-		
-		<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
-		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
-		
-			<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-			<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>		
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+
+<esd:SecurityRequiredPageObjectsCheck
+	names='<%=new String[]{"REFERENCE_CHECK_REQUEST_BEAN", "JOB", "JOB_ASSIGNMENTS", "AD_REQUEST_BEAN", "PROFILE"}%>'
+	scope='<%=PageContext.REQUEST_SCOPE%>'
+	redirectTo="/Personnel/admin_index.jsp" />
+
 <%
 	ReferenceCheckRequestBean refReq = (ReferenceCheckRequestBean) request.getAttribute("REFERENCE_CHECK_REQUEST_BEAN");
   	JobOpportunityBean job = (JobOpportunityBean) request.getAttribute("JOB");
