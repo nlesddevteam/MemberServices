@@ -12,8 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 
 import com.awsd.personnel.Personnel;
@@ -33,6 +31,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
+import net.sf.json.JSONObject;
+
 public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImpl {
 
 	static final String CLIENT_ID = "362546788437-ntuv1jsloeagtrkn8vqd2d1r85hnt79t.apps.googleusercontent.com";
@@ -42,7 +42,7 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 	public GoogleLoginAjaxRequestHandler() {
 
 		this.validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("id_token")
+				new RequiredFormElement("id_token")
 		});
 	}
 
@@ -109,7 +109,8 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 						else {
 							System.err.println("LOGON SERVICES [GOOGLE] - " + "User Login @ "
 									+ new SimpleDateFormat("MMMM dd, yyyy hh:mm a").format(Calendar.getInstance().getTime()) + " ["
-									+ email + "].");
+									+ email + " *"
+									+ usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryDescription().toUpperCase() + "*].");
 
 							session.setAttribute("usr", usr);
 
