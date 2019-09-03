@@ -142,12 +142,12 @@
 					</esd:SecurityAccessRequired>
 
 
-					<!-- Admin Planner 
+					<!-- Admin Planner --> 
 					<esd:SecurityAccessRequired
 						roles="ANNUAL-PLANNER-VIEW,WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS,ADMINISTRATIVE ASSISTANT">
 
 						<div class="menuIconImage">
-							<a href="https://sites.google.com/nlesd.ca/annualplanner/home"
+							<a href="https://sites.google.com/nlesd.ca/theannualplanner/home"
 								target="_blank"> <img
 								src="includes/img/menu/aplanner-off.png"
 								class="img-swap menuImage" border=0
@@ -156,7 +156,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
--->
+
 
 					<!-- Pay Advice Admin -->
 					<esd:SecurityAccessRequired permissions="PAY-ADVICE-ADMIN">
