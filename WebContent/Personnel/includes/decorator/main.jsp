@@ -210,23 +210,46 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 					        <li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-modal-window"></span> Advertisements<span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
-
-					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/request_ad.jsp">Request Advertisement</a></li>
-	                                </esd:SecurityAccessRequired>
-
-                                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-APPROVE">
-	                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_list_ad_requests.jsp?status=<%=RequestStatus.SUBMITTED.getId()%>">Pending Requests (<%=AdRequestManager.getAdRequestBeanCount(RequestStatus.SUBMITTED)%>)</a></li>
-                                    </esd:SecurityAccessRequired>
-
-           	                        <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-APPROVE,PERSONNEL-ADREQUEST-POST">
-	                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_list_ad_requests.jsp?status=<%=RequestStatus.APPROVED.getId()%>">Approved Requests (<%=AdRequestManager.getAdRequestBeanCount(RequestStatus.APPROVED)%>)</a></li>
-	                                </esd:SecurityAccessRequired>
-
-	        	                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-APPROVE">
-	                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_list_ad_requests.jsp?status=<%=RequestStatus.PREDISPLAYED.getId()%>">Pre-Display Requests (<%=AdRequestManager.getAdRequestBeanCount(RequestStatus.PREDISPLAYED)%>)</a></li>
-	                                </esd:SecurityAccessRequired>
-
+                                     <li class="dropdown-submenu">
+					          	 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Educational</a>
+						                            <ul class="dropdown-menu">
+										          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
+						                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/request_ad.jsp">Request Advertisement</a></li>
+						                                </esd:SecurityAccessRequired>
+					
+					                                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-APPROVE">
+						                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_list_ad_requests.jsp?status=<%=RequestStatus.SUBMITTED.getId()%>">Pending Requests (<%=AdRequestManager.getAdRequestBeanCount(RequestStatus.SUBMITTED)%>)</a></li>
+					                                    </esd:SecurityAccessRequired>
+					
+					           	                        <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-APPROVE,PERSONNEL-ADREQUEST-POST">
+						                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_list_ad_requests.jsp?status=<%=RequestStatus.APPROVED.getId()%>">Approved Requests (<%=AdRequestManager.getAdRequestBeanCount(RequestStatus.APPROVED)%>)</a></li>
+						                                </esd:SecurityAccessRequired>
+					
+						        	                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-APPROVE">
+						                                           <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_list_ad_requests.jsp?status=<%=RequestStatus.PREDISPLAYED.getId()%>">Pre-Display Requests (<%=AdRequestManager.getAdRequestBeanCount(RequestStatus.PREDISPLAYED)%>)</a></li>
+						                                </esd:SecurityAccessRequired>
+	                                				</ul>
+	                                	</li>
+	                                				<li class="dropdown-submenu">
+					          	 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support/Management</a>
+						                            <ul class="dropdown-menu">
+                                  
+                                   						<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
+							                            	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addRequestToHire.html">Add New Request</a></li>
+							                            </esd:SecurityAccessRequired>
+							                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=0">Pending Requests</a></li>
+	                                      				</esd:SecurityAccessRequired>
+	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=5">Approved Requests</a></li>
+	                                      				</esd:SecurityAccessRequired>
+	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=7">Rejected requests</a></li>
+	                                      				</esd:SecurityAccessRequired>
+	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=6">Competition Posted</a></li>
+	                                      				</esd:SecurityAccessRequired>
+	                                 </ul></li>     			
 
 					          	</ul>
 					        </li>
@@ -270,24 +293,9 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 
 								       	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-SUPPORT-JOBS">
 								       	<li class="dropdown-submenu">
-						          	 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support Staff/Management</a>
+						          	 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support/Management</a>
 							                            <ul class="dropdown-menu">
-							                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-							                            	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addRequestToHire.html">Add New Request</a></li>
-							                            </esd:SecurityAccessRequired>
-							                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=0">Pending Requests</a></li>
-	                                      				</esd:SecurityAccessRequired>
-	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=5">Approved Requests</a></li>
-	                                      				</esd:SecurityAccessRequired>
-	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=7">Rejected requests</a></li>
-	                                      				</esd:SecurityAccessRequired>
-	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=6">Competition Posted</a></li>
-	                                      				</esd:SecurityAccessRequired>
-	                                      				<li class="divider"></li>
+							                           
 	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=All&zoneid=0">View All Posts</a></li>
 					                                  		<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=Open&zoneid=0">Open</a></li>
 						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=Unadvertised&zoneid=0">Unadvertised</a></li>
