@@ -10,7 +10,6 @@ import com.awsd.school.SchoolException;
 import com.esdnl.personnel.jobs.bean.ApplicantCurrentPositionBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
-import com.esdnl.personnel.jobs.constants.ApplicantPoolJobSSConstant;
 import com.esdnl.personnel.jobs.dao.ApplicantCurrentPositionManager;
 public class ApplicantCurrentPositionsSSTagHandler extends TagSupport{
 
@@ -43,7 +42,8 @@ public class ApplicantCurrentPositionsSSTagHandler extends TagSupport{
 			out.println("</tr></thead><tbody>");
 					for (ApplicantCurrentPositionBean value : map.values()) {
 						out.println("<TR>");
-						out.println("<TD>" + SchoolDB.getSchool(value.getSchoolId()).getSchoolName() + "</TD>");
+						//out.println("<TD>" + SchoolDB.getSchool(value.getSchoolId()).getSchoolName() + "</TD>");
+						out.println("<TD>" + getLocationText(value.getSchoolId()) + "</TD>");
 						out.println("<TD>" + value.getPositionUnion() + "</TD>");
 						out.println("<TD>" + value.getPositionName() + "</TD>");
 						out.println("<TD>" + value.getPositionTypeString()+ "</TD>");
@@ -79,10 +79,7 @@ public class ApplicantCurrentPositionsSSTagHandler extends TagSupport{
 		} catch (JobOpportunityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SchoolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
 		return SKIP_BODY;
 	}
@@ -102,5 +99,50 @@ public class ApplicantCurrentPositionsSSTagHandler extends TagSupport{
 		}else{
 			return "Temporary";
 		}
+	}
+	public String getLocationText(int schoolid) {
+
+		String txt = null;
+
+		switch (schoolid) {
+		case -3000:
+			txt = "Central Regional Office";
+			break;
+		case -2000:
+			txt = "Western Regional Office";
+			break;
+		case -1000:
+			txt = "Labrador Regional Office";
+			break;
+		case -999:
+			txt = "District Office";
+			break;
+		case -998:
+			txt = "Eastern Regional Office";
+			break;
+		case -100:
+			txt = "Avalon East Region";
+			break;
+		case -200:
+			txt = "Avalon West Region";
+			break;
+		case -300:
+			txt = "Burin Region";
+			break;
+		case -400:
+			txt = "Vista Region";
+			break;
+		default:
+			try {
+				txt = SchoolDB.getSchool(schoolid).getSchoolName();
+			} catch (SchoolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			break;
+		}
+
+		return txt;
 	}
 }
