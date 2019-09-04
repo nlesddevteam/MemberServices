@@ -73,6 +73,10 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 				if (idToken != null) {
 					Payload payload = idToken.getPayload();
 
+					if (payload == null) {
+						throw new IllegalAccessAttemptException("Invalid payload. Illegal Access Attempt!");
+					}
+
 					if (!StringUtils.equals("nlesd.ca", (String) payload.getHostedDomain())) {
 						throw new IllegalAccessAttemptException("Invalid domain [" + payload.getHostedDomain()
 								+ "] attempted access.");
