@@ -553,7 +553,7 @@
 								border=0></a>
 						</div>
 					</esd:SecurityAccessRequired>
-					<!-- EECED
+					<!-- EECED -->
 					<esd:SecurityAccessRequired permissions="EECD-VIEW-APPROVALS">
 						<div class="menuIconImage">                              	
 							<a href="EECD/schoolAdminViewApprovals.html">
@@ -575,7 +575,6 @@
 							</a>                                                         
 						</div>
 					</esd:SecurityAccessRequired> 
-				-->
 
 					<!-- 	   
 			  	   <esd:SecurityAccessRequired permissions="FUND3-SYSTEM-ACCESS">   		
