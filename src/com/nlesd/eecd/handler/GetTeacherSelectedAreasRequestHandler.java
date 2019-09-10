@@ -8,7 +8,9 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.eecd.dao.EECDAreaManager;
 public class GetTeacherSelectedAreasRequestHandler extends RequestHandlerImpl {
 	public GetTeacherSelectedAreasRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW","EECD-VIEW-APPROVALS"
+		};
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

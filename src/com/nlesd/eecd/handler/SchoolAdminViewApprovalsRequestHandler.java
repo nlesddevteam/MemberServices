@@ -9,7 +9,9 @@ import com.nlesd.eecd.bean.EECDTAApprovalBean;
 import com.nlesd.eecd.dao.EECDTAApprovalManager;
 public class SchoolAdminViewApprovalsRequestHandler extends RequestHandlerImpl {
 	public SchoolAdminViewApprovalsRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW-APPROVALS"
+		};
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

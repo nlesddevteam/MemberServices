@@ -15,7 +15,9 @@ import com.nlesd.eecd.dao.EECDShortlistManager;
 import com.nlesd.eecd.dao.EECDTeacherAreaManager;
 public class ViewShortListRequestHandler extends RequestHandlerImpl {
 	public ViewShortListRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW-ADMIN","EECD-VIEW-SHORTLIST"
+		};
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

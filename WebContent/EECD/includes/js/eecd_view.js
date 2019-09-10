@@ -17,7 +17,10 @@
     							//set is firstsave to no so they will now update
     							$('#firstsave').val('N');
     							//show save message
-    							$('#successMsg').text("Areas have been updated").css("display", "block").delay(5000);    							
+    							$('#successMsg').text("Areas have been updated").css("display", "block").delay(5000);
+    							$('#successMsgb').text("Areas have been updated").css("display", "block").delay(5000);
+    							$(location).attr('href',"viewEECD.html");
+    							
     						} else {
     							//show error message
     							$('#errorMsg').text($(this).find("MESSAGE").text()).css("display", "block").delay(5000);    							
@@ -47,6 +50,13 @@ $(function () {
 		        		return;
 		        		
 		        	}
+	        		
+	        		if($(this).attr("qupdated") == "N"){
+	        			//show edit questions div
+	        			var dname = "#divhref" + $(this).attr("id");
+	        			$(dname).show();
+	        		}
+	        		
 	        }
 
 	        var $widget = $(this),
@@ -73,14 +83,30 @@ $(function () {
 	        }else{
 	        	$checkbox.prop('checked', false);
 	        }
-	        //$checkbox.prop('checked', true);
 	        // Event Handlers
 	        $widget.on('click', function () {
-	            $checkbox.prop('checked', !$checkbox.is(':checked'));
-	            $checkbox.triggerHandler('change');
-	            updateDisplay();
-	        });
-	        $checkbox.on('change', function () {
+	        	var test = $("#editselected").val();
+	        	if(test == "Y"){
+	        		getAreaQuestions($widget.attr("id"));
+	            }else{
+	        		$checkbox.prop('checked', !$checkbox.is(':checked'));
+		            $checkbox.triggerHandler('change');
+		            $("#selectedid").val($widget.attr("id"));
+		            if($checkbox.is(':checked')){
+		            	getAreaQuestions($widget.attr("id"));
+		            	updateDisplay();
+		            	
+		            }else{
+		            	// do nothing it is unchecked
+		            	$checkbox.prop('checked', false);
+		            	updateDisplay();
+		            }
+	        	}
+		       
+		        $checkbox.triggerHandler('change');
+		    });
+	        $checkbox.on('click', function () {
+	        	
 	            updateDisplay();
 	        });
 	          
@@ -124,7 +150,6 @@ $(function () {
 	    
 	    $('#get-checked-data').on('click', function(event) {
 	        event.preventDefault(); 
-	        //var checkedItems = {}, 
 	        var counter = 0;
 	        var idlist;
 	        $("#check-list-box li.active").each(function(idx, li) {
@@ -143,3 +168,118 @@ $(function () {
 	    });
 
 	});
+/*******************************************************************************
+ * Opens dialog for adding to shortlist
+ ******************************************************************************/
+function openaddquestions() {
+	var tstatus=-1;
+	var options = {
+		"backdrop" : "static",
+		"show" : true
+	};
+	
+	$("#maintitlespan").text("Area Questions");
+	$("#spantitle1").text("");
+	$("#spantitle2").text("");
+	$("#spantitle3").text("");
+	$('#myModal').modal(options);
+	// now we add the onclick event
+	$('#btnok').unbind('click').bind('click', function (e) {
+		addUpdateTeacherAreaQuestions();
+		});
+	
+
+}
+/*******************************************************************************
+ * Calls ajax post for adding new area description
+ ******************************************************************************/
+function getAreaQuestions(areaid) {
+	$("#tquestions").find("tr:gt(1)").remove();
+	if(areaid == ""){
+		return;
+	}
+	var showwindow="N";
+	$.ajax({
+		url : 'getAreaQuestions.html',
+		type : 'POST',
+		data : {
+				aid : areaid 
+		},success : function(xml) {
+			$(xml).find('TQUESTION').each(
+					function() {
+						
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#title1").html($(this).find("AREAD").text());
+							//if($(this).find("ETEACHER").text() != "null"){
+								//$("#title2").html($(this).find("ETEACHER").text());
+							//}
+							var newrow="";
+							newrow = "<tr><td colspan='2'>" + $(this).find("QSORT").text() + ".  " +  $(this).find("QTEXT").text() + "</td></tr>";
+							newrow = newrow + "<tr><td colspan='2'><textarea rows='5' cols='60' id='txtqanswer' name='txtqanswer'>";
+							newrow = newrow + $(this).find("ANSWER").text() + "</textarea><input type='hidden' name='txtanswerid' value='" + $(this).find("ANSWERID").text() + "'>";
+							newrow = newrow + "<input type='hidden' id='txtqid' name='txtqid' value='" + $(this).find("QID").text() + "'>";
+							newrow = newrow + "<input type='hidden' id='txtareaid' name='txtareaid' value='" + $(this).find("AREAID").text() + "'></td></tr>";
+							$("#tquestions tbody").append(newrow);
+							showwindow="Y";   							
+						} else if ($(this).find("MESSAGE").text() == "NONE") {
+							//no questions do not show modal
+							  							
+						}else{
+							$('#errorMsg').text($(this).find("MESSAGE").text()).css("display", "block").delay(5000);  
+						}
+
+					});
+			if(showwindow == "Y"){
+				openaddquestions();
+			}
+			
+		},
+		error : function(xhr, textStatus, error) {    			
+			$('#errorMsg').text(error).css("display", "block").delay(5000).fadeOut();     			
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Calls ajax post for saving the data on modal
+ ******************************************************************************/
+function addUpdateTeacherAreaQuestions() {
+	var frm = $('#frmquestions');
+	$.ajax({
+		url : 'addUpdateQuestions.html',
+		type : 'POST',
+		data : frm.serialize(),
+		success : function(xml) {
+			$(xml).find('CAREA').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							//isvalid = true;
+							$('#successMsg').text("Area Questions Have Been Updated").css("display", "block");
+							$('#myModal').modal('hide');
+							$('.modal-backdrop').remove();
+							var did = "#divhref" + $("#selectedid").val();
+							$(did).show();
+						} else {
+							$('#errorMsg').text($(this).find("MESSAGE").text()).css("display", "block").delay(5000).fadeOut();
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#errorMsg").html(error).css("display",
+					"block");
+		},
+		dataType : "text",
+		async : false
+
+	});
+	
+}
+function openedit(areaid){
+	$("#editselected").val("Y");
+}
