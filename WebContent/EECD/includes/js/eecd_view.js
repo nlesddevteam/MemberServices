@@ -216,10 +216,10 @@ function getAreaQuestions(areaid) {
 							//}
 							var newrow="";
 							newrow = "<tr><td colspan='2'>" + $(this).find("QSORT").text() + ".  " +  $(this).find("QTEXT").text() + "</td></tr>";
-							newrow = newrow + "<tr><td colspan='2'><textarea rows='5' cols='60' id='txtqanswer' name='txtqanswer'>";
+							newrow = newrow + "<tr><td colspan='2'><textarea rows='5' cols='60' maxlength='500' id='txtqanswer' name='txtqanswer'>";
 							newrow = newrow + $(this).find("ANSWER").text() + "</textarea><input type='hidden' name='txtanswerid' value='" + $(this).find("ANSWERID").text() + "'>";
 							newrow = newrow + "<input type='hidden' id='txtqid' name='txtqid' value='" + $(this).find("QID").text() + "'>";
-							newrow = newrow + "<input type='hidden' id='txtareaid' name='txtareaid' value='" + $(this).find("AREAID").text() + "'></td></tr>";
+							newrow = newrow + "<input type='hidden' id='txtareaid' name='txtareaid'  value='" + $(this).find("AREAID").text() + "'></td></tr>";
 							$("#tquestions tbody").append(newrow);
 							showwindow="Y";   							
 						} else if ($(this).find("MESSAGE").text() == "NONE") {

@@ -124,7 +124,7 @@ $("#loadingSpinner").css("display","none");
                     <table id="tquestions">
                     <tbody>
                     <tr><td colspan='2' align="center"><h4 class="modal-title" id="title1"></h4></td></tr>
-                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2"></h4></td></tr>
+                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2">Maximum 500 characters per question</h4></td></tr>
                     </tbody>			
                     </table>
                     </form>
