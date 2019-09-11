@@ -3772,6 +3772,14 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.GetRTHUnionPositionsAppAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/getRTHUnionPositionsApp.html</URL-Pattern>
-    </Request-Handler>                                                
+    </Request-Handler> 
+    <Request-Handler>
+    <Request-Handler-Class>com.nlesd.eecd.handler.GetAreaQuestionsAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/EECD/getAreaQuestions.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.nlesd.eecd.handler.AddUpdateTeacherQuestionsAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/EECD/addUpdateQuestions.html</URL-Pattern>
+    </Request-Handler>                                                     
   </Request-Handlers>
 </Member-Services-Config>

@@ -6,7 +6,6 @@ import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.awsd.common.Utils;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.nlesd.eecd.bean.EECDAreaBean;
@@ -15,7 +14,10 @@ import com.nlesd.eecd.dao.EECDAreaManager;
 import com.nlesd.eecd.dao.EECDTeacherAreaManager;
 public class ViewEECDRequestHandler extends RequestHandlerImpl {
 	public ViewEECDRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW","EECD-VIEW-APPROVALS"
+		};
+		
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

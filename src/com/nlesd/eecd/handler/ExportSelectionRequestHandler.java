@@ -11,7 +11,9 @@ import com.nlesd.eecd.bean.EECDAreaBean;
 import com.nlesd.eecd.dao.EECDAreaManager;
 public class ExportSelectionRequestHandler extends RequestHandlerImpl {
 	public ExportSelectionRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW-ADMIN"
+		};
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

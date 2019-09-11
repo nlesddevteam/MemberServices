@@ -515,6 +515,8 @@ public class EECDAreaManager {
 					abean.setShortlistCompleted(false);
 				}
 				abean.setCompletedBy(rs.getString("COMPLETED_BY"));
+				abean.setEligibleTeachers(rs.getString("ELIGIBLE_TEACHERS"));
+				abean.setRequired(rs.getString("REQUIRED"));
 			}
 		catch (SQLException e) {
 				abean = null;

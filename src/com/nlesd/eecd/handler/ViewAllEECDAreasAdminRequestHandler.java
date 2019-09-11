@@ -9,7 +9,9 @@ import com.nlesd.eecd.bean.EECDAreaBean;
 import com.nlesd.eecd.dao.EECDAreaManager;
 public class ViewAllEECDAreasAdminRequestHandler extends RequestHandlerImpl {
 	public ViewAllEECDAreasAdminRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW-SHORTLIST"
+		};
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
