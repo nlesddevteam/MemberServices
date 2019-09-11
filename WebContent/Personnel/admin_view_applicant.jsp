@@ -283,7 +283,7 @@ input {
 								    <td class="tableTitle">Password:</td>
 								    <td>${password}</td>
 								    <td><a href="#" class="btn btn-info btn-xs" onclick="onSendApplicantLoginInfoEmail(<%=profile.getUID()%>);"><span class="glyphicon glyphicon-envelope"></span> Email Credentials</a></td>
-								    <td><a href="http://www.nlesd.ca/employment/teachingpositions.jsp?uid=<%=PasswordEncryption.encrypt(profile.getSIN())%>" class="btn btn-warning btn-xs" target="_blank"><span class="glyphicon glyphicon-user"></span> Sign In</a></td>
+								    <td><a href="/employment/index.jsp?uid=<%=PasswordEncryption.encrypt(profile.getSIN())%>" class="btn btn-warning btn-xs" target="_blank"><span class="glyphicon glyphicon-user"></span> Sign In</a></td>
 								    </tr>
 						</esd:SecurityAccessRequired>
 							    

@@ -15,7 +15,7 @@
     <jsp:forward page="applicant_login.jsp" />
 <%}else if(request.getParameter("list_id") == null){%>
   <script type="text/javascript">
-    document.location.href='https://www.nlesd.ca/employment/teachingpositions.jsp';
+    document.location.href='/employment/teachingpositions.jsp';
   </script>
 <%}else if(session.getAttribute("APPLIED") != null){
     session.setAttribute("APPLIED", null);
@@ -44,7 +44,7 @@
     catch(JobOpportunityException e){}
   %>
     <script type="text/javascript">
-      document.location.href='https://www.nlesd.ca/employment/view_sub_list.jsp?list_id=<%=request.getParameter("list_id")%>&applied=true';
+      document.location.href='/employment/view_sub_list.jsp?list_id=<%=request.getParameter("list_id")%>&applied=true';
     </script>
 <%
     session.setAttribute("APPLIED", new Boolean(true));

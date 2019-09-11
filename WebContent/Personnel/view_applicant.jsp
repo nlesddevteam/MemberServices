@@ -885,7 +885,7 @@ Sections with no information will display a red header. Those completed and/or w
 
 
 						
-<div align="center" class="no-print"><a href="http://www.nlesd.ca/employment/teachingpositions.jsp" class="btn btn-sm btn-danger">Back to Teaching Positions</a></div>
+<div align="center" class="no-print"><a href="/employment/index.jsp?finished=true" class="btn btn-sm btn-danger">Back to Employment</a></div>
 <br/><br/>
 
 

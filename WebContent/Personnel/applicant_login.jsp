@@ -77,7 +77,9 @@ function breakout()
 	});
   
   </script>
-
+      <script>
+	$("#loadingSpinner").css("display","none");
+	</script>
 </head>
 <body>
 	<script type='text/javascript'>breakout();</script>
@@ -90,11 +92,12 @@ function breakout()
 					.getAttribute("APPLICANT");
 			
 			String surl="";
-			if(profile.getProfileType().equals("T")){
-			surl="https://www.nlesd.ca/employment/teachingpositions.jsp?uid=";
-			}else{
-			surl="https://www.nlesd.ca/employment/supportadminpositions.jsp?uid=";
-			}
+			surl="/employment/index.jsp?uid=";
+			//if(profile.getProfileType().equals("T")){
+			//surl="/employment/educationalpositions.jsp?uid=";
+			//}else{
+			//surl="/employment/supportadminpositions.jsp?uid=";
+			//}
 	%>
 	<script type="text/javascript">
       document.location.href="<%=surl%><%=PasswordEncryption.encrypt(profile.getSIN())%>";
@@ -114,25 +117,24 @@ function breakout()
 	
 	 			<div id="selectBlock" >
 		  		
-		  		<form action="applicantlogin.html" method="post" id="appLoginForm">
-		  		
-		  		<div class="input-group">
-    			<span class="input-group-addon">EMAIL:</span> 
-		  				<input type="text" name="email" id="email" onKeyPress="return submitenter(this,event);" class="form-control" data-toggle="tooltip" title="Enter your email address you used when you signed up for an Employment Services Account." placeholder="Enter your email address.">
-		  		</div>
-		  		<br/>
-		  		<div class="input-group">
-    			<span class="input-group-addon">PASSWORD:</span>
-						<input class="form-control" type="password" name="password" id="password" data-toggle="tooltip" title="Enter your password" onKeyPress="return submitenter(this,event);" placeholder="Enter your password.">
-				</div>	
-									
-			  <br/>
-			  <div align="center"><input type="submit" value="Login" id="loginLink" class="btn btn-sm btn-success"> 			  	  	
-			  <a class="btn btn-sm btn-warning" href="#inline1" title="Forget Password" onclick="OpenPopUp();">Forgot Password?</a>
-			  <a href="/employment/teachingpositions.jsp?finished=true" class="btn btn-sm btn-danger">Cancel</a>
+			  		<form action="applicantlogin.html" method="post" id="appLoginForm">
+			  		<div class="input-group">
+	    			<span class="input-group-addon">EMAIL:</span> 
+			  				<input type="text" name="email" id="email" class="form-control" data-toggle="tooltip" title="Enter your email address you used when you signed up for an Employment Services Account." placeholder="Enter your email address.">
+			  		</div>
+			  		<br/>
+			  		<div class="input-group">
+	    			<span class="input-group-addon">PASSWORD:</span>
+							<input class="form-control" type="password" name="password" id="password" data-toggle="tooltip" title="Enter your password"  placeholder="Enter your password.">
+					</div>	
+										
+				  <br/>
+				  <div align="center"><input type="submit" value="Login" id="loginLink" class="btn btn-sm btn-success"> 			  	  	
+				  <a class="btn btn-sm btn-warning" href="#inline1" title="Forget Password" onclick="OpenPopUp();">Forgot Password?</a>
+				  <a href="/employment/index.jsp" class="btn btn-sm btn-danger">Cancel</a>
+					</div>
+					</form>
 				</div>
-				</form>
-			</div>
 			<div id="processBlock" style="display:none;" align="center">
 										<img src="includes/img/processing.gif" alt="loading" id="loading_image"><br/>
 										Logging in, please wait....

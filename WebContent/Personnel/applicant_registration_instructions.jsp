@@ -38,7 +38,8 @@
   	</c:choose>
   
   </div>
-  	<div class="panel-body">	
+  	<div class="panel-body" style="font-size:12px;">	
+	<img src="includes/img/register.gif" border=0 style="float:right;width:100%;max-width:300px;"/>
 	
 		<b>To apply online using the electronic application process, you need to first create a profile as follows:</b>
 		<br/><br/>
@@ -57,18 +58,18 @@
 				the information. <br>
 			<br>
 			
-			<c:if test="${ param.ptype ne 'S' }">		
+			<c:if test="${ param.ptype ne 'S' }">
 			
-			<li>Newfoundland &amp; Labrador English School District experience means any experience with
-				any former Boards that are now a part of Newfoundland &amp; Labrador English School District. <br>
-			<br>
-			<li>Replacement or substitute time and number of major or minor
-				courses should be entered in digits only, (ie. 22, not twenty-two).
+				<li>Newfoundland &amp; Labrador English School District experience means any experience with
+					any former Boards that are now a part of Newfoundland &amp; Labrador English School District. <br>
 				<br>
-			<br>
-			<li>You are required to upload the appropriate documents as part
-				of the application process. <br>
-			<br>
+				<li>Replacement or substitute time and number of major or minor
+					courses should be entered in digits only, (ie. 22, not twenty-two).
+					<br>
+				<br>
+				<li>You are required to upload the appropriate documents as part
+					of the application process. <br>
+				<br>
 			</c:if> 
 			
 			<li>When you have completed your profile you will be returned to
@@ -85,29 +86,21 @@
 		</ol>
 		
 		<form>
+		<div align="center" class="no-print" style="padding-top:10px;">
 		
-		
-		
-		
-		<div align="center" class="no-print">
-		
-		<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a> 
-		
+		<a href="/employment/index.jsp" class="btn btn-xs btn-danger">Back to Employment</a>
 		<c:choose>
 			<c:when test="${ param.ptype ne 'S' }">
-				<input type="button" value="Continue" class="btn btn-xs btn-primary"
-					onclick="document.location.href='applicantRegistration.html';">one
+				<input type="button" value="Continue creating your Teaching Profile" class="btn btn-xs btn-success"
+					onclick="document.location.href='applicantRegistration.html';">
 			</c:when>		
 			<c:otherwise>
-				<input type="button" value="Continue" class="btn btn-xs btn-primary"
-					onclick="document.location.href='applicantRegistrationSS.html';">two
+				<input type="button" value="Continue creating your Support Staff/Management Profile" class="btn btn-xs btn-success"
+					onclick="document.location.href='applicantRegistrationSS.html';">
 			</c:otherwise>
-		</c:choose>
-		
-		</div>
+	</c:choose>
+		</div>		
 		<br>
-		<br>
-
 	</form>
 </div></div>
 </body>

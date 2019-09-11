@@ -61,7 +61,7 @@
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Applicant Security Password Recovery</b></div>
       			 	<div class="panel-body"> 	
-	Please enter a question and answer that you will remember in case you need to reset your password. If you fail to complete this section, you will not be able to reset your password and will need to contact support if your login fails.
+	Please enter a secure question and answer that you will remember and ONLY you would know in case you need to reset your password. If you fail to complete this section, you will not be able to reset your password and will need to contact support if your login fails.
 	<br/><br/>
 	<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
 	<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div> 
@@ -83,7 +83,7 @@
                 </div>
                 <br/>  
                 <div align="center">                  
-                  <input type="submit" class="btn btn-sm btn-success" value="Save/Update" /> <a href="view_applicant.jsp" class="btn btn-sm btn-danger">Cancel</a>
+                  <input type="submit" class="btn btn-sm btn-success" value="Save/Update" /> <a href="javascript: history.go(-1)"" class="btn btn-sm btn-danger">Cancel</a>
                  </div>                    
                                                 
 				</form>

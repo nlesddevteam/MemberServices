@@ -11,7 +11,7 @@
     <jsp:forward page="applicant_login.jsp" />
 <%}else if(request.getParameter("comp_num") == null){%>
   <script type="text/javascript">
-    document.location.href='https://www.nlesd.ca/employment/teachingpositions.jsp';
+    document.location.href='/employment/teachingpositions.jsp';
   </script>
 <%}else if((session.getAttribute("JOBS-APPLIED-FOR-MAP") != null)
 		&& (((HashMap)session.getAttribute("JOBS-APPLIED-FOR-MAP")).containsKey(request.getParameter("comp_num")))){%>
@@ -48,6 +48,6 @@
     session.setAttribute("JOBS-APPLIED-FOR-MAP", applied_for);
   %>
     <script type="text/javascript">
-      document.location.href='https://www.nlesd.ca/employment/view_job_post.jsp?comp_num=<%=request.getParameter("comp_num")%>';
+      document.location.href='/employment/view_job_post.jsp?comp_num=<%=request.getParameter("comp_num")%>';
     </script>
 <%}%>

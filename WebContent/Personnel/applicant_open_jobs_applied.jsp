@@ -46,11 +46,11 @@ input {border:1px solid silver;}
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Applicant Position Application(s)</b></div>
       			 	<div class="panel-body"> 
-					<div class="table-responsive"> 
+					<div class="table-responsive"> 			
 					
-					<div style="color:DimGrey;font-size:14px;font-weight:bold;margin-top:10px;">Current Job Competition Application(s)</div>  
 									
 					<%if(jobs.length > 0){%>
+					Below are your current job competition applications:<br/>	
 									<table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
 									    <thead>
 									      <tr>
@@ -76,14 +76,16 @@ input {border:1px solid silver;}
 			                                <span style="color:Grey;">No open job applications on file.</span>
 			                                 <%}%>
 					
-			             <hr>		
-						<div style="color:DimGrey;font-size:14px;font-weight:bold;margin-top:10px;">Current Substitute List Application(s)</div>  
+			             <hr>						 
 									
 					
 									
 			                                  <%Map.Entry[] entries = (Map.Entry[])sublists.entrySet().toArray(new Map.Entry[0]);
 			                                  	ApplicantSubListInfoBean info = null;
 			                                  	if(entries.length > 0){ %>
+			                                  	
+			                                  	Below are your current sub list applications:<br/>	
+			                                  	
 			                   <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
 									    <thead>
 									      <tr>
@@ -107,18 +109,21 @@ input {border:1px solid silver;}
 			                        </table>
 			                                 
 			                                 <% }else{%>
-			                                <span style="color:Grey;">No open job applications on file.</span>
+			                                <span style="color:Grey;">No open sub list applications on file.</span>
 			                                 <%}%>
 			                                 
-			                        <br/>         
-			                                 
-			                      <div align="center" class="no-print">
-                                        <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>  <a class="btn btn-xs btn-primary" href="view_applicant.jsp">Your Profile</a>
-                                   </div>            
+			                           
+			                            
+			                               
 			                                 
 
 </div></div></div></div>   
 
+ <div align="center" class="no-print">
+                                        <a class="btn btn-xs btn-danger" href="/employment/index.jsp">Return to Employment</a>  <a class="btn btn-xs btn-danger" href="view_applicant.jsp">Return to Your Profile</a>
+</div>  
+
+<br/>
 
 <!-- View Job -->
 <div id="myModal" class="modal fade" role="dialog">

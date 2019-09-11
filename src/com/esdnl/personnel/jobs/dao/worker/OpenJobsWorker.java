@@ -29,8 +29,12 @@ import com.nlesd.school.service.SchoolZoneService;
 
 public class OpenJobsWorker extends TimerTask {
 
-	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
-
+//FOR LIVE SERVER
+	//private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../NLESDWEB/WebContent/";
+	
+//FOR LOCAL HOST ONLY
+	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
+	
 	public OpenJobsWorker() {
 
 		super();
@@ -42,8 +46,8 @@ public class OpenJobsWorker extends TimerTask {
 		try {
 			synchronized (OpenJobsExportService.OPEN_JOBS) {
 				OpenJobsExportService.OPEN_JOBS.clear();
-				OpenJobsExportService.OPEN_JOBS.addAll(JobOpportunityManager.getJobOpportunityBeansVector("OPEN"));
-				OpenJobsExportService.OPEN_JOBS.addAll(JobOpportunityManager.getJobOpportunityBeansVector("AWARDED"));
+				OpenJobsExportService.OPEN_JOBS.addAll(JobOpportunityManager.getJobOpportunityBeansVector("OPEN"));				
+				OpenJobsExportService.OPEN_JOBS.addAll(JobOpportunityManager.getJobOpportunityBeansVector("AWARDED"));		
 				System.err.println("<<<<<< OPEN JOBS RELOADED >>>>>");
 
 				createJobFiles();
@@ -63,6 +67,8 @@ public class OpenJobsWorker extends TimerTask {
 		PrintWriter writer = null;
 		JobOpportunityBean[] jobs = null;
 		JobOpportunityAssignmentBean[] ass = null;
+		int jlist=0;
+		
 
 		try {
 			jobs = (JobOpportunityBean[]) OpenJobsExportService.OPEN_JOBS.toArray(new JobOpportunityBean[0]);
@@ -87,94 +93,73 @@ public class OpenJobsWorker extends TimerTask {
 
 				writer = new PrintWriter(new FileWriter(job_tmp), true);
 
-				writer.println("<html>");
-				writer.println("<head>");
-				writer.println("<title>Newfoundland &amp; Labrador English School District - Employment Opportunities</title>");
-				writer.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />");
-				// writer.println("<link rel='stylesheet'
-				// href='../../includes/style.css' type='text/css'>");
-				writer.println("<link rel='stylesheet' href='/employment/css/employment.css' type='text/css'>");
-				writer.println("<script type='text/javascript'>");
-				writer.println("\tfunction toggleTableRowHighlight(target, color)");
-				writer.println("\t{");
-				writer.println("\t\tvar rowSelected = document.getElementById(target);");
-				writer.println("\t\trowSelected.style.backgroundColor=color; ");
-				writer.println("\t}");
-				writer.println("</script>");
-				writer.println("</head>");
-				writer.println("<body style='background-color:#f0f0f0;'>");
-				writer.println("<TABLE width='100%' cellpadding='3' cellspacing='0' align='center'>");
-				writer.println("\t<TR><TD colspan='4' style='color:#FF0000;' class='displayHeaderTitle'>"
-						+ JobTypeConstant.ALL[ii].getDescription() + "</TD></TR>");
-				writer.println(
-						"\t<TR><TD class='displayHeaderTitle'>Competition #</TD><TD class='displayHeaderTitle'>Position Title</TD><TD class='displayHeaderTitle'>Competition End Date</TD><TD>&nbsp;</TD></TR>");
-
-				int jcnt = 0;
-				String bg_color = "";
-				String bd_color = "";
-				if (jobs.length > 0) {
-					for (int i = 0; i < jobs.length; i++) {
+				
+				
+			if (jobs.length > 0) {
+				
+				    
+					jlist++;	
+						
+						writer.println("<script>$('document').ready(function(){");
+						writer.println("$('.educationalJobsList"+jlist+"').DataTable({'order': [[ 0, 'desc' ]],'lengthMenu': [[20, 50, 100, 200, -1], [20, 50, 100, 200, 'All']] });");
+						writer.println("});</script>");				
+						writer.println("<br/><table width='100%' class='table table-condensed table-striped educationalJobsList"+jlist+"' style='font-size:11px;width:100%;'>");
+						writer.println("<thead>");
+						writer.println("<tr><th width='15%'>COMPETITION #</th><th width='55%'>POSITION TITLE/LOCATION(S)</th><th width='20%'>COMPETITION END DATE</th><th width='10%'>OPTIONS</th></tr>");
+						writer.println("</thead>");
+						writer.println("<tbody>");				
+							//writer.println(""+ JobTypeConstant.ALL[ii].getDescription() + "");				
+					int jcount=0;
+								
+					for (int i = 0; i < jobs.length; i++) {						
+						
 						if ((JobTypeConstant.AWARDED.equal(JobTypeConstant.ALL[ii]) && jobs[i].isAwarded())
 								|| (!jobs[i].isAwarded() && (jobs[i].getJobType().getValue() == JobTypeConstant.ALL[ii].getValue()))) {
-
-							if (!jobs[i].isCancelled())
-								bg_color = (((jcnt++ % 2) == 0) ? "#E0E0E0" : "#FFFFFF");
-							else
-								bg_color = "#FFFFCC";
-							bd_color = ((!jobs[i].isCancelled()) ? "#C0C0C0" : "#FF0000");
-							// ass =
-							// JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(jobs[i]);
+						
+							jcount++;
 							ass = null;
-							ass = (JobOpportunityAssignmentBean[]) jobs[i].toArray(new JobOpportunityAssignmentBean[0]);
-
-							writer.println("\t<TR id='" + jobs[i].getCompetitionNumber()
-									+ "' style='padding-top:3px;padding-bottom:3px;background-color:" + bg_color + ";'");
-							writer.println(
-									"\t\tonmouseover=\"toggleTableRowHighlight('" + jobs[i].getCompetitionNumber() + "', '#FFCC00');\"");
-							writer.println("\t\tonmouseout=\"toggleTableRowHighlight('" + jobs[i].getCompetitionNumber() + "', '"
-									+ bg_color + "');\">");
-							writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-									+ " ;border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-									+ ";' class='displayText'>" + jobs[i].getCompetitionNumber() + " </TD>");
-							writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-									+ ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-									+ ";' class='displayText'>");
-							for (int j = 0; ((ass != null) && (j < ass.length)); j++)
-								writer.println("\t\t\t<b>" + ass[j].getLocationText() + "</b><br>");
-							writer.println("\t\t\t" + jobs[i].getPositionTitle());
-							writer.println("\t\t</TD>");
+							ass = (JobOpportunityAssignmentBean[]) jobs[i].toArray(new JobOpportunityAssignmentBean[0]);							
 							if (!jobs[i].isCancelled()) {
-								writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-										+ ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-										+ ";' class='displayText'>" + jobs[i].getFormatedCompetitionEndDate() + "</TD>");
-								writer.println("\t\t<TD style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-										+ ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-										+ " ;' class='displayText'>");
-								writer.println(
-										"\t\t\t<A style='color:#FF0000;font-weight:bold;text-decoration:none;' href='/employment/view_job_post.jsp?comp_num="
-												+ jobs[i].getCompetitionNumber() + "'>View</A>");
-								writer.println("\t\t</TD>");
+								writer.println("<tr id='" + jobs[i].getCompetitionNumber() + "'>");	
+							} else {
+								writer.println("<tr style='color:Red;background-color:#ffe6e6;' id='" + jobs[i].getCompetitionNumber() + "'>");		
+							}							
+							writer.println("<td>" + jobs[i].getCompetitionNumber() + "</td>");
+							writer.println("<td>");							
+							writer.println("<b>" + jobs[i].getPositionTitle()+"</b><br/>");
+							for (int j = 0; ((ass != null) && (j < ass.length)); j++) {
+								writer.println(" &middot; " + ass[j].getLocationText() + "<br>");
 							}
-							else {
-								writer.println(
-										"\t\t<TD align='center' style='border-top:solid " + (jobs[i].isCancelled() ? "3px " : "1px ")
-												+ bd_color + ";border-bottom:solid " + (jobs[i].isCancelled() ? "3px " : "1px ") + bd_color
-												+ ";color:#FF0000;font-weight:bold;' colspan='2' class='displayText'>POSITION CANCELLED</TD>");
+							writer.println("</td>");					
+							
+							if (!jobs[i].isCancelled()) {
+								writer.println("<td>" + jobs[i].getFormatedCompetitionEndDate() +"</td>");								
+								writer.println("<td><a class='no-print btn btn-xs btn-primary' href='/employment/view_job_post.jsp?comp_num="+ jobs[i].getCompetitionNumber() + "'><span class='glyphicon glyphicon-search'></span> VIEW</a></td>");								
 							}
-							writer.println("\t</TR>");
-						}
+							else {								
+								writer.println("<td>POSITION CANCELLED</td>");
+								writer.println("<td></td>");
+							}
+							writer.println("</tr>");
+						} 
+						
 					}
-					if (jcnt <= 0)
-						writer.println(
-								"\t<TR><TD colspan='4' class='displayText'>No positions available at this time. Thank you.</TD></TR>");
-				}
+					
+					writer.println("</tbody></table>");
+					
+					if (jcount < 1) {			//Place span up atop to write to with jq.				
+						writer.println("<script>$('.educationalJobsList"+jlist+"').parent().css('display','none');</script>");
+						writer.println("<script>$('.noPos"+jlist+"').css('display','block');</script>");
+						//writer.println("<div style='text-align:center;'>Sorry, no positions currently available in this category.</div>");
+					} 
+		
+			}
 				else {
-					writer.println(
-							"\t<TR><TD colspan='4' class='displayText'>No positions available at this time. Thank you.</TD></TR>");
+					//writer.println("<div class='alert alert-info' style='text-align:center;'>Sorry, no positions available at this time. Thank you.</div>");
 				}
-				writer.println("</TABLE>");
-				writer.println("</BODY>");
-				writer.println("</HTML>");
+				
+				writer.println("<br/><br/>");
+				
 				writer.flush();
 				writer.close();
 
@@ -199,13 +184,20 @@ public class OpenJobsWorker extends TimerTask {
 		PrintWriter writer = null;
 		TreeMap<String, ArrayList<SubListBean>> listMap = null;
 		Collection<RegionBean> regions = null;
-
+		int jslist=0;		
+		int jcount=0;
+		int noJobs=0;
+		int regionCount=0;
+		int tjobCount=0;
+		//int totalSubTeacherJobs=0;
+		//int totalSubTLAJobs=0;
+		
 		try {
 
 			for (int ii = 0; ii < SubstituteListConstant.ALL.length; ii++) {
 
 				listMap = SubListManager.getSubListBeans(SubstituteListConstant.ALL[ii]);
-
+				
 				job_tmp = new File(rootbasepath + "employment/generated/index_sublist_"
 						+ SubstituteListConstant.ALL[ii].getValue() + ".tmp");
 
@@ -226,101 +218,100 @@ public class OpenJobsWorker extends TimerTask {
 
 				writer = new PrintWriter(new FileWriter(job_tmp), true);
 
-				writer.println("<html>");
-				writer.println("<head>");
-				writer.println("<title>Newfoundland &amp; Labrador English School District - Employment Opportunities</title>");
-				writer.println("<link rel='stylesheet' href='/employment/css/employment.css' type='text/css'>");
-				writer.println("<script type='text/javascript'>");
-				writer.println("\tfunction toggleTableRowHighlight(target, color)");
-				writer.println("\t{");
-				writer.println("\t\tvar rowSelected = document.getElementById(target);");
-				writer.println("\t\trowSelected.style.backgroundColor=color; ");
-				writer.println("\t}");
-				writer.println("</script>");
-				writer.println("</head>");
-				writer.println("<body style='background-color:#f0f0f0;'>");
-
-				int jcnt = 0;
-				String bg_color = "";
-				String bd_color = "";
-
 				if ((listMap != null) && (listMap.size() > 0)) {
 					for (Map.Entry<String, ArrayList<SubListBean>> entry : listMap.entrySet()) {
-						/*
-						writer.println("<TABLE width='100%' cellpadding='3' cellspacing='0' align='center'>");
-						writer.println("\t<TR><TD class='displayPageTitle'>" + SubstituteListConstant.ALL[ii].getDescription()
-								+ " - " + entry.getKey() + "</TD></TR>");
-						writer.println("</TABLE>");
-						*/
+						
 
 						for (SchoolZoneBean zone : SchoolZoneService.getSchoolZoneBeans()) {
-							writer.println("<TABLE width='100%' cellpadding='3' cellspacing='0' align='center'>");
-							writer.println("\t<TR><TD class='displayPageTitle' style='text-transform:capitalize;'>"
-									+ zone.getZoneName() + " Region</TD></TR>");
-							writer.println("</TABLE><br/>");
-
-							//writer.println("<h5 style='text-align:center;font-family:arial;text-transform: capitalize;'>"
-							//		+ zone.getZoneName() + " Region</h5>");
-
+							noJobs=1;
+							regionCount++;
+							tjobCount=0;
+							String sname ="provincial";
+							sname = zone.getZoneName();
+	                        String listBakColor;
+                    		String listTitleColor;
+							if(sname.toUpperCase().contains("EASTERN")) {                    			
+       						 		listBakColor = "rgba(191, 0, 0, 0.1)";     
+       						 		listTitleColor = "rgba(191, 0, 0, 1)";
+		       					 } else if (sname.toUpperCase().contains("AVALON")) {   
+		       						listBakColor = "rgba(191, 0, 0, 0.1)";
+		       						listTitleColor = "rgba(191, 0, 0, 1)";
+		       					 } else if (sname.toUpperCase().contains("CENTRAL")) {
+		       						listBakColor = "rgba(0, 191, 0, 0.1)";
+		       						listTitleColor = "rgba(0, 191, 0, 1)";
+		       					 } else if (sname.toUpperCase().contains("WESTERN")) {
+		       						listBakColor = "rgba(255, 132, 0, 0.1)";
+		       						listTitleColor = "rgba(255, 132, 0, 1)";
+		       					 } else if (sname.toUpperCase().contains("LABRADOR")) {
+		          					listBakColor = "rgba(127, 130, 255, 0.1)";
+		          					listTitleColor = "rgba(127, 130, 255, 1)";
+		       					 } else {
+		          					listBakColor = "rgb(153, 51, 51, 0.1)";
+		          					listTitleColor = "rgba(153, 51, 51, 1)";
+		       					 }							
+							
+							writer.println("<br/><div style='border:1px solid "+listTitleColor+";'><div style='background:"+listTitleColor+";width:100%;'><span style='font-size:16px;font-weight:bold;text-transform:Capitalize;color:white;'>&nbsp;"+ zone.getZoneName() + " Region</span><span style='font-size:16px;color:White;font-weight:bold;' class='regionCNT"+regionCount+"'></span></div>");
+							
 							regions = RegionManager.getRegionBeans(zone);
-
+							
 							if (regions != null && regions.size() > 0) {
+								
 								for (RegionBean region : regions) {
-									writer.println("<TABLE width='98%' cellpadding='3' cellspacing='0' align='center'>");
-									writer.println(
-											"\t<TR><TD colspan='2' style='color:#FF0000;text-transform:capitalize;' class='displayHeaderTitle'>"
-													+ region.getName() + "</TD></TR>");
-									writer.println("\t<TR><TD class='displayHeaderTitle'>List Title</TD><TD>&nbsp;</TD></TR>");
-
-									jcnt = 0;
-
-									for (SubListBean list : entry.getValue()) {
+									jslist++;									
+									jcount=0;	
+									
+									writer.println("<div style='padding:5px;background-color:"+listBakColor+";'>"); 
+									writer.println("<script>$('document').ready(function(){");
+									writer.println("$('.sublistsJobsList"+jslist+"').DataTable({'order': [[ 0, 'asc' ]],'bLengthChange': false,'paging': false, 'lengthMenu': [[-1, 20, 50, 100, 200], ['All', 20, 50, 100, 200]] });");
+									writer.println("});</script>");		
+									writer.println("<span style='font-weight:bold;padding-bottom:10px;text-transform:uppercase;color:"+listTitleColor+";'>"+ region.getName() + "</span><br/><br/>");									
+									writer.println("<table width='100%' class='table table-condensed table-striped sublistsJobsList"+jslist+"' style='font-size:11px;width:100%;'>");
+									writer.println("<thead>");
+									writer.println("<tr><th width='90%'>SUBLIST TITLE</th><th width='10%'>OPTIONS</th></tr>");
+									writer.println("</thead>");
+									writer.println("<tbody>");
+									
+								for (SubListBean list : entry.getValue()) {
 										if (list.getRegion().getId() != region.getId())
 											continue;
-
-										bg_color = (((jcnt++ % 2) == 0) ? "#E0E0E0" : "#FFFFFF");
-
-										bd_color = "#C0C0C0";
-
-										writer.println("\t<TR id='" + list.getId()
-												+ "' style='padding-top:3px;padding-bottom:3px;background-color:" + bg_color + ";'");
-										writer.println("\t\tonmouseover=\"toggleTableRowHighlight('" + list.getId() + "', '#FFCC00');\"");
-										writer.println(
-												"\t\tonmouseout=\"toggleTableRowHighlight('" + list.getId() + "', '" + bg_color + "');\">");
-										writer.println(
-												"\t\t<TD align='left' style='border-top:solid 1px " + bd_color + " ;border-bottom:solid 1px "
-														+ bd_color + ";' class='displayText'>" + list.getTitle() + " </TD>");
-										writer.println("\t\t<TD align='right' style='border-top:solid 1px " + bd_color
-												+ " ;border-bottom:solid 1px " + bd_color + ";' class='displayText'>");
-										writer.println(
-												"\t\t\t<A style='color:#FF0000;font-weight:bold;text-decoration:none;' href='/employment/view_sub_list.jsp?list_id="
-														+ list.getId() + "'>View</A>");
-										writer.println("\t\t</TD>");
-
-										writer.println("\t</TR>");
+										jcount++;	
+										tjobCount++;
+										noJobs=0;
+										writer.println("<tr id='" + list.getId()+ "'>");
+										writer.println("<td>" + list.getTitle() + "</td>");
+										writer.println("<td><a class='no-print btn btn-xs btn-primary' href='/employment/view_sub_list.jsp?list_id="+ list.getId() + "'><span class='glyphicon glyphicon-search'></span> VIEW</a></td>");
+										writer.println("</tr>");
 									}
-									if (jcnt <= 0)
-										writer.println(
-												"\t<TR><TD colspan='2' class='displayText'>No lists available at this time. Thank you.</TD></TR>");
-
-									writer.println("</TABLE>");
-									writer.println("<BR><BR>");
-								}
+									writer.println("</tbody></table>");	
+									writer.println("<script>$('.regionCNT"+regionCount+"').html(' ("+tjobCount+")');</script>");
+									if (jcount < 1) {											
+										writer.println("<script>$('.sublistsJobsList"+jslist+"').parent().css('display','none');</script>");
+										
+										} 									
+									writer.println("</div>");
+								}								
+								
 							}
 							else {
-
+								
 							}
+							if (noJobs > 0) {											
+								writer.println("<div style='padding:5px;'>Sorry, no sublist available in this region at this time. Thank you.</div>");	
+								
+								} 	
+							
+							writer.println("</div>");
+							
+							
+							
 						}
 					}
 				}
 				else {
-					writer.println("<TABLE width='100%' cellpadding='3' cellspacing='0' align='center'>");
-					writer.println("\t<TR><TD class='displayText'>No lists available at this time. Thank you.</TD></TR>");
-					writer.println("</TABLE>");
+					writer.println("<div class='alert alert-info'>Sorry, no list available at this time. Thank you.</div>");
 				}
 
-				writer.println("</BODY>");
-				writer.println("</HTML>");
+				
 				writer.flush();
 				writer.close();
 

@@ -171,7 +171,7 @@
 	                      		<c:forEach items="${ divisions }" var='division'>
 	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
 	                      			<c:choose>
-											<c:when test="${ (division.name eq 'Finance and Buisness Administration') or (division.name eq 'Corporate Services')  }">
+											<c:when test="${ (division.name eq 'Finance and Business Administration') or (division.name eq 'Corporate Services')  }">
 											Corporate Services
 											</c:when>
 											<c:otherwise>
@@ -284,6 +284,7 @@
 						<option value="LAN Administrator">LAN Administrator</option>
 						<option value="Lead Driver">Lead Driver</option>
 						<option value="Maintenance">Maintenance</option>
+						<option value="Maintenance Clerk">Maintenance Clerk</option>
 						<option value="Maintenance Foreman">Maintenance Foreman</option>
 						<option value="Maintenance Supervisor">Maintenance Supervisor</option>
 						<option value="Manager of Accounting and Financial Operations">Manager of Accounting and Financial Operations</option>
@@ -308,6 +309,7 @@
 						<option value="NG Clerk">NG Clerk</option>
 						<option value="Numeracy Support Teacher">Numeracy Support Teacher</option>
 						<option value="Operations Manager">Operations Manager</option>
+						<option value="Operations Manager (Energy Management)">Operations Manager (Energy Management)</option>
 						<option value="Orientation and Mobility Specialist">Orientation and Mobility Specialist</option>
 						<option value="Pathfinder Teacher">Pathfinder Teacher</option>
 						<option value="Payroll Clerk">Payroll Clerk</option>
