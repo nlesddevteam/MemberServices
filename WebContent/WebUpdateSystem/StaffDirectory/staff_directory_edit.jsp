@@ -171,7 +171,7 @@
 	                      		<c:forEach items="${ divisions }" var='division'>
 	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
 	                      			<c:choose>
-											<c:when test="${ (division.name eq 'Finance and Buisness Administration') or (division.name eq 'Corporate Services')  }">
+											<c:when test="${ (division.name eq 'Finance and Business Administration') or (division.name eq 'Corporate Services')  }">
 											Corporate Services
 											</c:when>
 											<c:otherwise>
