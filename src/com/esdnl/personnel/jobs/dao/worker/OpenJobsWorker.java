@@ -30,7 +30,7 @@ import com.nlesd.school.service.SchoolZoneService;
 public class OpenJobsWorker extends TimerTask {
 
 //FOR LIVE SERVER
-	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../NLESDWEB/WebContent/";
+	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 	
 //FOR LOCAL HOST ONLY
 	//private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
