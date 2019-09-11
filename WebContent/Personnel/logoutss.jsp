@@ -16,7 +16,7 @@
 	<head>		
 			
 <script type="text/javascript">
-      document.location.href="/employment/ssmgmtpositions.jsp?logout=true&uid=0";
+      document.location.href="/employment/index.jsp?logout=true&uid=0";
 </script>
 		
 	</head>

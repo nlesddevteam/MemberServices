@@ -80,19 +80,17 @@
 	<!-- TOP PANEL -->
 		<div class="mainContainer">
 
-
-
-			<div class="container-fluid no-print" id="noPrintThis" style="max-height:230px;min-height:120px;height:auto;">
+			<div class="container-fluid no-print" id="noPrintThis" style="max-height:200px;min-height:100px;padding-top:10px;padding-bottom:10px;height:auto;">
 				<div class="row">
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
-				   	<img class="topLogoImg" src="/MemberServices/Personnel/includes/img/myhrplogowide-app.png" title="Newfoundland and Labrador English School District">
+				   	<div align="center" class="no-print"><img src="/employment/includes/img/myhrportallogo-small.png" style="max-height:100px;" border=0></div>
 				  </div>
 				</div>
 			</div>
 
 <!-- START NAVIGATION BAR navbar-fixed-top-->
 
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="270" style="transform:translateZ(0);max-width:1250px;">
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="transform:translateZ(0);max-width:1250px;">
   <div class="container-fluid">
 		    <div class="navbar-header">
 				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -127,7 +125,7 @@
 					    	 <ul class="dropdown-menu multi-level">
 					          <li><a href="/MemberServices/Personnel/view_applicant_ss.jsp">Home</a></li>
 					          <li><a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a></li>
-                                <li><a href="/employment/supportadminpositions.jsp">Back to Positions</a></li>
+                                <li><a href="/employment/index.jsp">Back to Positions</a></li>
 					          	</ul>
 					        </li>
 
@@ -210,12 +208,12 @@
 				<%if(session.getAttribute("APPLICANT") != null){%>
 					          <li><a href="/MemberServices/Personnel/view_applicant.jsp">Home</a></li>
 				<%} else { %>
-					          <li><a href="/employment/teachingpositions.jsp?finished=true">Back to Employment</a></li>
+					          <li><a href="/employment/index.jsp">Back to Employment</a></li>
 				<%} %>
 					          <li><a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});">Print Page</a></li>
                 <%if(session.getAttribute("APPLICANT") != null){%>
                               <li class="divider"></li>
-                              <li><a href="/employment/teachingpositions.jsp">Back to Positions</a></li>
+                              <li><a href="/employment/index.jsp">Back to Employment</a></li>
 
 
                 <%}%>
@@ -326,6 +324,7 @@ proper contact(s) found under the <a href="viewContactInformation.html">Help</a>
 If you are experiencing technical difficulties with this system, email Geoff Taylor <a href="mailto:geofftaylor@nlesd.ca?subject=MyHRP System">geofftaylor@nlesd.ca</a> (Avalon Region) or Rodney Batten <a href="mailto:rodneybatten@nlesd.ca?subject=MyHRP System">rodneybatten@nlesd.ca</a> (Central/Western/Labrador).
 </div>
 
+<div align="center" class='no-print'><img src="includes/img/nlesd-colorlogo.png" border=0 style="width:100%;max-width:250px;"/></div>
 <!-- FOOTER AREA -->
 
 	<div class="mainFooter no-print">

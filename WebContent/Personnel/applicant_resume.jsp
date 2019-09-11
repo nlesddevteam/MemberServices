@@ -17,8 +17,6 @@
 		//session.setAttribute("APPLICANT", ApplicantProfileManager.getApplicantProfileBean(profile.getUID()));
 	%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>Newfoundland &amp; Labrador English School District - Applicant Registration</title>
@@ -37,7 +35,7 @@
 
 
   <script type="text/javascript">
-    document.location.href="http://www.nlesd.ca/employment/teachingpositions.jsp?finished=true";
+    document.location.href="/employment/index.jsp?finished=true";
   </script>
 <table cellpadding="2" cellspacing="2" width="920" align="left"><tr><td colspan="2"><span class="applicantTitle">Applicant Registration<br>Step 10: Documents - Criminal Offence Declaration Form</span></td></tr>
 <tr valign="top"><td>&nbsp;</td><td align='center'>Fields marked <span class="requiredStar">*</span> are required.</td></tr>

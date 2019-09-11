@@ -397,6 +397,9 @@ employment positions and/or applications. Sections with no information will disp
 	                              <%} %>
                                 
  </div></div></div></div>                             
+         
+         
+         <div align="center" class="no-print" style="padding-top:3px;padding-bottom:10px;"><a href="/employment/index.jsp?finished=true" class="btn btn-sm btn-danger">Back to Employment</a></div>
                                 
 </body>
 </html>

@@ -76,20 +76,17 @@
 
 	<!-- TOP PANEL -->
 		<div class="mainContainer">
-
-
-
-			<div class="container-fluid no-print" id="noPrintThis" style="max-height:230px;min-height:120px;height:auto;">
+<div class="container-fluid no-print" id="noPrintThis" style="max-height:200px;min-height:100px;padding-top:10px;padding-bottom:10px;height:auto;">
 				<div class="row">
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
-				   	<img class="topLogoImg" src="/MemberServices/Personnel/includes/img/myhrplogowide.png" title="Newfoundland and Labrador English School District">
+				   	<div align="center" class="no-print"><img src="/employment/includes/img/myhrportallogo-small.png" style="max-height:100px;" border=0></div>
 				  </div>
 				</div>
 			</div>
 
 <!-- START NAVIGATION BAR navbar-fixed-top-->
 
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="270" style="transform:translateZ(0);max-width:1250px;">
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="transform:translateZ(0);max-width:1250px;">
   <div class="container-fluid">
 		    <div class="navbar-header">
 				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -163,7 +160,7 @@ Any questions or concerns relating to a profile should be directed to the
 proper contact(s) found under the <a href="viewContactInformation.html">Help</a> menu above or your regional HR staff.<br/>
 If you are experiencing technical difficulties with this system, email Geoff Taylor <a href="mailto:geofftaylor@nlesd.ca?subject=MyHRP System">geofftaylor@nlesd.ca</a> (Avalon Region) or Rodney Batten <a href="mailto:rodneybatten@nlesd.ca?subject=MyHRP System">rodneybatten@nlesd.ca</a> (Central/Western/Labrador).
 </div>
-
+<div align="center" class='no-print'><img src="includes/img/nlesd-colorlogo.png" border=0 style="width:100%;max-width:250px;"/></div>
 <!-- FOOTER AREA -->
 
 	<div class="mainFooter no-print">
