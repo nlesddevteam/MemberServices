@@ -5,12 +5,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.awsd.common.Utils;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.eecd.bean.EECDExportItemBean;
 import com.nlesd.eecd.dao.EECDShortlistManager;
 public class ExportShortListRequestHandler extends RequestHandlerImpl {
 	public ExportShortListRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW-ADMIN"
+		};
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("aid")
+		});
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

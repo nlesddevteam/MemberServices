@@ -13,6 +13,8 @@ public class EECDAreaBean implements Serializable {
 	private boolean shortlistCompleted;
 	private Date dateCompleted;
 	private String completedBy;
+	private String eligibleTeachers;
+	private String required;
 	public int getId() {
 		return id;
 	}
@@ -72,5 +74,17 @@ public class EECDAreaBean implements Serializable {
 	}
 	public void setCompletedBy(String completedBy) {
 		this.completedBy = completedBy;
+	}
+	public String getEligibleTeachers() {
+		return eligibleTeachers;
+	}
+	public void setEligibleTeachers(String eligibleTeachers) {
+		this.eligibleTeachers = eligibleTeachers;
+	}
+	public String getRequired() {
+		return required;
+	}
+	public void setRequired(String required) {
+		this.required = required;
 	}
 }

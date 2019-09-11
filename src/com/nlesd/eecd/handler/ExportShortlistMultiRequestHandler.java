@@ -10,7 +10,9 @@ import com.nlesd.eecd.bean.EECDExportItemBean;
 import com.nlesd.eecd.dao.EECDShortlistManager;
 public class ExportShortlistMultiRequestHandler extends RequestHandlerImpl {
 	public ExportShortlistMultiRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"EECD-VIEW-ADMIN"
+		};
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

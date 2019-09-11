@@ -842,8 +842,14 @@ function updateVehicle(usertype) {
 	var isvalid = false;
 	var form = $('#contact-form-up')[0];
 	var formData = new FormData(form);
+	var surl="";
+	if(usertype=="A"){
+		surl="updateVehicleAdminSubmit.html";
+	}else{
+		surl="updateVehicleSubmit.html";
+	}
 	$.ajax({
-		url : 'updateVehicleSubmit.html',
+		url : surl,
 		type : 'POST',
 		data : formData,
 		processData : false,
@@ -914,8 +920,14 @@ function opendeletedialog(splate, id,trantype) {
  * Calls ajax post for delete vehicle
  ******************************************************************************/
 function deletevehicle(splate, id,trantype) {
+	var surl="";
+	if(trantype == "A"){
+		surl="deleteVehicleAdmin.html";
+	}else{
+		surl="deleteVehicle.html";
+	}
 	$.ajax({
-		url : 'deleteVehicle.html',
+		url : surl,
 		type : 'POST',
 		data : {
 			vid : id,
@@ -1669,8 +1681,14 @@ function opendeletedialogemp(splate, id,trantype) {
  * Calls ajax post for delete employee
  ******************************************************************************/
 function deleteemployee(sname, id,trantype) {
+	var surl="";
+	if(trantype == "A"){
+		surl="deleteEmployeeAdmin.html";
+	}else{
+		surl="deleteEmployee.html";
+	}
 	$.ajax({
-		url : 'deleteEmployee.html',
+		url : surl,
 		type : 'POST',
 		data : {
 			eid : id,
@@ -3826,27 +3844,34 @@ function awardContractAjax(contractid) {
 /*******************************************************************************
  * Opens dialog for awarding contact
  ******************************************************************************/
-function opensuspendcontract(cid, contractname) {
+function opensuspendcontract(cid, contractname,stype) {
 	var options = {
 		"backdrop" : "static",
 		"show" : true
 	};
-	$('#maintitle4').text("Suspend Contract");
+	if(stype == "S"){
+		$('#maintitle4').text("Suspend Contract");
+		$('#title24').text("Are you sure you want to suspend this contract?");
+	}else{
+		$('#maintitle4').text("Unsuspend Contract");
+		$('#title24').text("Are you sure you want to unsuspend this contract?");
+	}
+	
 	$('#title14').text("Contract: " + contractname);
-	$('#title24').text("Are you sure you want to suspend this contract?");
+	
 	$('#buttonleft4').text("YES");
 	$('#buttonright4').text("NO");
 	$('#contractors').hide();
 	// now we add the onclick event
 	$("#buttonleft4").click(function() {
-		suspendContractAjax(cid);
+		suspendContractAjax(cid,stype);
 	});
 	$('#myModal4').modal(options);
 }
 /*******************************************************************************
  * Calls ajax post for delete contract route
  ******************************************************************************/
-function suspendContractAjax(contractid) {
+function suspendContractAjax(contractid,stype) {
 	var contractorid = $("#contractors").val();
 	var statusnotes = $("#rnotes").val();
 	$.ajax({
@@ -3854,7 +3879,8 @@ function suspendContractAjax(contractid) {
 		type : 'POST',
 		data : {
 			cid : contractid,
-			snotes : statusnotes
+			snotes : statusnotes,
+			statustype: stype
 		},
 		success : function(xml) {
 			$(xml).find('CONTRACTORSTATUS').each(
@@ -4665,27 +4691,28 @@ function deletereport(stitle, id) {
 					function() {
 						// now add the items if any
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
-							$("#successmessage")
+							$("#details_success_message")
 									.html("Report Has Been Deleted").css(
 											"display", "block").delay(6000)
 									.fadeOut();
-							$('#mainalerts').show();
+							$('#details_success_message').show();
 
 							var surl = "viewMyReports.html";
 							$("#pageContentBody").load(surl);
 							$('#myModal').modal('hide');
 
 						} else {
-							$("#errormessage").html(
+							$("#details_error_message").html(
 									$(this).find("MESSAGE").text()).css(
 									"display", "block").delay(6000).fadeOut();
-							$("#mainalert").show();
+							$("#details_error_message").show();
 							$('#myModal').modal('hide');
 						}
 
 					});
 		},
 		error : function(xhr, textStatus, error) {
+			alert(error);
 			$("#errormessage").html(error).css("display", "block").delay(6000)
 					.fadeOut();
 			$("#mainalert").show();
@@ -4902,8 +4929,14 @@ function addnewemployeetraining(trantype) {
 	requestd.append('traininglength',selectedlen);
 	requestd.append('providedby',providedby);
 	requestd.append('location',location);
+	var surl = "";
+	if(trantype == "C"){
+		surl="addNewEmployeeTraining.html";
+	}else{
+		surl="addNewEmployeeTrainingAdmin.html";
+	}
 	$.ajax({
-		url : "addNewEmployeeTraining.html",
+		url : surl,
 		type : 'POST',
 		data : requestd,
 		contentType : false,
@@ -4974,6 +5007,12 @@ function opendeletetradialog(sdoc, id) {
  ******************************************************************************/
 function deleteemployeetraining(docname, id,trantype) {
 	var employeeid = $("#cid").val();
+	var surl="";
+	if(trantype == "A"){
+		surl="deleteEmployeeTrainingAdmin.html";
+	}else{
+		surl="deleteEmployeeTraining.html";
+	}
 	$.ajax({
 		url : 'deleteEmployeeTraining.html',
 		type : 'POST',
@@ -5954,6 +5993,12 @@ function updateemployeetraining(trantype) {
 	requestd.append('providedby',providedby);
 	requestd.append('location',location);
 	requestd.append('hidid',hidid);
+	var surl ="";
+	if(trantype == "A"){
+		surl="updateEmployeeTrainingAdmin.html";
+	}else{
+		surl="updateEmployeeTraining.html";
+	}
 	$.ajax({
 		url : "updateEmployeeTraining.html",
 		type : 'POST',
