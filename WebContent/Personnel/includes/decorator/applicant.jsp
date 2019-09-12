@@ -290,7 +290,14 @@
 
   </c:otherwise>
   </c:choose>
-
+                     <ul class="nav navbar-nav navbar-right">
+    								
+								<%if(profile != null){%>
+								<li><a href="/employment/index.jsp"  onclick="loadingData()" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-log-out"></span> Back to Employment</a></li>
+								<%} %>     
+      
+      
+    						</ul>
  		</div>
    </div>
 </nav>

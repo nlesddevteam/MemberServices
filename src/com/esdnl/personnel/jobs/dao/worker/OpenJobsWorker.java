@@ -101,8 +101,11 @@ public class OpenJobsWorker extends TimerTask {
 					jlist++;	
 						
 						writer.println("<script>$('document').ready(function(){");
-						writer.println("$('.educationalJobsList"+jlist+"').DataTable({'order': [[ 0, 'desc' ]],'lengthMenu': [[20, 50, 100, 200, -1], [20, 50, 100, 200, 'All']] });");
-						writer.println("});</script>");				
+						writer.println("$('.educationalJobsList"+jlist+"').DataTable({'order': [[ 0, 'desc' ]],'lengthMenu': [[25, 50, 100, 200, -1], [25, 50, 100, 200, 'All']] });");
+						writer.println("});</script>");	
+						writer.println("<span class='jobCount"+jlist+"' style='float:right;font-size:25px;color:rgba(0,0,0,0.3);position:relative;top:-30px;'></span><br/>");
+						writer.println("<span style='position:relative;top:-10px;font-size:10px;'>Positions are sorted by competition number by default. To find a particular job, use the search at right. You can also sort the listings by any column by clicking the heading.");	
+						writer.println("</span>");
 						writer.println("<br/><table width='100%' class='table table-condensed table-striped educationalJobsList"+jlist+"' style='font-size:11px;width:100%;'>");
 						writer.println("<thead>");
 						writer.println("<tr><th width='15%'>COMPETITION #</th><th width='55%'>POSITION TITLE/LOCATION(S)</th><th width='20%'>COMPETITION END DATE</th><th width='10%'>OPTIONS</th></tr>");
@@ -134,7 +137,7 @@ public class OpenJobsWorker extends TimerTask {
 							
 							if (!jobs[i].isCancelled()) {
 								writer.println("<td>" + jobs[i].getFormatedCompetitionEndDate() +"</td>");								
-								writer.println("<td><a class='no-print btn btn-xs btn-primary' href='/employment/view_job_post.jsp?comp_num="+ jobs[i].getCompetitionNumber() + "'><span class='glyphicon glyphicon-search'></span> VIEW</a></td>");								
+								writer.println("<td><a class='no-print btn btn-xs btn-primary' href='/employment/view_job_post.jsp?comp_num="+ jobs[i].getCompetitionNumber() + "'>VIEW</a></td>");								
 							}
 							else {								
 								writer.println("<td>POSITION CANCELLED</td>");
@@ -146,12 +149,12 @@ public class OpenJobsWorker extends TimerTask {
 					}
 					
 					writer.println("</tbody></table>");
-					
+					writer.println("<script>$('.jobCount"+jlist+"').html("+jcount+");</script>");
 					if (jcount < 1) {			//Place span up atop to write to with jq.				
 						writer.println("<script>$('.educationalJobsList"+jlist+"').parent().css('display','none');</script>");
-						writer.println("<script>$('.noPos"+jlist+"').css('display','block');</script>");
+						writer.println("<script>$('.noPos"+jlist+"').css('display','block');</script>");						
 						//writer.println("<div style='text-align:center;'>Sorry, no positions currently available in this category.</div>");
-					} 
+					}
 		
 			}
 				else {
@@ -250,7 +253,7 @@ public class OpenJobsWorker extends TimerTask {
 		          					listTitleColor = "rgba(153, 51, 51, 1)";
 		       					 }							
 							
-							writer.println("<br/><div style='border:1px solid "+listTitleColor+";'><div style='background:"+listTitleColor+";width:100%;'><span style='font-size:16px;font-weight:bold;text-transform:Capitalize;color:white;'>&nbsp;"+ zone.getZoneName() + " Region</span><span style='font-size:16px;color:White;font-weight:bold;' class='regionCNT"+regionCount+"'></span></div>");
+							writer.println("<br/><div style='border:1px solid "+listTitleColor+";'><div style='background:"+listTitleColor+";width:100%;'><span style='font-size:16px;font-weight:bold;text-transform:Capitalize;color:white;'>&nbsp;"+ zone.getZoneName() + " Region</span></div>");
 							
 							regions = RegionManager.getRegionBeans(zone);
 							
@@ -264,10 +267,11 @@ public class OpenJobsWorker extends TimerTask {
 									writer.println("<script>$('document').ready(function(){");
 									writer.println("$('.sublistsJobsList"+jslist+"').DataTable({'order': [[ 0, 'asc' ]],'bLengthChange': false,'paging': false, 'lengthMenu': [[-1, 20, 50, 100, 200], ['All', 20, 50, 100, 200]] });");
 									writer.println("});</script>");		
-									writer.println("<span style='font-weight:bold;padding-bottom:10px;text-transform:uppercase;color:"+listTitleColor+";'>"+ region.getName() + "</span><br/><br/>");									
+									writer.println("<span style='font-weight:bold;padding-bottom:10px;text-transform:uppercase;color:"+listTitleColor+";'>"+ region.getName() + "</span><span style='float:right;font-size:20px;color:rgba(0,0,0,0.3);position:relative;top:-5px;' class='regionCNT"+regionCount+"'></span><br/>");									
+									writer.println("<span style='font-size:10px;'>Sub lists are sorted by name by default. To find a particular list, use the search at right. You can also sort the listings by any column by clicking the heading.</span>");	
 									writer.println("<table width='100%' class='table table-condensed table-striped sublistsJobsList"+jslist+"' style='font-size:11px;width:100%;'>");
 									writer.println("<thead>");
-									writer.println("<tr><th width='90%'>SUBLIST TITLE</th><th width='10%'>OPTIONS</th></tr>");
+									writer.println("<tr><th width='80%'>SUBLIST TITLE</th><th width='10%'>EXPIRY</th><th width='10%'>OPTIONS</th></tr>");
 									writer.println("</thead>");
 									writer.println("<tbody>");
 									
@@ -279,11 +283,12 @@ public class OpenJobsWorker extends TimerTask {
 										noJobs=0;
 										writer.println("<tr id='" + list.getId()+ "'>");
 										writer.println("<td>" + list.getTitle() + "</td>");
-										writer.println("<td><a class='no-print btn btn-xs btn-primary' href='/employment/view_sub_list.jsp?list_id="+ list.getId() + "'><span class='glyphicon glyphicon-search'></span> VIEW</a></td>");
+										writer.println("<td>" + list.getExpiryDate() + "</td>");
+										writer.println("<td><a class='no-print btn btn-xs btn-primary' href='/employment/view_sub_list.jsp?list_id="+ list.getId() + "'>VIEW</a></td>");
 										writer.println("</tr>");
 									}
 									writer.println("</tbody></table>");	
-									writer.println("<script>$('.regionCNT"+regionCount+"').html(' ("+tjobCount+")');</script>");
+									writer.println("<script>$('.regionCNT"+regionCount+"').html('"+tjobCount+"&nbsp;');</script>");
 									if (jcount < 1) {											
 										writer.println("<script>$('.sublistsJobsList"+jslist+"').parent().css('display','none');</script>");
 										
