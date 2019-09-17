@@ -290,7 +290,8 @@
 						<option value="Manager of Accounting and Financial Operations">Manager of Accounting and Financial Operations</option>
 						<option value="Manager of ATIPP">Manager of ATIPP</option>
 						<option value="Manager of Budgeting">Manager of Budgeting</option>
-						<option value="Manager of Communications">Manager of Communications</option>
+						<option value="Manager of Communications">Manager of Communications</option>						
+						<option value="Manager of Contracted Student Transportation">Manager of Contracted Student Transportation</option>
 						<option value="Manager of Facilities">Manager of Facilities</option>
 						<option value="Manager of Facilities & Maintenance">Manager of Facilities & Maintenance</option>
 						<option value="Manager of Facilities Operations">Manager of Facilities Operations</option>
@@ -421,7 +422,8 @@
 							<option value="Student Assistants/Teachers (Schools Sq-Z)">Student Assistants/Teachers (Schools Sq-Z)</option>
 							<option value="Student Services">Student Services</option>
 							<option value="Student Support Services">Student Support Services</option>
-							<option value="Student Transportation">Student Transportation</option>
+							<option value="Student Transportation">Student Transportation</option>							
+							<option value="Student Transportation Enforcement Officer">Student Transportation Enforcement Officer</option>
 							<option value="Support Staff">Support Staff</option>
 							<option value="Support Staff and Student Assistants">Support Staff and Student Assistants</option>
 							<option value="TCAS Support">TCAS Support</option>
