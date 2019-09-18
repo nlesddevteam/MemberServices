@@ -18,7 +18,7 @@ public class SchoolDirectoryDetailsOtherService {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.add_directory_details_o(?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.add_directory_details_o(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, s.getGoogleMapEmbed());
 			stat.setString(3, s.getSchoolCatchmentEmbed());
@@ -33,6 +33,12 @@ public class SchoolDirectoryDetailsOtherService {
 			stat.setInt(12, s.getSchoolDirectory());
 			stat.setString(13, s.getAddedBy());
 			stat.setString(14, s.getTwitterEmbed());
+			stat.setString(15, null);
+			if(s.getSurveillanceCamera()) {
+				stat.setInt(16, 1);
+			}else {
+				stat.setInt(16, 0);
+			}
 			stat.execute();
 		
 			id = stat.getInt(1);
@@ -70,7 +76,7 @@ public class SchoolDirectoryDetailsOtherService {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.schools_pkg.update_directory_details_o(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.schools_pkg.update_directory_details_o(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, s.getGoogleMapEmbed());
 			stat.setString(2, s.getSchoolCatchmentEmbed());
 			stat.setString(3, s.getDescription());
@@ -85,6 +91,12 @@ public class SchoolDirectoryDetailsOtherService {
 			stat.setString(12, s.getAddedBy());
 			stat.setInt(13, s.getId());
 			stat.setString(14, s.getTwitterEmbed());
+			stat.setString(15, null);
+			if(s.getSurveillanceCamera()) {
+				stat.setInt(16, 1);
+			}else {
+				stat.setInt(16, 0);
+			}
 			stat.execute();
 		
 		}
@@ -171,6 +183,11 @@ public class SchoolDirectoryDetailsOtherService {
 			abean.setAddedBy(rs.getString("ADDED_BY"));
 			abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
 			abean.setTwitterEmbed(rs.getString("TWITTER_EMBED"));
+			if(rs.getInt("SURVEILLANCE_CAMERA") == 1) {
+				abean.setSurveillanceCamera(true);
+			}else {
+				abean.setSurveillanceCamera(false);
+			}
 		}
 		catch (Exception e) {
 			abean = null;
