@@ -60,8 +60,8 @@ public class ModifyTeacherSchoolRequestHandler  implements RequestHandler
     p = usr.getPersonnel();
 
     p.setSchool(SchoolDB.getSchool(sid));
-
-    path = "teacher_viewprofile_school.jsp";  
+    request.setAttribute("smsgOK", "SUCCESS! School Assignment change successfully updated.");
+    path = "index.jsp";  
     
     return path;
   }

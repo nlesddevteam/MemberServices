@@ -43,10 +43,16 @@
   	<pattern>/PDReg/*</pattern>
   </decorator> 
 -->
+
 <!-- For Learning Plans / Growth Plans -->
    <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
-	<pattern>/PPGP/*</pattern>
- 	</decorator>
+		<pattern>/PPGP/*</pattern>
+   </decorator>
+ 
+<!-- For Teacher Profile Update -->
+  <decorator name="tProfile" page="Profile/Teacher/includes/decorator/main.jsp">
+	<pattern>/Profile/Teacher/*</pattern>
+  </decorator> 
  	
   <decorator name="personnelExternal" page="Personnel/includes/decorator/external.jsp">
   	<pattern>/Personnel/add_nlesd_external*</pattern>

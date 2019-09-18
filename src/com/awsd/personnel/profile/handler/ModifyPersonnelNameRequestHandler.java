@@ -65,7 +65,8 @@ public class ModifyPersonnelNameRequestHandler  implements RequestHandler
     
     if(type.equals("Teacher"))
     {
-      path = "teacher_viewprofile_name.jsp";  
+      path = "index.jsp";
+      request.setAttribute("msgOK", "SUCCESS! Name change successfully updated.");
     }
     
     return path;
