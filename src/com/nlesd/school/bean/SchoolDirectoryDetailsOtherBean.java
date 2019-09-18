@@ -22,6 +22,7 @@ public class SchoolDirectoryDetailsOtherBean implements Serializable {
 	private String addedBy;
 	private Date dateAdded;
 	private String twitterEmbed;
+	private Boolean surveillanceCamera;
 	public Integer getId() {
 		return id;
 	}
@@ -115,6 +116,12 @@ public class SchoolDirectoryDetailsOtherBean implements Serializable {
 	}
 	public void setTwitterEmbed(String twitterEmbed) {
 		this.twitterEmbed = twitterEmbed;
+	}
+	public Boolean getSurveillanceCamera() {
+		return surveillanceCamera;
+	}
+	public void setSurveillanceCamera(Boolean surveillanceCamera) {
+		this.surveillanceCamera = surveillanceCamera;
 	}
 
 }

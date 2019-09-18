@@ -199,6 +199,7 @@ public class UpdateSchoolRequestHandler extends RequestHandlerImpl {
 			detailsOther.setSchoolEnrollment(form.get("schoolenrollment").toString());
 			detailsOther.setAddedBy(usr.getPersonnel().getFullNameReverse());
 			detailsOther.setTwitterEmbed(form.get("twitterembed").toString());
+			detailsOther.setSurveillanceCamera(form.getBoolean("surcameras"));
 
 			if (detailsOther.getId() > 0) {
 				SchoolDirectoryDetailsOtherService.updateSchoolDirectoryDetailsOtherBean(detailsOther);

@@ -707,7 +707,13 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 <div class="panel panel-warning">	
  <div class="panel-heading" style="font-weight:bold;">12. SYSTEM ADMINISTRATOR ONLY ITEMS</div>
 						  	<div class="panel-body" style="background-color:#fffae6;"> 
-
+								
+								<br/>Does this school have Surveillance Cameras?<br/>
+								  <div class="radio" style="padding-bottom:5px;padding-top:5px;">								   							  
+								    <label><input type='radio' name='surcameras' value='true' ${ school.detailsOther.surveillanceCamera? "CHECKED=CHECKED" :"" } /> Yes </label>	
+						            <label><input type='radio' name='surcameras' value='false' ${ not school.detailsOther.surveillanceCamera ? "CHECKED=CHECKED" :"" } /> No </label>
+								  </div>	
+								
 								<div class="input-group" style="padding-bottom:5px;">
 								    <span class="input-group-addon">School Name:</span>
 								   <input type='text' id='schoolName' name='schoolName' autocomplete="false" class="form-control" value="${ school.schoolName }" />
@@ -761,7 +767,12 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 				    					</select>    				
 	                      </div>
 								
+							
 								
+								
+								
+								
+								  	
 								
 								
 								
