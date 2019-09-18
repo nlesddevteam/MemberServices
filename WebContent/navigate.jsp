@@ -371,7 +371,7 @@
 					</esd:SecurityAccessRequired>
 
 
-					<!-- Presentation Resource Archive -->
+					<!-- Presentation Resource Archive
 
 					<div class="menuIconImage">
 						<a href="SETResource/"> <img
@@ -379,7 +379,7 @@
 							class="img-swap menuImage" border=0
 							title="District Presentation Resource Archive.">
 						</a>
-					</div>
+					</div> -->
 					<!--  
 			   <div class="menuIconImage"> 	                  	
 			            		<a href="Profile/">
@@ -390,12 +390,12 @@
 
 					<!-- Teacher Profile System -->
 					<esd:SecurityAccessRequired
-						permissions="PERSONNEL-PROFILE-TEACHER-VIEW">
+						permissions="PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW">
 						<div class="menuIconImage">
-							<a href="Profile/Teacher/viewCurrentTeacherProfile.html"> <img
-								src="includes/img/menu/teacherprofile-off.png"
+							<a href="Profile/Teacher/"> <img
+								src="includes/img/menu/userprofile-off.png"
 								class="img-swap menuImage" border=0
-								title="Teacher Profile allows a teacher to modify their current teaching assignments.">
+								title="User Profile Manager allows a Teacher/Support Staff employee to modify their current name and school assignment.">
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
@@ -436,7 +436,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- User Administration -->
+					<!-- User Administration
 					<esd:SecurityAccessRequired permissions="USER-ADMIN-VIEW">
 						<div class="menuIconImage">
 							<a href="UserAdmin/"> <img
@@ -446,7 +446,7 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+ -->
 					<!-- Travel Claim System  -->
 					<esd:SecurityAccessRequired permissions="TRAVEL-EXPENSE-VIEW">
 						<div class="menuIconImage">
