@@ -358,6 +358,9 @@ div.schoollist > div:nth-of-type(odd) {background: #FDF5E6;}
 	                      	<input type='radio' name='accessible' value='false' ${ not school.details.accessible ? "CHECKED=CHECKED" :"" } />
 	                     <input type='radio' name='frenchImmersion' value='true' ${ school.details.frenchImmersion ? "CHECKED=CHECKED" :"" } />
 	                      	<input type='radio' name='frenchImmersion' value='false' ${ not school.details.frenchImmersion ? "CHECKED=CHECKED" :"" } />
+	                      <input type='radio' name='surcameras' value='true' ${ school.detailsOther.surveillanceCamera? "CHECKED=CHECKED" :"" } />
+						 <input type='radio' name='surcameras' value='false' ${ not school.detailsOther.surveillanceCamera ? "CHECKED=CHECKED" :"" } />	                      
+	                      
 	                      <textarea id='schoolOpening'  style="width:100%;height:100px;" name='schoolOpening'>${ school.details.schoolOpening }</textarea>	                      	
 	                      <textarea id='kindergartenTimes'  style="width:100%;max-width:500px;height:100px;" name='kindergartenTimes'>${ school.details.kindergartenTimes }</textarea>	                      	
 	                      <textarea id='kinderstartTimes'  style="width:100%;max-width:500px;height:100px;" name='kinderstartTimes'>${ school.details.kinderstartTimes }</textarea>	                      	
