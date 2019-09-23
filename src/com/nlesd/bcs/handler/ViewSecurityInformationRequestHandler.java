@@ -12,18 +12,12 @@ public class ViewSecurityInformationRequestHandler extends BCSApplicationRequest
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-				IOException {
+			IOException {
 		super.handleRequest(request, response);
-		
 		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	request.setAttribute("sec",BussingContractorSecurityManager.getBussingContractorSecurityById(ebean.getId()));
-	  		path = "view_security_info.jsp";
-	      }
-		
+		request.setAttribute("sec",BussingContractorSecurityManager.getBussingContractorSecurityById(ebean.getId()));
+		path = "view_security_info.jsp";
+
 		return path;
 	}
 }

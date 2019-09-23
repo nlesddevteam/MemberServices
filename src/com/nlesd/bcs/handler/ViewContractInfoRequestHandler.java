@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorSystemContractBean;
 import com.nlesd.bcs.bean.BussingContractorSystemRouteBean;
@@ -13,19 +17,18 @@ import com.nlesd.bcs.dao.DropdownManager;
 import com.nlesd.bcs.handler.BCSApplicationRequestHandlerImpl;
 public class ViewContractInfoRequestHandler extends BCSApplicationRequestHandlerImpl{
 	public ViewContractInfoRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("cid")
+		});
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	  int cid = form.getInt("cid");
+		if (validate_form()) {
+			BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			int cid = form.getInt("cid");
 	    	  BussingContractorSystemContractBean bcbean = BussingContractorSystemContractManager.getBussingContractorSystemContractById(cid);
 	    	request.setAttribute("contractor",ebean);
 	    	request.setAttribute("contract",bcbean);
@@ -35,9 +38,10 @@ public class ViewContractInfoRequestHandler extends BCSApplicationRequestHandler
 		    request.setAttribute("croutes",alist);
 		  
 	  		path = "view_contract_info.jsp";
-	      }
-		
-		
+		}else {
+			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
+	    	path = "contractorLogin.html";	
+		}
 		return path;
 	}
 }

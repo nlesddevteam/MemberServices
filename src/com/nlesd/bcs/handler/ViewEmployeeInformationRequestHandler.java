@@ -3,7 +3,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.nlesd.bcs.bean.BussingContractorBean;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
 import com.nlesd.bcs.constants.DropdownTypeConstant;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
@@ -11,19 +13,17 @@ import com.nlesd.bcs.dao.BussingContractorSystemEmployeeTrainingManager;
 import com.nlesd.bcs.dao.DropdownManager;
 public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequestHandlerImpl{
 	public ViewEmployeeInformationRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("vid")
+			});
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	//check to see if this is an edit or add
+		if (validate_form()) {
+			//check to see if this is an edit or add
 	    	  BussingContractorEmployeeBean vbean = new BussingContractorEmployeeBean();
 	    	  if(request.getParameter("vid") == null){
 	    		  //add
@@ -43,8 +43,10 @@ public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequest
 			  request.setAttribute("tlengths", DropdownManager.getDropdownValuesTM(23));
 	    	  
 	  		path = "view_employee_info.jsp";
-	      }
-		
+		}else {
+			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
+	    	path = "contractorLogin.html";	
+		}
 		return path;
 	}
 }

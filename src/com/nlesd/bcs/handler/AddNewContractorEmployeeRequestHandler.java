@@ -17,9 +17,20 @@ import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 public class AddNewContractorEmployeeRequestHandler extends BCSApplicationRequestHandlerImpl {
 	public AddNewContractorEmployeeRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("employeeposition"),
+				new RequiredFormElement("firstname"),
+				new RequiredFormElement("lastname"),
+				new RequiredFormElement("address1"),
+				new RequiredFormElement("city"),
+				new RequiredFormElement("province"),
+				new RequiredFormElement("postalcode")
+			});
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -28,6 +39,7 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 		super.handleRequest(request, response);
 		BussingContractorEmployeeBean vbean =  new BussingContractorEmployeeBean();
 		String message="UPDATED";
+		if (validate_form()) {
 		try {
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -96,7 +108,7 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 				vbean.setDaSuspensions(form.get("dasuspensions"));
 				vbean.setDaAccidents(form.get("daaccidents"));
 				//now we do the documents
-				String filelocation="/../MemberServices/BCS/documents/employeedocs/";
+				String filelocation="/BCS/documents/employeedocs/";
 				String docfilename = "";
 				if(form.getUploadFile("dlfront").getFileSize() > 0){
 					docfilename=save_file("dlfront", filelocation);
@@ -214,22 +226,26 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 				}catch(Exception e){
 					message = e.getMessage();
 				}
-				String xml = null;
-				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-				sb.append("<CONTRACTORS>");
-				sb.append("<CONTRACTOR>");
-				sb.append("<MESSAGE>" + message + "</MESSAGE>");
-				sb.append("<VID>" + vbean.getId() + "</VID>");
-				sb.append("</CONTRACTOR>");
-				sb.append("</CONTRACTORS>");
-				xml = sb.toString().replaceAll("&", "&amp;");
-				PrintWriter out = response.getWriter();
-				response.setContentType("text/xml");
-				response.setHeader("Cache-Control", "no-cache");
-				out.write(xml);
-				out.flush();
-				out.close();
-				return null;
+		}else {
+			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+		}
+
+		String xml = null;
+		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+		sb.append("<CONTRACTORS>");
+		sb.append("<CONTRACTOR>");
+		sb.append("<MESSAGE>" + message + "</MESSAGE>");
+		sb.append("<VID>" + vbean.getId() + "</VID>");
+		sb.append("</CONTRACTOR>");
+		sb.append("</CONTRACTORS>");
+		xml = sb.toString().replaceAll("&", "&amp;");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/xml");
+		response.setHeader("Cache-Control", "no-cache");
+		out.write(xml);
+		out.flush();
+		out.close();
+		return null;
 		
 	
 	}

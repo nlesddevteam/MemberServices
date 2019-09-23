@@ -63,8 +63,9 @@ $("#loadingSpinner").css("display","none");
 					            		<tr>
 					                		<th width="20%">TEACHER</th>
 					                		<th width="20%">SCHOOL</th>
-					                		<th width="35%">AREA</th>
-					                		<th width="25%">STATUS</th>
+					                		<th width="30%">AREA</th>
+					                		<th width="15%">STATUS</th>
+					                		<th width="15%">OPTIONS</th>
 					            		</tr>
 					            	</thead>
 					            	<tbody>	
@@ -82,6 +83,11 @@ $("#loadingSpinner").css("display","none");
 									       	 		<td>${ area.currentStatus.description }</td>
 									       	 	</c:otherwise>
 									       	</c:choose>
+									       	<td>
+									       		<c:if test = "${isquestions eq 'Y'}">
+													<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW QUESTIONS</a>
+												</c:if>
+											</td>
 											   
 										</tr>
 								</c:forEach>
@@ -100,6 +106,34 @@ $("#loadingSpinner").css("display","none");
 									<br />
 									<div align="center"><b>${ slisted }</b> teacher(s) has/have been added to the shortlist.</div>
 									</esd:SecurityAccessRequired>		
- </div></div></div></div>  
+ </div></div></div></div>
+     <div class="modal fade" id="myModalq" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+			<div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitleq"><span id="maintitlespanq"></span></h4>
+                </div>
+                <div class="modal-body">
+					<form id="frmquestions" action="">
+                    <table id="tquestions" width="90%">
+                    <tbody>
+                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title1q"></h4></td></tr>
+                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2q"></h4></td></tr>
+                    </tbody>			
+                    </table>
+                    </form>
+                    
+				</div>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-xs btn-primary" id="btnokq" name="btnok">OK</button>
+        		</div>
+                
+            </div>
+      
+    </div>
+  </div>  
 </body>
 </html>	

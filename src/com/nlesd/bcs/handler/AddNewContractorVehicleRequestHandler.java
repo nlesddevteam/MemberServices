@@ -7,6 +7,10 @@ import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
@@ -19,7 +23,15 @@ import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequestHandlerImpl {
 	public AddNewContractorVehicleRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("vmake"),
+				new RequiredFormElement("vyear"),
+				new RequiredFormElement("vserialnumber"),
+				new RequiredFormElement("vplatenumber"),
+				new RequiredFormElement("vtype"),
+				new RequiredFormElement("vsize"),
+				new RequiredFormElement("vrowner")
+			});
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -28,6 +40,7 @@ public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequest
 		super.handleRequest(request, response);
 		BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
 		String message="UPDATED";
+		if (validate_form()) {
 		try {
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -84,7 +97,7 @@ public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequest
 					vbean.setMiscHeInsDate2(sdf.parse(form.get("mheidate2").toString()));
 				}
 				//now we do the documents
-				String filelocation="/../MemberServices/BCS/documents/vehicledocs/";
+				String filelocation="/BCS/documents/vehicledocs/";
 				String docfilename = "";
 				if(form.getUploadFile("fallInsFile").getFileSize() > 0){
 					docfilename=save_file("fallInsFile", filelocation);
@@ -211,23 +224,27 @@ public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequest
 				}catch(Exception e){
 					message = e.getMessage();
 				}
-				String xml = null;
-				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-				sb.append("<CONTRACTORS>");
-				sb.append("<CONTRACTOR>");
-				sb.append("<MESSAGE>" + message + "</MESSAGE>");
-				sb.append("<VID>" + vbean.getId() + "</VID>");
-				sb.append("</CONTRACTOR>");
-				sb.append("</CONTRACTORS>");
-				xml = sb.toString().replaceAll("&", "&amp;");
-				PrintWriter out = response.getWriter();
-				response.setContentType("text/xml");
-				response.setHeader("Cache-Control", "no-cache");
-				out.write(xml);
-				out.flush();
-				out.close();
-				return null;
-		
+		}else {
+			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+		}
+
+		String xml = null;
+		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+		sb.append("<CONTRACTORS>");
+		sb.append("<CONTRACTOR>");
+		sb.append("<MESSAGE>" + message + "</MESSAGE>");
+		sb.append("<VID>" + vbean.getId() + "</VID>");
+		sb.append("</CONTRACTOR>");
+		sb.append("</CONTRACTORS>");
+		xml = sb.toString().replaceAll("&", "&amp;");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/xml");
+		response.setHeader("Cache-Control", "no-cache");
+		out.write(xml);
+		out.flush();
+		out.close();
+		return null;
+
 	
 	}
 }
