@@ -3,7 +3,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.nlesd.bcs.bean.BussingContractorBean;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.constants.DropdownTypeConstant;
 import com.nlesd.bcs.dao.BussingContractorVehicleDocumentManager;
@@ -11,21 +13,16 @@ import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.DropdownManager;
 public class ViewVehicleInformationRequestHandler extends BCSApplicationRequestHandlerImpl{
 	public ViewVehicleInformationRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("vid")
+			});
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	//BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
-	    	//request.setAttribute("company",bccbean);
-	    	  //check to see if this is an edit or add
+		if (validate_form()) {
 	    	  BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
 	    	  if(request.getParameter("vid") == null){
 	    		  //add
@@ -51,8 +48,10 @@ public class ViewVehicleInformationRequestHandler extends BCSApplicationRequestH
 	       	  request.setAttribute("spath",request.getContextPath());
 	    	  request.setAttribute("dpath","/BCS/documents/vehicledocs/");
 	  		path = "view_vehicle_info.jsp";
-	      }
-		
+		}else {
+			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
+	    	path = "contractorLogin.html";		
+		}
 		return path;
 	}
 }

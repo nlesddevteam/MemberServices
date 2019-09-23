@@ -13,18 +13,14 @@ public class ViewCompanyInformationRequestHandler extends BCSApplicationRequestH
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-				IOException {
+			IOException {
 		super.handleRequest(request, response);
 		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
-	    	request.setAttribute("company",bccbean);
-	  		path = "view_company_info.jsp";
-	      }
-		
+		BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
+		request.setAttribute("company",bccbean);
+		path = "view_company_info.jsp";
+
+
 		return path;
 	}
 }

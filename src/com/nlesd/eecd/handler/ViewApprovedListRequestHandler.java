@@ -39,7 +39,7 @@ public class ViewApprovedListRequestHandler extends RequestHandlerImpl {
 			request.setAttribute("areas", list);
 			request.setAttribute("areadescription", adescription);
 			request.setAttribute("listid", Integer.parseInt(request.getParameter("aid")));
-			
+			request.setAttribute("isquestions", abean.getRequired());
 			//pass back the number of shortlisted people
 			ArrayList<EECDTeacherAreaBean> slist = new ArrayList<EECDTeacherAreaBean>();
 			

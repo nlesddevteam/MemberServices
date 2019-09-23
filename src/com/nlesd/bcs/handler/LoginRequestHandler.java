@@ -3,8 +3,8 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.awsd.servlet.LoginNotRequiredRequestHandler;
-public class LoginRequestHandler implements LoginNotRequiredRequestHandler {
+import com.esdnl.servlet.PublicAccessRequestHandlerImpl;
+public class LoginRequestHandler extends PublicAccessRequestHandlerImpl {
 	public LoginRequestHandler() {
 
 	}
@@ -13,7 +13,7 @@ public class LoginRequestHandler implements LoginNotRequiredRequestHandler {
 			throws ServletException,
 				IOException {
 		
-
+		super.handleRequest(request, response);
 		String path = "login.jsp";
 		
 		return path;

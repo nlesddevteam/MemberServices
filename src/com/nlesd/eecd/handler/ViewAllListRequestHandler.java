@@ -39,6 +39,7 @@ public class ViewAllListRequestHandler extends RequestHandlerImpl {
 			request.setAttribute("areadescription", abean.getAreaDescription());
 			request.setAttribute("listid", abean.getId());
 			request.setAttribute("iscompleted", abean.getShortlistCompleted());
+			request.setAttribute("isquestions", abean.getRequired());
 			//pass back the number of shortlisted people
 			ArrayList<EECDTeacherAreaBean> slist = new ArrayList<EECDTeacherAreaBean>();
 			

@@ -359,3 +359,82 @@ function markshortlistcomplete(taid, ttype) {
 	});
 
 }
+/*******************************************************************************
+ * Opens dialog for viewing teacher answers
+ ******************************************************************************/
+function openquestionsdialog(areaid) {
+	var tstatus=-1;
+	var options = {
+		"backdrop" : "static",
+		"show" : true
+	};
+	
+	$("#maintitlespanq").text("Area Questions");
+	$('#myModalq').modal(options);
+	// now we add the onclick event
+	$('#btnokq').unbind('click').bind('click', function (e) {
+		//addUpdateTeacherAreaQuestions();
+		$('#myModalq').modal('hide');
+		$('.modal-backdrop').remove();
+		});
+	
+
+}
+/*******************************************************************************
+ * Calls ajax post for adding new area description
+ ******************************************************************************/
+function getAreaQuestionsView(areaid,pid) {
+	$("#tquestions").find("tr:gt(1)").remove();
+	if(areaid == ""){
+		return;
+	}
+	var showwindow="N";
+	$.ajax({
+		url : 'getViewAreaQuestions.html',
+		type : 'POST',
+		data : {
+				aid : areaid,
+				psid: pid
+		},success : function(xml) {
+			$(xml).find('TQUESTION').each(
+					function() {
+						
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#title1").html($(this).find("AREAD").text());
+							//if($(this).find("ETEACHER").text() != "null"){
+								//$("#title2").html($(this).find("ETEACHER").text());
+							//}
+							var newrow="";
+							newrow = "<tr><td colspan='2'>" + $(this).find("QSORT").text() + ".  " +  $(this).find("QTEXT").text() + "</td></tr>";
+							newrow = newrow + "<tr><td colspan='2'><div style='border:1px solid black;'><p><br>" + $(this).find("ANSWER").text() + "</p></div></td></tr>";
+							$("#tquestions tbody").append(newrow);
+							showwindow="Y";   							
+						} else if ($(this).find("MESSAGE").text() == "NONE") {
+							//no questions do not show modal
+							  							
+						}else{
+							$('#errorMsg').text($(this).find("MESSAGE").text()).css("display", "block").delay(5000);  
+						}
+
+					});
+			if(showwindow == "Y"){
+				openquestionsdialog();
+			}
+			
+		},
+		error : function(xhr, textStatus, error) {    			
+			$('#errorMsg').text(error).css("display", "block").delay(5000).fadeOut();     			
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Opens dialog for viewing teacher answers
+ ******************************************************************************/
+function viewanswers(areaid,pid) {
+	getAreaQuestionsView(areaid,pid);
+}

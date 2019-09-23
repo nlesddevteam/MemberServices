@@ -18,13 +18,17 @@ import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.constants.StatusConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
-public class SubmitNewBussingContractorAjaxRequestHandler extends PublicAccessRequestHandlerImpl {
+public class SubmitNewBussingContractorAjaxRequestHandler extends PublicAccessRequestHandlerImpl 
+{
+	public SubmitNewBussingContractorAjaxRequestHandler() {
 
+	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 		String errormessage="";
 		//check to see if email, business number and hst number is unique
+		super.handleRequest(request, response);
 		boolean check = BussingContractorManager.checkContractor(request.getParameter("email"), request.getParameter("businessnumber"), request.getParameter("hstnumber"));
 		if(check){
 			//success

@@ -7,43 +7,59 @@ import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 public class AdminSubmitAuditRequestHandler extends RequestHandlerImpl {
 	public AdminSubmitAuditRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"BCS-SYSTEM-ACCESS"
+		};
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("selectaudit"),
+				new RequiredFormElement("selectcon")
+			});
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		int audittype = Integer.parseInt(request.getParameter("selectaudit").toString());
-		int contractor = Integer.parseInt(request.getParameter("selectcon").toString());
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	
+		if (validate_form()) {
+			int audittype = Integer.parseInt(request.getParameter("selectaudit").toString());
+			int contractor = Integer.parseInt(request.getParameter("selectcon").toString());
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Date sdate = null;
-		Date edate= null;
-		try {
-			sdate = format.parse(request.getParameter("sdate").toString());
-			edate = format.parse(request.getParameter("edate").toString());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			Date sdate = null;
+			Date edate= null;
+			try {
+				sdate = format.parse(request.getParameter("sdate").toString());
+				edate = format.parse(request.getParameter("edate").toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ArrayList<AuditTrailBean> list = new ArrayList<AuditTrailBean>();
+			if(audittype == 1){
+				list = AuditTrailManager.getAuditEntriesLogins(contractor, sdate, edate, EntryTypeConstant.CONTRACTORLOGIN.getValue());
+			}else if(audittype ==2){
+				list = AuditTrailManager.getAuditEntriesEmpVeh(contractor, sdate, edate, EntryTypeConstant.CONTRACTORCOMPANYUPDATED.getValue(),EntryTypeConstant.CONTRACTORDOCDELETED.getValue());
+			}
+			
+			request.setAttribute("auditentries", list);
+			path = "admin_view_audit_results.jsp";
+		}else {
+			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
+	    	path = "index.html";
 		}
 		
-		ArrayList<AuditTrailBean> list = new ArrayList<AuditTrailBean>();
-		if(audittype == 1){
-			list = AuditTrailManager.getAuditEntriesLogins(contractor, sdate, edate, EntryTypeConstant.CONTRACTORLOGIN.getValue());
-		}else if(audittype ==2){
-			list = AuditTrailManager.getAuditEntriesEmpVeh(contractor, sdate, edate, EntryTypeConstant.CONTRACTORCOMPANYUPDATED.getValue(),EntryTypeConstant.CONTRACTORDOCDELETED.getValue());
-		}
-		
-		request.setAttribute("auditentries", list);
-		path = "admin_view_audit_results.jsp";
+
 		return path;
 	}
 
