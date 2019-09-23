@@ -339,6 +339,7 @@
 						<option value="Solicitor">Solicitor</option>
 						<option value="Speech Language Pathologist">Speech Language Pathologist</option>
 						<option value="Store Keeper">Store Keeper</option>
+						<option value="Student Transportation Enforcement Officer">Student Transportation Enforcement Officer</option>
 						<option value="Supervisor of Board Owned Bus Services">Supervisor of Board Owned Bus Services</option>
 						<option value="Training Specialist">Training Specialist</option>
 						<option value="Transportation Clerk">Transportation Clerk</option>
