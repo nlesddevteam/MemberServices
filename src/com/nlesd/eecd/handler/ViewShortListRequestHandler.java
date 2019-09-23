@@ -35,6 +35,7 @@ public class ViewShortListRequestHandler extends RequestHandlerImpl {
 		request.setAttribute("areas", list);
 		request.setAttribute("areadescription", abean.getAreaDescription());
 		request.setAttribute("listid", Integer.parseInt(request.getParameter("aid")));
+		request.setAttribute("isquestions", abean.getRequired());
 		if(sbean.getId() > 0) {
 			request.setAttribute("iscompleted", sbean.getShortlistCompleted());
 		}else {

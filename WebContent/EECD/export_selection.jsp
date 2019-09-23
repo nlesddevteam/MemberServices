@@ -147,7 +147,7 @@ $("#loadingSpinner").css("display","none");
                   				</ul>
                 	</div>
                 		<div align="center">
-                		<button onclick="loadingData()" class="btn btn-success btn-xs" id="get-checked-data">Export Selection(s)</button>
+                		<button onclick="" class="btn btn-success btn-xs" id="get-checked-data">Export Selection(s)</button>
                 		<a class="btn btn-xs btn-danger" onclick="loadingData()" href="javascript:history.go(-1);">Back</a> 
                 		</div>
                 		<input type="hidden" id="idlist" name="idlist">

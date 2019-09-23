@@ -12,17 +12,12 @@ public class ViewContactInformationRequestHandler extends BCSApplicationRequestH
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-				IOException {
+			IOException {
 		super.handleRequest(request, response);
 		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	request.setAttribute("contractor",BussingContractorManager.getBussingContractorById(ebean.getId()));
-	  		path = "view_contact_info.jsp";
-	      }
-		
+		request.setAttribute("contractor",BussingContractorManager.getBussingContractorById(ebean.getId()));
+		path = "view_contact_info.jsp";
+
 		return path;
 	}
 }

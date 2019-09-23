@@ -49,6 +49,45 @@ public class EECDTAApprovalManager {
 		}
 		return list;
 	}
+	public static ArrayList<EECDTAApprovalBean> getApprovalsNoSchool() {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<EECDTAApprovalBean> list = new ArrayList<EECDTAApprovalBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_eecd_approvals_no_school; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				EECDTAApprovalBean abean = new EECDTAApprovalBean();
+				abean = createEECDTAApprovalBean(rs);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<EECDTAApprovalBean> getApprovalsNoSchool(): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static EECDTAApprovalBean createEECDTAApprovalBean(ResultSet rs) {
 		EECDTAApprovalBean abean = null;
 		try {

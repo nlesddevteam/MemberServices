@@ -1,5 +1,7 @@
 package com.nlesd.eecd.bean;
 
+import java.util.TreeMap;
+
 public class EECDExportItemBean {
 	public String teacherName;
 	public String currentSchool;
@@ -7,6 +9,10 @@ public class EECDExportItemBean {
 	public String seniority;
 	public String committees;
 	public String areaDescription;
+	public TreeMap<Integer,EECDExportQuestionBean> questions;
+	public EECDExportItemBean() {
+		questions=new TreeMap<Integer,EECDExportQuestionBean>();
+	}
 	public String getAreaDescription() {
 		return areaDescription;
 	}
@@ -42,6 +48,12 @@ public class EECDExportItemBean {
 	}
 	public void setCommittees(String committees) {
 		this.committees = committees;
+	}
+	public TreeMap<Integer, EECDExportQuestionBean> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(TreeMap<Integer, EECDExportQuestionBean> questions) {
+		this.questions = questions;
 	}
 
 }

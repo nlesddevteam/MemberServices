@@ -33,7 +33,8 @@ public class ExportShortListRequestHandler extends RequestHandlerImpl {
 		sb.append(parts[0]);
 		sb.append("-");
 		sb.append(parts[1].substring(2,4));
-		list = EECDShortlistManager.getExportListByArea(Integer.parseInt(request.getParameter("aid")),Utils.getCurrentSchoolYear(),sb.toString());
+		//list = EECDShortlistManager.getExportListByArea(Integer.parseInt(request.getParameter("aid")),Utils.getCurrentSchoolYear(),sb.toString());
+		list = EECDShortlistManager.getExportListWithQuestionsByArea(Integer.parseInt(request.getParameter("aid")),Utils.getCurrentSchoolYear(),sb.toString());
 		request.setAttribute("areas", list);
 			
 		return "export_shortlists.jsp";

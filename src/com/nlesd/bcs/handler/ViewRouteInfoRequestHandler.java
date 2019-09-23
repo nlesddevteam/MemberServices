@@ -3,6 +3,10 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
 import com.nlesd.bcs.bean.BussingContractorSystemContractBean;
@@ -15,20 +19,20 @@ import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.handler.BCSApplicationRequestHandlerImpl;
 public class ViewRouteInfoRequestHandler extends BCSApplicationRequestHandlerImpl{
 	public ViewRouteInfoRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("cid"),
+				new RequiredFormElement("rid")
+			});
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
+		if (validate_form()) {
 	    	  int cid = form.getInt("cid");
 	    	  int rid = form.getInt("rid");
+	    	  BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 	    	  BussingContractorSystemContractBean bcbean = BussingContractorSystemContractManager.getBussingContractorSystemContractById(cid);
 	    	  BussingContractorSystemRouteBean rbean = BussingContractorSystemRouteManager.getBussingContractorSystemRouteById(rid);
 	    	  request.setAttribute("contractor",ebean);
@@ -54,9 +58,10 @@ public class ViewRouteInfoRequestHandler extends BCSApplicationRequestHandlerImp
 	    	  request.setAttribute("drivers", BussingContractorEmployeeManager.getApprovedContractorsDrivers(ebean.getId()));
 	    	  request.setAttribute("vehicles", BussingContractorVehicleManager.getApprovedContractorsVehicles(ebean.getId()));
 	    	  path = "view_route_info.jsp";
-	      }
-		
-		
+		}else {
+			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
+	    	path = "contractorLogin.html";
+		}
 		return path;
 	}
 }

@@ -311,10 +311,10 @@ $(document).ready(function() {
 			        	<c:when test="${contract.id gt 0 }">
 			        		<c:choose>
 			      			<c:when test="${contract.contractHistory.statusString eq 'Awarded' }">
-			      				<button type="button" class="btn btn-xs btn-warning" onclick="opensuspendcontract('${contract.id}','${contract.contractName}');">Suspend Contract</button>
+			      				<button type="button" class="btn btn-xs btn-warning" onclick="opensuspendcontract('${contract.id}','${contract.contractName}','S');">Suspend Contract</button>
 			      			</c:when>
 			      			<c:when test="${contract.contractHistory.statusString eq 'Suspended' }">
-			      				<button type="button" class="btn btn-xs btn-info">Unsuspend Contract</button>
+			      				<button type="button" class="btn btn-xs btn-info" onclick="opensuspendcontract('${contract.id}','${contract.contractName}','U');">Unsuspend Contract</button>
 			      			</c:when>
 			      			<c:when test="${contract.contractHistory.statusString eq 'Cancelled' }">
 			      			</c:when>

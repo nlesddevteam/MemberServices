@@ -5014,7 +5014,7 @@ function deleteemployeetraining(docname, id,trantype) {
 		surl="deleteEmployeeTraining.html";
 	}
 	$.ajax({
-		url : 'deleteEmployeeTraining.html',
+		url : surl,
 		type : 'POST',
 		data : {
 			vid : id,

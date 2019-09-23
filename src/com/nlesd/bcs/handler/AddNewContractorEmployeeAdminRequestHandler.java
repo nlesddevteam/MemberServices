@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.awsd.security.User;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
@@ -24,7 +27,18 @@ import com.nlesd.bcs.dao.BussingContractorManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerImpl {
 	public AddNewContractorEmployeeAdminRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"BCS-SYSTEM-ACCESS"
+		};
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("employeeposition"),
+				new RequiredFormElement("firstname"),
+				new RequiredFormElement("lastname"),
+				new RequiredFormElement("address1"),
+				new RequiredFormElement("city"),
+				new RequiredFormElement("province"),
+				new RequiredFormElement("postalcode")
+			});
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -38,7 +52,8 @@ public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerI
 		session = request.getSession(false);
 	 	usr = (User) session.getAttribute("usr");
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		try {
+		if (validate_form()) {
+			try {
 				BussingContractorBean bcbean = null;
 				if(form.exists("contractor")){
 					bcbean = BussingContractorManager.getBussingContractorById(form.getInt("contractor"));
@@ -118,7 +133,7 @@ public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerI
 				vbean.setDaSuspensions(form.get("dasuspensions"));
 				vbean.setDaAccidents(form.get("daaccidents"));
 				//now we do the documents
-				String filelocation="/../MemberServices/BCS/documents/employeedocs/";
+				String filelocation="/BCS/documents/employeedocs/";
 				String docfilename = "";
 				if(form.getUploadFile("dlfront").getFileSize() > 0){
 					docfilename=save_file("dlfront", filelocation);
@@ -236,24 +251,43 @@ public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerI
 				AuditTrailManager.addAuditTrail(atbean);
 				
 				}catch(Exception e){
-					message = e.getMessage();
+					String xml = null;
+					StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+					sb.append("<CONTRACTORS>");
+					sb.append("<CONTRACTOR>");
+					sb.append("<MESSAGE>" + message + "</MESSAGE>");
+					sb.append("<VID>" + vbean.getId() + "</VID>");
+					sb.append("</CONTRACTOR>");
+					sb.append("</CONTRACTORS>");
+					xml = sb.toString().replaceAll("&", "&amp;");
+					PrintWriter out = response.getWriter();
+					response.setContentType("text/xml");
+					response.setHeader("Cache-Control", "no-cache");
+					out.write(xml);
+					out.flush();
+					out.close();
+					return null;
 				}
-				String xml = null;
-				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-				sb.append("<CONTRACTORS>");
-				sb.append("<CONTRACTOR>");
-				sb.append("<MESSAGE>" + message + "</MESSAGE>");
-				sb.append("<VID>" + vbean.getId() + "</VID>");
-				sb.append("</CONTRACTOR>");
-				sb.append("</CONTRACTORS>");
-				xml = sb.toString().replaceAll("&", "&amp;");
-				PrintWriter out = response.getWriter();
-				response.setContentType("text/xml");
-				response.setHeader("Cache-Control", "no-cache");
-				out.write(xml);
-				out.flush();
-				out.close();
-				return null;
+		}else {
+			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+		}
+
+		String xml = null;
+		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+		sb.append("<CONTRACTORS>");
+		sb.append("<CONTRACTOR>");
+		sb.append("<MESSAGE>" + message + "</MESSAGE>");
+		sb.append("<VID>" + vbean.getId() + "</VID>");
+		sb.append("</CONTRACTOR>");
+		sb.append("</CONTRACTORS>");
+		xml = sb.toString().replaceAll("&", "&amp;");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/xml");
+		response.setHeader("Cache-Control", "no-cache");
+		out.write(xml);
+		out.flush();
+		out.close();
+		return null;
 		
 	
 	}
