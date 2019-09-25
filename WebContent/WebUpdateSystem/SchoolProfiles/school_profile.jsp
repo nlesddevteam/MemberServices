@@ -25,7 +25,12 @@
 %>
 <c:set var='schools' value="<%= schools %>" />
 <c:set var="zonePerm" value='all' />
-<c:set var="updaterSchoolName" value='<%=  usr.getPersonnel().getSchool() !=null ? usr.getPersonnel().getSchool().getSchoolName() : "" %>' />  
+<!-- Check if not assigned to a office -->
+<%	if(usr.getPersonnel().getSchool().getSchoolID() !=277) { %>
+<c:set var="updaterSchoolName" value='<%=  usr.getPersonnel().getSchool() !=null?usr.getPersonnel().getSchool().getSchoolName() : "" %>' />  
+<% }else{ %>
+<c:set var="updaterSchoolName" value="" /> 
+<%} %>
 
 
 
@@ -220,7 +225,7 @@ div.schoollist > div:nth-of-type(odd) {background: #FDF5E6;}
 			</div>
 <div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../../navigate.jsp" title="Back to MemberServices Main Menu"><img src="../includes/img/ms-footerlogo.png" border=0></a></div>
 		<div class="section group">
-			<div class="col full_block copyright">&copy; 2018 Newfoundland and Labrador English School District</div>
+			<div class="col full_block copyright">&copy; 2019 Newfoundland and Labrador English School District</div>
 		</div>	
 </div>
   
