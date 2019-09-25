@@ -18,8 +18,8 @@
     
   <decorator name="EECD" page="EECD/includes/decorator/main.jsp">
   	<pattern>/EECD/*</pattern>
-  </decorator>  
-  
+  </decorator>    
+
     
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
       <pattern>/Personnel/applicantlogin.html</pattern>
@@ -43,6 +43,11 @@
   	<pattern>/PDReg/*</pattern>
   </decorator> 
 -->
+
+<!-- For Student Travel System 
+  <decorator name="STUDENTTRAVEL" page="student/travel/includes/decorator/main.jsp">
+  		<pattern>/student/travel/*</pattern>
+  </decorator>  -->
 
 <!-- For Learning Plans / Growth Plans -->
    <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
