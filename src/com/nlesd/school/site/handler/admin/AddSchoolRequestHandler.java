@@ -29,10 +29,10 @@ public class AddSchoolRequestHandler extends RequestHandlerImpl {
 
 			request.setAttribute("school", new School());
 
-			path = "school_profile_edit.jsp";
+			path = "/WebUpdateSystem/SchoolProfiles/school_profile_add.jsp";
 		}
 		else {
-			path = "school_profile.jsp";
+			path = "/WebUpdateSystem/SchoolProfiles/school_profile.jsp";
 
 			request.setAttribute("msg", "Could not initiate the add school process.");
 		}

@@ -245,7 +245,7 @@
     </Request-Handler>
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.admin.AddSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/Schools/addSchool.html</URL-Pattern>
+      <URL-Pattern>/WebUpdateSystem/SchoolProfiles/addSchool.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.admin.EditSchoolRequestHandler</Request-Handler-Class>
