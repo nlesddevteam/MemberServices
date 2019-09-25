@@ -14,12 +14,9 @@
 
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd"%>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job"%>
-
-<esd:SecurityCheck
-	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 <esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "REFERENCE_BEAN", "PROFILE" }%>'
 	scope='<%=PageContext.REQUEST_SCOPE%>'
-	redirectTo="/Personnel/admin_index.jsp" />
+	redirectTo="https://www.nlesd.ca/employment/index.jsp" />
 	
 <%
 	NLESDReferenceTeacherBean ref = (NLESDReferenceTeacherBean) request.getAttribute("REFERENCE_BEAN");
