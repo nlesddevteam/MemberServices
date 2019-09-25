@@ -16,13 +16,13 @@ public class RemoveFromShortListAjaxRequestHandler extends RequestHandlerImpl
 				"EECD-VIEW-SHORTLIST"
 		};
 		this.validator = new FormValidator(new FormElement[] {
-				new RequiredFormElement("aid"),
-				new RequiredFormElement("astatus")
+				new RequiredFormElement("aid")
 		});
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
+		super.handleRequest(request, response);
 		String message="";
 		String xml = null;
 		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");

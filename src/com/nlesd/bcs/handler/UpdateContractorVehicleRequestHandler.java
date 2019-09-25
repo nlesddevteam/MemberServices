@@ -7,66 +7,49 @@ import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.awsd.security.User;
-import com.esdnl.servlet.PublicAccessRequestHandlerImpl;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
-import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDateHistoryManager;
-import com.nlesd.bcs.dao.BussingContractorManager;
 import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
-public class UpdateContractorVehicleRequestHandler extends PublicAccessRequestHandlerImpl {
+public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequestHandlerImpl {
 	public UpdateContractorVehicleRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("vid"),
+				new RequiredFormElement("vmake"),
+				new RequiredFormElement("vyear"),
+				new RequiredFormElement("vserialnumber"),
+				new RequiredFormElement("vplatenumber"),
+				new RequiredFormElement("vid")
+		});
 	}
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-				IOException {
+			IOException {
 		super.handleRequest(request, response);
-		BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
-		BussingContractorVehicleBean origbean = new BussingContractorVehicleBean();
-		HttpSession session = null;
-		User usr = null;
-		session = request.getSession(false);
-	 	usr = (User) session.getAttribute("usr");
+		String xml = null;
 		String message="UPDATED";
 		String updatedby="";
-		try {
+		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+		if (validate_form()) {
+			BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
+			BussingContractorVehicleBean origbean = new BussingContractorVehicleBean();
+			try {
 				Integer vid = form.getInt("vid");
 				origbean = BussingContractorVehicleManager.getBussingContractorVehicleById(vid);
 				vbean.setId(vid);
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-				
-				BussingContractorBean bcbean = null;
-				if(form.exists("contractor")){
-					bcbean = BussingContractorManager.getBussingContractorById(form.getInt("contractor"));
-				}else{
-					if(usr.checkPermission("BCS-VIEW-WESTERN")){
-						bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.WESTERN.getValue());
-					}
-					if(usr.checkPermission("BCS-VIEW-CENTRAL")){
-						bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.CENTRAL.getValue());
-					}
-					if(usr.checkPermission("BCS-VIEW-LABRADOR")){
-						bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.LABRADOR.getValue());
-					}
-					
-				}
-				if(usr != null){
-					updatedby=usr.getLotusUserFullNameReverse();
-				}else{
-					updatedby=bcbean.getContractorName();
-				}
-				
+				BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+				updatedby=bcbean.getContractorName();
 				vbean.setContractorId(bcbean.getId());
 				vbean.setvMake(form.getInt("vmake"));
 				vbean.setvModel(-1);
@@ -128,9 +111,9 @@ public class UpdateContractorVehicleRequestHandler extends PublicAccessRequestHa
 				vbean.setWinterInsStation(form.get("winterinsstation"));
 				vbean.setUnitNumber(form.get("unitnumber"));
 				vbean.setInsurancePolicyNumber(form.get("insurancepolicynumber"));
-				
+
 				//now we check the docs tab
-				String filelocation="/../MemberServices/BCS/documents/vehicledocs/";
+				String filelocation="/BCS/documents/vehicledocs/";
 				String docfilename = "";
 				if(form.getUploadFile("regFile").getFileSize() > 0){
 					docfilename=save_file("regFile", filelocation);
@@ -301,15 +284,11 @@ public class UpdateContractorVehicleRequestHandler extends PublicAccessRequestHa
 				atbean.setEntryNotes("Contractor vehicle (" + vbean.getvPlateNumber() + ") updated on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
 				atbean.setContractorId(vbean.getContractorId());
 				AuditTrailManager.addAuditTrail(atbean);
-				}catch(Exception e){
-					message = e.getMessage();
-				}
-				String xml = null;
-				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+			}catch(Exception e){
+				message = e.getMessage();
 				sb.append("<CONTRACTORS>");
 				sb.append("<CONTRACTOR>");
 				sb.append("<MESSAGE>" + message + "</MESSAGE>");
-				sb.append("<VID>" + vbean.getId() + "</VID>");
 				sb.append("</CONTRACTOR>");
 				sb.append("</CONTRACTORS>");
 				xml = sb.toString().replaceAll("&", "&amp;");
@@ -319,8 +298,30 @@ public class UpdateContractorVehicleRequestHandler extends PublicAccessRequestHa
 				out.write(xml);
 				out.flush();
 				out.close();
-				return null;
-		
-	
+			}
+			sb.append("<CONTRACTORS>");
+			sb.append("<CONTRACTOR>");
+			sb.append("<MESSAGE>" + message + "</MESSAGE>");
+			sb.append("<VID>" + vbean.getId() + "</VID>");
+			sb.append("</CONTRACTOR>");
+			sb.append("</CONTRACTORS>");
+		}else {
+			sb.append("<CONTRACTORS>");
+			sb.append("<CONTRACTOR>");
+			sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
+			sb.append("</CONTRACTOR>");
+			sb.append("</CONTRACTORS>");
+		}
+
+		xml = sb.toString().replaceAll("&", "&amp;");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/xml");
+		response.setHeader("Cache-Control", "no-cache");
+		out.write(xml);
+		out.flush();
+		out.close();
+		return null;
+
+
 	}
 }

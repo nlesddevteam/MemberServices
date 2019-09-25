@@ -151,7 +151,7 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 						if (app != null) {
 							if (app.equalsIgnoreCase("PROFILE")) {
 								if (permissions.containsKey("PERSONNEL-PROFILE-TEACHER-VIEW")) {
-									json.put("redirect", "Profile/Teacher/teacher_viewprofile_name.jsp");
+									json.put("redirect", "Profile/Teacher/index.jsp");
 								}
 							}
 						}

@@ -13,24 +13,24 @@ public class ContractorMainRequestHandler extends BCSApplicationRequestHandlerIm
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-				IOException {
+			IOException {
 		super.handleRequest(request, response);
 		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 		if(ebean == null)
-	      {
-	        path = "login.jsp";
-	      }else{
-	    	//BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
-	    	//request.setAttribute("company",bccbean);
-	    	//get list of employee warnings
-	    	request.setAttribute("ewarnings", BussingContractorWarningsManager.getEmployeeWarnings(ebean.getId()));
-	    	//get list of vehicle warnings
-	    	request.setAttribute("vwarnings", BussingContractorWarningsManager.getVehicleWarnings(ebean.getId())); 
-	    	//get list of sys docs warnings
-	    	request.setAttribute("dwarnings", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsMessages()); 
-	  		path = "contractor_main.jsp";
-	      }
-		
+		{
+			path = "login.jsp";
+		}else{
+			//BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
+			//request.setAttribute("company",bccbean);
+			//get list of employee warnings
+			request.setAttribute("ewarnings", BussingContractorWarningsManager.getEmployeeWarnings(ebean.getId()));
+			//get list of vehicle warnings
+			request.setAttribute("vwarnings", BussingContractorWarningsManager.getVehicleWarnings(ebean.getId())); 
+			//get list of sys docs warnings
+			request.setAttribute("dwarnings", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsMessages()); 
+			path = "contractor_main.jsp";
+		}
+
 		return path;
 	}
 }

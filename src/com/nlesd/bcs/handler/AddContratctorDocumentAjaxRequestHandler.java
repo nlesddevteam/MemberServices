@@ -14,9 +14,15 @@ import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDocumentManager;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequiredFormElement;
 public class AddContratctorDocumentAjaxRequestHandler extends BCSApplicationRequestHandlerImpl{
 	public AddContratctorDocumentAjaxRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("documenttype"),
+				new RequiredFormElement("documenttitle")
+			});
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException,
@@ -25,38 +31,41 @@ public class AddContratctorDocumentAjaxRequestHandler extends BCSApplicationRequ
 			String message="UPDATED";
 			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 			BussingContractorDocumentBean vbean = new BussingContractorDocumentBean();
-			try {
-				//get fields
-				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-				vbean.setContractorId(bcbean.getId());
-				vbean.setDocumentType(form.getInt("documenttype"));
-				vbean.setDocumentTitle(form.get("documenttitle"));
-				String filelocation="/../MemberServices/BCS/documents/contractordocs/";
-				String docfilename = save_file("documentfile", filelocation);
-				vbean.setDocumentPath(docfilename);
-				if(form.get("expirydate").isEmpty())
-				{
-					vbean.setExpiryDate(null);
-				}else{
-					vbean.setExpiryDate(sdf.parse(form.get("expirydate").toString()));
+			if (validate_form()) {
+				try {
+					//get fields
+					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+					vbean.setContractorId(bcbean.getId());
+					vbean.setDocumentType(form.getInt("documenttype"));
+					vbean.setDocumentTitle(form.get("documenttitle"));
+					String filelocation="/BCS/documents/contractordocs/";
+					String docfilename = save_file("documentfile", filelocation);
+					vbean.setDocumentPath(docfilename);
+					if(form.get("expirydate").isEmpty())
+					{
+						vbean.setExpiryDate(null);
+					}else{
+						vbean.setExpiryDate(sdf.parse(form.get("expirydate").toString()));
+					}
+					//save file to db
+	            	BussingContractorDocumentManager.addBussingContractorDocument(vbean);
+					//update audit trail
+					AuditTrailBean atbean = new AuditTrailBean();
+					atbean.setEntryType(EntryTypeConstant.CONTRACTORDOCADDED);
+					atbean.setEntryId(vbean.getId());
+					atbean.setEntryTable(EntryTableConstant.CONTRACTORDOC);
+					DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+					atbean.setEntryNotes("Contractor doc (" + vbean.getDocumentTitle() + ") added on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
+					atbean.setContractorId(vbean.getContractorId());
+					AuditTrailManager.addAuditTrail(atbean);
+	            }
+				catch (Exception e) {
+					message=e.getMessage();
 				}
-				//save file to db
-            	BussingContractorDocumentManager.addBussingContractorDocument(vbean);
-				//update audit trail
-				AuditTrailBean atbean = new AuditTrailBean();
-				atbean.setEntryType(EntryTypeConstant.CONTRACTORDOCADDED);
-				atbean.setEntryId(vbean.getId());
-				atbean.setEntryTable(EntryTableConstant.CONTRACTORDOC);
-				DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
-				atbean.setEntryNotes("Contractor doc (" + vbean.getDocumentTitle() + ") added on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
-				atbean.setContractorId(vbean.getContractorId());
-				AuditTrailManager.addAuditTrail(atbean);
-            }
-			catch (Exception e) {
-				message=e.getMessage();
-		
-				
+			}else {
+				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
 			}
+
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<CONTRACTORS>");

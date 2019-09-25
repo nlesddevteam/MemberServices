@@ -9,14 +9,19 @@ import com.nlesd.bcs.bean.BussingContractorRouteListBean;
 import com.nlesd.bcs.dao.BussingContractorRouteListManager;
 public class GetContractorRoutesRequestHandler extends BCSApplicationRequestHandlerImpl
 {
-	  public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException
-	  {
-	    String path="";
-	    BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-	    ArrayList<BussingContractorRouteListBean> list  = BussingContractorRouteListManager.getContractorsRoutes(bcbean.getId());
-	    request.setAttribute("routes", list);
-	    path = "view_contractor_routes.jsp";
-	    return path;
-	  }
+	public GetContractorRoutesRequestHandler() {
+
+	}
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException
+	{
+		super.handleRequest(request, response);
+		BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+		ArrayList<BussingContractorRouteListBean> list  = BussingContractorRouteListManager.getContractorsRoutes(bcbean.getId());
+		request.setAttribute("routes", list);
+		path = "view_contractor_routes.jsp";
+
+
+		return path;
+	}
 }

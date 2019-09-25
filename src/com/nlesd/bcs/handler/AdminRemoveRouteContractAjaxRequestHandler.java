@@ -7,9 +7,10 @@ import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import com.awsd.security.User;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorSystemContractBean;
 import com.nlesd.bcs.bean.BussingContractorSystemRouteBean;
@@ -22,60 +23,71 @@ import com.nlesd.bcs.dao.BussingContractorSystemRouteContractManager;
 import com.nlesd.bcs.dao.BussingContractorSystemRouteManager;
 public class AdminRemoveRouteContractAjaxRequestHandler extends RequestHandlerImpl{
 	public AdminRemoveRouteContractAjaxRequestHandler() {
-
+		this.requiredPermissions = new String[] {
+				"BCS-SYSTEM-ACCESS"
+		};
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("cid"),
+				new RequiredFormElement("rid")
+		});
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException,
 		IOException {
 		super.handleRequest(request, response);
 			String message="SUCCESS";
-			HttpSession session = null;
-		    User usr = null;
-		    session = request.getSession(false);
-		    if((session != null) && (session.getAttribute("usr") != null))
-		    {
-		      usr = (User) session.getAttribute("usr");
-		      if(!(usr.getUserPermissions().containsKey("BCS-SYSTEM-ACCESS")))
-		      {
-		        throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-		      }
-		    }
-		    else
-		    {
-		      throw new SecurityException("User login required.");
-		    }
-			int rid = form.getInt("rid");
-			int cid = form.getInt("cid");
-			BussingContractorSystemRouteContractBean rcbean = BussingContractorSystemRouteContractManager.getBussingContractorSystemRouteContractByCR(cid,rid);
-			BussingContractorSystemRouteBean rbean = BussingContractorSystemRouteManager.getBussingContractorSystemRouteById(rcbean.getRouteId());
-			BussingContractorSystemContractBean cbean = BussingContractorSystemContractManager.getBussingContractorSystemContractById(rcbean.getContractId());
-
-			
-			
-			try {
-				BussingContractorSystemRouteContractManager.removeRouteContract(cid,rid);
-				//update audit trail
-				AuditTrailBean atbean = new AuditTrailBean();
-				atbean.setEntryType(EntryTypeConstant.ROUTEREMOVEDFROMCONTRACT);
-				atbean.setEntryId(rcbean.getId());
-				atbean.setEntryTable(EntryTableConstant.ROUTE);
-				DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
-				atbean.setEntryNotes("Route:  (" + rbean.getRouteName() + ") removed from Contract: " + cbean.getContractName() + usr.getPersonnel().getFullNameReverse() + " on " + dateTimeInstance.format(Calendar.getInstance().getTime()));
-				atbean.setContractorId(rbean.getId());
-				AuditTrailManager.addAuditTrail(atbean);
-            }
-			catch (Exception e) {
-				message=e.getMessage();
-		
-				
-			}
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-			sb.append("<CONTRACTS>");
-			sb.append("<CONTRACT>");
-			sb.append("<MESSAGE>" + message + "</MESSAGE>");
-			sb.append("</CONTRACT>");
-			sb.append("</CONTRACTS>");
+			if (validate_form()) {
+				int rid = form.getInt("rid");
+				int cid = form.getInt("cid");
+				BussingContractorSystemRouteContractBean rcbean = BussingContractorSystemRouteContractManager.getBussingContractorSystemRouteContractByCR(cid,rid);
+				BussingContractorSystemRouteBean rbean = BussingContractorSystemRouteManager.getBussingContractorSystemRouteById(rcbean.getRouteId());
+				BussingContractorSystemContractBean cbean = BussingContractorSystemContractManager.getBussingContractorSystemContractById(rcbean.getContractId());
+
+				
+				
+				try {
+					BussingContractorSystemRouteContractManager.removeRouteContract(cid,rid);
+					//update audit trail
+					AuditTrailBean atbean = new AuditTrailBean();
+					atbean.setEntryType(EntryTypeConstant.ROUTEREMOVEDFROMCONTRACT);
+					atbean.setEntryId(rcbean.getId());
+					atbean.setEntryTable(EntryTableConstant.ROUTE);
+					DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+					atbean.setEntryNotes("Route:  (" + rbean.getRouteName() + ") removed from Contract: " + cbean.getContractName() + usr.getPersonnel().getFullNameReverse() + " on " + dateTimeInstance.format(Calendar.getInstance().getTime()));
+					atbean.setContractorId(rbean.getId());
+					AuditTrailManager.addAuditTrail(atbean);
+	            }
+				catch (Exception e) {
+					message=e.getMessage();
+					sb.append("<CONTRACTS>");
+					sb.append("<CONTRACT>");
+					sb.append("<MESSAGE>" + message + "</MESSAGE>");
+					sb.append("</CONTRACT>");
+					sb.append("</CONTRACTS>");
+					xml = sb.toString().replaceAll("&", "&amp;");
+					PrintWriter out = response.getWriter();
+					response.setContentType("text/xml");
+					response.setHeader("Cache-Control", "no-cache");
+					out.write(xml);
+					out.flush();
+					out.close();
+					return null;
+				}
+				sb.append("<CONTRACTS>");
+				sb.append("<CONTRACT>");
+				sb.append("<MESSAGE>" + message + "</MESSAGE>");
+				sb.append("</CONTRACT>");
+				sb.append("</CONTRACTS>");
+			}else {
+				sb.append("<CONTRACTS>");
+				sb.append("<CONTRACT>");
+				sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
+				sb.append("</CONTRACT>");
+				sb.append("</CONTRACTS>");
+			}
+
 			xml = sb.toString().replaceAll("&", "&amp;");
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/xml");

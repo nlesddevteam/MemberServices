@@ -18,6 +18,11 @@
    $(document).ready(function() {
 	   $("#error_message").hide();
 	   $("#success_message").hide();
+	   //check for error message
+	   if($("#msg").val() != ""){
+		   $("#error_message").text($("#msg").val());
+		   $("#error_message").show();
+	   }
     $('#contact-form').bootstrapValidator({
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
@@ -42,9 +47,9 @@
           									$("#error_message").hide();
           									$("#divcontainer").hide();
           			 					}else{
-          			 						$('#errorspan')
           			 						$('#error_message').text($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
           			 						$("#success_message").hide();
+          			 						$('#error_message').show();
           			 					}
 
           							});
@@ -172,6 +177,7 @@
       <input type="hidden" id="hidid" name="hidid" value="${contractor.secBean.password}">
       <input type="hidden" id="hidcid" name="hidcid" value="${contractor.id}">
       <input type="hidden" id="hidcsid" name="hidcsid" value="${contractor.secBean.id}">
+      <input type="hidden" id="msg" name="msg" value="${msg}">
       <div class="col-sm-5">
         <input type="password" class="form-control" id="tpassword" placeholder="Enter temporary password" name="tpassword">
       </div>
@@ -212,7 +218,7 @@
 						<br/>&nbsp;<br/> 	
 							
 							<div style="clear:both;"></div>
-						<div class="alert alert-warning" style="display:none;"></div>
+						<div class="alert alert-warning" style="display:none;" id="divmessage"></div>
 						
 						<div class="alert alert-info no-print">						
 						 		<div class="acrobatMessage"><a href="http://get.adobe.com/reader/"><img src="includes/img/adobereader.png" width="150" border="0"></a></div>							

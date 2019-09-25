@@ -75,6 +75,9 @@ $("#loadingSpinner").css("display","none");
 									        <td>${ area.schoolName}</td>
 									       	<td>${ area.areaDescription }</td>    
 											<td>
+												<c:if test = "${isquestions eq 'Y'}">
+													<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW QUESTIONS</a>
+												</c:if>
 												<c:if test = "${iscompleted eq false}">
 													<a href="#" class="btn btn-primary btn-xs" onclick="openaddtoshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}','${area.areaId}');">ADD TO SHORTLIST</a>
 												</c:if>
@@ -131,6 +134,34 @@ $("#loadingSpinner").css("display","none");
         				<button type="button" class="btn btn-xs btn-default" data-dismiss="modal">CANCEL</button>
         				<input type="hidden" id="hiddenid">
                 </div>
+            </div>
+      
+    </div>
+  </div>
+    <div class="modal fade" id="myModalq" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+			<div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitleq"><span id="maintitlespanq"></span></h4>
+                </div>
+                <div class="modal-body">
+					<form id="frmquestions" action="">
+                    <table id="tquestions" width="90%">
+                    <tbody>
+                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title1q"></h4></td></tr>
+                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2q"></h4></td></tr>
+                    </tbody>			
+                    </table>
+                    </form>
+                    
+				</div>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-xs btn-primary" id="btnokq" name="btnok">OK</button>
+        		</div>
+                
             </div>
       
     </div>

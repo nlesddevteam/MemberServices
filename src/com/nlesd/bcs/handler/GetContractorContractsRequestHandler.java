@@ -9,14 +9,19 @@ import com.nlesd.bcs.bean.BussingContractorSystemContractBean;
 import com.nlesd.bcs.dao.BussingContractorSystemContractManager;
 public class GetContractorContractsRequestHandler extends BCSApplicationRequestHandlerImpl
 {
-	  public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException
-	  {
-	    String path="";
-	    BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-	    ArrayList<BussingContractorSystemContractBean> list  = BussingContractorSystemContractManager.getContractsForContractor(bcbean.getId());
-	    request.setAttribute("contracts", list);
-	    path = "view_contractor_contracts.jsp";
-	    return path;
-	  }
+	public GetContractorContractsRequestHandler() {
+
+	}
+
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException
+	{
+		super.handleRequest(request, response);
+		BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+		ArrayList<BussingContractorSystemContractBean> list  = BussingContractorSystemContractManager.getContractsForContractor(bcbean.getId());
+		request.setAttribute("contracts", list);
+		path = "view_contractor_contracts.jsp";
+
+		return path;
+	}
 }

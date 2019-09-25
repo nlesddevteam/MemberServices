@@ -56,16 +56,24 @@
 							 <div class="alert alert-danger" id="errorMsg" style="text-align:center;display:none;" align="center"></div>
 					 		<div style="padding-left:5px; padding-right:5px; padding-top:10px; border-top:1px solid Silver;">
 		            		<c:choose>
-								<c:when test="${fn:length(areas) gt 0}"> 
+								<c:when test="${fn:length(areas) gt 0}">
+								<c:set var="first" value="${areas[0].questions}"/> 
 								<table id="exportdatatable" class="table table-condensed table-striped" style="font-size:12px;background-color:#FFFFFF;">								
 					  				<thead>
 					            		<tr>
-					                		<th width="20%">AREA</th>
-					                		<th width="15%">TEACHER</th>
-					                		<th width="15%">SCHOOL</th>
-					                		<th width="20%">ASSIGNMENT</th>
-					                		<th width="10%">YEARS TEACHING</th>
-					                		<th width="20%">EECD EXPERIENCE</th>
+					                		<th>AREA</th>
+					                		<th>TEACHER</th>
+					                		<th>SCHOOL</th>
+					                		<th>ASSIGNMENT</th>
+					                		<th>YEARS TEACHING</th>
+					                		<th>EECD EXPERIENCE</th>
+					                		<c:choose>
+												<c:when test="${fn:length(first) gt 0}">
+													<c:forEach items='${ first }' var='question'>
+														<th>${ question.value.questionText}</th>
+													</c:forEach>
+												</c:when>
+											</c:choose>
 					            		</tr>
 					            	</thead>
 					            	<tbody>							
@@ -78,7 +86,10 @@
 										<td>${ area.currentAssignment}</td>
 										<td>${ area.seniority }</td>
 										<td>${ area.committees }</td>
-                    				</tr>
+										<c:forEach items='${ area.questions }' var='question'>
+											<td>${ question.value.questionAnswer}</td>
+										</c:forEach>
+									</tr>
 								</c:forEach>
 								
 								</tbody>
