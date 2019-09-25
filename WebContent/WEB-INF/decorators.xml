@@ -22,16 +22,17 @@
   
     
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
-      <pattern>/Personnel/applicantlogin.html</pattern>
-      <pattern>/Personnel/applicantRegistration*.html</pattern>
-      <pattern>/Personnel/applicantSubPrefs.html</pattern>
-      <pattern>/Personnel/applicantsecurity.html</pattern>
-      <pattern>/Personnel/applicant_*</pattern>      
-      <pattern>/Personnel/view_applicant*</pattern>
-      <pattern>/Personnel/logout*</pattern>
-      <pattern>/Personnel/viewLetterOfEmployment.html</pattern>
-      <pattern>/Personnel/applicantPositionOfferController.html</pattern>
+    <pattern>/Personnel/applicantlogin.html</pattern>
+    <pattern>/Personnel/applicantRegistration*.html</pattern>
+    <pattern>/Personnel/applicantSubPrefs.html</pattern>
+    <pattern>/Personnel/applicantsecurity.html</pattern>
+    <pattern>/Personnel/applicant_*</pattern>      
+    <pattern>/Personnel/view_applicant*</pattern>
+    <pattern>/Personnel/logout*</pattern>
+    <pattern>/Personnel/viewLetterOfEmployment.html</pattern>
+    <pattern>/Personnel/applicantPositionOfferController.html</pattern>
 	  <pattern>/Personnel/viewCriminalOffenceDeclaration.html</pattern>
+	  <pattern>/Personnel/viewNLESDReferenceApp.html</pattern>
 	</decorator>
     
 <decorator name="personnel" page="Personnel/includes/decorator/main.jsp">
@@ -63,8 +64,7 @@
   	<pattern>/Personnel/addNLESDManageReferenceApp.html</pattern>
   	<pattern>/Personnel/view_nlesd_support_reference.jsp</pattern>
   	<pattern>/Personnel/addNLESDSupportReferenceApp.html</pattern>
-  	<pattern>/Personnel/viewNLESDReferenceApp.html</pattern>
-	<pattern>/Personnel/addNLESDExternalTeacherReferenceApp.html</pattern>
+  	<pattern>/Personnel/addNLESDExternalTeacherReferenceApp.html</pattern>
 	<pattern>/Personnel/addNLESDExternalAdminReferenceApp.html</pattern>
 	<pattern>/Personnel/addNLESDExternalGuideReferenceApp.html</pattern>
 	<pattern>/Personnel/addNLESDExternalReferenceApp.html</pattern>

@@ -28,7 +28,7 @@ public class ExportShortlistMultiRequestHandler extends RequestHandlerImpl {
 		String data = EECDShortlistManager.getExportListWithQuestionsByAreaMulti(request.getParameter("idlist"), Utils.getCurrentSchoolYear(), sb.toString());
 		//request.setAttribute("areas", list);
 		response.setContentType("application/csv");
-		response.setHeader("content-disposition","filename=processerrors.csv");
+		response.setHeader("content-disposition","filename=eecdexport.txt");
 		PrintWriter out = response.getWriter();
 		out.print(data);
 		out.flush();
