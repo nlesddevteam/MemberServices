@@ -42,7 +42,7 @@ public class GradeSubjectUnitPercentageTagHandler  extends TagSupport {
       out.println("<table width='100%' cellpadding='2' cellspacing='0' border='0'>");
       
       //header
-      out.println("<tr><td class='displayHeaderTitle'>Grade:</td><td class='displayHeaderTitle'>Subject:</td><td class='displayHeaderTitle'>%Unit:</td><td>&nbsp;</td></tr>");
+      out.println("<tr><td width='35%' class='displayHeaderTitle'>GRADE</td><td width='35%' class='displayHeaderTitle'>SUBJECT</td><td width='20%' class='displayHeaderTitle'>%UNIT</td><td class='displayHeaderTitle' width='10%'>OPTION</td></tr>");
       
       out.println("<tr>");
       
@@ -113,8 +113,8 @@ public class GradeSubjectUnitPercentageTagHandler  extends TagSupport {
       out.println("</td>");
       
       //add button
-      out.print("<td>");
-      out.print("<input type='button' value='Add' onClick='addGSU();'>");
+      out.print("<td align='center'>");
+      out.print("<input type='button' class='btn btn-xs btn-success' value='ADD' onClick='addGSU();'>");
       out.println("</td>");
       
       out.println("</tr>");
