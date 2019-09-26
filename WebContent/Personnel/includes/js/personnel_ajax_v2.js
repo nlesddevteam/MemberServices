@@ -127,7 +127,7 @@ function parseCurrentReferencesResponse(data) {
 	if($(data).find("REFERENCE").length > 0) {	
 		ref_chk_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
 		
-		ref_chk_str += "<tr><th width='10%'>REF.DATE</th><th width='15%'>REF.TYPE</th><th width='30%'>PROVIDED BY</th><th width='25%'>POSITION</th><th width='10%'>Select</th><th width='10%'>OPTIONS</th></tr>";
+		ref_chk_str += "<tr><th width='10%'>REF.DATE</th><th width='15%'>REF.TYPE</th><th width='30%'>PROVIDED BY</th><th width='25%'>POSITION</th><th width='10%'>SELECT</th><th width='10%'>OPTIONS</th></tr>";
 		$(data).find("REFERENCE").each(function(){
 		
 			//reference date
@@ -178,7 +178,7 @@ function parseCurrentReferenceCheckRequestsResponse(data) {
 
     if($(data).find("REFERENCE-CHECK-REQUEST").length > 0) {	
     	ref_chk_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
-    	ref_chk_str +=  "<tr><th width='15%'>Request Date</th><th width='35%'>Requested By</th><th width='30%'>Referrer Email</th><th with='20%'>Status</th></tr>";
+    	ref_chk_str +=  "<tr><th width='15%'>REQUEST DATE</th><th width='35%'>REQUESTED BY</th><th width='30%'>REFERRER EMAIL</th><th with='20%'>STATUS</th></tr>";
     	$(data).find("REFERENCE-CHECK-REQUEST").each(function() {
     		//request date
     		ref_chk_str = ref_chk_str + "<tr><td>" + $(this).find('REQUEST-DATE').text() + "</td>";
@@ -377,12 +377,12 @@ function toggleRequestReferenceCheck(open) {
 
 function parseAddGSUResponse(xml) {
     //formatting gsu beans
-    var gsu_str = "<span color='#FF0000'>None Added.</span>";
+    var gsu_str = "<div class='alert alert-danger'>No Grade/Subject/Unit% currently entered.</span>";
     
     if($(xml).find("GSU-BEAN").length > 0) {
-    	gsu_str = "<table width='80%' align='center' cellpadding='3' cellspacing='3' border='0' style='border:solid 1px #d4d4d4;'>";
+    	gsu_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
     	
-    	gsu_str += "<tr><th>Grade</th><th>Subject</th><th>Unit %</th></tr>";
+    	gsu_str += "<tr><th width='40%'>GRADE</th><th width='40%'>SUBJECT</th><th width='20%'>UNIT %</th></tr>";
     	$(xml).find("GSU-BEAN").each(function(){
     		//grade
     		gsu_str += "<tr><td>" + $(this).find("GRADE").text() + "</td>";
@@ -394,16 +394,12 @@ function parseAddGSUResponse(xml) {
     		gsu_str += "<td>" + $(this).find("PERCENT-UNIT").text() + "%</td></tr>";
     	});
     	
-    	gsu_str += "<tr><td colspan='3' align='center'><input type='button' style='font-size:10px;' value='Clear' onclick='clearGSU();' /></td></tr>";
+    	gsu_str += "<tr><td colspan='3' align='center'><input class='btn btn-xs btn-danger' type='button' value='CLEAR ALL' onclick='clearGSU();' /></td></tr>";
     	
     	gsu_str += "</table>";
     } 
 	
-    $('#gsu_display').html(gsu_str);
-	$('#gsu_display table tr th').addClass('displayHeaderTitle').css({'border' : 'solid 1px #d4d4d4'});
-	$('#gsu_display table tr td').addClass('displayText').css({'border' : 'solid 1px #d4d4d4', 'padding-left' : '3px'});
-	$('#gsu_display table tr td a.btn-action').css({'color' : '#FF0000', 'font-weight': 'bold', 'text-decoration' : 'none'});
-	$('#gsu_display table tr:odd td').css({'background-color': '#f0f0f0'});
+    $('#gsu_display').html(gsu_str);	
 }
 
 function addGSU() {
