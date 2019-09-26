@@ -906,7 +906,9 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 								
 								    <sch:SchoolZonesDDL id="zoneId" dummy="true" style="height:30px;width:100%;" value='${ school.zone }'  />								
 								    <sch:RegionsDDL id="regionId" style="height:30px;width:100%;" value='${ school.region.id }' />								
-								   	
+								   	<label><input type='radio' name='surcameras' value='true' ${ school.detailsOther.surveillanceCamera? "CHECKED=CHECKED" :"" } /> Yes </label>	
+						            <label><input type='radio' name='surcameras' value='false' ${ not school.detailsOther.surveillanceCamera ? "CHECKED=CHECKED" :"" } /> No </label>
+								  
 								
 								<sch:SchoolZonesDDL id="zoneId" dummy="true" value='${ school.zone }'  />
 	                    <sch:RegionsDDL id="regionId" value='${ school.region.id }' />
