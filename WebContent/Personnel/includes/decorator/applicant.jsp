@@ -339,7 +339,7 @@ If you are experiencing technical difficulties with this system, email Geoff Tay
 
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		  MyHRP Applicant Profiling System App 1.3 &middot; &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved
+		  MyHRP Applicant Profiling System App 1.4 &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved
 		 </div>
 
 		</div>

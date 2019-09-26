@@ -122,12 +122,12 @@ function parseCandidateSelection(data) {
 
 function parseCurrentReferencesResponse(data) {
 	//formatting reference check request beans
-	var ref_chk_str = "<span style='color:#FF0000;'>No references on record.</span>";
+	var ref_chk_str = "<div class='alert alert-danger'>No references currently on record.</div>";
 	
 	if($(data).find("REFERENCE").length > 0) {	
-		ref_chk_str = "<table align='left' cellpadding='3' cellspacing='3' border='0' style='border:solid 1px #d4d4d4;'>";
+		ref_chk_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
 		
-		ref_chk_str += "<tr><th>Ref. Date</th><th>Ref. Type</th><th>Provided By</th><th>Position</th><th>Select</th><th>View</th></tr>";
+		ref_chk_str += "<tr><th width='10%'>REF.DATE</th><th width='15%'>REF.TYPE</th><th width='30%'>PROVIDED BY</th><th width='25%'>POSITION</th><th width='10%'>Select</th><th width='10%'>OPTIONS</th></tr>";
 		$(data).find("REFERENCE").each(function(){
 		
 			//reference date
@@ -158,18 +158,14 @@ function parseCurrentReferencesResponse(data) {
 			//retrieve the type
 			//viewNLESDAdminReference.html
 
-			ref_chk_str += "<td align='center'><a class='btn-action' target='_blank' href='" + $(this).find('VIEW-URL').text() + "'>view</a></td></tr>";
+			ref_chk_str += "<td align='center'><a class='btn btn-xs btn-primary' href='" + $(this).find('VIEW-URL').text() + "'>VIEW</a></td></tr>";
 		
 		});
 		
 		ref_chk_str += "</table>";
 	}
 	
-	$('#current_refs').html(ref_chk_str);
-	$('#current_refs table tr th').addClass('displayHeaderTitle').css({'border' : 'solid 1px #d4d4d4'});
-	$('#current_refs table tr td').addClass('displayText').css({'border' : 'solid 1px #d4d4d4', 'padding-left' : '3px'});
-	$('#current_refs table tr td a.btn-action').css({'color' : '#FF0000', 'font-weight': 'bold', 'text-decoration' : 'none'});
-	$('#current_refs table tr:odd td').css({'background-color': '#f0f0f0'});
+	$('#current_refs').html(ref_chk_str);	
 	
 	$('form input:radio').click(function(){
 		onReferenceAndInterviewSummarySelected();
@@ -178,11 +174,11 @@ function parseCurrentReferencesResponse(data) {
 
 function parseCurrentReferenceCheckRequestsResponse(data) {  
     //formatting reference check request beans
-    var ref_chk_str = "<span style='color:#FF0000;'>No requests sent.</span>";
+    var ref_chk_str = "<div class='alert alert-danger'>No requests currently sent.</div>";
 
     if($(data).find("REFERENCE-CHECK-REQUEST").length > 0) {	
-    	ref_chk_str = "<table align='left' cellpadding='3' cellspacing='3' border='0' style='border:solid 1px #d4d4d4;'>";
-    	ref_chk_str +=  "<tr><th>Request Date</th><th>Requested By</th><th>Referrer Email</th><th>Status</th></tr>";
+    	ref_chk_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
+    	ref_chk_str +=  "<tr><th width='15%'>Request Date</th><th width='35%'>Requested By</th><th width='30%'>Referrer Email</th><th with='20%'>Status</th></tr>";
     	$(data).find("REFERENCE-CHECK-REQUEST").each(function() {
     		//request date
     		ref_chk_str = ref_chk_str + "<tr><td>" + $(this).find('REQUEST-DATE').text() + "</td>";
@@ -205,27 +201,24 @@ function parseCurrentReferenceCheckRequestsResponse(data) {
     		
     		//status
     		ref_chk_str += "<td><SPAN style='color:#FF0000;'>NOT COMPLETE</SPAN>"
-    				+ " | <span style='font-size:8pt;'><a class='btn-action' href='#' onclick='onDeleteRefCheck(" + $(this).find('REQUEST-ID').text() + ");return false;'>[delete]</a></span></td></tr>";
+    				+ " <a class='btn btn-xs btn-danger' href='#' onclick='onDeleteRefCheck(" + $(this).find('REQUEST-ID').text() + ");return false;'>DEL</a></td></tr>";
     	});
     	
     	ref_chk_str += "</table>";
     }
     
     $('#current_ref_requests').html(ref_chk_str);
-	$('#current_ref_requests table tr th').addClass('displayHeaderTitle').css({'border' : 'solid 1px #d4d4d4'});
-	$('#current_ref_requests table tr td').addClass('displayText').css({'border' : 'solid 1px #d4d4d4', 'padding-left' : '3px'});
-	$('#current_ref_requests table tr td a.btn-action').css({'color' : '#FF0000', 'font-weight': 'bold', 'text-decoration' : 'none'});
-	$('#current_ref_requests table tr:odd td').css({'background-color': '#f0f0f0'});
+	
 }
 
 function parseCurrentInterviewSummariesResponse(data) {
 	//formatting interview summary beans
-	var summary_str = "<span style='color:#FF0000;'>No interview summary on record.</span>";
+	var summary_str = "<div class='alert alert-danger'>No interview summary on record.</div>";
 	
 	if($(data).find("INTERVIEW-SUMMARY").length > 0) {	
-		summary_str = "<table align='left' cellpadding='3' cellspacing='3' border='0' style='border:solid 1px #d4d4d4;'>";
+		summary_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
 		
-		summary_str += "<tr><th>Date</th><th>Competition</th><th>Position</th><th>Recommendation</th><th>Select</th><th>View</th></tr>";
+		summary_str += "<tr><th width='10%'>DATE</th><th width='10%'>COMP.#</th><th width='30%'>POSITION</th><th width='30%'>RECOMMENDATION</th><th width='10%'>SELECT</th><th width='10%'>OPTIONS</th></tr>";
 		$(data).find("INTERVIEW-SUMMARY").each(function(){
 		
 			//created date
@@ -244,17 +237,13 @@ function parseCurrentInterviewSummariesResponse(data) {
 			summary_str += "<td align='center'><input class='interview-summary-select' type='radio' value='" + $(this).attr('interviewSummaryId') + "' name='interview_summary_id' /></td>";
 			
 			//view interview summary
-			summary_str += "<td align='center'><a class='btn-action' target='_blank' href='viewInterviewSummary.html?id=" + $(this).attr('interviewSummaryId') + "'>view</a></td></tr>";
+			summary_str += "<td align='center'><a class='btn btn-xs btn-primary' href='viewInterviewSummary.html?id=" + $(this).attr('interviewSummaryId') + "'>VIEW</a></td></tr>";
 		});
 		
 		summary_str += "</table>";
 	}
 	
-	$('#current_interview_summaries').html(summary_str);
-	$('#current_interview_summaries table tr th').addClass('displayHeaderTitle').css({'border' : 'solid 1px #d4d4d4'});
-	$('#current_interview_summaries table tr td').addClass('displayText').css({'border' : 'solid 1px #d4d4d4', 'padding-left' : '3px'});
-	$('#current_interview_summaries table tr td a.btn-action').css({'color' : '#FF0000', 'font-weight': 'bold', 'text-decoration' : 'none'});
-	$('#current_interview_summaries table tr:odd td').css({'background-color': '#f0f0f0'});
+	$('#current_interview_summaries').html(summary_str);	
 	
 	$('form input:radio').click(function(){
 		onReferenceAndInterviewSummarySelected();
@@ -289,6 +278,8 @@ function onCandidateSelected(sin) {
   });
 }
 
+
+
 function onReferenceAndInterviewSummarySelected(){
 	if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
 		$('#candidate-recommendation-info').show();
@@ -319,7 +310,8 @@ function onSendReferenceCheckRequest() {
 	
 	$.get('sendReferenceCheckRequest.html', data, function(xml){
 		parseSendReferenceCheckRequestResponse(xml);
-	}, 'xml');
+	}, 'xml');	
+	
 }
 
 function parseSendReferenceCheckRequestResponse(xml) {
@@ -371,28 +363,16 @@ function onDeleteRefCheck(id) {
 
 function toggleRequestReferenceCheck(open) {
 	if(open === true) {
-		$('#req_ref_chk_img').attr('src', 'images/collapse2.jpg');
-		$('#request_reference_info').show();
+		
+		$("#request_reference_info").css("display","block").fadeIn();
 	}
-	else if(open === false) {
-		$('#req_ref_chk_img').attr('src', 'images/expand2.jpg');
-		$('#request_reference_info').hide();
+	else {
+		$("#request_reference_info").css("display","none").fadeOut();
 		
 		$('#referrer_email').val('');
 		$('#request_response_msg').html('');
 	}
-	else {
-		if($('#req_ref_chk_img').attr('src').indexOf('images/expand2.jpg') >= 0) {
-			$('#req_ref_chk_img').attr('src', 'images/collapse2.jpg');
-			$('#request_reference_info').show();
-		}
-		else {
-			$('#req_ref_chk_img').attr('src', 'images/expand2.jpg');
-			$('#request_reference_info').hide();
-			$('#referrer_email').val('');
-			$('#request_response_msg').html('');
-		}
-	}
+	
 }
 
 function parseAddGSUResponse(xml) {
