@@ -194,7 +194,7 @@
        <div id='current_ref_requests'>No requests currently sent.</div>
 		<div style="clear:both;"></div>                  
 		<div style="font-size:14px;color:Green;font-weight:bold;">Most Recent Candidate References</div>
-		Select a candidate reference below, and a summary to		                                            			
+		<div style="font-size:11px;padding-bottom:5px;">In order to make a recommendation, you must select a listed candidate reference and interview summary below. If not available, you cannot proceed.</div>		                                            			
 		<div id='current_refs' style='color:#FF0000;'>No references on file.</div>
 		<div style="clear:both;"></div>								                                    
 		<div style="font-size:14px;color:Green;font-weight:bold;">Most Recent Candidate Interview Summaries</div>		                                            		
@@ -240,9 +240,9 @@
 		       		<%}%>
 		       		<div id='recommended_position_other_row' style='display:none;margin-top:5px;'>
 		       		<b>If other, please describe:</b><br/>
-		       			<div id="S2Q1_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 1500 characters.</div>
+		       			<div id="S2Q1_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 500 characters.</div>
 		       			<textarea class="form-control" name="position_other" id="position_other"><%=(((f != null)&&(f.get("position_other")!=null))?f.get("position_other"):"")%></textarea>
-		    		    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 1500 - Remain: <span id="S2Q1_remain">1500</span></div>
+		    		    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 500 - Remain: <span id="S2Q1_remain">500</span></div>
 		    		
 		    		</div>	
 		       		
@@ -266,7 +266,7 @@
 $('#position_other').keypress(function(e) {
     var tval = $('#position_other').val(),
         tlength = tval.length,
-        set = 1500,
+        set = 500,
         remain = parseInt(set - tlength);
     $('#S2Q1_remain').text(remain);    
     if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {

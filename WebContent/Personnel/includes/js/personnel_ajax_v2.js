@@ -152,13 +152,13 @@ function parseCurrentReferencesResponse(data) {
 				ref_chk_str += "<td><SPAN style='color:#FF0000;'>PHONE</SPAN></td>";
 			
 			//select reference
-			ref_chk_str += "<td align='center'><input class='reference-select' type='radio' value='" + $(this).find('REFERENCE-ID').text() + "' name='reference_id' /></td>";
+			ref_chk_str += "<td><input class='reference-select' type='radio' value='" + $(this).find('REFERENCE-ID').text() + "' name='reference_id' /></td>";
 			
 			//view reference
 			//retrieve the type
 			//viewNLESDAdminReference.html
 
-			ref_chk_str += "<td align='center'><a class='btn btn-xs btn-primary' href='" + $(this).find('VIEW-URL').text() + "'>VIEW</a></td></tr>";
+			ref_chk_str += "<td><a class='btn btn-xs btn-primary' href='" + $(this).find('VIEW-URL').text() + "'>VIEW</a></td></tr>";
 		
 		});
 		
@@ -234,10 +234,10 @@ function parseCurrentInterviewSummariesResponse(data) {
 			summary_str += "<td>" + $(this).attr('recommendation') + "</td>";
 			
 			//select reference
-			summary_str += "<td align='center'><input class='interview-summary-select' type='radio' value='" + $(this).attr('interviewSummaryId') + "' name='interview_summary_id' /></td>";
+			summary_str += "<td><input class='interview-summary-select' type='radio' value='" + $(this).attr('interviewSummaryId') + "' name='interview_summary_id' /></td>";
 			
 			//view interview summary
-			summary_str += "<td align='center'><a class='btn btn-xs btn-primary' href='viewInterviewSummary.html?id=" + $(this).attr('interviewSummaryId') + "'>VIEW</a></td></tr>";
+			summary_str += "<td><a class='btn btn-xs btn-primary' href='viewInterviewSummary.html?id=" + $(this).attr('interviewSummaryId') + "'>VIEW</a></td></tr>";
 		});
 		
 		summary_str += "</table>";
