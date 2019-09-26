@@ -934,16 +934,17 @@ function AddReplExpForm_Validator(theForm)
 function onPositionTypeSelected(ele)
 {
 	if(ele.value == '7') //Other
-		toggleRow('recommended_position_other_row', 'inline');
+		$("#recommended_position_other_row").css("display","block");
+		
 	else
-		toggleRow('recommended_position_other_row', 'none');
+		$("#recommended_position_other_row").css("display","none");
 }
 
 function onSpecialConditionChecked(ele){
 	if(ele.checked)
-		toggleRow('special_conditions_row', 'inline');
+		$("#special_conditions_row").css("display","block");		
 	else
-		toggleRow('special_conditions_row', 'none');
+		$("#special_conditions_row").css("display","none");
 }
 
 function onError(){

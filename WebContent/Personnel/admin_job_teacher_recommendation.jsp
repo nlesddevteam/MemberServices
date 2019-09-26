@@ -70,7 +70,7 @@
 		.ratingAnswer {width:20%;}
 		input[type="radio"] {margin-top: -1px;margin-left:6px;margin-right:2px;vertical-align: middle;}
 	</style>	
-		<script type='text/javascript' src="js/common.js"></script>
+	
 		
 	</head>
 	
@@ -130,14 +130,16 @@
 	            <td class="tableResult"><span id="candidate_telephone"></span></td>
             </tr>
             <tr>
-            	<td colspan=2><a style="float:right;" href="#" class="btn btn-xs btn-info" onclick="toggleRequestReferenceCheck();return false;">Request a Reference Check?</a></td>
+            	<td colspan=2><a style="float:right;" href="#" class="btn btn-xs btn-info" onclick="$('#request_reference_info').toggle();">Request a Reference Check?</a>
+            	
+            	</td>
             </tr>
            </tbody>
            </table>  
             
             
    <div id='request_reference_info' style='display:none;background-color:#FFF8DC;'> 
-            
+             <div style="font-size:14px;color:Green;font-weight:bold;">Request a Reference Check</div>
             <table class="table table-condensed" style="font-size:12px;border-bottom:1px solid DimGrey;">
             <tbody>
             <tr>
@@ -168,7 +170,7 @@
 				</td>
 				</tr>
 				</table>
-                <span id='sending_email_msg' style='color:#FF0000; font-size:10px;display:none;'>Sending...</span>
+                <div id='sending_email_msg' class="alert alert-info" style="display:none;">Sending Request...</div>
             </td>
             </tr>
             <tr>
@@ -176,7 +178,7 @@
             <td class="tableResult">
            							 <a href="#" class="btn btn-xs btn-success" onclick="onManualReferenceCheckRequest();">YES</a>
 												                                             
-						            <div id="request_response_row" style='display:none;'>
+						            <div id="request_response_row" style='display:none;' class="alert alert-danger">
                          				<span id="request_response_msg" style="color:#FF0000;"></span>
                          			</div>
             
@@ -191,7 +193,8 @@
        <div style="font-size:14px;color:Green;font-weight:bold;">Current Reference Request(s)</div>
        <div id='current_ref_requests'>No requests currently sent.</div>
 		<div style="clear:both;"></div>                  
-		<div style="font-size:14px;color:Green;font-weight:bold;">Most Recent Candidate References</div>		                                            			
+		<div style="font-size:14px;color:Green;font-weight:bold;">Most Recent Candidate References</div>
+		Select a candidate reference below, and a summary to		                                            			
 		<div id='current_refs' style='color:#FF0000;'>No references on file.</div>
 		<div style="clear:both;"></div>								                                    
 		<div style="font-size:14px;color:Green;font-weight:bold;">Most Recent Candidate Interview Summaries</div>		                                            		
