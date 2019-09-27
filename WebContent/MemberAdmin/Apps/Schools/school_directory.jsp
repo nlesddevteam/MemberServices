@@ -360,6 +360,16 @@
 						  </c:choose>	
 						  
 						 
+						 <c:choose>
+								<c:when test="${ school.detailsOther.surveillanceCamera eq true}">
+								<img src="img/surv-on.png" alt="" title="Surveillance Camera(s) are installed and active at this school."  border="0" />
+								</c:when>
+								<c:when test="${ school.detailsOther.surveillanceCamera eq false}">
+								<img src="img/surv-off.png" alt="" title="No Surveillance Camera(s) are installed at this school." border="0" />
+								</c:when>
+								<c:otherwise><img src="img/surv-off.png" alt="" title="No Surveillance Camera(s) are installed at this school." border="0" /></c:otherwise>
+							</c:choose>
+						 
 						  		
 	                      
 	                      </td>
