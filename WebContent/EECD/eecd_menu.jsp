@@ -7,7 +7,7 @@
   usr = (User) session.getAttribute("usr");
 %>
 <div align="center" style="padding-top:10px;padding-bottom:10px;">
-<esd:SecurityAccessRequired permissions="EECD-VIEW-APPROVALS">					 
+<esd:SecurityAccessRequired roles="PRINCIPAL">					 
 	<a onclick="loadingData()" href='schoolAdminViewApprovals.html' class="btn btn-xs btn-success" style="color:White;" title="Approvals">Approvals</a> 
 	<a onclick="loadingData()" href='viewEECD.html' class="btn btn-xs btn-primary" style="color:White;" title="View Areas">View Areas</a> 
 	<a onclick="loadingData()" href='viewTeacherSelected.html' class="btn btn-xs btn-primary" style="color:White;" title="View Working Groups">View Working Groups</a>  
