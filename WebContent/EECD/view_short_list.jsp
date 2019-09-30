@@ -24,8 +24,8 @@
 		$("#loadingSpinner").css("display","none");	
 		
 		$("#areaApproval").DataTable(
-				{"order": [[ 1, "asc" ]],			
-				"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+				{"order": [[ 0, "asc" ]],			
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 				}	  
 			  );
 		
@@ -69,16 +69,23 @@
 	     									<td>${ area.teacherName}</td>	
 									        <td>${ area.schoolName}</td>								        
 											<td>${ area.areaDescription }</td>
-											<td>    
+											<td style="text-align:right;">   
 											<c:if test = "${iscompleted eq false}">
-												<div id="divremove"><a href="#" class="btn btn-primary btn-xs" style="color:white;" onclick="openremovefromshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}');">REMOVE FROM SHORTLIST</a></div>
+												<span id="divremove"><a href="#" class="btn btn-danger btn-xs" title='Remove from Shortlist' style="color:white;" onclick="openremovefromshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}');">REMOVE</a></span>
 											</c:if>
 											<c:if test = "${iscompleted eq true}">
-												<div id="divremove" style="display:none;"><a href="#" class="btn btn-primary btn-xs" style="color:white;" onclick="openremovefromshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}');">REMOVE FROM SHORTLIST</a></div>
+												<span id="divremove" style="display:none;"><a href="#" title='Remove from Shortlist' class="btn btn-danger btn-xs" style="color:white;" onclick="openremovefromshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}');">REMOVE</a></span>
 											</c:if>
-											<c:if test = "${isquestions eq 'Y'}">
-													<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW QUESTIONS</a>
-												</c:if> 
+											<c:if test = "${isquestions eq 'Y'}">										
+												<c:choose>
+													<c:when test = "${area.hasAnswers eq true}">
+														<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW ANSWERS</a>
+													</c:when>
+													<c:otherwise>
+														<span class="btn btn-xs btn-danger" title="Not Complete/Not Answered." onclick="viewanswers('${listid}','${area.personnelId}');">N/C</span>														
+													</c:otherwise>
+												</c:choose>
+											</c:if> 
 											</td>  
 										</tr>
 								</c:forEach>
@@ -168,12 +175,12 @@
                 </div>
                 <div class="modal-body">
 					<form id="frmquestions" action="">
-                    <table id="tquestions" width="90%">
-                    <tbody>
-                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title1q"></h4></td></tr>
-                    <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2q"></h4></td></tr>
+                   
+                    <table id="tquestions" width="100%" style="font-size:11px;background-color:#FFFFFF;">
+                    <tbody>                    
                     </tbody>			
-                    </table>
+                    </table>			
+                    
                     </form>
                     
 				</div>

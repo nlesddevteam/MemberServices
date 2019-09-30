@@ -23,9 +23,9 @@
 $('document').ready(function(){
 $("#loadingSpinner").css("display","none");	
 	 
-	  $("#approvedList").DataTable(
-		{"order": [[ 1, "asc" ]],			
-		"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+	  $("#groupsApproval").DataTable(
+		{"order": [[ 0, "asc" ]],			
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 		}	  
 	  );
  });
@@ -85,8 +85,15 @@ $("#loadingSpinner").css("display","none");
 									       	</c:choose>
 									       	<td>
 									       		<c:if test = "${isquestions eq 'Y'}">
-													<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW QUESTIONS</a>
-												</c:if>
+												<c:choose>
+													<c:when test = "${area.hasAnswers eq true}">
+														<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW ANSWERS</a>
+													</c:when>
+													<c:otherwise>
+													<span class="btn btn-xs btn-danger" title="Not Complete/Not Answered.">NOT ANSWERED</span>												
+													</c:otherwise>
+												</c:choose>
+											</c:if>
 											</td>
 											   
 										</tr>
@@ -118,7 +125,7 @@ $("#loadingSpinner").css("display","none");
                 </div>
                 <div class="modal-body">
 					<form id="frmquestions" action="">
-                    <table id="tquestions" width="90%">
+                    <table id="tquestions" width="100%" style="font-size:11px;background-color:#FFFFFF;">
                     <tbody>
                     <tr><td colspan='2' align="center"><h4 class="modal-title" id="title1q"></h4></td></tr>
                     <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2q"></h4></td></tr>

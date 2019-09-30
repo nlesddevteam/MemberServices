@@ -406,8 +406,15 @@ function getAreaQuestionsView(areaid,pid) {
 								//$("#title2").html($(this).find("ETEACHER").text());
 							//}
 							var newrow="";
-							newrow = "<tr><td colspan='2'>" + $(this).find("QSORT").text() + ".  " +  $(this).find("QTEXT").text() + "</td></tr>";
-							newrow = newrow + "<tr><td colspan='2'><div style='border:1px solid black;'><p><br>" + $(this).find("ANSWER").text() + "</p></div></td></tr>";
+							newrow = "<tr><td style='font-weight:bold;' width='15'>"+ $(this).find("QSORT").text() + ".&nbsp;" + "</td><td width='*' style='font-weight:bold;'>"  +  $(this).find("QTEXT").text() + "</td></tr>";
+							
+							var ans=$(this).find("ANSWER").text();
+							if (ans !="" || ans !=null){
+								newrow = newrow + "<tr><td></td><td style='padding-top:5px;padding-bottom:10px;'>" + ans + "</td></tr>";
+							} else {
+								newrow = newrow + "<tr><td></td><td style='color:Red;padding-top:5px;padding-bottom:10px;'>No answer given.</td></tr>";	
+								
+							}
 							$("#tquestions tbody").append(newrow);
 							showwindow="Y";   							
 						} else if ($(this).find("MESSAGE").text() == "NONE") {

@@ -15,6 +15,7 @@ public class EECDTeacherAreaBean implements Serializable {
 	private String schoolName;
 	private String teacherEmail;
 	private String schoolYear;
+	private boolean hasAnswers;
 	public String getSchoolYear() {
 		return schoolYear;
 	}
@@ -80,5 +81,11 @@ public class EECDTeacherAreaBean implements Serializable {
 	}
 	public void setTeacherEmail(String teacherEmail) {
 		this.teacherEmail = teacherEmail;
+	}
+	public boolean isHasAnswers() {
+		return hasAnswers;
+	}
+	public void setHasAnswers(boolean hasAnswers) {
+		this.hasAnswers = hasAnswers;
 	}
 }
