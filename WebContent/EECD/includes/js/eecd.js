@@ -409,7 +409,7 @@ function getAreaQuestionsView(areaid,pid) {
 							newrow = "<tr><td style='font-weight:bold;' width='15'>"+ $(this).find("QSORT").text() + ".&nbsp;" + "</td><td width='*' style='font-weight:bold;'>"  +  $(this).find("QTEXT").text() + "</td></tr>";
 							
 							var ans=$(this).find("ANSWER").text();
-							if (ans !="" || ans !=null){
+							if (ans !=""){
 								newrow = newrow + "<tr><td></td><td style='padding-top:5px;padding-bottom:10px;'>" + ans + "</td></tr>";
 							} else {
 								newrow = newrow + "<tr><td></td><td style='color:Red;padding-top:5px;padding-bottom:10px;'>No answer given.</td></tr>";	

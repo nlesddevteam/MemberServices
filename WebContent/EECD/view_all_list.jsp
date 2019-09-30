@@ -90,7 +90,7 @@ $("#loadingSpinner").css("display","none");
 														<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW ANSWERS</a>
 													</c:when>
 													<c:otherwise>
-													<span class="btn btn-xs btn-danger" title="Not Complete/Not Answered.">NOT ANSWERED</span>												
+													<span class="btn btn-xs btn-danger" title="Not Complete/Not Answered."><span class="glyphicon glyphicon-info-sign"></span> NOT COMPLETE</span>												
 													</c:otherwise>
 												</c:choose>
 											</c:if>
