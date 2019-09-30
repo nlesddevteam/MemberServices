@@ -588,6 +588,12 @@ public class EECDTeacherAreaManager {
 					abean.setTeacherName(rs.getString("PERSONNEL_FIRSTNAME") + " " + rs.getString("PERSONNEL_LASTNAME"));
 					abean.setSchoolName(rs.getString("SCHOOL_NAME"));
 					abean.setTeacherEmail(rs.getString("PERSONNEL_EMAIL"));
+					if(rs.getInt("quecount") > 0) {
+						abean.setHasAnswers(true);
+					}else {
+						abean.setHasAnswers(false);
+					}
+					
 				}
 			}
 		catch (SQLException e) {

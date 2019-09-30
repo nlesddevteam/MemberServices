@@ -1093,6 +1093,7 @@ public class SchoolDB {
 			try {
 				if (rs.getInt("DIRECTORY_ID") > 0) {
 					abean.setDetails(SchoolDirectoryDetailsService.createSchoolDirectoryDetailsBean(rs));
+					abean.setDetailsOther(SchoolDirectoryDetailsOtherService.getSchoolDirectoryDetailsOtherBean(abean.getDetails().getSchoolId()));
 				}
 				else {
 					abean.setDetails(null);
@@ -1101,6 +1102,9 @@ public class SchoolDB {
 			catch (SQLException e) {
 				//no school directory details.
 				abean.setDetails(null);
+			} catch (SchoolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 // assistant principals, if available

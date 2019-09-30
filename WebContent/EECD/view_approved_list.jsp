@@ -23,9 +23,9 @@
 $('document').ready(function(){
 $("#loadingSpinner").css("display","none");	
 	 
-	  $("#approvedList").DataTable(
-		{"order": [[ 1, "asc" ]],			
-		"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+	  $("#groupsApproval").DataTable(
+		{"order": [[ 0, "asc" ]],			
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 		}	  
 	  );
  });
@@ -43,11 +43,15 @@ $("#loadingSpinner").css("display","none");
 							To view the full shortlist, remove a teacher from the list and/or close the list then please use the View Short List button.
 							
                             <jsp:include page="eecd_menu.jsp"/>
-
+ 							<esd:SecurityAccessRequired permissions="EECD-VIEW-ADMIN,EECD-VIEW-SHORTLIST">					
+									<div align="center"><a href='viewShortlist.html?aid=${listid}&adescription=${areadescription}' class="btn btn-xs btn-warning"  title="View Shortlist">View Shortlist</a>
+									<a href='viewAllList.html?aid=${listid}' class="btn btn-xs btn-warning"  title="View All Applicants">View All Applicants</a>
+									</div>
+									<br />
+									<div align="center" class="alert alert-info"><b>${ slisted }</b> teacher(s) has/have been added to the shortlist.</div>
+							</esd:SecurityAccessRequired>		
 	
 	     								
- 							
-										
 					 		<%if(request.getAttribute("msg")!=null){%>								
 								<div id="fadeMessage" class="alert alert-danger">${ msg }</div>  									
 							<%} %>                 	
@@ -58,13 +62,13 @@ $("#loadingSpinner").css("display","none");
 					 		<div style="padding-left:5px; padding-right:5px; padding-top:10px; border-top:1px solid Silver;">
  								<c:choose>
 								<c:when test="${fn:length(areas) gt 0}">  
-								<table id="groupsApproval" class="table table-condensed table-striped" style="font-size:12px;background-color:#FFFFFF;">								
+								<table id="groupsApproval" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">								
 					  				<thead>
 					            		<tr>
-					                		<th width="20%">TEACHER</th>
-					                		<th width="20%">SCHOOL</th>
-					                		<th width="35%">AREA</th>
-					                		<th width="25%">OPTIONS</th>
+					                		<th width="25%">TEACHER</th>
+					                		<th width="25%">SCHOOL</th>
+					                		<th width="30%">AREA</th>
+					                		<th width="20%">OPTIONS</th>
 					            		</tr>
 					            	</thead>
 					            	<tbody>	
@@ -74,12 +78,19 @@ $("#loadingSpinner").css("display","none");
 	     									<td>${ area.teacherName}</td>	
 									        <td>${ area.schoolName}</td>
 									       	<td>${ area.areaDescription }</td>    
-											<td>
-												<c:if test = "${isquestions eq 'Y'}">
-													<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW QUESTIONS</a>
-												</c:if>
+											<td style="text-align:right;">
+												<c:if test = "${isquestions eq 'Y'}">										
+													<c:choose>
+													<c:when test = "${area.hasAnswers eq true}">
+													<a href="#" class="btn btn-primary btn-xs" onclick="viewanswers('${listid}','${area.personnelId}');">VIEW ANSWERS</a>
+													</c:when>
+													<c:otherwise>
+													<span class="btn btn-xs btn-danger" title="Not Complete/Not Answered."><span class="glyphicon glyphicon-info-sign"></span> NOT COMPLETE</span>													
+													</c:otherwise>
+													</c:choose>
+												</c:if> 
 												<c:if test = "${iscompleted eq false}">
-													<a href="#" class="btn btn-primary btn-xs" onclick="openaddtoshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}','${area.areaId}');">ADD TO SHORTLIST</a>
+													<a href="#" class="btn btn-success btn-xs" title="Add to Shortlist" onclick="openaddtoshortlistdialog('${area.id}','${fn:replace(area.teacherName,"'","\\'")}','${area.areaDescription}','${fn:replace(area.schoolName,"'","\\'")}','${area.areaId}');">+ SHORTLIST</a>
 												</c:if>
 											</td>   
 										</tr>
@@ -93,8 +104,8 @@ $("#loadingSpinner").css("display","none");
 								</c:otherwise>	
 								</c:choose>			
                                    <esd:SecurityAccessRequired permissions="EECD-VIEW-ADMIN,EECD-VIEW-SHORTLIST">					
-									<div align="center"><a href='viewShortlist.html?aid=${listid}&adescription=${areadescription}' class="btn btn-xs btn-success"  title="View Shortlist">View Shortlist</a>
-									<a href='viewAllList.html?aid=${listid}' class="btn btn-xs btn-success"  title="View All Applicants">View All Applicants</a>
+									<div align="center"><a href='viewShortlist.html?aid=${listid}&adescription=${areadescription}' class="btn btn-xs btn-warning"  title="View Shortlist">View Shortlist</a>
+									<a href='viewAllList.html?aid=${listid}' class="btn btn-xs btn-warning"  title="View All Applicants">View All Applicants</a>
 									</div>
 									<br />
 									<div align="center"><b>${ slisted }</b> teacher(s) has/have been added to the shortlist.</div>
@@ -149,7 +160,7 @@ $("#loadingSpinner").css("display","none");
                 </div>
                 <div class="modal-body">
 					<form id="frmquestions" action="">
-                    <table id="tquestions" width="90%">
+                    <table id="tquestions" width="100%" style="font-size:11px;background-color:#FFFFFF;">
                     <tbody>
                     <tr><td colspan='2' align="center"><h4 class="modal-title" id="title1q"></h4></td></tr>
                     <tr><td colspan='2' align="center"><h4 class="modal-title" id="title2q"></h4></td></tr>
@@ -159,7 +170,7 @@ $("#loadingSpinner").css("display","none");
                     
 				</div>
                 <div class="modal-footer">
-                        <button type="button" class="btn btn-xs btn-primary" id="btnokq" name="btnok">OK</button>
+                        <button type="button" class="btn btn-xs btn-primary" id="btnokq" name="btnok">DONE</button>
         		</div>
                 
             </div>
