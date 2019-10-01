@@ -48,14 +48,14 @@ public class ViewStudentTravelRequestRequestHandler extends RequestHandlerImpl {
 			}
 			catch (StudentTravelException e) {
 				e.printStackTrace(System.err);
-				request.setAttribute("msg", "Could not add travel request.");
+				request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 				request.setAttribute("FORM", form);
 
 				path = "index.jsp";
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);
-				request.setAttribute("msg", "Could not add travel request.");
+				request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 				request.setAttribute("FORM", form);
 
 				path = "index.jsp";
@@ -63,7 +63,7 @@ public class ViewStudentTravelRequestRequestHandler extends RequestHandlerImpl {
 		}
 		else {
 			request.setAttribute("FORM", form);
-			request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
+			request.setAttribute("msgERR", StringUtils.encodeHTML(validator.getErrorString()));
 			path = "index.jsp";
 		}
 

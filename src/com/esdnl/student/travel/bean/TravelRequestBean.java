@@ -309,15 +309,10 @@ public class TravelRequestBean {
 
 		StringBuffer buf = new StringBuffer();
 		buf.append("<html><head>");
-		buf.append("<style TYPE='text/css'><!--");
-		buf.append("body {margin:25px;}");
-		buf.append("table {width:75%; border:solid 2px #333333;}");
-		buf.append("table th {border-right:solid 1px #333333; padding-right:3px; text-align:right;}");
-		buf.append("--></style>");
-		buf.append("</head><body>");
-		buf.append("<div>");
-		buf.append("<table cellpadding='2' cellspacing='0'>");
-		buf.append("<tr><th>Destination</th><td>" + this.getDestination() + "</td></tr>");
+		buf.append("<style>th{font-weight:bold;text-transform:Uppercase;background-color:#FFF8DC;}</style>");
+		buf.append("</head><body>");		
+		buf.append("<table style='width:100%;max-width:600px;font-size:12px;border:0px;'>");
+		buf.append("<tr><th width='35%'>Destination</th><td width='65%'>" + this.getDestination() + "</td></tr>");
 		buf.append("<tr><th>Departure Date</th><td>" + this.getDepartureDateFormated() + "</td></tr>");
 		buf.append("<tr><th>Return Date</th><td>" + this.getReturnDateFormatted() + "</td></tr>");
 		buf.append("<tr><th># School Days Missed</th><td>" + this.getDaysMissed() + "</td></tr>");
@@ -338,8 +333,7 @@ public class TravelRequestBean {
 				+ (this.isSchoolFundraising() ? "YES" : "NO") + "</td></tr>");
 		buf.append("<tr><th>Emergency Contact</th><td>" + this.getEmergencyContact() + "</td></tr>");
 		buf.append("<tr><th>Itinerary</th><td>FILE ATTACHED.</td></tr>");
-		buf.append("</table>");
-		buf.append("</div>");
+		buf.append("</table>");		
 		buf.append("</body></html>");
 
 		return buf.toString();

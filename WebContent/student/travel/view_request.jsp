@@ -13,288 +13,221 @@
   TravelRequestBean treq = (TravelRequestBean) request.getAttribute("TRAVELREQUESTBEAN");
   Personnel approver = (Personnel) request.getAttribute("APPROVER");
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+  <esd:SecurityCheck permissions="STUDENT-TRAVEL-ADMIN-VIEW,STUDENT-TRAVEL-PRINCIPAL-VIEW" />
+  
 <html>
 <head>
-  <title>Newfoundland &amp; Labrador English School District - Member Services - STUDENT TRAVEL</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <style type="text/css">@import 'css/home.css';</style>
-  <style type="text/css">
-  	.displayHeaderTitle { 
-  		border-right: solid 1px #333333;
-  		padding-right: 5px;
-  	}
-  	#info {
-  		border-collapse:collapse;  		
-  	}
-  	#info tr td {
-  		border: solid 1px #333333;
-  		border-collapse: collapse;
-  	}
-  </style>
-  <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-  
-  <script type="text/javascript">
-  	$('document').ready(function() {
-			$('#info tr:odd td').css('background-color', '#f0f0f0');
-  	});
-  </script>
-  
+  <title>Student Travel Management</title>
+   
 </head>
 <body style="margin-top:15px;">
 
-  <esd:SecurityCheck permissions="STUDENT-TRAVEL-ADMIN-VIEW,STUDENT-TRAVEL-PRINCIPAL-VIEW" />
-  
-<!--
-	// Top Nav/Logo Container
-	// This will be included
--->
-  <jsp:include page="header.jsp" flush="true" />
-  <table width="760" cellpadding="0" cellspacing="0" border="0"  align="center">
-    <tr>
-      <td>   
-        <table width="760" cellpadding="0" cellspacing="0" border="0">
-          <tr>
-            <td width="760" align="left" valign="top">
-              <table width="760" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td width="30%" align="left" valign="top" 
-                      style="padding-top:10px;padding-left:5px;border-left:solid 1px #e0e0e0;border-right:solid 1px #FFB700;">
-                    <img src="images/spacer.gif" width="1" height="5"><BR>
-                    
-                    <jsp:include page="side_nav.jsp" flush="true"/>
-                    
-                    <img src="images/spacer.gif" width="1" height="10"><BR>
-                  </td>
-                  <td width="21" align="left" valign="top">
-                    <img src="images/spacer.gif" width="21" height="1"><BR>
-                  </td>
-                  <td width="*" align="left" valign="top" style='border-right:solid 1px #e0e0e0; padding:10px;'>		
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td width="100%" align="left" valign="top">
-                          <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                              <td class="displayPageTitle"><!--<%=(treq == null)?"Add":"Update"%>--> Student Travel Request</td>
-                            </tr>
-                            
-                            <tr style="padding-top:3px;">
-                              <td>
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading">Viewing Travel Request <b><%=(treq != null)?treq.getDestination():"&nbsp;"%></b> for <b><%=(treq != null)?SchoolDB.getSchool(treq.getSchoolId()).getSchoolName():"&nbsp;"%></b></div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive"> 		
+
+
+
                                 <%if(request.getAttribute("msg") != null){%>
-                                  <p>
-                                    <table cellpadding="0" cellspacing="0">
-                                      <tr>
-                                        <td class="messageText"><%=(String)request.getAttribute("msg")%></td>
-                                      </tr>
-                                    </table>
-                                  </p>
+                                 <%=(String)request.getAttribute("msg")%>
                                 <%}%>
                                 
-                                <form id="frmAddTravelRequest" action="addRequest.html" method="post">
+<form id="frmAddTravelRequest" action="addRequest.html" method="post">
                                   <%if(treq != null){%>
                                     <input type='hidden' name='op' value='UPDATE'>
                                     <input type='hidden' name='request_id' value='<%=treq.getRequestId()%>'>
                                   <%}else{%>
                                     <input type='hidden' name='op' value='ADD'>
                                   <%}%>
-                                  <p>
-                                  <table id="info" width="100%" cellpadding="5" cellspacing="0" border="0" style="padding: 5px;">
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Current Status</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getStatus().getDescription():"&nbsp;"%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Requested By</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?PersonnelDB.getPersonnel(treq.getRequestedBy()).getFullNameReverse():"&nbsp;"%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Requested Date</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getRequestedDateFormatted():"&nbsp;"%>
-                                      </td>
-                                    </tr>
-                                    <%
-                                    	if(treq.getRequestedBy() != treq.getActionedBy()){
-                                    %>
-                                      <tr>
-                                        <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'><%=(treq != null)?treq.getStatus().getDescription():"&nbsp;"%> By</td>
-                                        <td class="displayText" >
-                                          <%=(treq != null)?PersonnelDB.getPersonnel(treq.getActionedBy()).getFullNameReverse():"&nbsp;"%>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'><%=(treq != null)?treq.getStatus().getDescription():"&nbsp;"%> Date</td>
-                                        <td class="displayText" >
-                                          <%=(treq != null)?treq.getActionDateFormatted():"&nbsp;"%>
-                                        </td>
-                                      </tr>
-                                    <%}%>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>School</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?SchoolDB.getSchool(treq.getSchoolId()).getSchoolName():"&nbsp;"%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Destination</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getDestination():"&nbsp;"%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="top" align="right" width='200px'>Departure Date</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getDepartureDateFormated():""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="top" align="right" width='200px'>Return Date</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getReturnDateFormatted():""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="top" align="right" width='200px'># School Days Missed</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?Double.toString(treq.getDaysMissed()):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="top" align="right" width='200px'>Reason for Travel</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?StringUtils.encodeHTML(treq.getRational()):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Grades Involved</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getGrades():""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'># Students Involved</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?Integer.toString(treq.getNumStudents()):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Total # Chaperones</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?Integer.toString(treq.getTotalChaperons()):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Total # Teacher Chaperones</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?Integer.toString(treq.getTotalTeacherChaperons()):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Teacher Chaperons</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getTeacherChaperon():""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Total # Non-Teacher Chaperones</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?Integer.toString(treq.getTotalOtherChaperons()):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Other Chaperons</td>
-                                      <td class="displayText" >
-                                        <%=((treq != null)&&!StringUtils.isEmpty(treq.getOtherChaperon()))?treq.getOtherChaperon():""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Has each chaperone been approved by Principal?</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?(treq.isChaperonsApproved()?"YES":"NO"):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Does this trip involve billeting?</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?(treq.isBilletingInvolved()?"YES":"NO"):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Is there any school fundraising associated with this trip?</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?(treq.isSchoolFundraising()?"YES":"NO"):""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Emergency Contact</td>
-                                      <td class="displayText" >
-                                        <%=(treq != null)?treq.getEmergencyContact():""%>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="displayHeaderTitle"  valign="middle" align="right" width='200px'>Itinerary Document</td>
-                                      <td class="displayText" >
-                                        <a href="https://www.nlesd.ca/MemberServices/student/travel/itineraries/<%=(treq != null)?treq.getIteneraryFilename():""%>" target="_blank">VIEW</a>
-                                      </td>
-                                    </tr>
-                                    <%if((usr.getPersonnel().getPersonnelID() == approver.getPersonnelID())
-                                      && (treq != null) && treq.getStatus().equals(RequestStatus.SUBMITTED)){%>
-                                      <tr>
-                                        <td colspan="2" class="displayText" style="padding-top:10px;color:#FF0000;font-weight:bold;" >
-                                          <%
-                                          out.println("<a href='http://www.nlesd.ca/MemberServices/student/travel/travelRequestAdmin.html?u="
-                                            + approver.getUserName() + "&p="+PasswordEncryption.encrypt(approver.getPassword())
-                                            +"&op=approve&id=" +treq.getRequestId() + "' target='_blank'>APPROVE REQUEST</a>"); 
-                                          out.println("&nbsp;|&nbsp;");
-                                          out.println("<a href='http://www.nlesd.ca/MemberServices/student/travel/travelRequestAdmin.html?u="
-                                            + approver.getUserName() + "&p="+PasswordEncryption.encrypt(approver.getPassword())
-                                            +"&op=decline&id=" +treq.getRequestId() + "' target='_blank'>DECLINE REQUEST</a>");  
-                                          %>
-                                        </td>
-                                      </tr>
-                                    <%}%>
-                                    <!--
-                                    <tr>
-                                      <td colspan="2">
-                                        <input type="submit" value="<%=(treq == null)?"Add":"Update"%>">
-                                      </td>
-                                    </tr>
-                                    -->
-                                  </table>
-                                  </p>
-                                </form>
+                               
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">STATUS:</span>
+		    								<div class="form-control">		    								
+			                                  <%if(treq != null){%>
+			                                  <%if (treq.getStatus().getDescription() == "REJECTED"){ %>
+												          				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> <%=treq.getStatus().getDescription() %></span>
+												          		<%} else if (treq.getStatus().getDescription() == "APPROVED") {%>		
+												          				<span style="color:Green;"><span class="glyphicon glyphicon-ok"></span> <%=treq.getStatus().getDescription() %></span>
+												          		<%} else if  (treq.getStatus().getDescription() == "SUBMITTED") { %>		
+												          				<span style="color:Navy;"><span class="glyphicon glyphicon-share"></span> <%=treq.getStatus().getDescription() %></span>
+												          		<%} else { %>		
+												          				<span style="color:Black;"><%=treq.getStatus().getDescription() %></span>
+												          		<%}%>
+			                                  <%}else{ %>
+			                                  N/A
+			                                  <%} %>        
+		    								</div>
+	  									</div>
+	                               </div>
+	                               	                             
+                                   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">REQUESTED BY:</span>
+		    								<div class="form-control" style="text-transform:capitalize;"><%=(treq != null)?PersonnelDB.getPersonnel(treq.getRequestedBy()).getFullNameReverse():"&nbsp;"%></div>
+	  									</div>
+	                               </div>
+	                               
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">REQUEST DATE:</span>
+		    								<div class="form-control"><%=(treq != null)?treq.getRequestedDateFormatted():"&nbsp;"%></div>
+	  									</div>
+	                               </div>	                                
+                              
+                              	<% if(treq.getRequestedBy() != treq.getActionedBy()){ %>                               
+                                   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon"> <%=(treq != null)?treq.getStatus().getDescription():"&nbsp;"%> BY:</span>
+		    								<div class="form-control" style="text-transform:capitalize;"><%=(treq != null)?PersonnelDB.getPersonnel(treq.getActionedBy()).getFullNameReverse():"&nbsp;"%></div>
+	  									</div>
+	                               </div>
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon"><%=(treq != null)?treq.getStatus().getDescription():"&nbsp;"%> DATE:</span>
+		    								<div class="form-control"> <%=(treq != null)?treq.getActionDateFormatted():"N/A"%></div>
+	  									</div>
+	                               </div>
+	                            <%}%>   	                            
+	                             
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">SCHOOL:</span>
+		    								<div class="form-control"><%=(treq != null)?SchoolDB.getSchool(treq.getSchoolId()).getSchoolName():"N/A"%></div>
+	  									</div>
+	                               </div>	                               
+                               
+	                              
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">DEPARTURE DATE:</span>
+		    								<div class="form-control"><%=(treq != null)?treq.getDepartureDateFormated():"N/A"%></div>
+	  									</div>
+	                               </div>
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">RETURN DATE:</span>
+		    								<div class="form-control"><%=(treq != null)?treq.getReturnDateFormatted():"N/A"%></div>
+	  									</div>
+	                               </div>                             
+                              		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon"># DAYS MISSED:</span>
+		    								<div class="form-control"><%=(treq != null)?Double.toString(treq.getDaysMissed()):"N/A"%></div>
+	  									</div>
+	                               </div>
+	                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">DESTINATION:</span>
+		    								<div class="form-control" style="overflow: auto;height:auto;"><%=(treq != null)?treq.getDestination():"N/A"%></div>
+	  									</div>
+	                               </div>
+	                               
+	                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">REASON FOR TRIP:</span>
+		    								<div class="form-control" style="overflow: auto;height:auto;"><%=(treq != null)?StringUtils.encodeHTML(treq.getRational()):""%></div>
+	  									</div>
+	                               </div>
+	                               
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">GRADES:</span>
+		    								<div class="form-control"><%=(treq != null)?treq.getGrades():"N/A"%></div>
+	  									</div>
+	                               </div>	   
+	                                                           
+                             		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon"># STUDENTS:</span>
+		    								<div class="form-control"><%=(treq != null)?Integer.toString(treq.getNumStudents()):"N/A"%></div>
+	  									</div>
+	                               </div>
+	                               
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">TOTAL # CHAPERONES:</span>
+		    								<div class="form-control"><%=(treq != null)?Integer.toString(treq.getTotalChaperons()):"N/A"%></div>
+	  									</div>
+	                               </div>
+	                               
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon"># TEACHER CHAPERONES:</span>
+		    								<div class="form-control"><%=(treq != null)?Integer.toString(treq.getTotalTeacherChaperons()):"N/A"%></div>
+	  									</div>
+	                               </div>	
+                                  
+                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">TEACHER CHAPERONES:</span>
+		    								<div class="form-control"> <%=(treq != null)?treq.getTeacherChaperon():"N/A"%></div>
+	  									</div>
+	                               </div>	                               
+                                   
+                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon"># OTHER CHAPERONES:</span>
+		    								<div class="form-control"><%=(treq != null)?Integer.toString(treq.getTotalOtherChaperons()):"N/A"%></div>
+	  									</div>
+	                               </div>	
+	                               
+                               		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">OTHER CHAPERONES:</span>
+		    								<div class="form-control"><%=((treq != null)&&!StringUtils.isEmpty(treq.getOtherChaperon()))?treq.getOtherChaperon():"N/A"%></div>
+	  									</div>
+	                               </div>	                              
+                                        
+	                               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">EMERGENCY CONTACT:</span>
+		    								<div class="form-control"><%=(treq != null)?treq.getEmergencyContact():"N/A"%></div>
+	  									</div>
+	                               </div>
+	                               
+	                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                               		<div class="input-group">
+		    								<span class="input-group-addon">OTHER INFO:</span>
+		    								<div class="form-control" style="overflow: auto;height:auto;">
+		    								Each chaperone has <%=(treq != null)?(treq.isChaperonsApproved()?"been <span style='color:Green;'>APPROVED</span>":"<span style='color:Red;'>NOT</span> been approved"):""%> by the principal of <%=(treq != null)?SchoolDB.getSchool(treq.getSchoolId()).getSchoolName():"N/A"%>. 
+		    								This trip to <%=(treq != null)?treq.getDestination():"N/A"%> <%=(treq != null)?(treq.isBilletingInvolved()?"will":"will not"):""%> involve billeting and
+		    								there <%=(treq != null)?(treq.isSchoolFundraising()?"was":"wasn't any"):""%>  fundraising associated with this trip at the school.
+		    								</div>
+	  									</div>
+	                               </div>                        
+                                    
+                                    <div style="clear:both;"></div>
+                                    <br/>
+                                    <div align="center" class="no-print">                                    
+                                    <a class='btn btn-xs btn-primary' href="/MemberServices/student/travel/itineraries/<%=(treq != null)?treq.getIteneraryFilename():""%>" title="Itinerary Document. Will open in a new tab or window." target="_blank">VIEW ITINERARY DOCUMENT</a>
+                                    <a href='#' title='Print this page (pre-formatted)' class="btn btn-xs btn-info" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Student Travel System</b></div><br/>'});">PRINT THIS REQUEST</a></li>
                                 
-                                <%if(request.getAttribute("msg") != null){%>
-                                  <p>
-                                    <table cellpadding="0" cellspacing="0">
-                                      <tr>
-                                        <td class="messageText"><%=(String)request.getAttribute("msg")%></td>
-                                      </tr>
-                                    </table>
-                                  </p>
-                                <%}%>
-                              </td>
-                            </tr>  
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>						
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-  <img src="images/spacer.gif" width="1" height="4"><BR>
-  <jsp:include page="footer.jsp" flush="true" />
+                                    <%if((usr.getPersonnel().getPersonnelID() == approver.getPersonnelID()) && (treq != null) && treq.getStatus().equals(RequestStatus.SUBMITTED)){%>
+                                      
+                                          <%
+                                          out.println("<a href='/MemberServices/student/travel/travelRequestAdmin.html?u="
+                                            + approver.getUserName() +"&op=approve&id=" +treq.getRequestId() + "' class='btn btn-xs btn-success'>APPROVE REQUEST</a>"); 
+                                          
+                                          out.println("<a href='/MemberServices/student/travel/travelRequestAdmin.html?u="
+                                            + approver.getUserName() +"&op=decline&id=" +treq.getRequestId() + "' class='btn btn-xs btn-danger'>DECLINE REQUEST</a>");  
+                                          %>
+                                       
+                                    <%}%>
+                                    
+                                   <%if(((usr.checkRole("ADMINISTRATOR") || usr.checkRole("PRINCIPAL"))  && (treq.getStatus().getDescription() != "APPROVED"))){%>
+                                    	
+                                    	<a class='btn btn-xs btn-danger'  onclick="return confirm('Are you sure you want to delete this request? This cannot be undone.')" href='deleteTravelRequest.html?rid=<%= treq.getRequestId() %>'>DELETE REQUEST</a>
+                                   
+                                   <% } %>
+                                    <a href="index.jsp" class="btn btn-xs btn-danger">BACK TO LIST</a>                                    
+                                    
+                                 </div>
+                                </form>
+                          
+   </div></div></div></div>
+            
 </body>
 </html>
