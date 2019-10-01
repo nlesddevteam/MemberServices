@@ -329,7 +329,35 @@ public class TravelRequestManager {
 
 		return eBean;
 	}
-
+	public static void deleteRequest(Integer tid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			stat = con.prepareCall("begin awsd_user.STUDENT_TRAVEL.delete_student_travel(?); end;");
+			stat.setInt(1, tid);
+			stat.execute();
+			}
+		catch (Exception e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static void deleteRequest(Integer tid):" + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 	public static TravelRequestBean createTravelRequestBean(ResultSet rs) {
 
 		TravelRequestBean abean = null;

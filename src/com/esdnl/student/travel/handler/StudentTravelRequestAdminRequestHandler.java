@@ -87,17 +87,17 @@ public class StudentTravelRequestAdminRequestHandler extends RequestHandlerImpl 
 
 						request.setAttribute("APPROVER",
 								SchoolDB.getSchool(treq.getSchoolId()).getSchoolFamily().getProgramSpecialist());
-
+						request.setAttribute("msgOK", "SUCCESS: Student Travel request has been approved.");
 						path = "view_request.jsp";
 					}
 					catch (StudentTravelException e) {
 						e.printStackTrace(System.err);
-						request.setAttribute("msg", "Could not add travel request.");
+						request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 						request.setAttribute("FORM", form);
 					}
 					catch (Exception e) {
 						e.printStackTrace(System.err);
-						request.setAttribute("msg", "Could not approve travel request.");
+						request.setAttribute("msgERR", "ERROR: Could not approve travel request.");
 						request.setAttribute("FORM", form);
 					}
 				}
@@ -114,7 +114,10 @@ public class StudentTravelRequestAdminRequestHandler extends RequestHandlerImpl 
 						Personnel tmp = PersonnelDB.getPersonnel(treq.getRequestedBy());
 						smtp.postMail(new String[] {
 								usr.getPersonnel().getEmailAddress(), tmp.getEmailAddress()
-						}, null, null, "DECLINED: Student Travel Request - " + tmp.getSchool().getSchoolName(),
+						}, 
+						 null, 
+						 null, 
+						 "DECLINED: Student Travel Request - " + tmp.getSchool().getSchoolName(),
 								"This Student Travel Request has been declined by " + usr.getPersonnel().getFullNameReverse()
 										+ ". Please contact for more details." + "<BR><BR>" + treq.toHTML()
 										+ "<BR><BR>PLEASE DO NOT RESPOND TO THIS MESSAGE. THANK YOU.<br><br>" + "Member Services",
@@ -123,17 +126,20 @@ public class StudentTravelRequestAdminRequestHandler extends RequestHandlerImpl 
 								});
 
 						request.setAttribute("TRAVELREQUESTBEAN", treq);
-
+						request.setAttribute("APPROVER",
+								SchoolDB.getSchool(treq.getSchoolId()).getSchoolFamily().getProgramSpecialist());
+						request.setAttribute("msgERR", "ERROR: Student Travel Request has been declined.");
+						
 						path = "view_request.jsp";
 					}
 					catch (StudentTravelException e) {
 						e.printStackTrace(System.err);
-						request.setAttribute("msg", "Could not add travel request.");
+						request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 						request.setAttribute("FORM", form);
 					}
 					catch (Exception e) {
 						e.printStackTrace(System.err);
-						request.setAttribute("msg", "Could not approve travel request.");
+						request.setAttribute("msgERR", "ERROR: Could not approve travel request.");
 						request.setAttribute("FORM", form);
 					}
 				}
@@ -144,8 +150,8 @@ public class StudentTravelRequestAdminRequestHandler extends RequestHandlerImpl 
 		}
 		else {
 			request.setAttribute("FORM", form);
-			request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
-			path = "index.jsp";
+			request.setAttribute("msgERR", StringUtils.encodeHTML(validator.getErrorString()));
+			path = "view_request.jsp";
 		}
 
 		return path;

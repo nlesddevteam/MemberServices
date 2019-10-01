@@ -105,10 +105,10 @@ public class AddStudentTravelRequestRequestHandler extends RequestHandlerImpl {
 								+ usr.getPersonnel().getFullNameReverse() + "<br><br>" + treq.toHTML()
 								+ "<br><br>To APPROVE this request, please click "
 								+ "<a href='http://www.nlesd.ca/MemberServices/student/travel/travelRequestAdmin.html?u="
-								+ tmp.getUserName() + "&p=" + PasswordEncryption.encrypt(tmp.getPassword()) + "&op=approve&id="
+								+ tmp.getUserName() + "&op=approve&id="
 								+ treq.getRequestId() + "' target='_blank'>HERE</a><br><br>" + "To DECLINE this request, please click "
 								+ "<a href='http://www.nlesd.ca/MemberServices/student/travel/travelRequestAdmin.html?u="
-								+ tmp.getUserName() + "&p=" + PasswordEncryption.encrypt(tmp.getPassword()) + "&op=decline&id="
+								+ tmp.getUserName() + "&op=decline&id="
 								+ treq.getRequestId() + "' target='_blank'>HERE</a><br><br>"
 								+ "PLEASE DO NOT RESPOND TO THIS MESSAGE. THANK YOU.<br><br>" + "Member Services");
 						email.setFrom("ms@nlesd.ca");
@@ -122,35 +122,35 @@ public class AddStudentTravelRequestRequestHandler extends RequestHandlerImpl {
 						request.setAttribute("APPROVER",
 								SchoolDB.getSchool(treq.getSchoolId()).getSchoolFamily().getProgramSpecialist());
 
-						request.setAttribute("msg", "Request successfully submitted to "
-								+ s.getSchoolFamily().getProgramSpecialist().getFullNameReverse() + " for approval.");
+						request.setAttribute("msgOK", "SUCCESS: Request successfully submitted to <span style='text-transform:Capitalize;'>"
+								+ s.getSchoolFamily().getProgramSpecialist().getFullNameReverse() + "</span> for approval.");
 
 						path = "view_request.jsp";
 					}
 					else {
-						request.setAttribute("msg", "Could not add travel request.");
+						request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 						request.setAttribute("FORM", form);
 					}
 				}
 				catch (StudentTravelException e) {
 					e.printStackTrace(System.err);
-					request.setAttribute("msg", "Could not add travel request.");
+					request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 					request.setAttribute("FORM", form);
 				}
 				catch (ParseException e) {
 					e.printStackTrace(System.err);
-					request.setAttribute("msg", "Could not add travel request.");
+					request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 					request.setAttribute("FORM", form);
 				}
 				catch (Exception e) {
 					e.printStackTrace(System.err);
-					request.setAttribute("msg", "Could not add travel request.");
+					request.setAttribute("msgERR", "ERROR: Could not add travel request.");
 					request.setAttribute("FORM", form);
 				}
 			}
 			else {
 				request.setAttribute("FORM", form);
-				request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
+				request.setAttribute("msgERR", StringUtils.encodeHTML(validator.getErrorString()));
 			}
 		}
 
