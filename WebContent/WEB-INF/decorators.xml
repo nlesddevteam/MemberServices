@@ -45,11 +45,11 @@
   </decorator> 
 -->
 
-<!-- For Student Travel System  
+<!-- For Student Travel System  -->
   <decorator name="STUDENTTRAVEL" page="student/travel/includes/decorator/main.jsp">
   		<pattern>/student/travel/*</pattern>
   </decorator> 
--->
+
 
 <!-- For Learning Plans / Growth Plans -->
    <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
