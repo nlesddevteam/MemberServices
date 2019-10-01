@@ -174,23 +174,23 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 
 <%if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")){%>
 
-
+							<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 					        <li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Admin<span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 
 
-					          	 	<esd:SecurityAccessRequired roles="ADMINISTRATOR">
+					          	 	
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/viewSubjectGroups.html">Subject Groups</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/addSubjectGroup.html">Add Subject Group</a></li>
-					          	 	</esd:SecurityAccessRequired>
+					          	 	
 					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-SUBSTITUTES-RELOAD-TABLES">
 					          			<li class="divider"></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/startSync.html"><span class="glyphicon glyphicon-refresh"></span> Start Sync</a></li>
 					          		</esd:SecurityAccessRequired>
 					          	</ul>
 					        </li>
-
+							</esd:SecurityAccessRequired>
 
 					   <esd:SecurityAccessRequired permissions="PERSONNEL-EMP-OPPS-VIEW">
 					        <li class="dropdown" id="menuNormal">
