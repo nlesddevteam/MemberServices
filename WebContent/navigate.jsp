@@ -554,7 +554,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 					<!-- EECED -->
-					<esd:SecurityAccessRequired permissions="EECD-VIEW-APPROVALS">
+					<esd:SecurityAccessRequired roles="PRINCIPAL">
 						<div class="menuIconImage">                              	
 							<a href="EECD/schoolAdminViewApprovals.html">
 							<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
@@ -574,7 +574,7 @@
 								<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
 							</a>                                                         
 						</div>
-					</esd:SecurityAccessRequired> 
+					</esd:SecurityAccessRequired>
 
 					<!-- 	   
 			  	   <esd:SecurityAccessRequired permissions="FUND3-SYSTEM-ACCESS">   		
