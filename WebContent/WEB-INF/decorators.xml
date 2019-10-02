@@ -50,7 +50,6 @@
   		<pattern>/student/travel/*</pattern>
   </decorator> 
 
-
 <!-- For Learning Plans / Growth Plans -->
    <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
 		<pattern>/PPGP/*</pattern>
@@ -81,5 +80,4 @@
     <pattern>/Personnel/apply*</pattern>
     <pattern>/Personnel/unapply*</pattern>
 </excludes> 
-
 </decorators>
