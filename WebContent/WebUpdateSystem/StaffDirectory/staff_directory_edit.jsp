@@ -425,11 +425,15 @@
 							<option value="Student Support Services">Student Support Services</option>
 							<option value="Student Transportation">Student Transportation</option>							
 							<option value="Student Transportation Enforcement Officer">Student Transportation Enforcement Officer</option>
-							<option value="Support Staff">Support Staff</option>
+							<option value="Support Staff">Support Staff</option>	
 							<option value="Support Staff and Student Assistants">Support Staff and Student Assistants</option>
 							<option value="TCAS Support">TCAS Support</option>
 							<option value="Teacher">Teacher</option>
-							<option value="Teachers">Teachers</option>
+							<option value="Teachers">Teachers</option>							
+							<option value="Teachers (Schools A-E)">Teachers (Schools A-E)</option>
+							<option value="Teachers (Schools F-Le)">Teachers (Schools F-Le)</option>
+							<option value="Teachers (Schools Lf-Sp)">Teachers (Schools Lf-Sp)</option>
+							<option value="Teachers (Schools Sq-Z)">Teachers (Schools Sq-Z)</option>				
 							<option value="Teaching Staff">Teaching Staff</option>
 							<option value="Technology Education">Technology Education</option>
 							<option value="Technology/PowerSchool">Technology/PowerSchool</option>
@@ -449,10 +453,12 @@
 							 <option value="Avalon East">Avalon East</option>
 							 <option value="Avalon West">Avalon West</option>
 							 <option value="Burin">Burin</option>
+							 <option value="Burin/CUPE 1560">Burin/CUPE 1560</option>
 							 <option value="Burin/Avalon West">Burin/Avalon West</option>
 							 <option value="Central">Central</option>
 							 <option value="Labrador">Labrador</option>
 							 <option value="Labrador/Burin">Labrador/Burin</option>
+							 <option value="Labrador/Central">Labrador/Central</option>
 							 <option value="Provincial">Provincial</option>
 							 <option value="Vista">Vista</option>
 							 <option value="Vista/Avalon West">Vista/Avalon West</option>
@@ -460,7 +466,7 @@
 							 <option value="Western/Central">Western/Central</option>
 							 <option value="Avalon/Labrador">Avalon/Labrador</option>
 							 <option value="Western/Central/Labrador">Western/Central/Labrador</option>
-							 <option value="Vista/Burin">Vista/Burin</option>
+							 <option value="Vista/Burin">Vista/Burin</option>							 
 							 <option value="Western">Western</option>
 	                     </select>
 	            </div>
@@ -507,6 +513,7 @@
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option>
 	                    	 <option value="Acting">Acting</option>
+	                    	 <option value="Casual">Casual</option>
 	                     	 <option value="Interim">Interim</option>
 	                     	 <option value="On Leave">On Leave</option>
 							 <option value="Provisional">Provisional</option>
