@@ -97,9 +97,9 @@
                                 </tr>
                                 <tr> 
                                 <td class="tableTitleL">From*:</td>
-                                <td class="tableResultL" id="fromdateW"><input type="text" name="fromdate" id="fromdate" class="form-control" placeholder="In position from?"></td>
+                                <td class="tableResultL" id="fromdateW"><input type="text" name="fromdate" id="fromdate" readonly class="form-control" placeholder="In position from?"></td>
                                 <td class="tableTitleR">To:</td>
-                                <td class="tableResultR" id="todateW"><input type="text" name="todate" id="todate" class="form-control" placeholder="In position until?"></td>
+                                <td class="tableResultR" id="todateW"><input type="text" name="todate" id="todate" readonly class="form-control" placeholder="In position until?"></td>
                                 </tr>
                                 <tr> 
                                 <td class="tableTitleL">Reason For Leaving*(Select Current Position if still employed):</td>
@@ -144,7 +144,16 @@
 							<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
 						<%}%>
  
- 
+   <script>
+ $('document').ready(function(){
+		$("#fromdate,#todate").datepicker({
+	      	changeMonth: true,
+	      	changeYear: true,
+	      	dateFormat: "mm/yy",
+	      	yearRange: "-75:+0"
+	   });
+ });
+ </script> 
                          
                     
 </body>
