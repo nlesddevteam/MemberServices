@@ -51,6 +51,7 @@ public class RequestToHireBean {
 	private int shiftDiff;
 	private String positionNumber;
 	private Date EndDate;
+	private int privateList;
 	public int getId() {
 		return id;
 	}
@@ -470,5 +471,11 @@ public class RequestToHireBean {
 	}
 	public void setEndDate(Date endDate) {
 		EndDate = endDate;
+	}
+	public int getPrivateList() {
+		return privateList;
+	}
+	public void setPrivateList(int privateList) {
+		this.privateList = privateList;
 	}
 }

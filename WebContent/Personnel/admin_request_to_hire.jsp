@@ -541,6 +541,26 @@ var pageWordCountConf = {
 	                                      	
 	                                   
 </div>
+<div class="input-group">
+    <span style="color:DimGrey">&nbsp; &nbsp; Is Candidate List Private?&nbsp; </span>                                   	
+                                     
+                                      	<c:choose>
+                                      	<c:when test="${empty rbean}">
+                                      		<input type="checkbox" name="private_list" id="private_list"> 
+                                      	</c:when>
+                                      	<c:otherwise>
+                                      		<c:choose>
+                                      			<c:when test="${rbean.status.value eq 1 }">
+                                      				<input type="checkbox" name="private_list" id="private_list" ${rbean.privateList == 1 ? 'checked':''}>
+                                      			</c:when>
+                                      			<c:otherwise>
+                                      			<div class="form-control">${rbean.privateList == 1 ? 'Yes':'No'}</div>                                     			
+                                      				
+                                      			</c:otherwise>
+                                      		</c:choose>
+                                      	</c:otherwise>
+                                      	</c:choose>
+ </div>
 <c:if test="${VIEWAPPROVE}">
 	<c:if test="${rbean.status.value eq 2 }">
 	  	<div class="input-group"  id="positionNumberGroup">
@@ -586,44 +606,14 @@ var pageWordCountConf = {
    
  										<ul>                    
                                       	<c:choose>
-                                    		<c:when test="${not empty rbean}">
-		                                      	<li>Submitted by ${rbean.requestBy} on ${rbean.dateRequestedFormatted}
-		                                      	
-		                                      		<c:if test="${not empty rbean.ddApproved}">
-		                                      		
-		                                      		<li>Division Director Approval by ${rbean.ddApprovedBy} on ${rbean.ddApprovedFormatted}
-		                                      		
-		                                      		</c:if>
-		                                      		<c:if test="${not empty rbean.bcApproved}">
-		                                      	
-		                                      		<li>Comptroller Approval by ${rbean.bcApprovedBy} on ${rbean.bcApprovedFormatted}
-		                                      
-		                                      		</c:if>	
-		                                      		<c:if test="${not empty rbean.adApproved}">
-		                                      
-		                                      		<li>Assistant Director Approval by ${rbean.adApprovedBy} on ${rbean.adApprovedFormatted}
-		                                      		
-		                                      		</c:if>
-		                                      		<c:if test="${not empty rbean.adhrApproved}">
-		                                      		
-		                                      		<li>Assistant Director HR Approval by ${rbean.adhrApprovedBy} on ${rbean.adhrApprovedFormatted}
-		                                      		
-		                                      		</c:if>
-		                                      		<c:if test="${rbean.status.value eq 7}">
-		                                      		
-		                                      		<li><span style="color:Red;">Request has been declined.</span>
-		                                      			
-		                                      		</c:if>
-		                                      		<c:if test="${not empty rbean.competitionNumber}">
-		                                      		
-		                                      		<li><span style="color:Green;">Competition Number ${ rbean.competitionNumber} created.</span>
-		                                      			
-		                                      		</c:if>			                                      					                                      				                                      			
-		                                      
-		                                      </c:when>
-		                                      <c:otherwise>
-		                                      <li>No status information currently logged.
-		                                      </c:otherwise>
+                                    		<c:when test="${not empty HBEANS}">
+	                                      		<c:forEach items="${HBEANS}" var="treemap">
+	                                      			<li>${treemap.value.notes} on ${treemap.value.historyDateTime}			                                      				                                      			
+		                                      	</c:forEach>
+		                                     </c:when>
+		                                     <c:otherwise>
+		                                      	<li>No status information currently logged.
+		                                     </c:otherwise>
 		                                 </c:choose>
 		                                 </ul>
 </div></div>

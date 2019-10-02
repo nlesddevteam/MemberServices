@@ -295,7 +295,14 @@ var pageWordCountConf = {
 	                                 <div class="row">
 										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           						 			<div class="checkbox">
-  												<label><input type="checkbox" id="candidatelist_private" name="candidatelist_private" <%=(opp != null && opp.isCandidateListPrivate())?"CHECKED" :""%> />Is Candidate List Private?*</label>
+          						 			<%if((ad_req != null) && opp.getIsSupport().equals("N")){ %>
+          						 				<label><input type="checkbox" id="candidatelist_private" name="candidatelist_private" <%=(opp != null && opp.isCandidateListPrivate())?"CHECKED" :""%> />Is Candidate List Private?*</label>
+          						 			<%} %>
+          						 			
+  											<%if(rth != null){ %>
+  												<label><input type="checkbox" id="candidatelist_private" name="candidatelist_private" <%=rth.getPrivateList() == 1?"CHECKED" :""%> readonly />Is Candidate List Private?*</label>
+  											<%} %>  											
+  												
 											</div> 
           								</div>
 		  							 </div>

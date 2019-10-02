@@ -297,7 +297,9 @@ var pageWordCountConf = {
 	      			 	      				 
 					<a href='#' title='Print this page (pre-formatted)' class="btn btn-xs btn-primary" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a>
 		             			 
-								 
+	 <%if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-UPDATE") && req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+		 <a href="#" class="btn btn-xs btn-success" onclick="doPost('U','<%=req.getId()%>');">UPDATE AD</a>		 
+	 <%} %>
 	 <%if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-APPROVE") && req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
                         
 	     <a href="#" class="btn btn-xs btn-success" onclick="doPost('A','<%=req.getId()%>');">APPROVE AD</a>

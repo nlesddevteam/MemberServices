@@ -72,8 +72,8 @@ public int doStartTag() throws JspException
 			out.println((beans[i].getApplicantRefRequestBean()!= null)?beans[i].getApplicantRefRequestBean().getEmailAddress():"N/A");
 			out.println("</td>");		
 			
-        	if(profile.getProfileType() == "S"){
-        		out.println("<td><a class='btn-xs btn btn-danger' href='applicantRegistrationSS.html?step=8&del=" + beans[i].getId() +"'>DEL</a>");
+        	if(profile.getProfileType().equals("S")){
+        		out.println("<td><a class='btn-xs btn btn-danger' href='applicantRegistrationSS.html?step=7&del=" + beans[i].getId() +"'>DEL</a>");
         	}else{
         		out.println("<td><a class='btn-xs btn btn-danger' href='applicantRegistration.html?step=8&del=" + beans[i].getId() +"'>DEL</a>");
         	}
@@ -85,7 +85,7 @@ public int doStartTag() throws JspException
         			
         			if(!(beans[i].getApplicantRefRequestBean().getEmailAddress() == null)){
         				
-        				if(profile.getProfileType() == "T"){
+        				if(profile.getProfileType().equals("T")){
         					if(beans[i].getApplicantRefRequestBean().getEmailAddress().toLowerCase().contains("nlesd")){
             					out.println("<a class='btn btn-xs btn-primary' href='#' onclick=\"opensend('" + beans[i].getApplicantRefRequestBean().getId() 
                 						+ "','" + beans[i].getApplicantRefRequestBean().getEmailAddress() +"');\">SEND REQ</a>");
