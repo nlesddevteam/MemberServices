@@ -57,9 +57,9 @@ input {
 							    <tbody>
 							    <tr>
 							    <td class="tableTitleL">From(mm/yyyy)*:</td>
-				                <td class="tableResultL"><input type="text" name="from_date" id="from_date" class="form-control" autocomplete="off"></td>								
+				                <td class="tableResultL"><input type="text" name="from_date" id="from_date" class="form-control" readonly autocomplete="off"></td>								
 							    <td class="tableTitleR">To(mm/yyyy)*:</td>
-				                <td class="tableResultR"><input type="text" name="to_date" id="to_date" class="form-control" autocomplete="off"></td>
+				                <td class="tableResultR"><input type="text" name="to_date" id="to_date" class="form-control" readonly autocomplete="off"></td>
 								</tr>
                                 <tr>
 							    <td class="tableTitle">School*:</td>

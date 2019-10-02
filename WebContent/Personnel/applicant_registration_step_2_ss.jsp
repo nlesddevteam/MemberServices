@@ -171,9 +171,9 @@ input {border:1px solid silver;}
                                 </tr>
                                 <tr>
                                 <td class="tableTitleR">Start Date*:</td>
-                                <td class="tableResultR"><input type="text" name="sdate" id="sdate" class="form-control" placeholder="Enter Start Date"></td>
+                                <td class="tableResultR"><input type="text" name="sdate" id="sdate" class="form-control" readonly placeholder="Enter Start Date"></td>
                                 <td class="tableTitleR">End Date(if applicable):</td>
-                                <td class="tableResultR"><input type="text" name="edate" id="edate" class="form-control" placeholder="Enter End Date"></td>
+                                <td class="tableResultR"><input type="text" name="edate" id="edate" class="form-control" readonly placeholder="Enter End Date"></td>
                                 </tr>
                                 </tbody>
                                 </table>
@@ -203,6 +203,15 @@ input {border:1px solid silver;}
 						<%if(request.getAttribute("errmsg")!=null){%>
 							<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
 						<%}%>
-  
+   <script>
+ $('document').ready(function(){
+		$("#sdate,#edate").datepicker({
+	      	changeMonth: true,
+	      	changeYear: true,
+	      	dateFormat: "mm/yy",
+	      	yearRange: "-75:+0"
+	   });
+ });
+ </script>  
 </body>
 </html>

@@ -175,9 +175,9 @@
                            </tr>    
                            <tr>
                               <td class="tableTitleL">From (mm/yyyy)*:</td>
-                              <td class="tableResultL" id="from_dateW"><input type="text" name="from_date" id="from_date" class="form-control" autocomplete="off"></td>
+                              <td class="tableResultL" id="from_dateW"><input type="text" name="from_date" id="from_date" readonly class="form-control" autocomplete="off"></td>
                               <td class="tableTitleR">To (mm/yyyy)*:</td> 
-                              <td class="tableResultR" id="to_dateW"> <input type="text" name="to_date" id="to_date" class="form-control" autocomplete="off"></td>
+                              <td class="tableResultR" id="to_dateW"> <input type="text" name="to_date" id="to_date" readonly class="form-control" autocomplete="off"></td>
                            </tr>  
                            <tr>
                               <td class="tableTitleL">Type:</td>

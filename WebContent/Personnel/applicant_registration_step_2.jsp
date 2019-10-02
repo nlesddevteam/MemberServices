@@ -128,7 +128,7 @@ input {border:1px solid silver;}
                 				</tr>
                 				<tr style="border-bottom:1px solid silver;">
 							    <td class="tableTitle">End Date (mm/yyyy):</td>
-                				<td class="tableResult"><input type="text" name="contract_enddate" class="form-control" id="contract_enddate" value='<%=((esd_exp != null)&&(esd_exp.getContractEndDate()!=null))?(new SimpleDateFormat("MM/yyyy")).format(esd_exp.getContractEndDate()):""%>'></td>
+                				<td class="tableResult"><input type="text" name="contract_enddate" class="form-control" readonly id="contract_enddate" value='<%=((esd_exp != null)&&(esd_exp.getContractEndDate()!=null))?(new SimpleDateFormat("MM/yyyy")).format(esd_exp.getContractEndDate()):""%>'></td>
                 				</tr>
            						</tbody>
            		</table>				
@@ -167,6 +167,15 @@ if(esd_exp.getContractSchool() > 0){%>
         		<script type='text/javascript'>document.forms[0].repl_sub_time[1].click();</script>
   			<% }%>
 <%}%>
-  	
+  <script>
+ $('document').ready(function(){
+		$("#contract_enddate").datepicker({
+	      	changeMonth: true,
+	      	changeYear: true,
+	      	dateFormat: "mm/yy",
+	      	yearRange: "-75:+0"
+	   });
+ });
+ </script>  	
 </body>
 </html>
