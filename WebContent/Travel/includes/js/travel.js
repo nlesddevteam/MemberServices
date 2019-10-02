@@ -1137,7 +1137,7 @@ function ajaxRequestInfo(sletter)
  									var newrow="<tr>";
                                     newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() + "</td>";                                    
                                     newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";                                   
+                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";                                      
                                     newrow += "<td class='listdata'>";										
                                     newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
 									newrow += "</tr>";
@@ -1337,11 +1337,12 @@ function ajaxRequestInfoApprovedDate(sapproveddate)
 									{
 									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
 									}
- 								 								
+ 													
  									var newrow="<tr>";
                                     newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() +"</a></td>";
                                     newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
                                     newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>"; 
+                                    newrow += "<td class='listdata'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
                                     newrow += "<td class='listdata' align='center'>";										
                                     newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
 									newrow += "</tr>";
@@ -1351,7 +1352,7 @@ function ajaxRequestInfoApprovedDate(sapproveddate)
  								}else{
  									//alert($(this).find("MESSAGE").text());
  									var newrow="<tr>";
-                                    newrow += "<td align='center' colspan='4'>No Travel Claims Found</td>";
+                                    newrow += "<td align='center' colspan='5'>No Travel Claims Found</td>";
                                     $('table#claims-table tr:last').after(newrow);
  								}
 						});
@@ -1443,6 +1444,7 @@ function ajaxRequestInfoApprovedRegion(region)
                                     newrow += "<td class='listdata'> " + $(this).find("EMPLOYEE").text() + "</td>";                                    
                                     newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
                                     newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";
+                                    newrow += "<td class='listdata'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
                                     newrow += "<td class='listdata'>";										
                                     newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
 									newrow += "</tr>";
@@ -1452,7 +1454,7 @@ function ajaxRequestInfoApprovedRegion(region)
  								}else{
  									//alert($(this).find("MESSAGE").text());
  									var newrow="<tr>";
-                                    newrow += "<td align='center' colspan='4'>No Travel Claims Found</td>";
+                                    newrow += "<td align='center' colspan='5'>No Travel Claims Found</td>";
                                     $('table#claims-table tr:last').after(newrow);
  								}
 						});
