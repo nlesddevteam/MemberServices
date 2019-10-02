@@ -455,7 +455,7 @@
 							 <option value="Burin">Burin</option>
 							 <option value="Burin/CUPE 1560">Burin/CUPE 1560</option>
 							 <option value="Burin/Avalon West">Burin/Avalon West</option>
-							 <option value="Central">Central</option>
+							 <option value="Central">Central</option>							 
 							 <option value="Labrador">Labrador</option>
 							 <option value="Labrador/Burin">Labrador/Burin</option>
 							 <option value="Labrador/Central">Labrador/Central</option>
@@ -468,6 +468,7 @@
 							 <option value="Western/Central/Labrador">Western/Central/Labrador</option>
 							 <option value="Vista/Burin">Vista/Burin</option>							 
 							 <option value="Western">Western</option>
+							 
 	                     </select>
 	            </div>
 	            <br/>
@@ -481,6 +482,7 @@
 							 <option value="7-12">7-12</option>
 							 <option value="K-12">K-12</option>
 							 <option value="Intermediate">Intermediate</option>
+							 
 	                     </select>
 	            </div>
 	            <br/>
