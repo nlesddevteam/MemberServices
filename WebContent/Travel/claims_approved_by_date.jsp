@@ -76,7 +76,7 @@
 		</div>		
 		
 		
-	
+
 		
 		
 		
@@ -88,9 +88,10 @@
 				<thead>
 					
 					<tr class="listHeader">
-						<th width="25%" class="listdata" style="padding:2px;">Employee</th>
+						<th width="20%" class="listdata" style="padding:2px;">Employee</th>
 						<th width="10%" class="listdata" style="padding:2px;">Type</th>
-						<th width="55%" class="listdata" style="padding:2px;">Title/Month</th>
+						<th width="40%" class="listdata" style="padding:2px;">Title/Month</th>	
+						<th width="20%" class="listdata" style="padding:2px;">Supervisor</th>					
 						<th width="10%" class="listdata" style="padding:2px;">Function</th>
 					</tr>
 				</thead>

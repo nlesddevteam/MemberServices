@@ -47,6 +47,11 @@ public class GetTravelClaimsApprovedByRegionAjaxRequestHandler extends RequestHa
 									sb.append("<TITLE>" + Utils.getMonthString(claim.getFiscalMonth()) + " " + Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</TITLE>");
 									sb.append("<TYPE>Monthly</TYPE>");
 									sb.append("<ID>" + claim.getClaimID() + "</ID>");
+									if(claim.getSupervisor() == null) {
+										sb.append("<SUPERVISOR></SUPERVISOR>");
+										}else {
+										sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
+										}
 									sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 									sb.append("</CLAIM>");
 				           		}else{
@@ -55,6 +60,11 @@ public class GetTravelClaimsApprovedByRegionAjaxRequestHandler extends RequestHa
 									sb.append("<TITLE>" + "PD - " + ((PDTravelClaim)claim).getPD().getTitle().replaceAll("&", "&amp;").replaceAll("\"", "&quot;") + "</TITLE>");
 									sb.append("<TYPE>PD</TYPE>");
 									sb.append("<ID>" + claim.getClaimID() + "</ID>");
+									if(claim.getSupervisor() == null) {
+										sb.append("<SUPERVISOR></SUPERVISOR>");
+										}else {
+										sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
+										}
 									sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 									sb.append("</CLAIM>");
 				           		}
