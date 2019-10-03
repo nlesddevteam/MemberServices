@@ -32,9 +32,15 @@ public class AdRequestManager {
 			beans = new Vector<AdRequestBean>();
 
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.get_ad_requests_by_status2(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setInt(2, status.getId());
+			//call new function that will returned declined ad requests over the last 60 days
+			if(status == RequestStatus.REJECTED) {
+				stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.get_declined_ad_requests; end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+			}else {
+				stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.get_ad_requests_by_status2(?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setInt(2, status.getId());
+			}
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 

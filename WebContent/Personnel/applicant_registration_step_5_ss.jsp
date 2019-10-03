@@ -67,11 +67,15 @@
 	    if($( "#hstateprovince" ).length){
 	    	$("#state_province").val($( "#hstateprovince" ).val());
 	    }
+	    if($( "#ygraduated" ).length){
+	    	$("#yeargraduated").val($( "#ygraduated" ).val());
+	    }
 	});
 	</script>
 	<script src="js/applicant_validations.js"></script>
 </head>
 <body>
+<%pageContext.setAttribute("now", new java.util.Date()); %> 
 <div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">5</div>
 <div style="font-size:20px;padding-top:10px;color:rgb(0, 128, 0,0.8);font-weight:bold;text-align:left;">
 	SECTION 5: Editing your Support Staff/Management HR Application Profile 
@@ -95,6 +99,7 @@
                                     	<input type="hidden" name="hstateprovince" id="hstateprovince" value="<%= edu.getSchoolProvince()%>" >
                                     	<input type="hidden" name="op" id="op" value="edit" >
                                     	<input type="hidden" name="id" id="id" value="<%= edu.getId()%>">
+                                    	<input type="hidden" name="ygraduated" id="ygraduated" value="<%= edu.getYearGraduated()%>" >
                                   <%}%>    
                            <input type="hidden" name="utype" id="utype" value="">
                            <table class='table table-striped table-condensed' style='font-size:12px;'>
@@ -127,17 +132,28 @@
                              <td class="tableResultL" id="schoolcityW"><input type="text" name="schoolcity" id="schoolcity" class="form-control" value='<%= edu != null ? edu.getSchoolCity():""%>'></td>
                              <td class="tableTitleR">School Province/State*:</td>
                              <td class="tableResultR" id="state_provinceW"><job:StateProvince id="state_province" cls="form-control" /></td>
-                             </tr>         
+                             </tr> 
+                             <tr>        
                              <td class="tableTitleL">Did you graduate?</td>
-                             <td class="tableResultL" id="graduatedW"><select id="graduated" name="graduated" class="form-control">
+                             <td class="tableResultL" id="graduatedW">
+                             		<select id="graduated" name="graduated" class="form-control">
                                         	<option value="">Please select</option>
                                         	<option value="Y">Yes</option>
                                         	<option value="N">No</option>
                                         	<option value="G">GED</option>
                                         </select>
+							</td>
+                             <td class="tableTitleL">Graduation Year?</td>
+                             <td class="tableResultL" id="graduatedy">
+                             	<fmt:formatDate value="${now}" pattern="yyyy" var="startdate"/>
+		        				<select id="yeargraduated" name="yeargraduated"  class="form-control"  style="width:auto;">
+									<option value="-1">Please select year</option>
+						            <c:forEach begin="0" end="75" var="val">
+						                <c:set var="decr" value="${(startdate) - val}"/>
+						                <option value="${decr}">${decr}</option>
+						            </c:forEach>
+								</select>
                              </td>
-                             <td></td>
-                             <td></td>
                              </tr>
                                </tbody>  
                                </table>     

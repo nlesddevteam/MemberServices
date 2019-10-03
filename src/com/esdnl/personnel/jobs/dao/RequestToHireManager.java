@@ -24,7 +24,7 @@ public class RequestToHireManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, abean.getJobTitle());
@@ -56,6 +56,7 @@ public class RequestToHireManager {
 			}else{
 				stat.setDate(18, null);
 			}
+			stat.setInt(19, abean.getPrivateList());
 			stat.execute();
 			abean.setId(((OracleCallableStatement) stat).getInt(1));
 
@@ -95,7 +96,7 @@ public class RequestToHireManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.setString(1, abean.getJobTitle());
 			stat.setString(2, abean.getPreviousIncumbent());
@@ -126,6 +127,7 @@ public class RequestToHireManager {
 			}else{
 				stat.setDate(17, null);
 			}
+			stat.setInt(18, abean.getPrivateList());
 			stat.execute();
 
 			stat.close();
@@ -333,6 +335,7 @@ public class RequestToHireManager {
 			
 			abean.setShiftDiff(rs.getInt("SHIFT_DIFF"));
 			abean.setPositionNumber(rs.getString("POSITION_NUMBER"));
+			abean.setPrivateList(rs.getInt("PRIVATE_LIST"));
 			if (rs.getDate("END_DATE") != null)
 				abean.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
 		}

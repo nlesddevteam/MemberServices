@@ -5,8 +5,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
+import com.esdnl.personnel.jobs.bean.RequestToHireHistoryBean;
 import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.personnel.jobs.dao.RequestToHireEmailManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireHistoryManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.personnel.v2.database.sds.LocationManager;
 import com.esdnl.personnel.v2.model.sds.bean.LocationBean;
@@ -66,20 +68,33 @@ public class SubmitRequestToHireRequestHandler extends RequestHandlerImpl {
 			}else{
 				rthb.setShiftDiff(0);
 			}
+			if(form.exists("private_list")){
+				rthb.setPrivateList(1);
+			}else{
+				rthb.setPrivateList(0);
+			}
 			if(form.getInt("rid") == -1){
 				RequestToHireManager.addRequestToHireBean(rthb);
+				//add the history item
+				RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
+				rhis.setRequestToHireId(rthb.getId());
+				rhis.setStatusId(RequestToHireStatus.SUBMITTED);
+				rhis.setNotes(RequestToHireStatus.SUBMITTED.getDescription() +": " + usr.getPersonnel().getFullName());
+				RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 				request.setAttribute("msg", "Request submitted");
 				//send email for approval/submitted
 				RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rthb.getId()));
 			}else{
 				rthb.setId(form.getInt("rid"));
 				RequestToHireManager.updateRequestToHireBean(rthb);
+				//add the history item
+				RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
+				rhis.setRequestToHireId(rthb.getId());
+				rhis.setStatusId(RequestToHireStatus.UPDATED);
+				rhis.setNotes(RequestToHireStatus.UPDATED.getDescription() +": " + usr.getPersonnel().getFullName());
+				RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 				request.setAttribute("msg", "Request updated");
 			}
-			
-			
-			
-			
 			
 			path = "addRequestToHire.html?rid=" + rthb.getId();	
 			

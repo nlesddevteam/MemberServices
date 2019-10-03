@@ -9,8 +9,10 @@ public class DocumentTypeSS {
 	public static final DocumentTypeSS FIRST_AID = new DocumentTypeSS(104, "First Aid");
 	public static final DocumentTypeSS WHMIS = new DocumentTypeSS(105, "WHMIS");
 	public static final DocumentTypeSS DRIVERS_LICENSE = new DocumentTypeSS(106, "Drivers License");
+	public static final DocumentTypeSS UNIVERSITY_TRANSSCRIPT = new DocumentTypeSS(107, "University Transcript");
+	public static final DocumentTypeSS DEGREES = new DocumentTypeSS(108, "Degrees");
 	public static final DocumentTypeSS[] ALL = new DocumentTypeSS[] {
-		DRIVERS_ABSTRACT,OHS_TRAINING,CODE_OF_CONDUCT,FIRST_AID,WHMIS,DRIVERS_LICENSE
+		DRIVERS_ABSTRACT,OHS_TRAINING,CODE_OF_CONDUCT,FIRST_AID,WHMIS,DRIVERS_LICENSE,UNIVERSITY_TRANSSCRIPT,DEGREES
 	};
 
 	private DocumentTypeSS(int value, String desc) {

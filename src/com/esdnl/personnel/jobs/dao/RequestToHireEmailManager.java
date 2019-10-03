@@ -10,6 +10,7 @@ import com.awsd.personnel.PersonnelException;
 import com.awsd.school.SchoolDB;
 import com.awsd.school.SchoolException;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
+import com.esdnl.personnel.jobs.bean.RequestToHireHistoryBean;
 import com.esdnl.velocity.VelocityUtils;
 
 public class RequestToHireEmailManager {
@@ -78,6 +79,7 @@ public class RequestToHireEmailManager {
 			String emailsubject="";
 			EmailBean ebean = new EmailBean();
 			HashMap<String, Object> model = new HashMap<String, Object>();
+			StringBuilder historyNotes = new StringBuilder();
 			switch(rbean.getStatus().getValue()){
 			case 1://submitted
 				//user and division manager
@@ -88,6 +90,7 @@ public class RequestToHireEmailManager {
 				model.put("alevel","1" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+				historyNotes.append("Approval Email Sent To:");
 				break;
 			case 2://Division Approval
 				//user,division manager
@@ -98,6 +101,7 @@ public class RequestToHireEmailManager {
 				model.put("alevel","2" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+				historyNotes.append("Approval Email Sent To:");
 				break;
 			case 3://Comptroller Approval
 				//user,division manager
@@ -108,6 +112,7 @@ public class RequestToHireEmailManager {
 				model.put("alevel","3" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+				historyNotes.append("Approval Email Sent To:");
 				break;
 			case 4://Assistant Director Approval
 				//user,division manager
@@ -118,6 +123,7 @@ public class RequestToHireEmailManager {
 				model.put("alevel","4" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+				historyNotes.append("Approval Email Sent To:");
 				break;
 			case 5://Assistant Director HR Approval
 				//send email to user
@@ -130,6 +136,7 @@ public class RequestToHireEmailManager {
 				model.put("alevel","5" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire for " + rbean.getRequestBy() + " ready to be posted";
+				historyNotes.append("Ready To Post Email Sent To:");
 				break;
 			case 6://Ad Created
 				//send email to user
@@ -139,6 +146,7 @@ public class RequestToHireEmailManager {
 				model.put("alevel","6" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire for " + rbean.getRequestBy() + " has been posted";
+				historyNotes.append("Posted Email Sent");
 				break;
 			case 7://Rejected
 				//user
@@ -149,11 +157,12 @@ public class RequestToHireEmailManager {
 				model.put("alevel","5" );
 				model.put("requestTitle",rbean.getJobTitle() );
 				emailsubject="Request To Hire for " + rbean.getRequestBy() + " has been declined";
+				historyNotes.append("Declined Email Sent To:");
 				break;
 			default:
 				break;
 			}
-		
+			
 			
 			//email  region hr seo
 			for (Personnel p : to) {
@@ -162,8 +171,14 @@ public class RequestToHireEmailManager {
 				ebean.setBody(VelocityUtils.mergeTemplateIntoString(emailtemplate, model));
 				ebean.setFrom("ms@nlesd.ca");
 				ebean.send();
-				
+				historyNotes.append(" " + p.getFullName());
 				}
+			//add history object
+			RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
+			rhis.setRequestToHireId(rbean.getId());
+			rhis.setStatusId(rbean.getStatus());
+			rhis.setNotes(historyNotes.toString());
+			RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 				
 			
 		}  catch (PersonnelException e) {

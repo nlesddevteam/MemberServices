@@ -4,7 +4,11 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.esdnl.personnel.jobs.bean.RequestToHireHistoryBean;
+import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.personnel.jobs.dao.RequestToHireEmailManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireHistoryManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.util.StringUtils;
@@ -27,6 +31,11 @@ public class ApproveRequestToHireCompRequestHandler extends RequestHandlerImpl {
 				String pnumber = form.get("pnumber");
 				if(statustype.equals("A")){
 					RequestToHireManager.approveRequestToHireBCPos(rid,status, Integer.toString(usr.getPersonnel().getPersonnelID()),pnumber);
+					RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
+					rhis.setNotes(RequestToHireStatus.get(status).getDescription() + ":" + usr.getPersonnel().getFullName());
+					rhis.setRequestToHireId(rid);
+					rhis.setStatusId(RequestToHireStatus.get(status));
+					RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 					//send email to next approval
 					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid));
 				}
