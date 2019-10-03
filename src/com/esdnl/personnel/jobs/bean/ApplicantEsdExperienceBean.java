@@ -109,7 +109,7 @@ public class ApplicantEsdExperienceBean implements Serializable {
 			txt = "District Office";
 			break;
 		case -998:
-			txt = "Eastern Regional Office";
+			txt = "Avalon Regional Office";
 			break;
 		case -100:
 			txt = "Avalon East Region";
@@ -175,7 +175,7 @@ public class ApplicantEsdExperienceBean implements Serializable {
 			txt = "District Office";
 			break;
 		case -998:
-			txt = "Eastern Regional Office";
+			txt = "Avalon Regional Office";
 			break;
 		case -100:
 			txt = "Avalon East Region";

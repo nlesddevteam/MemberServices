@@ -11,6 +11,7 @@ public class ApplicantEducationSecSSBean implements Serializable {
 	private String schoolProvince;
 	private String yearsCompleted;
 	private String graduated;
+	private String yearGraduated;
 	public int getId() {
 		return id;
 	}
@@ -71,5 +72,11 @@ public class ApplicantEducationSecSSBean implements Serializable {
 			}
 		}
 		return stext;
+	}
+	public String getYearGraduated() {
+		return yearGraduated;
+	}
+	public void setYearGraduated(String yearGraduated) {
+		this.yearGraduated = yearGraduated;
 	}
 }

@@ -12,8 +12,11 @@ public class RequestToHireStatus {
 	public static final RequestToHireStatus APPROVEDASSISTANTHR = new RequestToHireStatus(5, "Approved Assistant Director HR");
 	public static final RequestToHireStatus ADCREATED = new RequestToHireStatus(6, "AD Created");
 	public static final RequestToHireStatus REJECTED = new RequestToHireStatus(7, "Rejected");
+	public static final RequestToHireStatus NOTIFICATIONSENT = new RequestToHireStatus(9, "Notification Sent");
+	public static final RequestToHireStatus NOTIFICATIONRESENT = new RequestToHireStatus(10, "Notification Resent");
+	public static final RequestToHireStatus UPDATED = new RequestToHireStatus(11, "Updated");
 	public static final RequestToHireStatus[] ALL = new RequestToHireStatus[] {
-		SUBMITTED, APPROVEDDIVISION, APPROVEDBUDGET, APPROVEDASSISTANT,APPROVEDASSISTANTHR,ADCREATED,REJECTED
+		SUBMITTED, APPROVEDDIVISION, APPROVEDBUDGET, APPROVEDASSISTANT,APPROVEDASSISTANTHR,ADCREATED,REJECTED,NOTIFICATIONSENT,NOTIFICATIONRESENT,UPDATED
 	};
 
 	private RequestToHireStatus(int value, String desc) {
