@@ -4,18 +4,46 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Vector;
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
+import java.util.stream.Collectors;
+
+import com.awsd.mail.bean.AlertBean;
+import com.awsd.mail.bean.EmailException;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.webupdatesystem.banners.bean.BannersBean;
 import com.esdnl.webupdatesystem.banners.bean.BannersException;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
 public class BannersManager {
+
+	private static Map<Integer, BannersBean> BANNER_CACHE;
+
+	static {
+		BANNER_CACHE = Collections.synchronizedMap(new LinkedHashMap<Integer, BannersBean>());
+
+		try {
+			BANNER_CACHE.putAll(getBanners().stream().collect(Collectors.toMap(BannersBean::getId, banner -> banner)));
+		}
+		catch (BannersException e) {
+			try {
+				new AlertBean(e);
+			}
+			catch (EmailException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
 	public static int addBanner(BannersBean ebean) {
+
 		Connection con = null;
 		CallableStatement stat = null;
-		int id=0;
+		int id = 0;
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
@@ -31,8 +59,12 @@ public class BannersManager {
 			stat.setString(9, ebean.getBannerCode());
 			stat.setString(10, ebean.getAddedBy());
 			stat.execute();
-			id=((CallableStatement) stat).getInt(1);
-			}
+			id = ((CallableStatement) stat).getInt(1);
+
+			//ADD TO CACHE
+			ebean.setId(id);
+			BANNER_CACHE.put(id, ebean);
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -53,81 +85,105 @@ public class BannersManager {
 		}
 		return id;
 	}
+
 	public static Vector<BannersBean> getBanners() throws BannersException {
-		Vector<BannersBean> mms = null;
-		BannersBean mm = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
-		try {
-			mms = new Vector<BannersBean>(5);
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.get_banners; end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
-			while (rs.next()) {
-				mm = createBannersBean(rs);
-				mms.add(mm);
-			}
+
+		if (BANNER_CACHE != null && BANNER_CACHE.size() > 0) {
+			Vector<BannersBean> mms = new Vector<BannersBean>(5);
+			mms.addAll(BANNER_CACHE.values());
+
+			return mms;
 		}
-		catch (SQLException e) {
-			System.err.println("BannersManager.getBanners: " + e);
-			throw new BannersException("Can not extract Banners from DB: " + e);
+		else {
+			System.out.println("**** NOT USING BANNER CACHE! ****");
+
+			Vector<BannersBean> mms = null;
+			BannersBean mm = null;
+			Connection con = null;
+			CallableStatement stat = null;
+			ResultSet rs = null;
+			try {
+				mms = new Vector<BannersBean>(5);
+				con = DAOUtils.getConnection();
+				stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.get_banners; end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.execute();
+				rs = ((OracleCallableStatement) stat).getCursor(1);
+				while (rs.next()) {
+					mm = createBannersBean(rs);
+					mms.add(mm);
+				}
+			}
+			catch (SQLException e) {
+				System.err.println("BannersManager.getBanners: " + e);
+				throw new BannersException("Can not extract Banners from DB: " + e);
+			}
+			finally {
+				try {
+					rs.close();
+				}
+				catch (Exception e) {}
+				try {
+					stat.close();
+				}
+				catch (Exception e) {}
+				try {
+					con.close();
+				}
+				catch (Exception e) {}
+			}
+			return mms;
 		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-		return mms;
 	}
+
 	public static BannersBean getBannerById(int id) throws BannersException {
-		BannersBean mm = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
-		try {
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.get_banner_by_id(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setInt(2, id);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
-			while (rs.next()) {
-				mm = createBannersBean(rs);
-			}
+
+		if (BANNER_CACHE != null && BANNER_CACHE.containsKey(id)) {
+			return BANNER_CACHE.get(id);
 		}
-		catch (SQLException e) {
-			System.err.println("BannersManager.getBannerById: " + e);
-			throw new BannersException("Can not extract Banner from DB: " + e);
+		else {
+			BannersBean mm = null;
+			Connection con = null;
+			CallableStatement stat = null;
+			ResultSet rs = null;
+			try {
+				con = DAOUtils.getConnection();
+				stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.get_banner_by_id(?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setInt(2, id);
+				stat.execute();
+				rs = ((OracleCallableStatement) stat).getCursor(1);
+				if (rs.next()) {
+					mm = createBannersBean(rs);
+				}
+
+				//ADD TO CACHE
+				BANNER_CACHE.put(mm.getId(), mm);
+			}
+			catch (SQLException e) {
+				System.err.println("BannersManager.getBannerById: " + e);
+				throw new BannersException("Can not extract Banner from DB: " + e);
+			}
+			finally {
+				try {
+					rs.close();
+				}
+				catch (Exception e) {}
+				try {
+					stat.close();
+				}
+				catch (Exception e) {}
+				try {
+					con.close();
+				}
+				catch (Exception e) {}
+			}
+			return mm;
 		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-		return mm;
 	}
+
 	public static void updateBanner(BannersBean ebean) {
+
 		Connection con = null;
 		CallableStatement stat = null;
 		try {
@@ -145,7 +201,10 @@ public class BannersManager {
 			stat.setString(9, ebean.getAddedBy());
 			stat.setInt(10, ebean.getId());
 			stat.execute();
-			}
+
+			//UPDATE CACHE
+			BANNER_CACHE.put(ebean.getId(), ebean);
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -165,7 +224,9 @@ public class BannersManager {
 			catch (Exception e) {}
 		}
 	}
+
 	public static void deleteBanner(Integer tid) {
+
 		Connection con = null;
 		CallableStatement stat = null;
 		try {
@@ -174,7 +235,10 @@ public class BannersManager {
 			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.delete_banner(?); end;");
 			stat.setInt(1, tid);
 			stat.execute();
-			}
+
+			//UPDATE CACHE
+			BANNER_CACHE.remove(tid);
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -193,9 +257,11 @@ public class BannersManager {
 			}
 			catch (Exception e) {}
 		}
-		
+
 	}
+
 	public static BannersBean createBannersBean(ResultSet rs) {
+
 		BannersBean abean = null;
 		try {
 			abean = new BannersBean();
@@ -215,5 +281,5 @@ public class BannersManager {
 			abean = null;
 		}
 		return abean;
-	}	
+	}
 }
