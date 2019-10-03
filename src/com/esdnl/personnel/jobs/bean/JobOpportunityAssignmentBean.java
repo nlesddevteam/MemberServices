@@ -114,7 +114,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 			txt = "District Office";
 			break;
 		case -998:
-			txt = "Eastern Regional Office";
+			txt = "Avalon Regional Office";
 			break;
 		case -100:
 			txt = "Avalon East Region";
@@ -175,7 +175,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 					zone = SchoolZoneService.getSchoolZoneBean(1);
 					break;
 				case -998:
-					//txt = "Eastern Regional Office";
+					//txt = "Avalon Regional Office";
 					zone = SchoolZoneService.getSchoolZoneBean(1);
 					break;
 				case -100:

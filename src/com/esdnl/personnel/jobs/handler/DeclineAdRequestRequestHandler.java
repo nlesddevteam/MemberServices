@@ -53,7 +53,16 @@ public class DeclineAdRequestRequestHandler implements RequestHandler {
 					HashMap<String, Object> model = new HashMap<String, Object>();
 					// set values to be used in template
 					model.put("requesterName", usr.getPersonnel().getFullNameReverse());
-					model.put("competitionTitle", req.getTitle());
+					if(req.getLocation() != null) {
+						StringBuilder sb= new StringBuilder();
+						sb.append(req.getTitle());
+						sb.append(" [ " + req.getLocation().getLocationDescription() + " ]");
+						model.put("competitionTitle", sb.toString());
+					}else {
+						
+						model.put("competitionTitle", req.getTitle());
+					}
+					
 					EmailBean email = new EmailBean();
 					email.setTo(history.getPersonnel().getEmailAddress());
 					email.setSubject("NLESD Personnel Package: Job Ad Request Declined");
