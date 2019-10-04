@@ -5,38 +5,29 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimStatus;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class PrintTravelClaimDetailsRequestHandler implements RequestHandler {
+public class PrintTravelClaimDetailsRequestHandler extends RequestHandlerImpl {
+
+	public PrintTravelClaimDetailsRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		HttpSession session = null;
-		User usr = null;
-		String path = "";
+		super.handleRequest(request, response);
 
 		TravelClaim claim = null;
 		int id = -1;
-
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-VIEW"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			throw new SecurityException("User login required.");
-		}
 
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -51,9 +42,10 @@ public class PrintTravelClaimDetailsRequestHandler implements RequestHandler {
 			if (claim != null) {
 				if ((usr.getPersonnel().getPersonnelID() == claim.getSupervisor().getPersonnelID())
 						|| ((claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)
-								|| claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING) || claim.getCurrentStatus().equals(
-								TravelClaimStatus.PAID)) && (usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") || usr.getUserPermissions().containsKey(
-								"TRAVEL-CLAIM-SEARCH")))) {
+								|| claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING)
+								|| claim.getCurrentStatus().equals(TravelClaimStatus.PAID))
+								&& (usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")
+										|| usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SEARCH")))) {
 
 					request.setAttribute("SUPERVISOR", "true");
 					if (claim.getCurrentStatus().equals(TravelClaimStatus.SUBMITTED)

@@ -2,35 +2,46 @@ package com.awsd.travel.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.awsd.travel.TravelClaimKMRate;
 import com.awsd.travel.TravelClaimKMRateDB;
 import com.esdnl.servlet.RequestHandlerImpl;
 
 public class AddNewKmRateAjaxRequestHandler extends RequestHandlerImpl {
+
 	public AddNewKmRateAjaxRequestHandler() {
 
+		this.requiredPermissions = new String[] {
+				"TRAVEL-CLAIM-ADMIN"
+		};
 	}
+
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException{
+			throws ServletException,
+				IOException {
+
 		super.handleRequest(request, response);
-        TravelClaimKMRate trate = new TravelClaimKMRate();
-        trate.setEffectiveStartDate(form.getDate("estartdate"));
-        trate.setBaseRate(form.getDouble("basekmrate"));
-        trate.setEffectiveEndDate(form.getDate("eenddate"));
-        trate.setApprovedRate(form.getDouble("approvedkmrate"));
-        boolean result=false;
-        
-        if(form.get("op").equals("ADD")){
-        	result = TravelClaimKMRateDB.addClaimKmRate(trate);
-        }else{
-        	result = TravelClaimKMRateDB.updateClaimKmRate(trate);
-        }
-        	
-        if(result){
+
+		TravelClaimKMRate trate = new TravelClaimKMRate();
+		trate.setEffectiveStartDate(form.getDate("estartdate"));
+		trate.setBaseRate(form.getDouble("basekmrate"));
+		trate.setEffectiveEndDate(form.getDate("eenddate"));
+		trate.setApprovedRate(form.getDouble("approvedkmrate"));
+		boolean result = false;
+
+		if (form.get("op").equals("ADD")) {
+			result = TravelClaimKMRateDB.addClaimKmRate(trate);
+		}
+		else {
+			result = TravelClaimKMRateDB.updateClaimKmRate(trate);
+		}
+
+		if (result) {
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<TRAVELCLAIMS>");
@@ -46,7 +57,8 @@ public class AddNewKmRateAjaxRequestHandler extends RequestHandlerImpl {
 			out.write(xml);
 			out.flush();
 			out.close();
-        }else{
+		}
+		else {
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<TRAVELCLAIMS>");
@@ -62,6 +74,7 @@ public class AddNewKmRateAjaxRequestHandler extends RequestHandlerImpl {
 			out.write(xml);
 			out.flush();
 			out.close();
-        }   return null;
+		}
+		return null;
 	}
 }

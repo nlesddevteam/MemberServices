@@ -8,7 +8,6 @@ import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -16,8 +15,6 @@ import com.awsd.common.Utils;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
 import com.awsd.personnel.Personnel;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
 import com.awsd.travel.PDTravelClaim;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
@@ -29,31 +26,25 @@ import com.esdnl.velocity.VelocityUtils;
 
 public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 
+	public PaymentPendingTravelClaimAjaxRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW"
+		};
+	}
+
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		HttpSession session = null;
-		User usr = null;
+		super.handleRequest(request, response);
+
 		TravelClaim claim = null;
 		Personnel claim_owner = null;
 		int id = -1;
 		boolean iserror = false;
 		String errormessage = "";
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW"))) {
-				iserror = true;
-				errormessage = "Illegal Access [" + usr.getLotusUserFullName() + "]";
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			iserror = true;
-			errormessage = "User login required.";
-			throw new SecurityException("User login required.");
-		}
+
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
 		}
@@ -67,27 +58,30 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 				if (TravelClaimDB.setCurrentStatus(claim, usr.getPersonnel(), TravelClaimStatus.PAYMENT_PENDING)) {
 					claim_owner = claim.getPersonnel();
 					if ((request.getParameter("note") != null) && !request.getParameter("note").trim().equals("")) {
-						TravelClaimNoteDB.addClaimNote(claim, new TravelClaimNote(usr.getPersonnel(), request.getParameter("note")));
+						TravelClaimNoteDB.addClaimNote(claim,
+								new TravelClaimNote(usr.getPersonnel(), request.getParameter("note")));
 						iserror = false;
 						errormessage = "SUCCESS";
 						try {
 							EmailBean email = new EmailBean();
 							email.setTo(new String[] {
-								claim_owner.getEmailAddress()
+									claim_owner.getEmailAddress()
 							});
 							email.setCC(new String[] {
-								usr.getPersonnel().getEmailAddress()
+									usr.getPersonnel().getEmailAddress()
 							});
 							email.setSubject("NLESD TravelClaim System - PAYMENT PENDING - Futher Information Required.");
 							HashMap<String, Object> model = new HashMap<String, Object>();
 							model.put("ownerfirst", claim_owner.getFirstName());
-							String fiscalyear = (!(claim instanceof PDTravelClaim) ? Utils.getMonthString(claim.getFiscalMonth())
-									+ " " + Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) : " PD on "
-									+ new SimpleDateFormat("EEE MMM dd, yyyy").format(((PDTravelClaim) claim).getPD().getStartDate()));
+							String fiscalyear = (!(claim instanceof PDTravelClaim)
+									? Utils.getMonthString(claim.getFiscalMonth()) + " "
+											+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())
+									: " PD on " + new SimpleDateFormat("EEE MMM dd, yyyy").format(
+											((PDTravelClaim) claim).getPD().getStartDate()));
 							//String fiscalyear = Utils.getMonthString(claim.getFiscalMonth()) + " " + Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear());
 							model.put("fiscalyear", fiscalyear);
-							String claimnote = StringUtils.isNotEmpty(request.getParameter("note")) ? request.getParameter("note").replace(
-									"\r\n", "<br />")
+							String claimnote = StringUtils.isNotEmpty(request.getParameter("note"))
+									? request.getParameter("note").replace("\r\n", "<br />")
 									: "";
 							model.put("claimnote", claimnote);
 							model.put("alink",
@@ -95,8 +89,8 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 							String maillink = "<a href='mailto:" + usr.getPersonnel().getEmailAddress() + "'>"
 									+ usr.getPersonnel().getFullNameReverse() + "</a>";
 							model.put("maillink", maillink);
-							email.setBody(VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_claim_payment_pending.vm",
-									model));
+							email.setBody(
+									VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_claim_payment_pending.vm", model));
 							email.setFrom("ms@nlesd.ca");
 							email.send();
 
@@ -114,10 +108,10 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 						try {
 							EmailBean email = new EmailBean();
 							email.setTo(new String[] {
-								claim_owner.getEmailAddress()
+									claim_owner.getEmailAddress()
 							});
 							email.setCC(new String[] {
-							//usr.getPersonnel().getEmailAddress()
+									//usr.getPersonnel().getEmailAddress()
 							});
 							email.setSubject("NLESD TravelClaim System - PAYMENT PENDING - Futher Information Required.");
 							HashMap<String, Object> model = new HashMap<String, Object>();
@@ -125,8 +119,8 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 							String fiscalyear = Utils.getMonthString(claim.getFiscalMonth()) + " "
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear());
 							model.put("fiscalyear", fiscalyear);
-							String claimnote = StringUtils.isNotEmpty(request.getParameter("note")) ? request.getParameter("note").replace(
-									"\r\n", "<br />")
+							String claimnote = StringUtils.isNotEmpty(request.getParameter("note"))
+									? request.getParameter("note").replace("\r\n", "<br />")
 									: "";
 							model.put("claimnote", claimnote);
 							model.put("alink",
@@ -134,8 +128,8 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 							String maillink = "<a href='mailto:" + usr.getPersonnel().getEmailAddress() + "'>"
 									+ usr.getPersonnel().getFullNameReverse() + "</a>";
 							model.put("maillink", maillink);
-							email.setBody(VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_claim_payment_pending.vm",
-									model));
+							email.setBody(
+									VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_claim_payment_pending.vm", model));
 							email.setFrom("ms@nlesd.ca");
 							email.send();
 						}
