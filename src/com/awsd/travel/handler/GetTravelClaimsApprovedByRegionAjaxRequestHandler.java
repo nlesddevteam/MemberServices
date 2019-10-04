@@ -61,7 +61,7 @@ public class GetTravelClaimsApprovedByRegionAjaxRequestHandler extends RequestHa
 									sb.append("<TYPE>PD</TYPE>");
 									sb.append("<ID>" + claim.getClaimID() + "</ID>");
 									if(claim.getSupervisor() == null) {
-										sb.append("<SUPERVISOR></SUPERVISOR>");
+										sb.append("<SUPERVISOR>N/A</SUPERVISOR>");
 										}else {
 										sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
 										}
