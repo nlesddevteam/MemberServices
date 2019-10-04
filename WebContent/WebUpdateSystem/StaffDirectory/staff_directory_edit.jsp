@@ -226,6 +226,8 @@
 	                     <select id='posPrimary' name='posPrimary' class="form-control">
 	                    <option value="N/A">---- Please Select (Required) ----</option>
 	                   	<option value="Accounts Payable Clerk">Accounts Payable Clerk</option>
+	                   	<option value="Accounts Payable Clerk I">Accounts Payable Clerk I</option>
+	                   	<option value="Accounts Payable Clerk II">Accounts Payable Clerk II</option>
 						<option value="Accounts Receivable Clerk">Accounts Receivable Clerk</option>
 						<option value="Accounts Supervisor">Accounts Supervisor</option>
 						<option value="Active Schools Coordinator">Active Schools Coordinator</option>
@@ -243,6 +245,9 @@
 						<option value="CEO/Director of Education">CEO/Director of Education</option>
 						<option value="CFO/Assistant Director of Education">CFO/Assistant Director of Education</option>
 						<option value="Classroom Teacher">Classroom Teacher</option>
+						<option value="Clerk I">Clerk I</option>
+						<option value="Clerk II">Clerk II</option>
+						<option value="Clerk III">Clerk III</option>
 						<option value="Clerk IV">Clerk IV</option>
 						<option value="Comptroller/Director of Financial Services">Comptroller/Director of Financial Services</option>
 						<option value="Computer Programmer Analyst">Computer Programmer Analyst</option>
