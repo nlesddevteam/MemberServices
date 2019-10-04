@@ -226,6 +226,8 @@
 	                     <select id='posPrimary' name='posPrimary' class="form-control">
 	                    <option value="N/A">---- Please Select (Required) ----</option>
 	                   	<option value="Accounts Payable Clerk">Accounts Payable Clerk</option>
+	                   	<option value="Accounts Payable Clerk I">Accounts Payable Clerk I</option>
+	                   	<option value="Accounts Payable Clerk II">Accounts Payable Clerk II</option>
 						<option value="Accounts Receivable Clerk">Accounts Receivable Clerk</option>
 						<option value="Accounts Supervisor">Accounts Supervisor</option>
 						<option value="Active Schools Coordinator">Active Schools Coordinator</option>
