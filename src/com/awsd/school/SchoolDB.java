@@ -666,7 +666,7 @@ public class SchoolDB {
 		}
 		return (check && su && apu);
 	}
-
+	
 	public static boolean updateSchoolTeacherSupervisor(School s) throws SchoolException {
 
 		Connection con = null;
