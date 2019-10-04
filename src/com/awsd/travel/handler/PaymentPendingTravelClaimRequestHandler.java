@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -13,39 +12,31 @@ import com.awsd.common.Utils;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
 import com.awsd.personnel.Personnel;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimNote;
 import com.awsd.travel.TravelClaimNoteDB;
 import com.awsd.travel.TravelClaimStatus;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class PaymentPendingTravelClaimRequestHandler implements RequestHandler {
+public class PaymentPendingTravelClaimRequestHandler extends RequestHandlerImpl {
+
+	public PaymentPendingTravelClaimRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		HttpSession session = null;
-		User usr = null;
-		String path = "";
+		super.handleRequest(request, response);
 
 		TravelClaim claim = null;
 		Personnel claim_owner = null;
 		int id = -1;
-
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			throw new SecurityException("User login required.");
-		}
 
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -74,25 +65,21 @@ public class PaymentPendingTravelClaimRequestHandler implements RequestHandler {
 								try {
 									EmailBean email = new EmailBean();
 									email.setTo(new String[] {
-										claim_owner.getEmailAddress()
+											claim_owner.getEmailAddress()
 									});
 									email.setCC(new String[] {
-										usr.getPersonnel().getEmailAddress()
+											usr.getPersonnel().getEmailAddress()
 									});
 									email.setSubject("NLESD TravelClaim System - PAYMENT PENDING - Futher Information Required.");
-									email.setBody(claim_owner.getFirstName()
-											+ ", <br/><br/>Your claim for "
-											+ Utils.getMonthString(claim.getFiscalMonth())
-											+ " "
+									email.setBody(claim_owner.getFirstName() + ", <br/><br/>Your claim for "
+											+ Utils.getMonthString(claim.getFiscalMonth()) + " "
 											+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())
 											+ " has been delayed pending the receival of further travel details; more specifically:<br/><br/>"
-											+ (StringUtils.isNotEmpty(request.getParameter("note")) ? request.getParameter("note").replace(
-													"\r\n", "<br />")
-													+ "<br /><br />" : "")
+											+ (StringUtils.isNotEmpty(request.getParameter("note"))
+													? request.getParameter("note").replace("\r\n", "<br />") + "<br /><br />"
+													: "")
 											+ "If you need to submit receipts; send originals to the attention of <a href='mailto:"
-											+ usr.getPersonnel().getEmailAddress()
-											+ "'>"
-											+ usr.getPersonnel().getFullNameReverse()
+											+ usr.getPersonnel().getEmailAddress() + "'>" + usr.getPersonnel().getFullNameReverse()
 											+ "</a>.<br/><br/> "
 											+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br/><br/>"
 											+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br/><br/>"
@@ -112,21 +99,17 @@ public class PaymentPendingTravelClaimRequestHandler implements RequestHandler {
 								try {
 									EmailBean email = new EmailBean();
 									email.setTo(new String[] {
-										claim_owner.getEmailAddress()
+											claim_owner.getEmailAddress()
 									});
 									email.setCC(new String[] {
-										usr.getPersonnel().getEmailAddress()
+											usr.getPersonnel().getEmailAddress()
 									});
 									email.setSubject("NLESD TravelClaim System - PAYMENT PENDING - Futher Information Required.");
-									email.setBody(claim_owner.getFirstName()
-											+ ", <br><br>Your claim for "
-											+ Utils.getMonthString(claim.getFiscalMonth())
-											+ " "
+									email.setBody(claim_owner.getFirstName() + ", <br><br>Your claim for "
+											+ Utils.getMonthString(claim.getFiscalMonth()) + " "
 											+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())
 											+ " has been delayed pending the receival of further travel details. <br/><br/>If you need to submit receipts; send originals to the attention of <a href='mailto:"
-											+ usr.getPersonnel().getEmailAddress()
-											+ "'>"
-											+ usr.getPersonnel().getFullNameReverse()
+											+ usr.getPersonnel().getEmailAddress() + "'>" + usr.getPersonnel().getFullNameReverse()
 											+ "</a>.<br /><br />"
 											+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br><br>"
 											+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br><br>"

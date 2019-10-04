@@ -6,16 +6,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.personnel.Personnel;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.profile.ProfileDB;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimException;
@@ -28,36 +27,31 @@ import com.esdnl.velocity.VelocityUtils;
 
 public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 
+	public SubmitTravelClaimAjaxRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-VIEW"
+		};
+	}
+
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
-		HttpSession session = null;
-		User usr = null;
+
+		super.handleRequest(request, response);
+
 		TravelClaim claim = null;
 		int id = -1;
 		boolean check = false;
 		Personnel claim_owner = null;
 		Personnel supervisor = null;
 		boolean iserror = false;
-		String errormessage="";
+		String errormessage = "";
 		// SMTPAuthenticatedMail smtp = null;
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-VIEW"))) {
-				iserror=true;
-				errormessage="Illegal Access [" + usr.getLotusUserFullName() + "]";
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			iserror=true;
-			errormessage="User login required.";
-			throw new SecurityException("User login required.");
-		}
-		if (ProfileDB.getProfile(usr.getPersonnel()) == null){
-			iserror=true;
-			errormessage="No Profile Found";
+
+		if (ProfileDB.getProfile(usr.getPersonnel()) == null) {
+			iserror = true;
+			errormessage = "No Profile Found";
 		}
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -66,17 +60,18 @@ public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 			id = -1;
 		}
 		if (id < 1) {
-			iserror=true;
-			errormessage="<<<<< CLAIM ID IS REQUIRED FOR SUBMIT OPERATION.  >>>>>";
+			iserror = true;
+			errormessage = "<<<<< CLAIM ID IS REQUIRED FOR SUBMIT OPERATION.  >>>>>";
 			throw new TravelClaimException("<<<<< CLAIM ID IS REQUIRED FOR SUBMIT OPERATION.  >>>>>");
-		}else{
+		}
+		else {
 			claim = TravelClaimDB.getClaim(id);
 			if (claim.getPersonnel().getPersonnelID() != usr.getPersonnel().getPersonnelID()) {
-				iserror=true;
-				errormessage="You do not have permission to submit this travel claim.";
+				iserror = true;
+				errormessage = "You do not have permission to submit this travel claim.";
 			}
 		}
-		if(iserror){
+		if (iserror) {
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<TRAVELCLAIMS>");
@@ -91,16 +86,17 @@ public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 			response.setHeader("Cache-Control", "no-cache");
 			out.write(xml);
 			out.flush();
-			out.close();			
-		}else{
+			out.close();
+		}
+		else {
 			// check of travel budget available funds.
 			boolean bcheck = false;
 			TravelClaimSummary summary = null;
 			TravelBudget budget = TravelBudgetService.getTravelBudget(usr.getPersonnel(), claim.getFiscalYear());
 			if (budget != null) {
 				summary = claim.getSummaryTotals();
-				BigDecimal diff = new BigDecimal(Double.toString(budget.getAmount() - budget.getAmountClaimed()
-						- summary.getSummaryTotal()));
+				BigDecimal diff = new BigDecimal(Double.toString(
+						budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal()));
 				if (diff.setScale(2, RoundingMode.HALF_EVEN).doubleValue() >= 0)
 					bcheck = true;
 				else
@@ -111,26 +107,28 @@ public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 			if (bcheck) {
 				check = TravelClaimDB.setCurrentStatus(claim, usr.getPersonnel(), TravelClaimStatus.SUBMITTED);
 				if (check) {
-					iserror=true;
-					errormessage="SUCCESS";
+					iserror = true;
+					errormessage = "SUCCESS";
 					claim_owner = claim.getPersonnel();
 					supervisor = claim.getSupervisor();
 					try {
 						EmailBean email = new EmailBean();
 						email.setTo(new String[] {
-							supervisor.getEmailAddress()	
+								supervisor.getEmailAddress()
 						});
 						email.setSubject("Travel Claim Pending Approval for " + claim_owner.getFullNameReverse());
 						HashMap<String, Object> model = new HashMap<String, Object>();
-						model.put("superfirst",supervisor.getFirstName());
-						model.put("ownerfull",claim_owner.getFullNameReverse());
-						model.put("alink","<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a>");
+						model.put("superfirst", supervisor.getFirstName());
+						model.put("ownerfull", claim_owner.getFullNameReverse());
+						model.put("alink",
+								"<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a>");
 						email.setBody(VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_claim_approval.vm", model));
 						email.setFrom("ms@nlesd.ca");
 						email.send();
-					}catch (Exception e) {
-						iserror=true;
-						errormessage="Claim submitted, supervisory email not sent.";
+					}
+					catch (Exception e) {
+						iserror = true;
+						errormessage = "Claim submitted, supervisory email not sent.";
 					}
 					// check if less then 10% budget remaining
 					if ((budget != null)
@@ -143,18 +141,19 @@ public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 
 							EmailBean email = new EmailBean();
 							email.setTo(new String[] {
-								budget.getDivision().getAssistantDirector().getEmailAddress()
+									budget.getDivision().getAssistantDirector().getEmailAddress()
 							});
 							email.setCC(new String[] {
-								supervisor.getEmailAddress()
+									supervisor.getEmailAddress()
 							});
 							email.setSubject("Travel budget less then 10% - " + claim_owner.getFullNameReverse());
 							HashMap<String, Object> model = new HashMap<String, Object>();
-							model.put("ownerfull",claim_owner.getFullNameReverse());
-							model.put("fiscalyear",budget.getFiscalYear());
-							model.put("budgetamount",df.format(budget.getAmount()));
-							model.put("ytdbudget",df.format(budget.getAmountClaimed() + summary.getSummaryTotal()));
-							model.put("available",df.format(budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal()));
+							model.put("ownerfull", claim_owner.getFullNameReverse());
+							model.put("fiscalyear", budget.getFiscalYear());
+							model.put("budgetamount", df.format(budget.getAmount()));
+							model.put("ytdbudget", df.format(budget.getAmountClaimed() + summary.getSummaryTotal()));
+							model.put("available",
+									df.format(budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal()));
 							email.setBody(VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_budget_warning.vm", model));
 							email.setFrom("ms@nlesd.ca");
 							//email.send();
@@ -164,12 +163,14 @@ public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 								email = new EmailBean();
 								email.setSubject("Travel budget less then 10% - " + claim_owner.getFullNameReverse());
 								model = new HashMap<String, Object>();
-								model.put("ownerfull",claim_owner.getFullNameReverse());
-								model.put("fiscalyear",budget.getFiscalYear());
-								model.put("budgetamount",df.format(budget.getAmount()));
-								model.put("ytdbudget",df.format(budget.getAmountClaimed() + summary.getSummaryTotal()));
-								model.put("available",df.format(budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal()));
-								email.setBody(VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_budget_warning.vm", model));
+								model.put("ownerfull", claim_owner.getFullNameReverse());
+								model.put("fiscalyear", budget.getFiscalYear());
+								model.put("budgetamount", df.format(budget.getAmount()));
+								model.put("ytdbudget", df.format(budget.getAmountClaimed() + summary.getSummaryTotal()));
+								model.put("available",
+										df.format(budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal()));
+								email.setBody(
+										VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_budget_warning.vm", model));
 								email.setFrom("ms@nlesd.ca");
 								email.setTo(admins);
 								//email.send();
@@ -177,14 +178,14 @@ public class SubmitTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 						}
 						catch (Exception e) {
 							e.printStackTrace(System.err);
-							iserror=true;
-							errormessage="Claim submitted, claim owner email not sent.";
+							iserror = true;
+							errormessage = "Claim submitted, claim owner email not sent.";
 						}
 					}
 				}
 				else {
-					iserror=true;
-					errormessage="Claim could not be submitted.";
+					iserror = true;
+					errormessage = "Claim could not be submitted.";
 				}
 			}
 			//send back result
