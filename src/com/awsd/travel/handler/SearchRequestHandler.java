@@ -7,37 +7,29 @@ import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class SearchRequestHandler implements RequestHandler {
+public class SearchRequestHandler extends RequestHandlerImpl {
+
+	public SearchRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW", "TRAVEL-CLAIM-SEARCH"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		HttpSession session = null;
-		User usr = null;
+		super.handleRequest(request, response);
+
 		String srch_txt = "", srch_type = "";
 		String path = "";
 		TreeMap<Integer, Vector<TravelClaim>> map = null;
-
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") || usr.getUserPermissions().containsKey(
-					"TRAVEL-CLAIM-SEARCH"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			throw new SecurityException("User login required.");
-		}
 
 		srch_txt = request.getParameter("txt");
 		if ((srch_txt != null) && !srch_txt.equals("")) {

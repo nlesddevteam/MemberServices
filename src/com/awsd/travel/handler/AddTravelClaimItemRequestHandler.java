@@ -8,28 +8,31 @@ import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.awsd.common.Utils;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimException;
 import com.awsd.travel.TravelClaimItem;
 import com.awsd.travel.TravelClaimItemsDB;
 import com.awsd.travel.service.TravelBudgetService;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class AddTravelClaimItemRequestHandler implements RequestHandler {
+public class AddTravelClaimItemRequestHandler extends RequestHandlerImpl {
+
+	public AddTravelClaimItemRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-VIEW"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		String path;
-		HttpSession session = null;
-		User usr = null;
+		super.handleRequest(request, response);
+
 		TravelClaim claim = null;
 		TravelClaimItem item = null;
 		SimpleDateFormat sdf = null;
@@ -37,17 +40,6 @@ public class AddTravelClaimItemRequestHandler implements RequestHandler {
 		int id = -1;
 		boolean check = false;
 		Calendar date_chk = null;
-
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-VIEW"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			throw new SecurityException("User login required.");
-		}
 
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -78,7 +70,12 @@ public class AddTravelClaimItemRequestHandler implements RequestHandler {
 							System.out.println(request.getParameter("item_lodging"));
 							System.out.println(Double.parseDouble(request.getParameter("item_lodging")));
 
-							item = new TravelClaimItem(sdf.parse(request.getParameter("item_date")), request.getParameter("item_desc"), Integer.parseInt(request.getParameter("item_kms")), Double.parseDouble(request.getParameter("item_meals")), Double.parseDouble(request.getParameter("item_lodging")), Double.parseDouble(request.getParameter("item_other")), request.getParameter("item_departure_time"), request.getParameter("item_return_time"));
+							item = new TravelClaimItem(sdf.parse(request.getParameter("item_date")), request.getParameter(
+									"item_desc"), Integer.parseInt(request.getParameter("item_kms")), Double.parseDouble(
+											request.getParameter("item_meals")), Double.parseDouble(
+													request.getParameter("item_lodging")), Double.parseDouble(
+															request.getParameter("item_other")), request.getParameter(
+																	"item_departure_time"), request.getParameter("item_return_time"));
 
 							System.out.println(item.getItemLodging());
 						}
@@ -95,17 +92,18 @@ public class AddTravelClaimItemRequestHandler implements RequestHandler {
 							if ((!claim.getFiscalYear().equalsIgnoreCase(Utils.getSchoolYear(date_chk)))
 									|| (claim.getFiscalMonth() != date_chk.get(Calendar.MONTH))) {
 								request.setAttribute("RESULT", "FAILED");
-								request.setAttribute("msg", "Claim item date is invalid.<br>Only items for "
-										+ Utils.getMonthString(claim.getFiscalMonth()) + " "
-										+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + " are valid.");
+								request.setAttribute("msg",
+										"Claim item date is invalid.<br>Only items for " + Utils.getMonthString(claim.getFiscalMonth())
+												+ " " + Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + " are valid.");
 
 								request.setAttribute("FAILED_ITEM", item);
 							}
 							else if (Utils.compareCurrentDate(item.getItemDate()) >= 1) {
 								request.setAttribute("RESULT", "FAILED");
-								request.setAttribute("msg", "Claim item date is in the future.<br>Only items on or before "
-										+ (new SimpleDateFormat("MMMM dd, yyyy").format((Calendar.getInstance()).getTime()))
-										+ " are valid.");
+								request.setAttribute("msg",
+										"Claim item date is in the future.<br>Only items on or before "
+												+ (new SimpleDateFormat("MMMM dd, yyyy").format((Calendar.getInstance()).getTime()))
+												+ " are valid.");
 
 								request.setAttribute("FAILED_ITEM", item);
 							}
@@ -140,9 +138,10 @@ public class AddTravelClaimItemRequestHandler implements RequestHandler {
 					}
 				}
 
-				request.setAttribute("TOTAL_CLAIMED", new Double(TravelClaimDB.getYearToDateTotalClaimed(claim.getPersonnel(),
-						claim.getFiscalYear())));
-				request.setAttribute("BUDGET", TravelBudgetService.getTravelBudget(claim.getPersonnel(), claim.getFiscalYear()));
+				request.setAttribute("TOTAL_CLAIMED",
+						new Double(TravelClaimDB.getYearToDateTotalClaimed(claim.getPersonnel(), claim.getFiscalYear())));
+				request.setAttribute("BUDGET",
+						TravelBudgetService.getTravelBudget(claim.getPersonnel(), claim.getFiscalYear()));
 
 				path = "claim_details.jsp";
 			}

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -14,25 +13,28 @@ import com.awsd.common.Utils;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
 import com.awsd.personnel.Personnel;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.PDTravelClaim;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimNote;
 import com.awsd.travel.TravelClaimNoteDB;
 import com.awsd.travel.TravelClaimStatus;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class ApproveDeclineTravelClaimRequestHandler implements RequestHandler {
+public class ApproveDeclineTravelClaimRequestHandler extends RequestHandlerImpl {
+
+	public ApproveDeclineTravelClaimRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-CLAIM-SUPERVISOR-VIEW"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		HttpSession session = null;
-		User usr = null;
-		String path = "";
+		super.handleRequest(request, response);
 
 		TravelClaim claim = null;
 		int id = -1;
@@ -40,17 +42,6 @@ public class ApproveDeclineTravelClaimRequestHandler implements RequestHandler {
 		Personnel supervisor = null;
 		Personnel claim_owner = null;
 		StringBuffer gl_acc = null;
-
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			throw new SecurityException("User login required.");
-		}
 
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -82,15 +73,16 @@ public class ApproveDeclineTravelClaimRequestHandler implements RequestHandler {
 								try {
 									EmailBean email = new EmailBean();
 									email.setTo(new String[] {
-										claim_owner.getEmailAddress()
+											claim_owner.getEmailAddress()
 									});
 									email.setSubject("Travel Claim APPROVED by " + supervisor.getFullNameReverse());
 									email.setBody(claim_owner.getFirstName()
 											+ ", <br><br>Your claim for "
-											+ (!(claim instanceof PDTravelClaim) ? Utils.getMonthString(claim.getFiscalMonth()) + " "
-													+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())
-													: " PD on "
-															+ new SimpleDateFormat("EEE MMM dd, yyyy").format(((PDTravelClaim) claim).getPD().getStartDate()))
+											+ (!(claim instanceof PDTravelClaim)
+													? Utils.getMonthString(claim.getFiscalMonth()) + " " + Utils.getYear(
+															claim.getFiscalMonth(), claim.getFiscalYear())
+													: " PD on " + new SimpleDateFormat("EEE MMM dd, yyyy").format(
+															((PDTravelClaim) claim).getPD().getStartDate()))
 											+ " has been APPROVED. "
 											+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br><br>"
 											+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br><br>"
@@ -151,15 +143,12 @@ public class ApproveDeclineTravelClaimRequestHandler implements RequestHandler {
 									try {
 										EmailBean email = new EmailBean();
 										email.setTo(new String[] {
-											claim_owner.getEmailAddress()
+												claim_owner.getEmailAddress()
 										});
 										email.setSubject("Travel Claim REJECTED by " + supervisor.getFullNameReverse());
-										email.setBody(claim_owner.getFirstName()
-												+ ", <br><br>Your claim for "
-												+ Utils.getMonthString(claim.getFiscalMonth())
-												+ " "
-												+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())
-												+ " has been REJECTED. "
+										email.setBody(claim_owner.getFirstName() + ", <br><br>Your claim for "
+												+ Utils.getMonthString(claim.getFiscalMonth()) + " "
+												+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + " has been REJECTED. "
 												+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br><br>"
 												+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br><br>"
 												+ "PLEASE DO NOT REPLY TO THIS MESSAGE.<br><br>" + "Member Services");
@@ -179,15 +168,12 @@ public class ApproveDeclineTravelClaimRequestHandler implements RequestHandler {
 									try {
 										EmailBean email = new EmailBean();
 										email.setTo(new String[] {
-											claim_owner.getEmailAddress()
+												claim_owner.getEmailAddress()
 										});
 										email.setSubject("Travel Claim REJECTED by " + supervisor.getFullNameReverse());
-										email.setBody(claim_owner.getFirstName()
-												+ ", <br><br>Your claim for "
-												+ Utils.getMonthString(claim.getFiscalMonth())
-												+ " "
-												+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())
-												+ " has been REJECTED. "
+										email.setBody(claim_owner.getFirstName() + ", <br><br>Your claim for "
+												+ Utils.getMonthString(claim.getFiscalMonth()) + " "
+												+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + " has been REJECTED. "
 												+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br><br>"
 												+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br><br>"
 												+ "PLEASE DO NOT REPLY TO THIS MESSAGE.<br><br>" + "Member Services");

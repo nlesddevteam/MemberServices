@@ -4,18 +4,16 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import com.awsd.common.Utils;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.personnel.Personnel;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.profile.ProfileDB;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimException;
@@ -23,15 +21,23 @@ import com.awsd.travel.TravelClaimStatus;
 import com.awsd.travel.TravelClaimSummary;
 import com.awsd.travel.bean.TravelBudget;
 import com.awsd.travel.service.TravelBudgetService;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class SubmitTravelClaimRequestHandler implements RequestHandler {
+public class SubmitTravelClaimRequestHandler extends RequestHandlerImpl {
+
+	public SubmitTravelClaimRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-VIEW"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
-		String path;
-		HttpSession session = null;
-		User usr = null;
+
+		super.handleRequest(request, response);
+
 		TravelClaim claim = null;
 		String op = "";
 		int id = -1;
@@ -39,21 +45,14 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 		Personnel claim_owner = null;
 		Personnel supervisor = null;
 		// SMTPAuthenticatedMail smtp = null;
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-VIEW"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}else {
-			throw new SecurityException("User login required.");
-		}
+
 		if (ProfileDB.getProfile(usr.getPersonnel()) == null)
 			path = "profile.jsp";
 		else {
 			try {
 				id = Integer.parseInt(request.getParameter("id"));
-			}catch (NumberFormatException e) {
+			}
+			catch (NumberFormatException e) {
 				id = -1;
 			}
 			if (id < 1) {
@@ -65,7 +64,8 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 				if (claim.getPersonnel().getPersonnelID() != usr.getPersonnel().getPersonnelID()) {
 					request.setAttribute("msg", "You do not have permission to submit this travel claim.");
 					request.setAttribute("NOPERMISSION", new Boolean(true));
-				}else {
+				}
+				else {
 					op = request.getParameter("op");
 					if (op != null) {
 						if (op.equalsIgnoreCase("CONFIRM")) {
@@ -75,8 +75,8 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 							TravelBudget budget = TravelBudgetService.getTravelBudget(usr.getPersonnel(), claim.getFiscalYear());
 							if (budget != null) {
 								summary = claim.getSummaryTotals();
-								BigDecimal diff = new BigDecimal(Double.toString(budget.getAmount() - budget.getAmountClaimed()
-										- summary.getSummaryTotal()));
+								BigDecimal diff = new BigDecimal(Double.toString(
+										budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal()));
 								if (diff.setScale(2, RoundingMode.HALF_EVEN).doubleValue() >= 0)
 									bcheck = true;
 								else
@@ -95,12 +95,10 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 									try {
 										EmailBean email = new EmailBean();
 										email.setTo(new String[] {
-											supervisor.getEmailAddress()
+												supervisor.getEmailAddress()
 										});
 										email.setSubject("Travel Claim Pending Approval for " + claim_owner.getFullNameReverse());
-										email.setBody(supervisor.getFirstName()
-												+ ", <br><br>"
-												+ claim_owner.getFullNameReverse()
+										email.setBody(supervisor.getFirstName() + ", <br><br>" + claim_owner.getFullNameReverse()
 												+ " has submitted a travel claim for your approval. "
 												+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br><br>"
 												+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br><br>"
@@ -113,8 +111,8 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 										request.setAttribute("msg", "Claim submitted, supervisory email not sent.");
 									}
 									// check if less then 10% budget remaining
-									if ((budget != null)
-											&& (((budget.getAmountClaimed() + summary.getSummaryTotal()) / budget.getAmount() * 100.0) >= 90.0)) {
+									if ((budget != null) && (((budget.getAmountClaimed() + summary.getSummaryTotal()) / budget.getAmount()
+											* 100.0) >= 90.0)) {
 
 										DecimalFormat df = new DecimalFormat("$#,##0.00");
 										try {
@@ -122,10 +120,10 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 											supervisor = claim.getSupervisor();
 											EmailBean email = new EmailBean();
 											email.setTo(new String[] {
-												budget.getDivision().getAssistantDirector().getEmailAddress()
+													budget.getDivision().getAssistantDirector().getEmailAddress()
 											});
 											email.setCC(new String[] {
-												supervisor.getEmailAddress()
+													supervisor.getEmailAddress()
 											});
 											email.setSubject("Travel budget less then 10% - " + claim_owner.getFullNameReverse());
 											email.setBody(claim_owner.getFullNameReverse()
@@ -168,8 +166,7 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 							}
 							else {
 								DecimalFormat df = new DecimalFormat("$#,##0.00");
-								request.setAttribute(
-										"msg",
+								request.setAttribute("msg",
 										"Claim could not be submitted due to insufficient funds available in approved budget ["
 												+ df.format(budget.getAmount()) + "]. Your supervisor has been notified via email.");
 								request.setAttribute("RESULT", "FAILED");
@@ -180,14 +177,14 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 									email.setTo(new String[] {
 											claim_owner.getEmailAddress(), supervisor.getEmailAddress()
 									});
-									email.setSubject("Travel claim suspended due to budget restrictions - "
-											+ claim_owner.getFullNameReverse());
+									email.setSubject(
+											"Travel claim suspended due to budget restrictions - " + claim_owner.getFullNameReverse());
 									email.setBody(claim_owner.getFullNameReverse()
 											+ " has submitted a travel claim which has been suspended due to insufficient funds available in approved budget. See details below; <br /><br /> "
 											+ budget.getFiscalYear() + " Approved Budget: " + df.format(budget.getAmount()) + "<br />"
 											+ budget.getFiscalYear() + " Claimed YTD: " + df.format(budget.getAmountClaimed()) + "<br />"
-											+ claim.getFiscalYear() + " " + Utils.getMonthString(claim.getFiscalMonth())
-											+ " Claimed Amount: " + df.format(summary.getSummaryTotal()) + "<br />" + "Deficit: "
+											+ claim.getFiscalYear() + " " + Utils.getMonthString(claim.getFiscalMonth()) + " Claimed Amount: "
+											+ df.format(summary.getSummaryTotal()) + "<br />" + "Deficit: "
 											+ df.format(budget.getAmount() - budget.getAmountClaimed() - summary.getSummaryTotal())
 											+ "<br /><br />" + "PLEASE DO NOT REPLY TO THIS MESSAGE.<br><br>" + "Member Services");
 									email.setFrom("ms@nlesd.ca");
@@ -196,8 +193,8 @@ public class SubmitTravelClaimRequestHandler implements RequestHandler {
 									Personnel admins[] = PersonnelDB.getPersonnelByRole("ADMINISTRATOR");
 									if (admins != null && admins.length > 0) {
 										email = new EmailBean();
-										email.setSubject("Travel claim suspended due to budget restrictions - "
-												+ claim_owner.getFullNameReverse());
+										email.setSubject(
+												"Travel claim suspended due to budget restrictions - " + claim_owner.getFullNameReverse());
 										email.setBody(claim_owner.getFullNameReverse()
 												+ " has submitted a travel claim which has been suspended due to insufficient funds available in approved budget. See details below; <br /><br /> "
 												+ budget.getFiscalYear() + " Approved Budget: " + df.format(budget.getAmount()) + "<br />"

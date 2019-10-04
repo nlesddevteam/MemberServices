@@ -15,26 +15,29 @@ import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.awsd.common.Utils;
-import com.awsd.security.SecurityException;
-import com.awsd.security.User;
-import com.awsd.servlet.RequestHandler;
 import com.awsd.travel.PDTravelClaim;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimSummary;
+import com.esdnl.servlet.RequestHandlerImpl;
 
-public class SDSExportRequestHandler implements RequestHandler {
+public class SDSExportRequestHandler extends RequestHandlerImpl {
+
+	public SDSExportRequestHandler() {
+
+		this.requiredPermissions = new String[] {
+				"TRAVEL-EXPENSE-SDS-EXPORT"
+		};
+	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
 
-		HttpSession session = null;
-		User usr = null;
-		String path = "";
+		super.handleRequest(request, response);
+
 		SimpleDateFormat sdf = null;
 		SimpleDateFormat sds = null;
 		SimpleDateFormat sds_desc = null;
@@ -52,18 +55,6 @@ public class SDSExportRequestHandler implements RequestHandler {
 		PrintWriter tchr_writer = null;
 		double gst = 0.0, total = 0.0;
 		String gl_prt_1 = "", gl_prt_2 = "", gl_prt_3 = "", desc = "", vennum = "";
-
-		session = request.getSession(false);
-		if ((session != null) && (session.getAttribute("usr") != null)) {
-			usr = (User) session.getAttribute("usr");
-			if (!(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-SDS-EXPORT"))) {
-				throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
-			}
-		}
-		else {
-			throw new SecurityException("User login required.");
-		}
-
 
 		if (request.getParameter("op") != null) {
 			if (request.getParameter("op").equalsIgnoreCase("CONFIRM")) {
@@ -118,12 +109,11 @@ public class SDSExportRequestHandler implements RequestHandler {
 									gst = (total / 1.15) * 0.05;
 
 									if (claim instanceof PDTravelClaim) {
-										desc = summary.getKMSSummary()
-												+ " kms - "
-												+ ((PDTravelClaim) claim).getPD().getTitle().trim().substring(
-														0,
+										desc = summary.getKMSSummary() + " kms - "
+												+ ((PDTravelClaim) claim).getPD().getTitle().trim().substring(0,
 														(((PDTravelClaim) claim).getPD().getTitle().trim().length() > 32) ? 32
-																: ((PDTravelClaim) claim).getPD().getTitle().trim().length()) + "...";
+																: ((PDTravelClaim) claim).getPD().getTitle().trim().length())
+												+ "...";
 									}
 									else {
 										desc = summary.getKMSSummary() + " kms - " + Utils.getMonthString(claim.getFiscalMonth()) + " "
@@ -136,7 +126,8 @@ public class SDSExportRequestHandler implements RequestHandler {
 									desc = "Meals/Other - " + Utils.getMonthString(claim.getFiscalMonth()) + " "
 											+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear());
 
-									tchr_writer.println(vennum + ", " + df.format((summary.getSummaryTotal() - summary.getMealSummary())));
+									tchr_writer.println(
+											vennum + ", " + df.format((summary.getSummaryTotal() - summary.getMealSummary())));
 								}
 
 								gl_prt_1 = claim.getSDSGLAccountCode().substring(0, 1);
