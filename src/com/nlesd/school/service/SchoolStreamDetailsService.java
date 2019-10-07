@@ -131,7 +131,9 @@ public class SchoolStreamDetailsService {
 				abean.setSchoolId(rs.getInt("SCHOOL_ID"));
 				abean.setStreamNotes(rs.getString("STREAM_NOTES"));
 				abean.setAddedBy(rs.getString("ADDED_BY"));
-				abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+				if(!(rs.getTimestamp("DATE_ADDED") ==  null)) {
+					abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+				}
 			}
 			catch (SQLException e) {
 				abean = null;
