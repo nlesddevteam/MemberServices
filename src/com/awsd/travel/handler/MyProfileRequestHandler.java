@@ -25,7 +25,7 @@ public class MyProfileRequestHandler extends RequestHandlerImpl {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
-
+		super.handleRequest(request, response);
 		String op;
 		Profile profile = null;
 
@@ -108,7 +108,7 @@ public class MyProfileRequestHandler extends RequestHandlerImpl {
 		}
 		else {
 			path = "profile.jsp";
-			profile = ProfileDB.getProfile(usr.getPersonnel());
+			profile = ProfileDB.getProfile(usr.getPersonnel());			
 			if (profile != null) {
 				request.setAttribute("CURRENT_PROFILE", profile);
 				path += "?op=update";
