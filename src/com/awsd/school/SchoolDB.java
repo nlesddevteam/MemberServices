@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Vector;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -31,7 +30,6 @@ import com.nlesd.school.bean.SchoolZoneBean;
 import com.nlesd.school.service.SchoolDirectoryDetailsOtherService;
 import com.nlesd.school.service.SchoolDirectoryDetailsService;
 import com.nlesd.school.service.SchoolStreamDetailsService;
-import com.nlesd.school.service.SchoolStreamSchoolsService;
 import com.nlesd.school.service.SchoolZoneService;
 import com.nlesd.schoolstatus.bean.SchoolStatusGlobalConfigBean;
 import com.nlesd.schoolstatus.service.SchoolStatusGlobalConfigService;
@@ -480,7 +478,7 @@ public class SchoolDB {
 		try {
 			con = DAOUtils.getConnection();
 
-			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_school(?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_school_details_all(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, id);
 			stat.execute();
@@ -666,7 +664,7 @@ public class SchoolDB {
 		}
 		return (check && su && apu);
 	}
-	
+
 	public static boolean updateSchoolTeacherSupervisor(School s) throws SchoolException {
 
 		Connection con = null;
@@ -1093,7 +1091,6 @@ public class SchoolDB {
 			try {
 				if (rs.getInt("DIRECTORY_ID") > 0) {
 					abean.setDetails(SchoolDirectoryDetailsService.createSchoolDirectoryDetailsBean(rs));
-					abean.setDetailsOther(SchoolDirectoryDetailsOtherService.getSchoolDirectoryDetailsOtherBean(abean.getDetails().getSchoolId()));
 				}
 				else {
 					abean.setDetails(null);
@@ -1102,9 +1099,34 @@ public class SchoolDB {
 			catch (SQLException e) {
 				//no school directory details.
 				abean.setDetails(null);
-			} catch (SchoolException e) {
+			}
+			try {
+				//check to see there is a other record
+				if (rs.getInt("FK_SCHOOL_DIRECTORY") > 0) {
+					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
+					abean.setDetailsOther(obean);
+				}else {
+					abean.setDetailsOther(null);
+				}
+				
+			}
+			catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				abean.setDetailsOther(null);
+			}
+			try {
+				//check to see there is a other record
+				if (rs.getInt("sstreamid") >0) {
+					SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
+					abean.setSchoolStreams(obean);
+				}else {
+					abean.setSchoolStreams(null);
+				}
+				
+			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				abean.setSchoolStreams(null);
 			}
 
 // assistant principals, if available
@@ -1233,26 +1255,32 @@ public class SchoolDB {
 				abean.setDetails(null);
 			}
 			try {
-				SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.getSchoolDirectoryDetailsOtherBean(abean.getSchoolID());
-				abean.setDetailsOther(obean);
+				//check to see there is a other record
+				if (rs.getInt("FK_SCHOOL_DIRECTORY") > 0) {
+					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
+					abean.setDetailsOther(obean);
+				}else {
+					abean.setDetailsOther(null);
+				}
+				
 			}
 			catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				abean.setDetailsOther(null);
 			}
 			try {
-				SchoolStreamDetailsBean obean = SchoolStreamDetailsService.getSchoolStreamDetailsBean(abean.getSchoolID());
-				abean.setSchoolStreams(obean);
-				//now we can see if there are any schools set
-				if(!(obean == null))
-				{
-				abean.getSchoolStreams().setSchoolStreamsEnglish(SchoolStreamSchoolsService.getSchoolStreamSchoolsEnglishBean(obean.getId()));
-				abean.getSchoolStreams().setSchoolStreamsFrench(SchoolStreamSchoolsService.getSchoolStreamSchoolsFrenchBean(obean.getId()));
+				//check to see there is a other record
+				if (rs.getInt("sstreamid") >0) {
+					SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
+					abean.setSchoolStreams(obean);
+				}else {
+					abean.setSchoolStreams(null);
 				}
+				
 			}
 			catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				abean.setSchoolStreams(null);
 			}
 // assistant principals, if available
 			try {
