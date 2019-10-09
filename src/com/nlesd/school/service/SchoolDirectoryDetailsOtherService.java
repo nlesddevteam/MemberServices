@@ -181,7 +181,9 @@ public class SchoolDirectoryDetailsOtherService {
 			abean.setSchoolEnrollment(rs.getString("SCHOOL_ENROLLMENT"));
 			abean.setSchoolDirectory(rs.getInt("FK_SCHOOL_DIRECTORY"));
 			abean.setAddedBy(rs.getString("ADDED_BY"));
-			abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+			if(!(rs.getTimestamp("DATE_ADDED") ==  null)) {
+				abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+			}
 			abean.setTwitterEmbed(rs.getString("TWITTER_EMBED"));
 			if(rs.getInt("SURVEILLANCE_CAMERA") == 1) {
 				abean.setSurveillanceCamera(true);

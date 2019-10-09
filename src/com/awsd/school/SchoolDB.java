@@ -1100,6 +1100,34 @@ public class SchoolDB {
 				//no school directory details.
 				abean.setDetails(null);
 			}
+			try {
+				//check to see there is a other record
+				if (rs.getInt("FK_SCHOOL_DIRECTORY") > 0) {
+					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
+					abean.setDetailsOther(obean);
+				}else {
+					abean.setDetailsOther(null);
+				}
+				
+			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				abean.setDetailsOther(null);
+			}
+			try {
+				//check to see there is a other record
+				if (rs.getInt("sstreamid") >0) {
+					SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
+					abean.setSchoolStreams(obean);
+				}else {
+					abean.setSchoolStreams(null);
+				}
+				
+			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				abean.setSchoolStreams(null);
+			}
 
 // assistant principals, if available
 			try {
@@ -1227,20 +1255,32 @@ public class SchoolDB {
 				abean.setDetails(null);
 			}
 			try {
-				SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
-				abean.setDetailsOther(obean);
+				//check to see there is a other record
+				if (rs.getInt("FK_SCHOOL_DIRECTORY") > 0) {
+					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
+					abean.setDetailsOther(obean);
+				}else {
+					abean.setDetailsOther(null);
+				}
+				
 			}
 			catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				abean.setDetailsOther(null);
 			}
 			try {
-				SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
-				abean.setSchoolStreams(obean);
+				//check to see there is a other record
+				if (rs.getInt("sstreamid") >0) {
+					SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
+					abean.setSchoolStreams(obean);
+				}else {
+					abean.setSchoolStreams(null);
+				}
+				
 			}
 			catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				abean.setSchoolStreams(null);
 			}
 // assistant principals, if available
 			try {
