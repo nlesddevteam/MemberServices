@@ -209,13 +209,13 @@ public class ControllerServlet extends HttpServlet {
 
 			//start announcement export service
 			try {
-				Class.forName("com.esdnl.webmaint.esdweb.service.AnnouncementExportService");
+				Class.forName("com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService");
 			}
 			catch (NoClassDefFoundError e) {
-				System.err.println("COULD NOT FIND com.esdnl.webmaint.esdweb.service.AnnouncementExportService CLASS.");
+				System.err.println("COULD NOT FIND com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService CLASS.");
 			}
 			catch (ClassNotFoundException e) {
-				System.err.println("COULD NOT FIND com.esdnl.webmaint.esdweb.service.AnnouncementExportService CLASS.");
+				System.err.println("COULD NOT FIND com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService CLASS.");
 			}
 
 			//start job opportunity export service
