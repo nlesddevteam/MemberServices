@@ -43,7 +43,7 @@ public class ResetApplicantPasswordRequestHandler  extends PublicAccessRequestHa
 			sb.append("<GET-APPLICANT-SECURITY>");
 			sb.append("<INFO>");
 			sb.append("<ERROR>");
-			sb.append("We could not find the email in our system. Did you create your security question when you initially registered? If not, we cannot reset your password. Please conmtact support.");
+			sb.append("We could not find the email in our system. Did you create your security question when you initially registered? If not, we cannot reset your password. Please contact support.");
 			sb.append("</ERROR>");
 			sb.append("</INFO>");
 			sb.append("</GET-APPLICANT-SECURITY>");
