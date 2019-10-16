@@ -26,7 +26,7 @@ public class ViewTravelClaimDetailsRequestHandler extends RequestHandlerImpl {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
-
+		super.handleRequest(request, response);
 		TravelClaim claim = null;
 		int id = -1;
 
