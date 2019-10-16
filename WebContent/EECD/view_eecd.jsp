@@ -61,53 +61,50 @@ $("#loadingSpinner").css("display","none");
                  			 <div class="alert alert-success" id="successMsg" style="text-align:center;display:none;" align="center"></div>
 							 <div class="alert alert-danger" id="errorMsg" style="text-align:center;display:none;" align="center"></div>
 					 		
-					 		<div style="padding-left:5px; padding-right:5px; padding-top:10px; border-top:1px solid Silver;">
+					 		
                  	
-                 	
+                 	 <div style="font-size:11px;width:100%;">                	
                  	<ul id="check-list-box" class="list-group checked-list-box">
-                  					<c:forEach items='${ areas }' var='area'>
+                  					<c:forEach items='${ areas }' var='area'>                  					
                   						<c:choose>
                   							<c:when test='${ area.additionalText ne null }'>
                   									<li class="list-group-item" id="${ area.id }" nocheck="Y">
-                  									<c:choose>
-                  									<c:when test="${ area.currentStatus eq 2 }">
-                  										<div class="alert alert-success" role="alert"> ${ area.areaDescription }  [${ area.additionalText }]</div></li>
-                  									</c:when>
-                  									<c:when test="${ area.currentStatus eq 3 }">
-                  										<div class="alert alert-danger" role="alert"> ${ area.areaDescription }  [${ area.additionalText }]</div></li>
-                  									</c:when>
-                  									<c:otherwise>
-                  										<div class="alert alert-primary" role="alert"> ${ area.areaDescription }  [${ area.additionalText }]</div></li>
-                  									</c:otherwise>
-                  									</c:choose>
-                  							</c:when>
+	                  								<c:choose>
+	                  									<c:when test="${ area.currentStatus eq 2 }"> <!-- Approved -->
+	                  										<div class="alert alert-success" role="alert"><span style="font-weight:bold;font-size:12px;">You have been successfully APPROVED for <span style="text-transform:uppercase;">${ area.areaDescription }</span></span><br/>${ area.additionalText }</div>
+	                  									</c:when>
+	                  									<c:when test="${ area.currentStatus eq 3 }"> <!-- declined -->
+	                  										<div class="alert alert-danger" role="alert"><span style="font-weight:bold;font-size:12px;">Sorry, you have been DECLINED for <span style="text-transform:uppercase;">${ area.areaDescription }</span></span><br/>${ area.additionalText }</div>
+	                  									</c:when>
+	                  									<c:otherwise>
+	                  										<div class="alert alert-primary" role="alert"> ${ area.areaDescription }<br/>${ area.additionalText }</div>
+	                  									</c:otherwise>
+	                  									</c:choose>
+                  									</li>
+                  							</c:when>                  							
                   							<c:otherwise>
-                  							<li class="list-group-item" id="${ area.id }" nocheck="N" qupdated="N">
-                  							 ${ area.areaDescription }
-                  							 <c:choose>
-                  								<c:when test="${ area.required eq 'Y' }">
-                  								<div id="divhref${ area.id }" style="display:none;"><a onclick="openedit('${ area.id }');" style="color:#FFFFFF;">Add/Edit Answers</a></div>
-                  								</c:when>
-                  							</c:choose>
-                  							 
-                  							 <br>
-                  							 <div class="alert alert-info" role="alert">Eligible teachers:${ area.eligibleTeachers }</div>
-                  							 </li>
-                  							  
+                  									<li class="list-group-item" id="${ area.id }" nocheck="N" qupdated="N">
+                  							 		<span style="font-weight:bold;text-transform:uppercase;">${ area.areaDescription }</span><br/> 		                  						                 							 
+                  									<div style="padding-left:15px;">${ area.eligibleTeachers }		 		
+                  							 		<c:if test="${ area.required eq 'Y' }">
+			                  								<br/><div id="divhref${ area.id }" style="display:none;text-align:right;padding-right:5px;"><a onclick="openedit('${ area.id }');" style="color:#FFFFFF;">Add/Edit Answers</a></div>
+			                  						</c:if>			                  						
+			                  						</div>
+                  							        </li>
                   							</c:otherwise>
                   						</c:choose>
-                  						
+                  					
                   					</c:forEach>
                   					
-                  				</ul>
-                		
+                  		</ul>
+                  		</div>
                 		<input type="hidden" id="firstsave" name="firstsave" value="${firstsave}">
                 		<input type="hidden" id="teacherareas" name="teacherareas" value="${teacherareas}">
                 		<input type="hidden" id="selectedid" name="selectedid" value="">
                 		<input type="hidden" id="editselected" name="editselected" value="N">
                 		<div align="center"><button class="btn btn-success btn-xs" id="get-checked-data">Update Teacher Areas</button></div>
                 		<div class="alert alert-success" id="successMsgb" style="text-align:center;display:none;" align="center"></div>
-            		</div>
+            	
 </div></div></div>            			
 
   <div class="modal fade" id="myModal" role="dialog">

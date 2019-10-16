@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.TreeMap;
 import java.util.Vector;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -277,6 +278,40 @@ public class NewsPostingsManager {
 			catch (Exception e) {}
 		}
 		return mms;
+	}
+	public static TreeMap<Integer, Integer> getNewsPostingsSettings() {
+		TreeMap<Integer, Integer> tmap = new TreeMap<Integer, Integer>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.get_wus_settings; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				tmap.put(rs.getInt("CATEGORY_ID"), rs.getInt("ROW_LIMIT"));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("TreeMap<Integer, Integer> getNewsPostingsSettings()" + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return tmap;
 	}
 	public static NewsPostingsBean createNewsPostingsBean(ResultSet rs) {
 		NewsPostingsBean abean = null;
