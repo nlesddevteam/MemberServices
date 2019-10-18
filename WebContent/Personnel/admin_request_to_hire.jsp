@@ -76,7 +76,14 @@ var pageWordCountConf = {
 	    maxCharCount: 3990,
 	}
 </script>
-
+<style>
+		.tableTitle {font-weight:bold;width:15%;}
+		.tableResult {font-weight:normal;width:85%;}
+		.tableTitleL {font-weight:bold;width:15%;}
+		.tableResultL {font-weight:normal;width:35%;}
+		.tableTitleR {font-weight:bold;width:15%;}
+		.tableResultR {font-weight:normal;width:35%;}
+</style>
 </head>
 <body>
   
@@ -87,7 +94,7 @@ var pageWordCountConf = {
 <div class="panel panel-success">
   <div class="panel-heading">Request to Hire  <i>* Required</i></div>
   	<div class="panel-body">	
-  Please complete the following form to request a new hire.<br/>
+  Please complete the following form to request a new hire.<br/><br/>
   <form id="frmAdRequest" action="submitRequestToHire.html" method="post" onsubmit="return CheckRequestToHire()">
   <input type="hidden" id="issupport" name="issupport" value="Y">
                                  
@@ -100,52 +107,40 @@ var pageWordCountConf = {
                                       
  <div class="alert alert-danger" id="errorMessage" style="display:none;"><span id="spanmessage"></span></div>
                                        
-                                      
-<div class="input-group" id="positionTitleGroup">
-
-    <span class="input-group-addon">Position Title*:</span>  
-  			<c:choose>
-           	<c:when test="${empty rbean}">
-           		<input type="text" class="form-control" name="job_title" id="job_title">
-           		<input type="hidden" id="rid" name="rid" value="-1">
-           	</c:when>
-           	<c:otherwise>
-           		<c:choose>
-           			<c:when test="${rbean.status.value eq 1 }">
-           				<input type="text" class="form-control" name="job_title" id="job_title" value="${rbean.jobTitle}">
-             			<input type="hidden" id="rid" name="rid" value="${rbean.id}">
-           			</c:when>
-           			<c:otherwise>
-           				<div class="form-control">${rbean.jobTitle}</div>
-           				<input type="hidden" id="rid" name="rid" value="${rbean.id}">
-           			</c:otherwise>
-           		</c:choose>
-           	</c:otherwise>
-           	</c:choose>
-</div>       
- <div class="input-group">
-    <span class="input-group-addon">Previous Incumbent:</span>                                   
-                                    
-                                      	<c:choose>
-                                      	<c:when test="${empty rbean}">
-                                      		<input type="text" class="form-control" name="previous_incumbent" id="previous_incumbent">
-                                      	</c:when>
-                                      	<c:otherwise>
-                                      		<c:choose>
-                                      			<c:when test="${rbean.status.value eq 1 }">
-                                      				<input type="text" class="form-control" name="previous_incumbent" id="previous_incumbent" value="${rbean.previousIncumbent}">
-                                      			</c:when>
-                                      			<c:otherwise>
-                                      				<div class="form-control">${rbean.previousIncumbent}</div>
-                                      			</c:otherwise>
-                                      		</c:choose>
-                                      	</c:otherwise>
-                                      	</c:choose>
- </div>                                     	
- <div class="input-group" id="locationGroup">
-    <span class="input-group-addon">Location*:</span>                                     	
-                                     
-                                      	<c:choose>
+    
+    
+    
+ <div class="container-fluid">    
+    
+  <table class='table table-striped table-condensed' style='font-size:12px;'>
+                    <tbody>
+                    <tr>
+			     		<td class='tableTitle'>POSITION TITLE:</td>
+			     		<td colspan=3 class='tableResult' id="positionTitleGroup">   
+    					<c:choose>
+			           	<c:when test="${empty rbean}">
+			           		<input type="text" class="form-control" name="job_title" id="job_title">
+			           		<input type="hidden" id="rid" name="rid" value="-1">
+			           	</c:when>
+			           	<c:otherwise>
+			           		<c:choose>
+			           			<c:when test="${rbean.status.value eq 1 }">
+			           				<input type="text" class="form-control" name="job_title" id="job_title" value="${rbean.jobTitle}">
+			             			<input type="hidden" id="rid" name="rid" value="${rbean.id}">
+			           			</c:when>
+			           			<c:otherwise>
+			           				${rbean.jobTitle}
+			           				<input type="hidden" id="rid" name="rid" value="${rbean.id}">
+			           			</c:otherwise>
+			           		</c:choose>
+			           	</c:otherwise>
+			           	</c:choose>
+  </td>
+  </tr>
+ 						<tr>
+			     		<td class='tableTitleL'>LOCATION:</td>
+			     		<td class='tableResultL' id="locationGroup">
+ 										<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<personnel:Locations id='location'  cls="form-control" value=""/>
                                      	</c:when>
@@ -155,16 +150,35 @@ var pageWordCountConf = {
                                       				<personnel:Locations id='location' cls="form-control" value="${empty rbean.workLocation ?'':rbean.locationDescription}"/>
                                      			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${empty rbean.workLocation ?'':rbean.locationDescription}</div>
+                                      				${empty rbean.workLocation ?'':rbean.locationDescription}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
- </div>                                     	
- <div class="input-group">
-    <span class="input-group-addon">Date Vacated:</span>                                     
-                                     
-                                      	<c:choose>
+ 						</td>
+			     		<td class='tableTitleR'>PREVIOUS INCUMBENT:</td>
+			     		<td class='tableResultR'>
+			     						<c:choose>
+                                      	<c:when test="${empty rbean}">
+                                      		<input type="text" class="form-control" name="previous_incumbent" id="previous_incumbent">
+                                      	</c:when>
+                                      	<c:otherwise>
+                                      		<c:choose>
+                                      			<c:when test="${rbean.status.value eq 1 }">
+                                      				<input type="text" class="form-control" name="previous_incumbent" id="previous_incumbent" value="${rbean.previousIncumbent}">
+                                      			</c:when>
+                                      			<c:otherwise>
+                                      				${rbean.previousIncumbent}
+                                      			</c:otherwise>
+                                      		</c:choose>
+                                      	</c:otherwise>
+                                      	</c:choose>
+ 						</td>
+			     		</tr>
+                        <tr>
+			     		<td class='tableTitleL'>DATE VACATED:</td>
+			     		<td class='tableResultL'> 
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">                                      	
                                       	<input class="form-control requiredinput_date" type="text" name="date_vacated" id="date_vacated">                                      	
                                       	
@@ -176,15 +190,15 @@ var pageWordCountConf = {
                                         				value="${empty rbean.dateVacated ?'':rbean.dateVacatedFormatted}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${empty rbean.dateVacated ?'':rbean.dateVacatedFormatted}</div>
+                                      				${empty rbean.dateVacated ?'':rbean.dateVacatedFormatted}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
-                                      	</c:choose>
- </div>                                    
-<div class="input-group">
-    <span class="input-group-addon">Union:</span>
-                                      	<c:choose>
+                                      	</c:choose>             
+						</td>
+			     		<td class='tableTitleR'>UNION:</td>
+			     		<td class='tableResultR'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="union_code" id="union_code" class="form-control" onchange="getPositions()">
 											<OPTION VALUE='-1'>--- SELECT UNION---</OPTION>
@@ -206,16 +220,17 @@ var pageWordCountConf = {
 													<input type='hidden' id='hiduc' name='hiduc' value="${rbean.unionCode eq 0 ?'0':rbean.unionCode}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${rbean.unionCode eq 0 ?'':rbean.unionCodeString}</div>
+                                      				${rbean.unionCode eq 0 ?'':rbean.unionCodeString}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>      
-<span id="positionGroup">                              	
-<div class="input-group" >
-    <span class="input-group-addon">Position:</span>
-                                      	<c:choose>
+			     		</td>
+			     		</tr>
+                        <tr>
+			     		<td class='tableTitleL'>POSITION:</td>
+			     		<td class='tableResultL'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="position_name" id="position_name" class="form-control" onchange="getJesPay()">
 																							
@@ -237,17 +252,15 @@ var pageWordCountConf = {
 													<input type='hidden' id='hidpn' name='hidpn' value="${rbean.positionName eq 0 ?'0':rbean.positionName}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${rbean.positionName eq 0 ?'':rbean.positionNameString}</div>
+                                      				${rbean.positionName eq 0 ?'':rbean.positionNameString}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
- </div>  </span>                                	
- <div class="input-group"  id="positionTypeGroup">
-    <span class="input-group-addon">Position Type*:</span>                                     	
-
-                                      
-                                      	<c:choose>
+			     		</td>
+			     		<td class='tableTitleR'>POSITION TYPE:</td>
+			     		<td class='tableResultR' id="positionTypeGroup">
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="position_type" id="position_type" class="form-control">
 											<OPTION VALUE='-1'>--- SELECT JOB TYPE ---</OPTION>
@@ -270,16 +283,17 @@ var pageWordCountConf = {
 													<input type='hidden' id='hidpt' name='hidpt' value="${rbean.positionType eq 0 ?'0':rbean.positionType}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${rbean.positionType eq 0 ?'':rbean.positionTypeString}</div>
+                                      				${rbean.positionType eq 0 ?'':rbean.positionTypeString}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>                                      	
-<div class="input-group">
-    <span class="input-group-addon">Position Salary:</span>                                      	
-                                     
-                                      	<c:choose>
+			     		</td>
+			     		</tr>         	
+     					<tr>
+			     		<td class='tableTitleL'>SALARY:</td>
+			     		<td class='tableResultL'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<input type="text" name="position_salary" id="position_salary" class="form-control">
                                       	</c:when>
@@ -289,17 +303,16 @@ var pageWordCountConf = {
                                       				<input type="text" name="position_salary" id="position_salary" class="form-control" value="${empty rbean.positionSalary ? '':rbean.positionSalary}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      			<div class="form-control">${empty rbean.positionSalary ? '':rbean.positionSalary}</div>                                     			
+                                      			${empty rbean.positionSalary ? '':rbean.positionSalary}                                   			
                                       				
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
- </div>
- <div class="input-group">
-    <span class="input-group-addon">Hours/Week*:</span>                                      	
-                                     
-                                      	<c:choose>
+                        </td>
+			     		<td class='tableTitleR'>HOURS/WEEK*:</td>
+			     		<td class='tableResultR'>
+			     		<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<input type="text" name="position_hours" id="position_hours" class="form-control">
                                       	</c:when>
@@ -309,18 +322,18 @@ var pageWordCountConf = {
                                       				<input type="text" name="position_hours" id="position_hours" class="form-control" value="${empty rbean.positionHours ? '':rbean.positionHours}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      			<div class="form-control">${empty rbean.positionHours? '':rbean.positionHours}</div>                                     			
+                                      			${empty rbean.positionHours? '':rbean.positionHours}                                   			
                                       				
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
- </div>
-  <div class="input-group"  id="positionTypeGroup">
-    <span class="input-group-addon">Position Term*:</span>                                     	
-
-                                      
-                                      	<c:choose>
+			     		</td>
+			     		</tr>            	
+						<tr>
+			     		<td class='tableTitleL'>POSITION TERM::</td>
+			     		<td class='tableResultL'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="position_term" id="position_term" class="form-control">
 											<OPTION VALUE='-1'>--- SELECT POSITION TERM ---</OPTION>
@@ -340,16 +353,19 @@ var pageWordCountConf = {
 													<input type='hidden' id='hidptrm' name='hidptrm' value="${rbean.positionTerm eq 0 ?'0':rbean.positionTerm}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${rbean.positionTerm eq 0 ?'':rbean.positionTermString}</div>
+                                      				${rbean.positionTerm eq 0 ?'':rbean.positionTermString}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>
-<div class="input-group">
-    <span style="color:DimGrey">&nbsp; &nbsp; Does this position offer a Shift Differential? &nbsp; </span>                                   	
-                                     
-                                      	<c:choose>
+			     		</td>			     	
+			     		<td class='tableTitleR'></td>
+			     		<td class='tableResultR'></td>
+			     		</tr>
+						<tr>
+			     		<td class='tableTitle'>SHIFT DIFFERENTIAL?</td>
+			     		<td colspan=3 class='tableResult'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<input type="checkbox" name="shift_diff" id="shift_diff"> 
                                       	</c:when>
@@ -359,16 +375,18 @@ var pageWordCountConf = {
                                       				<input type="checkbox" name="shift_diff" id="shift_diff" ${rbean.shiftDiff == 1 ? 'checked':''}>
                                       			</c:when>
                                       			<c:otherwise>
-                                      			<div class="form-control">${rbean.shiftDiff == 1 ? 'Yes':'No'}</div>                                     			
+                                      			${rbean.shiftDiff == 1 ? 'Yes':'No'}                                			
                                       				
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
-                                      	</c:choose>
- </div>
- <div class="input-group"  id="startGroup">
-    <span class="input-group-addon">Start Date*:</span>                                   	
-                                      	<c:choose>
+                                      	</c:choose>			     		
+			     		</td>
+			     		</tr>
+			     		<tr>
+			     		<td class='tableTitleL'>START DATE*:</td>
+			     		<td class='tableResultL' id="startGroup">
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<input type="text" name="start_date" id="start_date" class="form-control requiredinput_date" />
                                       	</c:when>
@@ -378,15 +396,15 @@ var pageWordCountConf = {
                                       			<input type="text" name="start_date" id="start_date" class="form-control requiredinput_date" value="${empty rbean.startDate ?'':rbean.startDateFormatted}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${empty rbean.startDate ?'':rbean.startDateFormatted}</div>
+                                      				${empty rbean.startDate ?'':rbean.startDateFormatted}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>
- <div class="input-group"  id="endGroup">
-    <span class="input-group-addon">End Date (if applicable):</span>                                   	
-                                      	<c:choose>
+			     		</td>
+			     		<td class='tableTitleR'>END DATE (if applicable):</td>
+			     		<td class='tableResultR' id="endGroup">
+			     		<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<input type="text" name="end_date" id="end_date" class="form-control requiredinput_date" />
                                       	</c:when>
@@ -396,16 +414,17 @@ var pageWordCountConf = {
                                       			<input type="text" name="end_date" id="end_date" class="form-control requiredinput_date" value="${empty rbean.endDate ?'':rbean.endDateFormatted}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${empty rbean.endDate ?'':rbean.endDateFormatted}</div>
+                                      				${empty rbean.endDate ?'':rbean.endDateFormatted}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>
-<div class="input-group">
-    <span class="input-group-addon">Supervisor:</span>                                      	
-                                      
-                                      	<c:choose>
+                                      	</td>
+			     		</tr>
+						<tr>
+			     		<td class='tableTitleL'>SUPERVISOR:</td>
+			     		<td class='tableResultL'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<select name="supervisor" id="supervisor" class="form-control">
                           						<option value="SELECT YEAR">SELECT SUPERVISOR</option>
@@ -439,16 +458,15 @@ var pageWordCountConf = {
 					                        		<input type='hidden' name='hids' id='hids' value="${rbean.supervisor eq 0 ?'SELECT YEAR':rbean.supervisor}">                                      			
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${rbean.supervisorName}</div>
+                                      				${rbean.supervisorName}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>                                     	
-<div class="input-group">
-    <span class="input-group-addon">Division:</span>                                      	
-                                      
-	                                      	<c:choose>
+ 						</td>
+			     		<td class='tableTitleR'>DIVISION:</td>
+			     		<td class='tableResultR'>
+			     							<c:choose>
 	                                      	<c:when test="${empty rbean}">
 					                    		<select id='division' name='division' class='form-control'>
 					                    			<option value="-1" SELECTED>--- Select Division ---</option>
@@ -476,17 +494,18 @@ var pageWordCountConf = {
 						                    		<input type='hidden' name='hidd' id='hidd' value="${empty rbean ?'-1': rbean.division eq 0 ?'-1':rbean.division}">	                                      			
 	                                      			</c:when>
 	                                      			<c:otherwise>
-	                                      				<div class="form-control">${rbean.divisionString}</div>
+	                                      				${rbean.divisionString}
 	                                      			</c:otherwise>
 	                                      		</c:choose>
 	                                      	</c:otherwise>
 	                                      	</c:choose>
-</div>	
-  <div class="input-group"  id="positionTypeGroup">
-    <span class="input-group-addon">Request Type*:</span>                                     	
-
-                                      
-                                      	<c:choose>
+			     		
+			     		</td>
+			     		</tr>
+    					 <tr>
+			     		<td class='tableTitleL'>REQUEST TYPE*:</td>
+			     		<td class='tableResultL' id="positionTypeGroup">
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="request_type" id="request_type" class="form-control">
 											<OPTION VALUE=''>--- SELECT REQUEST TYPE ---</OPTION>
@@ -508,17 +527,19 @@ var pageWordCountConf = {
 													<input type='hidden' id='hidreqt' name='hidreqt' value="${rbean.requestType eq '' ?'':rbean.requestType}">
                                       			</c:when>
                                       			<c:otherwise>
-                                      				<div class="form-control">${rbean.requestType eq '' ?'':rbean.requestTypeString}</div>
+                                      				${rbean.requestType eq '' ?'':rbean.requestTypeString}
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
-</div>
-                                                                       	
-<div class="input-group">
-    <span class="input-group-addon">Comments:</span>
-                                                                          
-	                                   <!-- Not sure why the options below - should be combined into one statement -->
+			     		</td>
+			     		<td class='tableTitleR'></td>
+			     		<td class='tableResultR'></td>
+			     		</tr>
+			     		 <tr>
+			     		<td class='tableTitle'>COMMENTS:</td>
+			     		<td colspan=3 class='tableResult'> 
+			     		<!-- Not sure why the options below - should be combined into one statement - why? CKEditor complains. -->
 	                                      <c:choose>
 	                                      	<c:when test="${empty rbean}">	                                      		
 	                                      		
@@ -531,20 +552,20 @@ var pageWordCountConf = {
 	                                      				<textarea class="form-control" name="comments" id="comments">${empty rbean.comments ?'':rbean.comments}</textarea>
 	                                      			</c:when>
 	                                      			<c:otherwise>
-	                                      				<div class="form-control">${empty rbean.comments ?'':rbean.comments}</div>
+	                                      				${empty rbean.comments ?'':rbean.comments}
 	                                      			</c:otherwise>
 	                                      		</c:choose>
 	                                      	</c:otherwise>
 	                                      	</c:choose>
-	                                      	
-	                                      	
-	                                      	
-	                                   
-</div>
-<div class="input-group">
-    <span style="color:DimGrey">&nbsp; &nbsp; Is Candidate List Private?&nbsp; </span>                                   	
-                                     
-                                      	<c:choose>
+			     		
+			     		
+			     		  
+			     		</td>
+			     		</tr>
+		                <tr>
+			     		<td class='tableTitle'>LIST PRIVATE?</td>
+			     		<td colspan=3 class='tableResult'>
+			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<input type="checkbox" name="private_list" id="private_list"> 
                                       	</c:when>
@@ -554,36 +575,50 @@ var pageWordCountConf = {
                                       				<input type="checkbox" name="private_list" id="private_list" ${rbean.privateList == 1 ? 'checked':''}>
                                       			</c:when>
                                       			<c:otherwise>
-                                      			<div class="form-control">${rbean.privateList == 1 ? 'Yes':'No'}</div>                                     			
+                                      			${rbean.privateList == 1 ? 'Yes':'No'}                                   			
                                       				
                                       			</c:otherwise>
                                       		</c:choose>
                                       	</c:otherwise>
                                       	</c:choose>
- </div>
+			     		</td>
+			     		</tr>
+
 <c:if test="${VIEWAPPROVE}">
 	<c:if test="${rbean.status.value eq 2 }">
-	  	<div class="input-group"  id="positionNumberGroup">
-    		<span class="input-group-addon">Position Number:</span>                                     	
-
-			<input type="text" name="position_number" id="position_number" class="form-control">
-		</div>
-		
-	</c:if>
+	     				<tr>
+			     		<td class='tableTitleL'>POSITION NUMBER:</td>
+			     		<td class='tableResultL'>
+			     		<input type="text" name="position_number" id="position_number" class="form-control">
+			     		</td>	                    
+			     		<td class='tableTitleR'></td>
+			     		<td class='tableResultR'></td>
+			     		</tr>
+	
+	 </c:if>
 	<c:if test="${rbean.status.value gt 2 }">
-	  	<div class="input-group"  id="positionNumberGroup">
-    		<span class="input-group-addon">Position Number:</span>                                     	
-
-			<div class="form-control">${empty rbean.positionNumber ?'':rbean.positionNumber}</div>
-		</div>
+						<tr>
+			     		<td class='tableTitleL'>POSITION NUMBER:</td>
+			     		<td class='tableResultL'>
+			     		<div class="form-control">${empty rbean.positionNumber ?'':rbean.positionNumber}</div>
+			     		</td>	                    
+			     		<td class='tableTitleR'></td>
+			     		<td class='tableResultR'></td>
+			     		</tr>
+	
+	
+	
+	  	
 		
 	</c:if>
 </c:if>
 
+</tbody>
+</table>
 
  
  <div class="panel panel-info">
-  <div class="panel-heading">Current Status:</div>
+  <div class="panel-heading">Current Status &amp; Log:</div>
   	<div class="panel-body">
  
  
@@ -591,18 +626,13 @@ var pageWordCountConf = {
                                      
                                       	<c:choose>
                                       	<c:when test="${empty rbean}">
-                                      		<span style="background-color:Red;padding:2px;color:White;">UNSUBMITTED</span>
+                                      		<div class="alert alert-danger" style="text-align:center;">UNSUBMITTED</div>
                                      	</c:when>
                                       	<c:otherwise>
-                                      		<span style="background-color:Green;padding:2px;color:White;">${rbean.status.description}</span>
+                                      		<div class="alert alert-success" style="text-align:center;">${rbean.status.description}</div>
                                       	</c:otherwise>
                                       	</c:choose>
             
-</div></div> 
- 
- <div class="panel panel-info">
-  <div class="panel-heading">Status Information Log:</div>
-  	<div class="panel-body">
    
  										<ul>                    
                                       	<c:choose>
@@ -622,53 +652,58 @@ var pageWordCountConf = {
 <br/>  		                             
 <div class="no-print" align="center">
             
-                                                                      
+              <div class="alert alert-warning" id="errorMessageS" style="display:none;"><span id="spanmessageS"></span></div>
+                                                               
                                     <c:choose>
                                     	<c:when test="${empty rbean}">
                                     			
-                                        				<input class="btn btn-primary" type="submit" value="Submit">
+                                        				<input class="btn btn-xs btn-primary" type="submit" value="Submit">
                                       				
                                     	</c:when>
                                     	<c:otherwise>
  												
                                       					<c:if test="${VIEWAPPROVE}">
 	                                      					<c:if test="${rbean.status.value eq 1 }">
-	                                      						<input type="submit" class="btn btn-primary" value="Submit">
-	                                      						<input type="button" class="btn btn-success" value="Approve" onclick="updaterequeststatus('A','2','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger" value="Decline" onclick="updaterequeststatus('D','2','${rbean.id}')">
+	                                      						<input type="submit" class="btn btn-primary btn-xs" value="Submit">
+	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','2','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','2','${rbean.id}')">
 	                                      					</c:if>
 	                                      					<c:if test="${rbean.status.value eq 2 }">
-	                                      						<input type="button" class="btn btn-success" value="Approve" onclick="updaterequeststatuscomp('A','3','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger" value="Decline" onclick="updaterequeststatus('D','3','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatuscomp('A','3','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','3','${rbean.id}')">
 	                                      					</c:if>
 	                                      					<c:if test="${rbean.status.value eq 3 }">
-	                                      						<input type="button" class="btn btn-success" value="Approve" onclick="updaterequeststatus('A','4','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger" value="Decline" onclick="updaterequeststatus('D','4','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','4','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','4','${rbean.id}')">
 	                                      					</c:if>
 	                                      					<c:if test="${rbean.status.value eq 4 }">
-	                                      						<input type="button" class="btn btn-success" value="Approve" onclick="updaterequeststatus('A','5','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger" value="Decline" onclick="updaterequeststatus('D','5','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','5','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','5','${rbean.id}')">
 	                                      					</c:if>
 
                                       					</c:if>
                                       					<c:if test="${rbean.status.value eq 5 }">
-                                      						<input class="btn btn-primary" type="button" value="Post this Ad" onclick="PostRequestToHire();">
+                                      						<input class="btn btn-primary btn-xs" type="button" value="Post this Ad" onclick="PostRequestToHire();">
                                       					</c:if>
                                       					<c:if test="${rbean.status.value eq 6 }">
-                                      						<a class="btn btn-warning" href="view_job_post.jsp?comp_num=${rbean.competitionNumber }">View Competition ${rbean.competitionNumber }</a>
+                                      						<a class="btn btn-warning btn-xs" href="view_job_post.jsp?comp_num=${rbean.competitionNumber }">View Competition ${rbean.competitionNumber }</a>
                                       					</c:if>
                                       					<c:if test="${rbean.status.value lt 6 }">
-                                      					<input type="button" class="btn btn-danger" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
+                                      					<input type="button" class="btn btn-danger btn-xs" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
                                       					</c:if>
                                       				                                 		
                                     	</c:otherwise>
                                     </c:choose>
-                                      <div class="alert alert-success" id="errorMessageS" style="display:none;"><span id="spanmessageS"></span></div>
-                                   <a class="btn btn-danger" href="javascript:history.go(-1);">Back</a>
+                                      
+                                   <a href='#' title='Print this page (pre-formatted)' class="btn btn-xs btn-primary" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a>
+		            				 <a class="btn btn-danger btn-xs" href="javascript:history.go(-1);">Back</a>
 
- </div>                       
+ </div>               
+ 
+ 
+ </div>        
      </form>                           
-   </div></div></div>  
+   </div></div></div> 
    
    <script>
     CKEDITOR.replace( 'comments',{wordcount: pageWordCountConf,height:150});

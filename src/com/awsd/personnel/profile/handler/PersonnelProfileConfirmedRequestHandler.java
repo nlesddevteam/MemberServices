@@ -24,8 +24,10 @@ public class PersonnelProfileConfirmedRequestHandler   implements RequestHandler
     if((session != null) && (session.getAttribute("usr") != null))
     {
       usr = (User) session.getAttribute("usr");
-      if(!(usr.getUserPermissions().containsKey("PERSONNEL-PROFILE-VIEW")))
+      if((usr.getUserPermissions().containsKey("PERSONNEL-PROFILE-TEACHER-VIEW")) || (usr.getUserPermissions().containsKey("PERSONNEL-PROFILE-SECRETARY-VIEW")))
       {
+    	//Do nothing but pray  
+      } else {
         throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
       }
     }
