@@ -187,13 +187,9 @@ input {
 						if (job.isClosed()) {
 					%>
 					
-					<a onclick="loadingData()" class="btn btn-xs btn-info"
-						href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>'>View
-						Shortlist</a>
+					<a onclick="loadingData()" class="btn btn-xs btn-info" href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>'>View Shortlist</a>
 					<%}%>	
-					<button type="button" class="btn btn-warning btn-xs"
-						data-toggle="modal" data-target="#emailModal">Email
-						Applicants</button>
+					<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#emailModal">Email Applicants</button>
 
 					<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
 
@@ -208,23 +204,35 @@ input {
 					%>
 
 					Below is a table of current applicants for this position sorted by
-					seniority. The type and certificates/courses are displayed for
+					seniority. 
+					<%if (job.getIsSupport().equals("N")) { %>
+					The type and certificates/courses are displayed for
 					quick reference for <b>non support staff/management positions</b>.
 					(UT = #University Transcripts, TC = #Teaching Certificates, COC =
 					#Code of Conducts, FPD = #French Proficiency (DELF), CEC = #Level 2
-					Early Childhood Education Certificates , and #CRS = # of Courses) <br />
+					Early Childhood Education Certificates , and #CRS = # of Courses)
+					<%}%> 
+					<br />
 					<br />
 					<table id="jobsapp" class="table table-condensed table-striped"
 						style="font-size: 11px; background-color: #FFFFFF;">
 						<thead>
 							<tr>
+							<%if (job.getIsSupport().equals("Y")) { %>							
+								<th width='30%'>NAME</th>
+								<th width='30%'>EMAIL</th>
+								<th width='10%'>SENIORITY</th>			
+								<th width='15%'>TYPE</th>
+								<th width='15%'>OPTIONS</th>
+							<%} else {%>
 								<th width='20%'>NAME</th>
 								<th width='20%'>EMAIL</th>
-								<th width='10%'>SENIORITY</th>
+								<th width='10%'>SENIORITY</th>					
 								<th width='12%'>OTHER INFO</th>
 								<th width='13%'>CERT./CRS</th>
 								<th width='10%'>TYPE</th>
 								<th width='15%'>OPTIONS</th>
+							<%} %>	
 							</tr>
 						</thead>
 						<tbody>
@@ -237,43 +245,34 @@ input {
 														? true
 														: false);
 							%>
-							<tr
-								class='applicant-list<%=(isLabWestSchool ? " lab-west-school" : "")%>'
-								uid='<%=applicants[i].getSIN()%>'>
+							<tr class='applicant-list<%=(isLabWestSchool ? " lab-west-school" : "")%>' uid='<%=applicants[i].getSIN()%>'>
+							
+							<!-- NAME -->	
 								<td valign='top'><%=applicants[i].getFullName().replace("'", "&#39;")%></td>
-								<td valign='top'><a
-									href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
+								
+							<!-- EMAIL -->	
+								<td valign='top'><a	href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
+								
+							<!-- SENIORITY -->	
 								<td>
-									<%
-										if (applicants[i].getSenority() > 0) {
-									%> <span style='color: red;'><%=applicants[i].getSenority()%></span>
-									<%
-										} else {
-									%> <span style="color: DimGrey;">0</span> <%
- 	}
- %>
-
+									<%if (applicants[i].getSenority() > 0) { %> <span style='color: red;'><%=applicants[i].getSenority()%></span>
+									<%} else {%> <span style="color: DimGrey;">0</span> 
+									<%}%>
 								</td>
-								<td>
-									<%
-										if (isLabWestSchool) {
-									%> Labrador West School: <%=applicants[i].getEsdExp().getPermanentContractLocationText()%>.
-									<%
-										} else {
-									%> <span style="color: DimGrey;">N/A</span> <%
- 	}
- %>
-
-
-
+							<!-- OTHER (HIDE FOR NOW WITH SUPPORT JOBS -->
+							<%if (job.getIsSupport().equals("N")) { %>	
+								<td><%if (isLabWestSchool) {%> 
+								Labrador West School: <%=applicants[i].getEsdExp().getPermanentContractLocationText()%>.
+									<%} else {%> 
+									<span style="color: DimGrey;">N/A</span>
+									<%}%>
 								</td>
-								<%
-									if (applicants[i].getProfileType().equals("T")) {
-								%>
+							<%}%>	
+								
+								
+					<%if (applicants[i].getProfileType().equals("T")) {%>
 
-								<%
-									Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager
-														.getApplicantDocumentBean(applicants[i]);
+								<% Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(applicants[i]);
 												int coursesCompleted = 0;
 												int UT = 0; //University Transcripts 1
 												int TC = 0; //Teaching Certificates 2
@@ -281,14 +280,12 @@ input {
 												int FP = 0; //French Proficiency (DELF) doc.getType().getDescription() 4
 												int EC = 0; //Level 2 Early Childhood Education Certificate   5
 								%>
-								<%
-									if ((docs != null) && (docs.size() > 0)) {
+								<%if ((docs != null) && (docs.size() > 0)) {
 													for (ApplicantDocumentBean doc : docs) {
 								%>
 
 
-								<%
-									if (doc.getType().getValue() == 1) {
+								<%if (doc.getType().getValue() == 1) {
 															UT++;
 														} else if (doc.getType().getValue() == 2) {
 															TC++;
@@ -303,26 +300,16 @@ input {
 														}
 								%>
 
-								<%
-									}
-												}
-								%>
+								<%}}%>
 
-								<%
-									edu_other = ApplicantEducationOtherManager
-														.getApplicantEducationOtherBean(applicants[i].getSIN());
-								%>
+								<% edu_other = ApplicantEducationOtherManager.getApplicantEducationOtherBean(applicants[i].getSIN());%>
 
-								<%
-									if (edu_other != null) {
+								<%if (edu_other != null) {
 													coursesCompleted = edu_other.getTotalCoursesCompleted();
 												} else {
 													coursesCompleted = 0;
 												}
 								%>
-
-
-
 
 								<!-- 
 	                                    
@@ -332,84 +319,40 @@ If they do not have ECE, but anything else including teacher certificate, etc, t
  
 If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be a Teacher /TLA
 
-	                                    
-	                                   
-	                                     -->
-								<td><b>UT:</b> <%=UT%> &middot; <b>TC:</b> <%=TC%><br /> <b>FPD:</b>
-									<%=FP%> &middot; <b>COC:</b> <%=CC%><br /> <b>ECE:</b> <%=EC%>
-									&middot; <b>#CRS:</b> <%=coursesCompleted%></td>
+	                              -->
+	                              
+	                          <!-- #Courses -->
+	                              
+								<td><b>UT:</b> <%=UT%> &middot; <b>TC:</b> <%=TC%><br /> 
+								<b>FPD:</b>	<%=FP%> &middot; <b>COC:</b> <%=CC%><br /> <b>ECE:</b> <%=EC%> &middot; <b>#CRS:</b> <%=coursesCompleted%></td>
 
 								<!-- If has 20+ courses or ECE Certificate) AND no teaching certificate -->
-								<%
-									if (((coursesCompleted >= 20) || (EC > 0)) && (TC < 1)) {
-								%>
-								<td
-									style="background-color: #DDA0DD; color: Black; text-align: center;">TLA</td>
+								<%if (((coursesCompleted >= 20) || (EC > 0)) && (TC < 1)) {%>
+								<td style="background-color: #DDA0DD; color: Black; text-align: center;vertical-align:middle;">TLA</td>
 								<!-- If is a Teacher AND a teaching certificate -->
-								<%
-									} else if ((applicants[i].getProfileType().equals("T")) && (TC > 0)) {
-								%>
-								<td
-									style="background-color: #6495ED; color: Black; text-align: center;">TEACHER</td>
+								<% } else if ((applicants[i].getProfileType().equals("T")) && (TC > 0)) {%>
+								<td style="background-color: #6495ED; color: Black; text-align: center;vertical-align:middle;">TEACHER</td>
 								<!-- If is a Teacher AND a Teaching Certificate AND a ECE Certificate or 20+ courses -->
-								<%
-									} else if ((applicants[i].getProfileType().equals("T")) && (TC > 0)
-														&& ((EC > 0) || (coursesCompleted >= 20))) {
-								%>
-								<td
-									style="background-color: #6495ED; color: Black; text-align: center;">TEACHER
-									/TLA</td>
-
-								<%
-									} else {
-								%>
-								<td
-									style="background-color: #E9967A; color: Black; text-align: center;">OTHER</td>
-								<%
-									}
-								%>
-
-								<%
-									} else {
-								%>
-
-								<!-- FUTURE USE for Support Certificate types -->
-								<td>N/A</td>
-
+								<%} else if ((applicants[i].getProfileType().equals("T")) && (TC > 0) && ((EC > 0) || (coursesCompleted >= 20))) {%>
+								<td style="background-color: #6495ED; color: Black; text-align: center;vertical-align:middle;">TEACHER/TLA</td>
+								<%} else {%>
+								<td style="background-color: #E9967A; color: Black; text-align: center;vertical-align:middle;">OTHER</td>
+								<%}%>
+								<%} %>
+								
 								<!-- FUTURE USE for Support Types -->
-								<!-- If is a Support/Managment  -->
-								<%
-									if (applicants[i].getProfileType().equals("S")) {
-								%>
-								<td
-									style="background-color: #FFEBCD; color: Black; text-align: center;">SUPPORT/MGMNT</td>
-
-								<%
-									} else {
-								%>
-								<td
-									style="background-color: #E9967A; color: Black; text-align: center;">OTHER</td>
-								<%
-									}
-								%>
-
-
-
-								<%
-									}
-								%>
-								<td><a onclick="loadingData()"
-									class='btn btn-xs btn-primary'
-									href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
-									<%
-										if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("MANAGER OF HR - PERSONNEL")) {
-									%> <a href="#" data-toggle="confirmation"
-									data-title="Are you sure you wish to withdraw <%=applicants[i].getFullNameReverse()%> from this competition?"
-									class="btn btn-danger btn-xs"
-									comp-num='<%=job.getCompetitionNumber()%>'
-									uid='<%=applicants[i].getSIN()%>'>Withdraw</a> <%
- 	}
- %></td>
+							<!-- If is a Support/Managment  -->
+								<% if (applicants[i].getProfileType().equals("S")) { %>
+								<td style="background-color: #FFEBCD; color: Black; text-align: center;vertical-align:middle;">SUPPORT/MGMNT</td>
+								<%}%>
+								
+								<td style="text-align:right;">
+									<a onclick="loadingData()" class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
+									<% if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("MANAGER OF HR - PERSONNEL")) {%> 
+									<a href="#" data-toggle="confirmation" data-title="Are you sure you wish to withdraw <%=applicants[i].getFullNameReverse()%> from this competition?"
+									class="btn btn-danger btn-xs" comp-num='<%=job.getCompetitionNumber()%>' uid='<%=applicants[i].getSIN()%>'>Withdraw</a> 
+									<%	}%>
+								</td>
 							</tr>
 							<%
 								}
@@ -417,16 +360,11 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 
 						</tbody>
 					</table>
-					<%
-						} else {
-					%>
+					
+					<%} else {%>
 					No applicants currently on file for this competition.
-					<%
-						}
-					%>
-
-
-				</div>
+					<%}%>
+			</div>
 
 
 
