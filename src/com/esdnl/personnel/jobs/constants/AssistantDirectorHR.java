@@ -23,7 +23,7 @@ public enum AssistantDirectorHR {
 															"images/gb-sig.png", "09/01/2013", "06/08/2016"), Lloyd_Collins("Lloyd Collins",
 																	"Assistant Director of Education - Human Resources and School Leadership",
 																	"images/lloydcollins-sig.png", "06/09/2016", "01/28/2018"), Ed_Walsh_2("Ed Walsh",
-																			"Assistant Director of Education - Human Resources and School Leadership",
+																			"Associate Director of Education (Programs and Human Resources)",
 																			"images/ed-sig.png", "01/29/2018", null);
 
 	private String name;
