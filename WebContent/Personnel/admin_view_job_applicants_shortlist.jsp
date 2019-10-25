@@ -212,27 +212,37 @@
 	                                    	if((recs != null) && (recs.length > 0)){
 	                                    		if(recs[0].getJob() != null){
 	                                    			jtype = recs[0].getJob().getJobType();
+	                                    			String jobtype ="";
+	                                    			if(jtype.equal(JobTypeConstant.TLA_REGULAR) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)){
+	                                    				jobtype=" TLA";
+	                                    			}else if(jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.REPLACEMENT)){
+	                                    				jobtype=" Teaching";
+	                                    			}else if (jtype.equal(JobTypeConstant.ADMINISTRATIVE)){
+	                                    				jobtype=" Administrative";
+	                                    			}else if (jtype.equal(JobTypeConstant.LEADERSHIP)){
+	                                    				jobtype=" Leadership";
+	                                    			}
 		                                    		if(jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.TLA_REGULAR)){
 		                                    			if(recs[0].getTotalUnits() < 1.0){
 		                                    				cssClass = "PermanentPartTimePosition";
 		                                    				cssText = "Permanent/ Part Time";
-		                                    				position = recs[0].getEmploymentStatus() + " Part-time (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
+		                                    				position = jobtype + " " + recs[0].getEmploymentStatus() + " Part-time (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
 		                                    			}
 		                                    			else{
 		                                    				cssClass = "PermanentFullTimePosition";
 		                                    				cssText = "Permanent/ Full Time";
-		                                    				position = recs[0].getEmploymentStatus() + " Full-time @ " + recs[0].getJob().getJobLocation() ;
+		                                    				position = jobtype + " " + recs[0].getEmploymentStatus()  + " Full-time @ " + recs[0].getJob().getJobLocation() ;
 		                                    			}
 		                                    		}
 		                                    		else if(jtype.equal(JobTypeConstant.REPLACEMENT) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)){
 		                                    			cssClass = "ReplacementPosition";
 		                                    			cssText = "Replacement";
-		                                    			position = recs[0].getJob().getCompetitionNumber() + ":Replacement (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
+		                                    			position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype +" Replacement (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
 		                                    		}
 		                                    		else if(jtype.equal(JobTypeConstant.TRANSFER)){
 		                                    			cssClass = "TransferPosition";
 		                                    			cssText = "Transfer";
-		                                    			position = recs[0].getJob().getCompetitionNumber() + ":Transfer (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
+		                                    			position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype + " Transfer (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
 		                                    		}
 	                                    		}
 	                                    		
