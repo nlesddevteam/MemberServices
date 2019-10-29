@@ -93,7 +93,19 @@
 						</tr>
 						<tr>
 							<td>Percentage:</td>
-							<td>${rec.totalUnits}</td>
+							
+							<c:choose>
+								<c:when test="${rec.totalUnits gt 0}">
+									<td><fmt:formatNumber type = "number" minFractionDigits = "2" value = "${rec.totalUnits}" /></td>
+									
+								</c:when>
+								<c:when test="${adreq.units gt 0}">
+									<td><fmt:formatNumber type = "number" minFractionDigits = "2" value = "${adreq.units}" /></td>
+								</c:when>
+								<c:otherwise>
+								<td>0.0</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						<tr>
 							<td>Type:</td>

@@ -74,10 +74,10 @@
   {
     acct_code = claim.getSDSGLAccountCode();
   }
-  else if((sds != null) && (sds.getAccountCode()!= null) && (!sds.getAccountCode().trim().equals("10000000000000000")))
-  {
-    acct_code = sds.getAccountCode();
-  }
+  //else if((sds != null) && (sds.getAccountCode()!= null) && (!sds.getAccountCode().trim().equals("10000000000000000")))
+  //{
+    //acct_code = sds.getAccountCode();
+  //}
   else
   {
     acct_code = null;

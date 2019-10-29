@@ -132,32 +132,34 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							new RequiredFormElement("References_Satisfactory"), new RequiredFormElement("Special_Conditions")
 					});
 
-					JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
-
-					HashMap<String, ArrayList<GradeSubjectPercentUnitBean>> all_jobs_gsu = (HashMap<String, ArrayList<GradeSubjectPercentUnitBean>>) session.getAttribute(
-							"ALL_JOBS_GSU_BEANS");
-					ArrayList<GradeSubjectPercentUnitBean> gsu_beans = null;
-					if(job.getIsSupport().equals("Y")){	
-						if (all_jobs_gsu != null)
-							gsu_beans = (ArrayList<GradeSubjectPercentUnitBean>) all_jobs_gsu.get(job.getCompetitionNumber());
-	
-						if ((gsu_beans == null) || (gsu_beans.size() <= 0)) {
-							request.setAttribute("msg", "Please indicate position breakdown (SECTION 2).");
-							request.setAttribute("FORM", form);
-	
-							path = "admin_job_teacher_recommendation.jsp";
-						}
-						else if (!positionUnitCheck()) {
-							request.setAttribute("msg",
-									"Please ensure that the position breakdown percentage total matches the position unit allocation.");
-							request.setAttribute("FORM", form);
-	
-							path = "admin_job_teacher_recommendation.jsp";
-						}
-					}
+					
 					if (validate_form()) {
 						try {
+							JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 
+							HashMap<String, ArrayList<GradeSubjectPercentUnitBean>> all_jobs_gsu = (HashMap<String, ArrayList<GradeSubjectPercentUnitBean>>) session.getAttribute(
+									"ALL_JOBS_GSU_BEANS");
+							ArrayList<GradeSubjectPercentUnitBean> gsu_beans = null;
+							if(job.getIsSupport().equals("N")){	
+								if (all_jobs_gsu != null)
+									gsu_beans = (ArrayList<GradeSubjectPercentUnitBean>) all_jobs_gsu.get(job.getCompetitionNumber());
+			
+								if ((gsu_beans == null) || (gsu_beans.size() <= 0)) {
+									request.setAttribute("msg", "Please indicate position breakdown (SECTION 2).");
+									request.setAttribute("FORM", form);
+			
+									path = "admin_job_teacher_recommendation.jsp";
+									return path;
+								}
+								else if (!positionUnitCheck()) {
+									request.setAttribute("msg",
+											"Please ensure that the position breakdown percentage total matches the position unit allocation.");
+									request.setAttribute("FORM", form);
+			
+									path = "admin_job_teacher_recommendation.jsp";
+									return path;
+								}
+							}
 							TeacherRecommendationBean bean = new TeacherRecommendationBean();
 
 							bean.setReferenceId(form.getInt("reference_id"));
@@ -202,7 +204,7 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 
 							request.setAttribute("RECOMMENDATION_BEAN",
 									RecommendationManager.getTeacherRecommendationBean(bean.getRecommendationId()));
-							request.setAttribute("msg", "Teacher recommendation submitted successfully.");
+							request.setAttribute("msg", "Recommendation submitted successfully.");
 
 							path = "admin_view_job_teacher_recommendation.jsp";
 						}
