@@ -767,7 +767,7 @@ function confirmVehicleFields(usertype,validatedates) {
 	// all good
 	$("#mainalert").hide();
 	// updateCompanyInformation();
-	if ($("#vid").val() == -1) {
+	if ($("#vid").val() <= 0) {
 		addNewVehicle(usertype);
 	} else {
 		updateVehicle(usertype);
@@ -1584,7 +1584,7 @@ function checkemployee(usert,validatedates) {
 	$("#body_error_message_top").css("display", "none");
 	$("#body_error_message_bottom").css("display", "none");
 	// updateCompanyInformation();
-	if ($("#cid").val() == -1) {
+	if ($("#cid").val() <= -1) {
 		addNewEmployee(usert);
 	} else {
 		updateEmployee(usert);
