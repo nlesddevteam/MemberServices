@@ -63,19 +63,20 @@
 					else if(!$("input[name='Scale1']:checked").val() || !$("input[name='Scale2']:checked").val() || !$("input[name='Scale3']:checked").val() || !$("input[name='Scale4']:checked").val()										
 							|| !$("input[name='Scale5']:checked").val() || !$("input[name='Scale6']:checked").val()) {
 						$('#section2Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale1').focus();		
+						$('#Scale1').focus();
+						is_valid = false;
 					}		
 					else if(!$("input[name='Scale7']:checked").val() || !$("input[name='Scale8']:checked").val()
 							|| !$("input[name='Scale9']:checked").val() || !$("input[name='Scale10']:checked").val() || !$("input[name='Scale11']:checked").val()) {
 						$('#section3Error').css('display','block').delay(5000).fadeOut();
 						$('#Scale1').focus();
-						
+						is_valid = false;
 						
 					} else if(!$("input[name='Scale12']:checked").val()
 							|| !$("input[name='Scale13']:checked").val() || !$("input[name='Scale14']:checked").val() || !$("input[name='Scale15']:checked").val() || !$("input[name='Scale16']:checked").val()) {
 						$('#section4Error').css('display','block').delay(5000).fadeOut();
 						$('#Scale1').focus();
-						
+						is_valid = false;
 					} else if (!$("input[name='Scale17']:checked").val() || !$("input[name='Scale18']:checked").val() || !$("input[name='Scale19']:checked").val() || !$("input[name='Scale20']:checked").val()
 							|| !$("input[name='Scale21']:checked").val() || !$("input[name='Scale22']:checked").val()) {
 						is_valid = false;
