@@ -346,6 +346,7 @@
 						<option value="Store Keeper">Store Keeper</option>
 						<option value="Student Transportation Enforcement Officer">Student Transportation Enforcement Officer</option>
 						<option value="Supervisor of Board Owned Bus Services">Supervisor of Board Owned Bus Services</option>
+						<option value="Supervisor of District-Operated Busing">Supervisor of District-Operated Busing</option>
 						<option value="Training Specialist">Training Specialist</option>
 						<option value="Transportation Clerk">Transportation Clerk</option>
 						<option value="Utility Worker I">Utility Worker I</option>
@@ -502,13 +503,15 @@
 							 <option value="Holy Heart">Holy Heart</option>
 							 <option value="Hospital School">Hospital School</option>
 							 <option value="IMC">IMC</option>
+							 <option value="Indian River Academy">Indian River Academy</option>
 							 <option value="SD Cook">SD Cook</option>
+							 <option value="Stephenville Elementary">Stephenville Elementary</option>
 							<option value="Avalon Office/HQ">Avalon Office/HQ</option>
 							 <option value="Central Office">Central Office</option>
 							  <option value="Labrador Office">Labrador Office</option>
 							 <option value="Western Office">Western Office</option>
 							 <option value="Norton Building">Norton Building</option>
-							 <option value="Norton Building">Located in School</option>
+							 <option value="Located in School">Located in School</option>
 
 	                     </select>
 	            </div>
