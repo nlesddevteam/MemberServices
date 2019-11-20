@@ -17,6 +17,7 @@
 
 <%
   User usr = null;
+
   usr = (User) session.getAttribute("usr");
   
 %>
