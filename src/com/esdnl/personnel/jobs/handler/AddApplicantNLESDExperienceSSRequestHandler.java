@@ -64,7 +64,7 @@ public class AddApplicantNLESDExperienceSSRequestHandler extends PersonnelApplic
 					}
 					//now we check to see if they are adding a current position and save that
 					if(request.getParameter("hidadd").equals("ADDNEW")){
-						if (form.getInt("perm_school") <= 0) {
+						if (form.getInt("perm_school") == 0) {
 							request.setAttribute("errmsg", "Please select work location.");
 							path = "applicant_registration_step_2_ss.jsp";
 						}else if(form.getInt("union_code") <= 0) {
