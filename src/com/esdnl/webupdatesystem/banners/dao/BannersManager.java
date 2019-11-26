@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -23,11 +26,33 @@ public class BannersManager {
 
 	private static Map<Integer, BannersBean> BANNER_CACHE;
 
+	public static Timer updater = null;
 	static {
 		BANNER_CACHE = Collections.synchronizedMap(new LinkedHashMap<Integer, BannersBean>());
 
 		try {
-			BANNER_CACHE.putAll(getBanners().stream().collect(Collectors.toMap(BannersBean::getId, banner -> banner)));
+			BANNER_CACHE.putAll(getBanners(true).stream().collect(Collectors.toMap(BannersBean::getId, banner -> banner)));
+
+			updater = new Timer();
+
+			updater.schedule(new TimerTask() {
+
+				@Override
+				public void run() {
+
+					System.out.println("*** UPDATING BANNER CACHE");
+					BANNER_CACHE.clear();
+					try {
+						BANNER_CACHE.putAll(
+								getBanners(true).stream().collect(Collectors.toMap(BannersBean::getId, banner -> banner)));
+					}
+					catch (BannersException e) {
+						System.err.println(e);
+					}
+
+				}
+			}, 1200000, 1200000);
+
 		}
 		catch (BannersException e) {
 			try {
@@ -88,9 +113,15 @@ public class BannersManager {
 
 	public static Vector<BannersBean> getBanners() throws BannersException {
 
-		if (BANNER_CACHE != null && BANNER_CACHE.size() > 0) {
+		return getBanners(false);
+	}
+
+	public static Vector<BannersBean> getBanners(boolean reload) throws BannersException {
+
+		if (!reload && BANNER_CACHE != null && BANNER_CACHE.size() > 0) {
 			Vector<BannersBean> mms = new Vector<BannersBean>(5);
-			mms.addAll(BANNER_CACHE.values());
+			mms.addAll(BANNER_CACHE.values().stream().sorted(Comparator.comparingInt(BannersBean::getBannerRotation)).collect(
+					Collectors.toList()));
 
 			return mms;
 		}
