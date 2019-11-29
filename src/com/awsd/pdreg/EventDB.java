@@ -286,11 +286,12 @@ public class EventDB {
 
 			sdf = new SimpleDateFormat("dd-MMM-yy");
 
-			sql = "SELECT EVENT_ID, EVENTTYPE_ID, EVENT_NAME, EVENT_DESC, EVENT_DATE, EVENT_ENDDATE, "
+			sql = "SELECT EVENT.EVENT_ID, EVENTTYPE_ID, EVENT_NAME, EVENT_DESC, EVENT_DATE, EVENT_ENDDATE, "
 					+ "EVENT_LOCATION, EVENT_SCHOOL_ID, EVENT_ZONE_ID, SCHEDULER_ID, nvl(EVENT_STARTTIME, 'UNKNOWN') EVENT_STARTTIME, "
 					+ "nvl(EVENT_FINISHTIME, 'UNKNOWN') EVENT_FINISHTIME, "
-					+ "nvl(EVENT_MAX, 0) EVENT_MAX, nvl(EVENT_CLOSEOUT_OPTION,'ZZ') EVENT_CLOSEOUT_OPTION, GOV_FUNDED "
-					+ "FROM EVENT WHERE EVENT_DATE='" + sdf.format(d) + "' OR ((EVENT_DATE <= '" + sdf.format(d) + "') AND ('"
+					+ "nvl(EVENT_MAX, 0) EVENT_MAX, nvl(EVENT_CLOSEOUT_OPTION,'ZZ') EVENT_CLOSEOUT_OPTION, GOV_FUNDED,nvl(ecount.pcount,0) PARTICIPANT_CNT "
+					+ "FROM EVENT left outer join (select count(*) pcount,event_id from EVENTPERSONNEL group by EVENT_ID) ecount on EVENT.EVENT_ID=ecount.event_id "
+					+ "WHERE EVENT_DATE='" + sdf.format(d) + "' OR ((EVENT_DATE <= '" + sdf.format(d) + "') AND ('"
 					+ sdf.format(d) + "' <= EVENT_ENDDATE ))" + " ORDER BY EVENT_ID";
 
 			con = DAOUtils.getConnection();
@@ -343,11 +344,12 @@ public class EventDB {
 
 			sdf = new SimpleDateFormat("dd-MMM-yy");
 
-			sql = "SELECT EVENT_ID, EVENTTYPE_ID, EVENT_NAME, EVENT_DESC, EVENT_DATE, EVENT_ENDDATE, "
+			sql = "SELECT EVENT.EVENT_ID, EVENTTYPE_ID, EVENT_NAME, EVENT_DESC, EVENT_DATE, EVENT_ENDDATE, "
 					+ "EVENT_LOCATION, EVENT_SCHOOL_ID, EVENT_ZONE_ID, SCHEDULER_ID, nvl(EVENT_STARTTIME, 'UNKNOWN') EVENT_STARTTIME, "
 					+ "nvl(EVENT_FINISHTIME, 'UNKNOWN') EVENT_FINISHTIME, "
-					+ "nvl(EVENT_MAX, 0) EVENT_MAX, nvl(EVENT_CLOSEOUT_OPTION,'ZZ') EVENT_CLOSEOUT_OPTION, GOV_FUNDED "
-					+ "FROM EVENT WHERE (EVENT_DATE='" + sdf.format(d) + "' OR ((EVENT_DATE <= '" + sdf.format(d) + "') AND ('"
+					+ "nvl(EVENT_MAX, 0) EVENT_MAX, nvl(EVENT_CLOSEOUT_OPTION,'ZZ') EVENT_CLOSEOUT_OPTION, GOV_FUNDED,nvl(ecount.pcount,0) PARTICIPANT_CNT "
+					+ "FROM EVENT left outer join (select count(*) pcount,event_id from EVENTPERSONNEL group by EVENT_ID) ecount on EVENT.EVENT_ID=ecount.event_id "
+					+ "WHERE (EVENT_DATE='" + sdf.format(d) + "' OR ((EVENT_DATE <= '" + sdf.format(d) + "') AND ('"
 					+ sdf.format(d) + "' <= EVENT_ENDDATE ))) AND EVENT_ZONE_ID=" + zone.getZoneId() + " ORDER BY EVENT_ID";
 
 			con = DAOUtils.getConnection();

@@ -64,11 +64,11 @@ public class DeleteEventRequestHandler implements RequestHandler
           //new DeleteEventWorkerThread(evt, registered).start();
           new FirstClassWorkerThread(usr.getPersonnel(), new Event[]{evt}, FirstClassWorkerThread.DELETE_EVENT).start();
           
-          request.setAttribute("msg", "Event deleted successfully.");
+          request.setAttribute("msgok", "SUCCESS: Event deleted successfully.");
         }
         else
         {
-          request.setAttribute("msg", "Event deleted successfully.");
+          request.setAttribute("msgok", "SUCCESS: Event deleted successfully.");
         }
       }
       else
@@ -80,13 +80,15 @@ public class DeleteEventRequestHandler implements RequestHandler
     }
     catch(NumberFormatException e)
     {
-      path = "error.jsp";
-      throw new EventException("Could not parse Event ID.\n" + e);
+    	request.setAttribute("msgerr", "ERROR: Could not parse Event ID.\n" + e);
+    	path = "deleteevent.jsp";
+     // throw new EventException("Could not parse Event ID.\n" + e);
     }
     catch(EventException e)
     {
-      path = "error.jsp";
-      throw e;
+    	request.setAttribute("msgerr", "ERROR: Could not remove this event. Please contact your IT Administrator.\n" + e);
+      path = "deleteevent.jsp";
+      //throw e;
     }
     
     return path;

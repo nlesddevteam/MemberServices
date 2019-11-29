@@ -2,7 +2,10 @@
           session="true" 
           import="java.util.*, 
             java.text.*, 
-            com.awsd.pdreg.*,com.awsd.security.*,com.awsd.personnel.*,com.awsd.school.*"
+            com.awsd.pdreg.*,
+            com.awsd.security.*,
+            com.awsd.personnel.*,
+            com.awsd.school.*"
           isThreadSafe="false"%>
 
 <%
@@ -73,142 +76,152 @@
 
 <html>
 
-<head>
-<title>Newfoundland &amp; Labrador English School District - Event Participants</title>
-<link href="../css/calendar.css" rel="stylesheet">
-<style>
-	td {font-family: Tahoma, Verdana, sans-serif; font-size: 12px;}
-</style>
+ <head>
+  
+   	<title>PD Calendar</title>
+    
+    <script>      
+     $("#loadingSpinner").css("display","none");	  
+ 		$('document').ready(function(){
+	  $(".staffRegistrations").DataTable({
+		  "order": [[ 0, "asc" ]],		 
+		  "bPaginate": false,
+		  "bLengthChange": false,
+		  "lengthMenu": [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]]
+	  
+	  
+	  });	
+	 
+ });
+    </script>
+     	<style>
+		.tableTitle {font-weight:bold;width:20%;text-transform:uppercase;}
+		.tableResult {font-weight:normal;width:80%;}
+		.tableTitleL {font-weight:bold;width:20%;text-transform:uppercase;}
+		.tableResultL {font-weight:normal;width:30%;background-color:#ffffff;}
+		.tableTitleR {font-weight:bold;width:20%;text-transform:uppercase;}
+		.tableResultR {font-weight:normal;width:30%;background-color:#ffffff;}
+		input {border:1px solid silver;}
+	</style>
+    
+    
+  </head>
 
-<script language="JavaScript" src="../js/common.js"></script>
+<body>
+<div class="container-fluid no-print" data-spy="affix" data-offset-top="0" style="position:fixed;width:100%;height:30px;background-color:#008B8B;color:White;text-align:center;font-weight:bold;padding:5px;">                      
+ <%=s.getSchoolName()%> Registrations
+</div>
+<div class="registerEventDisplay" style="padding-top:25px;font-size:11px;">
 
-<script language="Javascript">
-  function processing(image)
-  {
-    document.images[image].src='images/processing_ani.gif'; 
-    document.images[image].onmouseover="src='images/spacer.gif';" 
-    document.images[image].onmouseout="src='images/spacer.gif';"
-    document.images[image].onmousedown="src='images/spacer.gif';"
-    document.images[image].onmouseup="src='images/spacer.gif';"
-  }
-</script>
-</head>
+ <div align="center" class="no-print"><a href="viewDistrictCalendar.html"><img class="topLogoImg" src="includes/img/pdcalheader.png" border=0 style="padding-bottom:10px;"/></a></div>
 
-<body bgcolor="#FFFFFF" marginheight="5" marginwidth="5" topmargin="5" leftmargin="5" rightmargin="5">
-<table cellspacing="0" border="0" width="100%">
-  <tr>
-    <td bgcolor="#4682B4">
-      <table cellspacing="0" cellpadding="1" border="0" width="100%">
-        <tr>
-          <td colspan="2">
-            <table cellspacing="0" cellpadding="0" border="0" width="100%">
-              <tr>
-                <td>
-                  &nbsp;
-                </td>
-                <td align="center" width="100%">
-                  <font size="3" color="#ffffff"><b><%=s.getSchoolName()%></b></font>
-                </td>
-                <td>
-                  &nbsp;
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td align="center" colspan="2">
-            <table width="100%" cellpadding="0" cellspacing="1" border="0">
-              <tr>
-                <td width="100" valign="top" bgcolor="#f4f4f4">
-                  &nbsp;&nbsp;Principal:
-                </td>
-                <td width="300" valign="top" bgcolor="#FFFFFF">
-                  <%=s.getSchoolPrincipal().getFullNameReverse()%>
-                </td>
-              </tr>
-              <% if((aps != null) && (aps.length > 0)) { %>
-              <tr>
-                <td width="100" valign="top" bgcolor="#f4f4f4">
-                  &nbsp;&nbsp;Vice Principal:
-                </td>
-                <td width="300" valign="top" bgcolor="#FFFFFF">
-                  <%
-                  	for(int i=0; i < aps.length; i++)
-                  		out.println(aps[i].getFullNameReverse() + "<br>");
-                  %>
-                </td>
-              </tr>
-              <% } %>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          <table  width="100%" cellpadding="0" cellspacing="0" border="0">
-            <tr>
-              <td align="center">
-                <font color="#ffffff"><b>Registrations</b></font>
-              </td>
-            </tr>
-          </table>
-          </td>
-        </tr>
-        <tr>
-          <td align="center" colspan="2">
-            <table cellspacing="1" cellpadding="3" border="0" width="100%">
-              <% while (iter.hasNext())
-                {
+
+ 						<% if(request.getAttribute("msgERR") != null) { %>
+         				 <div class="alert alert-danger" style="text-align:center;"><%= request.getAttribute("msgERR") %></div>
+       					 <% } %>
+       					<% if(request.getAttribute("msgOK") != null) { %>
+         				 <div class="alert alert-success" style="text-align:center;"><%= request.getAttribute("msgOK") %>.</div>
+       					 <% } %> 
+
+								<table class="table table-striped table-condensed" style="font-size:12px;">							   
+							    <tbody>
+							    <tr>                        
+    							<td class="tableTitle">SCHOOL:</td>
+    							<td class="tableResult" colspan=3><%=s.getSchoolName()%></td>
+    							</tr>
+    							 <tr>                        
+    							<td class="tableTitle">PRINCIPAL:</td>
+    							<td class="tableResult" colspan=3 style="text-transform:Capitalize;"><%=s.getSchoolPrincipal().getFullNameReverse()%></td>
+    							</tr>
+    							<% if((aps != null) && (aps.length > 0)) { %>
+    							<tr>                        
+    							<td class="tableTitle">VICE-PRINCIPAL:</td>
+    							<td class="tableResult" colspan=3 style="text-transform:Capitalize;">
+    							<% for(int i=0; i < aps.length; i++)
+                  					out.println(aps[i].getFullNameReverse() + "<br>");
+                  				%>
+    							</td>
+    							</tr>
+								<%}%>
+								</tbody>
+								</table>
+    
+
+  
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading"><b>STAFF REGISTRATIONS</b></div>
+      			 	<div class="panel-body"> 
+      			 	Below is a list of your staff and any PD Events they maybe registered for.<br/><br/>
+      			 	You currently have <b><span id="staffRegistered"></span></b> staff members out of <span id="staffRegisteredPC"></span> registered for PD events.<br/><br/>
+      			 	
+ <table class="table table-condensed table-striped" style="width:100%;font-size:11px;background-color:#FFFFFF;">
+									   
+									    <tbody> 
+    
+              <%	
+              int numStaffRegistered = 0;  
+              int numStaff = 0;
+              %>
+            
+              <% while (iter.hasNext()) {
                   p = (Personnel) iter.next();
-              %>  
-                  <tr>                
-                    <td bgcolor="#f4f4f4" align="left" colspan="2">
-                      <b><%=p.getFullName()%></b>
-                    </td>
-                  </tr>  
-               <% revts = (RegisteredEvents) sre.get(p);
-                  e_iter = revts.entrySet().iterator();
-                  if(!e_iter.hasNext())
-                  {%>
-                    <td bgcolor="#ffffff" align="left" colspan="2"><font color="#FF0000"><b>No Registrations.</b></font></td>
-               <% } else {
-                  while(e_iter.hasNext())
-                  {
-                    evt = (Event)((Map.Entry) e_iter.next()).getValue();
-               %>   <tr>
-                      <td bgcolor="#ffffff" align="left"><a class="closeout" href="javascript:openWindow('registration', 'registerEvent.html?id=<%=evt.getEventID()%>&details=true', 400, 465, 0);"><%= evt.getEventName()%></a></td>
-                      <td bgcolor="#ffffff" align="center">
-                        <% if(evt.isPDOpportunity()) {%>
-                          <img name='<%="img"+p.getPersonnelID()%>' src="images/deregister_01.jpg" 
-                             onmouseover="src='images/deregister_02.jpg';"
-                             onmouseout="src='images/deregister_01.jpg';"
-                             onmousedown="src='images/deregister_03.jpg';"
-                             onmouseup="src='images/deregister_02.jpg';"
-                             onclick="processing('<%="img"+p.getPersonnelID()%>'); self.location.href='deregisterEvent.html?pid=<%=p.getPersonnelID()%>&id=<%=evt.getEventID()%>';">
-                        <%} else if(evt.isCloseOutDaySession()) {%>
-                          <font class="closeout">Closeout Session</font>
-                        <%}%>
-                      </td>
-                    </tr>
-                <% } %>        
+                  numStaff++;
+                  %>
+                
+              	 <tr>
+                  <td colspan=2 style="font-weight:bold;background-color:#FFF8DC;color:Green;"><%=p.getFullName()%></td> 
+                 </tr> 
+                  <% revts = (RegisteredEvents) sre.get(p);
+                  		e_iter = revts.entrySet().iterator();
+                  
+                  		if(!e_iter.hasNext()) {%>
+                      <tr><td colspan=2 style="font-style:italic;color:Silver;">&nbsp;&nbsp;Not registered for any events.</td></tr>
+               			<% } else {
+                  			int iCnt=0;
+                  			numStaffRegistered++;
+               				while(e_iter.hasNext()) {
+                    		evt = (Event)((Map.Entry) e_iter.next()).getValue();
+                    		iCnt++;
+               			%>
+               			<tr>
+               			<td width="75%">&nbsp;&nbsp;<%=iCnt%>. <%= evt.getEventName()%> 
+               			<%if(evt.isCloseOutDaySession()) {%>
+                 			(Closeout Session)
+               				<%}%>
+               			
+               			</td>
+                        <td width="25%" style="text-align:right;"><a class="no-print btn btn-xs btn-primary" title="View Event Details" href="registerEvent.html?id=<%=evt.getEventID()%>&details=true">VIEW</a>
+                			<% if(evt.isPDOpportunity()) {%>
+               				 <a class="no-print btn btn-xs btn-danger" title="De-Register this staff member from this event?" href="deregisterEvent.html?pid=<%=p.getPersonnelID()%>&id=<%=evt.getEventID()%>">DE-REGISTER?</a>
+               				<%}%>
+               			</td></tr>
+               <% } %>        
               <% } %>
+              
               <% } %>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <img src="images/closeblue_01.jpg" 
-               onmouseover="src='images/closeblue_02.jpg';" 
-               onmouseout="src='images/closeblue_01.jpg';"
-               onmousedown="src='images/closeblue_03.jpg';"
-               onmouseup="src='images/closeblue_02.jpg';"
-               onclick="self.close();">
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+              
+              
+              </tbody>
+              </table>
+              
+              
+              
+              
+   </div></div></div>
+   
+   			  <div align="center" class="no-print navBottom">
+  				<a href='#' title='Print this page (pre-formatted)' class="btn btn-primary btn-xs"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Professional Development Calendar</b></div><br/>'});"><span class="glyphicon glyphicon-print"></span> Print</a>	                     
+  				<a onclick="loadingData()" class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html">Back to Calendar</a>
+  			 </div>
+   
+   </div>
+   
+   
+   <script>
+   $("#staffRegistered").text(<%=numStaffRegistered%>);   
+   $("#staffRegisteredPC").text(<%=numStaff%>);  
+   </script>
+   
 </body>
 </html>

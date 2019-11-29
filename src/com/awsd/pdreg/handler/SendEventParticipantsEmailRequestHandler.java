@@ -97,7 +97,8 @@ public class SendEventParticipantsEmailRequestHandler   implements RequestHandle
       email.send();
       
       
-      msg = "Email sent successfully.";
+      msg = "SUCCESS! Email sent successfully.";
+      request.setAttribute("msgOK", msg);
       
     }
     catch(Exception e)
@@ -105,11 +106,12 @@ public class SendEventParticipantsEmailRequestHandler   implements RequestHandle
       System.err.println(e);
       e.printStackTrace(System.err);
       //throw new EventException("COULD NOT SEND PARTICIPANT EMAIL.");
-      msg = "Could not send email.";
+      msg = "ERROR: Sorry, could not send email.";
+      request.setAttribute("msgERR", msg);
     }
     
-    request.setAttribute("msg", msg);
     
-    return "email_reply.jsp";
+    
+    return "participantemail.jsp";
   }
 }

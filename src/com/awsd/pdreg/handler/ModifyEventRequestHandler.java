@@ -1,5 +1,7 @@
 package com.awsd.pdreg.handler;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,7 @@ import com.awsd.pdreg.EventRequirement;
 import com.awsd.pdreg.EventType;
 import com.awsd.pdreg.EventTypeDB;
 import com.awsd.pdreg.dao.EventCategoryManager;
+//import com.awsd.pdreg.handler.RegisterEventRequestHandler.AgendaFilenameFilter;
 import com.awsd.pdreg.worker.FirstClassWorkerThread;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.security.SecurityException;
@@ -32,7 +35,9 @@ public class ModifyEventRequestHandler implements RequestHandler {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
-
+		
+		
+		
 		Event evt = null;
 		EventType type = null;
 		int id = -1;
@@ -279,7 +284,7 @@ public class ModifyEventRequestHandler implements RequestHandler {
 				boolean flag = EventDB.updateEvent(event);
 
 				if (flag) {
-					request.setAttribute("msg", "Event modified successfully.");
+					request.setAttribute("msgOK", "SUCCESS: Event modified successfully.");
 					request.setAttribute("modified", new Boolean(true));
 					// notify all registered personnel that event date has changed.
 					if (notify) {
@@ -291,24 +296,52 @@ public class ModifyEventRequestHandler implements RequestHandler {
 					}
 				}
 				else {
-					request.setAttribute("msg", "Event modification unsuccessfully.");
+					request.setAttribute("msgERR", "ERROR: Event modification unsuccessful.");
 				}
 			}
 
 			evt = EventDB.getEvent(id);
 			request.setAttribute("evt", evt);
+			File agenda_dir = new File(session.getServletContext().getRealPath("/") + "/PDReg/agendas/");
+			File[] agendas = agenda_dir.listFiles(new AgendaFilenameFilterM(evt));
 
+			
+			if (agendas != null && agendas.length > 0) {
+				request.setAttribute("AGENDA_FILE", agendas[0]);
+				} 
 			// path = "modifyevent.jsp";
 		}
 		catch (NumberFormatException e) {
 			throw new EventException("Could not parse Event ID.\n" + e);
 		}
 		catch (EventException e) {
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("msgERR", e.getMessage());
 			evt = EventDB.getEvent(id);
 			request.setAttribute("evt", evt);
 		}
 		// return path;
 		return "modifyevent.jsp";
 	}
+	
+	private class AgendaFilenameFilterM implements FilenameFilter {
+
+		private Event evt;
+
+		public AgendaFilenameFilterM(Event evt) {
+
+			this.evt = evt;
+		}
+
+		public boolean accept(File dir, String name) {
+
+			boolean check = false;
+
+			if (name.indexOf(evt.getEventID() + ".") >= 0)
+				check = true;
+
+			return check;
+		}
+	}
+	
+	
 }

@@ -261,22 +261,22 @@ public class ScheduleEventRequestHandler extends RequestHandlerImpl {
 						}
 
 						if (type.getEventTypeName().equalsIgnoreCase("SCHOOL PD REQUEST")) {
-							request.setAttribute("msg", "PD request sent to "
+							request.setAttribute("msgOK", "PD request sent to "
 									+ usr.getPersonnel().getSchool().getSchoolFamily().getProgramSpecialist().getFullNameReverse()
 									+ " for approval.");
 						}
 						else {
-							request.setAttribute("msg", "Event Scheduled Successfully.");
+							request.setAttribute("msgOK", "SUCCESS: Event Scheduled Successfully.");
 						}
 					}
 					else {
-						request.setAttribute("msg", "Event Scheduling Unsuccessfully.");
+						request.setAttribute("msgERR", "ERROR: Event Scheduling Unsuccessfully.");
 					}
 				}
 			}
 		}
 		catch (EventException e) {
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("msgERR", e.getMessage());
 		}
 
 		return "scheduleevent.jsp";

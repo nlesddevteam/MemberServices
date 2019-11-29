@@ -8,7 +8,7 @@
 
 <%!
   // path to the directory where calendar images are stored. trailing slash req.
-  final String STR_ICONPATH = "images/";
+  final String STR_ICONPATH = "includes/img/";
 %>
 
 <%

@@ -5,8 +5,12 @@
                   java.io.*,
                   com.awsd.pdreg.*,
                   com.awsd.security.*,
-                  com.awsd.common.Utils,
-                  org.apache.commons.lang.*" 
+                  com.awsd.personnel.*,
+            com.awsd.school.*,
+            com.awsd.common.Utils,
+            com.nlesd.school.bean.*,
+            com.nlesd.school.service.*,
+            org.apache.commons.lang.*"            
           isThreadSafe="false"%>
  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -62,7 +66,7 @@
                                   "Saturday"};
   
   // path to the directory where calendar images are stored. trailing slash req.
-  final String STR_ICONPATH = "images/";
+  final String STR_ICONPATH = "includes/img/";
 
   File agenda_dir = new File(session.getServletContext().getRealPath("/") + "/PDReg/agendas/");
   
@@ -74,7 +78,11 @@
   int curY;
   int curD;
   int dayofweek;
-
+  
+	String bgcolor = "";
+	String txtcolor = "";
+	String regionName = "";
+	
   Calendar cur = null;
   SimpleDateFormat sdf = null;
 
@@ -97,6 +105,7 @@
   id = usr.getPersonnel().getPersonnelID();
   permissions = usr.getUserPermissions();
   
+  evt = (Event) request.getAttribute("evt");
   
   daily = (DailyCalendar) request.getAttribute("DailyEvents");
   iter = daily.iterator();
@@ -129,20 +138,21 @@
   Calendar now = Calendar.getInstance();
   Date dt_now = now.getTime();
   
+  int eA = 0;
+  int eC = 0;
+  int eW = 0;
+  int eL = 0;
+  int eP = 0;
+  
   
 %>
 
 <html>
 
 <head>
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<meta content="utf-8" http-equiv="encoding">
-<title>Newfoundland &amp; Labrador English School District - Daily Calendar</title>
-<style>
-	td {font-family: Tahoma, Verdana, sans-serif; font-size: 12px;}
-</style>
+<title>PD Calendar</title>
 
-<script language="JavaScript" src="../js/common.js"></script>
+
 <script language="JavaScript">
   function toggle(target, sw)
   {
@@ -150,44 +160,124 @@
     obj.style.display=sw;
   }
   
-  function setMessage(rid, cid, msg)
-  {
-    var cell  = document.getElementById(cid);
-
-    cell.innerHTML = "<FONT style='font-weight:bold' COLOR='FF0000'>"+ msg +"</FONT>";
-
-    toggle(rid, 'inline');
-  }
+ 
+$("#loadingSpinner").css("display","none");
 </script>
+<style>
+.tableTitle {font-weight:bold;width:20%;color:White;text-transform:uppercase;}
+.tableResult {font-weight:normal;width:80%;background-color:#ffffff;}
+.tableTitleL {font-weight:bold;width:20%;background-color:#006400;color:White;text-transform:uppercase;}
+.tableResultL {font-weight:normal;width:30%;background-color:#ffffff;}
+.tableTitleR {font-weight:bold;width:20%;background-color:#006400;color:White;text-transform:uppercase;}
+.tableResultR {font-weight:normal;width:30%;background-color:#ffffff;}
+input {border:1px solid silver;}
+
+.affix { top: 0px; width: 100%;z-index: 999 !important;}
+.affix + .container-fluid { padding-top: 80px;}
+
+@media only screen and (max-width: 850px) {		
+		.affix + .container-fluid {padding-top: 70px; }
+	
+}
+
+</style>
+<script src="/MemberServices/PDReg/includes/js/Chart.min.js"></script>
 </head>
 
-<body bgcolor="#FFFFFF" marginheight="5" marginwidth="5" topmargin="5" leftmargin="5" rightmargin="5">
-
-<table class="clsOTable" cellspacing="0" border="0" width="100%">
-  <tr>
-    <td bgcolor="#4682B4">
-      <table cellspacing="1" cellpadding="3" border="0" width="100%">
-        <tr>
-          <td colspan="2">
-            <table cellspacing="0" cellpadding="0" border="0" width="100%">
-              <tr>
+<body>     <a name="top"></a>
+<%if(ARR_MONTHS[curM] == "January" || ARR_MONTHS[curM] == "February") { %>
+  		<c:set var="season" value="winter"/> 
+  	    <c:set var="seasonIconLeft" value="winter.png"/>
+   		<c:set var="seasonIconRight" value="winter.png"/>
+   	<%} %>
+    <%if(ARR_MONTHS[curM] == "March") { %>   
+   		<c:set var="season" value="springGradient"/>
+   		<c:set var="seasonIconLeft" value="winter.png"/>
+   		<c:set var="seasonIconRight" value="spring.png"/>
+   		  
+    <%} %>    
+    <%if(ARR_MONTHS[curM] == "April" || ARR_MONTHS[curM] == "May") { %>
+  		<c:set var="season" value="spring"/> 
+  		<c:set var="seasonIconLeft" value="spring.png"/>
+   		<c:set var="seasonIconRight" value="spring.png"/>
+   	<%} %>   
+   <%if(ARR_MONTHS[curM] == "June") { %>   
+   		<c:set var="season" value="summerGradient"/>
+   		<c:set var="seasonIconLeft" value="spring.png"/>
+   		<c:set var="seasonIconRight" value="summer.png"/>
+   		 
+    <%} %> 
+    <%if(ARR_MONTHS[curM] == "July" || ARR_MONTHS[curM] == "August") { %>
+  		<c:set var="season" value="summer"/>
+  		<c:set var="seasonIconLeft" value="summer.png"/>
+   		<c:set var="seasonIconRight" value="summer.png"/>  
+  		
+   	<%} %>
+    <%if(ARR_MONTHS[curM] == "September") { %>   
+   		<c:set var="season" value="fallGradient"/>
+   		<c:set var="seasonIconLeft" value="summer.png"/>
+   		<c:set var="seasonIconRight" value="fall.png"/>
+   		  
+    <%} %>
+    <%if(ARR_MONTHS[curM] == "October" || ARR_MONTHS[curM] == "November") { %>
+  		<c:set var="season" value="fall"/> 
+  		<c:set var="seasonIconLeft" value="fall.png"/>
+   		<c:set var="seasonIconRight" value="fall.png"/> 
+  		 
+   	<%} %>    
+    <%if(ARR_MONTHS[curM] == "December") { %>   
+   		<c:set var="season" value="winterGradient"/> 
+   		<c:set var="seasonIconLeft" value="fall.png"/>
+   		<c:set var="seasonIconRight" value="winter.png"/>
+   		
+    <%} %>
+    
+  <div id="affixedTop" class="container-fluid" data-spy="affix" data-offset-top="0">
+		
+ 		<table id="affixedTable" class="table table-condensed ${season}" align="center" style="font-size:11px;width:100%;min-width:350px;">     
+    			<tr>
                 <td>
-                  <a href="viewDailyCalendar.html?dt=<%=prevM%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><img src="<%=STR_ICONPATH%>prev_year.gif" width="16" height="16" border="0" alt="previous month"></a>&nbsp;<a href="viewDailyCalendar.html?dt=<%=prevD%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><img src="<%=STR_ICONPATH%>prev.gif" width="16" height="16" border="0" alt="previous day"></a>
-                </td>
-                <td align="center" width="100%">
-                  <font size="3" color="#ffffff"><b><%=ARR_WEEKDAYS[dayofweek-1]%>,&nbsp;<%=ARR_MONTHS[curM]%>&nbsp;<%=curD%>&nbsp;<%=curY%></b></font>
-                </td>
-                <td>
-                  <a href="viewDailyCalendar.html?dt=<%=nextD%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><img src="<%=STR_ICONPATH%>next.gif" width="16" height="16" border="0" alt="next day"></a>&nbsp;<a href="viewDailyCalendar.html?dt=<%=nextM%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><img src="<%=STR_ICONPATH%>next_year.gif" width="16" height="16" border="0" alt="next month"></a>
+                <div style="float:left;width:15%;">
+                  <a onclick='loadingData()' class="monthNav btn btn-default btn-sm" title="Step a Month Back" href="viewDailyCalendar.html?dt=<%=prevM%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                  <a onclick='loadingData()' class="btn btn-default btn-sm" title="Step a Day Back" href="viewDailyCalendar.html?dt=<%=prevD%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><span class="glyphicon glyphicon-backward"></span></a>
+                </div>
+                <div class="topTitle" style="float:left;width:70%;text-align:center;">
+                   <img src="includes/img/icon/${seasonIconLeft}" class="topTitleImgLeft" border="0"><span style="font-weight:bold;color:white;text-transform:uppercase;"><span class="showWeekDay"><%=ARR_WEEKDAYS[dayofweek-1]%>,&nbsp;</span><%=ARR_MONTHS[curM]%>&nbsp;<%=curD%>,&nbsp;<%=curY%></span><img src="includes/img/icon/${seasonIconRight}" class="topTitleImgRight" border="0">
+               	</div>
+                <div style="float:right;width:15%;text-align:right;">
+                  <a onclick='loadingData()' class="btn btn-default btn-sm" title="Step a Day Ahead" href="viewDailyCalendar.html?dt=<%=nextD%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><span class="glyphicon glyphicon-forward"></span></a>
+                  <a onclick='loadingData()' class="monthNav btn btn-default btn-sm" title="Step a Month Ahead" href="viewDailyCalendar.html?dt=<%=nextM%><%= daily.getZone() != null ? "&region-id=" + daily.getZone().getZoneId() : "" %>"><span class="glyphicon glyphicon-fast-forward"></span></a>
+               </div>
                 </td>
               </tr>
             </table>
-          </td>
-        </tr>
+   </div>
+
+    <div class="container-fluid" >           
+      
+   
+     <div align="center" class="no-print"><a href="viewDistrictCalendar.html"><img class="topLogoImg" src="includes/img/pdcalheader-md.png" border=0 style="padding-bottom:10px;"/></a></div>
+     
+     <div align="center">
+   <b><span class="numT"></span> Events for <span class="showWeekDay"><%=ARR_WEEKDAYS[dayofweek-1]%>,&nbsp;</span><%=ARR_MONTHS[curM]%>&nbsp;<%=curD%>,&nbsp;<%=curY%></b><br/>
+  
+    
+     All <span class="numT"></span> Events for today are listed below and are color coded by region.
+     <div class="mainView" style="font-size:11px;color:Black;text-align:center;padding-top:5px;padding-bottom:5px;">   
+	   <div style="display:inline-block;white-space: nowrap;"><span class="region1a">&nbsp; AVALON (<span class="numA"></span>)&nbsp;</span></div>
+	   <div style="display:inline-block;white-space: nowrap;"><span class="region2a">&nbsp; CENTRAL (<span class="numC"></span>)&nbsp;</span> </div>
+	   <div style="display:inline-block;white-space: nowrap;"><span class="region3a">&nbsp; WESTERN (<span class="numW"></span>)&nbsp;</span></div>
+	  <div style="display:inline-block;white-space: nowrap;"><span class="region4a">&nbsp; LABRADOR (<span class="numL"></span>)&nbsp;</span></div>
+	  <div style="display:inline-block;white-space: nowrap;"><span class="region5a">&nbsp; PROVINCIAL (<span class="numP"></span>)&nbsp;</span></div>
+  </div>  
+  
+</div>
+  
+     <table id="bodyTable" class="dailyEventList table table-condensed" align="center" style="font-size:11px;width:100%;min-width:350px;">  
 <%      if(!iter.hasNext())
         {
 %>        <tr>
-              <td bgcolor="#ffffff" align="center">No Events Scheduled.</td>
+              <td align="center" colspan="4"><div class="alert alert-danger">Sorry, no events currently scheduled for today.</div></td>
           </tr>
 <%      }
         else
@@ -203,7 +293,7 @@
             
       			File[] agendas = agenda_dir.listFiles(new AgendaFilenameFilter(evt));
 
-      			if (agendas.length > 0) {
+      			if (agendas != null && agendas.length > 0) {      			
             	f_agenda = agendas[0];
       			}
       			else {
@@ -224,275 +314,304 @@
             }
             rowcnt++;
             
+            
+            
             if(!evt.isPrivateCalendarEntry() 
               || (evt.isPrivateCalendarEntry() && (evt.getSchedulerID() == id))) { %>
+              
+              
+              <%
+            //Check Regions of the events.
+				if(evt.getEventSchoolZoneID() ==1) {
+					 bgcolor ="rgba(191, 0, 0, 0.1)";
+					 txtcolor ="rgba(191, 0, 0, 1);";
+					 regionName ="AVALON REGION";
+					 eA++;
+				 } else if (evt.getEventSchoolZoneID() == 2) {
+					 bgcolor ="rgba(0, 191, 0, 0.1)";
+					 txtcolor ="rgba(0, 191, 0, 1);";
+					 regionName ="CENTRAL REGION";
+					 eC++;
+				 } else if (evt.getEventSchoolZoneID() ==3) {
+					 bgcolor ="rgba(255, 132, 0, 0.1)";
+					 txtcolor ="rgba(255, 132, 0, 1);";
+					 regionName ="WESTERN REGION";
+					 eW++;
+				 } else if (evt.getEventSchoolZoneID() ==4) {
+					 bgcolor ="rgba(127, 130, 255, 0.1)";
+					 txtcolor ="rgba(127, 130, 255, 1);";
+					 regionName ="LABRADOR REGION";
+					 eL++;
+				 } else if (evt.getEventSchoolZoneID() ==5) {
+					 bgcolor ="rgba(128, 0, 128, 0.1)";
+					 txtcolor ="rgba(128, 0, 128, 1);";
+					 regionName ="PROVINCIAL";
+					 eP++;
+				 } else {
+					 bgcolor ="#FFFFFF";
+					 txtcolor ="#000000;";
+					 regionName ="";
+				 }
+              
+              %>              
+                                       
               <tr>
-                <td bgcolor="#ffffff" align="left" width="25%">Type</td>
-                <td bgcolor="#ffffff" align="left"><%=evt.getEventType().getEventTypeName()%></td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Region:</td>
+                <td class="tableResult" colspan=3 style="color:<%=txtcolor%>;border-top:1px solid <%=txtcolor%>;"><%=regionName%></td>
+              </tr>
+              
+              <tr>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Event Type:</td>
+                <td class="tableResult" colspan=3><%=evt.getEventType().getEventTypeName()%></td>
+              </tr>
+              
+              <tr>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Title:</td>
+                <td class="tableResult" colspan=3><%=evt.getEventName()%></td>
               </tr>
               <tr>
-                <td bgcolor="#ffffff" align="left" width="25%">Title</td>
-                <td bgcolor="#ffffff" align="left"><%=evt.getEventName()%></td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Description:</td>
+                <td class="tableResult" colspan=3><%=evt.getEventDescription()%></td>
+              </tr>
+              
+              <tr>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Location (Host):</td>
+                <td class="tableResult" colspan=3><%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "") %>
+                <% if(evt.isCloseOutDaySession() || evt.isPDOpportunity()) { %>
+              	 	<br/><i>Hosted by: <span style="text-transform:capitalize;"><%=evt.getScheduler().getFullNameReverse() %></span></i>
+                <% } %>
+                </td>
               </tr>
               <tr>
-                <td bgcolor="#ffffff" align="left">Description</td>
-                <td bgcolor="#ffffff" align="left"><%=evt.getEventDescription()%></td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Start/End Date:</td>
+                <td class="tableResult" colspan=3>
+                <%=evt.getEventDate()%> to 
+                <% if(evt.getEventEndDate() != null) { %>
+			              <%=evt.getEventEndDate()%>
+			          <% } else {%>              		
+			              N/A
+		              <%} %>
+                 </td>
+                
               </tr>
-              <tr>
-                <td bgcolor="#ffffff" align="left">Start Date</td>
-                <td bgcolor="#ffffff" align="left"><%=evt.getEventDate()%></td>
-              </tr>
-              <% if(evt.getEventEndDate() != null) { %>
-	              <tr>
-	                <td bgcolor="#ffffff" align="left">End Date</td>
-	                <td bgcolor="#ffffff" align="left"><%=evt.getEventEndDate()%></td>
-	              </tr>
-              <% } %>
-              <tr>
-                <td bgcolor="#ffffff" align="left">Location</td>
-                <td bgcolor="#ffffff" align="left"><%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "") %></td>
-              </tr>
-              <% if(evt.isCloseOutDaySession() || evt.isPDOpportunity()) { %>
-              	<tr>
-                  <td bgcolor="<%=(legend.containsKey(new Integer(evt.getSchedulerID()))?"#" + ((String)legend.get(new Integer(evt.getSchedulerID()))):"#FFFFFF")%>" align="left">Event Host</td>
-                  <td bgcolor="#FFFFFF" align="left"><font style="font-weight:bold" color="<%=legend.containsKey(new Integer(evt.getSchedulerID()))?"#" + (String)legend.get(new Integer(evt.getSchedulerID())):"#000000"%>"><%=evt.getScheduler().getFullName()%></font></td>  
-              	</tr>
-              <% } %>
               <% if(!evt.getEventStartTime().equals("UNKNOWN")) { %>
 	              <tr>
-	                <td width="100" valign="top" bgcolor="#FFFFFF">
-	                  Start Time:
-	                </td>
-	                <td width="300" valign="top" bgcolor="#FFFFFF">
-	                  <%=evt.getEventStartTime()%>
-	                </td>
-	              </tr>
-	              <tr>
-	                <td width="100" valign="top" bgcolor="#FFFFFF">
-	                  Finish Time:
-	                </td>
-	                <td width="300" valign="top" bgcolor="#FFFFFF">
-	                  <%=evt.getEventFinishTime()%>
-	                </td>
+	                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Start/Finish Time:</td>
+	                <td class="tableResult" colspan=3><%=evt.getEventStartTime()%> to <%=evt.getEventFinishTime()%></td>	                
 	              </tr>
               <% } %>
               
               <% if(evt.hasEventCategories()) { %>
 					      <tr>
-					        <td width="100" valign="top" bgcolor="#FFFFFF">
-					          Categories:
-					        </td>
-					        <td width="300" valign="top" bgcolor="#FFFFFF">
+					        <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Categories:</td>
+					        <td class="tableResult" colspan=3>
 					          <c:forEach items="${evt.eventCategories}" var="cat" varStatus="status">
-					          	${cat.name}<c:if test="${status.last eq false}"><br /></c:if>
+					          	${cat.name}<c:if test="${status.last eq false}">, </c:if>
 					          </c:forEach>
 					        </td>
 					      </tr>
 				      <% } %>
               
-              <% if(evt.isSchoolPDEntry() || f_agenda != null) { %>
-				      <tr>
-				        <td width="100" valign="top" bgcolor="#FFFFFF">
-				          Agenda:
-				        </td>
-				        <td width="300" valign="top" bgcolor="#FFFFFF">
-				          <%if(f_agenda != null){%>
-				            <a href="http://www.nlesd.ca/MemberServices/PDReg/agendas/<%=f_agenda.getName()%>" target="_blank" style="color:#FF0000;font-weight:bold;text-decoration:none;">DOWNLOAD</a>
-				          <%}else{%>
-				            <span style="color:#FF0000;font-weight:bold;">Agenda not available.</span>
-				          <%}%>
-				        </td>
-				      </tr>
-				      <% } %>
+              
 				      
               <% if(evt.isCloseOutDaySession() || evt.isPDOpportunity()) { %>
 	              <tr>
-	                <td width="100" valign="top" bgcolor="#FFFFFF">
-	                  Max Participants:
-	                </td>
-	                <td width="300" valign="top" bgcolor="#FFFFFF">
-	                  <% if(evt.getEventMaximumParticipants() > 0) { %>
-	                    <%=evt.getEventMaximumParticipants()%>
-	                  <% } else { %>
+	                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Max Spaces (#Registered):</td>
+	                <td class="tableResult" colspan=3>
+	                  	<% if(evt.getEventMaximumParticipants() > 0) { %>	                  
+	                  			<%if (evt.getEventMaximumParticipants()<10) { %>
+								10
+								<%} else {%>	
+	                  			<%=evt.getEventMaximumParticipants()%>
+	                    		<%}%>
+	                  	<% } else { %>
 	                    UNLIMITED
-	                  <% } %>
-	                </td>
-	              </tr>
-	              <% if(!usr.checkRole("TEACHER")) { %>
-		              <tr>
-		                <td width="100" valign="top" bgcolor="#FFFFFF">
-		                  # Registered:
-		                </td>
-		                <td width="300" valign="top" bgcolor="#FFFFFF">
-		                  <%=evt.getRegistrationCount()%>
-		                </td>
-		              </tr>
-	              <% } %>
+	                  	<% } %>
+	                   <% if(!usr.checkRole("TEACHER")) { %>		              
+		              	(<%=evt.getRegistrationCount() %>)	              
+	              		<% } else { %>
+	                   (N/A)           
+	              		<%} %>
+	                 </td>	              
+	             </tr>
+	              
               <% } %>
-              <tr id="msgrow_<%=rowcnt%>" style="display:none">
-                  <td id="msg_<%=rowcnt%>"  colspan="2" bgcolor="#ffffff" align="center"></td>
-              </tr>
+              
               <tr>
+	                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>STATUS:</td>
+	                <td class="tableResult" colspan=3>
+              		<% if((Utils.compareCurrentDate(evt.getEventDate())==0)||((evt.getEventEndDate()!= null)&&(Utils.compareCurrentDate(evt.getEventDate())==-1)&&(Utils.compareCurrentDate(evt.getEventEndDate())>=0))){%>
+                              <span><font color="#008000"> <b><span class="glyphicon glyphicon-star"></span> Active Event</b></font></span>
+              		<%}else if(Utils.compareCurrentDate(evt.getEventDate())==-1){%>
+                              <span><font color="#FF0000"> <b><span class="glyphicon glyphicon-remove"></span> Past Event</b></font></span>
+               		<% } else {%>
+               		          <span><font color="#4169E1"> <b><span class="glyphicon glyphicon-ok"></span> Upcoming Event</b></font></span>
+               		<%} %>
+                    </td>
+			 </tr>
+              
                 <% if(Utils.compareCurrentDate(evt.getEventDate())>0) { %>
-                <td bgcolor="#F4F4F4" align="right" colspan="2">
-                  <table>
-                    <tr>
+                
+                <tr>
+                <td class="no-print eventOptions" colspan="4" style="background-color:<%=bgcolor%>">
+                  
+                  <div id="msgrow_<%=rowcnt%>" style="display:none;padding-bottom:5px;"><span id="msg_<%=rowcnt%>"></span></div>
+                  
+                  <% if(evt.isSchoolPDEntry() || f_agenda != null) { %>
+				            <a class="no-print btn btn-xs btn-info" href="/MemberServices/PDReg/agendas/<%=f_agenda.getName()%>" target="_blank" title="View Event Agenda" ><span class="glyphicon glyphicon-search"></span> Agenda</a>
+				   <% } %> 
+                  
                       <% if(!evt.isScheduler(usr)) { %>
                         <% if(evt.isPDOpportunity()) { %>
-                          <td>
+                         
                             <% if(revts.get(new Integer(evt.getEventID())) != null){ %>
-                              <script>setMessage('msgrow_<%=rowcnt%>', 'msg_<%=rowcnt%>', 'You are already registered for this event.');</script>
+                              <script>
+                              $('#msgrow_<%=rowcnt%>').css('display','inline');
+                              $('#msg_<%=rowcnt%>').text('NOTICE: You are already registered for this event.').css('color','green').css('font-weight','bold');                             
+                             </script>
                             <% } else if(evt.isFull()) { %>
-                              <script>setMessage('msgrow_<%=rowcnt%>', 'msg_<%=rowcnt%>', 'Registration has ended. Event is full.');</script>
+                              <script>
+                              $('#msgrow_<%=rowcnt%>').css('display','block');
+                              $('#msg_<%=rowcnt%>').text('NOTICE: Sorry, registration has ended. Event is full.').css('color','red').css('font-weight','bold');   
+                              </script>
                             <% } else { %>
                             
 
                             	<%if((dt_reg_start.compareTo(dt_now) <= 0) || (evt.getEventType().getEventTypeID() == 4) //PD SESSION
                             			){ %>
-	                              <img src="images/register_01.jpg" 
-	                               onmouseover="src='images/register_02.jpg';"
-	                               onmouseout="src='images/register_01.jpg';"
-	                               onmousedown="src='images/register_03.jpg';"
-	                               onmouseup="src='images/register_02.jpg';"
-	                               onclick="openWindow('registration', 'registerEvent.html?id=<%=evt.getEventID()%>', 420, 465, 1);">
+                            			<a onclick="loadingData()" href="registerEvent.html?id=<%=evt.getEventID()%>" title="Register for this Event" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span> Register</a>	                             
                                <%}else{%>
                                		&nbsp;
-                               		<script>setMessage('msgrow_<%=rowcnt%>', 'msg_<%=rowcnt%>', 'Registration not currently available.');</script>
+                               		<script>
+                               	 		$('#msgrow_<%=rowcnt%>').css('display','block');
+                                 		$('#msg_<%=rowcnt%>').text('Sorry, registration not currenty available.').css('color','red').css('font-weight','bold');     
+                               		</script>
                                <%}%>
                             <% } %>
-                          </td>
-                          <% if(permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS") && evt.isPDOpportunity()) { %>
-                            <td>
-                              <img src="images/view_participants_01.jpg" 
-                                onmouseover="src='images/view_participants_02.jpg';"
-                                onmouseout="src='images/view_participants_01.jpg';"
-                                onmousedown="src='images/view_participants_03.jpg';"
-                                onmouseup="src='images/view_participants_02.jpg';"
-                                onclick="openWindow('Participants', 'eventparticipants_frame.jsp?id=<%=evt.getEventID()%>', 450, 480, 1);">
-                            </td>
+                          
+                                                   
+                          
+                          <% if(permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS") && evt.isPDOpportunity()) { %>                           
+                           		<a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>                             
                           <% } %>
                         <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
-                              <td>
-                                <img src="images/sessions_01.jpg" 
-                                  onmouseover="src='images/sessions_02.jpg';"
-                                  onmouseout="src='images/sessions_01.jpg';"
-                                  onmousedown="src='images/sessions_03.jpg';"
-                                  onmouseup="src='images/sessions_02.jpg';"
-                                  onclick="openWindow('closeout', 'districtCloseout.html?id=<%=evt.getEventID()%>', 450, 465, 1);">                            
-                              </td>
+                                <a onclick="loadingData()" href="districtCloseout.html?id=<%=evt.getEventID()%>" title="Sessions" class="btn btn-primary btn-xs">Sessions</a>                                                         
                         <%}%>
                         <% if(permissions.containsKey("CALENDAR-DELETE-ALL")) { %>
-                          <td>
-                            <img src="images/delete_01.jpg" 
-                              onmouseover="src='images/delete_02.jpg';"
-                              onmouseout="src='images/delete_01.jpg';"
-                              onmousedown="src='images/delete_03.jpg';"
-                              onmouseup="src='images/delete_02.jpg';"
-                              onclick="openWindow('deleteevent', 'deleteEvent.html?id=<%=evt.getEventID()%>', 400, 400, 0);">
-                          </td>
+                          		<a onclick="loadingData()" href="deleteEvent.html?id=<%=evt.getEventID()%>" title="Delete this Event" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>                          
                         <% } %>
                       <% } else { %>
                         <% if(evt.hasParticipants()) { %>
-                          <td>
-                            <img src="images/view_participants_01.jpg" 
-                                onmouseover="src='images/view_participants_02.jpg';"
-                                onmouseout="src='images/view_participants_01.jpg';"
-                                onmousedown="src='images/view_participants_03.jpg';"
-                                onmouseup="src='images/view_participants_02.jpg';"
-                                onclick="openWindow('Participants', 'eventparticipants_frame.jsp?id=<%=evt.getEventID()%>', 450, 480, 1);">
-                          </td>
+                         <a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>  
                         <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
-                              <td>
-                                <img src="images/sessions_01.jpg" 
-                                 onmouseover="src='images/sessions_02.jpg';"
-                                 onmouseout="src='images/sessions_01.jpg';"
-                                 onmousedown="src='images/sessions_03.jpg';"
-                                 onmouseup="src='images/sessions_02.jpg';"
-                                 onclick="openWindow('closeout', 'districtCloseout.html?id=<%=evt.getEventID()%>', 450, 465, 1);">                            
-                              </td>
+                         <a onclick="loadingData()" href="districtCloseout.html?id=<%=evt.getEventID()%>" title="Sessions" class="btn btn-primary btn-xs">Sessions</a>
                         <%}%>
                         <% if((evt.isCloseOutDaySession() || evt.isPDOpportunity()) || usr.isAdmin()){ %>
-                        <td>
-                          <img src="images/modify_01.jpg" 
-                             onmouseover="src='images/modify_02.jpg';"
-                             onmouseout="src='images/modify_01.jpg';"
-                             onmousedown="src='images/modify_03.jpg';"
-                             onmouseup="src='images/modify_02.jpg';"
-                             onclick="openWindow('modifyevent', 'modifyEvent.html?id=<%=evt.getEventID()%>', 400, 465, 1);">                           
-                        </td>
+                          <a onclick="loadingData()" href="modifyEvent.html?id=<%=evt.getEventID()%>" title="Modify this Event" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-cog"></span> Modify</a>                                                   
                         <% } %>
-                        <td>
-                          <img src="images/delete_01.jpg" 
-                             onmouseover="src='images/delete_02.jpg';"
-                             onmouseout="src='images/delete_01.jpg';"
-                             onmousedown="src='images/delete_03.jpg';"
-                             onmouseup="src='images/delete_02.jpg';"
-                             onclick="openWindow('deleteevent', 'deleteEvent.html?id=<%=evt.getEventID()%>', 400, 400, 0);">
-                        </td>
+                        
+                         <a onclick="loadingData()" href="deleteEvent.html?id=<%=evt.getEventID()%>" title="Delete this Event" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>   
+                        
                       <% } %>
-                    </tr>
-                  </table>
+                    
                 </td>
+                </tr>
+                
+                
+                <tr><td colspan=4>&nbsp;</td></tr>
                 <%} else { %>
-                  <td bgcolor="#F4F4F4" align="left" width="100%" colspan="2" valign="middle">
-                    <table width="100%">
-                      <tr>
-                        <td bgcolor="#F4F4F4" width="50%" align="left">
-                          <% if((Utils.compareCurrentDate(evt.getEventDate())==0)||((evt.getEventEndDate()!= null)&&(Utils.compareCurrentDate(evt.getEventDate())==-1)&&(Utils.compareCurrentDate(evt.getEventEndDate())>=0))){%>
-                              <span><font color="#FF0000"><b>Active Event</b></font></span>
-                          <%}else if(Utils.compareCurrentDate(evt.getEventDate())==-1){%>
-                              <span><font color="#FF0000"><b>Past Event</b></font></span>
-                          <% } %>
-                        </td>
-                        <% if((evt.isScheduler(usr)|| usr.isAdmin()) && evt.hasParticipants() && (evt.isActive() || evt.isPast())) { %>
-                          <td bgcolor="#F4F4F4" align="right" valign="middle">
-                            <img src="images/attendance_01.jpg" 
-                              onmouseover="src='images/attendance_02.jpg';"
-                              onmouseout="src='images/attendance_01.jpg';"
-                              onmousedown="src='images/attendance_03.jpg';"
-                              onmouseup="src='images/attendance_02.jpg';"
-                              onclick="openWindow('Attendance', 'viewEventAttendance.html?id=<%=evt.getEventID()%>', 450, 480, 1);">
-                          </td>
-                        <% } else if(evt.hasParticipants() && permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS")) { %>
-                          <td bgcolor="#F4F4F4" align="right" valign="middle">
-                            <img src="images/view_participants_01.jpg" 
-                              onmouseover="src='images/view_participants_02.jpg';"
-                              onmouseout="src='images/view_participants_01.jpg';"
-                              onmousedown="src='images/view_participants_03.jpg';"
-                              onmouseup="src='images/view_participants_02.jpg';"
-                              onclick="openWindow('Participants', 'eventparticipants_frame.jsp?id=<%=evt.getEventID()%>', 450, 480, 1);">
-                          </td>
-                        <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
-                            <td bgcolor="#F4F4F4" align="right" valign="middle">
-                              <img src="images/sessions_01.jpg" 
-                               onmouseover="src='images/sessions_02.jpg';"
-                               onmouseout="src='images/sessions_01.jpg';"
-                               onmousedown="src='images/sessions_03.jpg';"
-                               onmouseup="src='images/sessions_02.jpg';"
-                               onclick="openWindow('closeout', 'districtCloseout.html?id=<%=evt.getEventID()%>', 450, 465, 1);">
-                            </td>   
-                        <%}%>
-                      </tr>
-                    </table>
-                  </td>
+                <tr>
+                <td class="no-print eventOptions" colspan="4" style="background-color:<%=bgcolor%>">
+                 <% if((evt.isScheduler(usr)|| usr.isAdmin()) && evt.hasParticipants() && (evt.isActive() || evt.isPast())) { %>
+                  		<a onclick="loadingData()" href="viewEventAttendance.html?id=<%=evt.getEventID()%>" title="Event Attendance" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-user"></span> Attendance</a>                           
+                <% } else if(evt.hasParticipants() && permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS")) { %>
+                         <a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-user"></span> Participants</a>                          
+                <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
+                       <a onclick="loadingData()" href="districtCloseout.html?id=<%=evt.getEventID()%>" title="Sessions" class="btn btn-xs btn-primary">Sessions</a>                           
+                        
+                 <%} else {%>
+                        
+                        <%} %>
+               </td>
+                  </tr>
+                  <tr><td colspan=4>&nbsp;</td></tr>
                 <%}%>
-              </tr>
+              
         <%  }
           }
-        } %>
-      <tr>
-        <td colspan="2" align="center">
-          <img src="images/closeblue_01.jpg" 
-               onmouseover="src='images/closeblue_02.jpg';" 
-               onmouseout="src='images/closeblue_01.jpg';"
-               onmousedown="src='images/closeblue_03.jpg';"
-               onmouseup="src='images/closeblue_02.jpg';"
-               onclick="window.opener.location.reload(); self.close();">
-        </td>
-      </tr>
+        } %>      
       </table>
-    </td>
-  </tr>
-</table>
+      
+       <div  style="font-size:11px;color:Black;text-align:center;padding-top:5px;">   
+	   <div style="display:inline-block;white-space: nowrap;"><span class="region1a">&nbsp; AVALON (<span class="numA"></span>)&nbsp;</span></div>
+	   <div style="display:inline-block;white-space: nowrap;"><span class="region2a">&nbsp; CENTRAL (<span class="numC"></span>)&nbsp;</span> </div>
+	   <div style="display:inline-block;white-space: nowrap;"><span class="region3a">&nbsp; WESTERN (<span class="numW"></span>)&nbsp;</span></div>
+	  <div style="display:inline-block;white-space: nowrap;"><span class="region4a">&nbsp; LABRADOR (<span class="numL"></span>)&nbsp;</span></div>
+	  <div style="display:inline-block;white-space: nowrap;"><span class="region5a">&nbsp; PROVINCIAL (<span class="numP"></span>)&nbsp;</span></div>
+  </div>  
+
+ 	  <br/>
+ 	  <div align="center"><canvas id="eventsByRegionChart" height="300"></canvas></div>  
+ 
+ <br/>
+ 
+ <div align="center" class="no-print navBottom">
+  <a href='#' title='Print this page (pre-formatted)' class="btn btn-primary btn-xs"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Professional Development Calendar</b></div><br/>'});"><span class="glyphicon glyphicon-print"></span> Print</a>	                     
+ <a onclick="loadingData()" class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html"><span class="glyphicon glyphicon-calendar"></span> Back to Calendar</a>
+ <a href="#top" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-arrow-up"></span> Back to Top</a>
+ </div>
+
+</div>
+
+
+
+
+ <script>$(document).ready(function(){ 
+ //Populate numbers of evenst for this page.
+ eT=0;
+ $(".numA").text(<%=eA%>);
+ $(".numC").text(<%=eC%>);
+ $(".numW").text(<%=eW%>);
+ $(".numL").text(<%=eL%>);
+ $(".numP").text(<%=eP%>);
+ eT = <%=eA + eC +eW + eL + eP%>;
+ $(".numT").text(eT);
+ });
+ </script>
+ 
+ <script>
+  
+  
+ //Pie Chart
+var ctx = document.getElementById('eventsByRegionChart').getContext('2d');
+var eventsByRegionChart = new Chart(ctx, {
+	type: 'pie',
+	  data: {
+		  labels: ['Avalon Events','Central Events','Western Events','Labrador Events','Provincial Events'],
+	    datasets: [{
+	    	backgroundColor: ['rgba(220, 20, 60, 0.3)','rgb(51, 153, 51, 0.3)','rgba(255, 153, 0, 0.3)','rgba(0, 102, 255, 0.3)','rgba(128, 0, 128, 0.3)'],
+	    	data: [<%=eA%>, <%=eC%>, <%=eW%>, <%=eL%>,<%=eP%> ]
+	    }]
+	  },	  
+	  options: {		  	  
+	      title: {
+	         display: true,
+	         fontSize: 14,
+	         text: 'Breakdown for this Day'
+	     },
+	     legend: {
+	         display: false,
+	         fontSize: 14,
+	         position: 'top',
+
+	     },
+	     responsive: false
+	 }
+ 
+	  
+	});   
+     
+     </script>
+ 
 </body>
 </html>

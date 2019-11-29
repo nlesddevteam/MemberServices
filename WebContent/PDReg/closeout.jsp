@@ -14,7 +14,7 @@
             
 
 <%
-  //final String STR_ICONPATH = "images/";
+  //final String STR_ICONPATH = "includes/img/";
 
 
   User usr = (User) session.getAttribute("usr");
@@ -79,11 +79,11 @@
   
   function processing(image)
   {
-    document.images[image].src='images/processing_ani.gif'; 
-    document.images[image].onmouseover="src='images/spacer.gif';" 
-    document.images[image].onmouseout="src='images/spacer.gif';"
-    document.images[image].onmousedown="src='images/spacer.gif';"
-    document.images[image].onmouseup="src='images/spacer.gif';"
+    document.images[image].src='includes/img/processing_ani.gif'; 
+    document.images[image].onmouseover="src='includes/img/spacer.gif';" 
+    document.images[image].onmouseout="src='includes/img/spacer.gif';"
+    document.images[image].onmousedown="src='includes/img/spacer.gif';"
+    document.images[image].onmouseup="src='includes/img/spacer.gif';"
   }
 
   function ToggleTable(target, sw)
@@ -280,7 +280,7 @@
                               <tr>
                                 <td width="2%">
                                   <%if(revts.containsKey(new Integer(evt.getEventID()))){%>
-                                    <img src='images/green_check.gif' border='0'>
+                                    <img src='includes/img/green_check.gif' border='0'>
                                     <script language="JavaScript">
                                         chk_opt = '<%=evt.getEventCloseoutOption()%>';
                                         chk_id = '<%=evt.getEventID()%>';
@@ -358,19 +358,19 @@
         <tr>
           <td valign="middle" align="center" width="100%">
             <%if(opchk[0] || (opchk[1]&&opchk[2])){%>
-              <img src="images/closeblue_01.jpg" 
-               onmouseover="src='images/closeblue_02.jpg';" 
-               onmouseout="src='images/closeblue_01.jpg';"
-               onmousedown="src='images/closeblue_03.jpg';"
-               onmouseup="src='images/closeblue_02.jpg';"
+              <img src="includes/img/closeblue_01.jpg" 
+               onmouseover="src='includes/img/closeblue_02.jpg';" 
+               onmouseout="src='includes/img/closeblue_01.jpg';"
+               onmousedown="src='includes/img/closeblue_03.jpg';"
+               onmouseup="src='includes/img/closeblue_02.jpg';"
                onclick="self.close();">
             <%}else{%>
             	<%if((dt_reg_start.compareTo(dt_now) <= 0)){%>
-		            <img id="reg" src="images/register_blue_01.jpg" 
-		              onmouseover="src='images/register_blue_02.jpg';"
-		              onmouseout="src='images/register_blue_01.jpg';"
-		              onmousedown="src='images/register_blue_03.jpg';"
-		              onmouseup="src='images/register_blue_02.jpg';"
+		            <img id="reg" src="includes/img/register_blue_01.jpg" 
+		              onmouseover="src='includes/img/register_blue_02.jpg';"
+		              onmouseout="src='includes/img/register_blue_01.jpg';"
+		              onmousedown="src='includes/img/register_blue_03.jpg';"
+		              onmouseup="src='includes/img/register_blue_02.jpg';"
 		              onclick="validateRegistration();">
               <%}else{%>
               	<font style="font-weight:bold;color:#FFCC00;">Registration not available at this time.</font>

@@ -53,10 +53,10 @@ public class RegisterEventRequestHandler extends RequestHandlerImpl {
 								evt
 						}, FirstClassWorkerThread.REGISTER_EVENT).start();
 
-						request.setAttribute("msg", "Registration successful.");
+						request.setAttribute("msgOK", "SUCCESS! Registration successful.");
 					}
 					else {
-						request.setAttribute("msg", "Registration unsuccessful. Please Try again.");
+						request.setAttribute("msgERR", "ERROR: Registration unsuccessful. Please Try again.");
 					}
 				}
 
@@ -68,26 +68,28 @@ public class RegisterEventRequestHandler extends RequestHandlerImpl {
 				File agenda_dir = new File(session.getServletContext().getRealPath("/") + "/PDReg/agendas/");
 				File[] agendas = agenda_dir.listFiles(new AgendaFilenameFilter(evt));
 
-				if (agendas.length > 0) {
+				if (agendas != null && agendas.length > 0) {
 					request.setAttribute("AGENDA_FILE", agendas[0]);
-				}
+					} 
+
 			}
 
 			path = "registerevent.jsp";
 		}
 		catch (NumberFormatException e) {
-			path = "error.jsp";
+			
 			request.setAttribute("err", new EventException("Could not parse Event ID.\n" + e));
+			path = "error.jsp";
 		}
 		catch (EventException e) {
-			path = "error.jsp";
 			request.setAttribute("err", e);
+			path = "error.jsp";
 		}
 
 		return path;
 	}
 
-	private class AgendaFilenameFilter implements FilenameFilter {
+	public class AgendaFilenameFilter implements FilenameFilter {
 
 		private Event evt;
 

@@ -67,10 +67,10 @@ public class CloseOutRegistrationRequestHandler implements RequestHandler {
 								tmp
 							}, FirstClassWorkerThread.REGISTER_EVENT).start();
 
-							request.setAttribute("msg", "Registration successful.");
+							request.setAttribute("msgOK", "SUCCESS! Registration successful.");
 						}
 						else {
-							request.setAttribute("msg", "Registration unsuccessful. Please Try again.");
+							request.setAttribute("msgERR", "ERROR: Registration unsuccessful. Please Try again.");
 						}
 					}
 				}

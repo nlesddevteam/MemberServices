@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.awsd.pdreg.EventDB;
 import com.awsd.pdreg.EventException;
 import com.awsd.pdreg.MonthlyCalendar;
 import com.awsd.security.SecurityException;
@@ -52,16 +53,37 @@ public class ViewMonthlyCalendarRequestHandler implements RequestHandler {
 			}
 		}
 
+		
+		//Basic routine for link call
 		SchoolZoneBean zone = null;
 
 		if (StringUtils.isNotEmpty(request.getParameter("region-id"))) {
 			int regionId = Integer.parseInt(request.getParameter("region-id"));
 			if (regionId > 0) {
-				zone = SchoolZoneService.getSchoolZoneBean(regionId);
+				zone = SchoolZoneService.getSchoolZoneBean(regionId);				
 			}
 		}
-
+		
 		request.setAttribute("MonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), zone));
+		
+		//Get fixed regional values 1,2,3,4,5 to get counts for graphing
+		SchoolZoneBean avalonZone = null;
+		SchoolZoneBean centralZone = null;
+		SchoolZoneBean westernZone = null;
+		SchoolZoneBean labradorZone = null;
+		SchoolZoneBean provincialZone = null;		
+		
+		avalonZone = SchoolZoneService.getSchoolZoneBean(1);
+		centralZone = SchoolZoneService.getSchoolZoneBean(2);
+		westernZone = SchoolZoneService.getSchoolZoneBean(3);
+		labradorZone = SchoolZoneService.getSchoolZoneBean(4);
+		provincialZone = SchoolZoneService.getSchoolZoneBean(5);
+		
+		request.setAttribute("avalonMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), avalonZone));
+		request.setAttribute("centralMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), centralZone));
+		request.setAttribute("westernMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), westernZone));
+		request.setAttribute("labradorMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), labradorZone));
+		request.setAttribute("provincialMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), provincialZone));
 
 		nextM = (Calendar) cur.clone();
 		nextM.add(Calendar.MONTH, 1);
