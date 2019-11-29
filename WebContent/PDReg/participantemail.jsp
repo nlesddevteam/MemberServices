@@ -30,136 +30,103 @@
     msg = (String) request.getAttribute("msg");
 %>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-    <title>
-      Newfoundland &amp; Labrador English School District - Event Participants Email
-    </title>
+  <head>  
+   <title>PD Calendar</title>
 
-    <script language="JavaScript" src="../js/common.js"></script>
     <script language="JavaScript">
       function processing()
       {
-        var cell = document.getElementById('processing');
-        cell.style.display=(cell.style.display=='none') ? 'inline' : 'none';
-        self.resizeTo(400, 221);
+       $("#processing").css("display","inline");
+       $("#sendEmail").css("display","none");
         document.email.submit();
       }
-    </script>
-  </head>
-  <body bgcolor="#FFFFFF" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" rightmargin="0">
-    <% if(msg != null) { %>
-      <script language="JavaScript">
-        openWindow('ConfirmMail', 'email_reply.jsp?msg=<%=msg%>', 405, 200, 0);
+      $("#loadingSpinner").css("display","none");
       </script>
-    <%}%>
-    <form name="email" action="sendEventParticipantsEmail.html" method="post">
-      <table id='processing' style="display:none;" width="400" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td width="400" align="left" valign="top" colspan="3">
-                    <img src="images/email_response_top.gif"><BR>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="1" align="left" valign="top" bgcolor="#000000">
-                    <img src="images/spacer.gif" width="1" height="1"><BR>
-                  </td>
-                  <td width="398" align="center" valign="top" bgcolor="#FFFFFF">
-                    <table width="300" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td width="51" height="51" align="left" valign="middle">
-                          <IMG src="images/sending_email.gif"><BR>
-                        </td>
-                        <td width="249" height="51" align="left" valign="middle">
-                          <span class=""><font color="#003399"><b>Sending Email...</b></font></span><BR>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td width="300" align="center" valign="middle" colspan="2">
-                          <img src="images/spacer.gif" width="1" height="15"><BR><BR>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td width="1" align="left" valign="top" bgcolor="#000000">
-                  <img src="images/spacer.gif" width="1" height="1"><BR>
-                </td>
-              </tr>
-              <tr>
-                <td width="400" align="left" valign="top" colspan="3">
-                  <img src="images/email_response_bottom.gif"><BR>
-                </td>
-              </tr>
-            </table>
+      <style>
+      .tableTitle {font-weight:bold;width:10%;color:Black;text-transform:uppercase;}
+      .tableResult {font-weight:normal;width:90%;background-color:#ffffff;}
+      .tableTitleL {font-weight:bold;width:20%;background-color:#006400;color:White;text-transform:uppercase;}
+      .tableResultL {font-weight:normal;width:30%;background-color:#ffffff;}
+      .tableTitleR {font-weight:bold;width:20%;background-color:#006400;color:White;text-transform:uppercase;}
+      .tableResultR {font-weight:normal;width:30%;background-color:#ffffff;}
+      input {border:1px solid silver;}
 
-      <table  align="center" cellpadding="1" cellspacing="0" border="0" width="255">
-      <tr>
-      <td bgcolor="#4682B4">
-      <table  width="255" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td bgcolor="#f4f4f4" width="55">
-            From:
-          </td>
-          <td bgcolor="#FFFFFF">
-            <input type="text" name="from" size="70" value="<%=usr.getPersonnel().getEmailAddress()%>" readonly>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#f4f4f4" width="55">
-            To:
-          </td>
-          <td bgcolor="#FFFFFF">
-            <textarea name="to" cols="53" rows="5"><%=request.getAttribute("to")%></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td  bgcolor="#f4f4f4" width="55">
-            Cc:
-          </td>
-          <td  bgcolor="#FFFFFF">
-            <textarea name="cc" cols="53" rows="1"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td  bgcolor="#f4f4f4" width="55">
-            Bcc:
-          </td>
-          <td bgcolor="#FFFFFF">
-            <textarea name="bcc" cols="53" rows="1"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td  bgcolor="#f4f4f4" width="55">
-            Subject:
-          </td>
-          <td bgcolor="#FFFFFF">
-            <input type="text" name="subject" size="71" value='<%=request.getAttribute("subject")%>'>
-          </td>
-        </tr>
-        <tr>
-          <td  bgcolor="#f4f4f4" colspan="2">
-            Message:
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <textarea name="message" cols="60" rows="15"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td valign="middle" colspan="2" align="right">
-            <img name="login" src="images/send_01.jpg" 
-                onMouseover="src='images/send_02.jpg'" 
-                onMouseout="src='images/send_01.jpg'" 
-                border="0" 
-                style="cursor:hand;"
-                onclick="processing();">
-          </td>
-        </tr>
-      </table>
-      </td>
-      </tr>
-      </table>
+      </style>
+  </head>
+  <body>
+   	<div class="container-fluid no-print" data-spy="affix" data-offset-top="0" style="position:fixed;width:100%;height:30px;background-color:#008B8B;color:White;text-align:center;font-weight:bold;padding:5px;">                      
+  	EMAIL PARTICIPANTS OF THIS EVENT
+	</div>
+	<div class="registerEventDisplay" style="padding-top:25px;font-size:11px;">
+    <div style="margin-left:5px;margin-right:5px;"> 
+   	<div align="center" class="no-print"><a href="viewDistrictCalendar.html"><img class="topLogoImg" src="includes/img/pdcalheader.png" border=0 style="padding-bottom:10px;"/></a></div>
+  
+
+  <% if(request.getAttribute("msg") != null) { %>
+	  <div align="center" class="alert alert-info"><%=request.getAttribute("msg")%></div>
+	  <div align="center"><a class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html" title="Back to Calendar">Back to Calendar</a></div>  
+  <%} else if(request.getAttribute("msgOK") != null) { %>
+	  <div align="center" class="alert alert-success" id="successEmail"><%=request.getAttribute("msgOK")%></div>
+	  <div align="center"><a class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html" title="Back to Calendar">Back to Calendar</a></div>  
+  <%} else if(request.getAttribute("msgERR") != null) { %>
+	  <div align="center" class="alert alert-danger" id="errorEmail"><%=request.getAttribute("msgERR")%></div>
+	  <div align="center"><a class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html" title="Back to Calendar">Back to Calendar</a></div>  
+  <%} else { %>
+  	
+    	<form name="email" action="sendEventParticipantsEmail.html" method="post">      
+      	<div id='processing' style="display:none;text-align:center;" class="alert alert-info">Sending Email...</div>     
+	      To send a message to the participants of the &quot;<b><%=request.getAttribute("subject")%></b>&quot; event, please fill out the fields below and click Send Message. 
+	      You can add additional recipients to the To, Cc, and Bcc fields if required. (Separate each email address by a semicolon.)
+	      <br/><br/>
+        <div class="formTitle">FROM:</div>
+        <div class="formBody">	
+        <input type="text" name="from" class="form-control" value="<%=usr.getPersonnel().getEmailAddress()%>" readonly>
+       </div> 
+       <div class="formTitle"> TO:</div>
+       <div class="formBody">	
+            <textarea name="to" rows="4" class="form-control"><%=request.getAttribute("to")%></textarea>
+        </div>
+        <div class="formTitle">CC:</div>
+        <div class="formBody">	
+            <textarea name="cc" rows="2" class="form-control"></textarea>
+        </div>
+        <div class="formTitle">BCC:</div>
+        <div class="formBody">	
+            <textarea name="bcc" rows="2" class="form-control"></textarea>
+          </div>
+          <div class="formTitle">SUBJECT:</div>
+          <div class="formBody">	
+            <input type="text" name="subject" class="form-control" readonly value='<%=request.getAttribute("subject")%>'>
+          </div>
+         <div class="formTitle">MESSAGE:</div>
+         <div class="formBody">	
+          	<div id="mes_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2000 characters.</div>
+			<textarea name="message" id="message" rows="8" class="form-control"></textarea>
+            <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2000 - Remain: <span id="mes_remain">2000</span></div>
+			</div>			
+            <div align="center" class="no-print navBottom">
+          <a href="#" class="no-print btn btn-xs btn-primary" id="sendEmail" onclick="processing();">Send Message</a> <a class="no-print btn btn-xs btn-danger" href="javascript:history.go(-1);">Cancel</a>
+          </div>
+                     
+
+
     </form>
+  <%} %>
+    </div></div>
+        <script>
+$('#message').keypress(function(e) {
+    var tval = $('#message').val(),
+        tlength = tval.length,
+        set = 2000,
+        remain = parseInt(set - tlength);
+    $('#mes_remain').text(remain);    
+    if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {
+    	$('#mes_Error').css('display','block').delay(4000).fadeOut();
+        $('#message').val((tval).substring(0, tlength - 1))
+    }
+});
+</script>
+    
+    
   </body>
 </html>

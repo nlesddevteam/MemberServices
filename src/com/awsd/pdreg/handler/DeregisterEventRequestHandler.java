@@ -71,17 +71,19 @@ public class DeregisterEventRequestHandler  implements RequestHandler
           //new DeregisterEventWorkerThread(p, evt).start();
           new FirstClassWorkerThread(p, new Event[]{evt}, FirstClassWorkerThread.DEREGISTER_EVENT).start();
           
-          request.setAttribute("msg", "Deregistration successful.");
+          request.setAttribute("msgOK", "SUCCESS: De-Registration successful.");
         }
         else
         {
-          request.setAttribute("msg", "Deregistration unsuccessful. Please Try again.");
+          request.setAttribute("msgERR", "ERROR: De-Registration unsuccessful. Please Try again.");
         }
       }
       
       request.setAttribute("evt", evt);
       if((p!=null) && (p.getPersonnelID() != usr.getPersonnel().getPersonnelID()))
       {
+    	request.setAttribute("msgDREG", "SUCCESS! Participant successfully removed from this event.");     	
+    	  
        path = "viewEventParticipants.html?id="+evt.getEventID();
       }
       else

@@ -30,6 +30,7 @@ public class SchoolPDRequestAdminRequestHandler extends RequestHandlerImpl {
 		String userid = null;
 		String op = null;
 		String msg = null;
+		String msgOK = null;
 		String path = "information.jsp";
 
 		userid = request.getParameter("u");
@@ -63,7 +64,8 @@ public class SchoolPDRequestAdminRequestHandler extends RequestHandlerImpl {
 											EventDB.setEventType(evt.getEventID(), EventType.DISTRICT_CALENDAR_CLOSEOUT_ENTRY);
 											break;
 										}
-										msg = "Request Approved.";
+										msgOK = "SUCCESS: Request Approved.";
+										request.setAttribute("msgOK", msgOK);
 										(new FirstClassWorkerThread(evt.getScheduler(), new Event[] {
 											evt
 										}, FirstClassWorkerThread.REQUEST_APPROVED)).start();
@@ -77,33 +79,33 @@ public class SchoolPDRequestAdminRequestHandler extends RequestHandlerImpl {
 											}, FirstClassWorkerThread.REQUEST_DECLINED, "Comments:<br>" + request.getParameter("comments"))).start();
 										}
 										else {
-											msg = " Are you sure you want to decline this request?";
+											msg = "Are you sure you want to decline this request?";
 											path = "information.jsp?u=" + userid + "&op=decline" + "&id=" + evt.getEventID()
 													+ "&action=schoolPDRequestAdmin.html";
 										}
 									}
 								}
 								else {
-									msg = "Request date as passed, request has been deleted.";
+									msg = "Sorry. Request date has passed and request has been deleted.";
 									EventDB.removeEvent(evt);
 								}
 							}
 							else {
-								msg = "Request has previously been filled.";
+								msg = "Sorry, Request has previously been filled.";
 							}
 						}
 						else {
-							msg = "Event no longer available.";
+							msg = "ERROR: Event is no longer available.";
 						}
 					}
 				}
 				catch (EventException e) {
-					msg = "Could not complete requested operation.";
+					msg = "ERROR: Could not complete requested operation.";
 					e.printStackTrace(System.err);
 				}
 			}
 			catch (SecurityException e) {
-				msg = "You do not have the necessary permissions to access this page. Verify that you have correctly entered your username and password.";
+				msg = "ERROR: You do not have the necessary permissions to access this page. Verify that you have correctly entered your username and password.";
 				e.printStackTrace(System.err);
 			}
 		}

@@ -20,18 +20,25 @@ import com.awsd.personnel.PersonnelException;
 import com.awsd.school.School;
 import com.awsd.security.SecurityException;
 import com.awsd.security.User;
+import com.awsd.servlet.RequestHandler;
 import com.nlesd.school.bean.SchoolZoneBean;
 
+import lotus.notes.Session;
+
+
+
 public class DailyCalendarTagHandler extends TagSupport {
+	
+	
 
 	private static final long serialVersionUID = -7200139447463398284L;
 
-	private static final int NUM_ROWS = 4;
-
+	private static final int NUM_ROWS = 8;
+	
 	private String date;
 	private String printable;
 	private int uid;
-	private SchoolZoneBean zone;
+	private SchoolZoneBean zone;	
 
 	private static CalendarLegend legend = null;
 
@@ -45,8 +52,10 @@ public class DailyCalendarTagHandler extends TagSupport {
 		}
 	}
 
-	public int doStartTag() throws JspException {
 
+
+	public int doStartTag() throws JspException  {
+	    
 		JspWriter out = null;
 		MonthlyCalendar monthly = null;
 		DailyCalendar daily = null;
@@ -57,6 +66,12 @@ public class DailyCalendarTagHandler extends TagSupport {
 		Calendar curcal = null;
 		Calendar tmp = null;
 		String color = "";
+		String bgcolor = "";
+		String txtcolor = "";
+		String regionName = "";
+		String eventDays="";
+		int numEventsThisDay=0;
+		
 		SimpleDateFormat sdf = null;
 		User usr = null;
 		int i = 0;
@@ -75,76 +90,76 @@ public class DailyCalendarTagHandler extends TagSupport {
 
 			monthly = (MonthlyCalendar) pageContext.getRequest().getAttribute("MonthlyEvents");
 			daily = (DailyCalendar) monthly.get(date);
-			iter = daily.iterator();
+			iter = daily.iterator(); 			
+			
+			// ++++++++++ NORMAL VIEW ++++++++++++
+			
+			out.print("<div class='mainView'>");
+			out.println("<table width='100%' border=0 style='font-size:11px; border-collapse:separate;border-spacing:2px;padding:1px;'>");	
 
-			if ((printable.equalsIgnoreCase("false"))) {
-				out.println("<table width=\"100%\">");
-			}
-			else {
-				out.println("<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">");
-			}
-
-			out.println("<tr>");
-			if ((printable.equalsIgnoreCase("false"))) {
-				out.println("<td bgcolor=\"#ffffff\" align=\"right\" valign=\"top\" width=\"100%\">");
-			}
-			else {
-				out.println("<td  class=\"cell_printout_day\" bgcolor=\"#F0F0F0\" align=\"center\" valign=\"top\" width=\"100%\" height=\"12\">");
-			}
-
+			out.println("<tr>");			
+			out.println("<td align='right' valign='top' width='100%'>");
+			
+			
 			if (curcal.get(Calendar.DATE) < 10) {
 				out.println("&nbsp;");
 			}
-			if ((printable.equalsIgnoreCase("false"))) {
-				out.println("<a href=\"javascript:openWindow('dailyCalendar', 'viewDailyCalendar.html?dt=" + date
-						+ (zone != null ? "&region-id=" + zone.getZoneId() : "") + "', 450, 480, 1);\">");
+			
+			if ((now.get(Calendar.DATE) == curcal.get(Calendar.DATE)) && (now.get(Calendar.MONTH) == curcal.get(Calendar.MONTH)) && (now.get(Calendar.YEAR) == curcal.get(Calendar.YEAR))) {
+			    out.println("<a title='Click to view todays events.' onclick='loadingData()' class='notranslate btn btn-xs btn-danger' href='viewDailyCalendar.html?dt=" + date + (zone != null ? "&region-id=" + zone.getZoneId() : "") + "'>");
 			}
-			if ((printable.equalsIgnoreCase("false")) && (now.get(Calendar.DATE) == curcal.get(Calendar.DATE))
-					&& (now.get(Calendar.MONTH) == curcal.get(Calendar.MONTH))
-					&& (now.get(Calendar.YEAR) == curcal.get(Calendar.YEAR))) {
-				out.println("<b><font size=\"3\" color=\"#FF0000\">");
-			}
-			else if ((printable.equalsIgnoreCase("false"))) {
-				out.println("<b><font size=\"3\" color=\"#4682B4\">");
-			}
+			
 			else {
-				out.println("<font style=\"font-family:times new roman; font-size:12px; font-weight:none;\">");
+				out.println("<a title='Click to view todays events.' onclick='loadingData()' class='notranslate btn btn-xs btn-default' href='viewDailyCalendar.html?dt=" + date + (zone != null ? "&region-id=" + zone.getZoneId() : "") + "'>");
 			}
-			out.println((new SimpleDateFormat("d")).format(cur));
-			out.println("</font></b>");
-			if ((printable.equalsIgnoreCase("false"))) {
-				out.println("</a>");
-			}
+			//when translating, where the numbers were strings, it translated to words rather than staying #.
+			int dateToDisplay = Integer.parseInt((new SimpleDateFormat("d")).format(cur));
+			//Show date now as integer.
+			out.println(dateToDisplay);
+			out.println("</a>");			
 			out.println("</td>");
 			out.println("</tr>");
 
+		
+			
 			i = 1;
 			while (iter.hasNext() || (i <= NUM_ROWS)) {
 				if (iter.hasNext()) {
 					evt = (Event) iter.next();
-
+					
 					if (evt.isCloseOutDaySession() || evt.isSchoolPDRequest() || evt.isSchoolCloseoutRequest()
 							|| (evt.isPrivateCalendarEntry() && (evt.getSchedulerID() != uid))) {
-						continue;
+						
+						continue;						
 					}
 				}
 				else {
 					evt = null;
 				}
-
+				
 				if ((evt != null) && (i <= NUM_ROWS)) {
+					numEventsThisDay++;
 					out.println("<tr>");
 
-					if ((printable.equalsIgnoreCase("false")) && (i == NUM_ROWS)) {
-						out.println("<td  bgcolor=\"#ffffff\" align=\"left\" width=\"100%\">");
-						out.println("<a href=\"javascript:openWindow('dailyCalendar', 'viewDailyCalendar.html?dt=" + date
-								+ (zone != null ? "&region-id=" + zone.getZoneId() : "") + "', 450, 480, 1);\">");
-						out.println("<b>More Events...</b>");
+					if ((i == NUM_ROWS)) {
+						out.println("<td align='center' width='100%' style='padding-top:3px;'>");
+						out.println("<a onclick='loadingData()' style='font-size:9px;' class='viewAllEvts btn btn-xs btn-success' title='View events scheduled for this day.' href='viewDailyCalendar.html?dt=" + date + (zone != null ? "&region-id=" + zone.getZoneId() : "") + "'>");
+						out.println("MORE...");
 						out.println("</a>");
+					
+					
+						if(evt.isPast()) {
+							bgcolor ="background-color:#f2f2f2;";
+							txtcolor ="white;"; 
+							out.println("<script>$('.calEvtLink').removeClass('calLnk').addClass('calLnkd');</script>");					
+							out.println("<script>$('.viewAllEvts').removeClass('btn-success').addClass('btn-default').text('MORE...');</script>");
+							}
+					
+					
 					}
 					else {
 						if (!evt.isPrivateCalendarEntry() || (evt.isPrivateCalendarEntry() && (evt.getSchedulerID() == uid))) {
-							if ((printable.equalsIgnoreCase("false")) && (legend != null)) {
+							if ((legend != null)) {
 								if (evt.isDistrictCalendarEntry()) {
 									color = "CCCCCC";
 								}
@@ -154,8 +169,8 @@ public class DailyCalendarTagHandler extends TagSupport {
 								else if (evt.isPrivateCalendarEntry() || evt.isHolidayCalendarEntry() || evt.isReminderCalendarEntry()) {
 									color = "FFFFFF";
 								}
-								else if (legend.containsKey(new Integer(evt.getSchedulerID()))) {
-									color = (String) legend.get(new Integer(evt.getSchedulerID()));
+								else if (legend.containsKey((evt.getSchedulerID()))) {
+									color = (String) legend.get((evt.getSchedulerID()));
 								}
 								else {
 									color = "FFFFFF";
@@ -164,20 +179,57 @@ public class DailyCalendarTagHandler extends TagSupport {
 							else {
 								color = "FFFFFF";
 							}
+							//Check Regions of the events.
+							if(evt.getEventSchoolZoneID() ==1) {
+								 bgcolor ="background-color:rgba(191, 0, 0, 0.2);";
+								 txtcolor ="rgba(191, 0, 0, 1);";
+								 regionName ="(AVALON REGION) ";
+							 } else if (evt.getEventSchoolZoneID() ==2) {
+								 bgcolor ="background-color:rgba(0, 191, 0, 0.2);";
+								 txtcolor ="rgba(0, 191, 0, 1);";
+								 regionName ="(CENTRAL REGION) ";
+							 } else if (evt.getEventSchoolZoneID() ==3) {
+								 bgcolor ="background-color:rgba(255, 132, 0, 0.2);";
+								 txtcolor ="rgba(255, 132, 0, 1);";
+								 regionName ="(WESTERN REGION) ";
+							 } else if (evt.getEventSchoolZoneID() ==4) {
+								 bgcolor ="background-color:rgba(127, 130, 255, 0.2);";
+								 txtcolor ="rgba(127, 130, 255, 1);";
+								 regionName ="(LABRADOR REGION) ";
+							 } else if (evt.getEventSchoolZoneID() ==5) {
+								 bgcolor ="background-color:rgba(128, 0, 128, 0.2);";
+								 txtcolor ="rgba(128, 0, 128, 1);";
+								 regionName ="(PROVINCIAL) ";
+							 } else {
+								 bgcolor ="";
+								 txtcolor ="#000000;";
+								 regionName ="";
+							 }
 
-							if ((printable.equalsIgnoreCase("false"))) {
-								out.println("<td  class='smalltext' bgcolor=\"#" + color
-										+ "\" align=\"left\" valign=\"middle\" width=\"100%\">");
-
+							if(evt.isPast()) {
+									bgcolor ="background-color:#f2f2f2;";
+									txtcolor ="white;"; 
+									out.println("<script>$('.calEvtLink').removeClass('calLnk').addClass('calLnkd');</script>");							
+									out.println("<script>$('.viewAllEvts').removeClass('btn-success').addClass('btn-default').text('MORE...');</script>");
+							}
+							
+									out.println("<td style='white-space:nowrap;max-width:75px;overflow:hidden;text-overflow:ellipsis;font-size:9px;color:"+txtcolor+bgcolor+"' align='left' valign='middle' width='100%'>");				
+							 
+								if (evt.isMultiDayEvent()) {								
+										eventDays="&nbsp;(Day " + evt.calcCurrentDay(cur) + " of " + evt.getNumberEventDays() + ")";								
+									} else {
+										eventDays="";
+									}
+							 
 								//display icon
 								if (evt.isPrivateCalendarEntry()) {
-									out.println("<img src='images/private.gif'>&nbsp;");
+									out.println("<span class='glyphicon glyphicon-lock'></span>");
 								}
 								else if (evt.isHolidayCalendarEntry()) {
-									out.println("<img src='images/holiday.jpg'>&nbsp;");
+									out.println("<span class='glyphicon glyphicon-gift'></span>");
 								}
 								else if (evt.isReminderCalendarEntry()) {
-									out.println("<img src='images/reminder.jpg'>&nbsp;");
+									out.println("<span class='glyphicon glyphicon-bell'></span>");
 								}
 
 								//display link
@@ -186,58 +238,61 @@ public class DailyCalendarTagHandler extends TagSupport {
 										usr = (User) pageContext.getSession().getAttribute("usr");
 										try {
 											if (usr.getUserPermissions().containsKey("CALENDAR-DELETE-ALL")) {
-												out.println("<a href=\"javascript:openWindow('registration', 'registerEvent.html?id="
-														+ evt.getEventID() + "', 400, 400, 0);\">");
+												out.println("&nbsp;<a "
+														+ "onclick='loadingData()' "
+														+ "class='calLnk calEvtLink' "
+														+ "data-toggle='popover' "
+														+ "data-html='true' "
+														+ "data-trigger='hover' "
+														+ "title='"+((evt.getEventName()!=null)?(evt.getEventName().replaceAll("'","").replaceAll("\"", "")):"N/A")+eventDays+"' "
+														+ "data-content='"+regionName+((evt.getEventDescription()!=null)?(evt.getEventDescription().replaceAll("'","").replaceAll("\\<.*?\\>", "").replaceAll("\"", "")):"N/A")+"' "
+														+ "href='registerEvent.html?id=" + evt.getEventID() + "'>");
 											}
 										}
 										catch (com.awsd.security.SecurityException e) {
 											System.err.println(e);
-										}
+										}  
 									}
 									else {
-										out.println("<a href=\"javascript:openWindow('registration', 'registerEvent.html?id="
-												+ evt.getEventID() + "', 420, 400, 1);\">");
+										out.println("&nbsp;<a "
+												+ "onclick='loadingData()' "
+												+ "class='calLnk calEvtLink' "
+												+ "data-toggle='popover' "
+												+ "data-trigger='hover' "
+												+ "title='"+((evt.getEventName()!=null)?(evt.getEventName().replaceAll("'","").replaceAll("\"", "")):"N/A")+eventDays+"' "
+												+ "data-content='"+regionName+((evt.getEventDescription()!=null)?(evt.getEventDescription().replaceAll("\\<.*?\\>", "").replaceAll("'","").replaceAll("\"", "")):"N/A")+"' "
+												+ "href='registerEvent.html?id=" + evt.getEventID() + "'>");
 									}
 								}
 								else {
-									out.println("<a href=\"javascript:openWindow('closeout', 'districtCloseout.html?id="
-											+ evt.getEventID() + "', 450, 465, 1);\">");
+									out.println("&nbsp;<a "
+											+ "onclick='loadingData()' "
+											+ "class='calLnk calEvtLink' "
+											+ "data-toggle='popover' "
+											+ "data-trigger='hover' "
+											+ "title='"+((evt.getEventName()!=null)?(evt.getEventName().replaceAll("'","").replaceAll("\"", "")):"N/A")+eventDays+"' "
+											+ "data-content='"+regionName+((evt.getEventDescription()!=null)?(evt.getEventDescription().replaceAll("\\<.*?\\>", "").replaceAll("'","").replaceAll("\"", "")):"N/A")+"' "
+											+ "href='districtCloseout.html?id=" + evt.getEventID() + "'>");
 								}
-							}
-							else {
-								out.println("<td  class=\"printout\" align=\"left\" width=\"100%\">");
-								//display icon
-								if (evt.isPrivateCalendarEntry()) {
-									out.println("<img src='images/private.gif'>&nbsp;");
-								}
-								else if (evt.isHolidayCalendarEntry()) {
-									out.println("<img src='images/holiday.jpg'>&nbsp;");
-								}
-								else if (evt.isReminderCalendarEntry()) {
-									out.println("<img src='images/reminder.jpg'>&nbsp;");
-								}
-
-							}
+							
 
 							if (evt.isSchoolPDEntry()) {
 								School s = evt.getScheduler().getSchool();
-								if (s != null)
-									out.print(s.getSchoolName() + " - PD");
-								else
-									out.print(evt.getEventName());
-							}
+								if (s != null) {
+									//out.print(s.getSchoolName().substring(0,Math.min(s.getSchoolName().length(), 20)) + " (PD)");
+									//End on word closest to num characters instead of just characters.
+									out.print(s.getSchoolName().replaceAll("(?<=.{20})\\b.*", " (PD)"));
+							} else {
+									//out.print(evt.getEventName().substring(0,Math.min(evt.getEventName().length(), 25)));
+									out.print(evt.getEventName().replaceAll("(?<=.{50})\\b.*", ""));
+							}}
 							else
-								out.print(evt.getEventName());
+								//out.print(evt.getEventName().substring(0, Math.min(evt.getEventName().length(), 25)));
+								out.print(evt.getEventName().replaceAll("(?<=.{50})\\b.*", ""));
 
-							if (evt.isMultiDayEvent()) {
-								if (printable.equalsIgnoreCase("false"))
-									out.println("&nbsp;<font size='1'><i>[Day " + evt.calcCurrentDay(cur) + " of "
-											+ evt.getNumberEventDays() + "]<i></font>");
-								else
-									out.println();
-							}
+							
 
-							if ((printable.equalsIgnoreCase("false"))) {
+							
 								try {
 									if (evt.isHolidayCalendarEntry() && usr.getUserPermissions().containsKey("CALENDAR-DELETE-ALL")) {
 										out.println("</a>");
@@ -249,7 +304,7 @@ public class DailyCalendarTagHandler extends TagSupport {
 								catch (SecurityException e) {
 									System.err.println(e);
 								}
-							}
+							
 						}
 					}
 					out.println("</td>");
@@ -257,14 +312,42 @@ public class DailyCalendarTagHandler extends TagSupport {
 				}
 				else if (i <= NUM_ROWS) {
 					out.println("<tr>");
-					out.println("<td  bgcolor=\"#ffffff\" align=\"left\" width=\"100%\">&nbsp;");
+					out.println("<td align=\"left\" width=\"100%\">&nbsp;");
 					out.println("</td>");
 					out.println("</tr>");
+				} else {
+					numEventsThisDay++;
 				}
 
 				i++;
 			}
-			out.println("</table>");
+			
+			out.println("</table>");	
+			if (numEventsThisDay > 0) {				
+				out.print("<span style='text-align:center;float:left;font-size:8px;color:DimGrey;'>EVENTS: "+numEventsThisDay+"</span>");			
+			}
+			out.println("</div>");	
+			
+			// ++++++++++ END NORMAL VIEW ++++++++++++
+			
+			
+			// ++++++++++ MOBILE VIEW ++++++++++++
+			
+			out.print("<div class='mobileView' style='text-align:center;'>");
+			if ((now.get(Calendar.DATE) == curcal.get(Calendar.DATE)) && (now.get(Calendar.MONTH) == curcal.get(Calendar.MONTH)) && (now.get(Calendar.YEAR) == curcal.get(Calendar.YEAR))) {
+			    out.println("<a title='Click to view todays events.' onclick='loadingData()' class='btn btn-xs btn-danger' href='viewDailyCalendar.html?dt=" + date + (zone != null ? "&region-id=" + zone.getZoneId() : "") + "'>");
+			} else {
+				out.println("<a title='Click to view todays events.' onclick='loadingData()' class='btn btn-xs btn-default' href='viewDailyCalendar.html?dt=" + date + (zone != null ? "&region-id=" + zone.getZoneId() : "") + "'>");
+			}
+			out.println((new SimpleDateFormat("d")).format(cur));
+			out.println("</a>");		
+			if (numEventsThisDay > 0) {				
+				out.print("<div style='text-align:center;font-size:7px;color:DimGrey;'>"+numEventsThisDay+" EVENTS</div>");			
+			}
+			out.println("</div>");	
+			
+			// ++++++++++ END MOBILE VIEW ++++++++++++
+			
 		}
 		catch (EventException e) {
 			throw new JspException(e.getMessage());

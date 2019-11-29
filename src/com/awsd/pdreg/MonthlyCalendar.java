@@ -6,7 +6,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.awsd.school.SchoolException;
 import com.nlesd.school.bean.SchoolZoneBean;
+import com.nlesd.school.service.SchoolZoneService;
 
 public class MonthlyCalendar extends HashMap<String, DailyCalendar> {
 
@@ -16,7 +20,7 @@ public class MonthlyCalendar extends HashMap<String, DailyCalendar> {
 	private SchoolZoneBean zone;
 
 	public MonthlyCalendar(String month, SchoolZoneBean zone) throws EventException {
-
+		
 		this.month = month;
 		this.zone = zone;
 
@@ -32,13 +36,25 @@ public class MonthlyCalendar extends HashMap<String, DailyCalendar> {
 		cal.set(Calendar.DATE, 1);
 
 		if (zone != null) {
-			this.putAll(EventDB.getMonthlyEvents(cal, zone));
+			this.putAll(EventDB.getMonthlyEvents(cal, zone));				
 		}
 		else {
-			this.putAll(EventDB.getMonthlyEvents(cal));
+			this.putAll(EventDB.getMonthlyEvents(cal));		
 		}
+		
+			
 
 	}
+	
+
+	public int totalEvents() {
+		int total = 0;		
+		for(DailyCalendar cal : this.values()) {
+			total += cal.size();
+		}		
+		return total;
+	}
+	
 
 	public String getMonth() {
 
