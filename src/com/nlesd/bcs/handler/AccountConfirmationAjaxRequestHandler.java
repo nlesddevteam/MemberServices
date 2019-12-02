@@ -94,7 +94,7 @@ public class AccountConfirmationAjaxRequestHandler extends PublicAccessRequestHa
 				model.put("name", bcbean.getFirstName() + " " + bcbean.getLastName());
 				model.put("link", "http://www.nlesd.ca/MemberServices/BCS/contractorLogin.html");
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/account_confirmation.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTORS>");
 				sb.append("<CONTRACTOR>");

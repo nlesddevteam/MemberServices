@@ -60,7 +60,7 @@ public class ApproveContractorEmployeeAjaxRequestHandler extends RequestHandlerI
 				// set values to be used in template
 				model.put("employee",ebean.getLastName() + "," + ebean.getFirstName() );
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employee_approval.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");

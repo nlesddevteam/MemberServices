@@ -55,8 +55,8 @@ public class SuspendContractorAjaxRequestHandler extends RequestHandlerImpl {
 				HashMap<String, Object> model = new HashMap<String, Object>();
 				// set values to be used in template
 				model.put("notes", snotes);
-				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspend_email.vm", model));
-				//email.send();
+				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_email.vm", model));
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");

@@ -93,7 +93,7 @@ public class SuspendContractAjaxRequestHandler extends RequestHandlerImpl {
 				}
 				
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspend_contract.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");

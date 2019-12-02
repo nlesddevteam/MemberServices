@@ -71,7 +71,7 @@ public class AwardContractAjaxRequestHandler extends RequestHandlerImpl {
 				// set values to be used in template
 				model.put("contractname", conBean.getContractName());
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/award_contract.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");

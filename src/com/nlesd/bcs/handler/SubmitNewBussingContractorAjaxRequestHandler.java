@@ -71,7 +71,7 @@ public class SubmitNewBussingContractorAjaxRequestHandler extends PublicAccessRe
 				email.setSubject("Newfoundland and Labrador English School District - Bussing Contractor System Registration");
 				email.setBody(VelocityUtils.mergeTemplateIntoString(
 						"bcs/confirm_submission.vm", model));
-				//email.send();
+				email.send();
 				//finance approval
 			}
 			catch (Exception e) {
