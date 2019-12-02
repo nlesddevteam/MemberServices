@@ -22,10 +22,10 @@ import com.esdnl.webupdatesystem.newspostings.dao.NewsPostingsManager;
 public class NewPostingsExportTimerTask extends TimerTask {
 
 	//FOR LIVE SERVER
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
+	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
 	//FOR LOCAL HOST ONLY   
-	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";	
+	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";	
 
 	public NewPostingsExportTimerTask() {
 
