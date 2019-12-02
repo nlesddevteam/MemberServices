@@ -60,7 +60,7 @@ public class ApproveContractorAjaxRequestHandler extends RequestHandlerImpl {
 				model.put("password", tmppwd);
 				model.put("link", "http://www.nlesd.ca/MemberServices/BCS/confirmNewAccount.html?cid=" + pid);
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/approval_confirmation.vm", model));
-				//email.send();
+				email.send();
 				//update audit trail
 				//AuditTrailBean atbean = new AuditTrailBean();
 				atbean.setEntryType(EntryTypeConstant.CONTRACTORSECURITYADDED);

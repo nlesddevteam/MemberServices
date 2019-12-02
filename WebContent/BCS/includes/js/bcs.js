@@ -86,6 +86,11 @@ function approvecontractor() {
 									"Contractor has been approved").css(
 									"display", "block").delay(6000).fadeOut();
 							$('#mainalerts').show();
+							var surl = "adminViewContractor.html?cid=" + contactorid;
+
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 						} else {
 							$("#errormessage").html(
 									$(this).find("MESSAGE").text()).css(
@@ -132,6 +137,10 @@ function rejectcontractor() {
 									"Contractor has been rejected").css(
 									"display", "block").delay(6000).fadeOut();
 							$('#mainalerts').show();
+							var surl = "adminViewContractor.html?cid=" + contractorid;
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 						} else {
 							$("#errormessage").html(
 									$(this).find("MESSAGE").text()).css(
@@ -178,6 +187,11 @@ function suspendcontractor() {
 									"Contractor has been suspended").css(
 									"display", "block").delay(6000).fadeOut();
 							$('#mainalerts').show();
+							var surl = "adminViewContractor.html?cid=" + contractorid;
+
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 						} else {
 							$("#errormessage").html(
 									$(this).find("MESSAGE").text()).css(
@@ -223,6 +237,11 @@ function unsuspendcontractor() {
 									"Contractor has been unsuspended").css(
 									"display", "block").delay(6000).fadeOut();
 							$('#mainalerts').show();
+							var surl = "adminViewContractor.html?cid=" + contractorid;
+
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 						} else {
 							$("#errormessage").html(
 									$(this).find("MESSAGE").text()).css(
@@ -1869,6 +1888,11 @@ function approveemployee() {
 									"Employee has been approved").css(
 									"display", "block").delay(6000).fadeOut();
 							$('#divbuttons').hide();
+							var surl = "adminViewEmployee.html?vid=" + employeeid;
+
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 						} else {
 							$("#employeeerrormessage").html(
 									$(this).find("MESSAGE").text()).css(
@@ -1913,6 +1937,11 @@ function rejectemployee() {
 							$("#employeesuccessmessage").html(
 									"Employee has been rejected").css(
 									"display", "block").delay(6000).fadeOut();
+							var surl = "adminViewEmployee.html?vid=" + employeeid;
+
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 
 						} else {
 							$("#employeeerrormessage").html(
@@ -2003,6 +2032,10 @@ function approvevehicle() {
 									"block").delay(6000).fadeOut();
 
 							$('#divbuttons').hide();
+							var surl="";
+							surl = "adminViewVehicle.html?cid=" + vehicleid;
+									
+							$("#pageContentBody").load(surl);
 						} else {
 							$("#vehicleerrormessage").html(
 									$(this).find("MESSAGE").text()).css(
@@ -2048,6 +2081,10 @@ function rejectvehicle() {
 							$("#vehiclesuccessmessage").html(
 									"Vehicle has been rejected").css("display",
 									"block").delay(6000).fadeOut();
+							var surl="";
+							surl = "adminViewVehicle.html?cid=" + vehicleid;
+									
+							$("#pageContentBody").load(surl);
 
 						} else {
 							$("#vehicleerrormessage").html(
@@ -2422,6 +2459,11 @@ function suspendemployee() {
 							$("#employeesuccessmessage").html(
 									"Employee has been suspended").css(
 									"display", "block").delay(6000).fadeOut();
+							var surl = "adminViewEmployee.html?vid=" + employeeid;
+
+							setTimeout(function() {
+								$("#pageContentBody").load(surl);
+							}, 4000);
 
 						} else {
 							$("#employeeerrormessage").html(
@@ -4812,6 +4854,10 @@ function suspendvehicle() {
 							$("#vehiclesuccessmessage").html(
 									"Vehicle has been suspended").css(
 									"display", "block").delay(6000).fadeOut();
+							var surl="";
+							surl = "adminViewVehicle.html?cid=" + vehicleid;
+									
+							$("#pageContentBody").load(surl);
 
 						} else {
 							$("#vehicleerrormessage").html(

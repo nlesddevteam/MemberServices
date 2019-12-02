@@ -57,7 +57,7 @@ public class ApproveContractorVehicleAjaxRequestHandler extends RequestHandlerIm
 				model.put("pnumber",ebean.getvPlateNumber());
 				model.put("snumber",ebean.getvSerialNumber());
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/vehicle_approval.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");

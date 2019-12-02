@@ -59,7 +59,7 @@ public class SuspendContractorVehicleAjaxRequestHandler extends RequestHandlerIm
 				model.put("snumber",ebean.getvSerialNumber());
 				model.put("rejnotes",snotes);
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/vehicle_suspend.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");
