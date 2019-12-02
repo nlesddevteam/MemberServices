@@ -22,10 +22,10 @@ import com.esdnl.webupdatesystem.newspostings.dao.NewsPostingsManager;
 public class NewPostingsExportTimerTask extends TimerTask {
 
 	//FOR LIVE SERVER
-	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
+	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
-	//FOR LOCAL HOST ONLY
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";	
+	//FOR LOCAL HOST ONLY   
+	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";	
 
 	public NewPostingsExportTimerTask() {
 
@@ -164,8 +164,7 @@ public class NewPostingsExportTimerTask extends TimerTask {
 								writer.println("<div class='newsFPBody siteBodyText'>");
 								if (!(StringUtils.isEmpty(np.getNewsPhoto()))) {
 									writer.println("<img src='/includes/files/news/img/" + np.getNewsPhoto()
-											+ "' class='newsFPIcon' border='0' title='" + np.getNewsPhotoCaption() + "alt=' "
-											+ np.getNewsPhotoCaption() + "'>");
+											+ "' class='newsFPIcon' border='0' title='" + np.getNewsPhotoCaption() + "'>");
 								}
 								writer.println(np.getNewsDescription().substring(0, 274));
 								if (np.getNewsDescription().length() > 274) {
