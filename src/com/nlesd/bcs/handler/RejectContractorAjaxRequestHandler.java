@@ -56,7 +56,7 @@ public class RejectContractorAjaxRequestHandler extends RequestHandlerImpl {
 				// set values to be used in template
 				model.put("notes", snotes);
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/rejection_email.vm", model));
-				//email.send();
+				email.send();
 
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");

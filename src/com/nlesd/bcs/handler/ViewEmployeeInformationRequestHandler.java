@@ -24,14 +24,19 @@ public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequest
 		super.handleRequest(request, response);
 		if (validate_form()) {
 			//check to see if this is an edit or add
+			System.out.println(request.getParameter("vid"));
 	    	  BussingContractorEmployeeBean vbean = new BussingContractorEmployeeBean();
 	    	  if(request.getParameter("vid") == null){
 	    		  //add
 	    		  vbean.setId(-1);
 	    	  }else{
 	    		  //update
-	    		  vbean = BussingContractorEmployeeManager.getBussingContractorEmployeeById(Integer.parseInt(request.getParameter("vid")));
-	    	  }
+	    		  if(Integer.parseInt(request.getParameter("vid")) <= 0) {
+	    			  vbean.setId(-1);
+	    		  }else {
+	    			  vbean = BussingContractorEmployeeManager.getBussingContractorEmployeeById(Integer.parseInt(request.getParameter("vid")));
+	    		  }
+	    		}
 	    	  request.setAttribute("employee", vbean);
 	    	  //now we pass the dropdowns
 	    	  request.setAttribute("positions", DropdownManager.getDropdownValues(DropdownTypeConstant.EPOSITION.getValue()));

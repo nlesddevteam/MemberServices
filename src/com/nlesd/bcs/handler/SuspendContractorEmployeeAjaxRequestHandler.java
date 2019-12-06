@@ -62,7 +62,7 @@ public class SuspendContractorEmployeeAjaxRequestHandler extends RequestHandlerI
 				model.put("employee",ebean.getLastName() + "," + ebean.getFirstName() );
 				model.put("rejnotes",snotes);
 				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employee_suspend.vm", model));
-				//email.send();
+				email.send();
 				// generate XML for candidate details.
 				sb.append("<CONTRACTOR>");
 				sb.append("<CONTRACTORSTATUS>");
