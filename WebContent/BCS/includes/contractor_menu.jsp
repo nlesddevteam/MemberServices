@@ -40,7 +40,7 @@
      </li>
      <li><a href="#"><i class="fa fa-fw fa-users"></i> Employees</a>
         <ul>
-           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('addNewEmployee.html');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
+           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('addNewEmployee.html?vid=-1');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=1');"><i class="fa fa-fw fa-clock-o"></i> Pending Approval</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=2');"><i class="fa fa-fw fa-check"></i> View Approved</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=4');"><i class="fa fa-fw fa-ban"></i> View Suspended</a></li>
@@ -50,7 +50,7 @@
      </li>
      <li><a href="#"><i class="fa fa-fw fa-bus"></i> Fleet</a>
         <ul>
-           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('addNewVehicle.html');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
+           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('addNewVehicle.html?vid=-1');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=1');"><i class="fa fa-fw fa-clock-o"></i> View Pending</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=2');"><i class="fa fa-fw fa-check"></i> View Approved</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=4');"><i class="fa fa-fw fa-ban"></i> View Suspended</a></li>
