@@ -492,7 +492,7 @@ input {border:1px solid silver;}
                                                    
                           
                           <% if(permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS") && evt.isPDOpportunity()) { %>                           
-                           		<a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>                             
+                           		<a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>&ref=dec&dat=<%=curY%><%=curM +1%><%=curD%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>                             
                           <% } %>
                         <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
                                 <a onclick="loadingData()" href="districtCloseout.html?id=<%=evt.getEventID()%>" title="Sessions" class="btn btn-primary btn-xs">Sessions</a>                                                         
@@ -502,7 +502,7 @@ input {border:1px solid silver;}
                         <% } %>
                       <% } else { %>
                         <% if(evt.hasParticipants()) { %>
-                         <a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>  
+                         <a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>&ref=dec&dat=<%=curY%><%=curM +1%><%=curD%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>  
                         <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
                          <a onclick="loadingData()" href="districtCloseout.html?id=<%=evt.getEventID()%>" title="Sessions" class="btn btn-primary btn-xs">Sessions</a>
                         <%}%>
@@ -523,9 +523,9 @@ input {border:1px solid silver;}
                 <tr>
                 <td class="no-print eventOptions" colspan="4" style="background-color:<%=bgcolor%>">
                  <% if((evt.isScheduler(usr)|| usr.isAdmin()) && evt.hasParticipants() && (evt.isActive() || evt.isPast())) { %>
-                  		<a onclick="loadingData()" href="viewEventAttendance.html?id=<%=evt.getEventID()%>" title="Event Attendance" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-user"></span> Attendance</a>                           
+                  		<a onclick="loadingData()" href="viewEventAttendance.html?id=<%=evt.getEventID()%>&ref=dec&dat=<%=curY%><%=curM +1%><%=curD%>" title="Event Attendance" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-user"></span> Attendance</a>                           
                 <% } else if(evt.hasParticipants() && permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS")) { %>
-                         <a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-user"></span> Participants</a>                          
+                         <a onclick="loadingData()" href="viewEventParticipants.html?id=<%=evt.getEventID()%>&ref=dec&dat=<%=curY%><%=curM +1%><%=curD%>" title="Event Participants" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-user"></span> Participants</a>                          
                 <% } else if(evt.isDistrictCalendarCloseOutEntry()){%>
                        <a onclick="loadingData()" href="districtCloseout.html?id=<%=evt.getEventID()%>" title="Sessions" class="btn btn-xs btn-primary">Sessions</a>                           
                         

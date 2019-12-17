@@ -298,7 +298,8 @@ $("#loadingSpinner").css("display","none");
 <div style="font-size:14px;padding-bottom:5px;font-weight:bold;color:<%=txtcolor%>">REGISTERED PERSONNEL FOR THIS EVENT</div>
 <span style="font-size:11px;">Registrants are listed sorted by name. You can click on the column header to sort by that column. You can DE-REGISTER a participant</span><br/><br/>
 <% if(!iter.hasNext()) {%>       
-<div class="alert alert-danger" style="font-size:11px;text-align:center;">NOTICE: Currently No Registered Personnel for this event.</div>
+<div class="alert alert-danger" style="font-size:11px;text-align:center;">
+NOTICE: Currently No Registered Personnel for this event. 
 <%  } else { %>        
 
 <div  style="height:100px;">
@@ -461,8 +462,10 @@ $(window).on('resize', function(){
 <br/>
          <div align="center" class="no-print navBottom">
          	<a href='#' class="btn btn-primary btn-xs" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;font-size:16px;font-weight:bold;><img width=400 src=includes/img/nlesd-colorlogo.png><br/>Scheduled PD Event</div>'});">Print Page</a>
-           	<a onclick='loadingData()' href="createEventParticipantsEmail.html?id=<%=evt.getEventID()%>" class="btn btn-primary btn-xs" title="Email Participants">Email Participants</a>
-         <a onclick='loadingData()' class="btn btn-xs btn-danger" href="javascript:history.go(-1);" title="Back"><span class="	glyphicon glyphicon-step-backward"></span> Back</a>
+        <%if (evt.getRegistrationCount() >0 ){ %>
+           		<a onclick='loadingData()' href="createEventParticipantsEmail.html?id=<%=evt.getEventID()%>" class="btn btn-primary btn-xs" title="Email Participants">Email Participants</a>
+          <%} %> 	
+         <a id="backPage" onclick='loadingData()' class="btn btn-xs btn-danger" href="javascript:history.go(-1);" title="Back"><span class="	glyphicon glyphicon-step-backward"></span> Back</a>
          <a class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html"><span class="	glyphicon glyphicon-step-backward"></span> Back to Calendar</a>
          </div> 
         
@@ -489,7 +492,47 @@ $(window).on('resize', function(){
        $('#confirm-deregister').on('show.bs.modal', function(e) {
     	    $(this).find('.btn-dereg').attr('href', $(e.relatedTarget).data('href'));
     	    
-    	});       
+    	});   
+       
+       if ( window.history.replaceState ) {
+    	   window.history.replaceState( null, null, window.location.href );
+    	   }
+     //make sure proper back page link is implemented to prevent confusion.  
+     //Get passed parameters.
+     pageBack="${ param.ref }";
+     pageBackDate="${ param.dat }";
+     pageUser = "${ param.vusr }";
+
+     //if missing paraemeters get the stored, but if not misssing, set the cookie so after page refreshes passed parameters are stored while page is in use.
+     if (pageBack == null || pageBack=="") {	
+     	pageBack = $.cookie("pageRefCookie");	
+     } else {	
+     	$.cookie("pageRefCookie", "${ param.ref }", { path: "/MemberServices/PDReg/",SameSite: "Lax", secure  : true });	
+     }
+     if (pageBackDate == null || pageBackDate=="") {	
+     	pageBackDate = $.cookie("pageDateCookie");		
+     } else {
+     	$.cookie("pageDateCookie", "${ param.dat }", { path: "/MemberServices/PDReg/",SameSite: "Lax", secure  : true });	
+     }
+     if (pageUser == null || pageUser=="") {	
+     	pageUser = $.cookie("pageUserCookie");			
+     } else {
+     	$.cookie("pageUserCookie", "${ param.vusr }", { path: "/MemberServices/PDReg/",SameSite: "Lax", secure  : true 	});
+     }
+     		if (pageBack=="sce"){
+     			$("#backPage").attr('href', 'viewUpcomingEvents.html?pid='+pageUser+'');
+     		} else if (pageBack=="dec"){
+     			$("#backPage").attr('href', 'viewDailyCalendar.html?dt='+pageBackDate+'');
+     		} else {	
+     			$("#backPage").attr('href', 'viewDistrictCalendar.html');
+     		}
+     </script> 
+       
+       
 </script>
+
+
+
+
 </body>
 </html>

@@ -159,7 +159,6 @@
     <%} %>
  
  
- 
 <div id="affixedTop" class="container-fluid" data-spy="affix" data-offset-top="0">
 		
  		<table id="affixedTable" class="table table-bordered table-condensed ${season}" align="center" style="font-size:11px;width:100%;min-width:350px;">              
@@ -277,16 +276,20 @@
   <div style="display:inline-block;margin-top:5px;"><a href="#" class='btnRegionView btn btn-xs btn-primary' title="List All Regional Events" onclick="loadingData()" data-region-id='0'>All Events</a></div>
    			<% for(SchoolZoneBean sz : SchoolZoneService.getSchoolZoneBeans()){ %> 
    			    <div style="display:inline-block;margin-top:5px;"><a href="#" class='btnRegionView btn btn-xs btn-primary' onclick="loadingData()" data-region-id="<%= sz.getZoneId() %>" title="Show <%= StringUtils.capitalize(sz.getZoneName())%> Regional Events"> <%= StringUtils.capitalize(sz.getZoneName())%></a></div>
-   			<%}%>   
- 				<div style="display:inline-block;margin-top:5px;"><a href="viewMemberEvents.html" title="List My Events" class="btn btn-xs btn-info" onclick="loadingData();">My Events</a></div>
+   			<%}%> 
+   			
+   			<% if(usr.checkPermission("CALENDAR-SCHEDULE")) { %>
+           		<div style="display:inline-block;margin-top:5px;"><a href="scheduleEvent.html?passthrough=true" class="btn btn-xs btn-success" title="Schedule Event" onclick="loadingData();"><span class="glyphicon glyphicon-plus"></span> Add Event</a></div>
+            	<div style="display:inline-block;margin-top:5px;"><a href="viewUpcomingEvents.html?pid=<%=usr.getPersonnel().getPersonnelID()%>" title="List events that I have scheduled for others to attend." class="btn btn-xs btn-danger" onclick="loadingData();"><span class="glyphicon glyphicon-calendar"></span> My Scheduled Events</a></div>
+   			<% } %>   			
+ 			<div style="display:inline-block;margin-top:5px;"><a href="viewMemberEvents.html" title="List events that I am currently registered for." class="btn btn-xs btn-danger" onclick="loadingData();"><span class="glyphicon glyphicon-tasks"></span> My Registered Events</a></div>
 			 <% if(usr.checkPermission("CALENDAR-VIEW-SCHOOL-ENROLLMENT")) { %>			                    
-              	<div style="display:inline-block;margin-top:5px;"><a href="viewSchoolRegistrations.html?id=<%=usr.getPersonnel().getSchool().getSchoolID()%>"  title="View School Enrollment" class="btn btn-xs btn-info" onclick="loadingData();">School Enrollment</a></div>
+              	<div style="display:inline-block;margin-top:5px;"><a href="viewSchoolRegistrations.html?id=<%=usr.getPersonnel().getSchool().getSchoolID()%>"  title="View School Enrollment" class="btn btn-xs btn-info" onclick="loadingData();"><span class="glyphicon glyphicon-user"></span> School Enrollment</a></div>
             <% } %>
-            <% if(usr.checkPermission("CALENDAR-SCHEDULE")) { %>
-           		<div style="display:inline-block;margin-top:5px;"><a href="scheduleEvent.html?passthrough=true" class="btn btn-xs btn-success" title="Schedule Event" onclick="loadingData();">Add Event</a></div>
-            <% } %>	
-            <div style="display:inline-block;margin-top:5px;"><a href='#' title='Print this page (pre-formatted)'  class="btn btn-xs btn-success"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><b>Professional Development Calendar</b></div><br/>'});">Print</a></div>		                     
-  		 	<div style="display:inline-block;margin-top:5px;"><a href="/MemberServices/navigate.jsp" class="btn btn-xs btn-danger" title="Back to MS" onclick="loadingData();">Exit</a></div>
+            
+            <div style="display:inline-block;margin-top:5px;"><a href='#' title='Print this page (pre-formatted)'  class="btn btn-xs btn-success"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><b>Professional Development Calendar</b></div><br/>'});"><span class="glyphicon glyphicon-print"></span> Print</a></div>
+            <div style="display:inline-block;margin-top:5px;"><a href="https://forms.gle/UrYhxVAXRpAWhJGf7" class="btn btn-xs btn-warning" title="Provide Feedback - Will open in a new tab." target="_blank"><span class="glyphicon glyphicon-bullhorn"></span> Feedback</a></div>
+  		 	<div style="display:inline-block;margin-top:5px;"><a href="/MemberServices/navigate.jsp" class="btn btn-xs btn-danger" title="Back to MS" onclick="loadingData();"><span class="glyphicon glyphicon-eject"></span> Exit</a></div>
  </div>
  
   	 </form>   
@@ -410,12 +413,12 @@ var eventsByRegionChart = new Chart(ctx, {
 		//$("#welcomeMessage").modal('show'); //For testing
 	}	else {		
 		$("#welcomeMessage").modal('show');
-	}
+	}	
 	
+	 
 	
 	});
 </script>
-
 
 
 

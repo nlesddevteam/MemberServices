@@ -1,7 +1,6 @@
 <!-- PDReg DECORATOR FILE (C) 2019  -->	
 <!-- APPLICATION FOR NLESD STAFF (MEMBER) SERVICES -->
-<!-- HTML 5 BOOTSTRAP 3.3.7 JQUERY 3.3.1 -->
-<!-- THIS CAOS BY GEOFF - Good Luck! -->
+<!-- HTML 5 BOOTSTRAP 3.3.7 JQUERY 3.4.1 -->
 
 <%@ page  language="java" 
           session="true" 
@@ -51,9 +50,9 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/> 
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-		 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">       
-  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">				
-		<link rel="shortcut icon" href="/MemberServices/PDReg/includes/img/favicon.ico">	
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">       
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">		
+  		<link rel="shortcut icon" href="/MemberServices/PDReg/includes/img/favicon.ico">	
 		<link href="/MemberServices/PDReg/includes/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">
 		<link href="/MemberServices/PDReg/includes/css/hover_drop_2.css" rel="stylesheet" media="all" type="text/css" />				
 		<link rel="stylesheet" href="/MemberServices/PDReg/includes/css/pdreg.css">	
@@ -63,10 +62,11 @@
 	<!-- JAVASCRIPT FILES -->
 		
 		<script src="/MemberServices/PDReg/includes/ckeditor/ckeditor.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>		
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>	
-  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  		
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  	
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>		
   		<script src="/MemberServices/PDReg/includes/js/bootstrap-confirmation.min.js"></script> 			
 		<script src="/MemberServices/PDReg/includes/js/jquery-ui.js"></script>
 		<script src="/MemberServices/PDReg/includes/js/jquery.cookie.js"></script>		
@@ -135,12 +135,8 @@ function googleTranslateElementInit() {
 		  </div>
 		
 		  <div class="copyright">		
-		 PD Calendar App 2.0 &copy; 2019 NLESD &middot; All Rights Reserved.
+		 PD Calendar App 2.1 &copy; 2019 NLESD &middot; All Rights Reserved.
 		 </div>
-		
-		  
-	
-	 	
 		
 	</div>	
 

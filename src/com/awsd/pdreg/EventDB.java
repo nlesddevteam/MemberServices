@@ -548,8 +548,12 @@ public class EventDB {
 			sql = "SELECT EVENT.EVENT_ID, EVENTTYPE_ID, EVENT_NAME, EVENT_DESC, EVENT_DATE, EVENT_ENDDATE, "
 					+ "EVENT_LOCATION, EVENT_SCHOOL_ID, EVENT_ZONE_ID, SCHEDULER_ID, nvl(EVENT_STARTTIME, 'UNKNOWN') EVENT_STARTTIME, "
 					+ "nvl(EVENT_FINISHTIME, 'UNKNOWN') EVENT_FINISHTIME, "
-					+ "nvl(EVENT_MAX, 0) EVENT_MAX, nvl(EVENT_CLOSEOUT_OPTION, 'ZZ') EVENT_CLOSEOUT_OPTION, GOV_FUNDED FROM EVENT "
-					+ "WHERE EVENT.SCHEDULER_ID = " + p.getPersonnelID() + " ORDER BY EVENT_DATE";
+					+ "nvl(EVENT_MAX, 0) EVENT_MAX, nvl(EVENT_CLOSEOUT_OPTION, 'ZZ') EVENT_CLOSEOUT_OPTION, GOV_FUNDED,PARTICIPANT_CNT,ATTENDED_CNT "
+					+ " FROM EVENT "
+					+ " left outer join "
+					+ " (select EVENT_ID,count(*) PARTICIPANT_CNT,sum(case ATTENDED when 1 then 1 else 0 end) ATTENDED_CNT  from EVENTPERSONNEL group by EVENT_ID)"
+					+ "  testing on EVENT.EVENT_ID =testing.EVENT_ID"
+					+ " WHERE EVENT.SCHEDULER_ID = " + p.getPersonnelID() + " ORDER BY EVENT_DATE";
 
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
@@ -1389,6 +1393,7 @@ public class EventDB {
 			//column may not be available.
 			try {
 				abean.setRegistrationCount(rs.getInt("PARTICIPANT_CNT"));
+				abean.setAttendees(rs.getInt("ATTENDED_CNT"));
 			}
 			catch (SQLException e) {}
 

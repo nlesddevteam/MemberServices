@@ -40,6 +40,16 @@ public class Event {
 	private int schedulerID;
 	Personnel scheduler = null;
 	private int participants;
+	
+	private int attendees=0;
+
+	public int getAttendees() {
+	return attendees;
+	}
+
+	public void setAttendees(int attendees) {
+	this.attendees = attendees;
+	}
 
 	private boolean governmentFunded;
 	private ArrayList<EventRequirement> eventRequirements;
