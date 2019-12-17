@@ -343,11 +343,13 @@ input {border:1px solid silver;}
                       	<%} else if((permissions.containsKey("CALENDAR-VIEW-PARTICIPANTS") || evt.isScheduler(usr)) && evt.hasParticipants()) { %>
                         <a onclick='loadingData()' href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>
                       	<% } %>
-                      	<% if((evt.isScheduler(usr) && evt.hasParticipants()) || usr.isAdmin()) { %>
+                      	<%if (!evt.isPast() || usr.isAdmin()) {%>
+                      	<% if((evt.isScheduler(usr) && evt.hasParticipants())) { %>
                          <a onclick='loadingData()' href="modifyEvent.html?id=<%=evt.getEventID()%>" title="Modify this Event" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-cog"></span> Modify</a> 
                       	<% } %>
                       	<% if(permissions.containsKey("CALENDAR-DELETE-ALL") || evt.isScheduler(usr)) { %>
                           <a onclick='loadingData()' href="deleteEvent.html?id=<%=evt.getEventID()%>" title="Delete this Event" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>   
+                        <% } %>
                         <% } %>
                     <% } %>   
                    

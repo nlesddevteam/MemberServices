@@ -52,7 +52,7 @@
   Date evtenddt = null;
   Event evt = null;
   School s = null;
-  boolean other;
+  boolean other;  
   String status = "";
   SimpleDateFormat sdf = null;
   int numEmpAttended = 0;
@@ -138,7 +138,7 @@
 		$('#btn-update-attendance').click(function(){
 			$("#btn-update-attendance").css("display","none");		
 			$(".updateMsg").css("display","block").delay(8000).fadeOut();
-			$('#frm-update-attendance').submit();
+			$('#frm-update-attendance').submit();		   
 			
 		});
 		
@@ -148,6 +148,11 @@
 	
   
 </script>
+
+
+
+
+
 <style>
 		.tableTitle {font-weight:bold;width:20%;}
 		.tableResult {font-weight:normal;width:50%;}
@@ -203,7 +208,7 @@
 <div style="margin-left:5px;margin-right:5px;">
  <div align="center" class="no-print"><a href="viewDistrictCalendar.html"><img class="topLogoImg" src="includes/img/pdcalheader.png" border=0 style="padding-bottom:10px;"/></a></div>
 
-<div class="alert alert-danger no-print topAlert" align="center" style="font-size:11px;display:none;"><b>*** EVENT ATTENDENCE NOTICE ***</b><br/>It is manditory that you confirm attendence to any event you hold. Please confirm below anyone registered who has attended the event. If someone attended who was not registered or listed below, please add using the 'Missing a Participant' link below and confirm.</div>         
+<div class="alert alert-danger no-print topAlert" align="center" style="font-size:11px;display:none;"><b>*** EVENT ATTENDENCE NOTICE ***</b><br/>It is manditory that you confirm attendance to any event you hold. Please confirm below anyone registered who has attended the event. If someone attended who was not registered or listed below, please add using the 'Missing a Participant' link below and confirm.</div>         
 
 
 	<div style="font-size:14px;font-weight:bold;width:100%;background-color:<%=bgcolor%>;color:<%=txtcolor%>">&nbsp;<%=regionName%> EVENT</div>
@@ -280,13 +285,17 @@
 
 }%>
  
-
+<form id='frm-update-attendance' action='updateEventAttendance.html' method='POST'>
+              	<input type='hidden' name='hdn-event-id' value='<%= evt.getEventID() %>' />
           
-<%      if(attendees == null || (attendees.size() <= 0))
+<%      if(attendees == null || (attendees.size() <= 0) )
         {
 %>       
-
- <div class="alert alert-danger" align="center">Sorry, no personnel currently registered for this event.</div>
+       <% if(evt.isPast()) { %>
+ 				<div class="alert alert-danger" align="center">Sorry, no personnel registered for this event. To complete attendance you must add a participant to the event.</div>
+		<%} else { %>
+				 <div class="alert alert-danger" align="center">Sorry, no personnel currently registered for this event. </div>
+		<%} %>
 
 <%      }
         else
@@ -299,8 +308,7 @@
 
 <div class="partMessage alert alert-info" style="font-size:11px;text-align:center;"></div>
 
-              	<form id='frm-update-attendance' action='updateEventAttendance.html' method='POST'>
-              	<input type='hidden' name='hdn-event-id' value='<%= evt.getEventID() %>' />
+              	
                 
        <table class="table table-condensed" id="calEventsTable" style="font-size:11px;">
        				<thead>
@@ -313,6 +321,7 @@
                   <% for (EventAttendee ea : attendees) {
                     s = ea.getPersonnel().getSchool();
                     
+                                       	
                     if((s!=null)&&(s.getSchoolID() != sid))
                     {
                       sid = s.getSchoolID();
@@ -340,19 +349,11 @@
                     </td>
                     </tr>
 					<% }%>
+					
+					
 					</tbody>
 		</table>
-		<br/>
-		<div class="alert alert-success updateMsg" align="center" style="display:none;">Updating Attendance, please wait...</div>
-					  <div align="center" class="no-print navBottom">					
-					<a href="#" id='btn-update-attendance' class="btn btn-xs btn-success" title="Update/Confirm Attendence"><span class="glyphicon glyphicon-refresh"></span> Update/Confirm</a>
-					<button id='lnk-add-attendee' type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#add-attendee-panel" title="Add a Missing Attendee"><span class="glyphicon glyphicon-user"></span> Add Participant?</button>
-					<p class="mobileView"></p>
-					<a href='#' title='Print this page (pre-formatted)' class="btn btn-primary btn-xs"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Professional Development Calendar</b></div><br/>'});"><span class="glyphicon glyphicon-print"></span> Print</a>	                     
- 					<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);" title="Back"><span class="	glyphicon glyphicon-step-backward"></span> Back</a>
-					</div>
-						
-			</form>
+		
       
 
       
@@ -470,7 +471,19 @@ $(window).on('resize', function(){
         
 <%  }%>    
         
-
+<br/>
+					<div class="alert alert-success updateMsg" align="center" style="display:none;">Updating Attendance, please wait...</div>
+					<div align="center" class="no-print navBottom">					
+					<a href="#" id='btn-update-attendance' class="btn btn-xs btn-success" title="Update/Confirm Attendence"><span class="glyphicon glyphicon-refresh"></span> Update/Confirm</a>
+					 <a onclick='loadingData()' href="viewEventParticipants.html?id=<%=evt.getEventID()%>" title="Event Participants" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> Participants</a>
+					<button id='lnk-add-attendee' type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#add-attendee-panel" title="Add a Missing Attendee"><span class="glyphicon glyphicon-user"></span> Add Participant?</button>
+					<p class="mobileView"></p>
+					<a href='#' title='Print this page (pre-formatted)' class="btn btn-primary btn-xs"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Professional Development Calendar</b></div><br/>'});"><span class="glyphicon glyphicon-print"></span> Print</a>	                     
+ 					<a id="backPage" class="btn btn-xs btn-danger" href="javascript:history.go(-1);" title="Back"><span class="	glyphicon glyphicon-step-backward"></span> Back</a>
+ 					 <a onclick="loadingData()" class="no-print btn btn-xs btn-danger" href="viewDistrictCalendar.html">Back to Calendar</a>
+					</div>
+						
+			</form>
  </div> </div>
  
  
@@ -506,7 +519,7 @@ $(window).on('resize', function(){
 		          	<div class="formTitle">ATTENDEE:</div>
 		          	<div class="formBody">
 		          	<select id="lst-attendee-id" class="form-control" name="lst-attendee-id">
-			              	<option value="">--- SELECT ATTENDEE ---</option>
+			              	<option value="">--- SELECT ATTENDEE ---</option>			              	
 			        </select></td>
 		          	</div>
 			        <div id='add-attendee-msg' class="alert alert-success" style="display:none;"></div>	           
@@ -522,10 +535,40 @@ $(window).on('resize', function(){
    
 </div> 
 <script>
-//Prevent resubmit
+//Prevent resubmit if back is pressed after addition of attendee.
 if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );}
-</script>
+window.history.replaceState( null, null, window.location.href );
+}
+//make sure proper back page link is implemented to prevent confusion.  
+//Get passed parameters.
+pageBack="${ param.ref }";
+pageBackDate="${ param.dat }";
+pageUser = "${ param.vusr }";
 
+//if missing paraemeters get the stored, but if not misssing, set the cookie so after page refreshes passed parameters are stored while page is in use.
+if (pageBack == null || pageBack=="") {	
+	pageBack = $.cookie("pageRefCookie");	
+} else {	
+	$.cookie("pageRefCookie", "${ param.ref }", { path: "/MemberServices/PDReg/",SameSite: "Lax", secure  : true });	
+}
+if (pageBackDate == null || pageBackDate=="") {	
+	pageBackDate = $.cookie("pageDateCookie");		
+} else {
+	$.cookie("pageDateCookie", "${ param.dat }", { path: "/MemberServices/PDReg/",SameSite: "Lax", secure  : true });	
+}
+if (pageUser == null || pageUser=="") {	
+	pageUser = $.cookie("pageUserCookie");			
+} else {
+	$.cookie("pageUserCookie", "${ param.vusr }", { path: "/MemberServices/PDReg/",SameSite: "Lax", secure  : true 	});
+}
+		if (pageBack=="sce"){
+			$("#backPage").attr('href', 'viewUpcomingEvents.html?pid='+pageUser+'');
+		} else if (pageBack=="dec"){
+			$("#backPage").attr('href', 'viewDailyCalendar.html?dt='+pageBackDate+'');
+		} else {	
+			$("#backPage").attr('href', 'viewDistrictCalendar.html');
+		}
+</script>
+  
 </body>
 </html>
