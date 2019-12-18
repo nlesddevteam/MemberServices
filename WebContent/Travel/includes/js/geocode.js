@@ -214,8 +214,13 @@
 					
 					  
 					    if(i <= 0) {
-					    	distance += "<span style='color:Red;'><b>Route "+ routenum +":</b>  "+parseFloat(response.routes[i].legs[0].distance.text).toFixed(1)+"kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
-							n0=parseFloat(response.routes[i].legs[0].distance.text).toFixed(0);
+					    	//distance += "<span style='color:Red;'><b>Route "+ routenum +":</b>  "+parseFloat(response.routes[i].legs[0].distance.value).toFixed(1)+"kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
+					    	distance += "<span style='color:Red;'><b>Route "+ routenum +":</b>  "+((response.routes[i].legs[0].distance.value)/1000).toFixed(2) +" kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
+							
+					    	//n0=parseFloat(response.routes[i].legs[0].distance.text).toFixed(0);
+					    	n0=(response.routes[i].legs[0].distance.value)/1000;
+					    	
+					    	
 							 directionsDisplay.setRouteIndex(i);
 							 directionsDisplay.setMap(map);
 							 directionsDisplay.setDirections(response);
@@ -231,8 +236,10 @@
 					     else if (i>0 && i==1) {
 
 							  routenum++;
-					    	 distance += "<span style='color:Blue;'><b>Route "+ routenum +":</b>  "+parseFloat(response.routes[i].legs[0].distance.text).toFixed(1)+"kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
-					    	 n1=parseFloat(response.routes[i].legs[0].distance.text).toFixed(0);
+					    	 //distance += "<span style='color:Blue;'><b>Route "+ routenum +":</b>  "+parseFloat(response.routes[i].legs[0].distance.text).toFixed(1)+"kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
+					    	 distance += "<span style='color:Blue;'><b>Route "+ routenum +":</b>  "+((response.routes[i].legs[0].distance.value)/1000).toFixed(2)+" kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
+					    	 
+					    	 n1=(response.routes[i].legs[0].distance.value)/1000;
 					    	 directionsDisplay.setRouteIndex(i);
 					    	 directionsDisplay.setMap(map);
 					    	 directionsDisplay.setDirections(response);
@@ -246,8 +253,8 @@
 					        }
 					     else {
 					    	 routenum++;
-					    	 distance += "<span style='color:Green;'><b>Route "+ routenum +":</b>  "+parseFloat(response.routes[i].legs[0].distance.text).toFixed(1)+"kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
-					    	 n2=parseFloat(response.routes[i].legs[0].distance.text).toFixed(0);
+					    	 distance += "<span style='color:Green;'><b>Route "+ routenum +":</b>  "+((response.routes[i].legs[0].distance.value)/1000).toFixed(2)+" kms ("+ response.routes[i].legs[0].duration.text+")</span> &nbsp;&nbsp;";
+					    	 n2=(response.routes[i].legs[0].distance.value)/1000;
 					    	 directionsDisplay.setRouteIndex(i); 
 					    	 directionsDisplay.setMap(map);
 					    	 directionsDisplay.setDirections(response);
@@ -264,15 +271,22 @@
 					     
 					  }
 				
-				 
-			     
-				
 				var minDistance = Math.min(n0,n1,n2);
-				var totalDistance = minDistance*2;
+				var totalDistance = Math.round(minDistance*2);
 				
-				distance+="<br/><br/><span style='color:black;font-size:12px;'>Number of routes:"+ response.routes.length +". You should use <b>"+ minDistance +" kms</b> to calculate your travel claim ("+totalDistance+" kms return). However you can use any route to travel to and from your destination.</div>";
+				if (totalDistance < 0.5) { 
+					distance+="<br/><br/><span style='color:red;font-size:12px;'><b>NOTICE:</b> Your total distance is less than 0.5 kms, therefore a value of 0 km must be used. If you have traveled this distance more than once for a particular claim, please combine them into one item so your total is >= 1km.</span>";
+					
+				}
+			     
+				minDistance = Math.round(minDistance);
 				
-				hideit("loadMes");
+				
+				
+				
+				distance+="<br/><br/><span style='color:black;font-size:12px;'>Number of routes:"+ response.routes.length +". You should use <b>"+ minDistance +" kms</b> to calculate your travel claim ("+totalDistance+" kms return). However you can use any route to travel to and from your destination.</span>";
+				distance+="</div>";
+			     hideit("loadMes");
 				
 				
 				

@@ -59,7 +59,7 @@ public class ViewMemberScheduledEventsRequestHandler implements RequestHandler
     }
     
     request.setAttribute("ScheduledEvents", evts);
-
+  
     return "scheduledevents.jsp";
   }
 }
