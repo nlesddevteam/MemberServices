@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javazoom.upload.UploadFile;
-
 import com.awsd.security.SecurityException;
 import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
 import com.esdnl.audit.IAuditable;
 import com.esdnl.util.FileUtils;
 import com.esdnl.util.StringUtils;
+
+import javazoom.upload.UploadFile;
 
 public class RequestHandlerImpl implements RequestHandler, IAuditable {
 
@@ -74,8 +74,8 @@ public class RequestHandlerImpl implements RequestHandler, IAuditable {
 		}
 
 		if (!validated)
-			throw new SecurityException("Illegal Access [" + request.getRequestURI() + "] [" + usr.getLotusUserFullName()
-					+ "]");
+			throw new SecurityException("Illegal Access [" + request.getRequestURI() + "] ["
+					+ (usr != null ? usr.getLotusUserFullName() : " UNAUTHENICATED USER") + "]");
 
 		form = new Form(request);
 
