@@ -47,8 +47,7 @@ public class AddNLESDSupportReferenceCheckAppRequestHandler extends PublicAccess
 				new RequiredFormElement("Scale11"),
 				new RequiredFormElement("Scale12"),
 				new RequiredFormElement("Scale13"),
-				new RequiredFormElement("Scale14"),
-				new RequiredFormElement("provider_email")
+				new RequiredFormElement("Scale14")
 		});
 		if (form.hasValue("confirm", "true") && validate_form()) {
 			try {
@@ -89,7 +88,6 @@ public class AddNLESDSupportReferenceCheckAppRequestHandler extends PublicAccess
 				ref.setReferenceScale("5");
 				Date d = new Date();
 				ref.setDateProvided(d);
-				ref.setProviderEmail(form.get("provider_email"));
 				ref = NLESDReferenceSSSupportManager.addNLESDReferenceSSSupportBean(ref);
 				//update applicant_ref_request
 				ApplicantRefRequestManager.applicantReferenceCompleted(refreqid, "Reference Completed", ref.getId());
@@ -107,7 +105,7 @@ public class AddNLESDSupportReferenceCheckAppRequestHandler extends PublicAccess
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");
-				path = "view_nlesd_support_reference.jsp";
+				path = "nlesd_support_reference_checklist_app.jsp";
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);

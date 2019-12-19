@@ -13,7 +13,7 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
-<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "REFREQUEST", "PROFILE" }%>'
+<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "PROFILE" }%>'
 	scope='<%=PageContext.REQUEST_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />
 	
@@ -32,7 +32,7 @@
 	}catch (Exception e){
 		p=null;
 	}
-	System.out.println(refReq.getEmailAddress());
+	
 	
 %>
 <html>
@@ -112,7 +112,7 @@
 			               <form action="addNLESDManageReferenceApp.html" method="POST" name="admin_nlesd_rec_form" id="admin_nlesd_rec_form">
 												<input type='hidden' id='applicant_id' name='applicant_id' value='<%= profile.getUID() %>' />
 			                                	<input type='hidden' id='confirm' name='confirm' value='true' />
-			                                    <input type='hidden' id='reqreqid' name='refreqid' value='<%= refReq.getId() %>' />	
+			                                    <input type='hidden' id='reqreqid' name='refreqid' value='<%= refReq == null ? -1: refReq.getId() %>' />	
 
 	
 <!-- Referencee Information -------------------------------------------------------------------------->	
