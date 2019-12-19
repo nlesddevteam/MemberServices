@@ -39,6 +39,7 @@ public class OtherJobPostsTagHandler extends TagSupport {
 		JobOpportunityAssignmentBean[] ass = null;
 		String bg_color = "";
 		String bd_color = "";
+			
 		int JobCount = 0;
 		try {
 			// System.err.println("INSIDE TAG");
@@ -52,10 +53,12 @@ public class OtherJobPostsTagHandler extends TagSupport {
 			}else{
 				opps = this.value;
 			}
-
+			
 			// System.err.println("Opportunities: " + opps.length);
-
-			out.println("<table class=\"table table-striped table-condensed\" style=\"font-size:12px;padding-top:3px;border-top:1px solid silver;\">");		
+			out.println("<script>$('document').ready(function(){");
+			out.println("$('.otherJobsList"+this.type+"').DataTable({'order': [[ 0, 'desc' ]],'bLengthChange': false,'paging': false, 'lengthMenu': [[-1, 20, 50, 100, 200], ['All', 20, 50, 100, 200]] });");
+			out.println("});</script>");	
+			out.println("<table class='table table-striped table-condensed otherJobsList"+this.type+"' style=\"font-size:12px;padding-top:3px;border-top:1px solid silver;\">");		
 			JobCount=0;
 			out.println("<thead><tr><th class='tableCompNum'>Competition Number</th>"
 					+ "<th class='tablePosTitle'>Position Title</th>"
