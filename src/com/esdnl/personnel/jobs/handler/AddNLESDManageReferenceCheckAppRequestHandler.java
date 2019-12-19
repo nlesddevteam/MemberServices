@@ -107,7 +107,7 @@ public class AddNLESDManageReferenceCheckAppRequestHandler extends PublicAccessR
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");
-				path = "view_nlesd_manage_reference.jsp";
+				path = "nlesd_manage_reference_checklist_app.jsp";
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);
