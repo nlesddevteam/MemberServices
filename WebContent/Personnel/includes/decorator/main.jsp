@@ -309,7 +309,7 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 								      		<li class="dropdown-submenu">
 						          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Job Posts</a>
 						          	 	  		<ul class="dropdown-menu">
-								      				<!-- <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_post_job_other.jsp">Post Job</a></li>-->
+								      				<!-- <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_post_job_other.jsp">Post Job</a></li>--> 
 													<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other_o.jsp?zoneid=0">View Posts</a></li>
 												</ul>
 											</li>
