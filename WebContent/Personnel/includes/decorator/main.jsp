@@ -275,7 +275,7 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 				                                      	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addSEOStaffingAssignment.html">SEO Staffing Assignments</a></li>
 				                                    </esd:SecurityAccessRequired>
 				                                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-POSTJOB">
-				                                      	<!-- <li><a href="/MemberServices/Personnel/admin_post_job.jsp">Post Job</a></li>-->
+				                                      <!-- <li><a href="/MemberServices/Personnel/admin_post_job.jsp">Post Job</a></li>-->
 				                                    </esd:SecurityAccessRequired>
 					                                    <li class="divider"></li>
 					                                    <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=All&zoneid=0">View All Posts</a></li>
@@ -309,7 +309,7 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 								      		<li class="dropdown-submenu">
 						          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Job Posts</a>
 						          	 	  		<ul class="dropdown-menu">
-								      				<!-- <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_post_job_other.jsp">Post Job</a></li>--> 
+								      				<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_post_job_other.jsp">Post Job</a></li>
 													<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other_o.jsp?zoneid=0">View Posts</a></li>
 												</ul>
 											</li>
