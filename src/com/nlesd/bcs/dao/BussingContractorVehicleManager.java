@@ -900,6 +900,45 @@ public class BussingContractorVehicleManager {
 		}
 		return list;
 	}
+	public static ArrayList<BussingContractorVehicleBean> getVehiclesByStatusFull(int status) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_by_status_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorVehicleBean bean = createBussingContractorVehicleBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorVehicleBean> getVehiclesByStatus(int status): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static ArrayList<BussingContractorVehicleBean> getVehiclesByStatusReg(int status,int cid) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -940,6 +979,85 @@ public class BussingContractorVehicleManager {
 		}
 		return list;
 	}
+	public static ArrayList<BussingContractorVehicleBean> getVehiclesByStatusRegFull(int status,int cid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_reg_vehicles_by_status_f(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.setInt(3, cid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorVehicleBean bean = createBussingContractorVehicleBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorVehicleBean> getVehiclesByStatus(int status): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
+	public static TreeMap<String,Integer> getVehiclesByStatusRegTM(int status,int cid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<String,Integer> list = new TreeMap<String,Integer>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_reg_vehicles_by_status(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.setInt(3, cid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				list.put(rs.getString("PLATENUMBER") + "[" + rs.getString("SERIALNUMBER") +"]", rs.getInt("ID"));
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("TreeMap<String,Integer> getVehiclesByStatusRegTM(int status,int cid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static TreeMap<Integer,BussingContractorVehicleBean> getVehicleArchiveRecordsById(int id,TreeMap<Integer,BussingContractorVehicleBean> list) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -1052,5 +1170,80 @@ public class BussingContractorVehicleManager {
 				abean = null;
 		}
 		return abean;
-	}		
+	}
+	public static BussingContractorVehicleBean createBussingContractorVehicleBeanFull(ResultSet rs) {
+		//creates contractor bean using recordset instead of another db call
+		//old one will be removed once all places that call create bean return contractor information
+		BussingContractorVehicleBean abean = null;
+		try {
+				abean = new BussingContractorVehicleBean();
+				abean.setId(rs.getInt("ID"));
+				abean.setContractorId(rs.getInt("CONTRACTORID"));
+				abean.setvMake(rs.getInt("VMAKE"));
+				abean.setvModel(rs.getInt("VMODEL"));
+				abean.setvYear(rs.getString("VYEAR"));
+				abean.setvSerialNumber(rs.getString("VSERIALNUMBER"));
+				abean.setvPlateNumber(rs.getString("VPLATENUMBER"));
+				abean.setvType(rs.getInt("VTYPE"));
+				abean.setvSize(rs.getInt("VSIZE"));
+				abean.setvOwner(rs.getString("VROWNER"));
+				Timestamp ts= rs.getTimestamp("REGEXPIRYDATE");
+				if(ts != null){
+					abean.setRegExpiryDate(new java.util.Date(rs.getTimestamp("REGEXPIRYDATE").getTime()));
+				}
+				ts= rs.getTimestamp("INSEXPIRYDATE");
+				if(ts != null){
+					abean.setInsExpiryDate(new java.util.Date(rs.getTimestamp("INSEXPIRYDATE").getTime()));
+				}
+				abean.setInsuranceProvider(rs.getString("INSURANCEPROVIDER"));
+				ts= rs.getTimestamp("FALLINSDATE");
+				if(ts != null){
+					abean.setFallInsDate(new java.util.Date(rs.getTimestamp("FALLINSDATE").getTime()));
+				}
+				ts= rs.getTimestamp("WINTERINSDATE");
+				if(ts != null){
+					abean.setWinterInsDate(new java.util.Date(rs.getTimestamp("WINTERINSDATE").getTime()));
+				}
+				ts= rs.getTimestamp("FALLHEINSDATE");
+				if(ts != null){
+					abean.setFallHeInsDate(new java.util.Date(rs.getTimestamp("FALLHEINSDATE").getTime()));
+				}
+				ts= rs.getTimestamp("MISCHEINSDATE1");
+				if(ts != null){
+					abean.setMiscHeInsDate1(new java.util.Date(rs.getTimestamp("MISCHEINSDATE1").getTime()));
+				}
+				ts= rs.getTimestamp("MISCHEINSDATE2");
+				if(ts != null){
+					abean.setMiscHeInsDate2(new java.util.Date(rs.getTimestamp("MISCHEINSDATE2").getTime()));
+				}
+				abean.setvStatus(rs.getInt("VSTATUS"));
+				abean.setApprovedBy(rs.getString("APPROVEDBY"));
+				ts= rs.getTimestamp("DATEAPPROVED");
+				if(ts != null){
+					abean.setDateApproved(new java.util.Date(rs.getTimestamp("DATEAPPROVED").getTime()));
+				}
+				abean.setIsDeleted(rs.getString("ISDELETED"));
+				abean.setBcBean(BussingContractorManager.createBussingContractorBeanFull(rs));
+				abean.setStatusNotes(rs.getString("STATUSNOTES"));
+				abean.setvModel2(rs.getString("VMODEL2"));
+				abean.setvMakeOther(rs.getString("VMAKEOTHER"));
+				abean.setFallCMVI(rs.getString("FALLCMVI"));
+				abean.setWinterCMVI(rs.getString("WINTERCMVI"));
+				abean.setFallInsStation(rs.getString("FALLINSSTATION"));
+				abean.setWinterInsStation(rs.getString("WINTERINSSTATION"));
+				abean.setUnitNumber(rs.getString("UNITNUMBER"));
+				abean.setInsurancePolicyNumber(rs.getString("IPOLICYNUMBER"));
+				abean.setFallInsFile(rs.getString("FALLINSFILE"));
+				abean.setWinterInsFile(rs.getString("WINTERINSFILE"));
+				abean.setFallHEInsFile(rs.getString("FALLHEINSFILE"));
+				abean.setMiscHEInsFile1(rs.getString("MISCHEINSFILE1"));
+				abean.setMiscHEInsFile2(rs.getString("MISCHEINSFILE2"));
+				abean.setRegFile(rs.getString("REGFILE"));
+				abean.setInsFile(rs.getString("INSFILE"));
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}	
 }

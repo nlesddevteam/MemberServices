@@ -59,8 +59,7 @@ public class AdminViewContractRequestHandler extends RequestHandlerImpl
 		request.setAttribute("spath",request.getContextPath() + "/BCS/documents/system/contracts/");
 		ArrayList<BussingContractorSystemRouteBean> alist = BussingContractorSystemRouteManager.getBussingContractorSystemRouteByContactId(docid);
 		request.setAttribute("croutes",alist);
-		alist = BussingContractorSystemRouteManager.getRoutes();
-		request.setAttribute("allroutes",alist);
+		request.setAttribute("allroutes",BussingContractorSystemRouteManager.getRoutesListTM());
 
 		//now we check to see if they are regional admin\
 		if((usr.getUserPermissions().containsKey("BCS-VIEW-WESTERN")|| usr.getUserPermissions().containsKey("BCS-VIEW-CENTRAL") || usr.getUserPermissions().containsKey("BCS-VIEW-LABRADOR"))){

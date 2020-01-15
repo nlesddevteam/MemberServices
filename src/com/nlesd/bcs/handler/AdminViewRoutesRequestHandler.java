@@ -21,18 +21,18 @@ public class AdminViewRoutesRequestHandler  extends RequestHandlerImpl
 			int cid=0;
 			if(usr.checkPermission("BCS-VIEW-WESTERN")){
 				cid = BoardOwnedContractorsConstant.WESTERN.getValue();
-				request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesRegionalAdmin(cid));
+				request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesRegionalAdminList(cid));
 			}
 			if(usr.checkPermission("BCS-VIEW-CENTRAL")){
 				cid = BoardOwnedContractorsConstant.CENTRAL.getValue();
-				request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesRegionalAdmin(cid));
+				request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesRegionalAdminList(cid));
 			}
 			if(usr.checkPermission("BCS-VIEW-LABRADOR")){
 				cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
-				request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesRegionalAdmin(cid));
+				request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesRegionalAdminList(cid));
 			}
 		}else{
-			request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutes());
+			request.setAttribute("routes", BussingContractorSystemRouteManager.getRoutesList());
 		}
 
 		path = "admin_view_routes.jsp";

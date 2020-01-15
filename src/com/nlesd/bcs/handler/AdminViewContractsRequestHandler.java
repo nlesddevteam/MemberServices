@@ -4,7 +4,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.RequestHandlerImpl;
-import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.dao.BussingContractorSystemContractManager;
 public class AdminViewContractsRequestHandler extends RequestHandlerImpl
 {
@@ -18,21 +17,17 @@ public class AdminViewContractsRequestHandler extends RequestHandlerImpl
 	{
 		super.handleRequest(request, response);
 		if(usr.checkPermission("BCS-VIEW-WESTERN") || usr.checkPermission("BCS-VIEW-CENTRAL") || usr.checkPermission("BCS-VIEW-LABRADOR")){
-			int cid=0;
 			if(usr.checkPermission("BCS-VIEW-WESTERN")){
-				cid = BoardOwnedContractorsConstant.WESTERN.getValue();
-				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsReg(cid));
+				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsFullByRegion(71));
 			}
 			if(usr.checkPermission("BCS-VIEW-CENTRAL")){
-				cid = BoardOwnedContractorsConstant.CENTRAL.getValue();
-				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsReg(cid));
+				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsFullByRegion(69));
 			}
 			if(usr.checkPermission("BCS-VIEW-LABRADOR")){
-				cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
-				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsReg(cid));
+				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsFullByRegion(70));
 			}
 		}else{
-			request.setAttribute("contracts", BussingContractorSystemContractManager.getContracts());
+			request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsFull());
 		}
 
 		path = "admin_view_contracts.jsp";
