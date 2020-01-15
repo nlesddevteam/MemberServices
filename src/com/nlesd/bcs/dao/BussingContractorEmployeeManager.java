@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.TreeMap;
-
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import com.esdnl.dao.DAOUtils;
@@ -853,6 +852,46 @@ public class BussingContractorEmployeeManager {
 		}
 		return list;
 	}
+	public static ArrayList<BussingContractorEmployeeBean> getEmployeesByStatusFull(int status) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_by_status_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean abean = new BussingContractorEmployeeBean();
+				abean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeesByStatusFull(int status): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
 	public static ArrayList<BussingContractorEmployeeBean> getEmployeesRemoved(int status) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -934,6 +973,86 @@ public class BussingContractorEmployeeManager {
 		}
 		return list;
 	}
+	public static ArrayList<BussingContractorEmployeeBean> getEmployeesByStatusRegFull(int status,int cid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_reg_employees_by_status_f(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.setInt(3, cid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean abean = new BussingContractorEmployeeBean();
+				abean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeesByStatusRegFull(int status,int cid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static TreeMap<String,Integer>getEmployeesByStatusRegTM(int status,int cid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<String,Integer> list = new TreeMap<String,Integer>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_reg_employees_by_status(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.setInt(3, cid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				list.put(rs.getString("FIRSTNAME") + ", " + rs.getString("FIRSTNAME"), rs.getInt("ID"));
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeesByStatus(int status): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static ArrayList<BussingContractorEmployeeBean> searchEmployeesByIntegerReg(String searchBy, String searchFor, Integer searchInt,Integer cid){
 		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
 		BussingContractorEmployeeBean ebean = null;
@@ -1110,8 +1229,13 @@ public class BussingContractorEmployeeManager {
 				abean.setScaDocument(rs.getString("SCADOCUMENT"));
 				abean.setStatus(rs.getInt("STATUS"));
 				abean.setIsDeleted(rs.getString("ISDELETED"));
-				//abean.setEmployeePositionText(rs.getString("DD_TEXT"));
-				abean.setEmployeePositionText(DropdownManager.getDropdownItemText(rs.getInt("EMPLOYEEPOSITION")));
+				try {
+					//using one big query
+					abean.setEmployeePositionText(rs.getString("DD_TEXT"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setEmployeePositionText(DropdownManager.getDropdownItemText(rs.getInt("EMPLOYEEPOSITION")));
+				}
 				ts= rs.getTimestamp("PRCVSQDATE");
 				if(ts != null){
 					abean.setPrcvsqDate(new java.util.Date(rs.getTimestamp("PRCVSQDATE").getTime()));
@@ -1134,5 +1258,88 @@ public class BussingContractorEmployeeManager {
 				abean = null;
 		}
 		return abean;
-	}		
+	}
+	public static BussingContractorEmployeeBean createBussingContractorEmployeeBeanFull(ResultSet rs)  {
+		//new function that will replace old one once all queries have been updated with full data being returned in one query
+		BussingContractorEmployeeBean abean = null;
+		try {
+				abean = new BussingContractorEmployeeBean();
+				abean.setId(rs.getInt("ID"));
+				abean.setContractorId(rs.getInt("CONTRACTORID"));
+				abean.setEmployeePosition(rs.getInt("EMPLOYEEPOSITION"));
+				abean.setStartDate(rs.getString("STARTDATE"));
+				abean.setContinuousService(rs.getString("CONTINUOUSSERVICE"));
+				abean.setFirstName(rs.getString("FIRSTNAME"));
+				abean.setLastName(rs.getString("LASTNAME"));
+				abean.setMiddleName(rs.getString("MIDDLENAME"));
+				abean.setAddress1(rs.getString("ADDRESS1"));
+				abean.setAddress2(rs.getString("ADDRESS2"));
+				abean.setCity(rs.getString("CITY"));
+				abean.setProvince(rs.getString("PROVINCE"));
+				abean.setPostalCode(rs.getString("POSTALCODE"));
+				abean.setHomePhone(rs.getString("HOMEPHONE"));
+				abean.setCellPhone(rs.getString("CELLPHONE"));
+				abean.setEmail(rs.getString("EMAIL"));
+				abean.setDlNumber(rs.getString("DLNUMBER"));
+				Timestamp ts= rs.getTimestamp("DLEXPIRYDATE");
+				if(ts != null){
+					abean.setDlExpiryDate(new java.util.Date(rs.getTimestamp("DLEXPIRYDATE").getTime()));
+				}
+				abean.setDlClass(rs.getInt("DLCLASS"));
+				ts= rs.getTimestamp("DARUNDATE");
+				if(ts != null){
+					abean.setDaRunDate(new java.util.Date(rs.getTimestamp("DARUNDATE").getTime()));
+				}
+				abean.setDaConvictions(rs.getString("DACONVICTIONS"));
+				ts= rs.getTimestamp("FAEXPIRYDATE");
+				if(ts != null){
+					abean.setFaExpiryDate(new java.util.Date(rs.getTimestamp("FAEXPIRYDATE").getTime()));
+				}
+				ts= rs.getTimestamp("PCCDATE");
+				if(ts != null){
+					abean.setPccDate(new java.util.Date(rs.getTimestamp("PCCDATE").getTime()));
+				}
+				ts= rs.getTimestamp("SCADATE");
+				if(ts != null){
+					abean.setScaDate(new java.util.Date(rs.getTimestamp("SCADATE").getTime()));
+				}
+				
+				abean.setFindingsOfGuilt(rs.getString("FINDINGSOFGUILT"));
+				abean.setDlFront(rs.getString("DLFRONT"));
+				abean.setDlBack(rs.getString("DLBACK"));
+				abean.setDaDocument(rs.getString("DADOCUMENT"));
+				abean.setFaDocument(rs.getString("FADOCUMENT"));
+				abean.setPrcvsqDocument(rs.getString("PRCVSQDOCUMENT"));
+				abean.setPccDocument(rs.getString("PCCDOCUMENT"));
+				abean.setScaDocument(rs.getString("SCADOCUMENT"));
+				abean.setStatus(rs.getInt("STATUS"));
+				abean.setIsDeleted(rs.getString("ISDELETED"));
+				abean.setEmployeePositionText(rs.getString("DD_TEXT"));
+				
+				ts= rs.getTimestamp("PRCVSQDATE");
+				if(ts != null){
+					abean.setPrcvsqDate(new java.util.Date(rs.getTimestamp("PRCVSQDATE").getTime()));
+				}
+				abean.setApprovedBy(rs.getString("APPROVEDBY"));
+				ts= rs.getTimestamp("DATEAPPROVED");
+				if(ts != null){
+					abean.setDateApproved(new java.util.Date(rs.getTimestamp("DATEAPPROVED").getTime()));
+				}
+				ts= rs.getTimestamp("BIRTHDATE");
+				if(ts != null){
+					abean.setBirthDate(new java.util.Date(rs.getTimestamp("BIRTHDATE").getTime()));
+				}
+				abean.setStatusNotes(rs.getString("STATUSNOTES"));
+				//pass full recordset to create function
+				//abean.setBcBean(BussingContractorManager.getBussingContractorById(abean.getContractorId()));
+				abean.setBcBean(BussingContractorManager.createBussingContractorBeanFull(rs));
+				
+				abean.setDaSuspensions(rs.getString("DASUSPENSIONS"));
+				abean.setDaAccidents(rs.getString("DAACCIDENTS"));
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}
 }

@@ -36,37 +36,37 @@ public class ViewVehiclesApprovalsRequestHandler extends RequestHandlerImpl
 				cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
 			}
 			if(status.equals("p")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.SUBMITTED.getValue(),cid);
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.SUBMITTED.getValue(),cid);
 				reporttitle="Vehicles Awaiting Approval";
 			}else if(status.equals("a")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(),cid);
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.APPROVED.getValue(),cid);
 				reporttitle="Vehicles Approved";
 			}else if(status.equals("r")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.REJECTED.getValue(),cid);
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.REJECTED.getValue(),cid);
 				reporttitle="Vehicles Rejected";
 			}else if(status.equals("s")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.SUSPENDED.getValue(),cid);
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.SUSPENDED.getValue(),cid);
 				reporttitle="Vehicles Suspended";
 			}else if(status.equals("re")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.REMOVED.getValue(),cid);
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.REMOVED.getValue(),cid);
 				reporttitle="Vehicles Removed";
 			}
 		}else{
 			vehicles = new ArrayList<BussingContractorVehicleBean>();
 			if(status.equals("p")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatus(VehicleStatusConstant.SUBMITTED.getValue());
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.SUBMITTED.getValue());
 				reporttitle="Vehicles Awaiting Approval";
 			}else if(status.equals("a")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatus(VehicleStatusConstant.APPROVED.getValue());
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.APPROVED.getValue());
 				reporttitle="Vehicles Approved";
 			}else if(status.equals("r")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatus(VehicleStatusConstant.REJECTED.getValue());
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.REJECTED.getValue());
 				reporttitle="Vehicles Rejected";
 			}else if(status.equals("s")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatus(VehicleStatusConstant.SUSPENDED.getValue());
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.SUSPENDED.getValue());
 				reporttitle="Vehicles Suspended";
 			}else if(status.equals("re")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatus(VehicleStatusConstant.REMOVED.getValue());
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.REMOVED.getValue());
 				reporttitle="Vehicles Removed";
 			}
 		}

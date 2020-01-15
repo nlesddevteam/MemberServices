@@ -678,6 +678,46 @@ public class BussingContractorManager {
 		}
 		return list;
 	}
+	public static ArrayList<BussingContractorBean> getContractorsByStatusFull(int status) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorBean> list = new ArrayList<BussingContractorBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_contractors_by_status_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorBean abean = new BussingContractorBean();
+				abean = createBussingContractorBeanFull(rs);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("boolean checkPledgeEmail(String email,String businessnumber, String hstnumber): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static ArrayList<BussingContractorBean> getAllContractors() {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -886,6 +926,46 @@ public class BussingContractorManager {
 				abean.setBoardOwned(rs.getString("BOARDOWNED"));
 				//retrieve the security bean if it exists
 				abean.setComBean(BussingContractorCompanyManager.getBussingContractorCompanyById(abean.getId()));
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}
+	public static BussingContractorBean createBussingContractorBeanFull(ResultSet rs) {
+		BussingContractorBean abean = null;
+		try {
+				abean = new BussingContractorBean();
+				abean.setId(rs.getInt("BCID"));
+				abean.setFirstName(rs.getString("BCFIRSTNAME"));
+				abean.setLastName(rs.getString("BCLASTNAME"));
+				abean.setMiddleName(rs.getString("BCMIDDLENAME"));
+				abean.setEmail(rs.getString("BCEMAIL"));
+				abean.setAddress1(rs.getString("BCADDRESS1"));
+				abean.setAddress2(rs.getString("BCADDRESS2"));
+				abean.setCity(rs.getString("BCCITY"));
+				abean.setProvince(rs.getString("BCPROVINCE"));
+				abean.setPostalCode(rs.getString("BCPOSTALCODE"));
+				abean.setHomePhone(rs.getString("BCHOMEPHONE"));
+				abean.setCellPhone(rs.getString("BCCELLPHONE"));
+				abean.setWorkPhone(rs.getString("BCWORKPHONE"));
+				abean.setCompany(rs.getString("BCCOMPANY"));
+				abean.setBusinessNumber(rs.getString("BCBUSINESSNUMBER"));
+				abean.setHstNumber(rs.getString("BCHSTNUMBER"));
+				abean.setStatus(rs.getInt("BCSTATUS"));
+				abean.setDateSubmitted(new java.util.Date(rs.getTimestamp("BCDATESUBMITTED").getTime()));
+				//retrieve the security bean if it exists
+				//abean.setSecBean(BussingContractorSecurityManager.getBussingContractorSecurityById(abean.getId()));
+				abean.setSecBean(BussingContractorSecurityManager.createBussingContractorSecurityBeanFull(rs));
+				abean.setMaddress1(rs.getString("BCMADDRESS1"));
+				abean.setMaddress2(rs.getString("BCMADDRESS2"));
+				abean.setMcity(rs.getString("BCMCITY"));
+				abean.setMprovince(rs.getString("BCMPROVINCE"));
+				abean.setMpostalCode(rs.getString("BCMPOSTALCODE"));
+				abean.setMsameAs(rs.getString("BCMSAMEAS"));
+				abean.setBoardOwned(rs.getString("BCBOARDOWNED"));
+				//abean.setComBean(BussingContractorCompanyManager.getBussingContractorCompanyById(abean.getId()));
+				abean.setComBean(BussingContractorCompanyManager.createBussingContractorCompanyFullBean(rs));
 		}
 		catch (SQLException e) {
 				abean = null;

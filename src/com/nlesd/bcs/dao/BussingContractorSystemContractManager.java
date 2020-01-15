@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import com.esdnl.dao.DAOUtils;
@@ -76,6 +78,135 @@ public class BussingContractorSystemContractManager {
 			while (rs.next()){
 				BussingContractorSystemContractBean bean = createBussingContractorSystemContractBean(rs);
 				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static ArrayList<BussingContractorSystemContractBean> getContractorsEmployees(): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorSystemContractBean> getContractsFull() {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorSystemContractBean> list = new ArrayList<BussingContractorSystemContractBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_contracts_full; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			int contractid=0;
+			int historycount=0;
+			BussingContractorSystemContractBean bean = null;
+			while (rs.next()){
+				if(contractid == 0) {
+					bean = createBussingContractorSystemContractFullBean(rs);
+					contractid=bean.getId();
+					bean.setContractHistory(BussingContractorSystemContractHistoryManager.createBussingContractorSystemContractHistoryBean(rs));
+					historycount++;
+				}else {
+					if(rs.getInt("ID") == contractid) {
+						if(historycount == 0) {
+							bean.setContractHistory(BussingContractorSystemContractHistoryManager.createBussingContractorSystemContractHistoryBean(rs));
+							historycount++;
+						}
+					}else {
+						//new contract
+						//add current bean tolist
+						list.add(bean);
+						//create new bean
+						bean = createBussingContractorSystemContractFullBean(rs);
+						//set contractid
+						contractid=bean.getId();
+						//create history
+						bean.setContractHistory(BussingContractorSystemContractHistoryManager.createBussingContractorSystemContractHistoryBean(rs));
+						historycount++;
+					}
+				}
+				
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static ArrayList<BussingContractorSystemContractBean> getContractorsEmployees(): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorSystemContractBean> getContractsFullByRegion(int regid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorSystemContractBean> list = new ArrayList<BussingContractorSystemContractBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_contracts_full_reg(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, regid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			int contractid=0;
+			int historycount=0;
+			BussingContractorSystemContractBean bean = null;
+			while (rs.next()){
+				if(contractid == 0) {
+					bean = createBussingContractorSystemContractFullBean(rs);
+					contractid=bean.getId();
+					bean.setContractHistory(BussingContractorSystemContractHistoryManager.createBussingContractorSystemContractHistoryBean(rs));
+					historycount++;
+				}else {
+					if(rs.getInt("ID") == contractid) {
+						if(historycount == 0) {
+							bean.setContractHistory(BussingContractorSystemContractHistoryManager.createBussingContractorSystemContractHistoryBean(rs));
+							historycount++;
+						}
+					}else {
+						//new contract
+						//add current bean tolist
+						list.add(bean);
+						//create new bean
+						bean = createBussingContractorSystemContractFullBean(rs);
+						//set contractid
+						contractid=bean.getId();
+						//create history
+						bean.setContractHistory(BussingContractorSystemContractHistoryManager.createBussingContractorSystemContractHistoryBean(rs));
+						historycount++;
+					}
+				}
+				
 			}
 				
 		}
@@ -475,6 +606,83 @@ public class BussingContractorSystemContractManager {
 				catch (Exception e) {}
 			}
 			return list;
+		}
+		public static TreeMap<String,Integer> getContractsTM() {
+			Connection con = null;
+			CallableStatement stat = null;
+			ResultSet rs = null;
+			//ArrayList<BussingContractorSystemContractBean> list = new ArrayList<BussingContractorSystemContractBean>();
+			TreeMap<String,Integer> list = new TreeMap<String,Integer>();
+			try {
+				con = DAOUtils.getConnection();
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_contracts; end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.execute();
+				rs = ((OracleCallableStatement) stat).getCursor(1);
+				while (rs.next()){
+					//BussingContractorSystemContractBean bean = createBussingContractorSystemContractBean(rs);
+					list.put(rs.getString("CONTRACTNAME"), rs.getInt("ID"));
+				}
+					
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				try {
+					con.rollback();
+				}
+				catch (Exception ex) {}
+				System.err.println("static TreeMap<String,Integer> getContractsTM(): "
+						+ e);
+			}
+			finally {
+				try {
+					stat.close();
+				}
+				catch (Exception e) {}
+				try {
+					con.close();
+				}
+				catch (Exception e) {}
+			}
+			return list;
+		}
+		public static TreeMap<String,Integer> getContractsRegTM(int cid) {
+			Connection con = null;
+			CallableStatement stat = null;
+			ResultSet rs = null;
+			TreeMap<String,Integer> list = new TreeMap<String,Integer>();
+			try {
+				con = DAOUtils.getConnection();
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_contracts_reg(?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setInt(2,cid);
+				stat.execute();
+				rs = ((OracleCallableStatement) stat).getCursor(1);
+				while (rs.next()){
+					list.put(rs.getString(rs.getString("CONTRACTNAME")), rs.getInt("ID"));
+				}
+					
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				try {
+					con.rollback();
+				}
+				catch (Exception ex) {}
+				System.err.println("static TreeMap<String,Integer> getContractsRegTM(int cid): "
+						+ e);
+			}
+			finally {
+				try {
+					stat.close();
+				}
+				catch (Exception e) {}
+				try {
+					con.close();
+				}
+				catch (Exception e) {}
+			}
+			return list;
 		}		
 	public static BussingContractorSystemContractBean createBussingContractorSystemContractBean(ResultSet rs) {
 		BussingContractorSystemContractBean abean = null;
@@ -509,5 +717,38 @@ public class BussingContractorSystemContractManager {
 				abean = null;
 		}
 		return abean;
-	}	
+	}
+	public static BussingContractorSystemContractBean createBussingContractorSystemContractFullBean(ResultSet rs) {
+		BussingContractorSystemContractBean abean = null;
+		try {
+				abean = new BussingContractorSystemContractBean();
+				abean.setId(rs.getInt("ID"));
+				abean.setContractName(rs.getString("CONTRACTNAME"));
+				abean.setContractType(rs.getInt("CONTRACTTYPE"));
+				abean.setContractNotes(rs.getString("CONTRACTNOTES"));
+				abean.setContractRegion(rs.getInt("CONTRACTREGION"));
+				Timestamp ts= rs.getTimestamp("CONTRACTEXPIRYDATE");
+				if(ts != null){
+					abean.setContractExpiryDate(new java.util.Date(rs.getTimestamp("CONTRACTEXPIRYDATE").getTime()));
+				}
+				abean.setAddedBy(rs.getString("ADDEDBY"));
+				ts= rs.getTimestamp("DATEADDED");
+				if(ts != null){
+					abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATEADDED").getTime()));
+				}
+				abean.setIsDeleted(rs.getString("ISDELETED"));
+				abean.setContractRegionString(rs.getString("DDTEXT2"));
+				abean.setContractTypeString(rs.getString("DDTEXT1"));
+				abean.setVehicleType(rs.getInt("VEHICLETYPE"));
+				abean.setVehicleSize(rs.getInt("VEHICLESIZE"));
+				ts= rs.getTimestamp("CONTRACTSTARTDATE");
+				if(ts != null){
+					abean.setContractStartDate(new java.util.Date(rs.getTimestamp("CONTRACTSTARTDATE").getTime()));
+				}
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}
 }
