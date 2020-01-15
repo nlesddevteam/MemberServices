@@ -286,7 +286,7 @@ public class ControllerServlet extends HttpServlet {
 				session = request.getSession(false);
 
 				if ((session != null) && (session.getAttribute("usr") != null)) {
-					errmsg = "**[MS ]** NO HANDLER - " + ((User) session.getAttribute("usr")).getUsername();
+					errmsg = "**[MS]** NO HANDLER - " + ((User) session.getAttribute("usr")).getUsername();
 				}
 				else if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
 					errmsg = "**[MyHRP]** NO HANDLER - " + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail();
