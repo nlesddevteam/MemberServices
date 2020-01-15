@@ -212,10 +212,12 @@ public class ControllerServlet extends HttpServlet {
 				Class.forName("com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService");
 			}
 			catch (NoClassDefFoundError e) {
-				System.err.println("COULD NOT FIND com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService CLASS.");
+				System.err.println(
+						"COULD NOT FIND com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService CLASS.");
 			}
 			catch (ClassNotFoundException e) {
-				System.err.println("COULD NOT FIND com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService CLASS.");
+				System.err.println(
+						"COULD NOT FIND com.esdnl.webupdatesystem.newspostings.service.NewsPostingsExportService CLASS.");
 			}
 
 			//start job opportunity export service
@@ -280,7 +282,20 @@ public class ControllerServlet extends HttpServlet {
 				rh = (RequestHandler) Class.forName((String) handlerHash.get(request.getServletPath())).newInstance();
 
 			if (rh == null) {
-				System.err.println("NO HANDLER: " + request.getServletPath());
+				String errmsg = "";
+				session = request.getSession(false);
+
+				if ((session != null) && (session.getAttribute("usr") != null)) {
+					errmsg = "**[MS]** NO HANDLER - " + ((User) session.getAttribute("usr")).getUsername();
+				}
+				else if ((session != null) && (session.getAttribute("APPLICANT") != null)) {
+					errmsg = "**[MyHRP]** NO HANDLER - " + ((ApplicantProfileBean) session.getAttribute("APPLICANT")).getEmail();
+				}
+				else {
+					errmsg = "**[UNAUTHENICATED USER]** NO HANDLER";
+				}
+
+				System.err.println(errmsg + " - " + request.getServletPath());
 				response.sendRedirect("/MemberServices/memberServices.html");
 			}
 			else {
@@ -292,7 +307,7 @@ public class ControllerServlet extends HttpServlet {
 					if ((session != null) && (session.getAttribute("usr") != null)) {
 						usr = (User) session.getAttribute("usr");
 						viewURL = rh.handleRequest(request, response);
-						System.err.println(usr.getUsername() + ": " + viewURL);
+						System.err.println("**[MS]** " + usr.getUsername() + ": " + viewURL);
 					}
 					else {
 						throw new SecurityException("**[MS]** User login required [" + request.getRequestURI() + "].");
