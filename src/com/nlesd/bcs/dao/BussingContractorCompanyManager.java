@@ -190,6 +190,7 @@ public class BussingContractorCompanyManager {
 		BussingContractorCompanyBean abean = null;
 		try {
 				abean = new BussingContractorCompanyBean();
+				//two fields used in full query return of data, if there then they will be used.
 				abean.setId(rs.getInt("ID"));
 				abean.setContractorId(rs.getInt("CONTRACTORID"));
 				abean.settRegular(rs.getString("TREGULAR"));
@@ -211,5 +212,34 @@ public class BussingContractorCompanyManager {
 				abean = null;
 		}
 		return abean;
-	}	
+	}
+	public static BussingContractorCompanyBean createBussingContractorCompanyFullBean(ResultSet rs) {
+		BussingContractorCompanyBean abean = null;
+		try {
+				abean = new BussingContractorCompanyBean();
+				//two fields used in full query return of data, if there then they will be used.
+				if(rs.getInt("COID") > 0) {
+					abean.setId(rs.getInt("COID"));
+					abean.setContractorId(rs.getInt("COCONTRACTORID"));
+					abean.settRegular(rs.getString("COTREGULAR"));
+					abean.settAlternate(rs.getString("COTALTERNATE"));
+					abean.settParent(rs.getString("COTPARENT"));
+					abean.setCrSameAs(rs.getString("COCRSAMEAS"));
+					abean.setCrFirstName(rs.getString("COCRFIRSTNAME"));
+					abean.setCrLastName(rs.getString("COCRLASTNAME"));
+					abean.setCrPhoneNumber(rs.getString("COCRPHONENUMBER"));
+					abean.setCrEmail(rs.getString("COCREMAIL"));
+					abean.setToSameAs(rs.getString("COTOSAMEAS"));
+					abean.setToFirstName(rs.getString("COTOFIRSTNAME"));
+					abean.setToLastName(rs.getString("COTOLASTNAME"));
+					abean.setToPhoneNumber(rs.getString("COTOPHONENUMBER"));
+					abean.setToEmail(rs.getString("COTOEMAIL"));
+				}
+				
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}
 }

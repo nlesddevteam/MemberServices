@@ -463,7 +463,7 @@ $(document).ready(function() {
                     	<select class="form-control" id="routes" name="routes"  style="width:auto;">
 		                	<option value=" ">Please select route</option>
 							<c:forEach var="entry" items="${allroutes}">
-								<option value='${entry.id}'>${entry.routeName}</option>
+								<option value='${entry.value}'>${entry.key}</option>
 							</c:forEach>
 				  		</select>
 				  	</p>

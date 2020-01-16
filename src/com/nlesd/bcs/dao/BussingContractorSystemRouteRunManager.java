@@ -213,7 +213,7 @@ public class BussingContractorSystemRouteRunManager {
 					}
 				}
 				abean.setRunSchools(schools);
-				abean.setRunSchools(BussingContractorSystemRouteRunSchoolManager.getRunSchools(abean.getId()));
+				//abean.setRunSchools(BussingContractorSystemRouteRunSchoolManager.getRunSchools(abean.getId()));
 		}
 		catch (SQLException e) {
 				abean = null;

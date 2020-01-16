@@ -6,10 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import com.esdnl.dao.DAOUtils;
 import com.nlesd.bcs.bean.BussingContractorSystemRouteBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRouteListBean;
 public class BussingContractorSystemRouteManager {
 	public static BussingContractorSystemRouteBean addBussingContractorSystemRoute(BussingContractorSystemRouteBean vbean) {
 		Connection con = null;
@@ -441,6 +444,120 @@ public class BussingContractorSystemRouteManager {
 				catch (Exception e) {}
 			}
 			return list;
+	}
+	public static ArrayList<BussingContractorSystemRouteListBean> getRoutesList() {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorSystemRouteListBean> list = new ArrayList<BussingContractorSystemRouteListBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_routes_list; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorSystemRouteListBean bean = createBussingContractorSystemRouteListBean(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorSystemRouteListBean> getRoutesList(): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static TreeMap<String,Integer> getRoutesListTM() {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<String,Integer> list = new TreeMap<String,Integer>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_routes_list; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				list.put(rs.getString("ROUTENAME"),rs.getInt("ID"));
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("TreeMap<Integer,String> getRoutesListTM(): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
+	public static ArrayList<BussingContractorSystemRouteListBean> getRoutesRegionalAdminList(int cid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorSystemRouteListBean> list = new ArrayList<BussingContractorSystemRouteListBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_routes_list_region(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, cid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorSystemRouteListBean bean = createBussingContractorSystemRouteListBean(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorSystemRouteListBean> getRoutesRegionalAdminList(int cid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
 	}	
 	public static BussingContractorSystemRouteBean createBussingContractorSystemRouteBean(ResultSet rs) {
 		BussingContractorSystemRouteBean abean = null;
@@ -468,5 +585,23 @@ public class BussingContractorSystemRouteManager {
 				abean = null;
 		}
 		return abean;
-	}	
+	}
+	public static BussingContractorSystemRouteListBean createBussingContractorSystemRouteListBean(ResultSet rs) {
+		BussingContractorSystemRouteListBean abean = null;
+		try {
+				abean = new BussingContractorSystemRouteListBean();
+				abean.setId(rs.getInt("ID"));
+				abean.setRouteName(rs.getString("ROUTENAME"));
+				abean.setCompany(rs.getString("COMPANY"));
+				abean.setFirstName(rs.getString("FIRSTNAME"));
+				abean.setLastName(rs.getString("LASTNAME"));
+				abean.setRouteRun(rs.getString("ROUTERUN"));
+				abean.setRouteTime(rs.getString("ROUTETIME"));
+				abean.setRouteSchools(rs.getString("ELEMENTS"));
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}
 }
