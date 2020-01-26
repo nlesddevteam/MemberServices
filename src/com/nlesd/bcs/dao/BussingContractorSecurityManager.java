@@ -174,5 +174,26 @@ public class BussingContractorSecurityManager {
 				abean = null;
 		}
 		return abean;
-	}	
+	}
+	public static BussingContractorSecurityBean createBussingContractorSecurityBeanFull(ResultSet rs) {
+		//used until all functions switched to include all fields
+		BussingContractorSecurityBean abean = null;
+		try {
+				abean = new BussingContractorSecurityBean();
+				if(rs.getInt("BSID") > 0) {
+					abean.setId(rs.getInt("BSID"));
+					abean.setContractorId(rs.getInt("BSCONTRACTOR_ID"));
+					abean.setEmail(rs.getString("BSEMAIL"));
+					abean.setPassword(rs.getString("BSPASSWORD"));
+					abean.setSecurityQuestion(rs.getString("BSSECURITY_QUESTION"));
+					abean.setSqAnswer(rs.getString("BSSQ_ANSWER"));
+					abean.setLastUpdated(new java.util.Date(rs.getTimestamp("BSLAST_UPDATED").getTime()));
+				}
+				
+		}
+		catch (SQLException e) {
+				abean = null;
+		}
+		return abean;
+	}
 }

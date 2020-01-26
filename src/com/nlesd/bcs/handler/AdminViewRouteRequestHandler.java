@@ -65,31 +65,31 @@ public class AdminViewRouteRequestHandler extends RequestHandlerImpl
 				int cid=0;
 				if(usr.checkPermission("BCS-VIEW-WESTERN")){
 					cid = BoardOwnedContractorsConstant.WESTERN.getValue();
-					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsReg(cid));
+					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsRegTM(cid));
 					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(), cid));
 					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(), cid));
 				}
 				if(usr.checkPermission("BCS-VIEW-CENTRAL")){
 					cid = BoardOwnedContractorsConstant.CENTRAL.getValue();
-					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsReg(cid));
+					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsRegTM(cid));
 					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(), cid));
 					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(), cid));
 				}
 				if(usr.checkPermission("BCS-VIEW-LABRADOR")){
 					cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
-					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsReg(cid));
+					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsRegTM(cid));
 					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(), cid));
 					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(), cid));
 				}
 			}else{
-				request.setAttribute("contracts", BussingContractorSystemContractManager.getContracts());
+				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsTM());
 				//if((bcbean.getContractBean().getId() > 0)){
 				if(!(bcbean.getContractBean() ==  null)){
 					if(bcbean.getContractBean().getId() >0){
 						if(bcbean.getContractBean().getContractHistory().getContractStatus() == 85){
-							request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(),
+							request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusRegTM(EmployeeStatusConstant.APPROVED.getValue(),
 									bcbean.getContractBean().getContractHistory().getContractorId()));
-							request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(),
+							request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusRegTM(VehicleStatusConstant.APPROVED.getValue(),
 									bcbean.getContractBean().getContractHistory().getContractorId()));
 						}
 

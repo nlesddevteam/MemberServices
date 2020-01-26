@@ -96,7 +96,11 @@ public class BussingContractorSystemContractHistoryManager {
 		BussingContractorSystemContractHistoryBean abean = null;
 		try {
 				abean = new BussingContractorSystemContractHistoryBean();
-				abean.setId(rs.getInt("ID"));
+				try {
+					abean.setId(rs.getInt("CSTATUSID"));
+				}catch(Exception e) {
+					abean.setId(rs.getInt("ID"));
+				}
 				abean.setContractStatus(rs.getInt("CONTRACTSTATUS"));
 				abean.setContractId(rs.getInt("CONTRACTID"));
 				abean.setContractorId(rs.getInt("CONTACTORID"));

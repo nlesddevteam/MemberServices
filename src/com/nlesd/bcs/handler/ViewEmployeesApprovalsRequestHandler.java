@@ -44,36 +44,36 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 					cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
 				}
 				if(status.equals("p")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.NOTREVIEWED.getValue(),cid);
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.NOTREVIEWED.getValue(),cid);
 					reporttitle="Employees Awaiting Approval";
 				}else if(status.equals("a")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(),cid);
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.APPROVED.getValue(),cid);
 					reporttitle="Employees Approved";
 				}else if(status.equals("r")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.NOTAPPROVED.getValue(),cid);
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.NOTAPPROVED.getValue(),cid);
 					reporttitle="Employees Rejected";
 				}else if(status.equals("s")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.SUSPENDED.getValue(),cid);
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.SUSPENDED.getValue(),cid);
 					reporttitle="Employees Suspended";
 				}else if(status.equals("re")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.REMOVED.getValue(),cid);
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.REMOVED.getValue(),cid);
 					reporttitle="Employees Removed";
 				}
 			}else{
 				if(status.equals("p")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatus(EmployeeStatusConstant.NOTREVIEWED.getValue());
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.NOTREVIEWED.getValue());
 					reporttitle="Employees Awaiting Approval";
 				}else if(status.equals("a")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatus(EmployeeStatusConstant.APPROVED.getValue());
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.APPROVED.getValue());
 					reporttitle="Employees Approved";
 				}else if(status.equals("r")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.NOTAPPROVED.getValue());
 					reporttitle="Employees Rejected";
 				}else if(status.equals("s")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatus(EmployeeStatusConstant.SUSPENDED.getValue());
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.SUSPENDED.getValue());
 					reporttitle="Employees Suspended";
 				}else if(status.equals("re")){
-					employees=BussingContractorEmployeeManager.getEmployeesRemoved(EmployeeStatusConstant.REMOVED.getValue());
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.REMOVED.getValue());
 					reporttitle="Employees Removed";
 				}
 			}

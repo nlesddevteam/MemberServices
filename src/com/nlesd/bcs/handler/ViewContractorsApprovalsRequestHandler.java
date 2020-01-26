@@ -31,19 +31,19 @@ public class ViewContractorsApprovalsRequestHandler extends RequestHandlerImpl
 			String reporttitle="";
 			ArrayList<BussingContractorBean> contractors = new ArrayList<BussingContractorBean>();
 			if(status.equals("p")){
-				contractors=BussingContractorManager.getContractorsByStatus(StatusConstant.SUBMITTED.getValue());
+				contractors=BussingContractorManager.getContractorsByStatusFull(StatusConstant.SUBMITTED.getValue());
 				reporttitle="Contractors Awaiting Approval";
 			}else if(status.equals("a")){
-				contractors=BussingContractorManager.getContractorsByStatus(StatusConstant.APPROVED.getValue());
+				contractors=BussingContractorManager.getContractorsByStatusFull(StatusConstant.APPROVED.getValue());
 				reporttitle="Contactors Approved";
 			}else if(status.equals("r")){
-				contractors=BussingContractorManager.getContractorsByStatus(StatusConstant.REJECTED.getValue());
+				contractors=BussingContractorManager.getContractorsByStatusFull(StatusConstant.REJECTED.getValue());
 				reporttitle="Contractors Rejected";
 			}else if(status.equals("s")){
-				contractors=BussingContractorManager.getContractorsByStatus(StatusConstant.SUSPENDED.getValue());
+				contractors=BussingContractorManager.getContractorsByStatusFull(StatusConstant.SUSPENDED.getValue());
 				reporttitle="Contractors Suspended";
 			}else if(status.equals("re")){
-				contractors=BussingContractorManager.getContractorsByStatus(StatusConstant.REMOVED.getValue());
+				contractors=BussingContractorManager.getContractorsByStatusFull(StatusConstant.REMOVED.getValue());
 				reporttitle="Contractors Removed";
 			}
 			request.setAttribute("contractors", contractors);

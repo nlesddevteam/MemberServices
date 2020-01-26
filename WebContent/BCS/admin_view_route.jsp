@@ -443,7 +443,7 @@ $(document).ready(function() {
                     	<select class="form-control" id="contracts" name="contracts"  style="width:auto;">
 		                	<option value=" ">Please select contract</option>
 							<c:forEach var="entry" items="${contracts}">
-								<option value='${entry.id}'>${entry.contractName}</option>
+								<option value='${entry.value}'>${entry.key}</option>
 							</c:forEach>
 				  		</select>
 				  	</p>
@@ -471,7 +471,7 @@ $(document).ready(function() {
 							<c:forEach var="entry" items="${drivers}">
 								<c:choose>
 									<c:when test="${entry.id ne assigneddriverid}">
-										<option value='${entry.id}'>${entry.lastName},${entry.firstName}</option>
+										<option value='${entry.value}'>${entry.key}</option>
 									</c:when>
 								</c:choose>
 							</c:forEach>
@@ -506,7 +506,7 @@ $(document).ready(function() {
 							<c:forEach var="entry" items="${vehicles}">
 								<c:choose>
 									<c:when test="${entry.id ne assignedvehicleid}">
-										<option value='${entry.id}'>${entry.vPlateNumber} [${entry.vSerialNumber}]</option>
+										<option value='${entry.value}'>${entry.key}</option>
 									</c:when>
 								</c:choose>
 							</c:forEach>

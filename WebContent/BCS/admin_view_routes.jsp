@@ -74,41 +74,23 @@ $(document).ready(function() {
 		      			<c:when test="${fn:length(routes) > 0}">
 			      			<c:forEach items="${routes}" var="rule">
 			      			<c:set var="countRoutes" value="${countRoutes + 1}" />
-			      				<c:choose>
-			      				<c:when test="${fn:length(rule.routeRuns) > 0}">
-			      					<c:forEach items="${rule.routeRuns}" var="ruleschool">
-			      						<tr style="border-bottom:1px solid silver;">
-			      							<td class="field_content">${rule.routeName}</td>
-			      							<td class="field_content">${rule.contractorName}</td>
-			      							<td class="field_content">${ruleschool.routeRun}</td>
-			      							<td class="field_content">${ruleschool.routeTime}</td>
-			      							<td class="field_content">${ruleschool.runSchools}</td>
-			      							<td align="right" class="field_content">
-			      								<button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewRoute.html?vid=${rule.id}');">View</button>
-		      					    			<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialogroute('${rule.routeName}','${rule.id}');">Del</button>
-			      							</td>
-			      						</tr>
-			      					</c:forEach>
-			      				</c:when>
-			      				<c:otherwise>
-			      						<tr style="border-bottom:1px solid silver;">
-			      							<td class="field_content">${rule.routeName}</td>
-			      							<td class="field_content">${rule.contractorName}</td>
-			      							<td class="field_content"></td>
-			      							<td class="field_content"></td>
-			      							<td class="field_content"></td>
-			      							<td align="right" class="field_content">
-			      								<button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewRoute.html?vid=${rule.id}');">View</button>
-		      					    			<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialogroute('${rule.routeName}','${rule.id}');">Del</button>
-			      							</td>
-			      						</tr>			      				
-			      				</c:otherwise>
-			      				</c:choose>
+			      				<tr style="border-bottom:1px solid silver;">
+			      					<td class="field_content">${rule.routeName}</td>
+			      					<td class="field_content">${rule.companyName}</td>
+			      					<td class="field_content">${rule.routeRun}</td>
+			      					<td class="field_content">${rule.routeTime}</td>
+			      					<td class="field_content">${rule.routeSchools}</td>
+			      					<td align="right" class="field_content">
+			      						<button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewRoute.html?vid=${rule.id}');">View</button>
+		      					    	<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialogroute('${rule.routeName}','${rule.id}');">Del</button>
+			      					</td>
+			      				</tr>
+			      				
 			      			</c:forEach>
-     							</c:when>
-     							<c:otherwise>
-     								<tr><td colspan='5' style="color:Red;">No routes found</td></tr>
-     							</c:otherwise>
+     						</c:when>
+     						<c:otherwise>
+     							<tr><td colspan='5' style="color:Red;">No routes found</td></tr>
+     						</c:otherwise>
      						</c:choose>
 			  		</tbody>
 			  	</table>
