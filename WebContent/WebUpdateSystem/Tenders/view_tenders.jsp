@@ -1703,6 +1703,240 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 
 
 
+<!-- TENDERS THAT NEED EDITING----------------------------------------------------------- -->  
+  
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a  data-toggle="collapse" data-parent="#accordion" href="#collapse8">
+        <span class="archivedTenderHeading"><span class="glyphicon glyphicon-briefcase"></span> Closed Tenders NOT Set ( ${todayYear - 1} and previous ) (<span class="needStatusSetCount"></span>)</span>
+       </a>
+      </h4>
+    </div>
+    <div id="collapse8" class="panel-collapse collapse">
+      <div class="panel-body">
+      Below is a list of currently CLOSED tenders. If you notice a (UPDATE) after a CLOSED tender in the status field, means the tender is closed automatically and needs updating to actual closed status and/or an awarded state.
+      <div class="tender-list">
+  						
+		  												
+									
+								<c:set var="now" value="<%=new java.util.Date()%>" /> 								
+								<fmt:formatDate value="${now}" pattern="DDD" var="todayDay" />		
+								<fmt:formatDate value="${now}" pattern="yyyy" var="todayYear" />	
+									
+									<c:choose>
+	                                  	<c:when test='${fn:length(tenders) gt 0}'>
+	                                  	
+	                                  	<div class="row">
+									   		
+									        <div class="column header tenNumber">TENDER #</div>
+									        <div class="column header tenTitle">TITLE / ADDENDUM(s)</div>									         
+									        <div class="column header tenRegion">REGION</div>
+									        <div class="column header tenStatus">STATUS</div>									        
+									        <div class='column header tenClose'>CLOSEDG</div>
+											 <div class="column header tenOpen">OPENED AT</div>
+											 
+<esd:SecurityAccessRequired permissions="TENDER-ADMIN">
+											 	<div class="column header tenOptions">OPTIONS</div>
+</esd:SecurityAccessRequired>      
+									    </div>
+	                                  	
+	                                  	
+                                  		<c:forEach items='${tenders}' var='g'>
+                                  		
+                                  				
+                                  				<fmt:formatDate value="${g.closingDate}" pattern="DDD" var="dayClosed" />
+                                  				<fmt:formatDate value="${g.closingDate}" pattern="yyyy" var="yearClosed" />
+                                  				<fmt:formatDate value="${g.dateAdded}" pattern="DDD" var="dayAdded" />		
+                                  				<fmt:formatDate value="${g.dateAdded}" pattern="dd/MM/yyyy" var="postedDate" />	
+
+		
+                            				
+<c:if test="${(g.tenderStatus.description eq 'OPEN') and (yearClosed lt todayYear)}">
+
+
+
+
+
+          				
+<c:set var="needStatusSet" value="${needStatusSet + 1}" />
+  
+                                  				
+                            				
+
+                                  		
+                                  			<c:set var="statusColorText" value="textStatusClosed"/>	
+																	
+                                        <c:if test="${ (g.tenderZone.zoneName eq 'eastern') or (g.tenderZone.zoneName eq 'avalon') }"><c:set var="regionColor" value="bgcolor1"/></c:if>	
+					   					<c:if test="${ g.tenderZone.zoneName eq 'central' }"><c:set var="regionColor" value="bgcolor2"/></c:if>	
+										<c:if test="${ g.tenderZone.zoneName eq 'western' }"><c:set var="regionColor" value="bgcolor3"/></c:if>	
+										<c:if test="${ g.tenderZone.zoneName eq 'labrador' }"><c:set var="regionColor" value="bgcolor4"/></c:if>	
+										<c:if test="${ (g.tenderZone.zoneName eq 'nlesd - provincial') or (g.tenderZone.zoneName eq 'provincial') }"><c:set var="regionColor" value="bgcolor5"/></c:if>	
+										
+					      		
+									
+                    <c:if test="${ g.tenderStatus.description eq 'OPEN' }"><c:set var="statusColor" value="openColor"/></c:if>	
+	                <c:if test="${ g.tenderStatus.description eq 'CLOSED' }"><c:set var="statusColor" value="closedColor"/></c:if>
+	                <c:if test="${ g.tenderStatus.description eq 'CANCELLED' }"><c:set var="statusColor" value="closedColor"/></c:if>
+	                <c:if test="${ g.tenderStatus.description eq 'AMMENDED' }"><c:set var="statusColor" value="ammendedColor"/></c:if>
+	                <c:if test="${ g.tenderStatus.description eq 'AWARDED' }"><c:set var="statusColor" value="awardedColor"/></c:if>
+	                <c:if test="${ g.tenderStatus.description eq 'ON HOLD' }"><c:set var="statusColor" value="hold"/></c:if>
+															
+															
+                                  		<c:choose>																
+																<c:when test="${ g.tenderOpeningLocation.zoneName eq 'central' }">
+																		<c:set var="openRegionColor" value="region2"/>
+																</c:when>
+																<c:when test="${ g.tenderOpeningLocation.zoneName eq 'western' }">
+																		<c:set var="openRegionColor" value="region3"/>
+																</c:when>
+																<c:when test="${ g.tenderOpeningLocation.zoneName eq 'labrador' }">
+																		<c:set var="openRegionColor" value="region4"/>
+																</c:when>
+																<c:when test="${ (g.tenderOpeningLocation.zoneName eq 'nlesd - provincial') or (g.tenderOpeningLocation.zoneName eq 'provincial')  }">
+																		<c:set var="openRegionColor" value="region5"/>
+																</c:when>
+																<c:otherwise>
+																		<c:set var="openRegionColor" value="region1"/>
+																</c:otherwise>
+															</c:choose>
+                                  		
+                                  		<div class='row contact-row' id="" zone='${ contact.zone.zoneId }'>
+                                  					<div class='column tenNumber ${statusColorText} ${regionColor}'>
+                                  					
+                                  					                                  					
+                                  					<c:choose>
+	                                  					<c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-AR-')}"> 
+	                                  					       ${fn:substringAfter(g.tenderNumber, "NLESD-AR-")}                          					
+	                                  					</c:when>                                  					
+                                  					    <c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-ER-')}">
+                                  								${fn:substringAfter(g.tenderNumber, "NLESD-ER-")}
+                                  						</c:when>
+                                  						<c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-CR-')}">
+                                  								${fn:substringAfter(g.tenderNumber, "NLESD-CR-")}
+                                  						</c:when>
+                                  						<c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-WR-')}">
+                                  								${fn:substringAfter(g.tenderNumber, "NLESD-WR-")}
+                                  						</c:when>
+                                  						<c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-LR-')}">
+                                  								${fn:substringAfter(g.tenderNumber, "NLESD-LR-")}
+                                  						</c:when>
+                                  					    <c:when test="${fn:containsIgnoreCase(g.tenderNumber, 'NLESD-')}">
+                                  								${fn:substringAfter(g.tenderNumber, "NLESD-")}
+                                  						</c:when>
+                                  					
+                                  					<c:otherwise>                                  					
+                                  					${g.tenderNumber}                                  					
+                                  					</c:otherwise>
+                                  					
+                                  					</c:choose>
+                                  					  
+                                  					
+                                  					                              					
+                                  					</div>
+													<div class='column tenTitle ${statusColorText} ${regionColor}'>
+													${g.tenderTitle}
+													 <ul>
+													<c:choose>
+		                                  					<c:when test="${not empty g.docUploadName}">
+		                                  					<li><a href="/includes/files/tenders/doc/${g.docUploadName}" title="${g.tenderTitle}">Tender Document</a>
+		                                  					</c:when>   
+		                                  					<c:otherwise><li><span style="color:Red;">No document(s) available.</span></c:otherwise>                               					
+	                                  					</c:choose>   
+													
+													
+													 <c:if test='${fn:length(g.otherTendersFiles) gt 0}'>
+                   										
+															<c:forEach var="p" items="${g.otherTendersFiles}" varStatus="counter">
+																<li><a href="/includes/files/tenders/doc/${p.tfDoc}" target="_blank" title="${tfTitle}">${p.tfTitle} (${p.addendumDateFormatted})</a></li>
+															</c:forEach>
+														</c:if>
+														</ul>
+														<c:choose>
+														<c:when test="${g.contractValue gt 0 }">
+														
+														Awarded to Company(s):<br/><b>${g.awardedTo}</b><br/>on ${g.awardedDateFormatted} for the total amount of <b>$${g.contractValueFormatted}</b>.	
+															</c:when>
+														<c:otherwise>
+														Awarding details not currently available.
+														</c:otherwise>
+														
+														</c:choose>
+														<br/><br/>
+													<span style="font-size:9px;text-align:right;"><b>Added/Edited by:</b> <span style="text-transform: capitalize;">${g.addedBy} on ${postedDate}</span></span>	
+													</div>														
+													<div class='column tenRegion ${regionColor}'>
+													
+														<c:choose>
+															<c:when test="${ (g.tenderZone.zoneName eq 'eastern') or (g.tenderZone.zoneName eq 'avalon')}">														
+																avalon
+															</c:when>
+															<c:when test="${fn:containsIgnoreCase(g.tenderZone.zoneName, 'NLESD')}">
+																Provincial
+															</c:when>
+															<c:otherwise>${g.tenderZone.zoneName}</c:otherwise>
+														</c:choose>  
+													
+													</div>
+													<div class='column tenStatus ${statusColor}'>		
+													
+													<c:choose>
+													<c:when test="${g.tenderStatus.description ne 'CLOSED'}">
+													
+													<span style="color:white;background-color:Red;width:100%;font-weight:bold;">&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;CLOSED&nbsp;</span>
+													<span style="color:Blue;">(Update)</span>														
+													</c:when>
+													<c:otherwise>
+													<span style="color:white;background-color:Red;width:100%;font-weight:bold;">&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;${g.tenderStatus.description}&nbsp;</span>
+													
+													</c:otherwise>
+													</c:choose>
+													
+													
+													</div>
+													<div class='column tenClose'> ${g.closingDateFormatted}</div>
+													<div class='column tenRegion ${openRegionColor}'>
+													  	<c:choose>
+															<c:when test="${ (g.tenderOpeningLocation.zoneName eq 'eastern') or (g.tenderOpeningLocation.zoneName eq 'avalon')}">														
+																avalon
+															</c:when>
+															<c:when test="${fn:containsIgnoreCase(g.tenderOpeningLocation.zoneName, 'NLESD')}">
+																Provincial
+															</c:when>
+															<c:otherwise>${g.tenderOpeningLocation.zoneName}</c:otherwise>
+														</c:choose>  
+														Regional Office
+													</div>
+<esd:SecurityAccessRequired permissions="TENDER-ADMIN">	
+                                  		            <div class='column tenOptions' align="center">
+                                  		            <a href="viewTenderDetails.html?id=${g.id}" class="btn btn-xs btn-info" style="color:white;">Edit</a> 		                                      
+		                                      		<a class="btn btn-xs btn-danger" style="color:white;" onclick="return confirm('Are you sure you want to DELETE this Tender?');" href='deleteTender.html?dtid=${g.id}'>Del</a>
+		                                      		</div>
+</esd:SecurityAccessRequired>
+                                  		</div>
+                                  		
+                                  		                                  		
+                                  		
+		                				</c:if>
+                                  		</c:forEach>
+                                  		</c:when>
+										<c:otherwise>
+											<tr><td colspan='13'>No Tenders Found.</td></tr>
+										</c:otherwise>
+									</c:choose>
+									
+</div>
+      
+      
+      
+      </div>
+    </div>
+  </div>
+
+
+
+
 
 
 
@@ -1745,7 +1979,7 @@ $('document').ready(function(){
   			$(".archivedClosedCount").html("${archivedClosed}"); 
   			$(".archivedAwardedCount").html("${archivedAwarded}");   			  			
   			$(".archivedCancelledCount").html("${archivedCancelled}"); 			
-    		
+  			$(".needStatusSetCount").html("${needStatusSet}"); 
   		
     </script>
 
