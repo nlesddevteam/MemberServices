@@ -15,7 +15,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR"/>
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS"/>
 
 <%
 User usr = (User) session.getAttribute("usr");
@@ -248,6 +248,12 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
 	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=6">Competition Posted</a></li>
 	                                      				</esd:SecurityAccessRequired>
+	                                      				<esd:SecurityAccessRequired permissions="RTH-VIEW-MY-REQUESTS">
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyRequests.html">View My Requests</a></li>
+	                                      				</esd:SecurityAccessRequired>
+	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-RTH-VIEW-APPROVALS">
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyApprovals.html">View My Approvals</a></li>
+	                                      				</esd:SecurityAccessRequired>	                                      				
 	                                 </ul></li>     			
 
 					          	</ul>
@@ -275,7 +281,7 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 				                                      	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addSEOStaffingAssignment.html">SEO Staffing Assignments</a></li>
 				                                    </esd:SecurityAccessRequired>
 				                                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-POSTJOB">
-				                                      <!-- <li><a href="/MemberServices/Personnel/admin_post_job.jsp">Post Job</a></li>-->
+				                                      	<li><a href="/MemberServices/Personnel/admin_post_job.jsp">Post Job</a></li>
 				                                    </esd:SecurityAccessRequired>
 					                                    <li class="divider"></li>
 					                                    <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=All&zoneid=0">View All Posts</a></li>
@@ -309,7 +315,7 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 								      		<li class="dropdown-submenu">
 						          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Job Posts</a>
 						          	 	  		<ul class="dropdown-menu">
-								      				<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_post_job_other.jsp">Post Job</a></li>
+								      				<!-- <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_post_job_other.jsp">Post Job</a></li>-->
 													<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other_o.jsp?zoneid=0">View Posts</a></li>
 												</ul>
 											</li>
@@ -480,7 +486,41 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 					         	</ul>
 					        </li>
 
- <%}%>
+ <%} else if(usr.checkPermission("RTH-NEW-REQUEST")){%>
+ 					        <li class="dropdown" id="menuNormal">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-modal-window"></span> Advertisements<span class="caret"></span></a>
+					          	 <ul class="dropdown-menu multi-level">
+                                     <li class="dropdown-submenu">
+					          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support/Management</a>
+						                           <ul class="dropdown-menu">
+                                  						<li><a onclick="loadingData()" href="/MemberServices/Personnel/addRequestToHire.html">Add New Request</a></li>
+                                  						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyRequests.html">View My Requests</a></li>
+							         				
+							         				<%if(usr.checkPermission("PERSONNEL-RTH-VIEW-APPROVALS")){%>
+							         					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyApprovals.html">View My Approvals</a></li>
+							         				<%} %>
+							         				
+							         				
+							         				</ul>
+							         </li>     			
+
+					          	</ul>
+					        </li>
+ 
+ <%} else if(usr.checkPermission("PERSONNEL-RTH-VIEW-APPROVALS")){%>
+ 						<li class="dropdown" id="menuNormal">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-modal-window"></span> Advertisements<span class="caret"></span></a>
+					          	 <ul class="dropdown-menu multi-level">
+                                     <li class="dropdown-submenu">
+					          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support/Management</a>
+						                           <ul class="dropdown-menu">
+                                  						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyApprovals.html">View My Approvals</a></li>
+							         				</ul>
+							         </li>     			
+
+					          	</ul>
+					        </li>
+ <%} %>
 
 
 <!-- HELP MENU -->

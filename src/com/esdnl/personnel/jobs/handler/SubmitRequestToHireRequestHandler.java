@@ -16,7 +16,9 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.util.StringUtils;
 public class SubmitRequestToHireRequestHandler extends RequestHandlerImpl {
 	public SubmitRequestToHireRequestHandler() {
-
+		requiredPermissions = new String[] {
+				"PERSONNEL-ADREQUEST-REQUEST","RTH-NEW-REQUEST"
+			};
 		
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

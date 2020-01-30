@@ -1,4 +1,4 @@
-<%@ page language="java"
+3<%@ page language="java"
          import="java.util.*,
                  java.text.*,
                  com.awsd.school.*,
@@ -87,7 +87,7 @@ var pageWordCountConf = {
 </head>
 <body>
   
-  <esd:SecurityCheck permissions="PERSONNEL-ADREQUEST-REQUEST" />
+  <esd:SecurityCheck permissions="PERSONNEL-ADREQUEST-REQUEST,RTH-NEW-REQUEST" />
 
 <div class="panel-group" style="padding-top:5px;"> 
 
@@ -680,16 +680,16 @@ var pageWordCountConf = {
 	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','5','${rbean.id}')">
 	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','5','${rbean.id}')">
 	                                      					</c:if>
-
+															<c:if test="${rbean.status.value eq 5 }">
+                                      							<input class="btn btn-primary btn-xs" type="button" value="Post this Ad" onclick="PostRequestToHire();">
+                                      						</c:if>
+                                      						<c:if test="${rbean.status.value eq 6 }">
+                                      							<a class="btn btn-warning btn-xs" href="view_job_post.jsp?comp_num=${rbean.competitionNumber }">View Competition ${rbean.competitionNumber }</a>
+                                      						</c:if>					
                                       					</c:if>
-                                      					<c:if test="${rbean.status.value eq 5 }">
-                                      						<input class="btn btn-primary btn-xs" type="button" value="Post this Ad" onclick="PostRequestToHire();">
-                                      					</c:if>
-                                      					<c:if test="${rbean.status.value eq 6 }">
-                                      						<a class="btn btn-warning btn-xs" href="view_job_post.jsp?comp_num=${rbean.competitionNumber }">View Competition ${rbean.competitionNumber }</a>
-                                      					</c:if>
+                                      					
                                       					<c:if test="${rbean.status.value lt 6 }">
-                                      					<input type="button" class="btn btn-danger btn-xs" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
+                                      							<input type="button" class="btn btn-danger btn-xs" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
                                       					</c:if>
                                       				                                 		
                                     	</c:otherwise>

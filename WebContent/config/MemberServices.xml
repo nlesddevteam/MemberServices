@@ -3808,6 +3808,14 @@
     <Request-Handler>
     <Request-Handler-Class>com.nlesd.eecd.handler.AdminViewApprovalsNoSchoolRequestHandler</Request-Handler-Class>
       <URL-Pattern>/EECD/adminViewApprovalsNoSchool.html</URL-Pattern>
-    </Request-Handler>                                                                 
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewMyRequestsToHireRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewMyRequests.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewMyRTHApprovalsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewMyApprovals.html</URL-Pattern>
+    </Request-Handler>                                                                      
   </Request-Handlers>
 </Member-Services-Config>
