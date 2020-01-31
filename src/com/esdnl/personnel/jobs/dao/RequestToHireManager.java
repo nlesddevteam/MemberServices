@@ -548,6 +548,7 @@ public class RequestToHireManager {
 				break;
 			case 5://Assistant Director HR Approval
 				//user,division manager
+				canview = user.checkRole("RTH-POST-COMP");
 				break;
 			case 6://Ad Created
 				//user
@@ -723,5 +724,193 @@ public class RequestToHireManager {
 			pstring="Other";
 		}
 		return pstring;
+	}
+	public static RequestToHireBean[] getMyRequestsToHireSubmitted(int pid) throws JobOpportunityException {
+
+		Vector<RequestToHireBean> beans = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			beans = new Vector<RequestToHireBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_by_pid(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, pid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next())
+				beans.add(createRequestToHireBean(rs));
+
+		}
+		catch (SQLException e) {
+			System.err.println("RequestToHireBean[] getMyRequestsToHireSubmitted(int pid): " + e);
+			throw new JobOpportunityException("Can not extract RequestToHireBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
+	}
+	public static int getDivisionID(String division) {
+		int divisionid=0;
+		switch(division){
+		case "PRO"://Eastern
+			divisionid = 1;
+			break;
+		case "IT"://central
+			divisionid=2;
+			break;
+		case "PBS"://Western
+			divisionid=3;
+			break;
+		case "ST"://Labrador
+			divisionid=4;
+			break;
+		case "FAC"://Labrador
+			divisionid=5;
+			break;	
+		case "HR"://Labrador
+			divisionid=6;
+			break;	
+		default://nlesd
+			divisionid=6;
+			break;
+		}
+		return divisionid;
+	}
+	public static int getZoneID(String zone) {
+		int zoneid=0;
+		switch(zone){
+		case "EAST"://Eastern
+			zoneid = 1;
+			break;
+		case "CENT"://central
+			zoneid=2;
+			break;
+		case "WEST"://Western
+			zoneid=3;
+			break;
+		case "LABR"://Labrador
+			zoneid=4;
+			break;	
+		default://nlesd
+			zoneid=1;
+			break;
+		}
+		return zoneid;
+	}
+	public static RequestToHireBean[] getRequestsToHireApprovalsAD(int divisionid,int status) throws JobOpportunityException {
+		Vector<RequestToHireBean> beans = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			beans = new Vector<RequestToHireBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_approvals_ad(?,?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, divisionid);
+			stat.setInt(3, 0);
+			stat.setInt(4, status);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next())
+				beans.add(createRequestToHireBean(rs));
+
+		}
+		catch (SQLException e) {
+			System.err.println("getRequestsToHireApprovalsAD(int divisionid,int status): " + e);
+			throw new JobOpportunityException("Can not extract RequestToHireBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
+	}
+	public static RequestToHireBean[] getRequestsToHireApprovalsDD(int divisionid,int zoneid) throws JobOpportunityException {
+		Vector<RequestToHireBean> beans = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			beans = new Vector<RequestToHireBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_approvals_dd(?,?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, divisionid);
+			stat.setInt(3, zoneid);
+			stat.setInt(4, RequestToHireStatus.SUBMITTED.getValue());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next())
+				//need to account for locations without zones: District Headquarters
+				if(rs.getInt("ZONE_ID") > 0) {
+					if(zoneid == rs.getInt("ZONE_ID")) {
+						//get records for passed in zone
+						beans.add(createRequestToHireBean(rs));
+					}
+				}else {
+					//no zone so will show with eastern
+					if(zoneid == 1) {
+						beans.add(createRequestToHireBean(rs));
+					}
+				}
+				
+
+		}
+		catch (SQLException e) {
+			System.err.println("getRequestsToHireApprovalsAD(int divisionid,int status): " + e);
+			throw new JobOpportunityException("Can not extract RequestToHireBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
 	}
 }

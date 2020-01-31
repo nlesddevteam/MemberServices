@@ -94,7 +94,8 @@ public class RequestToHireEmailManager {
 				break;
 			case 2://Division Approval
 				//user,division manager
-				to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BC")));
+				//to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BC")));
+				//use new email created for the comptroller
 				emailtemplate="personnel/request_to_hire_submitted.vm";
 				model.put("requesterName", rbean.getRequestBy());
 				model.put("requestId", rbean.getId());
@@ -165,14 +166,26 @@ public class RequestToHireEmailManager {
 			
 			
 			//email  region hr seo
-			for (Personnel p : to) {
+			if(rbean.getStatus().getValue() == 2) {
+				//comptroller approval use new email created
+				// budgethireapproval@nlesd.ca,
 				ebean.setSubject(emailsubject);
-				ebean.setTo(p.getEmailAddress());
+				ebean.setTo("budgethireapproval@nlesd.ca");
 				ebean.setBody(VelocityUtils.mergeTemplateIntoString(emailtemplate, model));
 				ebean.setFrom("ms@nlesd.ca");
 				ebean.send();
-				historyNotes.append(" " + p.getFullName());
-				}
+				historyNotes.append(" " + "budgethireapproval@nlesd.ca");
+			}else {
+				for (Personnel p : to) {
+					ebean.setSubject(emailsubject);
+					ebean.setTo(p.getEmailAddress());
+					ebean.setBody(VelocityUtils.mergeTemplateIntoString(emailtemplate, model));
+					ebean.setFrom("ms@nlesd.ca");
+					ebean.send();
+					historyNotes.append(" " + p.getFullName());
+					}
+			}
+			
 			//add history object
 			RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
 			rhis.setRequestToHireId(rbean.getId());

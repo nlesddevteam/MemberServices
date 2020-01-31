@@ -287,7 +287,7 @@
 			  	  </esd:SecurityAccessRequired>-->
 					<!-- Personnel Package 2019-->
 					<esd:SecurityAccessRequired
-						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
+						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS">
 						<div class="menuIconImage">
 							<a href="Personnel/admin_index.jsp"> <img
 								src="includes/img/menu/myhrp-off.png" class="img-swap menuImage"
@@ -295,6 +295,7 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
+					
 
 					<!-- PD Calendar -->
 					<esd:SecurityAccessRequired permissions="CALENDAR-VIEW">

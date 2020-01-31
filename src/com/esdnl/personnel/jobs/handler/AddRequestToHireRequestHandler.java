@@ -17,7 +17,7 @@ public class AddRequestToHireRequestHandler extends RequestHandlerImpl {
 	public AddRequestToHireRequestHandler() {
 
 		requiredPermissions = new String[] {
-			"PERSONNEL-ADREQUEST-REQUEST"
+			"PERSONNEL-ADREQUEST-REQUEST","RTH-NEW-REQUEST"
 		};
 	}
 
