@@ -280,9 +280,7 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 							          	  			<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 				                                      	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addSEOStaffingAssignment.html">SEO Staffing Assignments</a></li>
 				                                    </esd:SecurityAccessRequired>
-				                                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-POSTJOB">
-				                                      	<li><a href="/MemberServices/Personnel/admin_post_job.jsp">Post Job</a></li>
-				                                    </esd:SecurityAccessRequired>
+				                                    
 					                                    <li class="divider"></li>
 					                                    <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=All&zoneid=0">View All Posts</a></li>
 					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=Open&zoneid=0">Open</a></li>
