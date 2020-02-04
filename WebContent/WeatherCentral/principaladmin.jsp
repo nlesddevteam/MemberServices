@@ -184,7 +184,7 @@
                   <div>
 	                  <BR /><BR />
 	                  <label class="boldBlack10pxTitle" for="<%="NOTE_" + school.getSchoolID()%>">Note(optional, to be posted to public website.):</label><br />
-	                  <textarea name="<%="NOTE_" + school.getSchoolID()%>" rows="3" cols="50" onKeyPress="return submitenter(this,event);"><%=(sstat.getSchoolClosureNote()!=null)?sstat.getSchoolClosureNote():""%></textarea>
+	                  <textarea name="<%="NOTE_" + school.getSchoolID()%>" rows="3" cols="50"><%=(sstat.getSchoolClosureNote()!=null)?sstat.getSchoolClosureNote():""%></textarea>
 	                  <BR /><BR /><img src="/MemberServices/MemberAdmin/images/cccccc_line.gif" width="100%" height="5"><BR />
                   </div>
                   <BR /><BR />
