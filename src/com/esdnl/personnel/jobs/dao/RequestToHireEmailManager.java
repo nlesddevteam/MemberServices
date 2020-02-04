@@ -34,7 +34,9 @@ public class RequestToHireEmailManager {
 			case 455: // Janeway Hospital School
 				zoneid = 1;
 				break;
-			case 1000: //Labrador Regional Office
+			case 1000:
+			case 1001:
+			case 1002://Labrador Regional Office
 				zoneid = 4;
 				break;
 			case 1009: // Avalon West Satellite Office
@@ -43,15 +45,28 @@ public class RequestToHireEmailManager {
 			case 2008: // Vista Satellite Office
 				zoneid = -1;
 				break;
-			case 2000: //Western Regional Office
+			case 2000:
+			case 2001://Western Regional Office
 				zoneid = 3;
 				break;
 			case 3000: //Nova Central Regional Office
+			case 3030:
+			case 3031:
+			case 3032:
+			case 3033:
+			case 3034:
+			case 3035:
+			case 3036:
+			case 3037:
+			case 3038:
 				zoneid = 2;
 				break;
+			case 5000: //District Conference Center
+				zoneid = 1;
+				break;
 			default:
-
-				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation())).getSchoolName());
+				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(test%1000).getSchoolName());
+				
 			}
 			
 			
@@ -96,13 +111,30 @@ public class RequestToHireEmailManager {
 				//user,division manager
 				//to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BC")));
 				//use new email created for the comptroller
-				emailtemplate="personnel/request_to_hire_submitted.vm";
-				model.put("requesterName", rbean.getRequestBy());
-				model.put("requestId", rbean.getId());
-				model.put("alevel","2" );
-				model.put("requestTitle",rbean.getJobTitle() );
-				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
-				historyNotes.append("Approval Email Sent To:");
+				if(rbean.getDivision() == 7) {
+					//student assistant, set ready to post and send email
+					//send email to user
+					to.add(PersonnelDB.getPersonnel(rbean.getRequestById()));
+					//send email to position that posts the job
+					to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-" + zonename +"-POST-COMP")));
+					emailtemplate="personnel/request_to_hire_post.vm";
+					model.put("requesterName", rbean.getRequestBy());
+					model.put("requestId", rbean.getId());
+					model.put("alevel","5" );
+					model.put("requestTitle",rbean.getJobTitle() );
+					emailsubject="Request To Hire for " + rbean.getRequestBy() + " ready to be posted";
+					historyNotes.append("Ready To Post Email Sent To:");
+					
+				}else {
+					emailtemplate="personnel/request_to_hire_submitted.vm";
+					model.put("requesterName", rbean.getRequestBy());
+					model.put("requestId", rbean.getId());
+					model.put("alevel","2" );
+					model.put("requestTitle",rbean.getJobTitle() );
+					emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+					historyNotes.append("Approval Email Sent To:");
+				}
+				
 				break;
 			case 3://Comptroller Approval
 				//user,division manager
@@ -130,7 +162,7 @@ public class RequestToHireEmailManager {
 				//send email to user
 				to.add(PersonnelDB.getPersonnel(rbean.getRequestById()));
 				//send email to position that posts the job
-				to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-POST-COMP")));
+				to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-" + zonename +"-POST-COMP")));
 				emailtemplate="personnel/request_to_hire_post.vm";
 				model.put("requesterName", rbean.getRequestBy());
 				model.put("requestId", rbean.getId());

@@ -314,7 +314,10 @@ public class RequestToHireBean {
 			break;
 		case 6:
 			dString="HR";
-			break;			
+			break;
+		case 7:
+			dString="HR";
+			break;
 		default:
 			dString="";
 			break;

@@ -489,7 +489,9 @@ public class RequestToHireManager {
 			case 455: // Janeway Hospital School
 				zoneid = 1;
 				break;
-			case 1000: //Labrador Regional Office
+			case 1000:
+			case 1001:
+			case 1002://Labrador Regional Office
 				zoneid = 4;
 				break;
 			case 1009: // Avalon West Satellite Office
@@ -498,15 +500,28 @@ public class RequestToHireManager {
 			case 2008: // Vista Satellite Office
 				zoneid = -1;
 				break;
-			case 2000: //Western Regional Office
+			case 2000:
+			case 2001://Western Regional Office
 				zoneid = 3;
 				break;
 			case 3000: //Nova Central Regional Office
+			case 3030:
+			case 3031:
+			case 3032:
+			case 3033:
+			case 3034:
+			case 3035:
+			case 3036:
+			case 3037:
+			case 3038:
 				zoneid = 2;
 				break;
+			case 5000: //District Conference Center
+				zoneid = 1;
+				break;
 			default:
-
-				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation())).getSchoolName());
+				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(test%1000).getSchoolName());
+				
 			}
 			
 			switch(rbean.getStatus().getValue()){
