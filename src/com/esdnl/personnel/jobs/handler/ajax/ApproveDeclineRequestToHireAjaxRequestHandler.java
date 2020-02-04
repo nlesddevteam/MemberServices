@@ -54,6 +54,16 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 							rhis.setStatusId(RequestToHireStatus.get(status));
 							RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 						}
+					}if(rth.getDivision() == 7) {
+						//student assistant only requires divison director
+						if(status == 2) {
+							//by pass one of the validations for ad-hr
+							RequestToHireManager.approveRequestToHire(rid,5, Integer.toString(usr.getPersonnel().getPersonnelID()));
+							rhis.setNotes(RequestToHireStatus.get(5).getDescription() + ":" + usr.getPersonnel().getFullName());
+							rhis.setRequestToHireId(rid);
+							rhis.setStatusId(RequestToHireStatus.get(5));
+							RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
+						}
 					}else {
 						RequestToHireManager.approveRequestToHire(rid,status, Integer.toString(usr.getPersonnel().getPersonnelID()));
 						rhis.setNotes(RequestToHireStatus.get(status).getDescription() + ":" + usr.getPersonnel().getFullName());
