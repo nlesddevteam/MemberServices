@@ -20,7 +20,7 @@ import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.RequestStatus;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
-import com.esdnl.servlet.Form;
+
 
 public class PostAdRequestRequestHandler implements RequestHandler {
 
@@ -138,7 +138,7 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 					opp.setPositionTitle(req.getJobTitle());
 					opp.setJobAdText(req.getComments());
 
-					opp.setJobType(JobTypeConstant.SUPPORTMANAGEMENT);
+					opp.setJobType(JobTypeConstant.INTERNALONLY);
 
 					int location_id = 0;
 
@@ -174,6 +174,33 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 					case 5000: //District Conference Centre
 						location_id = 220;
 						break;
+					case 3034: //Western Baie Verte BusDep
+						location_id = 832;
+						break;
+					case 3032: //Nova Central Fogo Bus Depot
+						location_id = 833;
+						break;
+					case 3035: //Nova Central Gander Bus/Maint
+						location_id = 834;
+						break;
+					case 3036: //Nova Central GF-Windsor Bus
+						location_id = 835;
+						break;
+					case 3031: //Nova Central Lewisporte BusDep
+						location_id = 836;
+						break;
+					case 3030: //Nova Central Summerford BusDep
+						location_id = 837;
+						break;
+					case 2001: //Western Bus Depot
+						location_id = 838;
+						break;
+					case 1001: //Labrador HVGB Bus Depot
+						location_id = 839;
+						break;
+					case 1002: //Labrador Wabush Bus Depot
+						location_id = 840;
+						break;							
 					default:
 
 						location_id = SchoolDB.getSchoolFromDeptId(Integer.parseInt(req.getWorkLocation().trim()) % 1000).getSchoolID();

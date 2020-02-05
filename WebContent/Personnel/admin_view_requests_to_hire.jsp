@@ -37,7 +37,7 @@ $('.otherJobsList').DataTable({'order': [[ 1, 'asc' ]],'bLengthChange': true,'pa
 </head>
 <body>
   
-  <esd:SecurityCheck permissions="PERSONNEL-ADREQUEST-APPROVE,PERSONNEL-ADREQUEST-POST" />
+  <esd:SecurityCheck permissions="PERSONNEL-ADREQUEST-APPROVE,PERSONNEL-ADREQUEST-POST,PERSONNEL-RTH-BC-APPROVED" />
   
   
   <div class="pageHeader">${status} Requests</div>
