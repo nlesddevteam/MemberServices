@@ -20,13 +20,13 @@ public class ViewRequestsToHireRequestHandler extends RequestHandlerImpl {
 		HttpSession session = null;
 		User usr = null;
 		RequestToHireBean[] list = null;
-
+		
 		try {
 			session = request.getSession(false);
 			if ((session != null) && (session.getAttribute("usr") != null)) {
 			      usr = (User) session.getAttribute("usr");
 			      if(!(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-APPROVE")
-			      || usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST")))
+			      || usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST")  || usr.getUserPermissions().containsKey("PERSONNEL-RTH-BC-APPROVED")))
 			      {
 			        throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
 			      }

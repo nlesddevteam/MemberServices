@@ -1330,12 +1330,16 @@ public class JobOpportunityManager {
 				jBean.setCancelledDate(new java.util.Date(rs.getDate("CANCELLED_DATE").getTime()));
 
 			jBean.setPrivateCandidateList(rs.getBoolean("CANDIDATELIST_PRIVATE"));
-
+			jBean.setIsSupport(rs.getString("IS_SUPPORT"));
 			if (rs.getDate("SHORTLIST_COMPLETE_DATE") != null)
 				jBean.setShortlistCompleteDate(new java.util.Date(rs.getTimestamp("SHORTLIST_COMPLETE_DATE").getTime()));
-
-			jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, loadMetaData));
-			jBean.setIsSupport(rs.getString("IS_SUPPORT"));
+			if(jBean.getIsSupport().contentEquals("Y")) {
+				jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, false));
+			}else {
+				jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, loadMetaData));
+			}
+			
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

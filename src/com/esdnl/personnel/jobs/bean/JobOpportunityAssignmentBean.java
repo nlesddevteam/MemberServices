@@ -101,6 +101,34 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		String txt = null;
 
 		switch (this.location) {
+		//need entries for support staff depots
+		case 832: 
+			txt="Western Baie Verte Bus Depot";
+			break;
+		case 833: 
+			txt="Central Fogo Bus Depot";
+			break;
+		case 834: 
+			txt="Central Gander Bus Depot";
+			break;
+		case 835: 
+			txt="Central GFW Bus Depot";
+			break;
+		case 836: 
+			txt="Central Lewisporte Bus Depot";
+			break;				
+		case 837: 
+			txt="Central Summerford Bus Depot";
+			break;
+		case 838: 
+			txt="Western Corner Brook Bus Depot";
+			break;
+		case 839: 
+			txt="Labrador HVGB Bus Depot";
+			break;
+		case 840: 
+			txt="Labrador Wabush Bus Depot";
+			break;
 		case -3000:
 			txt = "Central Regional Office";
 			break;
@@ -206,20 +234,45 @@ public class JobOpportunityAssignmentBean implements Serializable {
 			}
 		}
 		else {
-			School s = ((School) school_names.get(new Integer(this.location)));
-
-			if (s != null) {
+			//new locatons added for support staff hiring depots
+			if(this.location == 832 || this.location == 838 ) {
 				try {
-					zone = s.getZone();
+					zone = SchoolZoneService.getSchoolZoneBean(3);
+				} catch (SchoolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				catch (SchoolException e) {
+			}else if(this.location == 833 || this.location == 834 || this.location == 835 || this.location == 836 || this.location == 837 ) {
+				try {
+					zone = SchoolZoneService.getSchoolZoneBean(2);
+				} catch (SchoolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(this.location == 839 || this.location == 840) {
+				try {
+					zone = SchoolZoneService.getSchoolZoneBean(4);
+				} catch (SchoolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				School s = ((School) school_names.get(new Integer(this.location)));
+
+				if (s != null) {
 					try {
-						(new AlertBean(e)).send();
+						zone = s.getZone();
 					}
-					catch (EmailException e1) {}
-					zone = null;
+					catch (SchoolException e) {
+						try {
+							(new AlertBean(e)).send();
+						}
+						catch (EmailException e1) {}
+						zone = null;
+					}
 				}
 			}
+			
 		}
 
 		if (zone == null) {
