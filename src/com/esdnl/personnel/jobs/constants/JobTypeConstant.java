@@ -22,10 +22,9 @@ public class JobTypeConstant implements Serializable {
 	public static transient final JobTypeConstant INTERNALONLY = new JobTypeConstant(11, "INTERNAL ONLY");
 	public static transient final JobTypeConstant EXTERNALONLY = new JobTypeConstant(12, "EXTERNAL ONLY");
 	public static transient final JobTypeConstant INTERNALEXTERNAL = new JobTypeConstant(13, "INTERNAL AND EXTERNAL");
-	public static transient final JobTypeConstant SUPPORTMANAGEMENT = new JobTypeConstant(14, "SUPPORT/MANAGEMENT");
 
 	public static final JobTypeConstant[] ALL = new JobTypeConstant[] {
-			POOL, REGULAR, REPLACEMENT, TLA_REGULAR, TLA_REPLACEMENT, ADMINISTRATIVE, LEADERSHIP, SUMMER_SCHOOL, AWARDED,INTERNALONLY,EXTERNALONLY,INTERNALEXTERNAL,SUPPORTMANAGEMENT
+			POOL, REGULAR, REPLACEMENT, TLA_REGULAR, TLA_REPLACEMENT, ADMINISTRATIVE, LEADERSHIP, SUMMER_SCHOOL, AWARDED,INTERNALONLY,EXTERNALONLY,INTERNALEXTERNAL
 	};
 
 	private JobTypeConstant(int value, String desc) {
@@ -73,8 +72,6 @@ public class JobTypeConstant implements Serializable {
 			return JobTypeConstant.EXTERNALONLY;
 		case 13:
 			return JobTypeConstant.INTERNALEXTERNAL;
-		case 14:
-			return JobTypeConstant.SUPPORTMANAGEMENT;
 		default:
 			return null;
 		}

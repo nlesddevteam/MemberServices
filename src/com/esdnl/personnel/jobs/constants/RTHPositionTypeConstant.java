@@ -4,8 +4,7 @@ public class RTHPositionTypeConstant {
 	private int value;
 	  private String desc;
 	  
-	  public static final RTHPositionTypeConstant PART_TIME = new RTHPositionTypeConstant(1, "PART TIME");
-	  public static final RTHPositionTypeConstant FULL_TIME = new RTHPositionTypeConstant(2, "FULL TIME");
+	  
 	  public static final RTHPositionTypeConstant PERMANENT = new RTHPositionTypeConstant(3, "PERMANENT");
 	  public static final RTHPositionTypeConstant TEMPORARY = new RTHPositionTypeConstant(4, "TEMPORARY");
 	  public static final RTHPositionTypeConstant REPLACEMENT = new RTHPositionTypeConstant(5, "REPLACEMENT");
@@ -13,8 +12,7 @@ public class RTHPositionTypeConstant {
 	  
 	  public static final RTHPositionTypeConstant[] ALL = new RTHPositionTypeConstant[]
 	  {
-		  PART_TIME,
-		  FULL_TIME,
+		 
 		  PERMANENT,
 		  TEMPORARY,
 		  REPLACEMENT,

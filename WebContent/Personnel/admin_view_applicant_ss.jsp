@@ -654,11 +654,7 @@ input {
                                   <a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
                                     	<% if(!job.isShortlistComplete()) { %>
                                    			<%if(guide != null){ %>
-                                   				<%if(validReference){ %>
-                                   					<a href='shortListApplicant.html?sin=<%=profile.getSIN() %>'" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
-                                   				<%}else{ %>
-                                   					<a href='#' onclick="alert('Applicant has no current Reference on file. Reference needs to be completed before applicant can be shortlisted.'); return false;" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
-                                   				<%} %>
+                                   				<a href='shortListApplicant.html?sin=<%=profile.getSIN() %>'" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
                                    			<%}else{ %>
                                    					<a href='#' onclick="alert('Interview guide must be set for competition <%=job.getCompetitionNumber() %> before shortlist can be created.'); return false;" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
                                    			<%} %>
