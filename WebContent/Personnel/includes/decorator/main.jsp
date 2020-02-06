@@ -497,6 +497,10 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 							         				<%if(usr.checkPermission("PERSONNEL-RTH-VIEW-APPROVALS")){%>
 							         					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyApprovals.html">View My Approvals</a></li>
 							         				<%} %>
+							         				<%if(usr.checkPermission("PERSONNEL-RTH-BC-APPROVED")){%>
+							         					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=5">Approved Requests</a></li>
+							         					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=6">Competition Posted</a></li>
+							         				<%} %>
 							         				
 							         				
 							         				</ul>

@@ -226,7 +226,7 @@
   	<div class="alert alert-danger" id="section2Error" style="display:none;">ERROR: Please make sure you rate each statement below.</div>	
 									<div class="table-responsive">
 									
-										On a scale of <%=val1%> to <%=val6%> please rate the teacher on the following statements: 
+										On a scale of <%=val1%> to <%=val6%> please rate the candidate on the following statements: 
 										
 										(<%=val6%>-Excellent, <%=val5%>-Good, <%=val4%>-Average, <%=val3%>-Needs Improvement, <%=val2%>-Unacceptable and <%=val1%>-N/A):
 																		
