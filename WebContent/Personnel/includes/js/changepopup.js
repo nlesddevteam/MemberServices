@@ -383,7 +383,7 @@
                				});
          					  $("#position_name").append(option);
          					  $("#jes_pay").append(jesoption);
-         					 $("#position_salary").val('');
+         					 //$("#position_salary").val('');
          					 
      					
          				},
@@ -485,5 +485,11 @@
     	return true;
     	
     }
-
+	//function submit post add
+	function deleterequest(rid){
+		var posturl='deleteRequestToHire.html?rid=' + rid;
+		$("#frmAdRequest").hide();
+		$('#frmAdRequest').attr('action',posturl);
+		$('#frmAdRequest').submit();
+	}
 	

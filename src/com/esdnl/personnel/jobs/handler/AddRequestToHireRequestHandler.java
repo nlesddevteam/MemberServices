@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.awsd.personnel.*;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.bean.RequestToHireHistoryBean;
+import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.personnel.jobs.dao.RequestToHireHistoryManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -35,6 +36,12 @@ public class AddRequestToHireRequestHandler extends RequestHandlerImpl {
 					request.setAttribute("rbean",rbean );
 					//now determine if user has rights to approve
 					request.setAttribute("VIEWAPPROVE", RequestToHireManager.checkViewApproveButton(rbean, usr));
+					//now determine if user can update/delete if still only in submitted stage
+					if(rbean.getRequestById() ==  usr.getPersonnel().getPersonnelID() && rbean.getStatus().getValue() == RequestToHireStatus.SUBMITTED.getValue()) {
+						request.setAttribute("UPDATEDELETE", true);
+					}else {
+						request.setAttribute("UPDATEDELETE", false);
+					}
 					//get history objects
 					TreeMap<Integer, RequestToHireHistoryBean> hbeans = RequestToHireHistoryManager.getRequestsToHireHistory(Integer.parseInt(request.getParameter("rid")));
 					request.setAttribute("HBEANS",hbeans);
