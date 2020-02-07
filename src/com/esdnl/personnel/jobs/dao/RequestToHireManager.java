@@ -12,6 +12,7 @@ import com.awsd.school.SchoolDB;
 import com.awsd.security.User;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 public class RequestToHireManager {
@@ -928,4 +929,39 @@ public class RequestToHireManager {
 
 		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
 	}
+	public static void deleteRequestToHire(int requestid)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.delete_request_to_hire(?); end;");
+
+			stat.setInt(1, requestid);
+
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void deleteRequestToHire(int requestid): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 }
