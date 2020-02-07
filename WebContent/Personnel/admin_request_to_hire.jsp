@@ -232,7 +232,7 @@ var pageWordCountConf = {
 			     		<td class='tableResultL'>
 			     						<c:choose>
                                       	<c:when test="${empty rbean}">
-                                      		<SELECT name="position_name" id="position_name" class="form-control" onchange="getJesPay()">
+                                      		<SELECT name="position_name" id="position_name" class="form-control">
 																							
 											</SELECT>
 											<div style="display:none;">
@@ -243,7 +243,7 @@ var pageWordCountConf = {
                                       	<c:otherwise>
                                       		<c:choose>
                                       			<c:when test="${rbean.status.value eq 1 }">
-                                      				<SELECT name="position_name" id="position_name" class="form-control" onchange="getJesPay()">
+                                      				<SELECT name="position_name" id="position_name" class="form-control" >
 														<OPTION VALUE='-1'>--- SELECT POSITION---</OPTION>															
 													</SELECT>
 													<div style="display:none;">
@@ -621,33 +621,33 @@ var pageWordCountConf = {
  
  <div class="panel panel-info">
   <div class="panel-heading">Current Status &amp; Log:</div>
-  	<div class="panel-body">
+  	<div class="panel-body" style="font-size:11px;">
  
  
                                      
                                      
                                       	<c:choose>
                                       	<c:when test="${empty rbean}">
-                                      		<div class="alert alert-danger" style="text-align:center;">UNSUBMITTED</div>
+                                      		<div class="alert alert-danger" style="text-align:center;font-size:14px;">UNSUBMITTED</div>
                                      	</c:when>
                                       	<c:otherwise>
-                                      		<div class="alert alert-success" style="text-align:center;">${rbean.status.description}</div>
+                                      		<div class="alert alert-success" style="text-align:center;font-size:14px;">${rbean.status.description}</div>
                                       	</c:otherwise>
                                       	</c:choose>
             
    
- 										<ul>                    
+ 										<ol>                    
                                       	<c:choose>
                                     		<c:when test="${not empty HBEANS}">
 	                                      		<c:forEach items="${HBEANS}" var="treemap">
-	                                      			<li>${treemap.value.notes} on ${treemap.value.historyDateTime}			                                      				                                      			
+	                                      			<li>${treemap.value.notes} on ${treemap.value.historyDateTime}		</li>	                                      				                                      			
 		                                      	</c:forEach>
 		                                     </c:when>
 		                                     <c:otherwise>
-		                                      	<li>No status information currently logged.
+		                                      	<li>No status information currently logged.</li>
 		                                     </c:otherwise>
 		                                 </c:choose>
-		                                 </ul>
+		                                 </ol>
 </div></div>
 <!-- ADMINISTRATIVE FUNCTIONS -->
 
@@ -663,10 +663,14 @@ var pageWordCountConf = {
                                       				
                                     	</c:when>
                                     	<c:otherwise>
- 												
-                                      					<c:if test="${VIEWAPPROVE}">
+                                    						<c:if test="${rbean.status.value eq 1 }">
+                                    							<c:if test="${UPDATEDELETE}">
+	                                      							<input type="submit" class="btn btn-primary btn-xs" value="Update">
+	                                      							<input type="button" class="btn btn-success btn-xs" value="Delete" onclick="deleterequest('${rbean.id}');">
+	                                      						</c:if>
+ 															</c:if>
+                                      						<c:if test="${VIEWAPPROVE}">
 	                                      					<c:if test="${rbean.status.value eq 1 }">
-	                                      						<input type="submit" class="btn btn-primary btn-xs" value="Submit">
 	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','2','${rbean.id}')">
 	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','2','${rbean.id}')">
 	                                      					</c:if>

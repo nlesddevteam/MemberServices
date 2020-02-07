@@ -75,16 +75,16 @@ $('.otherJobsList').DataTable({'order': [[ 1, 'asc' ]],'bLengthChange': true,'pa
                                         		<span style="color:White;background-color:Orange;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;SUBMITTED&nbsp;</span>
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 2 }">
-                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;APPROVED&nbsp;</span>
+                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description } - ${rule.divisionStringShort }">&nbsp;APPROVED: Division Director&nbsp;</span>
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 3 }">
-                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;APPROVED&nbsp;</span>
+                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;APPROVED: Budgeting/Comptroller&nbsp;</span>
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 4 }">
-                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;APPROVED&nbsp;</span>
+                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description } - ${rule.divisionStringShort }">&nbsp;APPROVED: Assistant Director&nbsp;</span>
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 5 }">
-                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;APPROVED&nbsp;</span>
+                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;APPROVED: Assistant Director HR&nbsp;</span>
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 6 }">
                                         		<span style="color:White;background-color:Blue;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;AD CREATED&nbsp;</span>
