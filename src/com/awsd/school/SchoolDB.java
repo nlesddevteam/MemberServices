@@ -8,13 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
-import java.util.stream.Collectors;
 
-import com.awsd.mail.bean.AlertBean;
-import com.awsd.mail.bean.EmailException;
 import com.awsd.personnel.Personnel;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.PersonnelException;
@@ -41,219 +36,158 @@ import com.nlesd.schoolstatus.service.SchoolStatusGlobalConfigService;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
-public class SchoolDB extends TimerTask {
-
-	private static Collection<School> CACHE;
-
-	static {
-		try {
-			CACHE = new ArrayList<School>();
-			CACHE.addAll(getSchools());
-
-			(new Timer()).schedule(new SchoolDB(), 180000, 180000);
-			System.err.println("<<<<<< SCHOOL CACHE TIMER STARTED >>>>>");
-		}
-		catch (SchoolException e) {
-			try {
-				new AlertBean(e);
-			}
-			catch (EmailException e1) {}
-		}
-	}
-
-	@Override
-	public void run() {
-
-		try {
-			CACHE.clear();
-			CACHE.addAll(getSchools());
-
-			System.out.println(">>>>>> SCHOOL CACHE REFRESHED <<<<<<<");
-		}
-		catch (SchoolException e) {
-			try {
-				new AlertBean(e);
-			}
-			catch (EmailException e1) {}
-		}
-	}
+public class SchoolDB {
 
 	public static Collection<School> getSchools() throws SchoolException {
 
 		Collection<School> schools = null;
 
-		if (CACHE != null && CACHE.size() > 0) {
-			schools = CACHE.stream().collect(Collectors.toList());
+		School s = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			schools = new ArrayList<School>();
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_schools_3; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				do {
+					s = createSchoolBean(rs);
+					schools.add(s);
+
+					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
+
+						rs.next();
+
+				} while (!rs.isAfterLast());
+			}
 		}
-		else {
-
-			School s = null;
-			Connection con = null;
-			CallableStatement stat = null;
-			ResultSet rs = null;
-
+		catch (SQLException e) {
+			System.err.println("SchoolDB.getSchools(): " + e);
+			throw new SchoolException("Can not extract schools from DB: " + e);
+		}
+		finally {
 			try {
-				schools = new ArrayList<School>();
-				con = DAOUtils.getConnection();
-				stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_schools_3; end;");
-				stat.registerOutParameter(1, OracleTypes.CURSOR);
-				stat.execute();
-				rs = ((OracleCallableStatement) stat).getCursor(1);
-
-				if (rs.next()) {
-					do {
-						s = createSchoolBean(rs);
-						schools.add(s);
-
-						if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
-
-							rs.next();
-
-					} while (!rs.isAfterLast());
-				}
+				rs.close();
 			}
-			catch (SQLException e) {
-				System.err.println("SchoolDB.getSchools(): " + e);
-				throw new SchoolException("Can not extract schools from DB: " + e);
+			catch (Exception e) {}
+			try {
+				stat.close();
 			}
-			finally {
-				try {
-					rs.close();
-				}
-				catch (Exception e) {}
-				try {
-					stat.close();
-				}
-				catch (Exception e) {}
-				try {
-					con.close();
-				}
-				catch (Exception e) {}
+			catch (Exception e) {}
+			try {
+				con.close();
 			}
+			catch (Exception e) {}
 		}
+
 		return schools;
 	}
 
 	public static Collection<School> getSchools(SchoolZoneBean zone) throws RegionException {
 
 		Collection<School> schools = null;
-		if (CACHE != null && CACHE.size() > 0) {
-			schools = CACHE.stream().filter(s -> {
-				try {
-					return s.getZone().getZoneId() == zone.getZoneId();
-				}
-				catch (SchoolException e) {
-					return false;
-				}
-			}).collect(Collectors.toList());
-		}
-		else {
-			School s = null;
-			Connection con = null;
-			CallableStatement stat = null;
-			ResultSet rs = null;
 
+		School s = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			schools = new ArrayList<School>(14);
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_zone_schools(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, zone.getZoneId());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				do {
+					s = createSchoolBean(rs);
+					schools.add(s);
+
+					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
+						rs.next();
+
+				} while (!rs.isAfterLast());
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("Collection<School> getSchools(SchoolZoneBean zone): " + e);
+			throw new RegionException("Can not extract Schools from DB.", e);
+		}
+		finally {
 			try {
-				schools = new ArrayList<School>(14);
-
-				con = DAOUtils.getConnection();
-				stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_zone_schools(?); end;");
-				stat.registerOutParameter(1, OracleTypes.CURSOR);
-				stat.setInt(2, zone.getZoneId());
-				stat.execute();
-				rs = ((OracleCallableStatement) stat).getCursor(1);
-
-				if (rs.next()) {
-					do {
-						s = createSchoolBean(rs);
-						schools.add(s);
-
-						if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
-							rs.next();
-
-					} while (!rs.isAfterLast());
-				}
+				rs.close();
 			}
-			catch (SQLException e) {
-				System.err.println("Collection<School> getSchools(SchoolZoneBean zone): " + e);
-				throw new RegionException("Can not extract Schools from DB.", e);
+			catch (Exception e) {}
+			try {
+				stat.close();
 			}
-			finally {
-				try {
-					rs.close();
-				}
-				catch (Exception e) {}
-				try {
-					stat.close();
-				}
-				catch (Exception e) {}
-				try {
-					con.close();
-				}
-				catch (Exception e) {}
+			catch (Exception e) {}
+			try {
+				con.close();
 			}
+			catch (Exception e) {}
 		}
+
 		return schools;
 	}
 
 	public static Collection<School> getSchools(RegionBean region) throws RegionException {
 
 		Collection<School> schools = null;
-		if (CACHE != null && CACHE.size() > 0) {
-			schools = CACHE.stream().filter(s -> {
-				try {
-					return s.getRegion().getId() == region.getId();
-				}
-				catch (RegionException e) {
-					return false;
-				}
-			}).collect(Collectors.toList());
+
+		School s = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			schools = new ArrayList<School>(14);
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_region_schools_2(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, region.getId());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				do {
+					s = createSchoolBean(rs);
+					schools.add(s);
+
+					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
+						rs.next();
+
+				} while (!rs.isAfterLast());
+			}
 		}
-		else {
-			School s = null;
-			Connection con = null;
-			CallableStatement stat = null;
-			ResultSet rs = null;
-
+		catch (SQLException e) {
+			System.err.println("Collection<School> getSchools(RegionBean region): " + e);
+			throw new RegionException("Can not extract Schools from DB.", e);
+		}
+		finally {
 			try {
-				schools = new ArrayList<School>(14);
-
-				con = DAOUtils.getConnection();
-				stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_region_schools_2(?); end;");
-				stat.registerOutParameter(1, OracleTypes.CURSOR);
-				stat.setInt(2, region.getId());
-				stat.execute();
-				rs = ((OracleCallableStatement) stat).getCursor(1);
-
-				if (rs.next()) {
-					do {
-						s = createSchoolBean(rs);
-						schools.add(s);
-
-						if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
-							rs.next();
-
-					} while (!rs.isAfterLast());
-				}
+				rs.close();
 			}
-			catch (SQLException e) {
-				System.err.println("Collection<School> getSchools(RegionBean region): " + e);
-				throw new RegionException("Can not extract Schools from DB.", e);
+			catch (Exception e) {}
+			try {
+				stat.close();
 			}
-			finally {
-				try {
-					rs.close();
-				}
-				catch (Exception e) {}
-				try {
-					stat.close();
-				}
-				catch (Exception e) {}
-				try {
-					con.close();
-				}
-				catch (Exception e) {}
+			catch (Exception e) {}
+			try {
+				con.close();
 			}
+			catch (Exception e) {}
 		}
 
 		return schools;
