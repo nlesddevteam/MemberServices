@@ -148,7 +148,7 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 						location_id = -999;
 						break;
 					case 4007: // Burin Satellite Office
-						location_id = -300;
+						location_id = 285;
 						break;
 					case 449: // St. Augustine's Primary
 						location_id = 188;
