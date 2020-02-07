@@ -621,33 +621,33 @@ var pageWordCountConf = {
  
  <div class="panel panel-info">
   <div class="panel-heading">Current Status &amp; Log:</div>
-  	<div class="panel-body">
+  	<div class="panel-body" style="font-size:11px;">
  
  
                                      
                                      
                                       	<c:choose>
                                       	<c:when test="${empty rbean}">
-                                      		<div class="alert alert-danger" style="text-align:center;">UNSUBMITTED</div>
+                                      		<div class="alert alert-danger" style="text-align:center;font-size:14px;">UNSUBMITTED</div>
                                      	</c:when>
                                       	<c:otherwise>
-                                      		<div class="alert alert-success" style="text-align:center;">${rbean.status.description}</div>
+                                      		<div class="alert alert-success" style="text-align:center;font-size:14px;">${rbean.status.description}</div>
                                       	</c:otherwise>
                                       	</c:choose>
             
    
- 										<ul>                    
+ 										<ol>                    
                                       	<c:choose>
                                     		<c:when test="${not empty HBEANS}">
 	                                      		<c:forEach items="${HBEANS}" var="treemap">
-	                                      			<li>${treemap.value.notes} on ${treemap.value.historyDateTime}			                                      				                                      			
+	                                      			<li>${treemap.value.notes} on ${treemap.value.historyDateTime}		</li>	                                      				                                      			
 		                                      	</c:forEach>
 		                                     </c:when>
 		                                     <c:otherwise>
-		                                      	<li>No status information currently logged.
+		                                      	<li>No status information currently logged.</li>
 		                                     </c:otherwise>
 		                                 </c:choose>
-		                                 </ul>
+		                                 </ol>
 </div></div>
 <!-- ADMINISTRATIVE FUNCTIONS -->
 
