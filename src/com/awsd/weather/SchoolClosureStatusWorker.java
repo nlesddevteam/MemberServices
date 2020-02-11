@@ -7,17 +7,23 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.TimerTask;
 import java.util.Vector;
-
 import com.awsd.school.School;
+import com.awsd.school.SchoolDB;
+import com.awsd.school.SchoolException;
+import java.util.Arrays;
+import java.util.List;
+
 import com.awsd.servlet.ControllerServlet;
 
 public class SchoolClosureStatusWorker extends TimerTask {
 
 	private Vector<SchoolSystem> systems = null;
-
+//For LIVE copy
 	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
-
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
+	
+	//For local copy
+	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
+	
 
 	public SchoolClosureStatusWorker(Vector<SchoolSystem> systems) {
 
@@ -47,7 +53,7 @@ public class SchoolClosureStatusWorker extends TimerTask {
 				systems.addAll(SchoolSystemDB.getSchoolClosureStatuses());
 				System.err.println("<<<<<< SCHOOLSYSTEMS RELOADED >>>>>");
 
-				this.writeCustomizeViewFileNLESDWeb();
+				//this.writeCustomizeViewFileNLESDWeb();
 				this.writeAllViewFileNLESDWeb();
 
 				this.CBC_writeAllViewFile();
@@ -78,7 +84,7 @@ public class SchoolClosureStatusWorker extends TimerTask {
 				ss = new Vector<SchoolSystem>(systems);
 			}
 
-			all_view_tmp = new File(nlesd_rootbasepath + "statuscentral/status_central_all_view.tmp");
+			all_view_tmp = new File(nlesd_rootbasepath + "statuscentral/schoolstatus.tmp");
 
 			if (!all_view_tmp.getParentFile().exists())
 				all_view_tmp.getParentFile().mkdirs();
@@ -96,52 +102,175 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 			writer = new PrintWriter(new FileWriter(all_view_tmp), true);
 
-			writer.println("<html>");
-			writer.println("<head>");
-			writer.println("<title>Newfoundland &amp; Labrador English School District - School Status Report</title>");
-			writer.println("<link rel='stylesheet' href='/statuscentral/css/weathercentral.css'>");
-			writer.println("</head>");
-			writer.println("<body>");
-
-			boolean isOffice = false;
-
-			for (SchoolSystem sys : ss) {
-
-				writer.println("<div class='school-system'>");
-
-				writer.println(
-						"<div class='school-system-name'>" + sys.getSchoolSystemName().replaceAll("'", "&#39;") + "</div>");
-
-				for (School school : sys.getSchoolSystemSchools()) {
-					isOffice = (school.getSchoolName().endsWith("Office") || (school.getSchoolID() == 220));
-
-					stat = school.getSchoolClosureStatus();
-					writer.println("<div class='school-system-school' zone='"
-							+ (school.getZone() != null ? school.getZone().getZoneId() : "") + "'>");
-
-					writer.println("<div class='school-name'>" + school.getSchoolName().replaceAll("'", "&#39;") + "</div>");
-
-					writer.print("<div class='school-status " + cssClass(stat.getClosureStatusID()) + "'>");
-					writer.print(!isOffice ? stat.getClosureStatusDescription()
-							: stat.getClosureStatusDescription().replaceAll("School", "Office"));
-					writer.println("</div>");
-
-					if (stat.getSchoolClosureNote() != null) {
-						writer.print("<div class='school-status-note'><b>Note</b>:&nbsp;"
-								+ stat.getSchoolClosureNote().replaceAll("'", "&#39;") + "</div>");
-					}
-					writer.println("<div class='clear'></div>");
-					writer.println("</div>");
+			
+			School schoolST = null;		
+			
+		
+						
+			try {
+				Iterator<School> iter = SchoolDB.getSchoolsOffices().iterator();
+				
+				writer.println("<table id='schoolStatusTable' class='table table-condensed table-striped table-bordered' style='font-size:11px;' width='100%'>");
+				writer.println("<thead><tr  style='text-transform:uppercase;font-weight:bold;'>"
+						+ "<th width='20%'>SCHOOL/BUILDING</th>"
+						+ "<th width='10%'>STATUS</th>"
+						+ "<th width='40%'>DESCRIPTION/NOTE</th>"						
+						+ "<th width='10%'>REGION</th>"
+						+ "<th width='20%'>LOCATION</th>"
+						+ "</tr></thead>");
+				writer.println("<tbody>");
+				
+						
+				while (iter.hasNext()) {
+					
+					schoolST = (School) iter.next();							
+					int sid = schoolST.getSchoolID();		
+				 int code=schoolST.getSchoolClosureStatus().getClosureStatusID();  	
+			        
+//ignore these school ids
+				if (	 sid==281				//Avalon East
+						|  sid==282		//Avalon West
+						|| sid==273		//Former Avalon East School (Closed)
+						|| sid==274		//Former Avalon West School (Closed)
+						|| sid==275		//Former Burin School (Closed) 
+						|| sid==276		//Former Vista School
+						|| sid==475		//Former NCSD District/Regional Office
+						|| sid==476		//Former ESDNL District/Reginal Office
+						|| sid==477		//Former LSB Disitrict/Regional Office
+						|| sid==478		//Former WSDNL District/Regional Office
+						|| sid==410		//Long Island Academy
+						|| sid==441 	//Heritage Academy
+						|| sid==217		//Booth Memorial High School
+						|| sid==424		//H.L. Strong Academy
+						|| sid==216		//Bishops College					
+						|| sid==286		//SEB Cabin
+						|| sid==309		//Rowan Treatment Center
+						|| sid==269		//TEST SCHOOL
+						|| sid==284		//Vista Region
+						|| sid==832		//Western Baie Verte BusDep
+						|| sid==838		//Western Corner Brook Bus Depot
+						|| sid==735		//Z test School
+						|| sid==378		//Our Lady of Mercy Elementary			
+						|| sid==285		//Burin Bus Depot
+						|| sid==283		//Burin Region
+						|| code==9
+						) { 
+					//Do nothing yet
+				 				
+				}else {	
+					
+									
+					writer.println("<tr id="+schoolST.getSchoolID()+">");			
+					writer.println("<td>"+schoolST.getSchoolName() + " " + schoolST.getSchoolID() +"</td>");					
+			    		        
+			      switch (code) {
+			        case 186:
+			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:black;font-weight:bold;'>BUS DELAYED</td>");
+			          break;
+			        case 143:
+			        case 144:
+			        case 145:
+			        case 146:
+			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:black;font-weight:bold;'>DELAYED OPENING</td>");
+			          break;
+			        case 183:
+			        	writer.println("<td style='text-align:center;background-color:#bf00bd;font-size:11px;color:white;font-weight:bold;'>KINDERSTART SESSION</td>");
+			          break;
+			        case 123:			        
+			        case 184:
+			        case 185:
+			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;'>OFFICE CLOSED</td>");
+			          break;
+			        case 8:
+			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;'>OTHER STATUS</td>");
+			          break;
+			        case 7:
+			        case 10:
+			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;'>CLOSED ALL DAY</td>");
+			          break;
+			        case 82:
+			        case 83:
+			        case 84:
+			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR PD</td>");
+			          break;
+			        case 102:
+			        	writer.println("<td style='text-align:center;background-color:#0003ff;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR HOLIDAY</td>");
+			          break;
+			        case 11:
+			        	writer.println("<td style='text-align:center;background-color:#bf0000;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR AFTERNOON</td>");
+			          break;
+			        case 62:
+			        case 4:
+			        case 21:
+			        	writer.println("<td style='text-align:center;background-color:#bf0000;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR MORNING</td>");
+			          break;  
+			        case 22:
+			        	writer.println("<td style='text-align:center;background-color:#008001;font-size:11px;color:white;font-weight:bold;'>SUMMER BREAK</td>");
+			          break;
+			        case 163:
+			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:red;font-weight:bold;'>CLOSING EARLY</td>");
+			          break;  
+			        case 9:
+			        	writer.println("<td style='text-align:center;background-color:#008000;font-size:11px;color:white;font-weight:bold;'>OPEN</td>");
+			          break;
+			        case 122:
+			        	writer.println("<td style='text-align:center;background-color:#1c91ec;font-size:11px;color:white;font-weight:bold;'>SCHOOL REOPENING</td>");
+			          break;  
+			        default:
+			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;'>OTHER</td>");
+			          break;	    
+			      }   
+			        writer.println("<td>"+schoolST.getSchoolClosureStatus().getClosureStatusDescription() +"</td>");  
+			   
+			        if (schoolST.getZone() !=null) {			    	  			    	
+			    	  
+			    	  int schoolZone=schoolST.getZone().getZoneId();		        
+				      switch (schoolZone) {
+				      
+				        case 1:
+				        	writer.println("<td class='region1solid' style='text-align:center;color:white;'>AVALON</td>");
+				          break;
+				        case 2:				        
+				        	writer.println("<td class='region2solid' style='text-align:center;color:white;'>CENTRAL</td>");
+				          break;
+				        case 3:
+				        	writer.println("<td class='region3solid' style='text-align:center;color:white;'>WESTERN</td>");
+				          break;
+				        case 4:
+				        	writer.println("<td class='region4solid' style='text-align:center;color:white;'>LABRADOR</td>");
+				          break;
+				        case 5:
+				        	writer.println("<td class='region5solid' style='text-align:center;color:white;'>PROVINCIAL</td>");
+				          break;
+				        default:
+				        	writer.println("<td class='region5solid' style='text-align:center;color:white;'>PROVINCIAL</td>");
+				          break;	      	  
+				      }			    	
+			      } else {
+			    	  writer.println("<td class='region5solid' style='text-align:center;color:white;'>PROVINCIAL</td>");
+			      }
+			      
+				     				      	
+				     writer.println("<td>"+((schoolST.getTownCity() !=null)?schoolST.getTownCity()+", NL":"N/A")+"</td>");         
+			      		
+					
+			        writer.println("</tr>");			        
+					
+				} 			
 				}
-				writer.println("</div>");
+				
+				writer.println("</tbody>");
+				writer.println(" </table>");
+				
 			}
-
-			writer.println("</body>");
-			writer.println("</html>");
+			catch (SchoolException e) {
+				e.printStackTrace(System.err);
+			}
+	
 			writer.flush();
 			writer.close();
 
-			all_view_real = new File(nlesd_rootbasepath + "statuscentral/status_central_all_view.html");
+			all_view_real = new File(nlesd_rootbasepath + "statuscentral/schoolstatus.html");
 
 			if (all_view_real.exists()) {
 				all_view_real.delete();
@@ -160,189 +289,6 @@ public class SchoolClosureStatusWorker extends TimerTask {
 		}
 	}
 
-	public void writeCustomizeViewFileNLESDWeb() {
-
-		File customize_view_tmp = null, customize_view_real = null;
-		PrintWriter writer = null;
-		Vector<SchoolSystem> ss = null;
-		Iterator<SchoolSystem> sys_iter = null;
-		Iterator<School> sch_iter = null;
-		SchoolSystem system = null;
-		School school = null;
-		ClosureStatus stat = null;
-
-		try {
-			synchronized (this.systems) {
-				ss = new Vector<SchoolSystem>(systems);
-			}
-
-			customize_view_tmp = new File(nlesd_rootbasepath + "statuscentral/status_central_customize_view.tmp");
-
-			if (!customize_view_tmp.getParentFile().exists())
-				customize_view_tmp.getParentFile().mkdirs();
-
-			if (customize_view_tmp.exists()) {
-				System.err.println("<<<<< NLESD CUSTOMIZE TEMP FILE ALREADY EXIST >>>>>");
-
-				if (customize_view_tmp.delete()) {
-					System.err.println("<<<<< NLESD CUSTOMIZE TEMP FILE DELETED >>>>>");
-				}
-				else {
-					System.err.println("<<<<< NLESD CUSTOMIZE TEMP FILE COULD NOT BE DELETED >>>>>");
-				}
-			}
-
-			writer = new PrintWriter(new FileWriter(customize_view_tmp), true);
-
-			sys_iter = ss.iterator();
-			writer.println("<html>");
-			writer.println("<head>");
-			writer.println("<title>Newfoundland &amp; Labrador English School District - School Status Report</title>");
-			writer.println("<link rel='stylesheet' href='/statuscentral/css/weathercentral.css'>");
-			writer.println("<script type=\"text/javascript\" src=\"/statuscentral/js/scroller_base.js\"></script>");
-			writer.println("<script type=\"text/javascript\" src=\"/statuscentral/js/scroller.js\"></script>");
-			writer.println("<script type=\"text/javascript\" src=\"/statuscentral/js/rounded_corner.js\"></script>");
-			writer.println("<script type=\"text/javascript\">");
-
-			writer.println("function getCookie(name) { // use: getCookie(\"name\");");
-			writer.println("var bikky = document.cookie;");
-			writer.println("var index = bikky.indexOf(name + \"=\");");
-			writer.println("if (index == -1) return null;");
-			writer.println("index = bikky.indexOf(\"=\", index) + 1; // first character");
-			writer.println("var endstr = bikky.indexOf(\";\", index);");
-			writer.println("if (endstr == -1) endstr = bikky.length; // last character");
-			writer.println("return unescape(bikky.substring(index, endstr));}");
-
-			writer.println("function run_scroller(w, h)");
-			writer.println("{");
-
-			writer.println("// Create the first scroller and position it.");
-			writer.println("myScroller1.width = w;");
-			writer.println("myScroller1.height = h;");
-			writer.println("myScroller1.create();");
-
-			writer.println("myScroller1.setzIndex(100);");
-			writer.println("myScroller1.show();");
-
-			writer.println("}");
-
-			writer.println("function restart()");
-			writer.println("{");
-			writer.println("if(!myScroller1.reversed)");
-			writer.println("{");
-			writer.println("myScroller1.start();");
-
-			writer.println("}");
-			writer.println("else");
-			writer.println("{");
-			writer.println("myScroller1.reverse();");
-
-			writer.println("}");
-			writer.println("}");
-
-			writer.println("</script>");
-
-			writer.println("</head>");
-
-			writer.println("<body>");
-
-			writer.println("<div id=\"tempholder\"></div>");
-			writer.println("<script type=\"text/javascript\">");
-			writer.println("//SET SCROLLER APPEARANCE AND MESSAGES");
-			writer.println(
-					"var myScroller1 = new Scroller(0, 0, parseInt($('#tempholder').width()), parseInt($('#tempholder').height()), 0, 10, false); //(xpos, ypos, width, height, border, padding, rounded)");
-			writer.println("myScroller1.setColors(\"#333333\", \"#F8F8F1\", \"#F8F8F1\"); //(fgcolor, bgcolor, bdcolor)");
-			writer.println("myScroller1.setFont(\"Tahoma\", 1);");
-
-			writer.println("var cookie_val = getCookie(\"statuscentral_config\");");
-
-			boolean isOffice = false;
-
-			while (sys_iter.hasNext()) {
-				system = (SchoolSystem) sys_iter.next();
-				writer.println("if((cookie_val==null) || cookie_val == \"\" || cookie_val == \"|\"){");
-				writer.println("myScroller1.addItem(\"<span class='weatherCentralSchoolSystem'>"
-						+ system.getSchoolSystemName().replaceAll("'", "&#39;") + "</span>\");");
-				writer.println("}else if(cookie_val.indexOf(\"|SYS-" + system.getSchoolSystemID() + "|\") >= 0){");
-				writer.println("myScroller1.addItem(\"<span class='weatherCentralSchoolSystem'>"
-						+ system.getSchoolSystemName().replaceAll("'", "&#39;") + "</span>\");}");
-
-				sch_iter = null;
-				sch_iter = system.getSchoolSystemSchools().iterator();
-				while ((sch_iter != null) && sch_iter.hasNext()) {
-					school = (School) sch_iter.next();
-					stat = school.getSchoolClosureStatus();
-
-					isOffice = (school.getSchoolName().endsWith("Office") || (school.getSchoolID() == 220));
-
-					writer.println("if((cookie_val==null) || cookie_val == \"\" || cookie_val == \"|\"){");
-					if ((stat.getSchoolClosureNote() != null) && !stat.getSchoolClosureNote().equalsIgnoreCase("")) {
-						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
-								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID()) + "\">"
-								+ (!isOffice ? stat.getClosureStatusDescription()
-										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
-								+ "</span><BR><span style=\"font-size:10px;color:#333333;\"><b>Note</b>: "
-								+ encodeHTML(stat.getSchoolClosureNote()) + "</span></div>');");
-					}
-					else {
-						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
-								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID()) + "\">" + (!isOffice ? stat.getClosureStatusDescription()
-										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
-								+ "</span></div>');");
-					}
-					writer.println("}else if(cookie_val.indexOf(\"|" + school.getSchoolID() + "|\") >= 0){");
-					if ((stat.getSchoolClosureNote() != null) && !stat.getSchoolClosureNote().equalsIgnoreCase("")) {
-						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
-								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID()) + "\">"
-								+ (!isOffice ? stat.getClosureStatusDescription()
-										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
-								+ "</span><BR><span style=\"font-size:10px;color:#333333;\"><b>Note</b>: "
-								+ encodeHTML(stat.getSchoolClosureNote()) + "</span></div>');}");
-					}
-					else {
-						writer.println("myScroller1.addItem('<div id=\"status_" + school.getSchoolID()
-								+ "\" class=\"floater_off\" onmouseover=\"this.className=\\'floater_on\\'; myScroller1.stop();\" onmouseout=\"this.className=\\'floater_off\\'; restart();\"><span class=\"normalGrey10pxText\">"
-								+ school.getSchoolName().replaceAll("'", "&#39;") + "</span><BR><span class=\""
-								+ cssClass(stat.getClosureStatusID()) + "\">" + (!isOffice ? stat.getClosureStatusDescription()
-										: stat.getClosureStatusDescription().replaceAll("School", "Office"))
-								+ "</span></div>');}");
-					}
-				}
-			}
-			System.gc();
-
-			writer.println("//SET SCROLLER PAUSE");
-			writer.println("myScroller1.setPause(1000); //set pause beteen msgs, in milliseconds");
-			writer.println("</script>");
-
-			writer.println("</body>");
-			writer.println("</html>");
-			writer.flush();
-			writer.close();
-
-			customize_view_real = new File(nlesd_rootbasepath + "statuscentral/status_central_customize_view.html");
-			if (customize_view_real.exists()) {
-				customize_view_real.delete();
-				System.err.println("<<<<<< NLESD EXISTING CUSTOMIZE VIEW FILE DELETED >>>>>>");
-			}
-			customize_view_tmp.renameTo(customize_view_real);
-			ss.clear();
-			System.err.println("<<<<<< NLESD CUSTOMIZE VIEW FILE REGENERATED >>>>>>");
-			System.err.flush();
-			System.gc();
-		}
-		catch (Exception e) {
-			System.err.println(e);
-			e.printStackTrace(System.err);
-			System.err.flush();
-		}
-	}
 
 	public void CBC_writeAllViewFile() {
 

@@ -9,7 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
-
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 import com.awsd.personnel.Personnel;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.PersonnelException;
@@ -33,22 +34,18 @@ import com.nlesd.school.service.SchoolZoneService;
 import com.nlesd.schoolstatus.bean.SchoolStatusGlobalConfigBean;
 import com.nlesd.schoolstatus.service.SchoolStatusGlobalConfigService;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 public class SchoolDB {
 
-	public static Collection<School> getSchools() throws SchoolException {
+	public static Vector<School> getSchools() throws SchoolException {
 
-		Collection<School> schools = null;
-
+		Vector<School> schools = null;
 		School s = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			schools = new ArrayList<School>();
+			schools = new Vector<School>(126);
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_schools_3; end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
@@ -61,9 +58,9 @@ public class SchoolDB {
 					schools.add(s);
 
 					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
-
+						
 						rs.next();
-
+						
 				} while (!rs.isAfterLast());
 			}
 		}
@@ -85,21 +82,19 @@ public class SchoolDB {
 			}
 			catch (Exception e) {}
 		}
-
 		return schools;
 	}
 
 	public static Collection<School> getSchools(SchoolZoneBean zone) throws RegionException {
 
-		Collection<School> schools = null;
-
+		Vector<School> v_opps = null;
 		School s = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			schools = new ArrayList<School>(14);
+			v_opps = new Vector<School>(14);
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_zone_schools(?); end;");
@@ -111,7 +106,7 @@ public class SchoolDB {
 			if (rs.next()) {
 				do {
 					s = createSchoolBean(rs);
-					schools.add(s);
+					v_opps.add(s);
 
 					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
 						rs.next();
@@ -138,20 +133,19 @@ public class SchoolDB {
 			catch (Exception e) {}
 		}
 
-		return schools;
+		return v_opps;
 	}
 
 	public static Collection<School> getSchools(RegionBean region) throws RegionException {
 
-		Collection<School> schools = null;
-
+		Vector<School> v_opps = null;
 		School s = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			schools = new ArrayList<School>(14);
+			v_opps = new Vector<School>(14);
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_region_schools_2(?); end;");
@@ -163,7 +157,7 @@ public class SchoolDB {
 			if (rs.next()) {
 				do {
 					s = createSchoolBean(rs);
-					schools.add(s);
+					v_opps.add(s);
 
 					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
 						rs.next();
@@ -190,7 +184,7 @@ public class SchoolDB {
 			catch (Exception e) {}
 		}
 
-		return schools;
+		return v_opps;
 	}
 
 	public static Vector<School> getSchools(SchoolSystem ss) throws SchoolException {
@@ -205,12 +199,13 @@ public class SchoolDB {
 		try {
 			schools = new Vector<School>(10);
 
-			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, " + "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
+			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, "
+					+ "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
 					+ "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID "
 					+ "FROM SCHOOL LEFT JOIN PERSONNEL ON SCHOOL.PRINCIPAL_ID = PERSONNEL.PERSONNEL_ID, SCHOOL_SYSTEM, SCHOOL_SYSTEM_SCHOOLS "
 					+ "WHERE SCHOOL.SCHOOL_ID=SCHOOL_SYSTEM_SCHOOLS.SCHOOL_ID "
-					+ "AND SCHOOL_SYSTEM.SS_ID=SCHOOL_SYSTEM_SCHOOLS.SS_ID " + "AND SCHOOL_SYSTEM.SS_ID=" + ss.getSchoolSystemID()
-					+ " and SCHOOL.DELETED=0 ORDER BY SCHOOL_NAME";
+					+ "AND SCHOOL_SYSTEM.SS_ID=SCHOOL_SYSTEM_SCHOOLS.SS_ID " + "AND SCHOOL_SYSTEM.SS_ID="
+					+ ss.getSchoolSystemID() + " and SCHOOL.DELETED=0 ORDER BY SCHOOL_NAME";
 
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
@@ -297,7 +292,8 @@ public class SchoolDB {
 		try {
 			schools = new Vector<School>(10);
 
-			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, " + "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
+			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, "
+					+ "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
 					+ "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID "
 					+ "FROM SCHOOL LEFT JOIN PERSONNEL ON PRINCIPAL_ID = PERSONNEL_ID, SCHOOL_FAMILY, SCHOOL_FAMILY_SCHOOLS "
 					+ "WHERE SCHOOL.SCHOOL_ID=SCHOOL_FAMILY_SCHOOLS.SCHOOL_ID "
@@ -344,7 +340,8 @@ public class SchoolDB {
 		try {
 			schools = new Vector<School>(10);
 
-			sql = "SELECT S.SCHOOL_ID, SCHOOL_NAME, " + "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
+			sql = "SELECT S.SCHOOL_ID, SCHOOL_NAME, "
+					+ "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
 					+ "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID "
 					+ "FROM SCHOOL S LEFT JOIN PERSONNEL ON PRINCIPAL_ID=PERSONNEL_ID WHERE NOT EXISTS ("
 					+ "SELECT SS.SCHOOL_ID FROM SCHOOL_FAMILY_SCHOOLS SS WHERE S.SCHOOL_ID = SS.SCHOOL_ID) "
@@ -390,7 +387,8 @@ public class SchoolDB {
 		try {
 			schools = new Vector<School>(10);
 
-			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, " + "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
+			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, "
+					+ "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
 					+ "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID "
 					+ "FROM SCHOOL LEFT JOIN PERSONNEL ON PRINCIPAL_ID=PERSONNEL_ID, STRIKE_SCHOOL_GROUP, STRIKE_SCHOOL_GROUP_SCHOOLS "
 					+ "WHERE SCHOOL.SCHOOL_ID=STRIKE_SCHOOL_GROUP_SCHOOLS.SCHOOL_ID "
@@ -470,7 +468,6 @@ public class SchoolDB {
 		}
 		return s;
 	}
-
 	public static School getSchoolFullDetails(int id) throws SchoolException {
 
 		School s = null;
@@ -515,7 +512,6 @@ public class SchoolDB {
 		}
 		return s;
 	}
-
 	public static School getSchoolFromDeptId(int id) throws SchoolException {
 
 		School s = null;
@@ -525,7 +521,8 @@ public class SchoolDB {
 		String sql;
 
 		try {
-			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, " + "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
+			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, "
+					+ "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
 					+ "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID "
 					+ "FROM SCHOOL LEFT JOIN PERSONNEL ON PRINCIPAL_ID=PERSONNEL_ID " + "WHERE DEPT_ID=" + id;
 
@@ -1106,36 +1103,33 @@ public class SchoolDB {
 			try {
 				//check to see there is a other record
 				if (rs.getInt("FK_SCHOOL_DIRECTORY") > 0) {
-					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(
-							rs);
+					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
 					abean.setDetailsOther(obean);
-				}
-				else {
+				}else {
 					abean.setDetailsOther(null);
 				}
-
+				
 			}
 			catch (Exception e) {
-
+				// TODO Auto-generated catch block
 				abean.setDetailsOther(null);
 			}
 			try {
 				//check to see there is a other record
-				if (rs.getInt("sstreamid") > 0) {
+				if (rs.getInt("sstreamid") >0) {
 					SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
 					abean.setSchoolStreams(obean);
-				}
-				else {
+				}else {
 					abean.setSchoolStreams(null);
 				}
-
+				
 			}
 			catch (Exception e) {
-
+				// TODO Auto-generated catch block
 				abean.setSchoolStreams(null);
 			}
 
-			// assistant principals, if available
+// assistant principals, if available
 			try {
 				if (rs.getInt("AP_PERSONNEL_ID") > 0) {
 					do {
@@ -1157,7 +1151,6 @@ public class SchoolDB {
 		}
 		return abean;
 	}
-
 	public static School createSchoolFullDetailsBean(ResultSet rs) {
 
 		School abean = null;
@@ -1264,35 +1257,32 @@ public class SchoolDB {
 			try {
 				//check to see there is a other record
 				if (rs.getInt("FK_SCHOOL_DIRECTORY") > 0) {
-					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(
-							rs);
+					SchoolDirectoryDetailsOtherBean obean = SchoolDirectoryDetailsOtherService.createSchoolDirectoryDetailsOtherBean(rs);
 					abean.setDetailsOther(obean);
-				}
-				else {
+				}else {
 					abean.setDetailsOther(null);
 				}
-
+				
 			}
 			catch (Exception e) {
-
+				// TODO Auto-generated catch block
 				abean.setDetailsOther(null);
 			}
 			try {
 				//check to see there is a other record
-				if (rs.getInt("sstreamid") > 0) {
+				if (rs.getInt("sstreamid") >0) {
 					SchoolStreamDetailsBean obean = SchoolStreamDetailsService.createSchoolStreamDetailsBean(rs);
 					abean.setSchoolStreams(obean);
-				}
-				else {
+				}else {
 					abean.setSchoolStreams(null);
 				}
-
+				
 			}
 			catch (Exception e) {
-
+				// TODO Auto-generated catch block
 				abean.setSchoolStreams(null);
 			}
-			// assistant principals, if available
+// assistant principals, if available
 			try {
 				if (rs.getInt("AP_PERSONNEL_ID") > 0) {
 					do {
@@ -1314,25 +1304,24 @@ public class SchoolDB {
 		}
 		return abean;
 	}
-
 	public static int getSchoolZoneBySchoolName(String schoolName) throws SchoolException {
-
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
-		int schoolZone = 0;
-
+		int schoolZone=0;
+		
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_school_zone_by_name(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, schoolName);
+			stat.setString(2,schoolName);
 			stat.execute();
 
+			
 			rs = (ResultSet) stat.getObject(1);
 
 			while (rs.next()) {
-				schoolZone = rs.getInt("zone_id");
+				schoolZone=rs.getInt("zone_id");
 			}
 		}
 		catch (SQLException e) {
@@ -1355,10 +1344,8 @@ public class SchoolDB {
 		}
 		return schoolZone;
 	}
-
 	public static ArrayList<SchoolStreamSelectListBean> getSchoolsByRegionZone(School s) throws RegionException {
-
-		ArrayList<SchoolStreamSelectListBean> tm = new ArrayList<SchoolStreamSelectListBean>();
+		ArrayList<SchoolStreamSelectListBean>  tm = new ArrayList<SchoolStreamSelectListBean> ();
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
@@ -1373,20 +1360,20 @@ public class SchoolDB {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			while (rs.next()) {
+			while(rs.next())
+			{
 				SchoolStreamSelectListBean bean = new SchoolStreamSelectListBean();
 				bean.setSchoolId(rs.getInt("school_id"));
 				bean.setSchoolName(rs.getString("school_name"));
 				tm.add(bean);
-
+				
 			}
 		}
 		catch (SQLException e) {
 			System.err.println("TreeMap<String,Integer> getSchoolsByRegionZone(School s) " + e);
 			throw new RegionException("Can not extract Schools from DB.", e);
-		}
-		catch (SchoolException e) {
-
+		} catch (SchoolException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -1406,9 +1393,7 @@ public class SchoolDB {
 
 		return tm;
 	}
-
 	public static ArrayList<SchoolStreamSelectListBean> getSchoolsByZone(School s) throws RegionException {
-
 		ArrayList<SchoolStreamSelectListBean> tm = new ArrayList<SchoolStreamSelectListBean>();
 		Connection con = null;
 		CallableStatement stat = null;
@@ -1423,20 +1408,20 @@ public class SchoolDB {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			while (rs.next()) {
+			while(rs.next())
+			{
 				SchoolStreamSelectListBean bean = new SchoolStreamSelectListBean();
 				bean.setSchoolId(rs.getInt("school_id"));
 				bean.setSchoolName(rs.getString("school_name"));
 				tm.add(bean);
-
+				
 			}
 		}
 		catch (SQLException e) {
 			System.err.println("TreeMap<String,Integer> getSchoolsByRegionZone(School s) " + e);
 			throw new RegionException("Can not extract Schools from DB.", e);
-		}
-		catch (SchoolException e) {
-
+		} catch (SchoolException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -1456,12 +1441,8 @@ public class SchoolDB {
 
 		return tm;
 	}
-
-	public static ArrayList<SchoolStreamSelectListBean> getSchoolsByRegionZone(	Integer regionid, Integer zoneid,
-																																							Integer schoolid)
-			throws RegionException {
-
-		ArrayList<SchoolStreamSelectListBean> tm = new ArrayList<SchoolStreamSelectListBean>();
+	public static ArrayList<SchoolStreamSelectListBean> getSchoolsByRegionZone(Integer regionid,Integer zoneid, Integer schoolid) throws RegionException {
+		ArrayList<SchoolStreamSelectListBean>  tm = new ArrayList<SchoolStreamSelectListBean> ();
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
@@ -1476,12 +1457,13 @@ public class SchoolDB {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			while (rs.next()) {
+			while(rs.next())
+			{
 				SchoolStreamSelectListBean bean = new SchoolStreamSelectListBean();
 				bean.setSchoolId(rs.getInt("school_id"));
 				bean.setSchoolName(rs.getString("school_name"));
 				tm.add(bean);
-
+				
 			}
 		}
 		catch (SQLException e) {
@@ -1505,10 +1487,7 @@ public class SchoolDB {
 
 		return tm;
 	}
-
-	public static ArrayList<SchoolStreamSelectListBean> getSchoolsByZone(Integer zoneid, Integer schoolid)
-			throws RegionException {
-
+	public static ArrayList<SchoolStreamSelectListBean> getSchoolsByZone(Integer zoneid, Integer schoolid) throws RegionException {
 		ArrayList<SchoolStreamSelectListBean> tm = new ArrayList<SchoolStreamSelectListBean>();
 		Connection con = null;
 		CallableStatement stat = null;
@@ -1523,17 +1502,17 @@ public class SchoolDB {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			while (rs.next()) {
+			while(rs.next())
+			{
 				SchoolStreamSelectListBean bean = new SchoolStreamSelectListBean();
 				bean.setSchoolId(rs.getInt("school_id"));
 				bean.setSchoolName(rs.getString("school_name"));
 				tm.add(bean);
-
+				
 			}
 		}
 		catch (SQLException e) {
-			System.err.println(
-					"ArrayList<SchoolStreamSelectListBean> getSchoolsByZone(Integer zoneid, Integer schoolid " + e);
+			System.err.println("ArrayList<SchoolStreamSelectListBean> getSchoolsByZone(Integer zoneid, Integer schoolid " + e);
 			throw new RegionException("Can not extract Schools from DB.", e);
 		}
 		finally {
@@ -1553,5 +1532,52 @@ public class SchoolDB {
 
 		return tm;
 	}
+	public static Vector<School> getSchoolsOffices() throws SchoolException {
 
+		Vector<School> schools = null;
+		School s = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			schools = new Vector<School>(126);
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_schools_4; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				do {
+					s = createSchoolBean(rs);
+					schools.add(s);
+
+					if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == s.getSchoolID()))
+						
+						rs.next();
+						
+				} while (!rs.isAfterLast());
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("SchoolDB.getSchoolsOffices(): " + e);
+			throw new SchoolException("Can not extract schools from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return schools;
+	}
 }
