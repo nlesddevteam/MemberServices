@@ -107,7 +107,7 @@
 				    	<select name='school' id="schoolSelect" class="form-control">
                           <option value="-1">PLEASE SELECT</option>
                           <%
-                          	Vector schools = SchoolDB.getSchools();
+                          	Collection<School> schools = SchoolDB.getSchools();
                             Iterator iter = schools.iterator();%>
 							
                             <option value="277" <%= (s != null)?(s.getSchoolID()!=277?"":" SELECTED"):""%>>District/Avalon Regional Office</option>
