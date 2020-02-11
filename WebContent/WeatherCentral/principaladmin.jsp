@@ -102,6 +102,11 @@
 		<tr id="bodyContainer">
 			<td width="100%" align="left" valign="top">				
 				<table width="60%" cellpadding="0" cellspacing="0" border="0" style="padding: 10px;" align="center">
+				 <tr>
+            <td style="background-color:#ffe6e6;border:1px solid red;font-size:12px;padding:4px;"><b>PLEASE NOTE:</b> Live Updates to school status are delayed up to 5 minutes after you submit your change here. Please wait 5 minutes to reload/refresh the NLESD school status website to see your changes.</td>
+            </tr>
+            <tr><td colspan=3>&nbsp;</td></tr>
+            <tr>
 					<tr>
 						<td width="100%" align="left" valign="top">
 							<span class="boldBlack11pxTitle">School Status Central Admin</span><BR />
