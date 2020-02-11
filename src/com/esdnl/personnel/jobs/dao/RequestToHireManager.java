@@ -12,7 +12,6 @@ import com.awsd.school.SchoolDB;
 import com.awsd.security.User;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
-import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 public class RequestToHireManager {
@@ -492,7 +491,8 @@ public class RequestToHireManager {
 				break;
 			case 1000:
 			case 1001:
-			case 1002://Labrador Regional Office
+			case 1002:
+			case 1003:	//Labrador Regional Office
 				zoneid = 4;
 				break;
 			case 1009: // Avalon West Satellite Office

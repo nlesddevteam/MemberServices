@@ -9,7 +9,7 @@ public class RequestToHireStatus {
 	public static final RequestToHireStatus APPROVEDDIVISION = new RequestToHireStatus(2, "Approved Division Director");
 	public static final RequestToHireStatus APPROVEDBUDGET = new RequestToHireStatus(3, "Approved Budgeting/Comptroller");
 	public static final RequestToHireStatus APPROVEDASSISTANT = new RequestToHireStatus(4, "Approved Assistant Director");
-	public static final RequestToHireStatus APPROVEDASSISTANTHR = new RequestToHireStatus(5, "Approved Assistant Director HR");
+	public static final RequestToHireStatus APPROVEDASSISTANTHR = new RequestToHireStatus(5, "Approved Associate Director of Education (Programs and Human Resources)");
 	public static final RequestToHireStatus ADCREATED = new RequestToHireStatus(6, "AD Created");
 	public static final RequestToHireStatus REJECTED = new RequestToHireStatus(7, "Rejected");
 	public static final RequestToHireStatus NOTIFICATIONSENT = new RequestToHireStatus(9, "Notification Sent");
