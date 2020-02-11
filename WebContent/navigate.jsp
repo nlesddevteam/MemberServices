@@ -508,7 +508,19 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
+<!-- Professional Learning Resources --> 
+					<esd:SecurityAccessRequired
+						permissions="PROFESSIONAL-LEARNING-RESOURCES">
 
+						<div class="menuIconImage">
+							<a href="https://pl.nlesd.ca"
+								target="_blank"> <img
+								src="includes/img/menu/plr-off.png"
+								class="img-swap menuImage" border=0
+								title="Professional Learning Resources">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
 
 					<!-- Growth Plan 
 			  	 <esd:SecurityAccessRequired permissions="PPGP-VIEW">
