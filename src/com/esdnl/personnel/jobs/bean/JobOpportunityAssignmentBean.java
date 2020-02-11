@@ -129,6 +129,9 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		case 840: 
 			txt="Labrador Wabush Bus Depot";
 			break;
+		case 841: 
+			txt="Labrador City/Wabush Area";
+			break;			
 		case 285: 
 			txt="Burin Bus Depot";
 			break;			
@@ -252,7 +255,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else if(this.location == 839 || this.location == 840) {
+			}else if(this.location == 839 || this.location == 840 || this.location == 841) {
 				try {
 					zone = SchoolZoneService.getSchoolZoneBean(4);
 				} catch (SchoolException e) {

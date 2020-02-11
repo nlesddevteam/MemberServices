@@ -35,6 +35,10 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 				int rid = form.getInt("rid");
 				int status = form.getInt("status");
 				String statustype = form.get("rtype");
+				String statusnotes=null;
+				if(form.exists("rnotes")) {
+					statusnotes=form.get("rnotes");
+				}
 				RequestToHireBean rth = RequestToHireManager.getRequestToHireById(rid);
 				RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
 				if(statustype.equals("A")){
@@ -54,7 +58,7 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 							rhis.setStatusId(RequestToHireStatus.get(status));
 							RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 						}
-					}if(rth.getDivision() == 7) {
+					}else if(rth.getDivision() == 7) {
 						//student assistant only requires divison director
 						if(status == 2) {
 							//by pass one of the validations for ad-hr
@@ -75,7 +79,11 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid));
 				}else{
 					RequestToHireManager.approveRequestToHire(rid,RequestToHireStatus.REJECTED.getValue(), Integer.toString(usr.getPersonnel().getPersonnelID()));
-					rhis.setNotes(RequestToHireStatus.REJECTED.getDescription() + ":" + usr.getPersonnel().getFullName());
+					if(statusnotes != null) {
+						rhis.setNotes(RequestToHireStatus.REJECTED.getDescription() + ":" + usr.getPersonnel().getFullName() + "(" + statusnotes + ")");
+					}else {
+						rhis.setNotes(RequestToHireStatus.REJECTED.getDescription() + ":" + usr.getPersonnel().getFullName());
+					}
 					rhis.setRequestToHireId(rid);
 					rhis.setStatusId(RequestToHireStatus.REJECTED);
 					RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
