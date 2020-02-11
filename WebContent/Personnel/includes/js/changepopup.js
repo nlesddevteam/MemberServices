@@ -492,4 +492,56 @@
 		$('#frmAdRequest').attr('action',posturl);
 		$('#frmAdRequest').submit();
 	}
+	function openreject(trantype,transtatus) {
+		$("#modaltitle").text("Reject Request To Hire");
+		$("#modaltext").text(
+				"Are you sure you would like to reject this request?");
+		$("#trantype").val(trantype);
+		$("#transtatus").val(transtatus);
+		$("#modalnotes").show();
+		// now we add the onclick event
+		$("#btnreject").click(function() {
+			updaterequeststatusnotes();
+		});
+		
+		$('#myModal').modal('show');
+	}
+    function updaterequeststatusnotes()
+    {
+    	var vrid=$("#rid").val();
+    	var vrtype=$("#trantype").val();
+    	var vstatus=$("#transtatus").val();
+    	var vnotes=$("#rnotes").val();
+    	
+    	$.ajax(
+     			{
+     				type: "POST",  
+     				url: "approveDeclineRequestToHire.html",
+     				data: {
+     					rid: vrid, rtype:vrtype, status: vstatus,rnotes: vnotes
+     				}, 
+     				success: function(xml){
+     					$(xml).find('RTH').each(function(){
+     							
+     							
+     							if($(this).find("STATUS").text() == "SUCCESS")
+     								{
+										window.location="addRequestToHire.html?rid=" + vrid;
+     								}else{
+     									alert("Error updating request.");
+     									
+     								}
+						});
+
+     					
+     				},
+     				  error: function(xhr, textStatus, error){
+     				      alert("Status:" + xhr.statusText + "  " + "Text:" +textStatus + "  " + "Error:" + error );
+
+     				  },
+     				dataType: "text",
+     				async: false
+     			}
+     		);
+    }
 	

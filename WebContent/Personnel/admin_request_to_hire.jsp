@@ -586,12 +586,13 @@ var pageWordCountConf = {
 			     		</td>
 			     		</tr>
 
-<c:if test="${VIEWAPPROVE}">
 	<c:if test="${rbean.status.value eq 2 }">
 	     				<tr>
 			     		<td class='tableTitleL'>POSITION NUMBER:</td>
 			     		<td class='tableResultL'>
-			     		<input type="text" name="position_number" id="position_number" class="form-control">
+			     		<c:if test="${VIEWAPPROVE}">
+			     			<input type="text" name="position_number" id="position_number" class="form-control">
+			     		</c:if>
 			     		</td>	                    
 			     		<td class='tableTitleR'></td>
 			     		<td class='tableResultR'></td>
@@ -602,7 +603,7 @@ var pageWordCountConf = {
 						<tr>
 			     		<td class='tableTitleL'>POSITION NUMBER:</td>
 			     		<td class='tableResultL'>
-			     		<div class="form-control">${empty rbean.positionNumber ?'':rbean.positionNumber}</div>
+			     		${empty rbean.positionNumber ?'':rbean.positionNumber}
 			     		</td>	                    
 			     		<td class='tableTitleR'></td>
 			     		<td class='tableResultR'></td>
@@ -613,7 +614,6 @@ var pageWordCountConf = {
 	  	
 		
 	</c:if>
-</c:if>
 
 </tbody>
 </table>
@@ -672,19 +672,19 @@ var pageWordCountConf = {
                                       						<c:if test="${VIEWAPPROVE}">
 	                                      					<c:if test="${rbean.status.value eq 1 }">
 	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','2','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','2','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="openreject('D','2')">
 	                                      					</c:if>
 	                                      					<c:if test="${rbean.status.value eq 2 }">
 	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatuscomp('A','3','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','3','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="openreject('D','3')">
 	                                      					</c:if>
 	                                      					<c:if test="${rbean.status.value eq 3 }">
 	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','4','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','4','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="openreject('D','4')">
 	                                      					</c:if>
 	                                      					<c:if test="${rbean.status.value eq 4 }">
 	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','5','${rbean.id}')">
-	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="updaterequeststatus('D','5','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="openreject('D','5')">
 	                                      					</c:if>
 															<c:if test="${rbean.status.value eq 5 }">
                                       							<input class="btn btn-primary btn-xs" type="button" value="Post this Ad" onclick="PostRequestToHire();">
@@ -710,7 +710,34 @@ var pageWordCountConf = {
  </div>        
      </form>                           
    </div></div></div> 
-   
+ </div>        
+     </form>                           
+   </div></div></div> 
+   <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><span id="modaltitle"></span></h4>
+      </div>
+      <div class="modal-body">
+        <p><span id="modaltext"></span></p>
+      </div>
+      <div class="modal-body2" style="display:none;text-align:center;" id="modalnotes">
+      	<p>Notes:</p>
+      	<br>
+        <textarea class = "form-control" rows = "5" style="width:75%;display: block;margin-left: auto;margin-right: auto;" id="rnotes"></textarea>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-xs btn-primary" id="btnreject">Ok</button>
+        <button type="button" class="btn btn-xs btn-default" data-dismiss="modal" >Close</button><input type="hidden" id="trantype"><input type="hidden" id="transtatus">
+      </div>
+    </div>
+
+  </div>
+</div>   
    <script>
     CKEDITOR.replace( 'comments',{wordcount: pageWordCountConf,height:150});
     </script>   

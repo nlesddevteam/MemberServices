@@ -200,7 +200,10 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 						break;
 					case 1002: //Labrador Wabush Bus Depot
 						location_id = 840;
-						break;							
+						break;
+					case 1003: //Labrador Wabush Bus Depot
+						location_id = 841;
+						break;	
 					default:
 
 						location_id = SchoolDB.getSchoolFromDeptId(Integer.parseInt(req.getWorkLocation().trim()) % 1000).getSchoolID();
