@@ -102,10 +102,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 			writer = new PrintWriter(new FileWriter(all_view_tmp), true);
 
-			
 			School schoolST = null;		
-			
-		
+					
 						
 			try {
 				Iterator<School> iter = SchoolDB.getSchoolsOffices().iterator();
@@ -161,7 +159,7 @@ public class SchoolClosureStatusWorker extends TimerTask {
 					
 									
 					writer.println("<tr id="+schoolST.getSchoolID()+">");			
-					writer.println("<td>"+schoolST.getSchoolName() + " " + schoolST.getSchoolID() +"</td>");					
+					writer.println("<td>"+schoolST.getSchoolName() + "</td>");					
 			    		        
 			      switch (code) {
 			        case 186:
@@ -219,9 +217,12 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			        default:
 			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;'>OTHER</td>");
 			          break;	    
-			      }   
-			        writer.println("<td>"+schoolST.getSchoolClosureStatus().getClosureStatusDescription() +"</td>");  
-			   
+			      }         
+			         			      
+			        writer.println("<td>"+schoolST.getSchoolClosureStatus().getClosureStatusDescription() + "<br/>");  
+			        writer.println(((schoolST.getSchoolClosureStatus().getSchoolClosureNote() !=null)?schoolST.getSchoolClosureStatus().getSchoolClosureNote()+" ":""));  
+			        writer.println("</td>");     			        
+			        
 			        if (schoolST.getZone() !=null) {			    	  			    	
 			    	  
 			    	  int schoolZone=schoolST.getZone().getZoneId();		        

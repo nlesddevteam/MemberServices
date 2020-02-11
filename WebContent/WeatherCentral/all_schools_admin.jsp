@@ -93,6 +93,10 @@
               </td>
             </tr>
             <tr>
+            <td colspan=3 style="background-color:#ffe6e6;border:1px solid red;font-size:12px;padding:4px;"><b>PLEASE NOTE:</b> Live Updates to school status are delayed up to 5 minutes after you submit your change here. Please wait 5 minutes to reload/refresh the NLESD school status website to see your changes.</td>
+            </tr>
+            <tr><td colspan=3>&nbsp;</td></tr>
+            <tr>
               
               <td  width="30%" valign="middle" >
                 <span class="boldBlack11pxLower">School Name</span><BR>
