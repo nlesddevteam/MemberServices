@@ -10,9 +10,6 @@ import java.util.Vector;
 import com.awsd.school.School;
 import com.awsd.school.SchoolDB;
 import com.awsd.school.SchoolException;
-import java.util.Arrays;
-import java.util.List;
-
 import com.awsd.servlet.ControllerServlet;
 
 public class SchoolClosureStatusWorker extends TimerTask {
@@ -110,11 +107,10 @@ public class SchoolClosureStatusWorker extends TimerTask {
 				
 				writer.println("<table id='schoolStatusTable' class='table table-condensed table-striped table-bordered' style='font-size:11px;' width='100%'>");
 				writer.println("<thead><tr  style='text-transform:uppercase;font-weight:bold;'>"
-						+ "<th width='20%'>SCHOOL/BUILDING</th>"
-						+ "<th width='10%'>STATUS</th>"
-						+ "<th width='40%'>DESCRIPTION/NOTE</th>"						
-						+ "<th width='10%'>REGION</th>"
-						+ "<th width='20%'>LOCATION</th>"
+						+ "<th width='25%'>SCHOOL/BUILDING</th>"
+						+ "<th width='15%'>STATUS</th>"
+						+ "<th width='50%'>DESCRIPTION/NOTE</th>"						
+						+ "<th width='10%'>REGION</th>"						
 						+ "</tr></thead>");
 				writer.println("<tbody>");
 				
@@ -159,63 +155,65 @@ public class SchoolClosureStatusWorker extends TimerTask {
 					
 									
 					writer.println("<tr id="+schoolST.getSchoolID()+">");			
-					writer.println("<td>"+schoolST.getSchoolName() + "</td>");					
-			    		        
+					writer.println("<td><span style='font-size:12px;font-weight:bold;'>"+schoolST.getSchoolName() + "</span><br/>");					
+					writer.println(((schoolST.getTownCity() !=null)?schoolST.getTownCity()+", NL":"N/A")+"</td>");
+					
+					
 			      switch (code) {
 			        case 186:
-			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:black;font-weight:bold;'>BUS DELAYED</td>");
+			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:black;font-weight:bold;vertical-align:middle;'>BUS DELAYED</td>");
 			          break;
 			        case 143:
 			        case 144:
 			        case 145:
 			        case 146:
-			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:black;font-weight:bold;'>DELAYED OPENING</td>");
+			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:black;font-weight:bold;vertical-align:middle;'>DELAYED OPENING</td>");
 			          break;
 			        case 183:
-			        	writer.println("<td style='text-align:center;background-color:#bf00bd;font-size:11px;color:white;font-weight:bold;'>KINDERSTART SESSION</td>");
+			        	writer.println("<td style='text-align:center;background-color:#bf00bd;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>KINDERSTART SESSION</td>");
 			          break;
 			        case 123:			        
 			        case 184:
 			        case 185:
-			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;'>OFFICE CLOSED</td>");
+			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>OFFICE CLOSED</td>");
 			          break;
 			        case 8:
-			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;'>OTHER STATUS</td>");
+			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>OTHER STATUS</td>");
 			          break;
 			        case 7:
 			        case 10:
-			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;'>CLOSED ALL DAY</td>");
+			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>CLOSED ALL DAY</td>");
 			          break;
 			        case 82:
 			        case 83:
 			        case 84:
-			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR PD</td>");
+			        	writer.println("<td style='text-align:center;background-color:#ff0000;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>CLOSED FOR PD</td>");
 			          break;
 			        case 102:
-			        	writer.println("<td style='text-align:center;background-color:#0003ff;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR HOLIDAY</td>");
+			        	writer.println("<td style='text-align:center;background-color:#0003ff;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>CLOSED FOR HOLIDAY</td>");
 			          break;
 			        case 11:
-			        	writer.println("<td style='text-align:center;background-color:#bf0000;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR AFTERNOON</td>");
+			        	writer.println("<td style='text-align:center;background-color:#bf0000;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>CLOSED FOR AFTERNOON</td>");
 			          break;
 			        case 62:
 			        case 4:
 			        case 21:
-			        	writer.println("<td style='text-align:center;background-color:#bf0000;font-size:11px;color:white;font-weight:bold;'>CLOSED FOR MORNING</td>");
+			        	writer.println("<td style='text-align:center;background-color:#bf0000;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>CLOSED FOR MORNING</td>");
 			          break;  
 			        case 22:
-			        	writer.println("<td style='text-align:center;background-color:#008001;font-size:11px;color:white;font-weight:bold;'>SUMMER BREAK</td>");
+			        	writer.println("<td style='text-align:center;background-color:#008001;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>SUMMER BREAK</td>");
 			          break;
 			        case 163:
-			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:red;font-weight:bold;'>CLOSING EARLY</td>");
+			        	writer.println("<td style='text-align:center;background-color:#fffc00;font-size:11px;color:red;font-weight:bold;vertical-align:middle;'>CLOSING EARLY</td>");
 			          break;  
 			        case 9:
-			        	writer.println("<td style='text-align:center;background-color:#008000;font-size:11px;color:white;font-weight:bold;'>OPEN</td>");
+			        	writer.println("<td style='text-align:center;background-color:#008000;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>OPEN</td>");
 			          break;
 			        case 122:
-			        	writer.println("<td style='text-align:center;background-color:#1c91ec;font-size:11px;color:white;font-weight:bold;'>SCHOOL REOPENING</td>");
+			        	writer.println("<td style='text-align:center;background-color:#1c91ec;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>SCHOOL REOPENING</td>");
 			          break;  
 			        default:
-			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;'>OTHER</td>");
+			        	writer.println("<td style='text-align:center;background-color:#ff8200;font-size:11px;color:white;font-weight:bold;vertical-align:middle;'>OTHER</td>");
 			          break;	    
 			      }         
 			         			      
@@ -229,30 +227,29 @@ public class SchoolClosureStatusWorker extends TimerTask {
 				      switch (schoolZone) {
 				      
 				        case 1:
-				        	writer.println("<td class='region1solid' style='text-align:center;color:white;'>AVALON</td>");
+				        	writer.println("<td class='region1solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>AVALON</td>");
 				          break;
 				        case 2:				        
-				        	writer.println("<td class='region2solid' style='text-align:center;color:white;'>CENTRAL</td>");
+				        	writer.println("<td class='region2solid' style='text-align:center;vertical-align:middle;color:rgba(255,255,255, 1);font-weight:bold;'>CENTRAL</td>");
 				          break;
 				        case 3:
-				        	writer.println("<td class='region3solid' style='text-align:center;color:white;'>WESTERN</td>");
+				        	writer.println("<td class='region3solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>WESTERN</td>");
 				          break;
 				        case 4:
-				        	writer.println("<td class='region4solid' style='text-align:center;color:white;'>LABRADOR</td>");
+				        	writer.println("<td class='region4solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>LABRADOR</td>");
 				          break;
 				        case 5:
-				        	writer.println("<td class='region5solid' style='text-align:center;color:white;'>PROVINCIAL</td>");
+				        	writer.println("<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>");
 				          break;
 				        default:
-				        	writer.println("<td class='region5solid' style='text-align:center;color:white;'>PROVINCIAL</td>");
+				        	writer.println("<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>");
 				          break;	      	  
 				      }			    	
 			      } else {
-			    	  writer.println("<td class='region5solid' style='text-align:center;color:white;'>PROVINCIAL</td>");
+			    	  writer.println("<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>");
 			      }
 			      
-				     				      	
-				     writer.println("<td>"+((schoolST.getTownCity() !=null)?schoolST.getTownCity()+", NL":"N/A")+"</td>");         
+				     				      					    
 			      		
 					
 			        writer.println("</tr>");			        
