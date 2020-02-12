@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TimerTask;
 import java.util.TreeMap;
-
 import com.awsd.school.SchoolException;
 import com.awsd.school.bean.RegionBean;
 import com.awsd.school.bean.RegionException;
@@ -30,10 +29,11 @@ import com.nlesd.school.service.SchoolZoneService;
 public class OpenJobsWorker extends TimerTask {
 
 //FOR LIVE SERVER
-	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
+	//private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 	
 //FOR LOCAL HOST ONLY
-	//private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
+	
+	private String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
 	
 	public OpenJobsWorker() {
 
@@ -94,6 +94,8 @@ public class OpenJobsWorker extends TimerTask {
 				writer = new PrintWriter(new FileWriter(job_tmp), true);
 
 				
+								
+				
 				
 			if (jobs.length > 0) {
 				
@@ -108,7 +110,7 @@ public class OpenJobsWorker extends TimerTask {
 						writer.println("</span>");
 						writer.println("<br/><table width='100%' class='table table-condensed table-striped educationalJobsList"+jlist+"' style='font-size:11px;width:100%;'>");
 						writer.println("<thead>");
-						writer.println("<tr><th width='15%'>COMPETITION #</th><th width='55%'>POSITION TITLE/LOCATION(S)</th><th width='20%'>COMPETITION END DATE</th><th width='10%'>OPTIONS</th></tr>");
+						writer.println("<tr><th width='15%'>COMPETITION #</th><th width='45%'>POSITION TITLE/LOCATION(S)</th><th width='10%'>REGION</th><th width='20%'>COMPETITION END DATE</th><th width='10%'>OPTIONS</th></tr>");
 						writer.println("</thead>");
 						writer.println("<tbody>");				
 							//writer.println(""+ JobTypeConstant.ALL[ii].getDescription() + "");				
@@ -131,9 +133,26 @@ public class OpenJobsWorker extends TimerTask {
 							writer.println("<td>");							
 							writer.println("<b>" + jobs[i].getPositionTitle()+"</b><br/>");
 							for (int j = 0; ((ass != null) && (j < ass.length)); j++) {
-								writer.println(" &middot; " + ass[j].getLocationText() + "<br>");
+								writer.println(" &middot; " + ass[j].getLocationText()+ "<br>");								
 							}
-							writer.println("</td>");					
+							writer.println("</td>");	
+							
+							
+							String thisRegion= ((ass[0].getLocationZone()!=null)?ass[0].getLocationZone().toString():"N/A");
+							
+							if(thisRegion.equalsIgnoreCase("AVALON")) {
+								writer.println("<td class='region1solid' style='text-align:center;color:white;vertical-align:middle;'>AVALON</td>");
+							} else if (thisRegion.equalsIgnoreCase("CENTRAL")) {
+								writer.println("<td class='region2solid' style='text-align:center;color:white;vertical-align:middle;'>CENTRAL</td>");
+							} else if (thisRegion.equalsIgnoreCase("WESTERN")) {
+								writer.println("<td class='region3solid' style='text-align:center;color:white;vertical-align:middle;'>WESTERN</td>");
+							} else if (thisRegion.equalsIgnoreCase("LABRADOR")) {
+								writer.println("<td class='region4solid' style='text-align:center;color:white;vertical-align:middle;'>LABRADOR</td>");
+							} else {
+								writer.println("<td class='region5solid' style='text-align:center;color:white;vertical-align:middle;'>PROVINCIAL</td>");
+							}
+							
+							
 							
 							if (!jobs[i].isCancelled()) {
 								writer.println("<td>" + jobs[i].getFormatedCompetitionEndDate() +"</td>");								
