@@ -217,8 +217,8 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			          break;	    
 			      }         
 			         			      
-			        writer.println("<td>"+schoolST.getSchoolClosureStatus().getClosureStatusDescription() + "<br/>");  
-			        writer.println(((schoolST.getSchoolClosureStatus().getSchoolClosureNote() !=null)?schoolST.getSchoolClosureStatus().getSchoolClosureNote()+" ":""));  
+			        writer.println("<td style='vertical-align:middle;'><span style='font-size:12px;'>"+schoolST.getSchoolClosureStatus().getClosureStatusDescription()+"</span>");  
+			        writer.println(((schoolST.getSchoolClosureStatus().getSchoolClosureNote() !=null)?"<br/><div style='margin-top:5px;'><b>NOTE:</b> "+schoolST.getSchoolClosureStatus().getSchoolClosureNote()+"</div>":""));  
 			        writer.println("</td>");     			        
 			        
 			        if (schoolST.getZone() !=null) {			    	  			    	
