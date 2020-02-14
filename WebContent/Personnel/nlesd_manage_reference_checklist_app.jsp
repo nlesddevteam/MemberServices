@@ -20,12 +20,12 @@
 <%
 	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("REFREQUEST");
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("PROFILE");
-  	String val1="5";
-	String val2="4";
-	String val3="3";
-	String val4="2";
-	String val5="1";
-	String val6="0";
+  	String val1="0";
+	String val2="1";
+	String val3="2";
+	String val4="3";
+	String val5="4";
+	String val6="5";
 	Personnel p = null;
 	try{
 		p = PersonnelDB.getPersonnelByEmail(refReq.getEmailAddress());
