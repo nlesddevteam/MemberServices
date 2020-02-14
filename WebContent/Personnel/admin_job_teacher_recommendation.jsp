@@ -92,7 +92,7 @@
            <form action="" method="POST" name="admin_rec_form" id="admin_rec_form">
                    	<input type='hidden' name='op' id='op' value='CONFIRM'/>
                    	<input type='hidden' name='comp_num' id='comp_num' value='<%=job.getCompetitionNumber() %>' />
-                 
+                 	<input type='hidden' name='jobtype' id='jobtype' value='<%=job.getIsSupport() %>' />
   
   
   <div class="panel panel-success">
@@ -188,7 +188,11 @@
             </table>         
                      
 </div>                  
-                                            
+         <% if(job.getIsSupport().equals("Y")){ %>
+         	<div style="font-size:14px;color:Green;font-weight:bold;"><input type='checkbox' id="chknoref" name="chknoref" value="Y" onclick="NoReferenceSelected()">&nbsp;&nbsp;&nbsp;No Reference/Interview Guide Required For This Position</div>
+         <%} %>
+
+        <br />                                    
        <div style="clear:both;"></div>
        <div style="font-size:14px;color:Green;font-weight:bold;">Current Reference Request(s)</div>
        <div id='current_ref_requests'>No requests currently sent.</div>
@@ -338,7 +342,7 @@ $('#position_other').keypress(function(e) {
 			                   <tr>
 			                   <td><b>4. Position Details.</b></td>
 			                   <td>
-			                   <b>UNION:</b> <%=rth.getUnionCodeString()%> &middot; <b>POSITION:</b> <%=rth.getPositionNameString()%> &middot; <b>SALARY:</b> <%=rth.getPositionSalary()%>
+			                   <b>UNION:</b> <%=rth.getUnionCodeString()%> &middot; <b>POSITION:</b> <%=rth.getPositionNameString()%> &middot; <b>SALARY:</b> <%=rth.getPositionSalary() == null?"":rth.getPositionSalary()%>
 		                       </td>
 			                   </tr>
 	                   <%} %>
@@ -403,9 +407,13 @@ $('#position_other').keypress(function(e) {
 	                               <tr>
 	                               <td><%=numCnt++%></td>
 	                               <td><b>Are the references satisfactory?</b>
-	                               				<input type="radio" name="References_Satisfactory" value="Yes" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("YES"))?"CHECKED":"")%>>Yes 
+	                               				
+											<% if(job.getIsSupport().equals("Y")){ %>
+												<input type="radio" name="References_Satisfactory" value="NA" CHECKED>NA
+											<%}else{%>
+												<input type="radio" name="References_Satisfactory" value="Yes" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("YES"))?"CHECKED":"")%>>Yes 
 	                                        	<input type="radio" name="References_Satisfactory" value="No" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("NO"))?"CHECKED":"")%>>No
-										
+											<%} %>
 	                               </td>	                               
 	                               </tr>
 	                               <tr>

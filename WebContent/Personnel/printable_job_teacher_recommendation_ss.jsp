@@ -683,6 +683,9 @@ input {border:1px solid silver;}
 		    
 		<%
 		//NOW WE GET THE LIST BEAN AND DETERMINE REF TYPE
+		if(rec.getReferenceId() > 0){
+			
+		
 		NLESDReferenceListBean nlesdref = NLESDReferenceListManager.getReferenceBeansByApplicantRec(rec.getReferenceId(),candidate.getSIN());
 		if(nlesdref.getReferenceType().equals("SUPPORT"))
 		{
@@ -697,7 +700,7 @@ input {border:1px solid silver;}
 		
 		%>
 		<jsp:include page="printable_rec_nlesd_manage_ref.jsp" />
-		<%} %>
+		<%}} %>
 		
 <jsp:include page="print_privacy.jsp" />
 	</body>

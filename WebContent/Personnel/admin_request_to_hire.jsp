@@ -476,7 +476,7 @@ var pageWordCountConf = {
 					                    			<option value="4">Finance - Student Transportation</option>
 					                    			<option value="5">Facilities</option>
 					                    			<option value="6">Human Resources</option>
-					                    			<option value="7">Human Resources - Student Assistant</option>
+					                    			<option value="7">Human Resources - Student Assistant/Casuals/Teacher Aides</option>
 					                    		</select>
 					                    		<input type='hidden' name='hidd' id='hidd' value="-1">	                                      		
 	                                      	</c:when>
@@ -491,7 +491,7 @@ var pageWordCountConf = {
 						                    			<option value="4">Finance - Student Transportation</option>
 						                    			<option value="5">Facilities</option>
 						                    			<option value="6">Human Resources</option>
-						                    			<option value="7">Human Resources - Student Assistant</option>
+						                    			<option value="7">Human Resources - Student Assistant/Casuals/Teacher Aides</option>
 						                    		</select>
 						                    		<input type='hidden' name='hidd' id='hidd' value="${empty rbean ?'-1': rbean.division eq 0 ?'-1':rbean.division}">	                                      			
 	                                      			</c:when>
