@@ -63,7 +63,7 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 						if(status == 2) {
 							//by pass one of the validations for ad-hr
 							RequestToHireManager.approveRequestToHire(rid,5, Integer.toString(usr.getPersonnel().getPersonnelID()));
-							rhis.setNotes(RequestToHireStatus.get(5).getDescription() + ":" + usr.getPersonnel().getFullName());
+							rhis.setNotes(RequestToHireStatus.get(2).getDescription() + ":" + usr.getPersonnel().getFullName());
 							rhis.setRequestToHireId(rid);
 							rhis.setStatusId(RequestToHireStatus.get(5));
 							RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
