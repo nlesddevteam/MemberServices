@@ -66,7 +66,7 @@
 <html>
 <head>
 	<title>MyHRP Applicant Profiling System</title>
-	<script type='text/javascript' src="js/personnel_ajax_v2.js"></script>
+	
 <script>
 	$("#loadingSpinner").css("display","none");
 </script>

@@ -105,6 +105,14 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			try {
 				Iterator<School> iter = SchoolDB.getSchoolsOffices().iterator();
 				
+				
+				writer.println("<script>");				
+				writer.println("$('document').ready(function(){$('#schoolStatusTable').DataTable({ 'order': [[ 0, 'asc' ]],'lengthChange': false, responsive: true, 'paging':   false,'lengthMenu': [[10, 20, 50, 100, -1], [10, 20, 50, 100, 'All']],");
+				writer.println("dom: 'Bfrtip', buttons: [	'copy','csv','excel',{extend: 'pdf',orientation: 'portrait', messageTop: 'SCHOOL STATUS REPORT',messageBottom: null,exportOptions: { columns: [ 0,1,2,3]}},");
+				writer.println("{ extend: 'print', orientation: 'portrait', messageTop: 'SCHOOL STATUS REPORT',messageBottom: null, exportOptions: {columns: [ 0,1,2,3] } }] });});");
+				writer.println("</script>");		
+				
+				
 				writer.println("<table id='schoolStatusTable' class='table table-condensed table-striped table-bordered' style='font-size:11px;' width='100%'>");
 				writer.println("<thead><tr  style='text-transform:uppercase;font-weight:bold;'>"
 						+ "<th width='25%'>SCHOOL/BUILDING</th>"

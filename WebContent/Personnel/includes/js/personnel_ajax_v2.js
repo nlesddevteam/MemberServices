@@ -251,7 +251,7 @@ function parseCurrentInterviewSummariesResponse(data) {
 }
 
 function onCandidateSelected(sin) {
-  if(sin == -1) {
+	if(sin == -1) {
 	  $('#candidate_info').hide();
 	  $('#candidate-recommendation-info').hide();
 	  $('#btn-refresh-candidate-info').hide();
@@ -281,12 +281,15 @@ function onCandidateSelected(sin) {
 
 
 function onReferenceAndInterviewSummarySelected(){
-	if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
-		$('#candidate-recommendation-info').show();
+	if($("#jobtype").val() == "N"){
+		if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
+			$('#candidate-recommendation-info').show();
+		}
+		else {
+			$('#candidate-recommendation-info').hide();
+		}
 	}
-	else {
-		$('#candidate-recommendation-info').hide();
-	}
+	
 }
 
 function onSendReferenceCheckRequest() {
@@ -565,4 +568,11 @@ function validateAdminComments()
 		
 
 }
-
+function NoReferenceSelected(){
+	if ($('#chknoref').is(":checked"))
+	{
+		$('#candidate-recommendation-info').show();
+	}else{
+		$('#candidate-recommendation-info').hide();
+	}
+}

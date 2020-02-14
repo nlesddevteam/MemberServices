@@ -163,7 +163,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 			txt = "Vista Region";
 			break;
 		case 0:
-			txt = "";
+			txt = "District Office";
 			break;
 		default:
 			School s = ((School) school_names.get(new Integer(this.location)));
@@ -205,6 +205,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 					zone = SchoolZoneService.getSchoolZoneBean(4);
 					break;
 				case -999:
+				case 0:
 					//txt = "District Office";
 					zone = SchoolZoneService.getSchoolZoneBean(1);
 					break;

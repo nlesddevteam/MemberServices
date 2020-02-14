@@ -502,7 +502,8 @@ public class RequestToHireManager {
 				zoneid = -1;
 				break;
 			case 2000:
-			case 2001://Western Regional Office
+			case 2001:
+			case 3034://Western Regional Office
 				zoneid = 3;
 				break;
 			case 3000: //Nova Central Regional Office
@@ -510,7 +511,6 @@ public class RequestToHireManager {
 			case 3031:
 			case 3032:
 			case 3033:
-			case 3034:
 			case 3035:
 			case 3036:
 			case 3037:
