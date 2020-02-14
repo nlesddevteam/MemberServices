@@ -16,10 +16,10 @@ public class SchoolClosureStatusWorker extends TimerTask {
 
 	private Vector<SchoolSystem> systems = null;
 //For LIVE copy
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
+	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 	
 	//For local copy
-	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
+	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";
 	
 
 	public SchoolClosureStatusWorker(Vector<SchoolSystem> systems) {
