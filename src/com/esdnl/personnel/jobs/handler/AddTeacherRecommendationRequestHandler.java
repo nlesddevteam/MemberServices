@@ -185,29 +185,22 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 								}
 							}
 							TeacherRecommendationBean bean = new TeacherRecommendationBean();
-							
-							
-							
-							
-							
-							
-							//add check for checkbox
-							System.out.println(form.get("chknoref"));
-							if(form.get("chknoref").equals("Y")) {
-								bean.setReferenceId(-1);
-								bean.setInterviewSummaryId(-1);
-								bean.setInterviewPanel("N/A");
+							//check for new no ref/summary checkbox
+							if(job.getIsSupport().equals("Y")){	
+								if(form.get("chknoref").equals("Y")) {
+									bean.setReferenceId(-1);
+									bean.setInterviewSummaryId(-1);
+									bean.setInterviewPanel("N/A");
+								}else {
+									bean.setReferenceId(form.getInt("reference_id"));
+									bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
+									bean.setInterviewPanel(form.get("Interview_Panel"));
+								}
 							}else {
 								bean.setReferenceId(form.getInt("reference_id"));
 								bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
 								bean.setInterviewPanel(form.get("Interview_Panel"));
 							}
-							
-							
-							
-							
-							
-							
 							bean.setCandidate2(form.get("candidate_2"));
 							bean.setCandidate3(form.get("candidate_3"));
 							bean.setCandidateId(form.get("candidate_name"));
