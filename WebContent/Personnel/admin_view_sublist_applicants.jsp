@@ -164,10 +164,125 @@
 	
 <script>
  $('document').ready(function(){
-	  $("#jobapps1").DataTable({"order": [[ 1, "asc" ]]});
-	  $("#jobapps2").DataTable({"order": [[ 1, "asc" ]]});
-	  $("#jobapps3").DataTable({"order": [[ 1, "asc" ]]});
-	  $("#jobapps4").DataTable({"order": [[ 1, "asc" ]]});
+	  $("#jobapps1").DataTable({"order": [[ 1, "asc" ]],
+		  dom: 'Blfrtip',
+	        buttons: [			        	
+	        	//'colvis',
+	        	'copy', 
+	        	'csv', 
+	        	'excel', 
+	        	{
+	                extend: 'pdfHtml5',
+	                footer:true,
+	                //orientation: 'landscape',
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3 ]
+	                }
+	            },
+	        	{
+	                extend: 'print',
+	                //orientation: 'landscape',
+	                footer:true,
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3]
+	                }
+	            }
+	        ] 
+	  
+	  
+	  });
+	  $("#jobapps2").DataTable({"order": [[ 1, "asc" ]],
+		  dom: 'Blfrtip',
+	        buttons: [			       	
+	       'copy', 
+	        	'csv', 
+	        	'excel', 
+	        	{
+	                extend: 'pdfHtml5',
+	                footer:true,
+	                //orientation: 'landscape',
+	                messageTop: ' ',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3,4 ]
+	                }
+	            },
+	        	{
+	                extend: 'print',
+	                //orientation: 'landscape',
+	                footer:true,
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3,4]
+	                }
+	            }
+	        ]
+	  
+	  });
+	  $("#jobapps3").DataTable({"order": [[ 1, "asc" ]],
+		  dom: 'Blfrtip',
+	        buttons: [			        	
+	        
+	        	'copy', 
+	        	'csv', 
+	        	'excel', 
+	        	{
+	                extend: 'pdfHtml5',
+	                footer:true,
+	                //orientation: 'landscape',
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3,4 ]
+	                }
+	            },
+	        	{
+	                extend: 'print',
+	                //orientation: 'landscape',
+	                footer:true,
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3,4]
+	                }
+	            }
+	        ]
+	  });
+	  $("#jobapps4").DataTable({"order": [[ 1, "asc" ]],
+		  dom: 'Blfrtip',
+	        buttons: [			        	
+	        	//'colvis',
+	        	'copy', 
+	        	'csv', 
+	        	'excel', 
+	        	{
+	                extend: 'pdfHtml5',
+	                footer:true,
+	                //orientation: 'landscape',
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3 ]
+	                }
+	            },
+	        	{
+	                extend: 'print',
+	                //orientation: 'landscape',
+	                footer:true,
+	                messageTop: '',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3]
+	                }
+	            }
+	        ]
+	  
+	  });
  });
 </script>
     
