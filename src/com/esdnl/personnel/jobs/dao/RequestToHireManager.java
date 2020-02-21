@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TreeMap;
 import java.util.Vector;
 import oracle.jdbc.OracleCallableStatement;
@@ -15,6 +17,9 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 public class RequestToHireManager {
+	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924));
+	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427));
+	
 	public static RequestToHireBean addRequestToHireBean(RequestToHireBean abean) throws JobOpportunityException {
 
 		Connection con = null;
@@ -164,7 +169,7 @@ public class RequestToHireManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
-			if(status == 2){
+			if(status == 2 || status == 13){
 				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.approve_rtf_dd(?,?,?); end;");
 			}else if(status == 3){
 				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.approve_rtf_bc(?,?,?); end;");
@@ -179,9 +184,11 @@ public class RequestToHireManager {
 
 			stat.setInt(1, rid);
 			stat.setInt(2, status);
-			if(status <= 5){
+			if(status <= 5 || status >=12){
 				//not used by rejected and ad created
 				stat.setString(3, statusby);
+			}else {
+				stat.setString(3, "");
 			}
 			
 			stat.execute();
@@ -253,6 +260,45 @@ public class RequestToHireManager {
 			catch (Exception e) {}
 		}
 
+	}
+	public static void updateRequestToHireStatus(int rid, int status) throws JobOpportunityException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rtf_status(?,?); end;");
+			stat.setInt(1, rid);
+			stat.setInt(2, status);
+			
+			stat.execute();
+
+			stat.close();
+
+			con.commit();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("updateRequestToHireStatus(int rid, int status): " + e);
+			throw new JobOpportunityException("Can not approve Request To Hire", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}	
 	public static RequestToHireBean createRequestToHireBean(ResultSet rs) {
 
@@ -472,6 +518,7 @@ public class RequestToHireManager {
 		boolean canview=false;
 		//first check zone
 		int zoneid;
+		int schoolid=-1;
 		StringBuilder sb = new StringBuilder();
 		sb.append("RTH-");
 		try {
@@ -481,7 +528,7 @@ public class RequestToHireManager {
 				zoneid = 1;
 				break;
 			case 4007: // Burin Satellite Office
-				zoneid = 1;
+				zoneid = 2;
 				break;
 			case 449: // St. Augustine's Primary
 				zoneid = 1;
@@ -522,7 +569,7 @@ public class RequestToHireManager {
 				break;
 			default:
 				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(test%1000).getSchoolName());
-				
+				schoolid = test%1000;
 			}
 			
 			switch(rbean.getStatus().getValue()){
@@ -573,6 +620,54 @@ public class RequestToHireManager {
 			case 7://Rejected
 				//user
 				canview=false;
+				break;
+			case 12://submitted for manager approval
+				if(burinschools.contains(schoolid)) {
+					canview = user.checkRole("RTH-BURIN-FAC-MAN");
+				}else if(vistaschools.contains(schoolid)) {
+					canview = user.checkRole("RTH-VISTA-FAC-MAN");
+				}else {
+					switch(zoneid){
+					case 1://Eastern
+						sb.append("EAST-");
+						break;
+					case 2://central
+						sb.append("CENT-");
+						break;
+					case 3://Western
+						sb.append("WEST-");
+						break;
+					case 4://Labrador
+						sb.append("LABR-");
+						break;	
+					default://nlesd
+						sb.append("EAST-");
+						break;
+					}
+					sb.append(rbean.getDivisionStringShort() + "-MAN");
+					canview = user.checkRole(sb.toString());
+				}
+				break;
+			case 13://submitted for manager approval
+				switch(zoneid){
+				case 1://Eastern
+					sb.append("EAST-");
+					break;
+				case 2://central
+					sb.append("CENT-");
+					break;
+				case 3://Western
+					sb.append("WEST-");
+					break;
+				case 4://Labrador
+					sb.append("LABR-");
+					break;	
+				default://nlesd
+					sb.append("EAST-");
+					break;
+				}
+				sb.append(rbean.getDivisionStringShort() + "-DD");
+				canview = user.checkRole(sb.toString());
 				break;
 			default:
 				canview=false;
@@ -929,6 +1024,61 @@ public class RequestToHireManager {
 
 		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
 	}
+	public static RequestToHireBean[] getRequestsToHireApprovalsDDMan(int divisionid,int zoneid,int statusid) throws JobOpportunityException {
+		Vector<RequestToHireBean> beans = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			beans = new Vector<RequestToHireBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_approvals_dd(?,?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, divisionid);
+			stat.setInt(3, zoneid);
+			stat.setInt(4, statusid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next())
+				//need to account for locations without zones: District Headquarters
+				if(rs.getInt("ZONE_ID") > 0) {
+					if(zoneid == rs.getInt("ZONE_ID")) {
+						//get records for passed in zone
+						beans.add(createRequestToHireBean(rs));
+					}
+				}else {
+					//no zone so will show with eastern
+					if(zoneid == 1) {
+						beans.add(createRequestToHireBean(rs));
+					}
+				}
+				
+
+		}
+		catch (SQLException e) {
+			System.err.println("getRequestsToHireApprovalsAD(int divisionid,int status): " + e);
+			throw new JobOpportunityException("Can not extract RequestToHireBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
+	}	
 	public static void deleteRequestToHire(int requestid)  {
 
 		Connection con = null;
@@ -963,5 +1113,64 @@ public class RequestToHireManager {
 			}
 			catch (Exception e) {}
 		}
-	}	
+	}
+	public static RequestToHireBean[] getRequestsToHireApprovalsMan(int divisionid,int statusid,String region) throws JobOpportunityException {
+		Vector<RequestToHireBean> beans = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			beans = new Vector<RequestToHireBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_approvals_dd(?,?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, divisionid);
+			if(region.equals("BURIN") || region.equals("VISTA")) {
+				stat.setInt(3, 2);
+			}else {
+				stat.setInt(3, RequestToHireManager.getDivisionID(region));
+			}
+			
+			stat.setInt(4, statusid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				int schoolid =  rs.getInt("WORK_LOCATION")%1000;
+				if(region.equals("BURIN")) {
+					if(burinschools.contains(schoolid)) {
+						beans.add(createRequestToHireBean(rs));
+					}
+				}else if(region.equals("VISTA")) {
+					if(vistaschools.contains(schoolid)) {
+						beans.add(createRequestToHireBean(rs));
+					}
+				}else {
+					beans.add(createRequestToHireBean(rs));
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("RequestToHireBean[] getRequestsToHireApprovalsMan(int divisionid,int statusid): " + e);
+			throw new JobOpportunityException("Can not extract RequestToHireBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
+	}
 }

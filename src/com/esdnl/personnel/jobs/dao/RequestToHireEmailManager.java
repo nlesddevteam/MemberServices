@@ -9,15 +9,20 @@ import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.PersonnelException;
 import com.awsd.school.SchoolDB;
 import com.awsd.school.SchoolException;
+import com.awsd.security.User;
+import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.bean.RequestToHireHistoryBean;
+import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.velocity.VelocityUtils;
 
 public class RequestToHireEmailManager {
-	
-	public static void sendRequestToHireEmail(RequestToHireBean rbean){
+	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924));
+	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427));
+	public static void sendRequestToHireEmail(RequestToHireBean rbean, User usr){
 		//first check zone
 		int zoneid;
+		int schoolid=-1;
 		String zonename="";
 		try {
 			Integer test =Integer.parseInt(rbean.getWorkLocation());
@@ -26,7 +31,7 @@ public class RequestToHireEmailManager {
 				zoneid = 1;
 				break;
 			case 4007: // Burin Satellite Office
-				zoneid = 1;
+				zoneid = 2;
 				break;
 			case 449: // St. Augustine's Primary
 				zoneid = 1;
@@ -67,7 +72,7 @@ public class RequestToHireEmailManager {
 				break;
 			default:
 				zoneid = SchoolDB.getSchoolZoneBySchoolName(SchoolDB.getSchoolFromDeptId(test%1000).getSchoolName());
-				
+				schoolid =  test%1000;
 			}
 			
 			
@@ -99,15 +104,86 @@ public class RequestToHireEmailManager {
 			switch(rbean.getStatus().getValue()){
 			case 1://submitted
 				//user and division manager
-				to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
-				emailtemplate="personnel/request_to_hire_submitted.vm";
-				model.put("requesterName", rbean.getRequestBy());
-				model.put("requestId", rbean.getId());
-				model.put("alevel","1" );
-				model.put("requestTitle",rbean.getJobTitle() );
-				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
-				historyNotes.append("Approval Email Sent To:");
-				break;
+				//add a check to see if it is facilites
+				if(rbean.getDivision() == 5) {
+					//check to see if it is burin first
+					if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")){
+						//division director so send email to comptroller
+						RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						rbean.setStatus(RequestToHireStatus.APPROVEDDIVISION);
+					}else {
+						if(vistaschools.contains(schoolid)) {
+							// need to send message to the manager for approval
+							if(usr.checkRole("RTH-VISTA-FAC-MAN")){
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+							}else {
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-VISTA-FAC-MAN")));
+								//update status to regional manager submitted
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+							}
+							
+							
+						}else if(burinschools.contains(schoolid)) {
+							// need to send message to the manager for approval
+							if(usr.checkRole("RTH-BURIN-FAC-MAN")){
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+							}else {
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BURIN-FAC-MAN")));
+								//update status to regional manager submitted
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+							}
+							
+						}else {
+							if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-MAN")){
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+							}else {
+								// need to send to divisional regional manager
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-MAN")));
+								//update status to regional manager submitted
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+							}
+							
+						}
+					}
+					emailtemplate="personnel/request_to_hire_submitted.vm";
+					model.put("requesterName", rbean.getRequestBy());
+					model.put("requestId", rbean.getId());
+					model.put("alevel","1" );
+					model.put("requestTitle",rbean.getJobTitle() );
+					emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+					historyNotes.append("Approval Email Sent To:");
+					break;
+				}else {
+					// we need to check if the person who submitted the request is the next to approve.  If yes then we need to set it approved already
+					if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")){
+						//we want to update the status
+						//now send the message
+						RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						rbean.setStatus(RequestToHireStatus.APPROVEDDIVISION);
+						emailtemplate="personnel/request_to_hire_submitted.vm";
+						model.put("requesterName", rbean.getRequestBy());
+						model.put("requestId", rbean.getId());
+						model.put("requestTitle",rbean.getJobTitle() );
+						emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+						historyNotes.append("Approval Email Sent To:");
+						break;
+					}else {
+						// not division director all normal
+						to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+						emailtemplate="personnel/request_to_hire_submitted.vm";
+						model.put("requesterName", rbean.getRequestBy());
+						model.put("requestId", rbean.getId());
+						model.put("alevel","1" );
+						model.put("requestTitle",rbean.getJobTitle() );
+						emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+						historyNotes.append("Approval Email Sent To:");
+						break;
+					}
+					
+				}
 			case 2://Division Approval
 				//user,division manager
 				//to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BC")));
@@ -193,6 +269,16 @@ public class RequestToHireEmailManager {
 				emailsubject="Request To Hire for " + rbean.getRequestBy() + " has been declined";
 				historyNotes.append("Declined Email Sent To:");
 				break;
+			case 13://approved regional manager
+				to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+				emailtemplate="personnel/request_to_hire_submitted.vm";
+				model.put("requesterName", rbean.getRequestBy());
+				model.put("requestId", rbean.getId());
+				model.put("alevel","1" );
+				model.put("requestTitle",rbean.getJobTitle() );
+				emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+				historyNotes.append("Approval Email Sent To:");
+				break;
 			default:
 				break;
 			}
@@ -237,6 +323,9 @@ public class RequestToHireEmailManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SchoolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JobOpportunityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
