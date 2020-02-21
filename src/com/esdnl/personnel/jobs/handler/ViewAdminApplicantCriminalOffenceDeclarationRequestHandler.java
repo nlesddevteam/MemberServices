@@ -23,11 +23,11 @@ public class ViewAdminApplicantCriminalOffenceDeclarationRequestHandler extends 
 	public ViewAdminApplicantCriminalOffenceDeclarationRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"
+				"PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("id")
+				new RequiredFormElement("id")
 		});
 	}
 
@@ -39,7 +39,12 @@ public class ViewAdminApplicantCriminalOffenceDeclarationRequestHandler extends 
 
 		if (validate_form()) {
 			try {
-				ApplicantCriminalOffenceDeclarationBean cod = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBean(form.getInt("id"));
+				ApplicantCriminalOffenceDeclarationBean cod = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBean(
+						form.getInt("id"));
+
+				if (cod == null || usr == null) {
+					throw new SecurityException("Illegal access attempt to view declaration.");
+				}
 
 				ApplicationObjectAuditBean audit = new ApplicationObjectAuditBean();
 

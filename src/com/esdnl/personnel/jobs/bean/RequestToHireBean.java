@@ -286,7 +286,10 @@ public class RequestToHireBean {
 			break;
 		case 6:
 			dString="Human Resources";
-			break;			
+			break;
+		case 7:
+			dString="Human Resources - Casuals/Student Assistant/Teacher Aides";
+			break;				
 		default:
 			dString="";
 			break;
@@ -481,4 +484,15 @@ public class RequestToHireBean {
 	public void setPrivateList(int privateList) {
 		this.privateList = privateList;
 	}
+	@Override
+    public boolean equals(Object obj) {
+        if (obj instanceof RequestToHireBean) {
+            return ((RequestToHireBean) obj).id == id;
+        }
+        return false;
+    }
+	@Override
+    public int hashCode() {
+        return this.id;
+    }
 }

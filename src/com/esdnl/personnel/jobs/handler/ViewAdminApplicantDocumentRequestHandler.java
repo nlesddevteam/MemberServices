@@ -27,11 +27,11 @@ public class ViewAdminApplicantDocumentRequestHandler extends RequestHandlerImpl
 	public ViewAdminApplicantDocumentRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-VIEW-DOCS"
+				"PERSONNEL-ADMIN-VIEW-DOCS"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("id")
+				new RequiredFormElement("id")
 		});
 	}
 
@@ -44,6 +44,10 @@ public class ViewAdminApplicantDocumentRequestHandler extends RequestHandlerImpl
 		if (validate_form()) {
 			try {
 				ApplicantDocumentBean doc = ApplicantDocumentManager.getApplicantDocumentBean(form.getInt("id"));
+
+				if (doc == null || usr == null) {
+					throw new SecurityException("Illegal access attempt to view document.");
+				}
 
 				response.setHeader("Pragma", "private");
 				response.setHeader("Cache-Control", "private, must-revalidate");

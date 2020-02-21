@@ -476,7 +476,7 @@ var pageWordCountConf = {
 					                    			<option value="4">Finance - Student Transportation</option>
 					                    			<option value="5">Facilities</option>
 					                    			<option value="6">Human Resources</option>
-					                    			<option value="7">Human Resources - Student Assistant/Casuals/Teacher Aides</option>
+					                    			<option value="7">Human Resources - Casuals/Student Assistant/Teacher Aides</option>
 					                    		</select>
 					                    		<input type='hidden' name='hidd' id='hidd' value="-1">	                                      		
 	                                      	</c:when>
@@ -491,7 +491,7 @@ var pageWordCountConf = {
 						                    			<option value="4">Finance - Student Transportation</option>
 						                    			<option value="5">Facilities</option>
 						                    			<option value="6">Human Resources</option>
-						                    			<option value="7">Human Resources - Student Assistant/Casuals/Teacher Aides</option>
+						                    			<option value="7">Human Resources - Casuals/Student Assistant/Teacher Aides</option>
 						                    		</select>
 						                    		<input type='hidden' name='hidd' id='hidd' value="${empty rbean ?'-1': rbean.division eq 0 ?'-1':rbean.division}">	                                      			
 	                                      			</c:when>
@@ -691,7 +691,15 @@ var pageWordCountConf = {
                                       						</c:if>
                                       						<c:if test="${rbean.status.value eq 6 }">
                                       							<a class="btn btn-warning btn-xs" href="view_job_post.jsp?comp_num=${rbean.competitionNumber }">View Competition ${rbean.competitionNumber }</a>
-                                      						</c:if>					
+                                      						</c:if>
+                                      						<c:if test="${rbean.status.value eq 12 }">
+	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','13','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="openreject('D','12')">
+	                                      					</c:if>
+	                                      					<c:if test="${rbean.status.value eq 13 }">
+	                                      						<input type="button" class="btn btn-success btn-xs" value="Approve" onclick="updaterequeststatus('A','2','${rbean.id}')">
+	                                      						<input type="button" class="btn btn-danger btn-xs" value="Decline" onclick="openreject('D','13')">
+	                                      					</c:if>						
                                       					</c:if>
                                       					
                                       					<c:if test="${rbean.status.value lt 6 }">

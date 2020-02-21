@@ -71,7 +71,7 @@ $('.otherJobsList').DataTable({'order': [[ 1, 'asc' ]],'bLengthChange': true,'pa
                                         		<td>${rule.dateRequestedFormatted }</td>
                                         		<td>
                                         		<c:choose>                                        		
-                                        		<c:when test="${rule.status.value eq 1 }">
+                                        		<c:when test="${rule.status.value eq 1 || rule.status.value eq 12 }">
                                         		<span style="color:White;background-color:Orange;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;SUBMITTED&nbsp;</span>
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 2 }">
@@ -100,6 +100,9 @@ $('.otherJobsList').DataTable({'order': [[ 1, 'asc' ]],'bLengthChange': true,'pa
                                         		</c:when>
                                         		<c:when test="${rule.status.value eq 11}">
                                         		<span style="color:Yellow;background-color:black;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description }">&nbsp;UPDATED&nbsp;</span>
+                                        		</c:when>
+                                        		<c:when test="${rule.status.value eq 13 }">
+                                        		<span style="color:White;background-color:Green;" data-trigger="hover" data-toggle="popover" data-content="${rule.status.description } - ${rule.divisionStringShort }">&nbsp;APPROVED: Regional Manager&nbsp;</span>
                                         		</c:when>
                                         		<c:otherwise>${rule.status.description }</c:otherwise>                                        		
                                         		</c:choose>

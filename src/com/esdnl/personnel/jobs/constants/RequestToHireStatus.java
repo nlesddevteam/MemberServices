@@ -6,8 +6,8 @@ public class RequestToHireStatus {
 	private String desc;
 
 	public static final RequestToHireStatus SUBMITTED = new RequestToHireStatus(1, "Submitted");
-	public static final RequestToHireStatus APPROVEDDIVISION = new RequestToHireStatus(2, "Approved Division Director");
-	public static final RequestToHireStatus APPROVEDBUDGET = new RequestToHireStatus(3, "Approved Budgeting/Comptroller");
+	public static final RequestToHireStatus APPROVEDDIVISION = new RequestToHireStatus(2, "Approved Director");
+	public static final RequestToHireStatus APPROVEDBUDGET = new RequestToHireStatus(3, "Approved Comptroller");
 	public static final RequestToHireStatus APPROVEDASSISTANT = new RequestToHireStatus(4, "Approved Assistant Director");
 	public static final RequestToHireStatus APPROVEDASSISTANTHR = new RequestToHireStatus(5, "Approved Associate Director of Education (Programs and Human Resources)");
 	public static final RequestToHireStatus ADCREATED = new RequestToHireStatus(6, "AD Created");
@@ -15,8 +15,11 @@ public class RequestToHireStatus {
 	public static final RequestToHireStatus NOTIFICATIONSENT = new RequestToHireStatus(9, "Notification Sent");
 	public static final RequestToHireStatus NOTIFICATIONRESENT = new RequestToHireStatus(10, "Notification Resent");
 	public static final RequestToHireStatus UPDATED = new RequestToHireStatus(11, "Updated");
+	public static final RequestToHireStatus SUBMITTEDREGIONALMANAGER = new RequestToHireStatus(12, "Submitted Regional Manager");
+	public static final RequestToHireStatus APPROVEDMANAGER = new RequestToHireStatus(13, "Approved Regional Manager");
 	public static final RequestToHireStatus[] ALL = new RequestToHireStatus[] {
 		SUBMITTED, APPROVEDDIVISION, APPROVEDBUDGET, APPROVEDASSISTANT,APPROVEDASSISTANTHR,ADCREATED,REJECTED,NOTIFICATIONSENT,NOTIFICATIONRESENT,UPDATED
+		,SUBMITTEDREGIONALMANAGER,APPROVEDMANAGER
 	};
 
 	private RequestToHireStatus(int value, String desc) {

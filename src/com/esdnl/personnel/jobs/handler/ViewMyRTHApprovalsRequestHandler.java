@@ -2,8 +2,8 @@ package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +23,10 @@ public class ViewMyRTHApprovalsRequestHandler extends RequestHandlerImpl {
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		RequestToHireBean[] list = null;
-		RequestToHireBean[] list2 = null;
 		ArrayList<RequestToHireBean> mainlist = new ArrayList<RequestToHireBean>();
-		
 		try {
 			//first we have to determine what roles they are in
+			
 			for (Map.Entry<String,Role> entry :usr.getUserRoles().entrySet()) {
 				if(entry.getKey().startsWith("RTH"))
 				{
@@ -51,12 +49,29 @@ public class ViewMyRTHApprovalsRequestHandler extends RequestHandlerImpl {
 						String[] groups = entry.getKey().split("-");
 						if(groups.length ==  4) {
 							Collections.addAll(mainlist,RequestToHireManager.getRequestsToHireApprovalsDD(RequestToHireManager.getDivisionID(groups[2]),RequestToHireManager.getZoneID(groups[1])));
+							//check to see if any requests for facilites with status 13
+							if(groups[2].contentEquals("FAC")) {
+								Collections.addAll(mainlist,RequestToHireManager.getRequestsToHireApprovalsDDMan(5,RequestToHireManager.getZoneID(groups[1]),13));
+							}	
+						}
+						
+						
+					}else if(entry.getKey().endsWith("-MAN")) {
+						//manager approval
+						//now we break up the name and find out zone and division
+						//stop duplicates since just hauling by status not school breakdown
+						String[] groups = entry.getKey().split("-");
+						if(groups.length == 4) {
+							Collections.addAll(mainlist,RequestToHireManager.getRequestsToHireApprovalsMan(5,RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue(),groups[1]));
+							
 						}
 						
 					}
 				}
 			}
-			request.setAttribute("requests", mainlist);
+			//remove duplicates for burin/vista groups
+			HashSet<RequestToHireBean> hashSet = new HashSet(mainlist);
+			request.setAttribute("requests", hashSet);
 			path = "admin_view_my_requests_to_hire_approvals.jsp";
 			
 		}
