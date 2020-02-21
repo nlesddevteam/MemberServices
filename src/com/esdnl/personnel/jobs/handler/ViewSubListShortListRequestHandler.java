@@ -30,6 +30,8 @@ public class ViewSubListShortListRequestHandler extends RequestHandlerImpl {
 			throws ServletException,
 				IOException {
 
+		super.handleRequest(request, response);
+
 		ApplicantProfileBean[] profiles = null;
 		SubListBean list = null;
 
