@@ -17,9 +17,11 @@
 		
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+		
+<job:ApplicantLoggedOn/>
 
 <%
-    ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
+	ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
 	SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
 	SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	ApplicantNLESDExperienceSSBean esd_exp = null;
@@ -30,24 +32,21 @@
 	//HashMap<Integer, ApplicantRegionalJobPoolSSBean> hmap = new HashMap<Integer, ApplicantRegionalJobPoolSSBean>();
 	Collection<ApplicantDocumentBean> docs = null;
 	HashMap<Integer, ApplicantCurrentPositionBean> hmapcur = new HashMap<Integer, ApplicantCurrentPositionBean>();
-	if(profile != null){
-	   	 esd_exp = ApplicantNLESDExperienceSSManager.getApplicantNLESDExperienceSSBeanBySin(profile.getSIN());
-	   	 edu = ApplicantEducationSecSSManager.getApplicantEducationSecSSBeanBySin(profile.getSIN());
-	   	other_info = ApplicantEducationOtherSSManager.getApplicantEducationOtherSSBean(profile.getSIN());
-	   	regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
-	   	//hmap = ApplicantRegionalJobPoolSSManager.getApplicantRegionalJobPoolPreferencesMap(profile.getSIN());
-	   	refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
-	   	docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
-	   	hmapcur = ApplicantCurrentPositionManager.getApplicantCurrentPositionBeanMap(profile.getSIN());
-	}
-    EmployeeBean empbean = null;
-    if(!StringUtils.isEmpty(profile.getSIN2())){
-    	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
-    }
-	
-	
-%>
 
+	esd_exp = ApplicantNLESDExperienceSSManager.getApplicantNLESDExperienceSSBeanBySin(profile.getSIN());
+	edu = ApplicantEducationSecSSManager.getApplicantEducationSecSSBeanBySin(profile.getSIN());
+	other_info = ApplicantEducationOtherSSManager.getApplicantEducationOtherSSBean(profile.getSIN());
+	regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(
+			new RegionBean[0]);
+	//hmap = ApplicantRegionalJobPoolSSManager.getApplicantRegionalJobPoolPreferencesMap(profile.getSIN());
+	refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
+	docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+	hmapcur = ApplicantCurrentPositionManager.getApplicantCurrentPositionBeanMap(profile.getSIN());
+	EmployeeBean empbean = null;
+	if (!StringUtils.isEmpty(profile.getSIN2())) {
+		empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
+	}
+%>
 
 <html>
 <head>
