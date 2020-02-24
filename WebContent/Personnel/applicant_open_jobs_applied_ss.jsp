@@ -10,13 +10,11 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
+<job:ApplicantLoggedOn/>
+
 <%
 ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
-JobOpportunityBean[] jobs = null;
-if(profile == null)
-  request.getRequestDispatcher("applicant_login.jsp").forward(request, response);
-
-jobs = JobOpportunityManager.getApplicantOpenJobOpportunityBeans(profile.getSIN());
+JobOpportunityBean[] jobs = JobOpportunityManager.getApplicantOpenJobOpportunityBeans(profile.getSIN());
 %>
 
 <html>
