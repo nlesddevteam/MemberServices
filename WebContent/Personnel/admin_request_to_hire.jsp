@@ -431,8 +431,7 @@ var pageWordCountConf = {
 						                          <%while(iter.hasNext())
 						                            {
 						                              p = (Personnel) iter.next();
-						                              if((p.getPersonnelID() != usr.getPersonnel().getPersonnelID()) 
-						                                || usr.getUserRoles().containsKey("DIRECTOR") || usr.getUserRoles().containsKey("ADMINISTRATOR")){%>
+						                              if(!(usr.getUserRoles().containsKey("DIRECTOR") || usr.getUserRoles().containsKey("ADMINISTRATOR"))){%>
 						                              <option style="text-transform:capitalize;" value="<%=p.getPersonnelID()%>"><%=p.getFullName().toLowerCase()%></option>
 						                          <%  }
 						                            }
@@ -448,8 +447,7 @@ var pageWordCountConf = {
 							                          <%while(iter.hasNext())
 							                            {
 							                              p = (Personnel) iter.next();
-							                              if((p.getPersonnelID() != usr.getPersonnel().getPersonnelID()) 
-							                                || usr.getUserRoles().containsKey("DIRECTOR") || usr.getUserRoles().containsKey("ADMINISTRATOR")){%>
+							                              if(!( usr.getUserRoles().containsKey("DIRECTOR") || usr.getUserRoles().containsKey("ADMINISTRATOR"))){%>
 							                              <option style="text-transform:capitalize;" value="<%=p.getPersonnelID()%>"><%=p.getFullName().toLowerCase()%></option>
 							                          <%  }
 							                            }
