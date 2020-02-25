@@ -76,9 +76,9 @@
 										      </h4>
 										    </div>
 										    <div id="collapse1" class="panel-collapse collapse">
-										      <div class="panel-body">
-										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
+										      <div class="panel-body">										      
 										      Please select up to a maximum of two (2) majors from the list below.<br/>
+										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
 										      <job:MajorMinor id="major" cls="form-control"/></div>
 										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
 										    </div>
@@ -91,7 +91,12 @@
 										      </h4>
 										    </div>
 										    <div id="collapse2" class="panel-collapse collapse">
-										      <div class="panel-body"><job:MajorMinor id="minor" cls="form-control"/></div>
+										      <div class="panel-body">
+										       Please select up to one (1) minor from the list below. You CANNOT select a minor IF you have two (2) majors selected in previous step.<br/>
+										       <div class="alert alert-danger minorError" style="display:none;">ERROR: Sorry, you cannot select a minor with two (2) majors.</div>										        
+										      <job:MajorMinor id="minor" cls="form-control"/>
+										      <div class="alert alert-danger minorError" style="display:none;">ERROR: Sorry, you cannot select a minor with 2 majors.</div>										     
+										      </div>
 										    </div>
 										  </div>
 										  <div class="panel panel-warning">
@@ -150,15 +155,41 @@
  <script>
  //Only allow one checked item per category.
 $(document).ready(function(){
+	
+	//Check minor N/A
+	
+	$('input[name="minor"][value="-1"]').prop("checked",true);
+	
 	var majorLimit=2;	
+	var minorLimit=1;	
+	
     $('.major').click(function() {
     	if ($('.major:checked').length >majorLimit) {
             this.checked = false;
+            
            $(".majorError").css("display","block").delay(5000).fadeOut();
-        }     		  
+        } 
+    	//if two elected, tick no minor, else untick.
+    	if ($('.major:checked').length ==2) {
+    		$('input[name="minor"]').prop('checked', false);
+    		$('input[name="minor"][value="-1"]').prop("checked",true);
+    		
+    	} else {
+    		$('input[name="minor"][value="-1"]').prop("checked",false);
+    	}
+    	
 	});
+    
+    //
     $('.minor').click(function() {
-        $('.minor').not(this).prop('checked', false);
+    	
+    	if ($('.major:checked').length ==2) {
+    		 $(".minorError").css("display","block").delay(5000).fadeOut();
+    		 $('input[name="minor"]').prop('checked', false);
+    	$('input[name="minor"][value="-1"]').prop("checked",true);
+    	} else {    			
+    	        $('.minor').not(this).prop('checked', false);
+    	}
     });
     $('.degree').click(function() {
         $('.degree').not(this).prop('checked', false);
