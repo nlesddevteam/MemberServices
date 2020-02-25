@@ -218,6 +218,8 @@ input {
 						style="font-size: 11px; background-color: #FFFFFF;">
 						<thead>
 							<tr>
+						
+							
 							<%if (job.getIsSupport().equals("Y")) { %>							
 								<th width='30%'>NAME</th>
 								<th width='30%'>EMAIL</th>
@@ -268,9 +270,11 @@ input {
 									<%}%>
 								</td>
 							<%}%>	
+					<%if ((applicants[i].getProfileType().equals("T") && job.getIsSupport().equals("Y")) || (applicants[i].getProfileType().equals("S") && job.getIsSupport().equals("N"))) {%>	
+					<td style="background-color: #000000; color: White; text-align: center;vertical-align:middle;">USER WRONG PROFILE TYPE FOR THIS POSITION</td>
+					<%} %>			
 								
-								
-					<%if (applicants[i].getProfileType().equals("T")) {%>
+					<%if (applicants[i].getProfileType().equals("T") && job.getIsSupport().equals("N")) { %>	
 
 								<% Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(applicants[i]);
 												int coursesCompleted = 0;
@@ -338,8 +342,7 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<%} else {%>
 								<td style="background-color: #E9967A; color: Black; text-align: center;vertical-align:middle;">OTHER</td>
 								<%}%>
-								<%} %>
-								
+								<%}  %>
 								<!-- FUTURE USE for Support Types -->
 							<!-- If is a Support/Managment  -->
 								<% if (applicants[i].getProfileType().equals("S")) { %>

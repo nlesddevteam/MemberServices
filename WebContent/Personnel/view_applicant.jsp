@@ -408,7 +408,7 @@ Sections with no information will display a red header. Those completed and/or w
                                     <th width="8%">From</th>
                                     <th width="8%">To</th>
                                     <th width="20%">Program &amp; Faculty</th>
-                                    <th width="25%">Major(#crs)/Minor(#crs)</th>
+                                    <th width="25%">Major(s)(#crs)/Minor(#crs)</th>
                                     <th width="15%">Degree Conferred</th>
                                   </tr>
                                  </thead>
@@ -419,13 +419,17 @@ Sections with no information will display a red header. Those completed and/or w
                                        <td><%=sdf.format(edu[i].getFrom())%></td>
                                        <td><%=sdf.format(edu[i].getTo())%></td>
                                        <td><%=edu[i].getProgramFacultyName()%></td>
-                                       <td><span style="color:Navy;">Major(s):</span>
-                                        <%if(edu[i].getMajor() != -1) { %>
-                                         <%=SubjectDB.getSubject(edu[i].getMajor()).getSubjectName() + " (" + edu[i].getNumberMajorCourses()+ ")<br/>"%>
-                                        <% } else { %>
-                                        	N/A <br/>
-                                        <%} %>
-                                        	<span style="color:Green;">Minor(s):</span>
+                                       <td><span style="color:Navy;">Major(s):</span>                                      
+                                        <% if(edu[i].getMajor_other() > 0) { %>
+                                        <%=SubjectDB.getSubject(edu[i].getMajor()).getSubjectName() + (edu[i].getMajor_other() > 0 ? ", " + SubjectDB.getSubject(edu[i].getMajor_other()).getSubjectName():"") +	" (" + edu[i].getNumberMajorCourses()+ ")<br/>"%> 
+                                      	<% } else if(edu[i].getMajor() != -1) { %>
+                                         <%=SubjectDB.getSubject(edu[i].getMajor()).getSubjectName() + " (" + edu[i].getNumberMajorCourses()+ ")<br/>"%>        
+                                        <%} else {%>
+                                       		N/A<br/>
+										<%} %>
+                                        
+                                        
+                                       <span style="color:Green;">Minor(s):</span>
                                         <%                                        
                                         if(edu[i].getMinor() != -1) {%>
                                          <%=SubjectDB.getSubject(edu[i].getMinor()).getSubjectName() + " (" + edu[i].getNumberMinorCourses()+ ")"%>

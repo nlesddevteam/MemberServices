@@ -528,13 +528,14 @@ input {
 							                                   <td><fmt:formatDate pattern = "MM/yy" value = "${edu.from}" /> - <fmt:formatDate pattern = "MM/yy" value = "${edu.to}" /></td> 
 							                                   <td>${edu.programFacultyName}</td> 
 							                                   <td>
-							                                   <c:choose>
-								                                   <c:when test="${edu.major ne '-1' }">
-								                                  		<%=SubjectDB.getSubject(edu[i].getMajor()).getSubjectName()%> (${edu.numberMajorCourses})
-								                                   </c:when>
-							                                   		<c:otherwise>N/A</c:otherwise>
-							                                   </c:choose>
-							                                   </td> 
+							                                    <% if(edu[i].getMajor_other() > 0) { %>
+                                      									<%=SubjectDB.getSubject(edu[i].getMajor()).getSubjectName() + (edu[i].getMajor_other() > 0 ? ", " + SubjectDB.getSubject(edu[i].getMajor_other()).getSubjectName():"") +	" (" + edu[i].getNumberMajorCourses()+ ")<br/>"%> 
+                                      							<% } else if(edu[i].getMajor() != -1) { %>
+                                        								 <%=SubjectDB.getSubject(edu[i].getMajor()).getSubjectName() + " (" + edu[i].getNumberMajorCourses()+ ")<br/>"%>        
+                                        						<%} else {%>
+                                       									N/A<br/>
+																<%} %>
+							              						</td> 
 							                                   <td>
 							                                    <c:choose>
 							                                   		<c:when test="${edu.minor ne '-1' }">
