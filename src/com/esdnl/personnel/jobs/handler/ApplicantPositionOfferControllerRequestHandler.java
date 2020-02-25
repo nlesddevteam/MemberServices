@@ -195,7 +195,10 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 
 							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("AD HR")));
 							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("ADMINISTRATOR")));
-
+							//send email to HR Pension/benefits for support staff positions
+							if(job.getIsSupport().equals("Y")) {
+								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("PERSONNEL-SUPPORT-BENEFITS")));
+							}
 							try {
 								EmailBean ebean = new EmailBean();
 
