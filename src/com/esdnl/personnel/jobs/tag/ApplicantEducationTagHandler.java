@@ -46,30 +46,27 @@ public class ApplicantEducationTagHandler extends TagSupport {
 				
 				out.println("<table class='table table-striped table-condensed' style='font-size:11px;'>");
 				out.println("<thead><tr>");
-				out.println("<th width='25%'>INSTITUTION</th>");
-				out.println("<th width='10%'>FROM/TO</th>");
-				out.println("<th width='25%'>PROGRAM/FACULTY</th>");
-				out.println("<th width='20%'>MAJOR(S)/MINOR(S)</th>");
-				out.println("<th width='10%'>DEGREE</th>");
+				out.println("<th width='25%'>INSTITUTION (From/To)</th>");			
+				out.println("<th width='30%'>PROGRAM/FACULTY</th>");
+				out.println("<th width='23%'>MAJOR(S)/MINOR(S)</th>");
+				out.println("<th width='12%'>DEGREE</th>");
 				out.println("<th width='10%'>OPTIONS</th>");
 				out.println("</tr></thead>");				
 				out.println("<tbody>");
 			for (int i = 0; i < beans.length; i++) {
 					out.println("<tr>");
-					out.println("<td>" + beans[i].getInstitutionName() + "</td>");
-					out.println("<td>" + sdf.format(beans[i].getFrom()) + " to<br/>");
-					out.println(sdf.format(beans[i].getTo()) + "</td>");
+					out.println("<td>" + beans[i].getInstitutionName());
+					out.println("<br/><i>" + sdf.format(beans[i].getFrom()) + " to " + sdf.format(beans[i].getTo()) + "</i></td>");				
 					out.println("<td>" + beans[i].getProgramFacultyName() + "</td>");  
 					out.println("<td>");					
-                    out.print("<span style='color:Navy;'>Major(#crs):</span>");
-							if (beans[i].getMajor() != -1) {						
-								out.println(SubjectDB.getSubject(beans[i].getMajor()).getSubjectName() + " (" + beans[i].getNumberMajorCourses()+ ")");
-							}
-							else {
-								out.println("N/A");
-							}
-					
-					out.println("<br/>");					
+                    out.print("<span style='color:Navy;'>Major(s)(#crs):</span>");                    
+                   if(beans[i].getMajor_other() > 0) { 
+                	   out.println(SubjectDB.getSubject(beans[i].getMajor()).getSubjectName() + (beans[i].getMajor_other() > 0 ? ", " + SubjectDB.getSubject(beans[i].getMajor_other()).getSubjectName():"") +	" (" + beans[i].getNumberMajorCourses()+ ")<br/>"); 
+                   } else if(beans[i].getMajor() != -1) { 
+                	   out.println(SubjectDB.getSubject(beans[i].getMajor()).getSubjectName() + " (" + beans[i].getNumberMajorCourses()+ ")<br/>");     
+                   } else {
+                	   	out.println("N/A<br/>");
+                	}                 
                     out.print("<span style='color:Green;'>Minor(#crs):</span>");
 							if (beans[i].getMinor() != -1) {
 								out.println(SubjectDB.getSubject(beans[i].getMinor()).getSubjectName() + " (" + beans[i].getNumberMinorCourses()+ ")");
@@ -77,7 +74,7 @@ public class ApplicantEducationTagHandler extends TagSupport {
 								out.println("N/A");
 							}
 					out.println("</td>");
-					out.println("<td>"+ ((!StringUtils.isEmpty(beans[i].getDegreeConferred())) ? DegreeManager.getDegreeBeans(beans[i].getDegreeConferred()).getAbbreviation() : "&nbsp;") + "</TD>");
+					out.println("<td>"+ ((!StringUtils.isEmpty(beans[i].getDegreeConferred())) ? DegreeManager.getDegreeBeans(beans[i].getDegreeConferred()).getAbbreviation() : "N/A") + "</TD>");
 					out.println("<td><a class='btn btn-xs btn-danger' href='applicantRegistration.html?step=5&del=" + beans[i].getId() + "'>DEL</td>");
 					out.println("</tr>");
 				}
