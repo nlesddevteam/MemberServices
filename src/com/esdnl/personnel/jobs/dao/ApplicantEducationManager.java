@@ -25,7 +25,7 @@ public class ApplicantEducationManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
 
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_applicant_edu(?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_applicant_edu(?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.setString(1, abean.getSIN());
 			stat.setDate(2, new java.sql.Date(abean.getFrom().getTime()));
@@ -37,7 +37,7 @@ public class ApplicantEducationManager {
 			stat.setInt(8, abean.getNumberMinorCourses());
 			stat.setString(9, abean.getDegreeConferred());
 			stat.setString(10, abean.getInstitutionName());
-
+			stat.setInt(11,abean.getMajor_other());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -164,6 +164,7 @@ public class ApplicantEducationManager {
 			aBean.setMinor(rs.getInt("MINOR_ID"));
 			aBean.setNumberMinorCourses(rs.getInt("NUM_MINOR_COURSES"));
 			aBean.setDegreeConferred(rs.getString("DEGREE_ID"));
+			aBean.setMajor_other(rs.getInt("MAJOR_ID_O"));
 		}
 		catch (SQLException e) {
 			aBean = null;
