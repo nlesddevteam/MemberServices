@@ -45,9 +45,21 @@ public class ViewAdminApplicantDocumentRequestHandler extends RequestHandlerImpl
 			try {
 				ApplicantDocumentBean doc = ApplicantDocumentManager.getApplicantDocumentBean(form.getInt("id"));
 
-				if (doc == null || usr == null) {
+				if (doc == null || usr == null || usr.getPersonnel() == null) {
 					throw new SecurityException("Illegal access attempt to view document.");
 				}
+
+				ApplicationObjectAuditBean audit = new ApplicationObjectAuditBean();
+
+				audit.setActionType(ActionTypeConstant.VIEW);
+				audit.setAction("Applicant Document Viewed - " + doc.getType().getDescription());
+				audit.setApplication(ApplicationConstant.PERSONNEL);
+				audit.setObjectType(ApplicantDocumentBean.class.toString());
+				audit.setObjectId(Integer.toString(doc.getDocumentId()));
+				audit.setWhen(Calendar.getInstance().getTime());
+				audit.setWho(Integer.toString(usr.getPersonnel().getPersonnelID()));
+
+				audit.saveBean();
 
 				response.setHeader("Pragma", "private");
 				response.setHeader("Cache-Control", "private, must-revalidate");
@@ -62,18 +74,6 @@ public class ViewAdminApplicantDocumentRequestHandler extends RequestHandlerImpl
 				catch (IOException e) {
 					e.printStackTrace();
 				}
-
-				ApplicationObjectAuditBean audit = new ApplicationObjectAuditBean();
-
-				audit.setActionType(ActionTypeConstant.VIEW);
-				audit.setAction("Applicant Document Viewed - " + doc.getType().getDescription());
-				audit.setApplication(ApplicationConstant.PERSONNEL);
-				audit.setObjectType(ApplicantDocumentBean.class.toString());
-				audit.setObjectId(Integer.toString(doc.getDocumentId()));
-				audit.setWhen(Calendar.getInstance().getTime());
-				audit.setWho(Integer.toString(usr.getPersonnel().getPersonnelID()));
-
-				audit.saveBean();
 			}
 			catch (JobOpportunityException e) {
 				e.printStackTrace(System.err);
