@@ -1124,13 +1124,13 @@ public class RequestToHireManager {
 			beans = new Vector<RequestToHireBean>();
 
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_approvals_dd(?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_approvals_man(?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, divisionid);
 			if(region.equals("BURIN") || region.equals("VISTA")) {
 				stat.setInt(3, 2);
 			}else {
-				stat.setInt(3, RequestToHireManager.getDivisionID(region));
+				stat.setInt(3, RequestToHireManager.getZoneID(region));
 			}
 			
 			stat.setInt(4, statusid);
@@ -1148,6 +1148,7 @@ public class RequestToHireManager {
 						beans.add(createRequestToHireBean(rs));
 					}
 				}else {
+					
 					beans.add(createRequestToHireBean(rs));
 				}
 			}
