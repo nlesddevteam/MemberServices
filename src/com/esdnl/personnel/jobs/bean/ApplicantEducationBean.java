@@ -17,6 +17,7 @@ public class ApplicantEducationBean implements Serializable {
 	private int minor;
 	private int minor_crs;
 	private String degree;
+	private int major_other;
 
 	public ApplicantEducationBean() {
 
@@ -31,6 +32,7 @@ public class ApplicantEducationBean implements Serializable {
 		this.minor = 0;
 		this.minor_crs = 0;
 		this.degree = null;
+		this.major_other = 0;
 	}
 
 	public int getId() {
@@ -141,5 +143,13 @@ public class ApplicantEducationBean implements Serializable {
 	public void setDegreeConferred(String degree) {
 
 		this.degree = degree;
+	}
+
+	public int getMajor_other() {
+		return major_other;
+	}
+
+	public void setMajor_other(int major_other) {
+		this.major_other = major_other;
 	}
 }

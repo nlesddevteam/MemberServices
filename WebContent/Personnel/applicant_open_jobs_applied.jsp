@@ -66,7 +66,7 @@ input {border:1px solid silver;}
 			                                      <td><%=jobs[i].getCompetitionNumber()%></td>
 			                                      <td><%=jobs[i].getPositionTitle()%></td>
 			                                      <td><%=jobs[i].getFormatedCompetitionEndDate()%></td>
-			                                      <td class="no-print"><a href="#" data-href="/employment/view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>" class="showModal btn btn-xs btn-primary">VIEW</a></td>
+			                                      <td class="no-print"><a href="/employment/view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>" class="btn btn-xs btn-primary">VIEW</a></td>
 			                                    </tr>
 			                                 <% } %>
 			                            </tbody>

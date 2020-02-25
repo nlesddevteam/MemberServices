@@ -72,11 +72,15 @@
 										    <div class="panel-heading">
 										      <h4 class="panel-title">
 										        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-										        SELECT MAJOR (Click to Open)</a>
+										        SELECT MAJOR(s) (Click to Open)</a>
 										      </h4>
 										    </div>
 										    <div id="collapse1" class="panel-collapse collapse">
-										      <div class="panel-body"><job:MajorMinor id="major" cls="form-control"/></div>
+										      <div class="panel-body">
+										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
+										      Please select up to a maximum of two (2) majors from the list below.<br/>
+										      <job:MajorMinor id="major" cls="form-control"/></div>
+										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
 										    </div>
 										  </div>
 										  <div class="panel panel-warning">
@@ -146,9 +150,13 @@
  <script>
  //Only allow one checked item per category.
 $(document).ready(function(){
+	var majorLimit=2;	
     $('.major').click(function() {
-        $('.major').not(this).prop('checked', false);
-    });
+    	if ($('.major:checked').length >majorLimit) {
+            this.checked = false;
+           $(".majorError").css("display","block").delay(5000).fadeOut();
+        }     		  
+	});
     $('.minor').click(function() {
         $('.minor').not(this).prop('checked', false);
     });
