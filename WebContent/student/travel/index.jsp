@@ -51,6 +51,33 @@ int cntr = 0;
  $('document').ready(function(){
 	  $(".travelApps").DataTable({
 		  "order": [[ 0, "asc" ]],
+		  dom: 'Blfrtip',
+	        buttons: [			        	
+	        	//'colvis',
+	        	'copy', 
+	        	'csv', 
+	        	'excel', 
+	        	{
+	                extend: 'pdfHtml5',
+	                footer:true,
+	                //orientation: 'landscape',
+	                messageTop: 'Student Travel',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3,4 ]
+	                }
+	            },
+	        	{
+	                extend: 'print',
+	                //orientation: 'landscape',
+	                footer:true,
+	                messageTop: 'Student Travel',
+	                messageBottom: null,
+	                exportOptions: {
+	                    columns: [ 0, 1, 2, 3,4]
+	                }
+	            }
+	        ],		  
 		  "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
 	  
 	  
