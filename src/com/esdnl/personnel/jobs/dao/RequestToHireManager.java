@@ -187,8 +187,6 @@ public class RequestToHireManager {
 			if(status <= 5 || status >=12){
 				//not used by rejected and ad created
 				stat.setString(3, statusby);
-			}else {
-				stat.setString(3, "");
 			}
 			
 			stat.execute();
