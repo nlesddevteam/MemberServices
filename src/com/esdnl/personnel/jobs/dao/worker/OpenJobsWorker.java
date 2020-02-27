@@ -103,7 +103,7 @@ public class OpenJobsWorker extends TimerTask {
 
 					writer.println("<script>$('document').ready(function(){");
 					writer.println("$('.educationalJobsList" + jlist
-							+ "').DataTable({'order': [[ 0, 'desc' ]],'lengthMenu': [[25, 50, 100, 200, -1], [25, 50, 100, 200, 'All']] });");
+							+ "').DataTable({'order': [[ 0, 'desc' ]],'lengthMenu': [[50, 75, 100, 200, -1], [50, 75, 100, 200, 'All']] });");
 					writer.println("});</script>");
 					writer.println("<span class='jobCount" + jlist
 							+ "' style='float:right;font-size:25px;color:rgba(0,0,0,0.3);position:relative;top:-30px;'></span><br/>");
