@@ -96,24 +96,45 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					RecommendationManager.updateTeacherRecommendationStatus(rec, usr.getPersonnel(),
 							RecommendationStatus.ACCEPTED);
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
+					if(rec.getJob().getIsSupport().equals("Y")) {
+						RequestToHireBean rbean = RequestToHireManager.getRequestToHireByCompNum(rec.getJob().getCompetitionNumber());
+						if(rbean != null){
+							boolean update = false;
 
-					AdRequestBean req = AdRequestManager.getAdRequestBean(rec.getJob().getCompetitionNumber());
-					if (req != null) {
-						boolean update = false;
+							if (form.exists("start_date")) {
+								rbean.setStartDate(form.getDate("start_date"));
+								update = true;
+							}
 
-						if (form.exists("start_date")) {
-							req.setStartDate(form.getDate("start_date"));
-							update = true;
+							if (form.exists("end_date")) {
+								rbean.setEndDate(form.getDate("end_date"));
+								update = true;
+							}
+
+							if (update)
+								RequestToHireManager.updateRequestToHireBeanDates(rbean);
 						}
+						
+					}else {
+						AdRequestBean req = AdRequestManager.getAdRequestBean(rec.getJob().getCompetitionNumber());
+						if (req != null) {
+							boolean update = false;
 
-						if (form.exists("end_date")) {
-							req.setEndDate(form.getDate("end_date"));
-							update = true;
+							if (form.exists("start_date")) {
+								req.setStartDate(form.getDate("start_date"));
+								update = true;
+							}
+
+							if (form.exists("end_date")) {
+								req.setEndDate(form.getDate("end_date"));
+								update = true;
+							}
+
+							if (update)
+								AdRequestManager.updateAdRequestBean(req);
 						}
-
-						if (update)
-							AdRequestManager.updateAdRequestBean(req);
 					}
+					
 
 					this.sendNotification(rec, form.get("op"));
 

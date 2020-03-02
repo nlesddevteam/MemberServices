@@ -431,7 +431,7 @@ var pageWordCountConf = {
 						                          <%while(iter.hasNext())
 						                            {
 						                              p = (Personnel) iter.next();
-						                              if(!(usr.getUserRoles().containsKey("DIRECTOR") || usr.getUserRoles().containsKey("ADMINISTRATOR"))){%>
+						                              if(!(usr.getUserRoles().containsKey("DIRECTOR") )){%>
 						                              <option style="text-transform:capitalize;" value="<%=p.getPersonnelID()%>"><%=p.getFullName().toLowerCase()%></option>
 						                          <%  }
 						                            }
@@ -447,7 +447,7 @@ var pageWordCountConf = {
 							                          <%while(iter.hasNext())
 							                            {
 							                              p = (Personnel) iter.next();
-							                              if(!( usr.getUserRoles().containsKey("DIRECTOR") || usr.getUserRoles().containsKey("ADMINISTRATOR"))){%>
+							                              if(!( usr.getUserRoles().containsKey("DIRECTOR") )){%>
 							                              <option style="text-transform:capitalize;" value="<%=p.getPersonnelID()%>"><%=p.getFullName().toLowerCase()%></option>
 							                          <%  }
 							                            }
@@ -700,6 +700,11 @@ var pageWordCountConf = {
 	                                      					</c:if>						
                                       					</c:if>
                                       					
+                                      					<c:if test="${(rbean.status.value gt 1 && rbean.status.value lt 6) || (rbean.status.value == 13)}">
+                                      						<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
+                                      							<input type="button" class="btn btn-success btn-xs" value="Delete" onclick="deleteapprovedrequest('${rbean.id}');">
+                                      						</esd:SecurityAccessRequired>
+                                      					</c:if>
                                       					<c:if test="${rbean.status.value lt 6 }">
                                       							<input type="button" class="btn btn-danger btn-xs" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
                                       					</c:if>

@@ -550,12 +550,12 @@ input {
 								<td class="tableAnswer"><input id='start-date'
 									name='start_date' type='text'
 									class='datefield requiredInputBox'
-									value='<%=rth.getStartDateFormatted()%>' /></td>
+									value='<%=rth.getStartDateFormattedRec()%>' /></td>
 								<%
 									}
 										else {
 								%>
-								<td class="tableAnswer"><%=rth.getStartDateFormatted()%></td>
+								<td class="tableAnswer"><%=rth.getStartDateFormattedRec()%></td>
 								<%
 									}
 								%>

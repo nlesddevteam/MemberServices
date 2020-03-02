@@ -110,12 +110,14 @@ public class PostJobRequestHandler implements RequestHandler {
 			}
 			else {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				SimpleDateFormat sdf_ced = new SimpleDateFormat("dd/MM/yyyy hh:mm:a");
+				SimpleDateFormat sdf_ced = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
 				JobOpportunityBean opp = new JobOpportunityBean();
 				opp.setCompetitionNumber(comp_num);
 				opp.setPositionTitle(position_title);
-				opp.setJobAdText(ad_text);
+				opp.setJobAdText(ad_text);;
+				System.out.println(comp_end_date);
+				System.out.println(sdf_ced.parse(comp_end_date));
 				opp.setCompetitionEndDate(sdf_ced.parse(comp_end_date));
 				opp.setListingDate(sdf.parse(listing_date));
 				opp.setJobType(JobTypeConstant.get(Integer.parseInt(job_type)));

@@ -544,4 +544,11 @@
      			}
      		);
     }
+	//function delete approved request
+	function deleteapprovedrequest(rid){
+		var posturl='deleteApporvedRequestToHire.html?rid=' + rid;
+		$("#frmAdRequest").hide();
+		$('#frmAdRequest').attr('action',posturl);
+		$('#frmAdRequest').submit();
+	}
 	
