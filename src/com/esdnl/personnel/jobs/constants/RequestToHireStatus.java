@@ -12,13 +12,14 @@ public class RequestToHireStatus {
 	public static final RequestToHireStatus APPROVEDASSISTANTHR = new RequestToHireStatus(5, "Approved Associate Director of Education (Programs and Human Resources)");
 	public static final RequestToHireStatus ADCREATED = new RequestToHireStatus(6, "AD Created");
 	public static final RequestToHireStatus REJECTED = new RequestToHireStatus(7, "Rejected");
+	public static final RequestToHireStatus DELETED = new RequestToHireStatus(8, "Deleted");
 	public static final RequestToHireStatus NOTIFICATIONSENT = new RequestToHireStatus(9, "Notification Sent");
 	public static final RequestToHireStatus NOTIFICATIONRESENT = new RequestToHireStatus(10, "Notification Resent");
 	public static final RequestToHireStatus UPDATED = new RequestToHireStatus(11, "Updated");
 	public static final RequestToHireStatus SUBMITTEDREGIONALMANAGER = new RequestToHireStatus(12, "Submitted Regional Manager");
 	public static final RequestToHireStatus APPROVEDMANAGER = new RequestToHireStatus(13, "Approved Regional Manager");
 	public static final RequestToHireStatus[] ALL = new RequestToHireStatus[] {
-		SUBMITTED, APPROVEDDIVISION, APPROVEDBUDGET, APPROVEDASSISTANT,APPROVEDASSISTANTHR,ADCREATED,REJECTED,NOTIFICATIONSENT,NOTIFICATIONRESENT,UPDATED
+		SUBMITTED, APPROVEDDIVISION, APPROVEDBUDGET, APPROVEDASSISTANT,APPROVEDASSISTANTHR,ADCREATED,REJECTED,DELETED,NOTIFICATIONSENT,NOTIFICATIONRESENT,UPDATED
 		,SUBMITTEDREGIONALMANAGER,APPROVEDMANAGER
 	};
 

@@ -1172,4 +1172,49 @@ public class RequestToHireManager {
 
 		return ((RequestToHireBean[]) beans.toArray(new RequestToHireBean[0]));
 	}
+	public static void updateRequestToHireBeanDates(RequestToHireBean abean){
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.mod_request_to_hire(?,?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.NUMBER);
+			stat.setInt(1, abean.getId());
+
+			if (abean.getStartDate() != null)
+				stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
+			else
+				stat.setNull(2, OracleTypes.DATE);
+
+			if (abean.getEndDate() != null)
+				stat.setDate(3, new java.sql.Date(abean.getEndDate().getTime()));
+			else
+				stat.setNull(3, OracleTypes.DATE);
+
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void updateAdRequestBean(AdRequestBean abean): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 }

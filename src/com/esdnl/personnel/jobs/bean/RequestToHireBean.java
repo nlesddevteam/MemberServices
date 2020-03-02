@@ -39,6 +39,7 @@ public class RequestToHireBean {
 	private RequestToHireStatus status;
 	private String CompetitionNumber;
 	public static final String DATE_FORMAT = "MM/dd/yyyy";
+	public static final String DATE_FORMAT_REC = "dd/MM/yyyy";
 	private int unionCode;
 	private String unionCodeString;
 	private int positionName;
@@ -197,7 +198,7 @@ public class RequestToHireBean {
 			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 			return sdf.format(this.getDateRequested());
 		}
-	}	
+	}
 	public String getDateVacatedFormatted() {
 		if(this.getDateVacated() == null){
 			return "";
@@ -212,6 +213,15 @@ public class RequestToHireBean {
 			return "";
 		}else{
 			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			return sdf.format(this.getStartDate());
+		}
+	}
+	public String getStartDateFormattedRec() {
+
+		if(this.getStartDate() == null){
+			return "";
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_REC);
 			return sdf.format(this.getStartDate());
 		}
 	}
@@ -253,6 +263,15 @@ public class RequestToHireBean {
 			return "";
 		}else{
 			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			return sdf.format(this.getEndDate());
+		}
+	}
+	public String getEndDateFormattedRec() {
+
+		if(this.getEndDate() == null){
+			return "";
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_REC);
 			return sdf.format(this.getEndDate());
 		}
 	}
