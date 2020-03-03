@@ -103,7 +103,7 @@ public class DeleteApprovedRequestToHireRequestHandler extends RequestHandlerImp
 				zoneid = 1;
 				break;
 			case 2008: // Vista Satellite Office
-				zoneid = -1;
+				zoneid = 2;
 				break;
 			case 2000:
 			case 2001:

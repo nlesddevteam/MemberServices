@@ -17,8 +17,8 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 public class RequestToHireManager {
-	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924));
-	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427));
+	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924,2008,482,8));
+	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427,7,4007,285));
 	
 	public static RequestToHireBean addRequestToHireBean(RequestToHireBean abean) throws JobOpportunityException {
 
@@ -527,6 +527,7 @@ public class RequestToHireManager {
 				break;
 			case 4007: // Burin Satellite Office
 				zoneid = 2;
+				schoolid=4007;
 				break;
 			case 449: // St. Augustine's Primary
 				zoneid = 1;
@@ -544,7 +545,8 @@ public class RequestToHireManager {
 				zoneid = 1;
 				break;
 			case 2008: // Vista Satellite Office
-				zoneid = -1;
+				zoneid = 2;
+				schoolid=2008;
 				break;
 			case 2000:
 			case 2001:

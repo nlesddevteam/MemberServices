@@ -30,7 +30,7 @@ public class ResendRTHApprovalAjaxRequestHandler extends RequestHandlerImpl {
 		try {
 				int rid = form.getInt("rid");
 				RequestToHireBean rth = RequestToHireManager.getRequestToHireById(rid);
-				RequestToHireEmailManager.sendRequestToHireEmail(rth,usr);
+				RequestToHireEmailManager.sendRequestToHireEmail(rth,usr,true);
 				
 				String xml = null;
 				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");

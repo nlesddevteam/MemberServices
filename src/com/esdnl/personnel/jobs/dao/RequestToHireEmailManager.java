@@ -17,9 +17,9 @@ import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.velocity.VelocityUtils;
 
 public class RequestToHireEmailManager {
-	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924));
-	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427));
-	public static void sendRequestToHireEmail(RequestToHireBean rbean, User usr){
+	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924,2008,482,8));
+	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427,4007,285,7));
+	public static void sendRequestToHireEmail(RequestToHireBean rbean, User usr, boolean resend){
 		//first check zone
 		int zoneid;
 		int schoolid=-1;
@@ -32,6 +32,7 @@ public class RequestToHireEmailManager {
 				break;
 			case 4007: // Burin Satellite Office
 				zoneid = 2;
+				schoolid=4007;
 				break;
 			case 449: // St. Augustine's Primary
 				zoneid = 1;
@@ -49,7 +50,8 @@ public class RequestToHireEmailManager {
 				zoneid = 1;
 				break;
 			case 2008: // Vista Satellite Office
-				zoneid = -1;
+				zoneid = 2;
+				schoolid=2008;
 				break;
 			case 2000:
 			case 2001:
@@ -102,50 +104,66 @@ public class RequestToHireEmailManager {
 			HashMap<String, Object> model = new HashMap<String, Object>();
 			StringBuilder historyNotes = new StringBuilder();
 			switch(rbean.getStatus().getValue()){
-			case 1://submitted
+			case 1:
+			case 12://submitted
 				//user and division manager
 				//add a check to see if it is facilites
 				if(rbean.getDivision() == 5) {
 					//check to see if it is burin first
 					if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")){
 						//division director so send email to comptroller
-						RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						if(!(resend)) {
+							RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						}
 						rbean.setStatus(RequestToHireStatus.APPROVEDDIVISION);
 					}else {
 						if(vistaschools.contains(schoolid)) {
 							// need to send message to the manager for approval
 							if(usr.checkRole("RTH-VISTA-FAC-MAN")){
-								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
-								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+								
+								if(!(resend)) {
+									RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+									to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+								}else {
+									to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-VISTA-FAC-MAN")));
+								}
 							}else {
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-VISTA-FAC-MAN")));
 								//update status to regional manager submitted
-								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+								if(!(resend)) {
+									RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+								}
 							}
-							
-							
 						}else if(burinschools.contains(schoolid)) {
 							// need to send message to the manager for approval
 							if(usr.checkRole("RTH-BURIN-FAC-MAN")){
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
-								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+								if(!(resend)) {
+									RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+								}else {
+									to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BURIN-FAC-MAN")));
+								}
 							}else {
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BURIN-FAC-MAN")));
 								//update status to regional manager submitted
-								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+								if(!(resend)) {
+									RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+								}
 							}
-							
 						}else {
 							if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-MAN")){
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
-								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+								if(!(resend)) {
+									RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.APPROVEDMANAGER.getValue());
+								}
 							}else {
 								// need to send to divisional regional manager
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-MAN")));
 								//update status to regional manager submitted
-								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+								if(!(resend)) {
+									RequestToHireManager.updateRequestToHireStatus(rbean.getId(), RequestToHireStatus.SUBMITTEDREGIONALMANAGER.getValue());
+								}
 							}
-							
 						}
 					}
 					emailtemplate="personnel/request_to_hire_submitted.vm";
@@ -161,7 +179,9 @@ public class RequestToHireEmailManager {
 					if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")){
 						//we want to update the status
 						//now send the message
-						RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						if(!(resend)) {
+							RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						}
 						rbean.setStatus(RequestToHireStatus.APPROVEDDIVISION);
 						emailtemplate="personnel/request_to_hire_submitted.vm";
 						model.put("requesterName", rbean.getRequestBy());
