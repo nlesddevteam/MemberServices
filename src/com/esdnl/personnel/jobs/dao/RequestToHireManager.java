@@ -1216,5 +1216,47 @@ public class RequestToHireManager {
 			}
 			catch (Exception e) {}
 		}
+	}
+	public static TreeMap<String,Integer> getRequestsToHireCount()  {
+		TreeMap<String,Integer> counts = new TreeMap<String,Integer>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rth_counts; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				//get each count and put in treemap
+				counts.put("SUBMITTED", rs.getInt("SUBMITTED"));
+				counts.put("APPROVED", rs.getInt("APPROVED"));
+				counts.put("POSTED", rs.getInt("POSTED"));
+				counts.put("REJECTED", rs.getInt("REJECTED"));
+			}
+				
+
+		}
+		catch (SQLException e) {
+			System.err.println("TreeMap<String,Integer> getRequestsToHireCount(): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return counts;
 	}	
 }

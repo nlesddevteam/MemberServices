@@ -5,6 +5,7 @@
 
 <%@ page language="java"
          import="com.esdnl.personnel.jobs.constants.*,
+        		 java.util.TreeMap,
                  com.esdnl.personnel.jobs.dao.*,
                  com.awsd.security.*"%>
 
@@ -20,6 +21,7 @@
 <%
 User usr = (User) session.getAttribute("usr");
 boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REPRESENTATIVE");
+TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 %>
 
 <html>
@@ -249,16 +251,16 @@ boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REP
 							                            	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addRequestToHire.html">Add New Request</a></li>
 							                            </esd:SecurityAccessRequired>
 							                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=0">Pending Requests</a></li>
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=0">Pending Requests (<%=counts.get("SUBMITTED") %>)</a></li>
 	                                      				</esd:SecurityAccessRequired>
 	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=5">Approved Requests</a></li>
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=5">Approved Requests (<%=counts.get("APPROVED") %>)</a></li>
 	                                      				</esd:SecurityAccessRequired>
 	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=7">Rejected requests</a></li>
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=7">Rejected Requests (<%=counts.get("REJECTED") %>)</a></li>
 	                                      				</esd:SecurityAccessRequired>
 	                                      				<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-REQUEST">
-	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=6">Competition Posted</a></li>
+	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/adminViewRequestsToHire.html?status=6">Competition Posted (<%=counts.get("POSTED") %>)</a></li>
 	                                      				</esd:SecurityAccessRequired>
 	                                      				<esd:SecurityAccessRequired permissions="RTH-VIEW-MY-REQUESTS">
 	                                      					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyRequests.html">View My Requests</a></li>
