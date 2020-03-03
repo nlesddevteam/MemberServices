@@ -59,7 +59,10 @@
   	<copy file="${src}/com/connection.properties" todir="${build}/com"/>
 
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/lib/${ant.project.name}-${DSTAMP}.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/lib/${ant.project.name}-${DSTAMP}.jar">
+    	<fileset dir="${build}" />
+    	<fileset dir="${src}" includes="**/*.java"/>
+    </jar>
 	
 		<delete verbose="true">
 		  <fileset dir="${web.dir}/WEB-INF/lib" includes="${ant.project.name}-*.jar"/>
