@@ -141,14 +141,18 @@
                                    </tbody>
                                    </table> 
                                     
-                                   <br/>                                   
-                                    									
+                                   <br/>    						
                                     
                                     <%if(!rec.isOfferAccepted() && !rec.isOfferRejected()){%>
-	                                   <div align="center">
-	                                        <a href="#" class="btn btn-xs btn-success" title="Accept Offer" value="ACCEPT" onclick="validateAcceptOffer();">Accept Offer</a>                                    
-	                                        <a href="#" class="btn btn-xs btn-danger" title="Decline Offer" value="DECLINE" onclick="validateDeclineOffer();">Decline Offer</a>
-	                                  </div>
+                                  <div class="alert alert-danger">
+									<div align="center"><span style="font-weight:bold;font-size:14px;">**** NOTICE OF POSITION ACCEPTANCE ****</span>
+									<br/> By clicking <b>Accept Offer</b>, I am confirming that all the information used by the Newfoundland and Labrador English School District in determining that I am the successful candidate 
+                                    for this position is up to date and accurate.  I understand that should this not be the case, that the Newfoundland and Labrador English School District reserves the right to rescind this job offer.
+                                    <br/><br/>                                   
+	                                        <a href="#" class="btn btn-sm btn-success" title="Accept Offer" value="ACCEPT" onclick="validateAcceptOffer();"><span class="glyphicon glyphicon-ok"></span> Accept Offer</a>                                    
+	                                        <a href="#" class="btn btn-sm btn-danger" title="Decline Offer" value="DECLINE" onclick="validateDeclineOffer();"><span class="glyphicon glyphicon-remove"></span> Decline Offer</a>
+	                               </div>
+	                              </div>                                     
 	                                     
                                     <%}%>
                                     
