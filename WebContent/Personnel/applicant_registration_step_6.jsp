@@ -97,10 +97,16 @@ SECTION 6: Editing your Teacher/Educator HR Application Profile
 							    <td class="tableTitleR"># Technology Courses*:</td>
 				                <td class="tableResultR"><input type="text" name="tech_crs" id="tech_crs" class="form-control" value="<%=(edu_other != null)?Integer.toString(edu_other.getNumberTechnologyCourses()):"0"%>"></td>
 								</tr> 
+								<tr>
+							    <td class="tableTitleL"># Social Studies Courses*:</td>
+				                <td class="tableResultL"><input type="text" name="sstudies_crs" id="sstudies_crs" class="form-control" value="<%=(edu_other != null)?Integer.toString(edu_other.getNumberSocialStudiesCourses()):"0"%>"></td>								
+							    <td class="tableTitleR"># Art Courses*:</td>
+				                <td class="tableResultR"><input type="text" name="art_crs" id="art_crs" class="form-control" value="<%=(edu_other != null)?Integer.toString(edu_other.getNumberArtCourses()):"0"%>"></td>
+								</tr> 
                                 <tr>
 							    <td class="tableTitleL"># Science Courses*:</td>
 				                <td class="tableResultL"><input type="text" name="science_crs" id="science_crs" class="form-control" value="<%=(edu_other != null)?Integer.toString(edu_other.getNumberScienceCourses()):"0"%>"></td>								
-							    <td class="tableTitleR">Total # Courses Completed:</td>
+							    <td class="tableTitleR">(TLA) Total # Courses Complete:</td>
 				                <td class="tableResultR"><input type="text" name="total_crs" id="total_crs" class="form-control" value="<%=(edu_other != null)?Integer.toString(edu_other.getTotalCoursesCompleted()):"0"%>"></td>
 								</tr>
 								<tr>

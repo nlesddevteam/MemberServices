@@ -74,6 +74,13 @@ public class ViewSubListApplicantsFilterResultsRequestHandler extends RequestHan
 				
 				if (form.exists("num_science"))
 					params.setScienceCourses(form.getInt("num_science"));
+				
+				if (form.exists("num_sstudies"))
+					params.setSocialStudiesCourses(form.getInt("num_sstudies"));
+				
+				if (form.exists("num_art"))
+					params.setArtCourses(form.getInt("num_art"));
+				
 
 				if ((degrees = form.getArray("degrees")) != null) {
 					if ((degrees.length == 1) && degrees[0].equals("0"))

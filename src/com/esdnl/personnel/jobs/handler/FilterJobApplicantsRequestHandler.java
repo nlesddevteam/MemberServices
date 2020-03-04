@@ -99,6 +99,12 @@ public class FilterJobApplicantsRequestHandler extends RequestHandlerImpl {
 
 				if (form.exists("num_science"))
 					params.setScienceCourses(form.getInt("num_science"));
+				
+				if (form.exists("num_studies"))
+					params.setSocialStudiesCourses(form.getInt("num_sstudies"));
+				
+				if (form.exists("num_art"))
+					params.setArtCourses(form.getInt("num_art"));
 
 				if (StringUtils.isEqual(form.get("tla_requirement"), "on"))
 					params.setTLARequirements(true);

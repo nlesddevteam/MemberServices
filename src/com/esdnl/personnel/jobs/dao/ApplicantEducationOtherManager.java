@@ -26,7 +26,7 @@ public class ApplicantEducationOtherManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
 
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_edu_other(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_edu_other(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.setString(1, abean.getSIN());
 			stat.setInt(2, abean.getProfessionalTrainingLevel().getValue());
@@ -43,8 +43,10 @@ public class ApplicantEducationOtherManager {
 			}
 			stat.setInt(9, abean.getNumberMusicCourses());
 			stat.setInt(10, abean.getNumberTechnologyCourses());
-			stat.setInt(11, abean.getNumberScienceCourses());
+			stat.setInt(11, abean.getNumberScienceCourses());			
 			stat.setInt(12, abean.getTotalCoursesCompleted());
+			stat.setInt(13, abean.getNumberSocialStudiesCourses());
+			stat.setInt(14, abean.getNumberArtCourses());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -136,6 +138,8 @@ public class ApplicantEducationOtherManager {
 			aBean.setNumberMusicCourses(rs.getInt("MUSIC_CRS"));
 			aBean.setNumberTechnologyCourses(rs.getInt("TECH_CRS"));
 			aBean.setNumberScienceCourses(rs.getInt("SCIENCE_CRS"));
+			aBean.setNumberSocialStudiesCourses(rs.getInt("SSTUDIES_CRS"));
+			aBean.setNumberArtCourses(rs.getInt("ART_CRS"));
 			aBean.setTotalCoursesCompleted(rs.getInt("TOTAL_CRS_COMPLETED"));
 		}
 		catch (SQLException e) {

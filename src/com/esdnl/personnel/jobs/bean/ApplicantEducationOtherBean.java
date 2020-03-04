@@ -20,6 +20,8 @@ public class ApplicantEducationOtherBean implements Serializable {
 	private Date cert_date;
 	private int music_crs;
 	private int tech_crs;
+	private int sstudies_crs;
+	private int art_crs;
 	private int science_crs;
 	private int total_crs_completed;
 
@@ -36,6 +38,8 @@ public class ApplicantEducationOtherBean implements Serializable {
 		this.cert_date = null;
 		this.music_crs = 0;
 		this.tech_crs = 0;
+		this.sstudies_crs = 0;
+		this.art_crs = 0;		
 		this.science_crs = 0;
 		this.total_crs_completed = 0;
 	}
@@ -170,6 +174,26 @@ public class ApplicantEducationOtherBean implements Serializable {
 
 		return science_crs;
 	}
+	
+	public int getNumberSocialStudiesCourses() {
+
+		return this.sstudies_crs;
+	}
+
+	public void setNumberSocialStudiesCourses(int sstudies_crs) {
+
+		this.sstudies_crs = sstudies_crs;
+	}
+	
+	public int getNumberArtCourses() {
+
+		return this.art_crs;
+	}
+
+	public void setNumberArtCourses(int art_crs) {
+
+		this.art_crs = art_crs;
+	}
 
 	public void setTotalCoursesCompleted(int total_crs_completed) {
 
@@ -193,13 +217,14 @@ public class ApplicantEducationOtherBean implements Serializable {
 		sb.append("<ENGLISH-COURSES>" + this.getNumberEnglishCourses() + "</ENGLISH-COURSES>");
 		sb.append("<MATH-COURSES>" + this.getNumberMathCourses() + "</MATH-COURSES>");
 		sb.append("<TEACHING-CERTIFICATE-LEVEL>" + this.getTeachingCertificateLevel() + "</TEACHING-CERTIFICATE-LEVEL>");
-		sb.append("<TEACHING-CERTIFICATE-ISSUED-DATE>" + this.getFormatedTeachingCertificateIssuedDate()
-				+ "</TEACHING-CERTIFICATE-ISSUED-DATE>");
+		sb.append("<TEACHING-CERTIFICATE-ISSUED-DATE>" + this.getFormatedTeachingCertificateIssuedDate()+ "</TEACHING-CERTIFICATE-ISSUED-DATE>");
 		sb.append("<MUSIC-COURSES>" + this.getNumberMusicCourses() + "</MUSIC-COURSES>");
 		sb.append("<TECHNOLOGY-COURSES>" + this.getNumberTechnologyCourses() + "</TECHNOLOGY-COURSES>");
 		sb.append("<SCIENCE-COURSES>" + this.getNumberScienceCourses() + "</SCIENCE-COURSES>");
+		sb.append("<SOCIAL-STUDIES-COURSES>" + this.getNumberSocialStudiesCourses() + "</SOCIAL-STUDIES-COURSES>");
+		sb.append("<ART-COURSES>" + this.getNumberArtCourses() + "</ART-COURSES>");
 		sb.append("<TOTAL-COURSES-COMPLETED>" + this.getTotalCoursesCompleted() + "</TOTAL-COURSES-COMPLETED>");
-
+		
 		sb.append("</EDUCATION-OTHER>");
 
 		return sb.toString();

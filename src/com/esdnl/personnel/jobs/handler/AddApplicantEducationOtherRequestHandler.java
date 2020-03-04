@@ -35,6 +35,8 @@ public class AddApplicantEducationOtherRequestHandler implements LoginNotRequire
 			String music_crs = request.getParameter("music_crs");
 			String tech_crs = request.getParameter("tech_crs");
 			String science_crs = request.getParameter("science_crs");
+			String sstudies_crs = request.getParameter("sstudies_crs");
+			String art_crs = request.getParameter("art_crs");
 			String total_crs = request.getParameter("total_crs");
 
 			profile = (ApplicantProfileBean) request.getSession(false).getAttribute("APPLICANT");
@@ -74,6 +76,14 @@ public class AddApplicantEducationOtherRequestHandler implements LoginNotRequire
 				request.setAttribute("errmsg", "Please specify number of Science courses.");
 				path = "applicant_registration_step_6.jsp";
 			}
+			else if (StringUtils.isEmpty(sstudies_crs)) {
+				request.setAttribute("errmsg", "Please specify number of Social Studies courses.");
+				path = "applicant_registration_step_6.jsp";
+			}
+			else if (StringUtils.isEmpty(art_crs)) {
+				request.setAttribute("errmsg", "Please specify number of Art courses.");
+				path = "applicant_registration_step_6.jsp";
+			}
 			else if (StringUtils.isEmpty(total_crs)) {
 				request.setAttribute("errmsg", "Please specify total number of courses completed.");
 				path = "applicant_registration_step_6.jsp";
@@ -99,6 +109,8 @@ public class AddApplicantEducationOtherRequestHandler implements LoginNotRequire
 				abean.setNumberMusicCourses(Integer.parseInt(music_crs));
 				abean.setNumberTechnologyCourses(Integer.parseInt(tech_crs));
 				abean.setNumberScienceCourses(Integer.parseInt(science_crs));
+				abean.setNumberSocialStudiesCourses(Integer.parseInt(science_crs));
+				abean.setNumberArtCourses(Integer.parseInt(art_crs));
 				abean.setTotalCoursesCompleted(Integer.parseInt(total_crs));
 				ApplicantEducationOtherManager.addApplicantEducationOtherBean(abean);
 

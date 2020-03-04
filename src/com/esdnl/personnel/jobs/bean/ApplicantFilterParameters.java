@@ -14,6 +14,8 @@ public class ApplicantFilterParameters {
 	private int musicCourses = 0;
 	private int technologyCourses = 0;
 	private int scienceCourses = 0;
+	private int socialstudiesCourses = 0;
+	private int artCourses = 0;
 	private String[] degrees = null;
 	private String[] majors = null;
 	private String[] minors = null;
@@ -138,6 +140,26 @@ public class ApplicantFilterParameters {
 	public void setScienceCourses(int scienceCourses) {
 
 		this.scienceCourses = scienceCourses;
+	}
+	
+	public int getSocialStudiesCourses() {
+
+		return socialstudiesCourses;
+	}
+
+	public void setSocialStudiesCourses(int socialstudiesCourses) {
+
+		this.socialstudiesCourses = socialstudiesCourses;
+	}
+	
+	public int getArtCourses() {
+
+		return artCourses;
+	}
+
+	public void setArtCourses(int artCourses) {
+
+		this.artCourses = artCourses;
 	}
 
 	public String[] getDegrees() {
