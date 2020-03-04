@@ -36,13 +36,7 @@ public class JobRecommendationControllerButtonsTagHandler extends TagSupport {
 					out.println("<label class='checkbox-inline'><input type='checkbox' onclick='COC_Check(this)'/>CODE OF CONDUCT is satisfactory?</label>");
 					out.println("<BR>");
 			}
-
-			if (usr.checkPermission("PERSONNEL-ADMIN-OFFER-POSITION") && recommendation.isAccepted()
-					&& !recommendation.isOfferMade()) {
-					out.println("<label class='checkbox-inline'><input type='checkbox' onclick='Phone_Contact_Check(this)'/>Candidate has been contacted by phone?</label>");
-					out.println("<BR>");
-			}
-
+			
 			if (usr.checkPermission("PERSONNEL-ADMIN-VIEW")
 					&& (pageContext.getAttribute("JOB_APPLICANTS", PageContext.SESSION_SCOPE) != null)) {
 					out.println("<a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-danger'>Back</a>");
@@ -80,13 +74,13 @@ public class JobRecommendationControllerButtonsTagHandler extends TagSupport {
 							|| usr.checkRole("PERSONNEL-CENTRAL-AD-PROGRAMS") || usr.checkRole("PERSONNEL-WESTERN-AD-PROGRAMS")
 							|| usr.checkRole("PERSONNEL-LABRADOR-AD-PROGRAMS") || usr.checkRole("PERSONNEL-EASTERN-AD-PROGRAMS")
 							|| usr.checkRole("SEO - PERSONNEL")) {
-						out.println("<a class='rec-op-btn btn btn-xs btn-primary' op='offer' style='display:none;' id='offer_btn' href='#'>Make Offer</a>");
+						out.println("<a class='rec-op-btn btn btn-xs btn-primary' op='offer'  id='offer_btn' href='#'>Make Offer</a>");
 
 					}
 				}
 				else {
 					if (usr.checkPermission("PERSONNEL-ADMIN-OFFER-POSITION")) {
-						out.println("<a class='rec-op-btn btn btn-xs btn-primary' op='offer' style='display:none;' id='offer_btn' href='#'>Make Offer</a>");
+						out.println("<a class='rec-op-btn btn btn-xs btn-primary' op='offer'  id='offer_btn' href='#'>Make Offer</a>");
 					}
 				}
 			}

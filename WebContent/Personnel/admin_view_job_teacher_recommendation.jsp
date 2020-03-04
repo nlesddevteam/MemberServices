@@ -185,12 +185,6 @@ input {
 			document.getElementById('accept_btn').style.display = 'none';
 	}
 
-	function Phone_Contact_Check(chkbox) {
-		if (chkbox.checked == true)
-			document.getElementById('offer_btn').style.display = 'inline';
-		else
-			document.getElementById('offer_btn').style.display = 'none';
-	}
 </script>
 </head>
 
@@ -500,7 +494,7 @@ input {
 							<tr>
 								<td class="tableQuestion">4.) Position Details</td>
 								<td class="tableAnswer">Union: <%=rth.getUnionCodeString()%><br />
-									Position: <%=rth.getPositionNameString()%><br /> Salary: <%=rth.getPositionSalary() == null?"":rth.getPositionSalary()%>
+									Position: <%=rth.getPositionNameString()%> <%=rth.getPositionSalary() == null?"":"<br />Salary: "+ rth.getPositionSalary()%>
 								</td>
 							</tr>
 							<%

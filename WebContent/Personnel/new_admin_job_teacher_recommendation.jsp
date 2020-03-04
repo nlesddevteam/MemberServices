@@ -359,7 +359,9 @@
 	                                        	<table border='0'>
 	                                        	<tr><td><u>Union:</u></td><td><%=rth.getUnionCodeString()%></td></tr>
 	                                        	<tr><td><u>Position:</u></td><td><%=rth.getPositionNameString()%></td></tr>
+	                                        	<%if(rth.getPositionSalary() != null)  {%>
 	                                        	<tr><td><u>Salary:</u></td><td><%=rth.getPositionSalary()%></td></tr>
+	                                        	<%} %>	                                        	
 	                                        	</table>
 	                                        </td>
 	                                      </tr>

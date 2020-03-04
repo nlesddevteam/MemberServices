@@ -244,7 +244,7 @@
 		       		<%}%>
 		       		<div id='recommended_position_other_row' style='display:none;margin-top:5px;'>
 		       		<b>If other, please describe:</b><br/>
-		       			<div id="S2Q1_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 500 characters.</div>
+		       			<div id="S2Q1_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 500 characters.</div>
 		       			<textarea class="form-control" name="position_other" id="position_other"><%=(((f != null)&&(f.get("position_other")!=null))?f.get("position_other"):"")%></textarea>
 		    		    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 500 - Remain: <span id="S2Q1_remain">500</span></div>
 		    		
@@ -342,7 +342,9 @@ $('#position_other').keypress(function(e) {
 			                   <tr>
 			                   <td><b>4. Position Details.</b></td>
 			                   <td>
-			                   <b>UNION:</b> <%=rth.getUnionCodeString()%> &middot; <b>POSITION:</b> <%=rth.getPositionNameString()%> &middot; <b>SALARY:</b> <%=rth.getPositionSalary() == null?"":rth.getPositionSalary()%>
+			                   <b>UNION:</b> 
+			                   <%=rth.getUnionCodeString()%> &middot; <b>POSITION:</b> <%=rth.getPositionNameString()%> 
+			                    <%=rth.getPositionSalary() == null?"":" &middot; <b>SALARY:</b> "+rth.getPositionSalary()%>
 		                       </td>
 			                   </tr>
 	                   <%} %>
