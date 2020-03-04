@@ -500,7 +500,7 @@ input {
 							<tr>
 								<td class="tableQuestion">4.) Position Details</td>
 								<td class="tableAnswer">Union: <%=rth.getUnionCodeString()%><br />
-									Position: <%=rth.getPositionNameString()%><br /> Salary: <%=rth.getPositionSalary() == null?"":rth.getPositionSalary()%>
+									Position: <%=rth.getPositionNameString()%> <%=rth.getPositionSalary() == null?"":"<br />Salary: "+ rth.getPositionSalary()%>
 								</td>
 							</tr>
 							<%
