@@ -67,10 +67,10 @@
 .tableTitle {font-weight:bold;width:20%;}
 .tableResult {font-weight:normal;width:80%;}
 
-.tableTitleL {font-weight:bold;width:20%;}
-.tableResultL {font-weight:normal;width:40%;}
-.tableTitleR {font-weight:bold;width:20%;}
-.tableResultR {font-weight:normal;width:40%;}
+.tableTitleL {font-weight:bold;width:30%;}
+.tableResultL {font-weight:normal;width:20%;}
+.tableTitleR {font-weight:bold;width:30%;}
+.tableResultR {font-weight:normal;width:20%;}
 input {    
     border:1px solid silver;
 }
@@ -478,26 +478,29 @@ Sections with no information will display a red header. Those completed and/or w
 								<td class="tableTitleR"># MATH COURSES:</td>
 							    <td class="tableResultR"><%=edu_oth.getNumberMathCourses()%></td>
 								</tr>
-								  
-                                <tr>
+								 <tr>
 							    <td class="tableTitleL"># ENGLISH COURSES:</td>
 							    <td class="tableResultL"><%=edu_oth.getNumberEnglishCourses()%></td>								
 							    <td class="tableTitleR"># MUSIC COURSES:</td>
 							    <td class="tableResultR"><%=edu_oth.getNumberMusicCourses()%></td>
 								</tr>      
-                                
-                                <tr>
+                                 <tr>
 							    <td class="tableTitleL"># TECHNOLOGY COURSES:</td>
 							    <td class="tableResultL"><%=edu_oth.getNumberTechnologyCourses()%></td>								
 							    <td class="tableTitleR"># SCIENCE COURSES:</td>
 							    <td class="tableResultR"><%=edu_oth.getNumberScienceCourses()%></td>
 								</tr>
-								
 								<tr>
-							    <td class="tableTitleL"># TOTAL COURSES COMPLETED:</td>
-							    <td class="tableResultL"><%=edu_oth.getTotalCoursesCompleted()%></td>
+							    <td class="tableTitleL"># SOCIAL STUDIES COURSES:</td>
+							    <td class="tableResultL"><%=edu_oth.getNumberSocialStudiesCourses()%></td>								
+							    <td class="tableTitleR"># ART COURSES:</td>
+							    <td class="tableResultR"><%=edu_oth.getNumberArtCourses()%></td>
+								</tr>
+								<tr>
+							    <td class="tableTitleL">(TLA) TOTAL # COURSES COMPLETE:</td>
+							    <td class="tableResultL"><%=edu_oth.getTotalCoursesCompleted()%></td>	
 							    <td class="tableTitleR"></td>
-							    <td class="tableResultR"></td>
+							    <td class="tableResultR"></td>						 
 							    </tr>
 							    
 							    <tr>							

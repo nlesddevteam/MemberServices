@@ -355,6 +355,12 @@ input {
 						<td class="tableResult">${eduOther.numberTechnologyCourses }</td>
 					</tr>
 					<tr>
+						<td class="tableTitle">Social Studies Courses:</td>
+						<td class="tableResult">${eduOther.numberSocialStudiesCourses }</td>
+						<td class="tableTitle">Art Courses:</td>
+						<td class="tableResult">${eduOther.numberArtCourses }</td>
+					</tr>
+					<tr>
 						<td class="tableTitle">Science Courses:</td>
 						<td class="tableResult">${eduOther.numberScienceCourses }</td>
 						<td class="tableTitle">Total Completed:</td>

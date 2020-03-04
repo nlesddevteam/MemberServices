@@ -170,7 +170,15 @@
 								  <div class="input-group">
 								    <span class="input-group-addon"># Science Courses</span>
 								    <input type="text" name="num_science" id="num_science" class="form-control" value="0">
-								  </div>                                           
+								  </div>       
+								  <div class="input-group">
+								    <span class="input-group-addon"># Social Studies Courses</span>
+								    <input type="text" name="num_sstudies" id="num_sstudies" class="form-control" value="0">
+								  </div> 
+								  <div class="input-group">
+								    <span class="input-group-addon"># Art Courses</span>
+								    <input type="text" name="num_art" id="num_art" class="form-control" value="0">
+								  </div>                                     
 	                              <div class="input-group">
 									<span class="input-group-addon">Level of Professional Training</span>
 									<div class="form-control">

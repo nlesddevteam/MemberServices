@@ -1206,6 +1206,16 @@ public class ApplicantProfileManager {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SCIENCE_CRS >= "
 						+ params.getScienceCourses() + ") ");
 			}
+			
+			if (params.getSocialStudiesCourses() > 0) {
+				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
+						+ params.getSocialStudiesCourses() + ") ");
+			}
+			
+			if (params.getArtCourses() > 0) {
+				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE ART_CRS >= "
+						+ params.getArtCourses() + ") ");
+			}
 
 			if (params.isTLARequirements()) {
 				sql.append(
