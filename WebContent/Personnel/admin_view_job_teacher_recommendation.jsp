@@ -185,12 +185,6 @@ input {
 			document.getElementById('accept_btn').style.display = 'none';
 	}
 
-	function Phone_Contact_Check(chkbox) {
-		if (chkbox.checked == true)
-			document.getElementById('offer_btn').style.display = 'inline';
-		else
-			document.getElementById('offer_btn').style.display = 'none';
-	}
 </script>
 </head>
 
