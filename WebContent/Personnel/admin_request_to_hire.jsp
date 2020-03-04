@@ -705,7 +705,7 @@ var pageWordCountConf = {
                                       							<input type="button" class="btn btn-success btn-xs" value="Delete" onclick="deleteapprovedrequest('${rbean.id}');">
                                       						</esd:SecurityAccessRequired>
                                       					</c:if>
-                                      					<c:if test="${rbean.status.value lt 6 }">
+                                      					<c:if test="${rbean.status.value lt 6 || rbean.status.value gt 11 }">
                                       							<input type="button" class="btn btn-danger btn-xs" value="Resend Notification" onclick="resendrthmessage('${rbean.id}')">
                                       					</c:if>
                                       				                                 		

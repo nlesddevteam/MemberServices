@@ -37,7 +37,7 @@ public class ApproveRequestToHireCompRequestHandler extends RequestHandlerImpl {
 					rhis.setStatusId(RequestToHireStatus.get(status));
 					RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 					//send email to next approval
-					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid),usr);
+					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid),usr,false);
 				}
 				
 				String xml = null;

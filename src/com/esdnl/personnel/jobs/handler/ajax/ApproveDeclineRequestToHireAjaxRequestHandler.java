@@ -76,7 +76,7 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 						RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 					}
 					//send email to next approval
-					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid),usr);
+					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid),usr,false);
 				}else{
 					RequestToHireManager.approveRequestToHire(rid,RequestToHireStatus.REJECTED.getValue(), Integer.toString(usr.getPersonnel().getPersonnelID()));
 					if(statusnotes != null) {
@@ -88,7 +88,7 @@ public class ApproveDeclineRequestToHireAjaxRequestHandler extends RequestHandle
 					rhis.setStatusId(RequestToHireStatus.REJECTED);
 					RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 					//send email to next approval
-					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid),usr);
+					RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rid),usr,false);
 				}
 				
 				

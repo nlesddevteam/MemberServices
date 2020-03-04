@@ -163,7 +163,7 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 						location_id = -200;
 						break;
 					case 2008: // Vista Satellite Office
-						location_id = -400;
+						location_id = 842;
 						break;
 					case 2000: //Western Regional Office
 						location_id = -2000;

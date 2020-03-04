@@ -85,7 +85,7 @@ public class SubmitRequestToHireRequestHandler extends RequestHandlerImpl {
 				RequestToHireHistoryManager.addRequestToHireHistoryBean(rhis);
 				request.setAttribute("msg", "Request submitted");
 				//send email for approval/submitted
-				RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rthb.getId()),usr);
+				RequestToHireEmailManager.sendRequestToHireEmail(RequestToHireManager.getRequestToHireById(rthb.getId()),usr,false);
 				
 			}else{
 				rthb.setId(form.getInt("rid"));
