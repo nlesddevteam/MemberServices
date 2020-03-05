@@ -132,9 +132,9 @@
 
 </head>
 <body>
-<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">7</div>
+<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">6</div>
 <div style="font-size:20px;padding-top:10px;color:rgb(0, 128, 0,0.8);font-weight:bold;text-align:left;">
-SECTION 7: Editing your Support Staff/Management HR Application Profile
+SECTION 6: Editing your Support Staff/Management HR Application Profile
 </div>
 
 <br/>Please add up to 3 references to your online profile.
@@ -145,7 +145,7 @@ SECTION 7: Editing your Support Staff/Management HR Application Profile
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
-	               	<div class="panel-heading"><b>7. REFERENCES</b></div>
+	               	<div class="panel-heading"><b>6. REFERENCES</b></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive"> 
 

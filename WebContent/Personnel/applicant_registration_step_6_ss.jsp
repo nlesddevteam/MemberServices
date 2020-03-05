@@ -41,9 +41,9 @@
   
 </head>
 <body>
-<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">6</div>
+<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">5</div>
 <div style="font-size:20px;padding-top:10px;color:rgb(0, 128, 0,0.8);font-weight:bold;text-align:left;">
-	SECTION 6: Editing your Support Staff/Management HR Application Profile 
+	SECTION5: Editing your Support Staff/Management HR Application Profile 
 </div>
 <br/><br/>
 <div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
@@ -51,7 +51,7 @@
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
-	               	<div class="panel-heading"><b>6. OTHER INFORMATION</b></div>
+	               	<div class="panel-heading"><b>5. OTHER INFORMATION</b></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive">
 					Please add any other information you would like to state in your profile. 

@@ -9,6 +9,7 @@ public class ApplicantEducationSecSSBean implements Serializable {
 	private String schoolName;
 	private String schoolCity;
 	private String schoolProvince;
+	private String schoolCountry;
 	private String yearsCompleted;
 	private String graduated;
 	private String yearGraduated;
@@ -48,6 +49,13 @@ public class ApplicantEducationSecSSBean implements Serializable {
 	public void setSchoolProvince(String schoolProvince) {
 		this.schoolProvince = schoolProvince;
 	}
+	public String getSchoolCountry() {
+		return schoolCountry;
+	}
+	public void setSchoolCountry(String schoolCountry) {
+		this.schoolCountry = schoolCountry;
+	}
+	
 	public String getYearsCompleted() {
 		return yearsCompleted;
 	}

@@ -584,6 +584,10 @@ input {border:1px solid silver;}
                            <td class="tableResult"><%=edu.getSchoolProvince() != null ? edu.getSchoolProvince() : ""%></td>
                          </tr>
                          <tr>
+                           <td class="tableTitle">School Country</td>
+                           <td class="tableResult"><%=edu.getSchoolCountry() != null ? edu.getSchoolCountry() : ""%></td>
+                         </tr>
+                         <tr>
                            <td class="tableTitle">Did you graduate?</td>
                            <td class="tableResult"><%=edu.getGraduatedText() != null ? edu.getGraduatedText() : ""%></td>
                          </tr>

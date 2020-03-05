@@ -32,7 +32,7 @@ $("#loadingSpinner").css("display","none");
 .tableTitleR {font-weight:bold;width:15%;}
 .tableResultR {font-weight:normal;width:35%;}
 input {border:1px solid silver;}
-
+select option[disabled] { display: none;}
 </style>
 
 <script type="text/javascript">
@@ -186,6 +186,119 @@ input {border:1px solid silver;}
 						<%}%>
 						<%if(request.getAttribute("errmsg")!=null){%>
 							<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
-						<%}%>                   
+						<%}%>   
+						
+  <script>
+      
+      //If you can undertand this flor logic, you are a genius.
+      
+      $( document ).ready(function() {
+    	  var op = document.getElementById("country").getElementsByTagName("option");    	  
+    	  var selectedProvince = $("select#state_province option:checked" ).val();
+    	
+    	  if(selectedProvince =="ZZ") {
+    		 for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      }
+    		 
+    	 } else {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }
+    		  op[1].disabled =false ;  //Enable CA    
+    	      op[2].disabled = false ;  //Enable US    		
+    	 }    	 
+    	  op = document.getElementById("state_province").getElementsByTagName("option");    	  
+    	  selectedCountry = $("select#country option:checked" ).val();
+    	  if(selectedCountry=="CA") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i<15) {
+    	    	  op[i].disabled = false ;  //Enable These
+    			  } else {
+    				  op[i].disabled = true ; // Disable rest
+    			  }
+    	      }    		 
+    	  
+    	  } else if(selectedCountry =="US") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i>15 && i < op.length-3) {
+    	    	  op[i].disabled = false ;  //Enable These 	
+    	      } else {
+    	    	  op[i].disabled = true ;  //Disable Rest
+    	      } 
+    			  
+    		  }	  
+    	  
+    	 } else {
+    		  for (var i = 0; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }    		
+    	  }
+    	  
+    	  op[op.length-1].disabled =false ;  //EnableOther       		  
+		  op[op.length-2].disabled =false ;  //EnableOther  
+    	 
+    	 
+      });
+    	  
+// State Province Select Criteria      
+      $('#state_province').change(function(){
+    	  var op = document.getElementById("country").getElementsByTagName("option");    	  
+    	  var selectedProvince = $("select#state_province option:checked" ).val();
+     	 if(selectedProvince =="ZZ") {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      }   		 
+    	  
+    	  } else {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }
+    		  op[1].disabled =false ;  //Enable CA    
+    	      op[2].disabled = false ;  //Enable US
+    		  
+    	  }
+    	});   	 
+
+//Country select criteria
+
+      $('#country').change(function(){
+    	  var op = document.getElementById("state_province").getElementsByTagName("option");    	  
+    	  var selectedCountry = $("select#country option:checked" ).val();
+     	
+    	  if(selectedCountry=="CA") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i<15) {
+    	    	  op[i].disabled = false ;  //Enable All
+    			  } else {
+    				  op[i].disabled = true ;
+    			  }
+    	      }    		 
+    	  
+    	  } else if(selectedCountry =="US") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i>15 && i < op.length-3) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      } else {
+    	    	  op[i].disabled = true ;  //Enable All    
+    	      } 
+    			  
+    		  }    	  
+    	     		  
+    	  } else {
+    		  for (var i = 0; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }    		
+    	  }
+    	  
+    	  op[op.length-1].disabled =false ;  //EnableOther       		  
+		  op[op.length-2].disabled =false ;  //EnableOther    
+    	});   	 
+      
+      
+      
+
+</script>                 						
+						                
 </body>
 </html>
