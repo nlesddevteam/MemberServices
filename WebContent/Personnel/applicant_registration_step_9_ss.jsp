@@ -43,9 +43,9 @@ input {border:1px solid silver;}
 	</head>
 	
 	<body>
-<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">8</div>
+<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">7</div>
 <div style="font-size:20px;padding-top:10px;color:rgb(0, 128, 0,0.8);font-weight:bold;text-align:left;">
-SECTION 8: Editing your Support Staff/Management HR Application Profile
+SECTION 7: Editing your Support Staff/Management HR Application Profile
 </div>
 
 <br/>Various documents/declarations are required to complete the application process. They can be uploaded here. 
@@ -58,7 +58,7 @@ SECTION 8: Editing your Support Staff/Management HR Application Profile
  <form id="frmPostJob" action="applicantRegistrationSS.html?step=8" method="post" enctype="multipart/form-data">
 	                                
 								    <div class="panel panel-info">
-								      <div class="panel-heading">9. DOCUMENTS (Upload)</div>
+								      <div class="panel-heading">7. DOCUMENTS (Upload)</div>
 								      <div class="panel-body">	
 	                                  <div class="table-responsive"> 	
 	                                     <table class="table table-striped table-condensed" style="font-size:12px;">							   

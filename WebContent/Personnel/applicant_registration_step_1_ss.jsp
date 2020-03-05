@@ -29,7 +29,7 @@ $("#loadingSpinner").css("display","none");
 .tableTitleR {font-weight:bold;width:15%;}
 .tableResultR {font-weight:normal;width:35%;}
 input {border:1px solid silver;}
-
+select option[disabled] { display: none;}
 </style>
 
 <script type="text/javascript">
@@ -53,7 +53,7 @@ input {border:1px solid silver;}
 	
 	</script>
 	
-	
+
 	
 </head>
 <body>
@@ -133,7 +133,7 @@ input {border:1px solid silver;}
 							    <td class="tableResultR" id="address2W"><input type="text" name="address2" id="address2" class="form-control" value="<%=((profile!=null)&&(profile.getAddress2()!=null))?profile.getAddress2() : ""%>"></td>
 							    </tr>
 							    <tr>
-								<td class="tableTitleL">Province/State*:</td>
+								<td class="tableTitleL">Province/State*:<br/><span style="font-weight:normal;font-size:10px;">Select Other to change country</span></td>
 							    <td class="tableResultL" id="state_provinceW"><job:StateProvince id="state_province" cls="form-control" value='<%=(profile!=null)?profile.getProvince():""%>' /></td>
 							    <td class="tableTitleR">Country*:</td>
 							    <td class="tableResultR" id="countryW"><job:Country id="country" cls="form-control" value='<%=(profile!=null)?profile.getCountry():""%>' /></td>
@@ -184,6 +184,117 @@ input {border:1px solid silver;}
 						<%if(request.getAttribute("errmsg")!=null){%>
 							<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
 						<%}%>                   
-                       
+      
+      <script>
+      
+      //If you can undertand this flor logic, you are a genius.
+      
+      $( document ).ready(function() {
+    	  var op = document.getElementById("country").getElementsByTagName("option");    	  
+    	  var selectedProvince = $("select#state_province option:checked" ).val();
+    	
+    	  if(selectedProvince =="ZZ") {
+    		 for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      }
+    		 
+    	 } else {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }
+    		  op[1].disabled =false ;  //Enable CA    
+    	      op[2].disabled = false ;  //Enable US    		
+    	 }    	 
+    	  op = document.getElementById("state_province").getElementsByTagName("option");    	  
+    	  selectedCountry = $("select#country option:checked" ).val();
+    	  if(selectedCountry=="CA") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i<15) {
+    	    	  op[i].disabled = false ;  //Enable These
+    			  } else {
+    				  op[i].disabled = true ; // Disable rest
+    			  }
+    	      }    		 
+    	  
+    	  } else if(selectedCountry =="US") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i>15 && i < op.length-3) {
+    	    	  op[i].disabled = false ;  //Enable These 	
+    	      } else {
+    	    	  op[i].disabled = true ;  //Disable Rest
+    	      } 
+    			  
+    		  }	  
+    	  
+    	 } else {
+    		  for (var i = 0; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }    		
+    	  }
+    	  
+    	  op[op.length-1].disabled =false ;  //EnableOther       		  
+		  op[op.length-2].disabled =false ;  //EnableOther  
+    	 
+    	 
+      });
+    	  
+// State Province Select Criteria      
+      $('#state_province').change(function(){
+    	  var op = document.getElementById("country").getElementsByTagName("option");    	  
+    	  var selectedProvince = $("select#state_province option:checked" ).val();
+     	 if(selectedProvince =="ZZ") {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      }   		 
+    	  
+    	  } else {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }
+    		  op[1].disabled =false ;  //Enable CA    
+    	      op[2].disabled = false ;  //Enable US
+    		  
+    	  }
+    	});   	 
+
+//Country select criteria
+
+      $('#country').change(function(){
+    	  var op = document.getElementById("state_province").getElementsByTagName("option");    	  
+    	  var selectedCountry = $("select#country option:checked" ).val();
+     	
+    	  if(selectedCountry=="CA") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i<15) {
+    	    	  op[i].disabled = false ;  //Enable All
+    			  } else {
+    				  op[i].disabled = true ;
+    			  }
+    	      }    		 
+    	  
+    	  } else if(selectedCountry =="US") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i>15 && i < op.length-3) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      } else {
+    	    	  op[i].disabled = true ;  //Enable All    
+    	      } 
+    			  
+    		  }    	  
+    	     		  
+    	  } else {
+    		  for (var i = 0; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }    		
+    	  }
+    	  
+    	  op[op.length-1].disabled =false ;  //EnableOther       		  
+		  op[op.length-2].disabled =false ;  //EnableOther    
+    	});   	 
+      
+      
+      
+
+</script>                 
 </body>
 </html>

@@ -35,7 +35,7 @@ public class ApplicantEducationPostSSTagHandler extends TagSupport {
 
 			if ((beans != null) && (beans.length > 0)) {
 				
-				out.println("<table class='table table-striped table-condensed' style='font-size:12px;'>");
+				out.println("<table class='table table-striped table-condensed' style='font-size:11px;'>");
 				out.println("<thead><tr>");
 				out.println("<th width='30%'>INSTITUTION</th>");
 				out.println("<th width='20%'>FROM/TO</th>");

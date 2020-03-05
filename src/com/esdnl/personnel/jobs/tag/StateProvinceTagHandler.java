@@ -50,8 +50,8 @@ public class StateProvinceTagHandler extends TagSupport {
 			if ((this.style != null) && !this.style.trim().equals(""))
 				out.print(" style=\"" + this.style + "\"");
 			out.println(">");
-
-			out.println("<OPTION VALUE='-1'>--- CANADIAN PROVINCES ---</OPTION>");
+			out.println("<OPTION VALUE='-1'>SELECT PROVINCE/STATE</OPTION>");
+			out.println("<OPTION VALUE='-1'>****** CANADIAN PROVINCES ******</OPTION>");
 			out.println("<OPTION VALUE='AB'"
 					+ ((!StringUtils.isEmpty(this.value) && this.value.equals("AB")) ? " SELECTED" : "") + ">Alberta</OPTION>");
 			out.println("<OPTION VALUE='BC'"
@@ -86,7 +86,7 @@ public class StateProvinceTagHandler extends TagSupport {
 			out.println("<OPTION VALUE='YT'"
 					+ ((!StringUtils.isEmpty(this.value) && this.value.equals("YT")) ? " SELECTED" : "") + ">Yukon</OPTION>");
 			out.println("<OPTION VALUE='-1'>&nbsp;</OPTION>");
-			out.println("<OPTION VALUE='-1'>--- US STATES ---</OPTION>");
+			out.println("<OPTION VALUE='-1'>****** US STATES ******</OPTION>");
 			out.println("<OPTION VALUE='AL'"
 					+ ((!StringUtils.isEmpty(this.value) && this.value.equals("AL")) ? " SELECTED" : "") + ">Alabama</OPTION>");
 			out.println("<OPTION VALUE='AK'"
@@ -207,7 +207,10 @@ public class StateProvinceTagHandler extends TagSupport {
 					+ ((!StringUtils.isEmpty(this.value) && this.value.equals("WI")) ? " SELECTED" : "") + ">Wisconsin</OPTION>");
 			out.println("<OPTION VALUE='WY'"
 					+ ((!StringUtils.isEmpty(this.value) && this.value.equals("WY")) ? " SELECTED" : "") + ">Wyoming</OPTION>");
-
+			out.println("<OPTION VALUE='-1'>&nbsp;</OPTION>");
+			out.println("<OPTION VALUE='-1'>****** NON-CANADA / NON-US ******</OPTION>");
+			out.println("<OPTION VALUE='ZZ'"
+					+ ((!StringUtils.isEmpty(this.value) && this.value.equals("ZZ")) ? " SELECTED" : "") + ">Other</OPTION>");
 			out.println("</SELECT>");
 
 		}
