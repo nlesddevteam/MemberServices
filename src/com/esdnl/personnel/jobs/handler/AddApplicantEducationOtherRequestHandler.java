@@ -109,7 +109,7 @@ public class AddApplicantEducationOtherRequestHandler implements LoginNotRequire
 				abean.setNumberMusicCourses(Integer.parseInt(music_crs));
 				abean.setNumberTechnologyCourses(Integer.parseInt(tech_crs));
 				abean.setNumberScienceCourses(Integer.parseInt(science_crs));
-				abean.setNumberSocialStudiesCourses(Integer.parseInt(science_crs));
+				abean.setNumberSocialStudiesCourses(Integer.parseInt(sstudies_crs));
 				abean.setNumberArtCourses(Integer.parseInt(art_crs));
 				abean.setTotalCoursesCompleted(Integer.parseInt(total_crs));
 				ApplicantEducationOtherManager.addApplicantEducationOtherBean(abean);
