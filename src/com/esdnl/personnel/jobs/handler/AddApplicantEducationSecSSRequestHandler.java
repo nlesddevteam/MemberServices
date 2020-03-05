@@ -16,8 +16,9 @@ public class AddApplicantEducationSecSSRequestHandler extends PersonnelApplicati
 				new RequiredFormElement("schoolname"),
 				new RequiredFormElement("schoolcity"),
 				new RequiredFormElement("state_province"),
+				//new RequiredFormElement("country"),
 				new RequiredFormElement("graduated"),
-				new RequiredFormElement("graduated"),
+				//new RequiredFormElement("yeargraduated"),
 		});
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,6 +35,7 @@ public class AddApplicantEducationSecSSRequestHandler extends PersonnelApplicati
 				String schoolname = form.get("schoolname");
 				String schoolcity = form.get("schoolcity");
 				String schoolprovince = form.get("state_province");
+				String schoolcountry = form.get("country");
 				String yearscompleted = "";
 				String graduated = form.get("graduated");
 				String yearGraduated = form.get("yeargraduated");
@@ -56,6 +58,7 @@ public class AddApplicantEducationSecSSRequestHandler extends PersonnelApplicati
 					exp.setYearsCompleted(yearscompleted);
 					exp.setGraduated(graduated);
 					exp.setYearGraduated(yearGraduated);
+					exp.setSchoolCountry(schoolcountry);
 					if(request.getParameter("op") == null){
 						ApplicantEducationSecSSManager.addApplicantEducationSecSSBean(exp);
 						request.setAttribute("msg", "Education added successfully.");

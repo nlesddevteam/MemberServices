@@ -35,6 +35,7 @@
 	.tableTitleR {font-weight:bold;width:20%;}
 	.tableResultR {font-weight:normal;width:30%;}
 	input { border:1px solid silver;}
+	select option[disabled] { display: none;}
 </style>
     <script type="text/javascript">
 	$('document').ready(function(){
@@ -76,9 +77,9 @@
 </head>
 <body>
 <%pageContext.setAttribute("now", new java.util.Date()); %> 
-<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">5</div>
+<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">4</div>
 <div style="font-size:20px;padding-top:10px;color:rgb(0, 128, 0,0.8);font-weight:bold;text-align:left;">
-	SECTION 5: Editing your Support Staff/Management HR Application Profile 
+	SECTION 4: Editing your Support Staff/Management HR Application Profile 
 </div>
 <br/><br/>
 <div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
@@ -130,8 +131,14 @@
                              <tr>
                              <td class="tableTitleL">School Town/City*:</td>
                              <td class="tableResultL" id="schoolcityW"><input type="text" name="schoolcity" id="schoolcity" class="form-control" value='<%= edu != null ? edu.getSchoolCity():""%>'></td>
-                             <td class="tableTitleR">School Province/State*:</td>
+                             <td class="tableTitleR"></td>
+                             <td class="tableResultR"></td>
+                             </tr> 
+                             <tr>
+                             <td class="tableTitleR">School Province/State*:<br/><span style='font-weight:normal;font-size:10px;'>If Non Canada/US select Other</span></td>
                              <td class="tableResultR" id="state_provinceW"><job:StateProvince id="state_province" cls="form-control" /></td>
+                             <td class="tableTitleR">School Country*:</td>
+                            <td class="tableResultR" id="countryW"><job:Country id="country" cls="form-control" value='<%=(edu !=null)?edu.getSchoolCountry():""%>' /></td>
                              </tr> 
                              <tr>        
                              <td class="tableTitleL">Did you graduate?</td>
@@ -146,7 +153,7 @@
                              <td class="tableTitleL">Graduation Year?</td>
                              <td class="tableResultL" id="graduatedy">
                              	<fmt:formatDate value="${now}" pattern="yyyy" var="startdate"/>
-		        				<select id="yeargraduated" name="yeargraduated"  class="form-control"  style="width:auto;">
+		        				<select id="yeargraduated" name="yeargraduated"  class="form-control" >
 									<option value="-1">Please select year</option>
 						            <c:forEach begin="0" end="75" var="val">
 						                <c:set var="decr" value="${(startdate) - val}"/>
@@ -266,6 +273,113 @@
 	      	yearRange: '-80:+5',
 	   });
  });
- </script>                             
+ </script>  
+ <script>
+      $( document ).ready(function() {
+    	  var op = document.getElementById("country").getElementsByTagName("option");    	  
+    	  var selectedProvince = $("select#state_province option:checked" ).val();
+    	
+    	  if(selectedProvince =="ZZ") {
+    		 for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      }    		
+    	 } else {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }
+    		  op[1].disabled =false ;  //Enable CA    
+    	      op[2].disabled = false ;  //Enable US    		
+    	 }    	 
+    	  op = document.getElementById("state_province").getElementsByTagName("option");    	  
+    	  selectedCountry = $("select#country option:checked" ).val();
+    	  if(selectedCountry=="CA") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i<15) {
+    	    	  op[i].disabled = false ;  //Enable All
+    			  } else {
+    				  op[i].disabled = true ;
+    			  }
+    	      }    		 
+    	  
+    	  } else if(selectedCountry =="US") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i>15 && i < op.length-3) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      } else {
+    	    	  op[i].disabled = true ;  //Enable All    
+    	      } 
+    			  
+    		  }	  
+    	  
+    	 } else {
+    		  for (var i = 0; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }    		
+    	  }
+    	  
+    	  op[op.length-1].disabled =false ;  //EnableOther       		  
+		  op[op.length-2].disabled =false ;  //EnableOther  
+    	 
+    	 
+      });
+    	  
+// State Province Select Criteria      
+      $('#state_province').change(function(){
+    	  var op = document.getElementById("country").getElementsByTagName("option");    	  
+    	  var selectedProvince = $("select#state_province option:checked" ).val();
+     	 if(selectedProvince =="ZZ") {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      }    		
+    	  
+    	  } else {
+    		  for (var i = 3; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }
+    		  op[1].disabled =false ;  //Enable CA    
+    	      op[2].disabled = false ;  //Enable US    		  
+    	  }
+    	});   	 
+
+//Country select criteria
+
+      $('#country').change(function(){
+    	  var op = document.getElementById("state_province").getElementsByTagName("option");    	  
+    	  var selectedCountry = $("select#country option:checked" ).val();
+     	
+    	  if(selectedCountry=="CA") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i<15) {
+    	    	  op[i].disabled = false ;  //Enable All
+    			  } else {
+    				  op[i].disabled = true ;
+    			  }
+    	      }    		 
+    	  
+    	  } else if(selectedCountry =="US") {
+    		  for (var i = 0; i < op.length; i++) {
+    			  if (i>15 && i < op.length-3) {
+    	    	  op[i].disabled = false ;  //Enable All    	
+    	      } else {
+    	    	  op[i].disabled = true ;  //Enable All    
+    	      } 
+    			  
+    		  }    	  
+    	     		  
+    	  } else {
+    		  for (var i = 0; i < op.length; i++) {
+    	    	  op[i].disabled = true ;  //Disable All    	
+    	      }    		
+    	  }
+    	  
+    	  op[op.length-1].disabled =false ;  //EnableOther       		  
+		  op[op.length-2].disabled =false ;  //EnableOther    
+    	});   	 
+      
+      
+      
+
+</script>                 
+                            
 </body>
 </html>

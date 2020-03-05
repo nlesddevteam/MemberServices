@@ -233,41 +233,46 @@ employment positions and/or applications. Sections with no information will disp
                        <table class="table table-striped table-condensed" style="font-size:11px;">
                        <thead>
                        <tr>
-                       <th width="25%">HIGHEST GRADE LEVEL</th>
-                       <th width="25%">SCHOOL NAME</th>
-                       <th width="25%">TOWN/CITY</th>
-                       <th width="25%">PROVINCE/STATE</th>
+                       
+                       <th width="20%">SCHOOL NAME</th>
+                       <th width="30%">ADDRESS</th>                                     
+                        <th width="15%">HIGHEST GRADE</th>
+                        <th width="35%">STATUS</th>
                        </tr>
                        </thead>
                        <tbody>	
-                 			<tr>
-                 			<td><%=edu.getEducationLevel() != null ? edu.getEducationLevel() : "N/A"%></td>                                    			
+                 			<tr>                 			                                 			
                  			<td><%=edu.getSchoolName() != null ? edu.getSchoolName() : "N/A"%></td>
-                 			<td><%=edu.getSchoolCity() != null ? edu.getSchoolCity() : "N/A"%></td>                                    			
-                 			<td><%=edu.getSchoolProvince() != null ? edu.getSchoolProvince() : "N/A"%></td>
-                 			</tr>
-                 		</tbody>
-          				</table>
-          				
-          				<%if (edu.getGraduatedText() != null) { %>
-	          				<c:set var="graduatedQ" value="<%=edu.getGraduatedText()%>"/>          				
+                 			<td><%=edu.getSchoolCity() != null ? edu.getSchoolCity()+", " : "N/A, "%>                              			
+                 			<%=edu.getSchoolProvince() != null ? edu.getSchoolProvince() + " &middot; ": ""%>
+                 			<%=edu.getSchoolCountry() != null ? edu.getSchoolCountry() : ", N/A"%></td>
+                 			<td><%=edu.getEducationLevel() != null ? edu.getEducationLevel() : "N/A"%></td>   
+                 			<td>
+                 			<%if (edu.getGraduatedText() != null) { %>
+                 			<c:set var="graduatedQ" value="<%=edu.getGraduatedText()%>"/>          				
 	          				<c:choose>
 	          				<c:when test="${graduatedQ eq 'Yes' }">
-	          					<div class="alert alert-success">Successfully Graduated from <%=edu.getSchoolName() != null ? edu.getSchoolName() : "N/A"%>.</div>
+	          					<span style="color:Green;">Successfully Graduated <%=edu.getYearGraduated()!=null? " in " +edu.getYearGraduated():"" %></span>
 	          				</c:when>
 	          				<c:when test="${graduatedQ eq 'No' }">
-	          					<div class="alert alert-danger">Did not graduate from <%=edu.getSchoolName() != null ? edu.getSchoolName() : "N/A"%>.</div>
+	          					<span style="color:Red;">Did Not Graduate</span>
 	          				</c:when>
 	          				<c:when test="${graduatedQ eq 'GED' }">
-	          					<div class="alert alert-warning">Applicant has completed a High School Equivalency (GED) test.</div>
+	          					<span style="color:Blue;">High School Equivalency (GED) <%=edu.getYearGraduated()!=null? " completed " +edu.getYearGraduated():"" %></span>
 	          				</c:when>
 	          				<c:otherwise>
-	          					<div class="alert alert-info">No graduation information currently on file.</div>
+	          					N/A
 	          				</c:otherwise>
 	          				</c:choose>
           				<%} else { %>
-          					<div class="alert alert-info">No graduation information currently on file.</div>
+          					N/A
           				<%} %>
+                 			
+                 			</td>  
+                 			</tr>
+                 		</tbody>
+          				</table>          				
+          			
           				
           				
           				<%} else { %>

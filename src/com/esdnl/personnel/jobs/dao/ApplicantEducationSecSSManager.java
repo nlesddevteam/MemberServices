@@ -16,7 +16,7 @@ public class ApplicantEducationSecSSManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_app_education_sec_ss(?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_app_education_sec_ss(?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.INTEGER);
 			stat.setString(2, abean.getSin());
 			stat.setString(3, abean.getEducationLevel());
@@ -26,6 +26,7 @@ public class ApplicantEducationSecSSManager {
 			stat.setString(7, abean.getYearsCompleted());
 			stat.setString(8, abean.getGraduated());
 			stat.setString(9, abean.getYearGraduated());
+			stat.setString(10, abean.getSchoolCountry());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -95,7 +96,7 @@ public class ApplicantEducationSecSSManager {
 			try {
 				con = DAOUtils.getConnection();
 				con.setAutoCommit(true);
-				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_app_education_sec_ss(?,?,?,?,?,?,?,?,?); end;");
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_app_education_sec_ss(?,?,?,?,?,?,?,?,?,?); end;");
 				stat.setString(1, abean.getSin());
 				stat.setString(2, abean.getEducationLevel());
 				stat.setString(3, abean.getSchoolName());
@@ -105,6 +106,7 @@ public class ApplicantEducationSecSSManager {
 				stat.setString(7, abean.getGraduated());
 				stat.setInt(8, abean.getId());
 				stat.setString(9, abean.getYearGraduated());
+				stat.setString(10, abean.getSchoolCountry());
 				stat.execute();
 			}
 			catch (SQLException e) {
@@ -141,6 +143,7 @@ public class ApplicantEducationSecSSManager {
 			aBean.setYearsCompleted(rs.getString("YEARSCOMPLETED"));
 			aBean.setGraduated(rs.getString("GRADUATED"));
 			aBean.setYearGraduated(rs.getString("YEARGRADUATED"));
+			aBean.setSchoolCountry(rs.getString("SCHOOLCOUNTRY"));
 		}
 		catch (SQLException e) {
 			aBean = null;
