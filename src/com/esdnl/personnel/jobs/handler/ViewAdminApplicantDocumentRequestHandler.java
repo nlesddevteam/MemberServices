@@ -52,7 +52,11 @@ public class ViewAdminApplicantDocumentRequestHandler extends RequestHandlerImpl
 				ApplicationObjectAuditBean audit = new ApplicationObjectAuditBean();
 
 				audit.setActionType(ActionTypeConstant.VIEW);
-				audit.setAction("Applicant Document Viewed - " + doc.getType().getDescription());
+				if(doc.getApplicant().getProfileType().equals("S")) {
+					audit.setAction("Applicant Document Viewed - " + doc.getTypeSS().getDescription());
+				}else {
+					audit.setAction("Applicant Document Viewed - " + doc.getType().getDescription());
+				}
 				audit.setApplication(ApplicationConstant.PERSONNEL);
 				audit.setObjectType(ApplicantDocumentBean.class.toString());
 				audit.setObjectId(Integer.toString(doc.getDocumentId()));
