@@ -16,6 +16,7 @@
 	<property name="appserver.home.6" location="../../../Apache Software Foundation/apache-tomcat-9.0.7-worker6"/>
 	
 	<property name="appserver.working" value="work/Catalina/localhost/${ant.project.name}"/>
+	<property name="appserver.logs" value="logs"/>
 	
   <property name="repo.dir" location="."/>
   <property name="nlesdweb.repo.dir" location="../nlesdweb"/>
@@ -88,5 +89,15 @@
 		<delete dir="${appserver.home.5}/${appserver.working}"/>
 		<delete dir="${appserver.home.6}/${appserver.working}"/>
 	</target>
+	
+	<target name="clean-logs"
+		        description="clean up appserver working directory" >
+		  <delete dir="${appserver.home.1}/${appserver.logs}"/>
+			<delete dir="${appserver.home.2}/${appserver.logs}"/>
+			<delete dir="${appserver.home.3}/${appserver.logs}"/>
+			<delete dir="${appserver.home.4}/${appserver.logs}"/>
+			<delete dir="${appserver.home.5}/${appserver.logs}"/>
+			<delete dir="${appserver.home.6}/${appserver.logs}"/>
+		</target>
 	
 </project>
