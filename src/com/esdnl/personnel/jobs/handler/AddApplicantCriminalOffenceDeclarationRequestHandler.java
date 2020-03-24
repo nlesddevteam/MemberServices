@@ -77,7 +77,12 @@ public class AddApplicantCriminalOffenceDeclarationRequestHandler extends Person
 		else
 			request.setAttribute("errmsg", this.validator.getErrorString());
 
-		path = "applicant_registration_step_10.jsp";
+		if(profile.getProfileType().equals("S")) {
+			path = "applicant_registration_step_9_ss.jsp";
+		}else {
+			path = "applicant_registration_step_10.jsp";
+		}
+		
 
 		return path;
 	}

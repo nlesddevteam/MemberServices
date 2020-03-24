@@ -46,6 +46,8 @@
 	if (!StringUtils.isEmpty(profile.getSIN2())) {
 		empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
 	}
+	Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
+	  
 %>
 
 <html>
@@ -400,7 +402,35 @@ employment positions and/or applications. Sections with no information will disp
 	                        		<script>$("#section8").removeClass("panel-success").addClass("panel-danger");</script>	
 	                              <%} %>
                                 
- </div></div></div></div>                             
+ </div></div></div></div>
+   <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section11">   
+	               	<div class="panel-heading"><b>8. CRIMINAL OFFENCE DECLARATIONS</b><span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10_CODF.jsp">EDIT</a></span></div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive">
+									<%if((cods != null) && (cods.size() > 0))  {
+	                                  int i=0; %>	                                  	
+	                                  	<table class="table table-striped table-condensed" style="font-size:11px;">
+      							    	<thead>
+      							    	<tr>
+                                       	<th width="90%">DECLARATION DATE</th>                                                                           
+                                       	<th width="10%">OPTIONS</th>                                                                           
+                                      	</tr>
+                                      	</thead>
+                                      	<tbody>
+	                                  	<%for(ApplicantCriminalOffenceDeclarationBean cod : cods) { %>
+	                                      <tr>
+	                                      <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
+	                                      <td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>' target='_blank'>VIEW</a></td>
+	                                     </tr>
+	                                      <%} %>  
+	                                   	</tbody>
+	                                   	</table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Documents currently on file.</span>
+	                                       <script>$("#section10").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+  </div></div></div></div>                             
          
          
          <div align="center" class="no-print" style="padding-top:3px;padding-bottom:10px;"><a href="/employment/index.jsp?finished=true" class="btn btn-sm btn-danger">Back to Employment</a></div>

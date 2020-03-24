@@ -64,6 +64,7 @@
 	   <script src="/MemberServices/Personnel/includes/js/personnel_ajax_v1.js"></script>
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="/MemberServices/Personnel/includes/js/applicant_validations.js"></script>
 		<decorator:head />
 
 

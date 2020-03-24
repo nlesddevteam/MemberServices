@@ -21,6 +21,11 @@
 	redirectTo="/Personnel/admin_index.jsp" />
 
 <%
+	if(request.getAttribute("filterparams")==null){
+		session.setAttribute("sfilterparams",null); 
+	}else{
+		session.setAttribute("sfilterparams",request.getAttribute("filterparams"));
+	}
 	User usr = (User) session.getAttribute("usr");
 	JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_APPLICANTS");
@@ -198,7 +203,143 @@ input {
 				<br />
 
 				<div class="table-responsive">
-
+					<c:choose>
+						<c:when test="${filterparams ne null }">
+								<div class="panel-group">
+  									<div class="panel panel-default">
+    									<div class="panel-heading">
+      										<h4 class="panel-title">
+        										<a data-toggle="collapse" id="selDegs" href="#degrees"><span class="glyphicon glyphicon-triangle-bottom"></span> My Filter(s)</a>
+      										</h4>
+    								</div>
+    								<div id="degrees" class="panel-collapse collapse in">
+    									
+    										<table class="table table-condensed table-striped"
+						style="font-size: 11px; background-color: #FFFFFF;">
+    										<tr>
+    										<td width="20%">Permanent NLESD Contract?</td>
+    										<td width="20%">
+    											<c:choose>
+    												<c:when test="${filterparams.permanentContract eq 'Y' }">
+    													Yes
+    												</c:when>
+    												<c:when test="${filterparams.permanentContract eq 'N' }">
+    													No
+    												</c:when>
+    												<c:otherwise>
+    													Any
+    												</c:otherwise>
+    											</c:choose>
+    										</td>
+    										<td width="20%"># Math Courses:</td>
+    										<td width="20%">
+    											${filterparams.mathCourses }
+    										</td>
+    										<td width="20%">
+    										Degree(s): ${filterparams.getDegreesString() }
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%">Permanent Exp (Months):</td>
+    										<td width="20%">
+    											${filterparams.permanentExp }
+    										</td>
+    										<td width="20%"># English Courses:</td>
+    										<td width="20%">
+    											${filterparams.englishCourses }
+    										</td>
+    										<td width="20%">
+    											Major Subject Group(s): ${filterparams.getMajorsSubjectGroupsString() } 
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%">Replacement Exp (Months):</td>
+    										<td width="20%">
+    											${filterparams.replacementExp }
+    										</td>
+    										<td width="20%"># Music Courses:</td>
+    										<td width="20%">
+    											${filterparams.musicCourses }
+    										</td>
+    										<td width="20%">
+    										Major(s): ${filterparams.getMajorsString() }
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%">Repl + Perm (Months):</td>
+    										<td width="20%">
+    											${filterparams.totalExp }
+    										</td>
+    										<td width="20%"># Technology Courses:</td>
+    										<td width="20%">
+    											${filterparams.technologyCourses }
+    										</td>
+    										<td width="20%">
+    											Minor Subject Group(s): ${filterparams.getMinorsSubjectGroupsString() } 
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%"># Sub Days:</td>
+    										<td width="20%">
+    											${filterparams.subDays }
+    										</td>
+    										<td width="20%"># Science Courses:</td>
+    										<td width="20%">
+    											${filterparams.scienceCourses }
+    										</td>
+    										<td width="20%">
+    											Minors(s): ${filterparams.getMinorsString() }
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%">TLA Courses > 20 / CEC L2:</td>
+    										<td width="20%">
+    											<c:choose>
+    												<c:when test="${filterparams.isTLARequirements()}">
+    													Yes
+    												</c:when>
+    												<c:otherwise>
+    													No
+    												</c:otherwise>
+    											</c:choose>
+    										</td>
+    										<td width="20%"># Social Studies Courses:</td>
+    										<td width="20%">
+    											${filterparams.socialStudiesCourses }
+    										</td>
+    										<td width="20%" rowspan='3'>
+    											Regional Preferences: ${filterparams.getRegionsString()}
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%"># Special Ed Courses:</td>
+    										<td width="20%">
+    											${filterparams.specialEducationCourses}
+    										</td>
+    										<td width="20%"># Art Courses:</td>
+    										<td width="20%">
+    											${filterparams.artCourses }
+    										</td>
+    										</tr>
+    										<tr>
+    										<td width="20%"># French Courses:</td>
+    										<td width="20%">
+    											${filterparams.frenchCourses}
+    										</td>
+    										<td width="20%">Level Of Prof Training:</td>
+    										<td width="20%">
+    											${filterparams.getTrainingString() }
+    										</td>
+    										</tr>
+    										</table>
+      									</div>
+    								</div>
+  									
+								</div>
+						</c:when>
+					</c:choose>
+					
+					
 					<%
 						if (applicants.length > 0) {
 					%>
@@ -350,7 +491,7 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<%}%>
 								
 								<td style="text-align:right;">
-									<a onclick="loadingData()" class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
+									<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>" target="_blank">Profile</a>
 									<% if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("MANAGER OF HR - PERSONNEL")) {%> 
 									<a href="#" data-toggle="confirmation" data-title="Are you sure you wish to withdraw <%=applicants[i].getFullNameReverse()%> from this competition?"
 									class="btn btn-danger btn-xs" comp-num='<%=job.getCompetitionNumber()%>' uid='<%=applicants[i].getSIN()%>'>Withdraw</a> 

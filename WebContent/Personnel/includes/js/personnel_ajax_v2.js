@@ -288,6 +288,16 @@ function onReferenceAndInterviewSummarySelected(){
 		else {
 			$('#candidate-recommendation-info').hide();
 		}
+	}else{
+		if($('#chknoref:checked').length <= 0){
+			if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
+				$('#candidate-recommendation-info').show();
+			}
+			else {
+				$('#candidate-recommendation-info').hide();
+			}
+			
+		}
 	}
 	
 }
@@ -319,7 +329,6 @@ function onSendReferenceCheckRequest() {
 
 function parseSendReferenceCheckRequestResponse(xml) {
     parseCurrentReferenceCheckRequestsResponse(xml);
-    
     //formatting send response
     if($(xml).find("RESPONSE-MSG").length > 0){
     	$('#request_response_msg').html($(xml).find("RESPONSE-MSG").text());
@@ -499,7 +508,9 @@ function onManualReferenceCheckRequestNLESD() {
 	  }
 	  
 	  
-	  $.fancybox.close();
+	  //$.fancybox.close();
+	  
+	  $('#refRequest').modal('hide');
 	  
 	  openWindow('MANUAL_REFERENCE_CHECK',"manualReferenceCheckRequest.html?uid="+ uid + "&reftype=" + reftype, 850, 600, 1); 
 	}
@@ -573,6 +584,11 @@ function NoReferenceSelected(){
 	{
 		$('#candidate-recommendation-info').show();
 	}else{
-		$('#candidate-recommendation-info').hide();
+		if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
+			$('#candidate-recommendation-info').show();
+		}
+		else {
+			$('#candidate-recommendation-info').hide();
+		}
 	}
 }

@@ -1348,4 +1348,32 @@ public class JobOpportunityManager {
 
 		return jBean;
 	}
+	public static void reopenCompetition(String comp_num) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			// get the opportunity info
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.reopen_competition(?); end;");
+			stat.setString(1, comp_num);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("void reopenCompetition(String comp_num): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 }

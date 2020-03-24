@@ -1,5 +1,10 @@
 package com.esdnl.personnel.jobs.bean;
 
+import java.util.Arrays;
+
+import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
+import com.esdnl.personnel.jobs.dao.ApplicantFilterParametersManager;
+
 public class ApplicantFilterParameters {
 
 	private JobOpportunityBean job = null;
@@ -27,7 +32,12 @@ public class ApplicantFilterParameters {
 	private int subDays = 0;
 	private int totalExp = 0;
 	private boolean tlaRequirements = false;
-
+	private String[] majorsSubjectGroup = null;
+	private String[] minorsSubjectGroup = null;
+	//used for saving filter options with shortlisting
+	private String applicantId;
+	private int shortlistedBy;
+	private String shortlistReason;
 	public ApplicantFilterParameters() {
 
 	}
@@ -271,5 +281,117 @@ public class ApplicantFilterParameters {
 
 		return this.tlaRequirements;
 	}
+	public String getTrainingString() {
+		StringBuilder sb = null;
+		if(this.trainingMethods != null){
+			for(String s : this.trainingMethods) {
+				if(sb == null) {
+					sb = new StringBuilder();
+					sb.append(TrainingMethodConstant.get(Integer.parseInt(s)).getDescription());
+				}else {
+					sb.append(",");
+					sb.append(TrainingMethodConstant.get(Integer.parseInt(s)).getDescription());
+				}
+			}
+		}else {
+			sb= new StringBuilder();
+			sb.append("None Selected");
+		}
+		return sb.toString();
+	}
+	public String getDegreesString() {
+		if(this.degrees != null) {
+			String indegrees = String.join(",", this.degrees);
+			return ApplicantFilterParametersManager.getDegreesString("'" + indegrees.replace(",", "','") + "'");
+				
+		}else {
+				return "None Selected";
+		}
+	}
+	public String getMajorsSubjectGroupsString() {
+		if(this.majorsSubjectGroup != null) {
+			String indegrees = String.join(",", this.majorsSubjectGroup);
+			return ApplicantFilterParametersManager.getSubjectGroupString(indegrees);
+				
+		}else {
+				return "None Selected";
+		}
+	}
+	public String getMajorsString() {
+		if(this.majors != null) {
+			String indegrees = String.join(",", this.majors);
+			return ApplicantFilterParametersManager.getSubjectString(indegrees);
+				
+		}else {
+				return "None Selected";
+		}
+	}
+	public String getMinorsString() {
+		if(this.minors != null) {
+			String indegrees = String.join(",", this.minors);
+			return ApplicantFilterParametersManager.getSubjectString(indegrees);
+				
+		}else {
+				return "None Selected";
+		}
+	}
+	public String getMinorsSubjectGroupsString() {
+		if(this.minorsSubjectGroup != null) {
+			String indegrees = String.join(",", this.minorsSubjectGroup );
+			return ApplicantFilterParametersManager.getSubjectGroupString(indegrees);
+				
+		}else {
+				return "None Selected";
+		}
+	}
+	public String getRegionsString() {
+		if(this.regionalPreferences != null) {
+			String strArray[] = Arrays.stream(this.regionalPreferences)
+                    .mapToObj(String::valueOf)
+                    .toArray(String[]::new);
+			String indegrees = String.join(",", strArray );
+			return ApplicantFilterParametersManager.getRegionsString(indegrees);
+				
+		}else {
+				return "None Selected";
+		}
+	}
+	public String[] getMajorsSubjectGroup() {
+		return majorsSubjectGroup;
+	}
 
+	public void setMajorsSubjectGroup(String[] majorsSubjectGroup) {
+		this.majorsSubjectGroup = majorsSubjectGroup;
+	}
+
+	public String[] getMinorsSubjectGroup() {
+		return minorsSubjectGroup;
+	}
+
+	public void setMinorsSubjectGroup(String[] minorsSubjectGroup) {
+		this.minorsSubjectGroup = minorsSubjectGroup;
+	}
+
+	public String getApplicantId() {
+		return applicantId;
+	}
+
+	public void setApplicantId(String applicantId) {
+		this.applicantId = applicantId;
+	}
+	public String getShortlistReason() {
+		return shortlistReason;
+	}
+
+	public void setShortlistReason(String shortlistReason) {
+		this.shortlistReason = shortlistReason;
+	}
+
+	public int getShortlistedBy() {
+		return shortlistedBy;
+	}
+
+	public void setShortlistedBy(int shortlistedBy) {
+		this.shortlistedBy = shortlistedBy;
+	}
 }

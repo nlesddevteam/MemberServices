@@ -27,7 +27,7 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
 <%
-    ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("APPLICANT");
+	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("APPLICANT");
     SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
     SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
     
@@ -174,29 +174,34 @@ $("#loadingSpinner").css("display","none");
 
   	
   	$('#btn_show_add_applicant_dialog').click(function(){
+  			
 			$("#add_applicant_dialog").dialog('open');
 			return false;
 		});
-
+  	$('#btn_add_shortlist').click(function(){
+  		if($("#hidshowsl").val() == "Y"){
+  			$('#add_shortlist_dialog').modal('show');
+  	  		return false;
+  		}else{
+  			var url="shortListApplicant.html?sin=" + $("#id").val();
+  			$(location).attr('href',url);
+  			
+  		}
+  		
+	});
+  	$('#btn_add_shortlist_ok').click(function(){
+  		$("#response_msg_sl").hide();
+		if($("#shortlistreason").val() == ""){
+			$("#response_msg_sl").show();
+		}else{
+			var url="shortListApplicant.html?sin=" + $("#id").val() + "&slnotes=" + $("#shortlistreason").val();
+  			$(location).attr('href',url);
+		}	
+	});
   	
-
-  	$('#btn_add_applicant').click(function(){
-
-			$.post("addSublistApplicant.html", 
-					{ 
-						sin: '<%=profile.getUID()%>', 
-						list_id: $('#sublist_id').val(),
-						ajax: true 
-					}, 
-					function(data){
-						parseAddApplicantResponse(data);
-					}, 
-					"xml"
-			);
-			
-		});
   	
-  });
+});
+
 
   function parseAddApplicantResponse(data){
 		var xmlDoc=data.documentElement;
@@ -228,7 +233,8 @@ input {
 	               	<div class="panel-heading"><b>DEMOGRAPHICS</b></div>
       			 	<div class="panel-body"> 
       			 	<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
-      			 	
+      			 	<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
+      			 	<input type="hidden" id="id" value="<%=profile.getSIN() %>">
       			 	 <c:if test="${APPLICANT.modifiedDate ne null}">
                        <span style="color:Silver;text-align:right;">Last Modified: <fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></span>
                      </c:if>
@@ -1211,7 +1217,7 @@ input {
                                    	<% if(!job.isShortlistComplete() && job.isClosed()) { %>
                                    			<%if(guide != null){ %>
                                    				<%if(validReference){ %>
-                                   					<a href='shortListApplicant.html?sin=<%=profile.getSIN() %>'" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+                                   					<a  class="btn btn-xs btn-primary" id="btn_add_shortlist"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
                                    				<%}else{ %>
                                    					<a href='#' onclick="alert('Applicant has no current Reference on file. Reference needs to be completed before applicant can be shortlisted.'); return false;" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
                                    				<%} %>
@@ -1271,7 +1277,33 @@ input {
 
   </div>
 </div>
- 
+ <!-- Modal for shortlisting -->
+<div id="add_shortlist_dialog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Applicant to Shortlist</h4>
+      </div>
+      <div class="modal-body">
+      
+				  <div class="form-group">
+				  <h4 class="modal-title">Reason For Short Listing Applicant:</h4>	
+				  <textarea rows="10" cols="60" id="shortlistreason"></textarea> 
+				   </div>
+				 <div class="alert alert-info" id="response_msg_sl" style="display:none;">Please enter reason for short listing applicant</div>
+				  
+				  
+				
+      </div>
+      <div class="modal-footer">
+      	<button type="button" id='btn_add_shortlist_ok' class="btn btn-success btn-xs" style="float:left;">Add to Shortlist</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 </body>

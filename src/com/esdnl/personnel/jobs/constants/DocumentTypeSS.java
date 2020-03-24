@@ -11,8 +11,9 @@ public class DocumentTypeSS {
 	public static final DocumentTypeSS DRIVERS_LICENSE = new DocumentTypeSS(106, "Drivers License");
 	public static final DocumentTypeSS UNIVERSITY_TRANSSCRIPT = new DocumentTypeSS(107, "University Transcript");
 	public static final DocumentTypeSS DEGREES = new DocumentTypeSS(108, "Degrees");
+	public static final DocumentTypeSS CERTIFICATES = new DocumentTypeSS(109, "Certificates");
 	public static final DocumentTypeSS[] ALL = new DocumentTypeSS[] {
-		DRIVERS_ABSTRACT,OHS_TRAINING,CODE_OF_CONDUCT,FIRST_AID,WHMIS,DRIVERS_LICENSE,UNIVERSITY_TRANSSCRIPT,DEGREES
+		DRIVERS_ABSTRACT,OHS_TRAINING,CODE_OF_CONDUCT,FIRST_AID,WHMIS,DRIVERS_LICENSE,UNIVERSITY_TRANSSCRIPT,DEGREES,CERTIFICATES
 	};
 
 	private DocumentTypeSS(int value, String desc) {
