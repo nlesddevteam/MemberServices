@@ -21,6 +21,8 @@
 <job:ApplicantLoggedOn/>
 
 <c:set var='doctypes' value='<%= DocumentTypeSS.ALL %>' />
+<c:set var='cods' value='<%=ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans((ApplicantProfileBean)session.getAttribute("APPLICANT")) %>' />
+
 
 <html>
 
@@ -121,7 +123,39 @@ SECTION 7: Editing your Support Staff/Management HR Application Profile
 				    	</div>                        	
 	                   </c:forEach>
 						<br/>			
-									
+	                    <div class="panel panel-danger" id="coddocs">                   
+			              <div class="panel-heading">Criminal Offence Declaration(s) <span class="no-print" style="float:right;padding-right:5px"><a id='btn-add-cod' class='btn btn-xs btn-primary' href='applicant_registration_step_10_CODF.jsp'>Add Declaration</a></span></div>  
+			              <div class="panel-body"> 
+			              <div class="table-responsive">                 
+		                					<c:choose>
+		                                      			<c:when test="${fn:length(cods) gt 0}">
+		                                      			<table class="table table-striped table-condensed" style="font-size:12px;">
+			                             <thead>
+			                             <tr>
+			                             <th width="80%">DECLARATION DATE</th>
+			                             <th width="20%">OPTIONS</th>
+			                             </tr>
+			                             </thead> 
+			                             <tbody> 	
+				                                      		
+				                                      		<c:forEach items="${cods}" var="cod">
+					                                      	<tr>	
+					                                      	<td><fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="${cod.declarationDate}" /></td>
+					                                      	<td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=${cod.declarationId}' target='_blank'>View</a></td>
+					                                      	</tr>	
+				                                      		</c:forEach>
+				                          </tbody>
+						                </table>             		
+				                                      		
+			                                      		</c:when>
+			                                      		<c:otherwise>
+			                                      		<span style="color:Grey;">No criminal offence declarations on record.</span>
+				                                      	<script>$("#coddocs").removeClass("panel-danger").addClass("panel-success");</script>		
+			                                      		</c:otherwise>
+		                                     	</c:choose>
+		                                    		
+		                                      		
+		                   </div></div></div>  									
 						<div align="center"><a class="btn btn-xs btn-danger" href="view_applicant_ss.jsp">Back to Profile</a></div>					
 
 	                                    

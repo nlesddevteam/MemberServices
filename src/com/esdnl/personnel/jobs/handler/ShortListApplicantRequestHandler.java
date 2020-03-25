@@ -12,10 +12,12 @@ import com.awsd.mail.bean.EmailException;
 import com.awsd.security.SecurityException;
 import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
+import com.esdnl.personnel.jobs.bean.ApplicantFilterParameters;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
+import com.esdnl.personnel.jobs.dao.ApplicantFilterParametersManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.SubListManager;
 import com.esdnl.servlet.Form;
@@ -32,7 +34,7 @@ public class ShortListApplicantRequestHandler implements RequestHandler {
 
 		JobOpportunityBean opp = null;
 		SubListBean list = null;
-
+		ApplicantFilterParameters abean = null;
 		try {
 			session = request.getSession(false);
 			if ((session != null) && (session.getAttribute("usr") != null)) {
@@ -72,6 +74,26 @@ public class ShortListApplicantRequestHandler implements RequestHandler {
 
 					if (!opp.isShortlistComplete()) {
 						ApplicantProfileManager.shortListApplicant(request.getParameter("sin"), opp);
+						
+						//now we add the shortlist reasons object
+						if(opp.getIsSupport().equals("N")){
+							if(session.getAttribute("sfilterparams") == null) {
+								abean = new ApplicantFilterParameters();
+								abean.setJob(opp);
+								abean.setApplicantId(request.getParameter("sin"));
+								abean.setShortlistedBy(usr.getPersonnel().getPersonnelID());
+								abean.setShortlistReason(request.getParameter("slnotes"));
+										
+							}else {
+								abean = (ApplicantFilterParameters) session.getAttribute("sfilterparams");
+								abean.setJob(opp);
+								abean.setApplicantId(request.getParameter("sin"));
+								abean.setShortlistedBy(usr.getPersonnel().getPersonnelID());
+							}
+							//now we save the object
+							ApplicantFilterParametersManager.addApplicantFilterParameters(abean);
+						}
+						
 						request.setAttribute("msg", "Applicant shortlisted successfully.");
 
 						/*

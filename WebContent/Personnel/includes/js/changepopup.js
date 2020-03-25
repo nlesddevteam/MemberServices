@@ -551,4 +551,12 @@
 		$('#frmAdRequest').attr('action',posturl);
 		$('#frmAdRequest').submit();
 	}
+	//check values on submit of Update Post Transfer Round screen
+	function checkptrvalues(){
+		if($("#currentstatus").val() == "-1"){
+			$("#errorText").html("Please select current status").css("display","block");
+			return false;
+		}
+		return true;
+	}
 	

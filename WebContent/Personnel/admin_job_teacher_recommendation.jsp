@@ -412,6 +412,8 @@ $('#position_other').keypress(function(e) {
 	                               				
 											<% if(job.getIsSupport().equals("Y")){ %>
 												<input type="radio" name="References_Satisfactory" value="NA" CHECKED>NA
+												<input type="radio" name="References_Satisfactory" value="Yes" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("YES"))?"CHECKED":"")%>>Yes 
+	                                        	<input type="radio" name="References_Satisfactory" value="No" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("NO"))?"CHECKED":"")%>>No
 											<%}else{%>
 												<input type="radio" name="References_Satisfactory" value="Yes" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("YES"))?"CHECKED":"")%>>Yes 
 	                                        	<input type="radio" name="References_Satisfactory" value="No" <%=(((f != null)&&(f.get("References_Satisfactory") != null)&& f.get("References_Satisfactory").equalsIgnoreCase("NO"))?"CHECKED":"")%>>No

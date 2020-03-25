@@ -62,6 +62,8 @@
     cal.add(Calendar.MONTH, -6);
     
     Date six_months = cal.getTime();
+    Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
+    
     
 %>
 
@@ -590,6 +592,61 @@ input {
 </div>                                  	
                                   	
   <%} %>                            
+
+<!-- CRIMINAL OFFENCE DECLARATIONS --------------------------------------------------------------->
+<% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) { %>
+
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section13">   
+	               	<div class="panel-heading"><b>Criminal Offence Declarations</b></div>
+      			 	<div class="panel-body"> 	
+					
+					<div class="table-responsive"> 
+      			 	       
+      			 	      
+							  <% if((cods != null) && (cods.size() > 0))
+                              { %>
+                               
+                                <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
+									    <thead>
+									      <tr style="border-top:1px solid black;">
+									        <th width='25%'>DECLARATION DATE</th>
+									        <th width='60%'>OFFENCES PRESENT</th>	
+									        <th width='15%' class="no-print">OPTIONS</th>					       								        
+									      </tr>
+									    </thead>
+							    
+							    <tbody>
+                               
+                               <%
+                               int i=0;
+                                  for(ApplicantCriminalOffenceDeclarationBean cod : cods)
+                                  {
+                               %>
+							    <tr>
+							    <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
+							    <td><%=((cod.getOffences() != null)?cod.getOffences().size():0)%></td>							    
+							    <td class="no-print">
+							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>' target='_blank'>VIEW</a>
+							    <a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
+							    </td>
+							    
+							    </tr>
+							    <%  }%>
+							    </tbody>
+							    </table>
+							    
+							    <%}  else { %>							   
+                                    <span style="color:Grey;">None CODs currently on file.</span>
+                                    <script>$("#section13").removeClass("panel-success").addClass("panel-danger");</script>
+                                 <% } %> 
+					</div>
+	
+	
+					</div>
+					</div>
+</div>
+ <% } %> 
                                    
 <!-- 10. POSITIONS APPLIED FOR --------------------------------------------------------------->
 	

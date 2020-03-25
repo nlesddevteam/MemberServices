@@ -143,8 +143,16 @@ public class FilterJobApplicantsRequestHandler extends RequestHandlerImpl {
 
 					params.setRegionalPreferences(regions);
 				}
+				if ((form.getIntArray("majorsgroup")) != null) {
 
+					params.setMajorsSubjectGroup(form.getArray("majorsgroup"));
+				}
+				if ((form.getIntArray("minorsgroup")) != null) {
+
+					params.setMinorsSubjectGroup(form.getArray("minorsgroup"));
+				}
 				profiles = ApplicantProfileManager.filterJobApplicantProfileBean(params);
+				request.setAttribute("filterparams", params);
 
 				session.setAttribute("JOB_APPLICANTS", profiles);
 			}

@@ -417,6 +417,7 @@
                                 <%}%>
                                 <%if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW")){%>
                                   <a class="btn btn-xs btn-danger" href='admin_view_job_applicants.jsp'>Back to Applicant List</a>
+                                  <a class="btn-xs btn btn-primary"  href='viewShortlistAudit.html?comp_num=<%=job.getCompetitionNumber()%>' target="_blank">View Shortlist Audit</a>
                                 <%}%>        
 	              
   			

@@ -16,8 +16,18 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
 <%
-	JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(request.getParameter("comp_num"));
-  TeacherRecommendationBean[] rec = RecommendationManager.getTeacherRecommendationBean(request.getParameter("comp_num"));  
+	JobOpportunityBean job = null;
+	TeacherRecommendationBean[] rec = null;
+	if(request.getAttribute("comp") == null){
+		job = JobOpportunityManager.getJobOpportunityBean(request.getParameter("comp_num"));
+	}else{
+		job = (JobOpportunityBean) request.getAttribute("comp");
+	}
+	if(request.getAttribute("recs") == null){
+		rec = RecommendationManager.getTeacherRecommendationBean(request.getParameter("comp_num")); 
+	}else{
+		rec = (TeacherRecommendationBean[]) request.getAttribute("recs");
+	}
 %>
 
 <html>
@@ -67,9 +77,17 @@
                                 	  
                                 	  <%
                                   	boolean all_expired = true;
+                                	boolean existing_rec = false;
                                     for(int i=0; i < rec.length; i++){
                                     	if(!rec[i].isExpired())
-                                    		all_expired = false;%>
+                                    		all_expired = false;
+                                    	if(existing_rec ==  false){
+                                    			if(rec[i].getCurrentStatus().getValue() != 3 && rec[i].getCurrentStatus().getValue() != 4){
+                                    				existing_rec=true;
+                                    			}
+                                    		}
+                                    		
+                                    		%>
                                     		<tr>
                                     		<td><%=rec[i].getRecommendedDateFormatted()%></td>	                                    
 	                                      	<td><%=rec[i].getCandidate().getFullNameReverse()%></td>
@@ -85,11 +103,18 @@
                                     </table>
                                     	
                                     	<div align="center">
-                                    	
                                     				<a class="btn btn-xs btn-info" href='view_job_post.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View Job Post</a>
-                                    			<%if(all_expired){%>                                    				
-                                    				<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a><br>
+                                    			<%if(!job.isAwarded()){%>
+                                    				<%if((!all_expired) && !(existing_rec)){%>
+                                    				<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
+                                    			
+                                    				<%}%>
                                     			<%}%>
+                                    			<%if(job.isAwarded()){ %>
+                                    				<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
+                                    					<a class="btn btn-xs btn-primary" href='reopenCompetition.html?comp_num=<%=job.getCompetitionNumber()%>'>Reopen Competition</a>
+                                    				</esd:SecurityAccessRequired>
+                                    			<%} %>
                                     			<a class="btn btn-danger btn-xs" href="javascript:history.go(-1);">Back</a>
                                     	</div>
                                     		

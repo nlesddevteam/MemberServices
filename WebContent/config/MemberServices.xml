@@ -3824,6 +3824,22 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.DeleteApprovedRequestToHireRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/deleteApporvedRequestToHire.html</URL-Pattern>
-    </Request-Handler>                                                                            
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ReopenCompetitionRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/reopenCompetition.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewPostTransferRoundSettingsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewPTRSettings.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.UpdatePostTransferRoundSettingsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/updatePTRSettings.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewShortlistAuditRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewShortlistAudit.html</URL-Pattern>
+    </Request-Handler>                                                                                            
   </Request-Handlers>
 </Member-Services-Config>
