@@ -49,7 +49,12 @@
   <decorator name="STUDENTTRAVEL" page="student/travel/includes/decorator/main.jsp">
   		<pattern>/student/travel/*</pattern>
   </decorator> 
-
+  
+ <!-- For COVID-19 System   -->
+  <decorator name="COVID19 SYSTEM" page="covid19/includes/decorator/main.jsp">
+  		<pattern>/covid19/*</pattern>
+  </decorator> 
+ 
 <!-- For Learning Plans / Growth Plans -->
    <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
 		<pattern>/PPGP/*</pattern>
@@ -74,8 +79,8 @@
 	<pattern>/Personnel/addNLESDExternalGuideReferenceApp.html</pattern>
 	<pattern>/Personnel/addNLESDExternalReferenceApp.html</pattern>
 </decorator>
-  
-<excludes>
+
+  <excludes>
     <pattern>/EECD/eecd_menu*</pattern>
     <pattern>/Personnel/apply*</pattern>
     <pattern>/Personnel/unapply*</pattern>
