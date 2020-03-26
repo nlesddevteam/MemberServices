@@ -141,6 +141,14 @@
 						<br />
 					</esd:SecurityAccessRequired>
 
+<!-- COVID 19-UPDATES - ALL STAFF -->
+						<div class="menuIconImage">
+							<a href="covid19/index.jsp"><img
+								src="includes/img/menu/covid19-off.png"
+								class="img-swap menuImage" border=0
+								title="Covid-19 Information Shared with Schools and District Staff">
+							</a>
+						</div>
 
 					<!-- Admin Planner --> 
 					<esd:SecurityAccessRequired
@@ -203,7 +211,7 @@
 								border=0></a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+			
 
 					<!-- Admin School Profile Update -->
 					<esd:SecurityAccessRequired
