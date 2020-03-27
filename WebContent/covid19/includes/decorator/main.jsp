@@ -17,9 +17,6 @@
         <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 
-<esd:SecurityCheck permissions='PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW' />
-
-
 <html>
   
   <head>
