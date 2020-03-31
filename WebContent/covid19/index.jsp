@@ -35,6 +35,7 @@ Information Shared with Schools and District Staff can be found below:
 <br/><br/>
    <ul>
    		<li><a href="includes/doc/c19-sservices-03302020.pdf" target="_blank">March 30 - Memo to Administrators, Guidance Counsellors, Educational Psychologists (Supporting Students &amp; Assessments)</a>
+     	<li><a href="includes/doc/c19-guidelines-03302020.pdf" target="_blank">March 30 - Guidelines and Support for Administrators, Teachers, and Programs Staff: Google Meet</a>
      	<li><a href="includes/doc/c19-stravel-03232020.pdf" target="_blank">March 25 - Memo to Select Schools (Remaining Student Travel Scheduled for 2019-2020 School Year Cancelled)</a>
      	<li><a href="includes/doc/c19-admin-03232020.pdf" target="_blank">March 23 - Memo to Administrators/Teachers (Learning at Home - Online Resource)</a>
      	<li><a href="includes/doc/c19-admin-03222020.pdf" target="_blank">March 22 - Memo to Administrators (Access to School Facilities)</a>
