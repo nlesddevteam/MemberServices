@@ -34,6 +34,7 @@ The Newfoundland and Labrador English School District is in regular contact with
 Information Shared with Schools and District Staff can be found below:
 <br/><br/>
    <ul>
+  		 <li><a href="includes/doc/c19-admin-04022020.pdf" target="_blank">April 2 - Memo to Administrators/Teachers (Next Steps; General and High School)</a>
   		<li><a href="includes/doc/c19-gc-03312020.pdf" target="_blank">March 31 - Memo to Guidance Counsellors (Volunteer Guidance Initiatives)</a>
    		<li><a href="includes/doc/c19-sservices-03302020.pdf" target="_blank">March 30 - Memo to Administrators, Guidance Counsellors, Educational Psychologists (Supporting Students &amp; Assessments)</a>
      	<li><a href="includes/doc/c19-guidelines-03302020.pdf" target="_blank">March 30 - Guidelines and Support for Administrators, Teachers, and Programs Staff: Google Meet</a>
