@@ -160,7 +160,7 @@
 																				
 																		</tr>
 																		<tr>
-																				<td>2b: Establisheing a culture for learning:</td>
+																				<td>2b: Establishing a culture for learning:</td>
 																				<%= ref.getScale8().equals("3")? "<td>&#10004;</td>" : "<td>&nbsp;</td>" %>  
 																				<%= ref.getScale8().equals("2") ? "<td>&#10004;</td>" : "<td>&nbsp;</td>" %> 
 																				<%= ref.getScale8().equals("1") ? "<td>&#10004;</td>" : "<td>&nbsp;</td>" %> 
