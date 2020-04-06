@@ -437,7 +437,7 @@
 													 </tr>																										
 							                        <tr>
 													    <td>1f.</td>
-													    <td>Assesseing student learning:</td>
+													    <td>Assessing student learning:</td>
 													    <td>
 														   	<input type="radio" name="Scale6" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale6 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale6" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale6 eq val2 ? "CHECKED" : "" }> <%=val2%>
@@ -493,7 +493,7 @@
 													 </tr>																										
 							                        <tr>
 													    <td>2b.</td>
-													    <td>Establisheing a culture for learning:</td>
+													    <td>Establishing a culture for learning:</td>
 													    <td>
 														   	<input type="radio" name="Scale8" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale8 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale8" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale8 eq val2 ? "CHECKED" : "" }> <%=val2%>

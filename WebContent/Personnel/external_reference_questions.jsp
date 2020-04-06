@@ -136,7 +136,7 @@
 													 </tr>																										
 							                        <tr>
 													    <td>1f.</td>
-													    <td>Assesseing student learning:</td>
+													    <td>Assessing student learning:</td>
 													    <td>
 														<span class="tableAnswer"><%=ref.getScale6()%></span>   	
 														</td>
@@ -181,7 +181,7 @@
 													 </tr>																										
 							                        <tr>
 													    <td>2b.</td>
-													    <td>Establisheing a culture for learning:</td>
+													    <td>Establishing a culture for learning:</td>
 													    <td><span class="tableAnswer"><%=ref.getScale8()%></span></td>
 													 </tr>
 													 <tr>
