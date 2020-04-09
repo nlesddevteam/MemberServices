@@ -109,4 +109,34 @@ public class AdRequestMajorManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void deleteAdRequestMajorBeans(int requestid) throws JobOpportunityException {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+			stat = con.prepareCall("begin awsd_user.personnel_ad_request.delete_ad_request_majors(?); end;");
+			stat.setInt(1, requestid);
+			stat.execute();
+			}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("void void deleteAdRequestMajorBeans(int requestid): " + e);
+			throw new JobOpportunityException("Can not delete AdRequestBean Majors.", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 }

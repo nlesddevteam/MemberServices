@@ -144,6 +144,14 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 								//new RequiredFormElement("interview_summary_id"),
 								//new RequiredFormElement("Interview_Panel"),
 								//form validation moved here since support staff might not have them
+								ApplicantProfileBean pbean = ApplicantProfileManager.getApplicantProfileBean(form.get("candidate_name"));
+								if(!(pbean.isProfileVerified())){
+									request.setAttribute("msg", "Please verify candidate's profile.");
+									request.setAttribute("FORM", form);
+			
+									path = "admin_job_teacher_recommendation.jsp";
+									return path;
+								}
 								if(form.getInt("reference_id") <= 0) {
 									request.setAttribute("msg", "Please select reference.");
 									request.setAttribute("FORM", form);
@@ -187,14 +195,19 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							TeacherRecommendationBean bean = new TeacherRecommendationBean();
 							//check for new no ref/summary checkbox
 							if(job.getIsSupport().equals("Y")){	
-								if(form.get("chknoref").equals("Y")) {
+								if(form.get("chknoref") == null) {
+									bean.setReferenceId(form.getInt("reference_id"));
+									bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
+									if(form.get("Interview_Panel") ==  "") {
+										bean.setInterviewPanel("N/A");
+									}else {
+										bean.setInterviewPanel(form.get("Interview_Panel"));
+									}
+									
+								}else {
 									bean.setReferenceId(-1);
 									bean.setInterviewSummaryId(-1);
 									bean.setInterviewPanel("N/A");
-								}else {
-									bean.setReferenceId(form.getInt("reference_id"));
-									bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
-									bean.setInterviewPanel(form.get("Interview_Panel"));
 								}
 							}else {
 								bean.setReferenceId(form.getInt("reference_id"));

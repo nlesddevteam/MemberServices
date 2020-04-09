@@ -3840,6 +3840,18 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewShortlistAuditRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewShortlistAudit.html</URL-Pattern>
-    </Request-Handler>                                                                                            
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.UpdateAdRequestRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/updateAdRequest.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ApplicantVerificationRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/applicantVerification.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.CreateVacantPositionAdAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/ajax/createVacantPositionAd.html</URL-Pattern>
+    </Request-Handler>                                                                                                            
   </Request-Handlers>
 </Member-Services-Config>

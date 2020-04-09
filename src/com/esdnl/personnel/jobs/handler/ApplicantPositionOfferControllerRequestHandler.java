@@ -199,6 +199,9 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 							if(job.getIsSupport().equals("Y")) {
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("PERSONNEL-SUPPORT-BENEFITS")));
 							}
+							//send to comptroller group for all jobs support/teaching RTH-BC
+							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BC")));
+							
 							try {
 								EmailBean ebean = new EmailBean();
 

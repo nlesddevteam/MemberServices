@@ -37,6 +37,7 @@ import com.esdnl.personnel.jobs.dao.JobOpportunityAssignmentManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
+import com.esdnl.personnel.jobs.dao.TeacherAllocationVacantPositionManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -165,6 +166,13 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
 
 					JobOpportunityManager.awardJobOpportunityBean(rec.getJob().getCompetitionNumber());
+					
+					//now update the teacher vacancy if there was one
+					AdRequestBean adbean = AdRequestManager.getAdRequestBean(rec.getJob().getCompetitionNumber());
+					if(adbean != null) {
+						TeacherAllocationVacantPositionManager.updateTeacherAllocationVacantPositionFilled(adbean.getId());
+					}
+					
 
 					request.setAttribute("msg", "Recommendation has been processed successfully.");
 				}

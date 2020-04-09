@@ -18,6 +18,7 @@ import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParameters;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParametersSS;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.ApplicantVerificationBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
@@ -81,7 +82,7 @@ public class ApplicantProfileManager {
 		try {
 
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_applicant_profile(?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_applicant_profile_ver(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setString(2, sin);
 			stat.execute();
@@ -2347,6 +2348,21 @@ public class ApplicantProfileManager {
 				aBean.setMajorsList("");
 			}
 			aBean.setProfileType(rs.getString("PROFILETYPE"));
+			
+			//now check to see if there is applicantverificationbean
+			try {
+				aBean.setProfileVerified(rs.getBoolean("PROFILEVERIFIED"));
+				if (rs.getInt("AV_ID") > 0) {
+					ApplicantVerificationBean vbean = new ApplicantVerificationBean();
+					vbean.setApplicantId(rs.getString("APPLICANT_ID"));
+					vbean.setAvid(rs.getInt("AV_ID"));
+					vbean.setDateVerified(new java.util.Date(rs.getTimestamp("DATE_VERIFIED").getTime()));
+					vbean.setVerifiedByName(rs.getString("PERSONNEL_FIRSTNAME") + " " + rs.getString("PERSONNEL_LASTNAME"));
+					vbean.setVerifiedBy(rs.getLong("VERIFIED_BY"));
+					aBean.setVerificationBean(vbean);
+				}
+			}
+			catch (SQLException e) {}
 		}
 		catch (SQLException e) {
 			aBean = null;

@@ -302,6 +302,8 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=Unadvertised&zoneid=0">Unadvertised</a></li>
 					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=Closed&zoneid=0">Closed</a></li>
 					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=NoShortlist&zoneid=0">Closed No Shortlist</a></li>
+					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=RECAPPROVAL&zoneid=0">Pending Recommendation Approval</a></li>
+					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=RECACCEPT&zoneid=0">Pending Recommendation Acceptance</a></li>
 					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=Cancelled&zoneid=0">Cancelled</a></li>
 					                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts.jsp?status=Awarded&zoneid=0">Awarded</a></li>
 									                 </ul>
@@ -319,6 +321,8 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=Unadvertised&zoneid=0">Unadvertised</a></li>
 						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=Closed&zoneid=0">Closed</a></li>
 						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=NoShortlist&zoneid=0">Closed No Shortlist</a></li>
+						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=RECAPPROVAL&zoneid=0">Pending Recommendation Approval</a></li>
+					                                   		<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=RECACCEPT&zoneid=0">Pending Recommendation Acceptance</a></li>
 						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=Cancelled&zoneid=0">Cancelled</a></li>
 						                                   	<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_job_posts_other.jsp?status=Awarded&zoneid=0">Awarded</a></li>
 							                            </ul>

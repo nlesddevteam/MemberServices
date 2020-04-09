@@ -64,6 +64,7 @@ var pageWordCountConf = {
   							<form id="frmAdRequest" action="requestAdvertisement.html" method="post">
                                   <input type="HIDDEN" name="request_id" id="request_id" value="<%=req.getId()%>">
                                   <input type="HIDDEN" name="op" id="op" value="GET_EMPLOYEES">
+                                  <input type="HIDDEN" name="rid" id="rid" value="<%=req.getId()%>">
 					
 					<%if(request.getAttribute("msg")!=null){%>
 	                           <div class="alert alert-warning" style="text-align:center;">                                       
@@ -90,7 +91,7 @@ var pageWordCountConf = {
 			     		<td class='tableTitleL'>LOCATION:</td>
 			     		<td class='tableResultL'>
 			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-		                           <personnel:Locations id='location' cls="form-control" value='<%=(req != null)?req.getLocation().getLocationDescription():""%>' onChange="document.forms[0].submit();" />
+		                           <personnel:Locations id='location' cls="form-control" value='<%=(req != null)?req.getLocation().getLocationDescription():""%>' onChange="doPost('GE','<%=req.getId()%>')" />
 		                        <%}else{%>		                                        
 		                           <%=req.getLocation().getLocationDescription()%>
 		                        <%}%>
@@ -428,7 +429,15 @@ var pageWordCountConf = {
 		var url="postAdRequest.html?request_id=" +rid;
 		  $("#frmAdRequest").attr('action', url);
 		  $("#frmAdRequest").submit();
-	  }
+	  }else if(posttype == 'U'){
+			var url="updateAdRequest.html?request_id=" +rid;
+			  $("#frmAdRequest").attr('action', url);
+			  $("#frmAdRequest").submit();
+		}else if(posttype == 'GE'){
+			var url="viewAdRequest.html?rid=" +rid + "&op=GET_EMPLOYEES";
+			  $("#frmAdRequest").attr('action', url);
+			  $("#frmAdRequest").submit();
+		}
   }
   </script>
  

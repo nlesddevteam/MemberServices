@@ -198,6 +198,15 @@ $("#loadingSpinner").css("display","none");
   			$(location).attr('href',url);
 		}	
 	});
+  	$('#butVerify').click(function(){
+  		$('#confirm_verify_dialog').modal('show');
+	});
+  	$('#btn_confirm_verify').click(function(){
+  		var url="applicantVerification.html";
+  		$('#frmverify').attr('action',url);
+		$('#frmverify').submit();
+  		$('#confirm_verify_dialog').modal('hide');
+	});
   	
   	
 });
@@ -231,14 +240,39 @@ input {
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>DEMOGRAPHICS</b></div>
-      			 	<div class="panel-body"> 
-      			 	<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
-      			 	<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
-      			 	<input type="hidden" id="id" value="<%=profile.getSIN() %>">
-      			 	 <c:if test="${APPLICANT.modifiedDate ne null}">
-                       <span style="color:Silver;text-align:right;">Last Modified: <fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></span>
-                     </c:if>
-      			 		<div class="table-responsive"> 
+      			 	<div class="panel-body">
+      			 	<div>
+      			 	<table width="100%">
+      			 		<tr>
+      			 			<td align="left" width="60%">
+      			 				<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
+      			 				<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
+      			 				<input type="hidden" id="id" value="<%=profile.getSIN() %>">
+      			 	 			<c:if test="${APPLICANT.modifiedDate ne null}">
+                       				<span style="color:Silver;text-align:right;">Last Modified: <fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></span>
+                     			</c:if>
+      			 			</td>
+      			 			<td align="right" width="40%">
+                   				<c:choose>
+					    			<c:when test="${ APPLICANT.profileVerified }">
+					    				<div class="alert alert-success" role="alert">
+					    					<c:if test="${APPLICANT.verificationBean ne null}">
+					    						Profile verified by ${APPLICANT.verificationBean.verifiedByName} on ${APPLICANT.verificationBean.getDateVerifiedFormatted()}
+					    					</c:if>
+												</div>
+					    			</c:when>
+					    			<c:otherwise>
+					    				<esd:SecurityAccessRequired roles="MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
+					    					<button type="button" class="btn btn-primary btn" id="butVerify">Verify Applicant Profile</button>
+					    				</esd:SecurityAccessRequired> 
+					    			</c:otherwise>
+					    		</c:choose>      			 			
+      			 			</td>
+      			 		</tr>
+      			 	</table>
+      			 	
+
+                    	<div class="table-responsive"> 
       			 	       
       			 	       <table class="table table-striped table-condensed" style="font-size:12px;">
 							   
@@ -316,7 +350,7 @@ input {
 							    	<td class="tableTitle">Replacement Contract End Date:</td>
 							    	<td>${repContractEndDate}</td>
 							    </tr>
-							    
+
 							    </tbody>
 							    </table>
       			 	       
@@ -1240,7 +1274,9 @@ input {
                        </div>
 
   </esd:SecurityAccessRequired>                         
-                           
+   <form id="frmverify">
+   	<input id="appid" name ="appid" type="hidden" value="<%=profile.getSIN()%>">
+   </form>                        
 <!-- SUBLIST SELECT --------------------------------------------------------------->
 
 <!-- Modal Revised for Bootstrap -->
@@ -1304,7 +1340,26 @@ input {
 
   </div>
 </div>
+ <!-- Modal for confirming applicant verification -->
+<div id="confirm_verify_dialog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Applicant Verification</h4>
+      </div>
+      <div class="modal-body">
+      <div class="form-group">
+		<h4 class="modal-title">Are you sure you want to verify applicant?</h4>	
+	 </div>
+      <div class="modal-footer">
+      	<button type="button" id='btn_confirm_verify' class="btn btn-success btn-xs" style="float:left;">Verify</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+      </div>
+    </div>
 
-
+  </div>
+</div>
+</div>
 </body>
 </html>

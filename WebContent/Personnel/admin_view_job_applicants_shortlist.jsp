@@ -54,8 +54,7 @@
   if(!(job == null)){
 	  if(job.getIsSupport().equals("Y")){
 		  rth = (RequestToHireBean) request.getAttribute("AD_REQUEST");
-		  System.out.println("SUPPORT");
-	  }else{
+		}else{
 		  ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
 	  }
 	  
@@ -112,15 +111,6 @@
 			}
 		});
 		
-		$('#btn-decline-interview').click(function(){
-			if(confirm('Are you sure you want to mark this applicant as DECLINED INTERVIEW?')){
-				return true;
-			}
-			else {
-				return false;
-			}
-		});
-		
 		$('.btn-action').button();
 		
 	});
@@ -139,6 +129,17 @@
 		$('#response_msg').html(msg);
 		$('#response_msg').show();
 	}
+	function openDecline(appid){
+		$('#sin').val(appid);
+		$('#prindecline').modal('show');
+	}
+	function interviewDeclined(){
+		$('#prindecline').modal('hide');
+		var url ="declineInterviewShortlistApplicant.html";
+		$('#frmdecline').attr('action',url);
+		$('#frmdecline').submit();
+	}
+		
 </script>
 <script>
  $('document').ready(function(){
@@ -296,7 +297,7 @@
 	                                        			out.println("<a class='btn btn-xs btn-danger' href='removeShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Remove</a>");
 	                                        	
 	                                        		if(!declinedInterview){
-                                        				out.println("<a id='btn-decline-interview' class='btn btn-xs btn-danger' href='declineInterviewShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Interview Declined?</a>");
+	                                        			out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "')\">Interview Declined?</a>");
                                         			}
 	                                        		else {
 	                                        	%>
@@ -311,6 +312,21 @@
 	                                        			out.println("<a class='btn btn-xs btn-success' href='#' onclick='showAddApplicantDialog(" + applicants[i].getUID() + ");' >Add To</a>");
 	                                        		
 	                                        	%>
+	                                        </esd:SecurityAccessRequired>
+	                                        <esd:SecurityAccessRequired permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
+	                                        <%
+	                                        	if(!declinedInterview){
+                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "')\">Interview Declined?</a>");
+                                				}
+                                    			else {
+                                    		%>
+                                    			<script>
+                                    			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
+                                    			</script>
+                                    			
+                                    		<%
+                                    			}
+	                                        %>
 	                                        </esd:SecurityAccessRequired>
 	                                        <% if(guide != null && !declinedInterview) { %>
 		                                        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
@@ -479,7 +495,9 @@
 	</div>
 	
 	
-	
+	   <form id="frmdecline" method="post">
+       <input type="hidden" id="sin" name="sin">
+       </form>
 	
 	
 	
@@ -495,7 +513,9 @@
         <h4 class="modal-title">Reference Request</h4>
       </div>
       <div class="modal-body">
+      <form id="frmdecline">
        <input type="hidden" id="uid" name="uid">
+       </form>
 		<b>Email Address:</b><br/>
         <input type='text' class="form-control" id='referrer_email' name='referrer_email' >
         <br/>
@@ -522,6 +542,32 @@
       <div class="modal-footer">
       <button class="btn btn-xs btn-success" type="button" onclick="onSendReferenceCheckRequestNLESD();">Send Reference Check</button>
       <button class="btn btn-xs btn-warning" type="button" onclick="onManualReferenceCheckRequestNLESD();">Phone Reference Check?</button>
+      <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- principal decline interview confirmation -->	
+	
+<div id="prindecline" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Interview Declined Confirmation</h4>
+      </div>
+      <div class="modal-body">
+       Are you sure you want to mark this applicant as DECLINED INTERVIEW?<br/>
+
+       	<div id="request_response_row" style='display:none;'>
+         <div id="request_response_msg"></div>
+         </div>
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-xs btn-success" type="button" onclick="interviewDeclined()">Ok</button>
       <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">Cancel</button>
       </div>
     </div>

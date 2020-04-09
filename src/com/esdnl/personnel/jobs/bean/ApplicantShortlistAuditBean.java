@@ -1,5 +1,6 @@
 package com.esdnl.personnel.jobs.bean;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ApplicantShortlistAuditBean extends ApplicantFilterParameters {
@@ -148,5 +149,9 @@ public class ApplicantShortlistAuditBean extends ApplicantFilterParameters {
 
 	public void setRegionalPreferenceList(String regionalPreferenceList) {
 		this.regionalPreferenceList = regionalPreferenceList;
+	}
+	public String shortlistedByDateFormatted()
+	{
+		return new SimpleDateFormat("dd/MM/yyyy").format(this.shortlistedByDate);
 	}
 }
