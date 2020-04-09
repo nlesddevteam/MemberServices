@@ -19,6 +19,7 @@
 
 <!--
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+
 -->
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
 <c:set var="permanentVal" value="0" />
@@ -557,21 +558,32 @@
           					</div>	
           					
           				   <div class="row">          					
-         			             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+         			             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
          			             		<div class="input-group">		
           					               	<span class="input-group-addon">Unit:</span>      							
           									<input id='txt_vacancyUnit' name='txt_vacancyUnit' class='form-control'/>          									
           								</div>
           						</div>
-          						 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+          						 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
           						 		<div class="checkbox">
   											<label><input id='chk_advertised' name='chk_advertised' type='checkbox'/> Position Advertised?</label>
 										</div>      						 
           						</div>
-          						 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+          						 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
           						 		<div class="checkbox">
   											<label><input id='chk_filled' name='chk_filled' type='checkbox' /> Position Filled?</label>
 										</div> 
+          						</div>
+          						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          						<%if(usr.checkRole("ADMINISTRATOR") || usr.checkRole("SENIOR EDUCATION OFFICIER")) {%>
+          						 		<div style="display:none;" id="divlinks">
+  											<a  id="hrefad" target="_blank">
+  													<button type="button" class="btn btn-primary">
+  														<span id="hrefspan"></span>
+  													</button>
+  											</a>
+										</div>
+								<%} %>		 
           						</div>
           					</div>	
           					<div class="row">
@@ -731,7 +743,29 @@ var optionText = $("#lst_schoolyear option:selected").val();
 $('.SchoolYear').text(optionText);
 });
 </script>	
+<div id="modalDelete" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><span id="modaltitle"></span></h4><input type="hidden" id="hidid">
+      </div>
+      <div class="modal-body">
+        <p><span id="deletemessage"></span></p>
+        <p><span id="deletead"></span></p>
+        <p><span id="deletejob"></span></p>
+      </div>
+
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-xs btn-primary" id="btnDeleteVac">Delete</button>
+        <button type="button" class="btn btn-xs btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
                               
 </body>
 

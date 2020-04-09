@@ -53,6 +53,7 @@ public class RequestToHireBean {
 	private String positionNumber;
 	private Date EndDate;
 	private int privateList;
+	private String vacancyReason;
 	public int getId() {
 		return id;
 	}
@@ -514,4 +515,10 @@ public class RequestToHireBean {
     public int hashCode() {
         return this.id;
     }
+	public String getVacancyReason() {
+		return vacancyReason;
+	}
+	public void setVacancyReason(String vacancyReason) {
+		this.vacancyReason = vacancyReason;
+	}
 }

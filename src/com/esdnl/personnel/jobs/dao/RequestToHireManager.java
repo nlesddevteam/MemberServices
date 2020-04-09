@@ -29,7 +29,7 @@ public class RequestToHireManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, abean.getJobTitle());
@@ -62,6 +62,7 @@ public class RequestToHireManager {
 				stat.setDate(18, null);
 			}
 			stat.setInt(19, abean.getPrivateList());
+			stat.setString(20, abean.getVacancyReason());
 			stat.execute();
 			abean.setId(((OracleCallableStatement) stat).getInt(1));
 
@@ -101,7 +102,7 @@ public class RequestToHireManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.setString(1, abean.getJobTitle());
 			stat.setString(2, abean.getPreviousIncumbent());
@@ -133,6 +134,7 @@ public class RequestToHireManager {
 				stat.setDate(17, null);
 			}
 			stat.setInt(18, abean.getPrivateList());
+			stat.setString(19, abean.getVacancyReason());
 			stat.execute();
 
 			stat.close();
@@ -382,6 +384,7 @@ public class RequestToHireManager {
 			abean.setPrivateList(rs.getInt("PRIVATE_LIST"));
 			if (rs.getDate("END_DATE") != null)
 				abean.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
+			abean.setVacancyReason(rs.getString("VACANCY_REASON"));
 		}
 		catch (Exception e) {
 			abean = null;

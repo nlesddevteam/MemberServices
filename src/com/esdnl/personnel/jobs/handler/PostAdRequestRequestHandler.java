@@ -20,6 +20,7 @@ import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.RequestStatus;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
+import com.esdnl.personnel.jobs.dao.TeacherAllocationVacantPositionManager;
 
 
 public class PostAdRequestRequestHandler implements RequestHandler {
@@ -121,6 +122,10 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 					opp.setIsSupport("N");
 					request.setAttribute("JOB_OPP", opp);
 					request.setAttribute("AD_REQUEST", req);
+					
+					//now update the teacher vacancy if there was one
+					TeacherAllocationVacantPositionManager.updateTeacherAllocationVacantPositionAdvertised(req.getId());
+					
 
 					path = "admin_post_job.jsp";
 				}

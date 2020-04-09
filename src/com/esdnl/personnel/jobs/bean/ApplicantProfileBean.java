@@ -46,6 +46,8 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	private String majorsList;
 	private String minorsList;
 	private String profileType;
+	private boolean profileVerified;
+	private ApplicantVerificationBean verificationBean;
 	
 	public ApplicantProfileBean() {
 
@@ -72,6 +74,8 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 
 		senority = 0;
 		profileType="T";
+		profileVerified=false;
+		verificationBean=null;
 	}
 
 	public ApplicantProfileBean(ApplicantProfileBean copy) {
@@ -108,6 +112,8 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 
 		this.senority = copy.senority;
 		profileType=copy.profileType;
+		profileVerified=copy.profileVerified;
+		verificationBean=copy.verificationBean;
 	}
 
 	public String getEmail() {
@@ -466,5 +472,21 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 
 	public void setProfileType(String profileType) {
 		this.profileType = profileType;
+	}
+
+	public boolean isProfileVerified() {
+		return profileVerified;
+	}
+
+	public void setProfileVerified(boolean profileVerified) {
+		this.profileVerified = profileVerified;
+	}
+
+	public ApplicantVerificationBean getVerificationBean() {
+		return verificationBean;
+	}
+
+	public void setVerificationBean(ApplicantVerificationBean verificationBean) {
+		this.verificationBean = verificationBean;
 	}
 }

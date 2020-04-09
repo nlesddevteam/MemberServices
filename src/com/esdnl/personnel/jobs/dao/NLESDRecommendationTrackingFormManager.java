@@ -504,7 +504,7 @@ public class NLESDRecommendationTrackingFormManager {
 								if (StringUtils.isBlank(eBean.getComments())) {
 									if (StringUtils.isNotBlank(adm.getQ12())) {
 										eBean.setComments("<i style='color:DimGrey;'>Reference Comment by " + adm.getProvidedBy() + " (" + adm.getProvidedByPosition()
-												+ ")</i><br/>" + ad.getQ12());
+												+ ")</i><br/>" + adm.getQ12());
 									}
 									else {
 										eBean.setComments("<i style='color:DimGrey;'>Reference provided by " + adm.getProvidedBy() + " (" + adm.getProvidedByPosition()

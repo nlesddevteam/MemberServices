@@ -313,7 +313,82 @@ public class TeacherAllocationVacantPositionManager {
 
 		return vacancies;
 	}
+	public static void updateTeacherAllocationVacantPositionAdvertised(int rid)
+			throws JobOpportunityException {
 
+				Connection con = null;
+					CallableStatement stat = null;
+
+				try {
+					con = DAOUtils.getConnection();
+					con.setAutoCommit(true);
+				
+					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_vacancy_advertised(?); end;");
+				
+					stat.setInt(1, rid);
+				
+					stat.execute();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+					try {
+						con.rollback();
+					}
+					catch (Exception ex) {}
+				
+					System.err.println("static void updateTeacherAllocationVacantPositionAdvertised(int rid)): "
+							+ e);
+					throw new JobOpportunityException("Can not update TeacherAllocationVacantPositionBean to DB.", e);
+				}
+				finally {
+					try {
+						stat.close();
+					}
+					catch (Exception e) {}
+					try {
+						con.close();
+					}
+					catch (Exception e) {}
+				}
+	}
+	public static void updateTeacherAllocationVacantPositionFilled(int rid)
+			throws JobOpportunityException {
+
+				Connection con = null;
+					CallableStatement stat = null;
+
+				try {
+					con = DAOUtils.getConnection();
+					con.setAutoCommit(true);
+				
+					stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_vacancy_filled(?); end;");
+				
+					stat.setInt(1, rid);
+				
+					stat.execute();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+					try {
+						con.rollback();
+					}
+					catch (Exception ex) {}
+				
+					System.err.println("updateTeacherAllocationVacantPositionFilled(int rid): "
+							+ e);
+					throw new JobOpportunityException("Can not update TeacherAllocationVacantPositionBean to DB.", e);
+				}
+				finally {
+					try {
+						stat.close();
+					}
+					catch (Exception e) {}
+					try {
+						con.close();
+					}
+					catch (Exception e) {}
+				}
+		}	
 	public static TeacherAllocationVacantPositionBean createTeacherAllocationVacantPositionBean(ResultSet rs) {
 
 		TeacherAllocationVacantPositionBean abean = null;

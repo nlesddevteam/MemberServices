@@ -109,4 +109,34 @@ public class AdRequestMinorManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void deleteAdRequestMinorBeans(int requestid) throws JobOpportunityException {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+			stat = con.prepareCall("begin awsd_user.personnel_ad_request.delete_ad_request_minors(?); end;");
+			stat.setInt(1, requestid);
+			stat.execute();
+			}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("void void deleteAdRequestinorBeans(int requestid): " + e);
+			throw new JobOpportunityException("Can not delete AdRequestBean Minors", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 }

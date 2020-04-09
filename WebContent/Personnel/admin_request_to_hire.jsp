@@ -175,7 +175,33 @@ var pageWordCountConf = {
                                       	</c:choose>
  						</td>
 			     		</tr>
-                        <tr>
+			     		 <tr>
+			     		<td class='tableTitle'>Reason for Vacancy:</td>
+			     		<td colspan=3 class='tableResult'> 
+			     		<!-- Not sure why the options below - should be combined into one statement - why? CKEditor complains. -->
+	                                      <c:choose>
+	                                      	<c:when test="${empty rbean}">	                                      		
+	                                      		
+	                                      		<textarea class="form-control" name="vacancy_reason" id="vacancy_reason"></textarea>
+												
+											</c:when>
+	                                      	<c:otherwise>
+	                                      		<c:choose>
+	                                      			<c:when test="${rbean.status.value eq 1 }">
+	                                      				<textarea class="form-control" name="vacancy_reason" id="vacancy_reason">${empty rbean.vacancyReason ?'':rbean.vacancyReason}</textarea>
+	                                      			</c:when>
+	                                      			<c:otherwise>
+	                                      				${empty rbean.vacancyReason ?'':rbean.vacancyReason}
+	                                      			</c:otherwise>
+	                                      		</c:choose>
+	                                      	</c:otherwise>
+	                                      	</c:choose>
+			     		
+			     		
+			     		  
+			     		</td>
+			     		</tr>
+			     		<tr>
 			     		<td class='tableTitleL'>DATE VACATED:</td>
 			     		<td class='tableResultL'> 
 			     						<c:choose>
@@ -751,6 +777,7 @@ var pageWordCountConf = {
 </div>   
    <script>
     CKEDITOR.replace( 'comments',{wordcount: pageWordCountConf,height:150});
+    CKEDITOR.replace( 'vacancy_reason',{wordcount: pageWordCountConf,height:150});
     </script>   
                           
 <script language="JavaScript">

@@ -25,6 +25,25 @@
 	catch(NumberFormatException e) {
 		zoneid = 0;
 	}
+	String statuslong="";
+	
+	if(request.getParameter("status").equals("All")){
+		statuslong="All";
+	}else if(request.getParameter("status").equals("Open")){
+		statuslong="Open";
+	}else if(request.getParameter("status").equals("Unadvertised")){
+		statuslong="Unadvertised";
+	}else if(request.getParameter("status").equals("NoShortlist")){
+		statuslong="Closed No Shortlist";
+	}else if(request.getParameter("status").equals("RECAPPROVAL")){
+		statuslong="Pending Recommendation Approval";
+	}else if(request.getParameter("status").equals("RECACCEPTANCE")){
+		statuslong="Pending Recommendation Acceptance";
+	}else if(request.getParameter("status").equals("Cancelled")){
+		statuslong="Cancelled";
+	}else if(request.getParameter("status").equals("Awarded")){
+		statuslong="Awardeed";
+	}
 
 	
 %>
@@ -83,7 +102,7 @@
 	<input type="hidden" name="status" id="status" value="<%=request.getParameter("status")%>" />
 	<input type="hidden" name="zoneid" id="zoneid" value="<%=zoneid%>" />
            
-     <div class="pageHeader"><%=request.getParameter("status")%> Job Opportunities    
+     <div class="pageHeader"><%=statuslong%> Job Opportunities    
        <c:set var="Zone" value="<%=zoneid %>" />
        
        <c:choose>
@@ -110,7 +129,7 @@
         </div> 
        
         	<div class="panel-group">		
-            Below are the <%=request.getParameter("status")%> job opportunities for the selected region(s) with the total number of positions in brackets in each heading category. To see the positions in each category, click on a category name to open the list. If there are no positions in a category, the header will display Red.
+            Below are the <%=statuslong%> job opportunities for the selected region(s) with the total number of positions in brackets in each heading category. To see the positions in each category, click on a category name to open the list. If there are no positions in a category, the header will display Red.
             
 		             <div align="center" class="no-print" style="margin-bottom:10px;margin-top:10px;"> 				
 		          				<button class='btnRegionView btn btn-primary btn-xs' type='button' data-region-id='0'>All Regions</button>

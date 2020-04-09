@@ -75,6 +75,7 @@ public class SubmitRequestToHireRequestHandler extends RequestHandlerImpl {
 			}else{
 				rthb.setPrivateList(0);
 			}
+			rthb.setVacancyReason(form.get("vacancy_reason"));
 			if(form.getInt("rid") == -1){
 				RequestToHireManager.addRequestToHireBean(rthb);
 				//add the history item

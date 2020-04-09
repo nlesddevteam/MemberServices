@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
 import com.nlesd.bcs.bean.BussingContractorSystemEmployeeTrainingBean;
-import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
-import com.nlesd.bcs.dao.BussingContractorManager;
 import com.nlesd.bcs.dao.BussingContractorSystemEmployeeTrainingManager;
 import com.nlesd.bcs.dao.DropdownManager;
 
-public class UpdateEmployeeTrainingAdminAjaxRequestHandler extends BCSApplicationRequestHandlerImpl{
+public class UpdateEmployeeTrainingAdminAjaxRequestHandler extends RequestHandlerImpl{
 	public UpdateEmployeeTrainingAdminAjaxRequestHandler() {
 		this.requiredPermissions = new String[] {
 				"BCS-SYSTEM-ACCESS"
@@ -44,20 +43,6 @@ public class UpdateEmployeeTrainingAdminAjaxRequestHandler extends BCSApplicatio
 			if (validate_form()) {
 				BussingContractorSystemEmployeeTrainingBean vbean = new BussingContractorSystemEmployeeTrainingBean();
 				try {
-					if(form.exists("contractor")){
-						bcbean = BussingContractorManager.getBussingContractorById(form.getInt("contractor"));
-					}else{
-						if(usr.checkPermission("BCS-VIEW-WESTERN")){
-							bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.WESTERN.getValue());
-						}
-						if(usr.checkPermission("BCS-VIEW-CENTRAL")){
-							bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.CENTRAL.getValue());
-						}
-						if(usr.checkPermission("BCS-VIEW-LABRADOR")){
-							bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.LABRADOR.getValue());
-						}
-
-					}
 					//get fields
 					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 					vbean.setPk(form.getInt("hidid"));
@@ -104,7 +89,7 @@ public class UpdateEmployeeTrainingAdminAjaxRequestHandler extends BCSApplicatio
 					atbean.setEntryTable(EntryTableConstant.EMPLOYEETRAINING);
 					DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
 					atbean.setEntryNotes("Employee Training (" + DropdownManager.getDropdownItemText(vbean.getTrainingType()) + ") updated for " + ebean.getFirstName() + " " + ebean.getLastName() + " on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
-					atbean.setContractorId(bcbean.getId());
+					atbean.setContractorId(ebean.getContractorId());
 					AuditTrailManager.addAuditTrail(atbean);
 	            }
 				catch (Exception e) {

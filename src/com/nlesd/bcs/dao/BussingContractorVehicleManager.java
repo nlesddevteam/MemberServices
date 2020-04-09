@@ -1033,7 +1033,7 @@ public class BussingContractorVehicleManager {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
-				list.put(rs.getString("PLATENUMBER") + "[" + rs.getString("SERIALNUMBER") +"]", rs.getInt("ID"));
+				list.put(rs.getString("VPLATENUMBER") + "[" + rs.getString("VSERIALNUMBER") +"]", rs.getInt("ID"));
 			}
 				
 		}

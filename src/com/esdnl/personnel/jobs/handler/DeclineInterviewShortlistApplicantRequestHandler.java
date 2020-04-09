@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
+import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -20,7 +22,7 @@ public class DeclineInterviewShortlistApplicantRequestHandler extends RequestHan
 	public DeclineInterviewShortlistApplicantRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-VIEW"
+			"PERSONNEL-ADMIN-VIEW","PERSONNEL-PRINCIPAL-VIEW","PERSONNEL-VICEPRINCIPAL-VIEW"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {
@@ -36,7 +38,6 @@ public class DeclineInterviewShortlistApplicantRequestHandler extends RequestHan
 
 		JobOpportunityBean opp = null;
 		SubListBean list = null;
-
 		try {
 
 			if (session.getAttribute("JOB") != null) {
@@ -58,6 +59,11 @@ public class DeclineInterviewShortlistApplicantRequestHandler extends RequestHan
 					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 					session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
 							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+					if(opp.getIsSupport().equals("Y")) {
+						request.setAttribute("AD_REQUEST", RequestToHireManager.getRequestToHireByCompNum(opp.getCompetitionNumber()));
+					}else {
+						request.setAttribute("AD_REQUEST", AdRequestManager.getAdRequestBean(opp.getCompetitionNumber()));
+					}
 				}
 				else if (list != null) {
 					/*

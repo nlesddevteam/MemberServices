@@ -470,7 +470,7 @@ $(document).ready(function() {
 		                	<option value=" ">Please select driver</option>
 							<c:forEach var="entry" items="${drivers}">
 								<c:choose>
-									<c:when test="${entry.id ne assigneddriverid}">
+									<c:when test="${entry.value ne assigneddriverid}">
 										<option value='${entry.value}'>${entry.key}</option>
 									</c:when>
 								</c:choose>
@@ -505,7 +505,7 @@ $(document).ready(function() {
 		                	<option value=" ">Please select vehicle</option>
 							<c:forEach var="entry" items="${vehicles}">
 								<c:choose>
-									<c:when test="${entry.id ne assignedvehicleid}">
+									<c:when test="${entry.value ne assignedvehicleid}">
 										<option value='${entry.value}'>${entry.key}</option>
 									</c:when>
 								</c:choose>

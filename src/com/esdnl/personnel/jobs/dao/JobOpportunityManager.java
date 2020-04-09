@@ -20,6 +20,7 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityAssignmentBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.constants.JobTypeConstant;
+import com.esdnl.personnel.jobs.constants.RecommendationStatus;
 import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
 import com.esdnl.util.StringUtils;
 import com.nlesd.school.bean.SchoolZoneBean;
@@ -348,6 +349,42 @@ public class JobOpportunityManager {
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
+			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECAPPROVAL")) {
+				if (zone == 0) {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.RECOMMENDED.getValue());
+					//stat.setInt(2, 1);
+					stat.setString(3, "N");
+					stat.setInt(4, RecommendationStatus.RECOMMENDED.getValue());
+				}
+				else {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.RECOMMENDED.getValue());
+					//stat.setInt(2, 1);
+					stat.setInt(3, zone);
+					stat.setString(4, "N");
+					stat.setInt(5, RecommendationStatus.RECOMMENDED.getValue());
+				}
+			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECACCEPT")) {
+				if (zone == 0) {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.APPROVED.getValue());
+					//stat.setInt(2, 5);
+					stat.setString(3, "N");
+					stat.setInt(4, RecommendationStatus.APPROVED.getValue());
+				}
+				else {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.APPROVED.getValue());
+					//stat.setInt(2, 5);
+					stat.setInt(3, zone);
+					stat.setString(4, "N");
+					stat.setInt(5, RecommendationStatus.APPROVED.getValue());
+				}
 			}
 			else {
 				if (zone == 0) {
@@ -486,6 +523,42 @@ public class JobOpportunityManager {
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
+				}
+			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECAPPROVAL")) {
+				if (zone == 0) {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.RECOMMENDED.getValue());
+					//stat.setInt(2, 1);
+					stat.setString(3, "Y");
+					stat.setInt(4, RecommendationStatus.RECOMMENDED.getValue());
+				}
+				else {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.RECOMMENDED.getValue());
+					//stat.setInt(2, 1);
+					stat.setInt(3, zone);
+					stat.setString(4, "Y");
+					stat.setInt(5, RecommendationStatus.RECOMMENDED.getValue());
+				}
+			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECACCEPT")) {
+				if (zone == 0) {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.APPROVED.getValue());
+					//stat.setInt(2, 5);
+					stat.setString(3, "Y");
+					stat.setInt(4, RecommendationStatus.APPROVED.getValue());
+				}
+				else {
+					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//stat.setInt(2, RecommendationStatus.APPROVED.getValue());
+					//stat.setInt(2, 5);
+					stat.setInt(3, zone);
+					stat.setString(4, "Y");
+					stat.setInt(5, RecommendationStatus.APPROVED.getValue());
 				}
 			}
 			else {

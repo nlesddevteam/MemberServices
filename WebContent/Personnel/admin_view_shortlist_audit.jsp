@@ -47,9 +47,10 @@
 						<c:choose>
 							<c:when test="${ fn:length(auditlist) > 0}">
 								<c:forEach var="entry" items="${auditlist}">
-									<tr><td style="background-color:#D3D3D3;"><h5><b>${entry.key} (${entry.value.applicantEmail})</b></h5></td><tr>
+									<tr><td style="background-color:#D3D3D3;"><h5><b>${entry.key} (${entry.value.applicantEmail}) 
 									<c:choose>
 										<c:when test="${entry.value.jasId gt 0}">
+											- Shortlisted by ${entry.value.shortlistedByName} on ${entry.value.shortlistedByDateFormatted()} </b></h5></td><tr>
 											<c:choose>
 												<c:when test="${entry.value.shortlistedReason ne null}">
 													<tr><td>${entry.value.shortlistedReason}</td></tr>
@@ -179,6 +180,7 @@
 											</c:choose>
 										</c:when>
 										<c:otherwise>
+											</b></h5></td><tr>
 											<tr><td>No audit information for applicant</td><tr>
 										</c:otherwise>
 									</c:choose>

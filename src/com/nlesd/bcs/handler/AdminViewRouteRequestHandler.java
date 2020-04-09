@@ -66,20 +66,20 @@ public class AdminViewRouteRequestHandler extends RequestHandlerImpl
 				if(usr.checkPermission("BCS-VIEW-WESTERN")){
 					cid = BoardOwnedContractorsConstant.WESTERN.getValue();
 					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsRegTM(cid));
-					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(), cid));
-					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(), cid));
+					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusRegTM(EmployeeStatusConstant.APPROVED.getValue(), cid));
+					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusRegTM(VehicleStatusConstant.APPROVED.getValue(), cid));
 				}
 				if(usr.checkPermission("BCS-VIEW-CENTRAL")){
 					cid = BoardOwnedContractorsConstant.CENTRAL.getValue();
 					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsRegTM(cid));
-					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(), cid));
-					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(), cid));
+					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusRegTM(EmployeeStatusConstant.APPROVED.getValue(), cid));
+					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusRegTM(VehicleStatusConstant.APPROVED.getValue(), cid));
 				}
 				if(usr.checkPermission("BCS-VIEW-LABRADOR")){
 					cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
 					request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsRegTM(cid));
-					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusReg(EmployeeStatusConstant.APPROVED.getValue(), cid));
-					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusReg(VehicleStatusConstant.APPROVED.getValue(), cid));
+					request.setAttribute("drivers", BussingContractorEmployeeManager.getEmployeesByStatusRegTM(EmployeeStatusConstant.APPROVED.getValue(), cid));
+					request.setAttribute("vehicles", BussingContractorVehicleManager.getVehiclesByStatusRegTM(VehicleStatusConstant.APPROVED.getValue(), cid));
 				}
 			}else{
 				request.setAttribute("contracts", BussingContractorSystemContractManager.getContractsTM());

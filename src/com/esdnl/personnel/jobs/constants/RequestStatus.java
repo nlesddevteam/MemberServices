@@ -19,6 +19,9 @@ public class RequestStatus
   
   public static final RequestStatus PREDISPLAYED 
   = new RequestStatus(5, "PREDISPLAYED");
+  
+  public static final RequestStatus CANCELLED 
+  = new RequestStatus(6, "CANCELLED");
     
   public static final RequestStatus[] ALL = new RequestStatus[]
   {
@@ -26,7 +29,8 @@ public class RequestStatus
     APPROVED,
     REJECTED,
     POSTED,
-    PREDISPLAYED
+    PREDISPLAYED,
+    CANCELLED
   };
   
   private RequestStatus(int uid, String desc)

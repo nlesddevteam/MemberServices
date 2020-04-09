@@ -510,6 +510,39 @@ $('document').ready(function(){
 		$('#btn-add-redundancy-position').text('Add Position');
 		$(this).hide();
 	});
+	$('#btnDeleteVac').click(function() {
+		$('#add-vacancy-position-message').css('display','none').text('');
+			$("#loadingSpinner").css("display","block");										
+			$.post("ajax/deleteTeacherAllocationVacantPosition.html", 
+				{	
+					id : $('#hidid').val(),
+					ajax : true 
+				}, 
+				function(data){
+					$('#add-vacancy-position-message').css('display','block').text($(data).find('DEL-TEACHER-ALLOCATION-VACANT-POSITION-RESPONSE').attr('msg'));
+					if($(data).find('TEACHER-ALLOCATION-BEAN').length > 0) {
+						parseTeacherAllocationBean(data);
+						
+						$('#hdn_VacantPositionID').val('');
+						$('#txt_jobDescription').val('');
+						$('#lst_type').val('-1');
+						$('#lst_owner').val('-1');
+						$('#txt_reasonVacancy').val('');
+						$('#txt_startTermDate').val('');
+						$('#txt_endTermDate').val('');
+						$('#txt_vacancyUnit').val('');
+						$('#chk_advertised').removeAttr('checked');
+						$('#chk_filled').removeAttr('checked');
+					}
+					
+					$("#loadingSpinner").css("display","none");
+				}, 
+				"xml");
+			$('#modalDelete').modal('hide');
+			return false;
+		
+	});
+	
 });
 	
 function parseTeacherAllocationBean(data) {
@@ -1042,6 +1075,29 @@ function parseTeacherAllocationBean(data) {
 														
 														$('#btn-add-vacancy-position').text('Update Position');
 														$('#btn-cancel-vacancy-position').show();
+														//now show correct link
+														if($(this).attr('RECLINK') != 'NONE'){
+															$('#hrefspan').text('View Recommedation');
+															$('#hrefad').prop('href', $(this).attr('RECLINK'));
+															$('#divlinks').show();
+														}else if($(this).attr('JOBLINK') != 'NONE'){
+															$('#hrefspan').text('View Job Opportunity');
+															$('#hrefad').prop('href', $(this).attr('JOBLINK'));
+															$('#divlinks').show();
+														}else if($(this).attr('ADLINK') != 'NONE'){
+															$('#hrefspan').text('View  Ad Request');
+															$('#hrefad').prop('href', $(this).attr('ADLINK'));
+															$('#divlinks').show();
+														}else if($(this).attr('CREATELINK') != 'NONE'){
+															$('#hrefspan').text('Create Ad Request');
+															$("#hrefad").click(function(){ createAdRequest(); });
+															//$('#hrefad').prop('href', $(this).attr('CREATELINK'));
+															$('#divlinks').show();
+														}else{
+															$('#hrefspan').text('Create Ad Request');
+															//$('#hrefad').prop('href', $(this).attr('CREATELINK'));
+															$('#divlinks').hide();
+														}
 													});
 												}
 												
@@ -1055,40 +1111,22 @@ function parseTeacherAllocationBean(data) {
 							
 							.append($('<a>')
 								.addClass('del-vacant btn btn-xs btn-danger')
-								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
+								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID'),'ad-title': $(this).attr('ADTITLE'),'compnum':$(this).attr('JOBCOMP')})
 								.text('DEL')
 								.css({'margin-left':'3px'})
 								.click(
 									function() {
-										$('#add-vacancy-position-message').css('display','none').text('');
-										$("#loadingSpinner").css("display","block");										
-										$.post("ajax/deleteTeacherAllocationVacantPosition.html", 
-											{	
-												id : $(this).attr('position-id'),
-												ajax : true 
-											}, 
-											function(data){
-												$('#add-vacancy-position-message').css('display','block').text($(data).find('DEL-TEACHER-ALLOCATION-VACANT-POSITION-RESPONSE').attr('msg'));
-												if($(data).find('TEACHER-ALLOCATION-BEAN').length > 0) {
-													parseTeacherAllocationBean(data);
-													
-													$('#hdn_VacantPositionID').val('');
-													$('#txt_jobDescription').val('');
-													$('#lst_type').val('-1');
-													$('#lst_owner').val('-1');
-													$('#txt_reasonVacancy').val('');
-													$('#txt_startTermDate').val('');
-													$('#txt_endTermDate').val('');
-													$('#txt_vacancyUnit').val('');
-													$('#chk_advertised').removeAttr('checked');
-													$('#chk_filled').removeAttr('checked');
-												}
-												
-												$("#loadingSpinner").css("display","none");
-											}, 
-											"xml");
-										return false;
-									}
+										$('#modalDelete').modal('show');
+											$('#hidid').val($(this).attr('POSITION-ID'));
+											$('#modaltitle').text("Confirm Delete Vacancy");
+											$('#deletemessage').text("Are you sure you want to delete this vacancy?");
+											if($(this).attr('compnum') != "NONE"){
+												$('#deletejob').text("The following Job Opportunity will be cancelled : " + $(this).attr('compnum'));
+											}else if($(this).attr('ad-title') != "NONE"){
+												$('#deletead').text("The following Ad Request will be deleted : " + $(this).attr('ad-title'));
+											}
+											
+										}
 								))
 						)
 					);
@@ -1492,5 +1530,36 @@ function loadTeacherAllocation(sy, lid){
 		}, 
 		"xml");
 }
-
+function createAdRequest(){
+	$("#loadingSpinner").css("display","block");
+	$.post("ajax/createVacantPositionAd.html", 
+		{	
+			id : $('#hdn_VacantPositionID').val(),
+			ajax : true 
+		}, 
+		function(data){
+			if($(data).find('TEACHER-ALLOCATION-VACANT-POSITION-BEAN').length > 0) {
+				parseTeacherAllocationBean(data);
+				
+				$('#hdn_VacantPositionID').val('');
+				$('#txt_jobDescription').val('');
+				$('#lst_type').val('-1');
+				$('#lst_owner').val('-1');
+				$('#txt_reasonVacancy').val('');
+				$('#txt_startTermDate').val('');
+				$('#txt_endTermDate').val('');
+				$('#txt_vacancyUnit').val('');
+				$('#chk_advertised').removeAttr('checked');
+				$('#chk_filled').removeAttr('checked');
+				
+				$('#add-vacancy-position-message').html('Ad Request for Vacant Position created successfully').show();
+			}
+			$("#loadingSpinner").css("display","none");
+			$('#btn-add-vacancy-position').text('Add Position');
+			$('#btn-cancel-vacancy-position').hide();
+			$('#divlinks').hide();
+			
+		}, 
+		"xml");
+}
 

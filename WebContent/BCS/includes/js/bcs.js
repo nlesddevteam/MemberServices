@@ -2504,12 +2504,12 @@ function resetPassword() {
 							$('#myModal').modal('hide');
 							$('.modal-backdrop').remove();
 							$('body').removeClass('modal-open');
-							$("#contractorsuccessmessage").html(
+							$("#body_success_message_top").html(
 									"New Password sent to Contractor").css(
-									"display", "block").delay(6000).fadeOut();
-							$('#mainalerts').show();
+									"display", "block").delay(6000);
+							//$('#mainalerts').show();
 						} else {
-							$("#contractorerrormessage").html(
+							$("#body_error_message_top").html(
 									$(this).find("MESSAGE").text()).css(
 									"display", "block").delay(6000).fadeOut();
 							$('#mainalert').show();
@@ -5991,6 +5991,7 @@ function ajaxGetTrainingById(trainingid) {
 											$('#buttonlefttr').text("YES");
 											$('#buttonrighttr').text("NO");
 											// now we add the onclick event
+											alert("here");
 											$("#buttonlefttr").click(function(event) {
 												event.preventDefault();
 												if (checknewtraining()) {
@@ -6017,6 +6018,7 @@ function ajaxGetTrainingById(trainingid) {
  * add new employee training
  ******************************************************************************/
 function updateemployeetraining(trantype) {
+	alert(trantype);
 	var selected = $("#trainingtype").val();
 	var tdate = $("#trainingdate").val();
 	var edate = $("#expirydate").val();
@@ -6046,7 +6048,7 @@ function updateemployeetraining(trantype) {
 		surl="updateEmployeeTraining.html";
 	}
 	$.ajax({
-		url : "updateEmployeeTraining.html",
+		url : surl,
 		type : 'POST',
 		data : requestd,
 		contentType : false,

@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.esdnl.personnel.jobs.constants.EmploymentConstant;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
+import com.esdnl.personnel.jobs.dao.TeacherAllocationManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 
 public class TeacherAllocationVacantPositionBean {
@@ -174,15 +175,18 @@ public class TeacherAllocationVacantPositionBean {
 				+ (this.getTermEnd() != null ? "TERM-END=\"" + sdf.format(this.getTermEnd()) + "\" " : "") + "UNIT=\""
 				+ this.unit + "\" ADVERTISED=\"" + this.isAdvertised() + "\" FILLED=\"" + this.isFilled() + "\" ");
 				//check to see if there is a link to the job ad
+				//send ad title job comp numb to show on delete confirm
 				if(!(this.adRequest == null)){
 					if(!(this.adRequest.getCompetitionNumber() == null)){
-						buf.append(" JOBLINK=\"" + this.adRequest.getCompetitionNumber() + "\" ");
+						buf.append(" JOBLINK=\"" + "view_job_post.jsp?comp_num=" + this.adRequest.getCompetitionNumber() + "\" ");
+						buf.append(" JOBCOMP=\"" +  this.adRequest.getCompetitionNumber() + "\" ");
+						buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
 						//now we check to see if it is filled
 						try {
 							JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(this.adRequest.getCompetitionNumber());
 							if(!(job == null)){
 								if(job.isAwarded()){
-									buf.append(" RECLINK=\"" + this.adRequest.getCompetitionNumber() + "\" ");
+									buf.append(" RECLINK=\"" + "admin_view_job_recommendation_list.jsp?comp_num=" + this.adRequest.getCompetitionNumber() + "\" ");
 								}else{
 									buf.append(" RECLINK=\"NONE\" ");
 								}
@@ -195,12 +199,34 @@ public class TeacherAllocationVacantPositionBean {
 						}
 						
 					}else{
+						//send back the link to the ad request
+						buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
+						buf.append(" JOBCOMP=\"NONE\" ");
+						buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
 						buf.append(" JOBLINK=\"NONE\" ");
 						buf.append(" RECLINK=\"NONE\" ");
 					}
 				}else{
-					buf.append(" JOBLINK=\"NONE\" ");
-					buf.append(" RECLINK=\"NONE\" ");
+					// need to check the school year, if greater than > 19-20
+					try {
+						TeacherAllocationBean tab = TeacherAllocationManager.getTeacherAllocationBean(this.getAllocationId());
+						String[] years = tab.getSchoolYear().split("-");
+						if(Integer.parseInt(years[1]) > 20) {
+							//add link for creating ad request
+							buf.append(" CREATELINK=\"" + "createAdForVacantPosition?posid=" + this.getPositionId()+ "\" ");
+						}else {
+							buf.append(" CREATELINK=\"NONE\" ");
+						}
+						buf.append(" JOBLINK=\"NONE\" ");
+						buf.append(" RECLINK=\"NONE\" ");
+						buf.append(" ADLINK=\"NONE\" ");
+						buf.append(" ADTITLE=\"NONE\" ");
+						buf.append(" JOBCOMP=\"NONE\" ");
+					} catch (JobOpportunityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
 				
 				buf.append("/>");

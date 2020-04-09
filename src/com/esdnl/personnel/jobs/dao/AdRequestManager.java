@@ -271,7 +271,82 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void updateAdRequestBeanDetails(AdRequestBean abean) throws JobOpportunityException {
 
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.personnel_ad_request.update_ad_request(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat.setString(1, abean.getLocation().getLocationDescription());
+			stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
+			if (abean.getEndDate() != null) {
+				stat.setDate(3, new java.sql.Date(abean.getEndDate().getTime()));
+			}else {
+				stat.setDate(3, null);
+			}
+			
+			stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
+			if (abean.getEndDate() != null) {
+				stat.setDate(3, new java.sql.Date(abean.getEndDate().getTime()));
+			}else {
+				stat.setDate(3, null);
+			}
+			
+			stat.setDouble(4, abean.getUnits());
+			stat.setInt(5, abean.getTrainingMethod().getValue());
+			if (abean.getOwner() != null) {
+				stat.setString(6, abean.getOwner().getEmpId());
+			}else {
+				stat.setString(6, null);
+			}
+			stat.setString(7, abean.getVacancyReason());
+			stat.setString(8, abean.getTitle());
+			
+			stat.setInt(9, abean.getJobType().getValue());
+			stat.setString(10, abean.getAdText());
+			stat.setBoolean(11, abean.isUnadvertised());
+			stat.setInt(12, abean.getId());
+			stat.execute();
+			//now we add/remove the child objects
+			// add degrees
+			AdRequestDegreeManager.deleteAdRequestDegreeBeans(abean.getId());
+			if (abean.getDegrees() != null && abean.getDegrees().length > 0) {
+				AdRequestDegreeManager.addAdRequestDegreeBeans(abean);
+			}
+			AdRequestMajorManager.deleteAdRequestMajorBeans(abean.getId());
+			// add majors
+			if (abean.getMajors() != null && abean.getMajors().length > 0) {
+				AdRequestMajorManager.addAdRequestMajors(abean);
+			}
+			AdRequestMinorManager.deleteAdRequestMinorBeans(abean.getId());
+			// add minors
+			if (abean.getMinors() != null && abean.getMinors().length > 0) {
+				AdRequestMinorManager.addAdRequestMinors(abean);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void updateAdRequestBean(AdRequestBean abean): " + e);
+			throw new JobOpportunityException("Can not update AdRequestBean to DB.", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 	public static void approveAdRequestBean(AdRequestBean abean, Personnel p) throws JobOpportunityException {
 
 		Connection con = null;
@@ -514,7 +589,41 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void cancelAdRequestBean(int adid, int pid) {
 
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			stat = con.prepareCall("begin awsd_user.PERSONNEL_AD_REQUEST.cancel_ad_request(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.NUMBER);
+			stat.setInt(1, adid);
+			stat.setInt(2, pid);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void cancelAdRequestBean(int adid, int pid)" + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 	public static AdRequestBean createAdRequestBean(ResultSet rs) {
 
 		AdRequestBean abean = null;
@@ -539,7 +648,7 @@ public class AdRequestManager {
 			abean.setCompetitionNumber(rs.getString("COMP_NUM"));
 
 			abean.setUnadvertised(rs.getBoolean("UNADVERTISED"));
-
+			
 			// get majors
 			// abean.setMajors(AdRequestMajorManager.getAdRequestMajors(abean));
 

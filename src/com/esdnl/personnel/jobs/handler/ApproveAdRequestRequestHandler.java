@@ -83,8 +83,7 @@ public class ApproveAdRequestRequestHandler implements RequestHandler {
 					req.setOwner(EmployeeManager.getEmployeeBean(owner));
 
 				if (!StringUtils.isEmpty(units))
-					;
-				req.setUnits(Double.parseDouble(units));
+					req.setUnits(Double.parseDouble(units));
 
 				if (!StringUtils.isEmpty(job_type))
 					req.setJobType(JobTypeConstant.get(Integer.parseInt(job_type)));
@@ -132,9 +131,11 @@ public class ApproveAdRequestRequestHandler implements RequestHandler {
 						request.setAttribute("msg", "Please select START DATE.");
 					else {
 						try {
+							//update the request
+							AdRequestManager.updateAdRequestBeanDetails(req);
 							// add the request to db
 							AdRequestManager.approveAdRequestBean(req, usr.getPersonnel());
-
+							
 							AdRequestHistoryBean history = req.getHistory(RequestStatus.SUBMITTED);
 							// send email to admins
 							// map SDS location ids to my location ids

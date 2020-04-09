@@ -7,10 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.TeacherAllocationBean;
 import com.esdnl.personnel.jobs.bean.TeacherAllocationVacantPositionBean;
-import com.esdnl.personnel.jobs.constants.RequestStatus;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
+import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
 import com.esdnl.personnel.jobs.dao.TeacherAllocationManager;
 import com.esdnl.personnel.jobs.dao.TeacherAllocationVacantPositionManager;
 import com.esdnl.servlet.FormElement;
@@ -34,7 +35,7 @@ public class DeleteTeacherAllocationVacantPositionAjaxRequestHandler extends Req
 				IOException {
 
 		super.handleRequest(request, response);
-		boolean isdeleted=false;
+		//boolean isdeleted=false;
 		if (validate_form()) {
 			try {
 
@@ -67,6 +68,20 @@ public class DeleteTeacherAllocationVacantPositionAjaxRequestHandler extends Req
 				*/
 				if (position != null) {
 					TeacherAllocationVacantPositionManager.deleteTeacherAllocationVacantPositionBean(position);
+					//now we check to see if there was an ad request or job comp to cancel
+					if(position.getAdRequest() != null) {
+						if(position.getAdRequest().getCompetitionNumber() != null) {
+							//we cancel the job
+							JobOpportunityBean jbean = JobOpportunityManager.getJobOpportunityBean(position.getAdRequest().getCompetitionNumber());
+							if(!(jbean.isClosed()) || !(jbean.isAwarded())) {
+								JobOpportunityManager.cancelJobOpportunityBean(position.getAdRequest().getCompetitionNumber());
+							}
+							
+						}else {
+							//we cancel the ad
+							AdRequestManager.cancelAdRequestBean(position.getAdRequest().getId(), usr.getPersonnel().getPersonnelID());
+						}
+					}
 
 					allocation = TeacherAllocationManager.getTeacherAllocationBean(position.getAllocationId());
 				}
