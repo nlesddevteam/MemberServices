@@ -35,7 +35,7 @@ $('document').ready(function(){
 	
 	$('#lst_schoolyear, #lst_school').change(function() {
 		$('#add-allocation-row').hide();
-		
+		$('#divlinks').hide();
 		if(isSystemAdministrator) {
 			if($('#lst_schoolyear').val() != '' && ($('#span-schoolyear-ops').length == 0)){
 				//$('#div_schoolyear')
@@ -448,6 +448,7 @@ $('document').ready(function(){
 					$('#txt_vacancyUnit').val('');
 					$('#chk_advertised').removeAttr('checked');
 					$('#chk_filled').removeAttr('checked');
+					$('#divlinks').hide();
 				}
 				
 				$("#loadingSpinner").css("display","none");
@@ -469,6 +470,7 @@ $('document').ready(function(){
 		$('#chk_advertised').removeAttr('checked');
 		$('#chk_filled').removeAttr('checked');
 		$('#btn-add-vacancy-position').text('Add Position');
+		$('#divlinks').hide();
 		$(this).hide();
 	});
 	
@@ -533,6 +535,7 @@ $('document').ready(function(){
 						$('#txt_vacancyUnit').val('');
 						$('#chk_advertised').removeAttr('checked');
 						$('#chk_filled').removeAttr('checked');
+						$('#divlinks').hide();
 					}
 					
 					$("#loadingSpinner").css("display","none");
@@ -1123,7 +1126,7 @@ function parseTeacherAllocationBean(data) {
 											if($(this).attr('compnum') != "NONE"){
 												$('#deletejob').text("The following Job Opportunity will be cancelled : " + $(this).attr('compnum'));
 											}else if($(this).attr('ad-title') != "NONE"){
-												$('#deletead').text("The following Ad Request will be deleted : " + $(this).attr('ad-title'));
+												$('#deletead').text("The following Ad Request will be cancelled : " + $(this).attr('ad-title'));
 											}
 											
 										}
