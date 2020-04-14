@@ -240,43 +240,35 @@ input {
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>DEMOGRAPHICS</b></div>
-      			 	<div class="panel-body">
-      			 	<div>
-      			 	<table width="100%">
-      			 		<tr>
-      			 			<td align="left" width="60%">
+      			 	<div class="panel-body">      					 	
       			 				<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
       			 				<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
       			 				<input type="hidden" id="id" value="<%=profile.getSIN() %>">
       			 	 			<c:if test="${APPLICANT.modifiedDate ne null}">
                        				<span style="color:Silver;text-align:right;">Last Modified: <fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></span>
                      			</c:if>
-      			 			</td>
-      			 			<td align="right" width="40%">
-                   				<c:choose>
-					    			<c:when test="${ APPLICANT.profileVerified }">
-					    				<div class="alert alert-success" role="alert">
+      			 			<br/>
+      			 			
+                    	<div class="table-responsive">       			 	       
+      			 	       <table class="table table-striped table-condensed" style="font-size:12px;">							   
+							    <tbody>
+							     <tr>
+							    <td class="tableTitle">Verification Status:</td>
+							    <td colspan=3>							    
+							    <c:choose>
+					    			<c:when test="${ APPLICANT.profileVerified }">					    				
 					    					<c:if test="${APPLICANT.verificationBean ne null}">
-					    						Profile verified by ${APPLICANT.verificationBean.verifiedByName} on ${APPLICANT.verificationBean.getDateVerifiedFormatted()}
+					    					<span style="color:Green;"><span class="glyphicon glyphicon-ok"></span> Profile verified by ${APPLICANT.verificationBean.verifiedByName} on ${APPLICANT.verificationBean.getDateVerifiedFormatted()}</span>
 					    					</c:if>
-												</div>
-					    			</c:when>
+									</c:when>
 					    			<c:otherwise>
-					    				<esd:SecurityAccessRequired roles="MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
-					    					<button type="button" class="btn btn-primary btn" id="butVerify">Verify Applicant Profile</button>
+					    				<esd:SecurityAccessRequired roles="ADMINISTRATOR,MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
+					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span><button type="button" class="btn btn-success btn-xs" id="butVerify" style="margin-left:10px;"><span class="glyphicon glyphicon-thumbs-up"></span> Verify</button>
 					    				</esd:SecurityAccessRequired> 
 					    			</c:otherwise>
-					    		</c:choose>      			 			
-      			 			</td>
-      			 		</tr>
-      			 	</table>
-      			 	
-
-                    	<div class="table-responsive"> 
-      			 	       
-      			 	       <table class="table table-striped table-condensed" style="font-size:12px;">
-							   
-							    <tbody>
+					    		</c:choose>
+					    		</td>
+							    </tr>
 							    <tr>
 							    <td class="tableTitle">NAME:</td>
 							    <td class="tableResult">${fullName}</td>
@@ -355,7 +347,7 @@ input {
 							    </table>
       			 	       
 						</div>
-	                 </div> 
+	              
 	              </div>
   </div>
        			 
