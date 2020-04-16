@@ -1037,6 +1037,11 @@ function parseTeacherAllocationBean(data) {
 						.append($('<td>').attr('valign', 'top').text(parseFloat($(this).attr('UNIT')).toFixed(2)))
 						.append($('<td>').attr({'valign':'top','align':'center'}).text(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 'YES')))
 						.append($('<td>').attr({'valign':'top','align':'center'}).text(($(this).attr('FILLED') == 'false' ? 'NO' : 'YES')))
+											.append($('<td>').attr({'valign':'top','align':'center'}).html( 
+								($(this).attr('ADLINK') != 'NONE'? isPositionPlanningAdmin == true ? '<a href="' + $(this).attr('ADLINK') +'" target="_blank" class="edit-vacant btn btn-xs btn-info">View</a>': 
+										'<span class="edit-vacant btn btn-xs btn-info">Generated</span>' : '<span class="edit-vacant btn btn-xs btn-info">None</span>')))
+								
+						
 						.append($('<td>')
 							.css({'padding-right':'5px'})
 							.attr({'align':'right','valign':'top'})
@@ -1111,7 +1116,6 @@ function parseTeacherAllocationBean(data) {
 										return false;
 									}
 								))
-							
 							.append($('<a>')
 								.addClass('del-vacant btn btn-xs btn-danger')
 								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID'),'ad-title': $(this).attr('ADTITLE'),'compnum':$(this).attr('JOBCOMP')})
@@ -1131,6 +1135,9 @@ function parseTeacherAllocationBean(data) {
 											
 										}
 								))
+								
+								
+							
 						)
 					);
 			});
