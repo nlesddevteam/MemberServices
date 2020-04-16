@@ -702,7 +702,7 @@ function parseTeacherAllocationBean(data) {
 		$('#total-staffing-allocation-units').text('Total Assigned School Staffing Units: ' + parseFloat($(this).attr('TOTAL-STAFFING-UNITS')).toFixed(2));
 		$('#total-outstanding-assigned-units').text('Total Outstanding School Staffing Units: ' + parseFloat($(this).attr('OUTSTANDING-ASSIGNMENT-UNITS')).toFixed(2));
 		
-		$('.total-staffing-allocation-units-title').text(parseFloat($(this).attr('TOTAL-STAFFING-UNITS')).toFixed(2));
+		$('.total-staffing-allocation-units-title').text(parseFloat($(this).attr('TOTAL-TCHR-ALLOCATIONS')).toFixed(2));
 		totalStaffing = parseFloat($(this).attr('TOTAL-STAFFING-UNITS')).toFixed(2);
 		$('.total-outstanding-assigned-units-title').text(parseFloat($(this).attr('OUTSTANDING-ASSIGNMENT-UNITS')).toFixed(2));
 		
@@ -1150,11 +1150,11 @@ function parseTeacherAllocationBean(data) {
 					.addClass('vacant-positions-table-row')
 					.addClass('displayText')
 					.append($('<td>')
-						.attr('colspan', '4')
+						.attr('colspan', '5')
 						.css({'border-top':'solid 1px #333333'})
 						.html('&nbsp;'))
 					.append($('<td>')
-						.attr('colspan', '4')
+						.attr('colspan', '5')
 						.css({'font-weight':'bold', 'border-top':'solid 1px #333333'})
 						.text(parseFloat($(this).find('TEACHER-ALLOCATION-VACANT-POSITION-BEANS').attr('TOTAL-ALLOCATIONS')).toFixed(2))));
 		}
