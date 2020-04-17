@@ -1035,12 +1035,13 @@ function parseTeacherAllocationBean(data) {
 										 .html(($.type($(this).attr('TERM-START'))!='undefined' ? $(this).attr('TERM-START') : '') + '<br />' 
 											+ ($.type($(this).attr('TERM-END'))!='undefined' ? $(this).attr('TERM-END') : '')))
 						.append($('<td>').attr('valign', 'top').text(parseFloat($(this).attr('UNIT')).toFixed(2)))
-						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 
-							isPositionPlanningAdmin == true ? $(this).attr('JOBLINK') == 'NONE' ? 'YES' : '<a href="' + $(this).attr('JOBLINK') +'" target="_blank">YES</a>' : 'YES' )))
-
+						
 						.append($('<td>').attr({'valign':'top','align':'center'}).html( 
 								($(this).attr('ADLINK') != 'NONE'? isPositionPlanningAdmin == true ? '<a href="' + $(this).attr('ADLINK') + '" target="_blank">YES</a>': 
 										'YES' : isPositionPlanningAdmin == true ? '<a  href="#" onclick="createAdRequest(\'' + $(this).attr('POSITION-ID') + '\');event.preventDefault();">Create</a>' : '<span>No</span>')))
+										
+						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 
+							isPositionPlanningAdmin == true ? $(this).attr('JOBLINK') == 'NONE' ? 'YES' : '<a href="' + $(this).attr('JOBLINK') +'" target="_blank">YES</a>' : 'YES' )))
 										
 						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('FILLED') == 'false' ? 'NO' : 
 							isPositionPlanningAdmin == true ? $(this).attr('RECLINK') != 'NONE' ? '<a href="' + $(this).attr('RECLINK') + '" target="_blank">YES</a>'  : 'YES' : 'YES')))		
