@@ -80,7 +80,7 @@ html { background: radial-gradient(#ffffff,#ffffff,#FDF5E6) no-repeat center cen
 		<tr bgcolor="#000000">
 			<td>
 				<div align="center">
-					<span class="copyright">Member Services &copy; 2018
+					<span class="copyright">Member Services &copy; 2020
 						Newfoundland and Labrador English School District &middot; All Rights Reserved</span>
 				</div>
 			</td>
