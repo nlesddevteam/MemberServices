@@ -18,67 +18,64 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
 <!-- LOAD JAVA TAG LIBRARIES -->		
-		<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
-		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
-
-
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
 <%
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("APPLICANT");
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
-    SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-    
-    ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(profile.getSIN());
-    ApplicantEducationBean[] edu = ApplicantEducationManager.getApplicantEducationBeans(profile.getSIN());
-    ApplicantEducationOtherBean edu_oth = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());
-    ApplicantEsdReplacementExperienceBean[] rpl = ApplicantEsdReplExpManager.getApplicantEsdReplacementExperienceBeans(profile.getSIN());
-    ApplicantSubstituteTeachingExpBean[] sub = ApplicantSubExpManager.getApplicantSubstituteTeachingExpBeans(profile.getSIN());
-    ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
-    ApplicantOtherInformationBean other_info = ApplicantOtherInfoManager.getApplicantOtherInformationBean(profile.getSIN());
-    ApplicantSupervisorBean[] refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
-    
-    
-    //ReferenceBean[] chks = ReferenceManager.getReferenceBeans(profile);
-    NLESDReferenceListBean[] chks = NLESDReferenceListManager.getReferenceBeansByApplicant(profile.getSIN());
-    boolean validReference = true;
-    if(chks.length == 0 || refs == null){
-    	validReference = false;
-    }
-    
-    RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
-    Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
-    Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
-    
-    User usr = (User)session.getAttribute("usr");
-    
-    if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
-      session.setAttribute("APPLICANT", profile); 
-     
-    HashMap<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
-    
-    if(!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
-    	new AlertBean(new com.awsd.security.SecurityException("Applicant Profile Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse()));
-    	
-    	throw new com.awsd.security.SecurityException("Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse());
-    }
-    
-    EmployeeBean empbean = null;
-    if(!StringUtils.isEmpty(profile.getSIN2())){
-    	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
-    }
-    
-    Calendar cal = Calendar.getInstance();
-    cal.clear(Calendar.HOUR);
-    cal.clear(Calendar.MINUTE);
-    cal.clear(Calendar.SECOND);
-    cal.clear(Calendar.MILLISECOND);
-    cal.add(Calendar.MONTH, -6);
-    
-    Date six_months = cal.getTime();
-    ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
+  SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+  SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+  
+  ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(profile.getSIN());
+  ApplicantEducationBean[] edu = ApplicantEducationManager.getApplicantEducationBeans(profile.getSIN());
+  ApplicantEducationOtherBean edu_oth = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());
+  ApplicantEsdReplacementExperienceBean[] rpl = ApplicantEsdReplExpManager.getApplicantEsdReplacementExperienceBeans(profile.getSIN());
+  ApplicantSubstituteTeachingExpBean[] sub = ApplicantSubExpManager.getApplicantSubstituteTeachingExpBeans(profile.getSIN());
+  ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
+  ApplicantOtherInformationBean other_info = ApplicantOtherInfoManager.getApplicantOtherInformationBean(profile.getSIN());
+  ApplicantSupervisorBean[] refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
+  
+  //ReferenceBean[] chks = ReferenceManager.getReferenceBeans(profile);
+  NLESDReferenceListBean[] chks = NLESDReferenceListManager.getReferenceBeansByApplicant(profile.getSIN());
+  boolean validReference = true;
+  if(chks.length == 0 || refs == null){
+  	validReference = false;
+  }
+  
+  RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
+  Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+  Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
+  
+  User usr = (User)session.getAttribute("usr");
+  
+  if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
+    session.setAttribute("APPLICANT", profile); 
+   
+  HashMap<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
+  
+  if(!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
+  	new AlertBean(new com.awsd.security.SecurityException("Applicant Profile Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse()));
+  	
+  	throw new com.awsd.security.SecurityException("Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse());
+  }
+  
+  EmployeeBean empbean = null;
+  if(!StringUtils.isEmpty(profile.getSIN2())){
+  	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
+  }
+  
+  Calendar cal = Calendar.getInstance();
+  cal.clear(Calendar.HOUR);
+  cal.clear(Calendar.MINUTE);
+  cal.clear(Calendar.SECOND);
+  cal.clear(Calendar.MILLISECOND);
+  cal.add(Calendar.MONTH, -6);
+  
+  Date six_months = cal.getTime();
+  ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
 %>
 <!-- Clean up the code and use jstl vars. this should be moved after. -->
 <c:set var="nameDisplay" value="<%=profile.getSurname() + \", \" + profile.getFirstname()%>"/>
@@ -105,17 +102,11 @@
 <head>
 <title>MyHRP Applicant Profiling System</title>
 
-
-
-
-
-
 <script>
 $("#loadingSpinner").css("display","none");
 </script>
 
 <script type="text/javascript">
-
 
 	var reload_applicant = false;
 	
@@ -178,6 +169,7 @@ $("#loadingSpinner").css("display","none");
 			$("#add_applicant_dialog").dialog('open');
 			return false;
 		});
+  	
   	$('#btn_add_shortlist').click(function(){
   		if($("#hidshowsl").val() == "Y"){
   			$('#add_shortlist_dialog').modal('show');
@@ -187,27 +179,28 @@ $("#loadingSpinner").css("display","none");
   			$(location).attr('href',url);
   			
   		}
-  		
-	});
+		});
+  
   	$('#btn_add_shortlist_ok').click(function(){
-  		$("#response_msg_sl").hide();
-		if($("#shortlistreason").val() == ""){
-			$("#response_msg_sl").show();
-		}else{
-			var url="shortListApplicant.html?sin=" + $("#id").val() + "&slnotes=" + $("#shortlistreason").val();
-  			$(location).attr('href',url);
-		}	
-	});
+	  	$("#response_msg_sl").hide();
+			if($("#shortlistreason").val() == ""){
+				$("#response_msg_sl").show();
+			}else{
+				var url="shortListApplicant.html?sin=" + $("#id").val() + "&slnotes=" + $("#shortlistreason").val();
+	  			$(location).attr('href',url);
+			}	
+		});
+  	
   	$('#butVerify').click(function(){
   		$('#confirm_verify_dialog').modal('show');
-	});
+		});
+  	
   	$('#btn_confirm_verify').click(function(){
   		var url="applicantVerification.html";
   		$('#frmverify').attr('action',url);
-		$('#frmverify').submit();
+			$('#frmverify').submit();
   		$('#confirm_verify_dialog').modal('hide');
-	});
-  	
+		});
   	
 });
 
@@ -324,10 +317,17 @@ input {
 								    <td>${SDSID}</td>
 							    	<td class="tableTitle">Years of Service:</td>
 							    	<td>
-							    	<c:choose>
-							    	<c:when test="${seniorityTotal ne ''}">${seniorityTotal} yrs</c:when>
-							    	<c:otherwise>N/A</c:otherwise>
-							    	</c:choose>
+							    	<% 
+							    		if((empbean != null ) && (empbean.getSeniority() != null)) {
+							    			NumberFormat nf = new DecimalFormat("0.00");
+							    			EmployeeSeniorityBean esb = empbean.getSeniority();
+							    			out.println("PROVINCIAL: " + nf.format(esb.getSeniorityValue1()) + " yrs<br />");
+							    			out.println("OUT OF PROVINCE: " + nf.format(esb.getSeniorityValue2()) + " yrs");
+							    		} 
+							    		else {
+							    			out.println("N/A");
+							    	 	} 
+							    	%>
 							    	</td>
 							    </tr>
 							    <tr>
@@ -349,6 +349,7 @@ input {
 						</div>
 	              
 	              </div>
+  </div>
   </div>
        			 
 <!-- SUBLIST APPLICATIONS --------------------------------------------------------------->   
@@ -665,7 +666,7 @@ input {
 								    </tr>
 							     </c:when>
 	                               <c:otherwise>
-	                              	<tr><td colpsan=4><span style="color:Grey;">No other education currently on file.</span></td></tr>
+	                              	<tr><td colspan=4><span style="color:Grey;">No other education currently on file.</span></td></tr>
 	                              	<script>$("#section3").removeClass("panel-success").addClass("panel-danger");</script>
 	                               </c:otherwise>
                                </c:choose>
