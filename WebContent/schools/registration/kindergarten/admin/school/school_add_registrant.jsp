@@ -367,11 +367,9 @@
 							<tr>
 								<td class='label required'>City/Town:</td>
 								<td align='left'>							
-								
-								<select id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' errortext='Mailing Address - City/Town' >
-								<jsp:include page="includes/townlist.jsp" />   
-                       			 </select>  
-								
+									<select id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' errortext='Mailing Address - City/Town' >
+										<jsp:include page="../../includes/townlist.jsp" />   
+	                </select>  
 								</td>
 							</tr>
 							<tr>
@@ -401,10 +399,9 @@
 							<tr>
 								<td class='label required'>City/Town:</td>
 								<td align='left'>								
-								<select id='txt_MailingCityTown' name='txt_MailingCityTown' errortext='Mailing Address - City/Town' >
-								<jsp:include page="includes/townlist.jsp" />                       		
-                       			 </select>  
-								
+									<select id='txt_MailingCityTown' name='txt_MailingCityTown' errortext='Mailing Address - City/Town' >
+										<jsp:include page="../../includes/townlist.jsp" />                       		
+	                </select>
 								</td>
 							</tr>
 							<tr>
