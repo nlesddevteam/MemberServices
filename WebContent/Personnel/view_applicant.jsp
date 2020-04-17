@@ -46,7 +46,7 @@
   Collection<ApplicantPositionOfferBean> emp_letters = null;
   
   jobs = JobOpportunityManager.getApplicantOpenJobOpportunityBeans(profile.getSIN());
-  HashMap sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
+  HashMap<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   
   current_offers = ApplicantPositionOfferManager.getApplicantPositionOfferBeans(profile);
   emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile);
@@ -122,6 +122,21 @@ Sections with no information will display a red header. Those completed and/or w
 							    <td class="tableResult"><fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></td>
 								</tr> 
 								</c:if>
+								<tr>
+							    <td class="tableTitle">Verification Status:</td>
+							    <td colspan=3>							    
+							    <c:choose>
+					    			<c:when test="${ APPLICANT.profileVerified }">					    				
+					    				<c:if test="${APPLICANT.verificationBean ne null}">
+					    					<span style="color:Green;"><span class="glyphicon glyphicon-ok"></span> Profile verified by ${APPLICANT.verificationBean.verifiedByName} on ${APPLICANT.verificationBean.getDateVerifiedFormatted()}</span>
+					    				</c:if>
+										</c:when>
+					    			<c:otherwise>
+					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span>
+					    			</c:otherwise>
+					    		</c:choose>
+					    		</td>
+							    </tr>
 								
                                 <tr>
 							    <td class="tableTitle">ADDRESS:</td>
@@ -171,11 +186,7 @@ Sections with no information will display a red header. Those completed and/or w
 							    <td class="tableTitle">DATE OF BIRTH:</td>
 							    <td class="tableResult"><%=profile.getDOBFormatted()%></td>
 								</tr>
-                                <%}%>  
-                                
-                                
-  
-  							</tr>
+                                <%}%>
   							</tbody>
   							</table>
   							</div>
@@ -234,7 +245,19 @@ Sections with no information will display a red header. Those completed and/or w
 								</tr>
                                 <tr>
 							    <td class="tableTitle">Years of Service:</td>
-							    <td class="tableResult"><fmt:formatNumber pattern='0.00' value='<%= empbean.getSeniority().getSeniorityTotal() %>'/></td>
+							    <td class="tableResult">
+							    	<% 
+							    		if((empbean != null ) && (empbean.getSeniority() != null)) {
+							    			NumberFormat nf = new DecimalFormat("0.00");
+							    			EmployeeSeniorityBean esb = empbean.getSeniority();
+							    			out.println("PROVINCIAL: " + nf.format(esb.getSeniorityValue1()) + " yrs<br />");
+							    			out.println("OUT OF PROVINCE: " + nf.format(esb.getSeniorityValue2()) + " yrs");
+							    		} 
+							    		else {
+							    			out.println("N/A");
+							    	 	} 
+							    	%>
+							  	</td>
 								</tr>  
 								 </tbody>
                                 </table> 
@@ -805,7 +828,9 @@ Sections with no information will display a red header. Those completed and/or w
       			 	<div class="panel-body"> 
 					<div class="table-responsive">          
                                        
-                                            <%Map.Entry[] entries = (Map.Entry[])sublists.entrySet().toArray(new Map.Entry[0]);
+                                            <%
+                                            @SuppressWarnings("unchecked")
+                                            Map.Entry<Integer, ApplicantSubListInfoBean>[] entries = (Map.Entry<Integer, ApplicantSubListInfoBean>[])sublists.entrySet().toArray(new Map.Entry[0]);
 			                                  	ApplicantSubListInfoBean info = null;
 			                                  	if(entries.length > 0){ %>
 			                                  	<table class="table table-striped table-condensed" style="font-size:11px;">
@@ -868,7 +893,7 @@ Sections with no information will display a red header. Those completed and/or w
                 
  <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section15">   
-	               	<div class="panel-heading"><b>LETTER(S) OF EMPLOYMENT</b></span></div>
+	               	<div class="panel-heading"><b>LETTER(S) OF EMPLOYMENT</b></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive">          
                                         <%if(emp_letters != null && emp_letters.size()> 0) {%>
@@ -907,7 +932,7 @@ Sections with no information will display a red header. Those completed and/or w
         <h4 class="modal-title">View Competition Application</h4>
       </div>
       <div class="modal-body">
-       <iframe src="" width="500" height="400" frameborder="0"></iframe>    
+       <iframe src="" width="500" height="400"></iframe>    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">Close</button>

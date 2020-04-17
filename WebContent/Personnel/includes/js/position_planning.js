@@ -1035,12 +1035,15 @@ function parseTeacherAllocationBean(data) {
 										 .html(($.type($(this).attr('TERM-START'))!='undefined' ? $(this).attr('TERM-START') : '') + '<br />' 
 											+ ($.type($(this).attr('TERM-END'))!='undefined' ? $(this).attr('TERM-END') : '')))
 						.append($('<td>').attr('valign', 'top').text(parseFloat($(this).attr('UNIT')).toFixed(2)))
-						.append($('<td>').attr({'valign':'top','align':'center'}).text(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 'YES')))
-						.append($('<td>').attr({'valign':'top','align':'center'}).text(($(this).attr('FILLED') == 'false' ? 'NO' : 'YES')))
-											.append($('<td>').attr({'valign':'top','align':'center'}).html( 
-								($(this).attr('ADLINK') != 'NONE'? isPositionPlanningAdmin == true ? '<a href="' + $(this).attr('ADLINK') +'" target="_blank" class="edit-vacant btn btn-xs btn-info">View</a>': 
-										'<span class="edit-vacant btn btn-xs btn-info">Generated</span>' : '<span class="edit-vacant btn btn-xs btn-info">None</span>')))
-								
+						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 
+							isPositionPlanningAdmin == true ? $(this).attr('JOBLINK') == 'NONE' ? 'YES' : '<a href="' + $(this).attr('JOBLINK') +'" target="_blank">YES</a>' : 'YES' )))
+
+						.append($('<td>').attr({'valign':'top','align':'center'}).html( 
+								($(this).attr('ADLINK') != 'NONE'? isPositionPlanningAdmin == true ? '<a href="' + $(this).attr('ADLINK') + '" target="_blank">YES</a>': 
+										'YES' : isPositionPlanningAdmin == true ? '<a  href="#" onclick="createAdRequest(\'' + $(this).attr('POSITION-ID') + '\');event.preventDefault();">Create</a>' : '<span>No</span>')))
+										
+						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('FILLED') == 'false' ? 'NO' : 
+							isPositionPlanningAdmin == true ? $(this).attr('RECLINK') != 'NONE' ? '<a href="' + $(this).attr('RECLINK') + '" target="_blank">YES</a>'  : 'YES' : 'YES')))		
 						
 						.append($('<td>')
 							.css({'padding-right':'5px'})
@@ -1098,7 +1101,7 @@ function parseTeacherAllocationBean(data) {
 															$('#divlinks').show();
 														}else if($(this).attr('CREATELINK') != 'NONE'){
 															$('#hrefspan').text('Create Ad Request');
-															$("#hrefad").click(function(){ createAdRequest(); });
+															$("#hrefad").click(function(){ createAdRequest('-1'); });
 															//$('#hrefad').prop('href', $(this).attr('CREATELINK'));
 															$('#divlinks').show();
 														}else{
@@ -1540,11 +1543,19 @@ function loadTeacherAllocation(sy, lid){
 		}, 
 		"xml");
 }
-function createAdRequest(){
+function createAdRequest(vid){
 	$("#loadingSpinner").css("display","block");
+	var vacid = "-1";
+	if(vid == "-1"){
+		//link click on edit form
+		vacid=$('#hdn_VacantPositionID').val();
+	}else{
+		//click from link in vacant list
+		vacid=vid;
+	}
 	$.post("ajax/createVacantPositionAd.html", 
 		{	
-			id : $('#hdn_VacantPositionID').val(),
+			id : vacid,
 			ajax : true 
 		}, 
 		function(data){
@@ -1571,5 +1582,6 @@ function createAdRequest(){
 			
 		}, 
 		"xml");
+	return false;
 }
 

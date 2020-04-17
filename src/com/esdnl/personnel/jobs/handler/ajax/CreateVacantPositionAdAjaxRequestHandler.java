@@ -69,10 +69,10 @@ public class CreateVacantPositionAdAjaxRequestHandler extends RequestHandlerImpl
 				adbean.setOwner(position.getEmployee());
 				adbean.setJobType(JobTypeConstant.REGULAR);
 				adbean.setTrainingMethod(TrainingMethodConstant.PRIMARY_ELEMENTARY);
-				AdRequestManager.updateAdRequestBeanDetails(adbean);
 				AdRequestManager.addAdRequestBean(adbean,usr.getPersonnel());
 				TeacherAllocationVacantPositionManager.updateTeacherAllocationVacantPositionAdRequest(adbean.getId(),position.getPositionId());
-				
+				//get fresh copy with new changes
+				tab = TeacherAllocationManager.getTeacherAllocationBean(position.getAllocationId());
 				//now we update the position with the ad request id
 				//TeacherAllocationVacantPositionManager.updateTeacherAllocationVacantPositionAdRequest(adbean.getId(), position.getPositionId());
 				//send email about new ad request

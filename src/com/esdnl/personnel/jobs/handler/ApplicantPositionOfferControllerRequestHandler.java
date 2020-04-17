@@ -196,11 +196,15 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("AD HR")));
 							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("ADMINISTRATOR")));
 							//send email to HR Pension/benefits for support staff positions
+							boolean sendBC=false;
+							
 							if(job.getIsSupport().equals("Y")) {
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("PERSONNEL-SUPPORT-BENEFITS")));
+								//send to comptroller group for all jobs support/teaching RTH-BC
+								//uses seperate email from the ms group
+								sendBC=true;
 							}
-							//send to comptroller group for all jobs support/teaching RTH-BC
-							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-BC")));
+							
 							
 							try {
 								EmailBean ebean = new EmailBean();
@@ -230,6 +234,10 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 									ebean.setFrom("ms@nlesd.ca");
 									ebean.send();
 
+								}
+								if(sendBC) {
+									ebean.setTo("budgethireapproval@nlesd.ca");
+									ebean.send();
 								}
 							}
 							catch (EmailException e) {
