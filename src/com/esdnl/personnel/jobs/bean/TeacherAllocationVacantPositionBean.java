@@ -181,6 +181,7 @@ public class TeacherAllocationVacantPositionBean {
 						buf.append(" JOBLINK=\"" + "view_job_post.jsp?comp_num=" + this.adRequest.getCompetitionNumber() + "\" ");
 						buf.append(" JOBCOMP=\"" +  this.adRequest.getCompetitionNumber() + "\" ");
 						buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
+						buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
 						//now we check to see if it is filled
 						try {
 							JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(this.adRequest.getCompetitionNumber());
