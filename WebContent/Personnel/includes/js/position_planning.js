@@ -1154,7 +1154,7 @@ function parseTeacherAllocationBean(data) {
 					.addClass('vacant-positions-table-row')
 					.addClass('displayText')
 					.append($('<td>')
-						.attr('colspan', '5')
+						.attr('colspan', '4')
 						.css({'border-top':'solid 1px #333333'})
 						.html('&nbsp;'))
 					.append($('<td>')
