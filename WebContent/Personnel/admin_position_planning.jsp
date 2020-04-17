@@ -488,8 +488,8 @@
 								        <th width='25%'>Owner/Reason</th>
 								        <th width='10%'>Term Dates</th>
 								        <th width='5%'>Unit</th>
-								        <th width='5%'>Job Ad</th>
 								        <th width='5%'>Ad Request</th>
+								        <th width='5%'>Job Ad</th>
 								        <th width='5%'>Filled</th>
 								        <th width='10%'>Options</th>
 								      </tr>
