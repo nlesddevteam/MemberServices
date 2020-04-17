@@ -506,7 +506,11 @@
 									</tr>
 									<tr>
 										<td class='label required'>City/Town:</td>
-										<td align='left'><input class='required' errortext='Physical Address - City/Town' type='text' id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' style='width: 200px;'/></td>
+										<td align='left'>
+										<select id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' errortext='Physical Address - City/Town'>
+											<jsp:include page="includes/townlist.jsp" />                      		
+                       					 </select>                     
+									</td>
 									</tr>
 									<tr>
 										<td class='label'>Province:</td>
@@ -534,7 +538,11 @@
 									</tr>
 									<tr>
 										<td class='label required'>City/Town:</td>
-										<td align='left'><input class='required' errortext='Mailing Address - City/Town' type='text' id='txt_MailingCityTown' name='txt_MailingCityTown' style='width: 200px;'/></td>
+										<td align='left'>
+										<select id='txt_MailingCityTown' name='txt_MailingCityTown' errortext='Mailing Address - City/Town' >											
+                       						<jsp:include page="includes/townlist.jsp" />              		
+                       					 </select>  
+									
 									</tr>
 									<tr>
 										<td class='label required'>Province:</td>

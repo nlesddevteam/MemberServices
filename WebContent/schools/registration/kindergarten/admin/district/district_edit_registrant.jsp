@@ -371,7 +371,11 @@
 							</tr>
 							<tr>
 								<td class='label required'>City/Town:</td>
-								<td align='left'><input class='required' errortext='Physical Address - City/Town' type='text' id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' style='width: 200px;' value="${kr.physicalCityTown}" /></td>
+								<td align='left'>
+								<select id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' errortext='Physical Address - City/Town' >
+								<jsp:include page="../../includes/townlist.jsp" />   
+                       			 </select> 
+								</td>
 							</tr>
 							<tr>
 								<td class='label'>Province:</td>
@@ -399,7 +403,11 @@
 							</tr>
 							<tr>
 								<td class='label required'>City/Town:</td>
-								<td align='left'><input class='required' errortext='Mailing Address - City/Town' type='text' id='txt_MailingCityTown' name='txt_MailingCityTown' style='width: 200px;' value="${kr.mailingCityTown}"/></td>
+								<td align='left'>
+								<select id='txt_MailingCityTown' name='txt_MailingCityTown' errortext='Mailing Address - City/Town' >
+								<jsp:include page="../../includes/townlist.jsp" />   
+                       			 </select> 	
+								</td>
 							</tr>
 							<tr>
 								<td class='label required'>Province:</td>
@@ -561,6 +569,15 @@
 				<br />
 			</form>
 		</div>
+		
+		<script>
+			$(document).ready(function(){
+								$('select[name="txt_PhysicalCityTown"]').find("option[value=\"${kr.physicalCityTown}\"]").attr("selected",true);								
+								$('select[name="txt_MailingCityTown"]').find("option[value=\"${kr.mailingCityTown}\"]").attr("selected",true);								
+			});								
+		</script>		
+		
+		
 	</body>
 	
 </html>
