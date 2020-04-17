@@ -18,8 +18,9 @@
 		<%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
 
 <!--
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
+
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 -->
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
 <c:set var="permanentVal" value="0" />
@@ -198,11 +199,11 @@
                         				</div>
                         				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">			
                         					 <div class="input-group">
-    											<span class="input-group-addon">IRT 1 Units*:</span>
+    											<span class="input-group-addon">IRT Units*:</span>
                         							<input id='txt_irt1' name='txt_irt1' type='text' class='allocation-input form-control input-sm' />
                         					 </div>	
                         				</div>
-                        				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="display:none;">
                         					 <div class="input-group">
     											<span class="input-group-addon">IRT 2 Units*:</span>
                         							<input id='txt_irt2' name='txt_irt2' type='text' class='allocation-input form-control input-sm'/>
@@ -483,12 +484,13 @@
 								    <thead>
 								      <tr>
 								        <th width='20%'>Job Desc.</th>
-								        <th width='15%'>Type</th>
-								        <th width='30%'>Owner/Reason</th>
+								        <th width='10%'>Type</th>
+								        <th width='25%'>Owner/Reason</th>
 								        <th width='10%'>Term Dates</th>
 								        <th width='5%'>Unit</th>
 								        <th width='5%'>Ad?</th>
 								        <th width='5%'>Filled</th>
+								        <th width='5%'>Ad Request</th>
 								        <th width='10%'>Options</th>
 								      </tr>
 								    </thead>
