@@ -122,7 +122,7 @@ Sections with no information will display a red header. Those completed and/or w
 							    <td class="tableResult"><fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></td>
 								</tr> 
 								</c:if>
-								<tr>
+								<tr style="display:none;">
 							    <td class="tableTitle">Verification Status:</td>
 							    <td colspan=3>							    
 							    <c:choose>
