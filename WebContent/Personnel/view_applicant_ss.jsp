@@ -99,7 +99,21 @@ employment positions and/or applications. Sections with no information will disp
 								    <td class="tableResult"><fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></td>
 									</tr> 
 								</c:if>
-								
+								<tr>
+							    <td class="tableTitle">Verification Status:</td>
+							    <td colspan=3>							    
+							    <c:choose>
+					    			<c:when test="${ APPLICANT.profileVerified }">					    				
+					    				<c:if test="${APPLICANT.verificationBean ne null}">
+					    					<span style="color:Green;"><span class="glyphicon glyphicon-ok"></span> Profile verified by ${APPLICANT.verificationBean.verifiedByName} on ${APPLICANT.verificationBean.getDateVerifiedFormatted()}</span>
+					    				</c:if>
+										</c:when>
+					    			<c:otherwise>
+					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span>
+					    			</c:otherwise>
+					    		</c:choose>
+					    		</td>
+							    </tr>
                                 <tr>
 							    	<td class="tableTitle">ADDRESS:</td>
 							    	<td class="tableResult">

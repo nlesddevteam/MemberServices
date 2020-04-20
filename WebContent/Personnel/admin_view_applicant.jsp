@@ -245,8 +245,7 @@ input {
                     	<div class="table-responsive">       			 	       
       			 	       <table class="table table-striped table-condensed" style="font-size:12px;">							   
 							    <tbody>
-				 <esd:SecurityAccessRequired roles="ADMINISTRATOR,MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
-					    		 <tr>
+				 	    		 <tr>
 							    <td class="tableTitle">Verification Status:</td>
 							    <td colspan=3>							    
 							    <c:choose>
@@ -256,12 +255,15 @@ input {
 					    					</c:if>
 									</c:when>
 					    			<c:otherwise>
-					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span><button type="button" class="btn btn-success btn-xs" id="butVerify" style="margin-left:10px;"><span class="glyphicon glyphicon-thumbs-up"></span> Verify</button>
+					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span>
+					    					<esd:SecurityAccessRequired roles="ADMINISTRATOR,MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
+											<button type="button" class="btn btn-success btn-xs" id="butVerify" style="margin-left:10px;"><span class="glyphicon glyphicon-thumbs-up"></span> Verify</button>
+											</esd:SecurityAccessRequired>
 					    			</c:otherwise>
 					    		</c:choose>
 					    		</td>
 							    </tr>
-				</esd:SecurityAccessRequired> 
+				 
 							    <tr>
 							    <td class="tableTitle">NAME:</td>
 							    <td class="tableResult">${fullName}</td>
