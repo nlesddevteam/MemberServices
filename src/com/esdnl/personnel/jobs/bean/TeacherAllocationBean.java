@@ -417,57 +417,63 @@ public class TeacherAllocationBean {
 
 		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		StringBuffer buf = new StringBuffer();
+		try {
+			buf.append("<TEACHER-ALLOCATION-BEAN ALLOCATION-ID=\"" + this.allocationId + "\" LOCATION-ID=\""
+					+ this.getLocation().getLocationId() + "\" SCHOOL-YEAR=\"" + this.schoolYear + "\" REGULAR-UNITS=\""
+					+ this.regularUnits + "\" ADMINISTRATIVE-UNITS=\"" + this.administrativeUnits + "\" GUIDANCE-UNITS=\""
+					+ this.guidanceUnits + "\" SPECIALIST-UNITS=\"" + this.specialistUnits + "\" LRT-UNITS=\"" + this.lrtUnits
+					+ "\" IRT1-UNITS=\"" + this.irt1Units + "\" IRT2-UNITS=\"" + this.irt2Units + "\" OTHER-UNITS=\""
+					+ this.otherUnits + "\" TLA-UNITS=\"" + this.tlaUnits + "\" STUDENT-ASSISTANT-HOURS=\""
+					+ this.studentAssistantHours + "\" READING-SPECIALIST-UNITS=\"" + this.readingSpecialistUnits
+					+ "\" SCHOOL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTCHRAllocationUnits()))
+					+ "\" TOTAL-TCHR-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalTCHRAllocationUnits()))
+					+ "\" TOTAL-TLA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalTLAAllocationUnits()))
+					+ "\" TOTAL-SA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalSAAllocationHours()))
+					+ "\" TOTAL-STAFFING-UNITS=\"" + Double.valueOf(twoDForm.format(this.getTotalStaffingUnits()))
+					+ "\" OUTSTANDING-ASSIGNMENT-UNITS=\"" + Double.valueOf(twoDForm.format(this.getAllocationStaffingDifference()))
+					+ "\" PUBLISHED=\"" + this.published + "\" ENABLED=\"" + this.enabled + "\">");
 
-		buf.append("<TEACHER-ALLOCATION-BEAN ALLOCATION-ID=\"" + this.allocationId + "\" LOCATION-ID=\""
-				+ this.getLocation().getLocationId() + "\" SCHOOL-YEAR=\"" + this.schoolYear + "\" REGULAR-UNITS=\""
-				+ this.regularUnits + "\" ADMINISTRATIVE-UNITS=\"" + this.administrativeUnits + "\" GUIDANCE-UNITS=\""
-				+ this.guidanceUnits + "\" SPECIALIST-UNITS=\"" + this.specialistUnits + "\" LRT-UNITS=\"" + this.lrtUnits
-				+ "\" IRT1-UNITS=\"" + this.irt1Units + "\" IRT2-UNITS=\"" + this.irt2Units + "\" OTHER-UNITS=\""
-				+ this.otherUnits + "\" TLA-UNITS=\"" + this.tlaUnits + "\" STUDENT-ASSISTANT-HOURS=\""
-				+ this.studentAssistantHours + "\" READING-SPECIALIST-UNITS=\"" + this.readingSpecialistUnits
-				+ "\" SCHOOL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTCHRAllocationUnits()))
-				+ "\" TOTAL-TCHR-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalTCHRAllocationUnits()))
-				+ "\" TOTAL-TLA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalTLAAllocationUnits()))
-				+ "\" TOTAL-SA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalSAAllocationHours()))
-				+ "\" TOTAL-STAFFING-UNITS=\"" + Double.valueOf(twoDForm.format(this.getTotalStaffingUnits()))
-				+ "\" OUTSTANDING-ASSIGNMENT-UNITS=\"" + Double.valueOf(twoDForm.format(this.getAllocationStaffingDifference()))
-				+ "\" PUBLISHED=\"" + this.published + "\" ENABLED=\"" + this.enabled + "\">");
+			if ((this.extras != null) && (this.extras.size() > 0)) {
+				buf.append("<TEACHER-ALLOCATION-EXTRA-BEANS COUNT=\"" + this.extras.size() + "\" TOTAL-ALLOCATIONS=\""
+						+ Double.valueOf(twoDForm.format(this.getTotalExtraTCHRAllocationUnits())) + "\">");
+				for (TeacherAllocationExtraBean extra : this.extras)
+					buf.append(extra.toXML());
+				buf.append("</TEACHER-ALLOCATION-EXTRA-BEANS>");
+			}
 
-		if ((this.extras != null) && (this.extras.size() > 0)) {
-			buf.append("<TEACHER-ALLOCATION-EXTRA-BEANS COUNT=\"" + this.extras.size() + "\" TOTAL-ALLOCATIONS=\""
-					+ Double.valueOf(twoDForm.format(this.getTotalExtraTCHRAllocationUnits())) + "\">");
-			for (TeacherAllocationExtraBean extra : this.extras)
-				buf.append(extra.toXML());
-			buf.append("</TEACHER-ALLOCATION-EXTRA-BEANS>");
+			if ((this.permanentPositions != null) && (this.permanentPositions.size() > 0)) {
+				buf.append("<TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS COUNT=\"" + this.permanentPositions.size()
+						+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalPermanentPositionUnits())) + "\">");
+				for (TeacherAllocationPermanentPositionBean position : this.permanentPositions)
+					buf.append(position.toXML());
+				buf.append("</TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS>");
+			}
+
+			if ((this.vacantPositions != null) && (this.vacantPositions.size() > 0)) {
+				buf.append("<TEACHER-ALLOCATION-VACANT-POSITION-BEANS COUNT=\"" + this.vacantPositions.size()
+						+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalVacantPositionUnits())) + "\">");
+				for (TeacherAllocationVacantPositionBean position : this.vacantPositions) {
+					position.setSchoolYear(this.getSchoolYear());
+					buf.append(position.toXML());
+				}
+				buf.append("</TEACHER-ALLOCATION-VACANT-POSITION-BEANS>");
+			}
+
+			if ((this.redundantPositions != null) && (this.redundantPositions.size() > 0)) {
+				buf.append("<TEACHER-ALLOCATION-REDUNDANT-POSITION-BEANS COUNT=\"" + this.redundantPositions.size()
+						+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalRedundantPositionUnits())) + "\">");
+				for (TeacherAllocationRedundantPositionBean position : this.redundantPositions)
+					buf.append(position.toXML());
+				buf.append("</TEACHER-ALLOCATION-REDUNDANT-POSITION-BEANS>");
+			}
+
+			buf.append("</TEACHER-ALLOCATION-BEAN>");
+
+			return buf.toString();
+		}catch(Exception e) {
+			return e.getMessage();
 		}
 
-		if ((this.permanentPositions != null) && (this.permanentPositions.size() > 0)) {
-			buf.append("<TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS COUNT=\"" + this.permanentPositions.size()
-					+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalPermanentPositionUnits())) + "\">");
-			for (TeacherAllocationPermanentPositionBean position : this.permanentPositions)
-				buf.append(position.toXML());
-			buf.append("</TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS>");
-		}
-
-		if ((this.vacantPositions != null) && (this.vacantPositions.size() > 0)) {
-			buf.append("<TEACHER-ALLOCATION-VACANT-POSITION-BEANS COUNT=\"" + this.vacantPositions.size()
-					+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalVacantPositionUnits())) + "\">");
-			for (TeacherAllocationVacantPositionBean position : this.vacantPositions)
-				buf.append(position.toXML());
-			buf.append("</TEACHER-ALLOCATION-VACANT-POSITION-BEANS>");
-		}
-
-		if ((this.redundantPositions != null) && (this.redundantPositions.size() > 0)) {
-			buf.append("<TEACHER-ALLOCATION-REDUNDANT-POSITION-BEANS COUNT=\"" + this.redundantPositions.size()
-					+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalRedundantPositionUnits())) + "\">");
-			for (TeacherAllocationRedundantPositionBean position : this.redundantPositions)
-				buf.append(position.toXML());
-			buf.append("</TEACHER-ALLOCATION-REDUNDANT-POSITION-BEANS>");
-		}
-
-		buf.append("</TEACHER-ALLOCATION-BEAN>");
-
-		return buf.toString();
 	}
 
 }
