@@ -1202,7 +1202,7 @@ function parseTeacherAllocationBean(data) {
 						.addClass('displayText')
 						.append($('<td>').attr({'valign':'top'}).text($(this).attr('EMP-NAME')))
 						.append($('<td>').attr({'valign':'top'}).text($(this).attr('RATIONALE')))
-						.append($('<td>').attr({'valign':'top', 'align':'center'}).text(parseFloat($(this).attr('UNIT')).toFixed(2)))
+						.append($('<td>').attr({'valign':'top'}).text(parseFloat($(this).attr('UNIT')).toFixed(2)))
 						.append($('<td>')
 							.css({'padding-right':'5px'})
 							.attr({'valign':'top','align':'right'})
