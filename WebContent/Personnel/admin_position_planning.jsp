@@ -9,20 +9,16 @@
 
 <!-- LOAD JAVA TAG LIBRARIES -->
 		
-		<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
-		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 
-		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
-		<%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
-
-<!--
-
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+<%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
 
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
--->
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
+
 <c:set var="permanentVal" value="0" />
 <html>
 	<head>
