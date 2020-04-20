@@ -109,7 +109,7 @@ employment positions and/or applications. Sections with no information will disp
 					    				</c:if>
 										</c:when>
 					    			<c:otherwise>
-					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span>
+					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> Your Profile has not been verified by HR. Please check again later.</span>
 					    			</c:otherwise>
 					    		</c:choose>
 					    		</td>
