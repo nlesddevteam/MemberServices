@@ -336,7 +336,7 @@ var pageWordCountConf = {
 		$("#ad_listing_date").datepicker({
 	      	changeMonth: true,
 	      	changeYear: true,
-	      	dateFormat: "dd/mm/yy"
+	      	dateFormat: "dd/MM/yyyy hh:mm:a"
 	   });
 		//Verify number of Degrees, Minors, and Majors selected and if none or not.
 		var degNum = $('.ad_degree:checked').length;
