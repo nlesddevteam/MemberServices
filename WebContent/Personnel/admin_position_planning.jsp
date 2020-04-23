@@ -16,8 +16,11 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
-
+<!-- 
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+ -->
+ 
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
 
 <c:set var="permanentVal" value="0" />
 <html>
@@ -32,12 +35,14 @@
 				<%
 					User usr = (User) session.getAttribute("usr");
 					LocationBean loc = (LocationBean) request.getAttribute("location");
-					if((usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) && loc != null){							
+					if((usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) && loc != null) {							
 				%>
 					isPositionPlanningAdmin = false;
 					
 					loadTeacherAllocation("<%= StringUtils.getSchoolYear(new Date()) %>", "<%=loc.getLocationDescription() %>");
-				<%}%>
+				<% } else if(usr.checkRole("SENIOR EDUCATION OFFICIER") && !usr.checkRole("SEO - PERSONNEL")) {%>
+					isPositionPlanningAdmin = false;
+				<% } %>
 				
 				<%if(usr.checkRole("ADMINISTRATOR")) {%>
 					isSystemAdministrator = true;
