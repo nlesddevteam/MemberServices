@@ -1,12 +1,13 @@
 <%@ page language="java"
-         import="java.util.*, com.esdnl.school.registration.kindergarten.bean.*" 
+         import="java.util.*, 
+         com.esdnl.school.registration.kindergarten.bean.*" 
          isThreadSafe="false"%>
 
 <%@ taglib prefix="sreg" uri="/WEB-INF/school_registration.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
-<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib prefix="esd" uri="/WEB-INF/memberservices.tld" %>
 
 <%
 	System.out.println(">>> KINDERGARTEN REGISTRATION VIEWED BY " + request.getRemoteAddr() + " <<<");
@@ -22,7 +23,7 @@
     <TITLE>Kindergarten Student Registration</title>
    
     <script type="text/javascript" src="//serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
-		<script type="text/javascript" src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>
+	<script type="text/javascript" src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>
     <script type="text/javascript">
     	// school ids of schools offering efi
     	//var efi = new Array(211, 215, 219, 287, 244, 209, 247, 229, 232, 495, 289, 387, 192, 239, 207, 241, 196, 242, 162, 464, 414, 352, 403, 330, 341, 416, 595);
@@ -50,11 +51,7 @@
     		
     		$('.opbutton').button();
     		
-    		$('.datefield').datepicker({
-    			dateFormat: "dd/mm/yy",
-					changeYear: true,
-					yearRange: "c-6:c+0"
-    		});
+    		
     		
     		$('#ddl_Stream').children().remove();
     		$('#ddl_Stream').append($('<option>').attr({'value':''}).text('--- Select School ---'));
@@ -301,9 +298,7 @@
      		}
     	}
     </script>
-    
-
-    
+   
     
   </head>
 
@@ -460,7 +455,7 @@
 									<tr>
 										<td class='label required' valign='top'>Date of Birth:</td>
 										<td align='left'>
-											<input class='required datefield' errortext='Student Information - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' maxlength="10" style='width: 75px;'/>
+											<input class='required datefield' errortext='Student Information - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' readonly maxlength="10" style='width: 75px;'/>
 											<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>dd/mm/yyyy</span>
 										</td>
 									</tr>
@@ -740,89 +735,20 @@
 				</div>
 			</c:when>
 		</c:choose>
-		
-		
-		<p>
-		
-		
-		<!--
-	     <div align="center">
-		<div style='padding-bottom:8px; width:95%; text-align:left;'>
-		<div style="border:1px solid navy;width:100%;padding:5px;font-size:12px;background-color:#e6f7ff;">
-<b>REGISTRATION DATES/TIMES</b><p>
-
-			<ul>
-			
-								<p><li>For the <b>Avalon Region</b>, online registration will begin at 9:00 a.m. on <b>Wednesday, May 9, 2018</b> and remain open until 9:00 p.m. on Thursday, May 10, 2018.
-								
-								<p><li>For the <b>Labrador, Western and Central Region (includes Burin and Vista)</b>, online registration will begin at 9:00 a.m. (8:30 a.m. in Labrador) on <b>Monday, May 14, 2018</b> and remain open until 9:00 p.m. (8:30 p.m. in labrador) on Tuesday, May 15, 2018. 
-								
-								
-								<p><li>To complete the registration process, proof of address and confirmation of MCP number must be provided in person at the designated school on or before <b>May 31, 2018</b>. 
-								
-								<p><li>Any parents/guardians requiring Internet access or technical support may visit their zoned school during registration times for assistance. Please contact your zoned school by May 3, 2018 to arrange assistance during the registration process.
-								
-								<p><li>Any parent/guardian having registration issues (questions on the registration process, details to provide, or errors in the data submitted) while completing the form on registration day may contact/visit their zoned school for assistance. 
-
-</ul>
-
-
-</div>
-
-<p>
-
-
-
-<div style="border:1px solid grey;width:100%;padding:5px;font-size:12px;background-color:#fffae6;">
-<b>KINDERSTART/KINDERGARTEN INQUIRIES</b><p>
-<p>Any parent/guardian having registration issues (questions on the registration process, details to provide, or errors in the data submitted) may contact/visit their zoned school for assistance or contact your local regional office and the Assistant Director of Education for Programs in your region. See numbers below:
-<br/>
-<ul>
-								
-								<p><li><b>For Labrador Region</b><br/>
-										&middot; Tel: (709) 896-2431
-								
-								
-								<p><li><b>For Western Region</b><br/>
-										&middot; Tel: (709) 637-4000
-								
-								<p><li><b>For Central Region <i>(including Vista and Burin areas)</i></b><br/>
-										&middot; Tel: (709) 256-2547
-								
-								<p><li><b>For Eastern Region <i>(Avalon West, Avalon East and St. John's Metro area)</i></b><br/>
-									&middot; Tel: (709) 758-2372
-								</ul>
-
-
-
-</div>     
-
-
-
-
-<p>
-
-
-
- <div style="border:1px solid Red;width:100%;padding:5px;font-size:12px;background-color:#ffe6e6;">
-		<b>TECHNICAL DIFFICULTIES ONLY</b><p>						
-								<p> If you experience <b>TECHNICAL DIFFICULTIES</b> during the online registration process please contact:
-								<ul>
-								<p><li><b>For Western and Labrador Regions</b><br/>
-										&middot; Rodney Batten (709) 637-4618 (<a href="mailto:rodneybatten@nlesd.ca?subject=Kindergarten Registration Support">rodneybatten@nlesd.ca</a>)
-								<p><li><b>For Central Region <i>(including Vista and Burin areas)</i></b><br/>
-										&middot; Gordon Moller (709) 256-2547 ext. 241 (<a href="mailto:gordonmoller@nlesd.ca?subject=Kindergarten Registration Support">gordonmoller@nlesd.ca</a>)
-								
-								<p><li><b>For Avalon Region <i>(Avalon West, Avalon East and St. John's Metro area)</i></b><br/>
-									&middot; Geoff Taylor (709) 757-4646 (<a href="mailto:geofftaylor@nlesd.ca?subject=Kindergarten Registration Support">geofftaylor@nlesd.ca</a>)<br>
-								 	&middot; Chris Crane (709) 758-2340 (<a href="mailto:chriscrane@nlesd.ca?subject=Kindergarten Registration Support">chriscrane@nlesd.ca</a>)<p>
-								 	
-									</ul>
-  	</div>	
-		
-		</div></div>
-		-->
-		
+	
+	<script>
+	//Limit dates to only 4-6 years ago. (May need to be changed!)
+	$(document).ready(function() {		
+	$('.datefield').datepicker({
+		dateFormat: "dd/mm/yy",
+		maxDate: "-4y",
+		minDate: "-6y",
+		changeYear: true
+	});
+	});	
+	</script>
+	
+				
 	</body>
 	
 </html>
