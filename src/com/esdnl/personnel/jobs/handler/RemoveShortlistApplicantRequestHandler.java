@@ -10,9 +10,11 @@ import javax.servlet.http.HttpSession;
 import com.awsd.security.SecurityException;
 import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
+import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
+import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 
 public class RemoveShortlistApplicantRequestHandler implements RequestHandler {
@@ -61,7 +63,10 @@ public class RemoveShortlistApplicantRequestHandler implements RequestHandler {
 					ApplicantProfileManager.removeShortlistApplicant(request.getParameter("sin"), opp);
 					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 					session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
-							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+					ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+					AdRequestBean ad = AdRequestManager.getAdRequestBean(opp.getCompetitionNumber());
+					request.setAttribute("AD_REQUEST", ad);
+					path = "admin_view_job_applicants_shortlist.jsp";
 				}
 				else if (list != null) {
 					/*
