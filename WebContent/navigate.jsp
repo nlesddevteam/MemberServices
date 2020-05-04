@@ -141,7 +141,7 @@
 						<br />
 					</esd:SecurityAccessRequired>
 
-<!-- COVID 19-UPDATES - ALL STAFF -->
+<!-- COVID 19-UPDATES - ALL STAFF -->					
 						<div class="menuIconImage">
 							<a href="covid19/index.jsp"><img
 								src="includes/img/menu/covid19-off.png"
@@ -149,7 +149,7 @@
 								title="Covid-19 Information Shared with Schools and District Staff">
 							</a>
 						</div>
-
+				
 					<!-- Admin Planner --> 
 					<esd:SecurityAccessRequired
 						roles="ANNUAL-PLANNER-VIEW,WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS,ADMINISTRATIVE ASSISTANT">
@@ -578,7 +578,7 @@
 					<esd:SecurityAccessRequired roles="PRINCIPAL">
 						<div class="menuIconImage">                              	
 							<a href="EECD/schoolAdminViewApprovals.html">
-							<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
+							<img src="includes/img/menu/eecdp-off.png" class="img-swap menuImage" border=0 title="EECD SCHOOL ADMIN">
 							</a>                                                         
 						</div>
 					</esd:SecurityAccessRequired>
@@ -592,7 +592,7 @@
 					<esd:SecurityAccessRequired permissions="EECD-VIEW-ADMIN,EECD-VIEW-SHORTLIST">
 						<div class="menuIconImage">                              
 							<a href="EECD/adminViewAreas.html">
-								<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
+								<img src="includes/img/menu/eecda-off.png" class="img-swap menuImage" border=0 title="EECD ADMIN">
 							</a>                                                         
 						</div>
 					</esd:SecurityAccessRequired>
