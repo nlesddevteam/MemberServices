@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -1207,12 +1208,13 @@ public class ApplicantProfileManager {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SCIENCE_CRS >= "
 						+ params.getScienceCourses() + ") ");
 			}
-			
+
 			if (params.getSocialStudiesCourses() > 0) {
-				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
-						+ params.getSocialStudiesCourses() + ") ");
+				sql.append(
+						" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
+								+ params.getSocialStudiesCourses() + ") ");
 			}
-			
+
 			if (params.getArtCourses() > 0) {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE ART_CRS >= "
 						+ params.getArtCourses() + ") ");
@@ -2099,15 +2101,15 @@ public class ApplicantProfileManager {
 				sqlwhere.append(" and cpos.POSITION_TYPE ='" + params.getCurrentPositionType() + "'");
 			}
 
-			if(params.getUnionCode() > 0){
+			if (params.getUnionCode() > 0) {
 				sqlfrom.append(" left outer join APPLICANT_CURRENT_POSITIONS cpos on app.SIN=cpos.SIN ");
 				sqlfrom.append(" left outer join JOB_RTH_POSITIONS rth on cpos.POSITION_HELD=rth.ID ");
 				sqlwhere.append(" and rth.union_code = " + params.getUnionCode());
 				// we check to see if we need to add the position clause
-				if(params.getCurrentUnionPosition() > 0){
+				if (params.getCurrentUnionPosition() > 0) {
 					sqlwhere.append(" and rth.ID = " + params.getCurrentUnionPosition());
 				}
-				usedCurrent=true;
+				usedCurrent = true;
 			}
 			if ((params.getDegrees() != null) && (params.getDegrees().length > 0)) {
 				sqlfrom.append(" left outer join APPLICANT_EDU_POST_SEC_SS edu on app.SIN=edu.SIN ");
@@ -2280,6 +2282,53 @@ public class ApplicantProfileManager {
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
 
+	public static Map<String, ApplicantProfileBean> getPoolCompetitionHighlyRecommendedCandidateMap(String comp_num)
+			throws JobOpportunityException {
+
+		Map<String, ApplicantProfileBean> apps = null;
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			apps = new HashMap<String, ApplicantProfileBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.GET_POOL_HIGHLY_REC_APPS(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, comp_num);
+
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				apps.put(rs.getString("sin"), createApplicantProfileBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(
+					"Map<String, ApplicantProfileBean> getPoolCompetitionHighlyRecommendedCandidateMap(String comp_num): " + e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return apps;
+	}
+
 	public static ApplicantProfileBean createApplicantProfileBean(ResultSet rs) {
 
 		ApplicantProfileBean aBean = null;
@@ -2348,7 +2397,7 @@ public class ApplicantProfileManager {
 				aBean.setMajorsList("");
 			}
 			aBean.setProfileType(rs.getString("PROFILETYPE"));
-			
+
 			//now check to see if there is applicantverificationbean
 			try {
 				aBean.setProfileVerified(rs.getBoolean("PROFILEVERIFIED"));
@@ -2360,6 +2409,17 @@ public class ApplicantProfileManager {
 					vbean.setVerifiedByName(rs.getString("PERSONNEL_FIRSTNAME") + " " + rs.getString("PERSONNEL_LASTNAME"));
 					vbean.setVerifiedBy(rs.getLong("VERIFIED_BY"));
 					aBean.setVerificationBean(vbean);
+				}
+			}
+			catch (SQLException e) {}
+
+			//get most recent accepted recommendation if present
+			try {
+				if (rs.getInt("RECOMMENDATION_ID") > 0) {
+					aBean.setMostRecentAcceptedRecommendation(RecommendationManager.createTeacherRecommendationBean(rs));
+				}
+				else {
+					aBean.setMostRecentAcceptedRecommendation(null);
 				}
 			}
 			catch (SQLException e) {}

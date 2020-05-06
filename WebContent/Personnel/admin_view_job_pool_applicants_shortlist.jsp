@@ -32,11 +32,11 @@
 	JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
 	TeacherRecommendationBean[] rec = RecommendationManager.getTeacherRecommendationBean(job.getCompetitionNumber());
 	
-	@SuppressWarnings("unchecked")
-	TreeMap<String, TreeMap<Integer, Vector<ApplicantProfileBean>>> regions 
-		= (TreeMap<String, TreeMap<Integer, Vector<ApplicantProfileBean>>>) session.getAttribute("JOB_SHORTLIST");
+	//@SuppressWarnings("unchecked")
+	//TreeMap<String, TreeMap<Integer, Vector<ApplicantProfileBean>>> regions 
+	//	= (TreeMap<String, TreeMap<Integer, Vector<ApplicantProfileBean>>>) session.getAttribute("JOB_SHORTLIST");
 	
-	ApplicantProfileBean[] applicants = null;
+	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_SHORTLIST");
   
 	AdRequestBean ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
   
@@ -55,6 +55,7 @@
   InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);
   Map<String, InterviewSummaryBean> interviewSummaryMap = InterviewSummaryManager.getInterviewSummaryBeansMap(job);
   
+  Map<String, ApplicantProfileBean> highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
 %>
 
 
@@ -154,11 +155,10 @@
  });
     </script>
     
-    <style>
-		input {    
-    border:1px solid silver;
-		}
-		.btn {font-size:11px;}
+ <style>
+		input { border:1px solid silver; }
+		.btn { font-size:11px; }
+		.col-highly-recommended { text-align: center; font-weight: bold; }
 </style>
 
 
@@ -171,8 +171,8 @@
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Competition # <%=job.getCompetitionNumber()%> Short List (Pool)</b></div>
       			 	<div class="panel-body">
-The applicants below are categorized by region and zone. Click on a tab to open the list of applicants short listed for this competition.<br/><br/>
-<!-- <a href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>&alphabetized=true'>Alphabetized List</a>-->
+<!--The applicants below are categorized by region and zone. Click on a tab to open the list of applicants short listed for this competition.<br/><br/>
+ <a href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>&alphabetized=true'>Alphabetized List</a>-->
                            
                                    
                <%if(request.getAttribute("msg")!=null){%>
@@ -182,7 +182,7 @@ The applicants below are categorized by region and zone. Click on a tab to open 
                      <div class="table-responsive">              
                       Applicants listed below are initially sorted based on seniority. Click on any header to sort by that category. To find based on a applicant and/or region, use the search tool below right.<br/><br/>
 										  
-                                       <% applicants = ApplicantProfileManager.getApplicantProfileBeanByJob(job.getCompetitionNumber());%>
+                                       <% //applicants = ApplicantProfileManager.getApplicantProfileBeanByJob(job.getCompetitionNumber());%>
                      
                                   <%if(applicants.length > 0){ %>  
                                 	  
@@ -193,8 +193,9 @@ The applicants below are categorized by region and zone. Click on a tab to open 
 									        <th width='25%'>NAME</th>									        
 									        <th width='15%'>EMAIL/TELEPHONE</th>
 									        <th width='10%'>SENIORITY</th>
+									        <th width='8%'>HIGHLY REC'ED</th>
 									        <th width="10%">STATUS</th>				        
-									        <th width='40%'>POSITION/OPTIONS/REGIONS</th>									       					        
+									        <th width='32%'>POSITION/OPTIONS/REGIONS</th>									       					        
 									      </tr>
 									    </thead>
 									    <tbody>                               	  
@@ -266,7 +267,8 @@ The applicants below are categorized by region and zone. Click on a tab to open 
                                             <%} else {%>                                             
                                                <span style="color:DimGrey;">0</span>
                                                 <%}%>
-	                                    	</td>	                                    	     
+	                                    	</td>	
+	                                    	<td class='col-highly-recommended <%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "alert-success" : "alert-danger" %>'><%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "YES" : "NO" %></td>                                    	     
 	                                    	<td style="text-align:center;vertical-align:middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>"><%=cssText%></td>
 	                                    	<td>
 	                                    	<div style="padding-top:5px;text-align:right;">	
@@ -353,7 +355,7 @@ The applicants below are categorized by region and zone. Click on a tab to open 
                                  </table>
                                   <% }else{%> 
                                   
-                                 No applicants currently short listed for this competition.
+                                 <span class='alert-danger'>No applicants currently short listed for this competition</span>
                                                                    
                                  <%} %>
                                   

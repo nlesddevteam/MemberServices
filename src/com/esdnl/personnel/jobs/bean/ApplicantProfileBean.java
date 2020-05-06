@@ -1,8 +1,10 @@
 package com.esdnl.personnel.jobs.bean;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.util.StringUtils;
@@ -48,7 +50,8 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	private String profileType;
 	private boolean profileVerified;
 	private ApplicantVerificationBean verificationBean;
-	
+	private TeacherRecommendationBean mostRecentAcceptedRecommendation;
+
 	public ApplicantProfileBean() {
 
 		email = null;
@@ -73,9 +76,10 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 		modifiedDate = null;
 
 		senority = 0;
-		profileType="T";
-		profileVerified=false;
-		verificationBean=null;
+		profileType = "T";
+		profileVerified = false;
+		verificationBean = null;
+		mostRecentAcceptedRecommendation = null;
 	}
 
 	public ApplicantProfileBean(ApplicantProfileBean copy) {
@@ -111,9 +115,10 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 			modifiedDate = null;
 
 		this.senority = copy.senority;
-		profileType=copy.profileType;
-		profileVerified=copy.profileVerified;
-		verificationBean=copy.verificationBean;
+		profileType = copy.profileType;
+		profileVerified = copy.profileVerified;
+		verificationBean = copy.verificationBean;
+		mostRecentAcceptedRecommendation = copy.mostRecentAcceptedRecommendation;
 	}
 
 	public String getEmail() {
@@ -368,7 +373,9 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 
 	public boolean isStale() {
 
-		boolean stale = (this.getModifiedDate() != null ? (((Calendar.getInstance().getTimeInMillis() - this.getModifiedDate().getTime()) / (24 * 60 * 60 * 1000)) >= ApplicantProfileBean.STALE_PERIOD_DAYS)
+		boolean stale = (this.getModifiedDate() != null
+				? (((Calendar.getInstance().getTimeInMillis() - this.getModifiedDate().getTime())
+						/ (24 * 60 * 60 * 1000)) >= ApplicantProfileBean.STALE_PERIOD_DAYS)
 				: true);
 
 		return stale;
@@ -451,42 +458,62 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	}
 
 	public String getMajorsList() {
+
 		return majorsList;
 	}
 
 	public void setMajorsList(String majorsList) {
+
 		this.majorsList = majorsList;
 	}
 
 	public String getMinorsList() {
+
 		return minorsList;
 	}
 
 	public void setMinorsList(String minorsList) {
+
 		this.minorsList = minorsList;
 	}
 
 	public String getProfileType() {
+
 		return profileType;
 	}
 
 	public void setProfileType(String profileType) {
+
 		this.profileType = profileType;
 	}
 
 	public boolean isProfileVerified() {
+
 		return profileVerified;
 	}
 
 	public void setProfileVerified(boolean profileVerified) {
+
 		this.profileVerified = profileVerified;
 	}
 
 	public ApplicantVerificationBean getVerificationBean() {
+
 		return verificationBean;
 	}
 
 	public void setVerificationBean(ApplicantVerificationBean verificationBean) {
+
 		this.verificationBean = verificationBean;
+	}
+
+	public TeacherRecommendationBean getMostRecentAcceptedRecommendation() {
+
+		return this.mostRecentAcceptedRecommendation;
+	}
+
+	public void setMostRecentAcceptedRecommendation(TeacherRecommendationBean mostRecentAcceptedRecommendation) {
+
+		this.mostRecentAcceptedRecommendation = mostRecentAcceptedRecommendation;
 	}
 }

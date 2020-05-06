@@ -29,7 +29,7 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 		};
 
 		validator = new FormValidator(new FormElement[] {
-			new RequiredFormElement("comp_num")
+				new RequiredFormElement("comp_num")
 		});
 	}
 
@@ -57,10 +57,10 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 					else {
 						session.setAttribute("JOB", opp);
 
-						if (!form.exists("alphabetized")
-								&& (opp.getJobType().equal(JobTypeConstant.POOL) || opp.getJobType().equal(
-										JobTypeConstant.SUMMER_SCHOOL))) {
-							session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getPoolShortlistMap(opp));
+						if (!form.exists("alphabetized") && (opp.getJobType().equal(JobTypeConstant.POOL)
+								|| opp.getJobType().equal(JobTypeConstant.SUMMER_SCHOOL))) {
+							//session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getPoolShortlistMap(opp));
+							session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 							path = "admin_view_job_pool_applicants_shortlist.jsp";
 						}
 						else {
@@ -69,16 +69,16 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 									ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
 							path = "admin_view_job_applicants_shortlist.jsp";
 						}
-						if(opp.getIsSupport().contentEquals("Y")) {
+						if (opp.getIsSupport().contentEquals("Y")) {
 							rth = RequestToHireManager.getRequestToHireByCompNum(form.get("comp_num"));
 							request.setAttribute("AD_REQUEST", rth);
-						}else {
+						}
+						else {
 							ad = AdRequestManager.getAdRequestBean(form.get("comp_num"));
 							request.setAttribute("AD_REQUEST", ad);
 						}
 
-						
-}
+					}
 				}
 				else {
 					request.setAttribute("msg", "Applicant List for competition  " + form.get("comp_num") + " is private.");

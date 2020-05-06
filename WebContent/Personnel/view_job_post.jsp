@@ -7,15 +7,15 @@
                  java.text.*"
         isThreadSafe="false"%>
 
-		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
-<!-- LOAD JAVA TAG LIBRARIES -->
+<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 		
-		
-		<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
-		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
+
 <%
 User usr = null;
 JobOpportunityBean opp = null;
@@ -35,9 +35,6 @@ if(opp != null){
 session.setAttribute("JOB", null);
 session.setAttribute("SUBLIST", null);
 %>
-
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
-  
 
 <html>
 <head>
@@ -237,6 +234,9 @@ function parseAddApplicantResponse(data){
   				    <a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>
   				
  				<%}%>
+ 				<% if(opp.getJobType().equal(JobTypeConstant.POOL)) { %>
+ 					<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewPoolHighlyRecommendedList.html?comp_num=<%=request.getParameter("comp_num")%>'>View Highly Recommended</a>
+ 				<% } %>
  			<%}%>
                                           			
        		<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>

@@ -29,6 +29,12 @@
 	User usr = (User) session.getAttribute("usr");
 	JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_APPLICANTS");
+	Map<String, ApplicantProfileBean> shortlistMap = (Map<String, ApplicantProfileBean>) session.getAttribute("SHORTLISTMAP");
+	
+	Map<String, ApplicantProfileBean> highlyRecommendedMap = null;
+	if(job.getJobType().equals(JobTypeConstant.POOL)) {
+		highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
+	}
 
 	int locationId = ((JobOpportunityAssignmentBean) job.get(0)).getLocation();
 
@@ -135,6 +141,11 @@
 <style>
 input {
 	border: 1px solid silver;
+	
+}
+.col-highly-recommended {
+	text-align: center;
+	font-weight: bold;
 }
 </style>
 
@@ -370,9 +381,12 @@ input {
 							<%} else {%>
 								<th width='20%'>NAME</th>
 								<th width='20%'>EMAIL</th>
-								<th width='10%'>SENIORITY</th>					
-								<th width='12%'>OTHER INFO</th>
-								<th width='13%'>CERT./CRS</th>
+								<th width='10%'>SENIORITY</th>
+								<% if(highlyRecommendedMap != null) { %>
+									<th>HIGHLY REC'ED</th>
+								<% } %>
+								<th width='10%'>OTHER INFO</th>
+								<th width='10%'>CERT./CRS</th>
 								<th width='10%'>TYPE</th>
 								<th width='15%'>OPTIONS</th>
 							<%} %>	
@@ -402,6 +416,10 @@ input {
 									<%} else {%> <span style="color: DimGrey;">0</span> 
 									<%}%>
 								</td>
+							<!-- HIGHLY RECOMMENDED -->
+							<% if(highlyRecommendedMap != null) { %>
+								<td class='col-highly-recommended <%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "alert-success" : "alert-danger" %>'><%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "YES" : "NO" %></td>
+							<% } %>
 							<!-- OTHER (HIDE FOR NOW WITH SUPPORT JOBS -->
 							<%if (job.getIsSupport().equals("N")) { %>	
 								<td><%if (isLabWestSchool) {%> 
@@ -472,7 +490,7 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<b>FPD:</b>	<%=FP%> &middot; <b>COC:</b> <%=CC%><br /> <b>ECE:</b> <%=EC%> &middot; <b>#CRS:</b> <%=coursesCompleted%></td>
 
 								<!-- If has 20+ courses or ECE Certificate) AND no teaching certificate -->
-								<%if (((coursesCompleted >= 20) || (EC > 0)) && (TC < 1)) {%>
+								<% if (((coursesCompleted >= 20) || (EC > 0)) && (TC < 1)) {%>
 								<td style="background-color: #DDA0DD; color: Black; text-align: center;vertical-align:middle;">TLA</td>
 								<!-- If is a Teacher AND a teaching certificate -->
 								<% } else if ((applicants[i].getProfileType().equals("T")) && (TC > 0)) {%>
@@ -491,6 +509,9 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<%}%>
 								
 								<td style="text-align:right;">
+									<% if(shortlistMap.containsKey(applicants[i].getUID())) { %>
+										<span style='font-weight:bold;' class='alert-success'>SHORTLISTED</span><br/>
+									<% } %>
 									<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>" target="_blank">Profile</a>
 									<% if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("MANAGER OF HR - PERSONNEL")) {%> 
 									<a href="#" data-toggle="confirmation" data-title="Are you sure you wish to withdraw <%=applicants[i].getFullNameReverse()%> from this competition?"
