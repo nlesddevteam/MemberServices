@@ -2954,6 +2954,10 @@
       <URL-Pattern>/Personnel/viewJobShortList.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewPoolHighlyRecommendedCandidatesListRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewPoolHighlyRecommendedList.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.MarkJobShortlistCompleteRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/markJobShortlistComplete.html</URL-Pattern>
     </Request-Handler>

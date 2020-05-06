@@ -3,6 +3,7 @@ package com.esdnl.personnel.jobs.bean;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import com.awsd.personnel.Personnel;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.PersonnelException;
@@ -21,10 +22,10 @@ public class TeacherRecommendationBean {
 	private int recommendation_id;
 
 	private String comp_num;
-
 	private String candidate_id;
 	private String candidate_sin2;
 	private Date candidate_dob;
+	private ApplicantProfileBean candidate;
 
 	private RecommendationStatus cur_status;
 	private PositionTypeConstant position_type;
@@ -71,6 +72,8 @@ public class TeacherRecommendationBean {
 	private String candidateComments3;
 	//added for support staff postions
 	private RTHPositionTypeConstant rth_position_type;
+
+	private JobOpportunityBean job;
 
 	public TeacherRecommendationBean() {
 
@@ -125,6 +128,9 @@ public class TeacherRecommendationBean {
 		candidateComments2 = null;
 		candidateComments3 = null;
 		rth_position_type = null;
+
+		this.job = null;
+		this.candidate = null;
 	}
 
 	public int getRecommendationId() {
@@ -164,7 +170,11 @@ public class TeacherRecommendationBean {
 
 	public JobOpportunityBean getJob() throws JobOpportunityException {
 
-		return JobOpportunityManager.getJobOpportunityBean(getCompetitionNumber());
+		if (this.job == null) {
+			this.job = JobOpportunityManager.getJobOpportunityBean(getCompetitionNumber());
+		}
+
+		return this.job;
 	}
 
 	public void setCompetitionNumber(String comp_num) {
@@ -179,7 +189,11 @@ public class TeacherRecommendationBean {
 
 	public ApplicantProfileBean getCandidate() throws JobOpportunityException {
 
-		return ApplicantProfileManager.getApplicantProfileBean(getCandidateId());
+		if (this.candidate == null) {
+			this.candidate = ApplicantProfileManager.getApplicantProfileBean(getCandidateId());
+		}
+
+		return this.candidate;
 	}
 
 	public void setCandidateId(String candidate_id) {
@@ -709,10 +723,12 @@ public class TeacherRecommendationBean {
 	}
 
 	public RTHPositionTypeConstant getRth_position_type() {
+
 		return rth_position_type;
 	}
 
 	public void setRth_position_type(RTHPositionTypeConstant rth_position_type) {
+
 		this.rth_position_type = rth_position_type;
 	}
 }

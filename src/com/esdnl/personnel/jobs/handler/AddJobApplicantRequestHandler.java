@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
@@ -21,7 +22,7 @@ public class AddJobApplicantRequestHandler extends RequestHandlerImpl {
 	public AddJobApplicantRequestHandler() {
 
 		requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-VIEW"
+				"PERSONNEL-ADMIN-VIEW"
 		};
 
 		validator = new FormValidator(new FormElement[] {
@@ -39,9 +40,14 @@ public class AddJobApplicantRequestHandler extends RequestHandlerImpl {
 			try {
 
 				ApplicantProfileBean profile = ApplicantProfileManager.getApplicantProfileBean(form.get("sin"));
+				JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
 
-				if (profile != null) {
+				if ((profile != null) && (job != null)) {
 					ApplicantProfileManager.applyForPosition(profile, form.get("comp_num"));
+
+					if (form.exists("shortlisted") && form.getBoolean("shortlisted")) {
+						ApplicantProfileManager.shortListApplicant(profile.getUID(), job);
+					}
 
 					if (!form.exists("ajax")) {
 						session.setAttribute("JOB_APPLICANTS",
