@@ -4,9 +4,8 @@ Your application for Kindergarten registration for $kr.studentFirstName $kr.stud
 been received at <b>$kr.registrationDate</b>. 
 </p>
 <p> 
-Please present proof of address, birth certificate and immunization records to the school on or before <u>$date.format('full_date', $kr.registration.addressConfirmationDeadline)</u>
-to complete the registration process. This does not guarantee acceptance to the school or program, the District reserves the right to make 
-the final decision regarding student acceptance and placement. 
+Please present proof of address, birth certificate and immunization records to the school. <b>Arrangements to complete this process will be communicated to all registrants in the coming weeks</b>. 
+This does not guarantee acceptance to the school or program, the District reserves the right to make the final decision regarding student acceptance and placement. 
 </p>
 <p>
 Acceptance letters will follow when acceptance has been approved.
