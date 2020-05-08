@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -349,7 +350,8 @@ public class JobOpportunityManager {
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECAPPROVAL")) {
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECAPPROVAL")) {
 				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
@@ -359,7 +361,8 @@ public class JobOpportunityManager {
 					stat.setInt(4, RecommendationStatus.RECOMMENDED.getValue());
 				}
 				else {
-					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat = con.prepareCall(
+							"begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					//stat.setInt(2, RecommendationStatus.RECOMMENDED.getValue());
 					//stat.setInt(2, 1);
@@ -367,7 +370,8 @@ public class JobOpportunityManager {
 					stat.setString(4, "N");
 					stat.setInt(5, RecommendationStatus.RECOMMENDED.getValue());
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECACCEPT")) {
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECACCEPT")) {
 				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
@@ -377,7 +381,8 @@ public class JobOpportunityManager {
 					stat.setInt(4, RecommendationStatus.APPROVED.getValue());
 				}
 				else {
-					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat = con.prepareCall(
+							"begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					//stat.setInt(2, RecommendationStatus.APPROVED.getValue());
 					//stat.setInt(2, 5);
@@ -524,7 +529,8 @@ public class JobOpportunityManager {
 					stat.setInt(2, job_type);
 					stat.setInt(3, zone);
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECAPPROVAL")) {
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECAPPROVAL")) {
 				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
@@ -534,7 +540,8 @@ public class JobOpportunityManager {
 					stat.setInt(4, RecommendationStatus.RECOMMENDED.getValue());
 				}
 				else {
-					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat = con.prepareCall(
+							"begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					//stat.setInt(2, RecommendationStatus.RECOMMENDED.getValue());
 					//stat.setInt(2, 1);
@@ -542,7 +549,8 @@ public class JobOpportunityManager {
 					stat.setString(4, "Y");
 					stat.setInt(5, RecommendationStatus.RECOMMENDED.getValue());
 				}
-			}else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECACCEPT")) {
+			}
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("RECACCEPT")) {
 				if (zone == 0) {
 					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps(?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
@@ -552,7 +560,8 @@ public class JobOpportunityManager {
 					stat.setInt(4, RecommendationStatus.APPROVED.getValue());
 				}
 				else {
-					stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
+					stat = con.prepareCall(
+							"begin ? := awsd_user.personnel_jobs_pkg.get_job_by_rec_status_opps_zn(?,?,?,?); end;");
 					stat.registerOutParameter(1, OracleTypes.CURSOR);
 					//stat.setInt(2, RecommendationStatus.APPROVED.getValue());
 					//stat.setInt(2, 5);
@@ -1368,6 +1377,53 @@ public class JobOpportunityManager {
 		return applieddate;
 	}
 
+	public static Map<String, JobOpportunityBean> getApplicantHighlyRecommendedPoolCompetitionsMap(String applicantId)
+			throws JobOpportunityException {
+
+		Map<String, JobOpportunityBean> pools = new HashMap<>();
+		JobOpportunityBean jBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_app_highly_rec_pools(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, applicantId);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				jBean = createJobOpportunityBean(rs);
+
+				pools.put(jBean.getCompetitionNumber(), jBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(
+					"Map<String, JobOpportunityBean> getApplicantHighlyRecommendedPoolCompetitionsMap(ApplicantProfileBean profile): "
+							+ e);
+			throw new JobOpportunityException("Can not extract JobOpportunityBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return pools;
+	}
+
 	public static JobOpportunityBean createJobOpportunityBean(ResultSet rs) {
 
 		return createJobOpportunityBean(rs, true);
@@ -1406,13 +1462,13 @@ public class JobOpportunityManager {
 			jBean.setIsSupport(rs.getString("IS_SUPPORT"));
 			if (rs.getDate("SHORTLIST_COMPLETE_DATE") != null)
 				jBean.setShortlistCompleteDate(new java.util.Date(rs.getTimestamp("SHORTLIST_COMPLETE_DATE").getTime()));
-			if(jBean.getIsSupport().contentEquals("Y")) {
+			if (jBean.getIsSupport().contentEquals("Y")) {
 				jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, false));
-			}else {
+			}
+			else {
 				jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, loadMetaData));
 			}
-			
-			
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -1421,6 +1477,7 @@ public class JobOpportunityManager {
 
 		return jBean;
 	}
+
 	public static void reopenCompetition(String comp_num) {
 
 		Connection con = null;
