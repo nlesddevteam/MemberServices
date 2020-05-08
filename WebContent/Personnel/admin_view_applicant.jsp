@@ -25,6 +25,13 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
 <%
+	User usr = (User)session.getAttribute("usr");
+	if(!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
+		new AlertBean(new com.awsd.security.SecurityException("Applicant Profile Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse()));
+		
+		throw new com.awsd.security.SecurityException("Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse());
+	}
+
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("APPLICANT");
   SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
   SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
@@ -37,6 +44,7 @@
   ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
   ApplicantOtherInformationBean other_info = ApplicantOtherInfoManager.getApplicantOtherInformationBean(profile.getSIN());
   ApplicantSupervisorBean[] refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
+  Map<String, JobOpportunityBean> highlyRecommendedPools = JobOpportunityManager.getApplicantHighlyRecommendedPoolCompetitionsMap(profile.getSIN());
   
   //ReferenceBean[] chks = ReferenceManager.getReferenceBeans(profile);
   NLESDReferenceListBean[] chks = NLESDReferenceListManager.getReferenceBeansByApplicant(profile.getSIN());
@@ -49,18 +57,10 @@
   Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
   Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
   
-  User usr = (User)session.getAttribute("usr");
-  
   if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
     session.setAttribute("APPLICANT", profile); 
    
   HashMap<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
-  
-  if(!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
-  	new AlertBean(new com.awsd.security.SecurityException("Applicant Profile Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse()));
-  	
-  	throw new com.awsd.security.SecurityException("Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse());
-  }
   
   EmployeeBean empbean = null;
   if(!StringUtils.isEmpty(profile.getSIN2())){
@@ -523,11 +523,6 @@ input {
 </div>					
  </esd:SecurityAccessRequired>	
 	
-	
-	
-	
-	                        
-
 
 
 <!-- POST SECONDARY EDUCATION --------------------------------------------------------------->
@@ -1177,7 +1172,40 @@ input {
 					</div>
 </div>
  <% } %>                               
-                                
+              
+
+<% if(highlyRecommendedPools.size() > 0) { %>
+	<!-- HIGHLY RECOMMENDED POOLS --------------------------------------------------------------->
+	<div class="panel-group no-print" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section14">
+			<div class="panel-heading">
+				<b>Pool Competitions with HIGHLY RECOMMENDED status</b>
+			</div>
+			<div class="panel-body">
+				<table class="table table-condensed table-striped" id="hcpools" style="font-size: 11px;">
+					<thead>
+						<tr>
+							<th>COMPETITION NUMBER</th>
+							<th>TITLE</th>
+							<th>LOCATION</th>
+							<th class="no-print">OPTIONS</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% for(JobOpportunityBean j : highlyRecommendedPools.values()) { %>
+							<tr>
+								<td><%= j.getCompetitionNumber() %></td>
+								<td><%= j.getPositionTitle() %></td>
+								<td><%= j.getJobLocation() %></td>
+								<td class="no-print"><a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>View</a></td>
+							</tr>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+<% } %>                
 
 <!-- POSITIONS APPLIED FOR --------------------------------------------------------------->
 	

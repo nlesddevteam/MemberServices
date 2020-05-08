@@ -41,6 +41,7 @@
   Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
   Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
   ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
+  Map<String, JobOpportunityBean> highlyRecommendedPools = JobOpportunityManager.getApplicantHighlyRecommendedPoolCompetitionsMap(profile.getSIN());
   
   ApplicantPositionOfferBean[] current_offers = null;
   Collection<ApplicantPositionOfferBean> emp_letters = null;
@@ -778,8 +779,45 @@ Sections with no information will display a red header. Those completed and/or w
 
 
 </div></div></div></div>
-					                              
- <!-- CURRENT JOB COMPETITION APPLICATION(S) ----------------------------------------------------------------------------------------->               
+
+<!-- HIGHLY RECOMMENDED POOL COMPETITIONS ----------------------------------------------------------------------------------------->
+<% if(highlyRecommendedPools.size() > 0) { %>
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section12">
+			<div class="panel-heading">
+				<b>Pool Competitions with HIGHLY RECOMMENDED status</b>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-condensed"
+						style="font-size: 11px;">
+						<thead>
+							<tr>
+								<th width="20%">COMP #</th>
+								<th width="50%">TITLE</th>
+								<th width="20%">LOCATION</th>
+								<th width="10%">OPTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for (JobOpportunityBean j : highlyRecommendedPools.values()) { %>
+								<tr>
+									<td><%= j.getCompetitionNumber() %></td>
+									<td><%= j.getPositionTitle( )%></td>
+									<td><%= j.getJobLocation() %></td>
+									<td><a href="" class="btn btn-xs btn-primary showModal"
+										data-href="/employment/view_job_post.jsp?comp_num=<%=j.getCompetitionNumber()%>">VIEW</a></td>
+								</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+<% } %>
+
+	<!-- CURRENT JOB COMPETITION APPLICATION(S) ----------------------------------------------------------------------------------------->               
                 
                 
   <div class="panel-group" style="padding-top:5px;">                               
@@ -788,7 +826,9 @@ Sections with no information will display a red header. Those completed and/or w
       			 	<div class="panel-body"> 
 					<div class="table-responsive">  
 					
-					<%if(jobs.length > 0){ %>        
+					<%
+  											if (jobs.length > 0) {
+  										%>        
 					<table class="table table-striped table-condensed" style="font-size:11px;">
       							    <thead>
       							    <tr>
