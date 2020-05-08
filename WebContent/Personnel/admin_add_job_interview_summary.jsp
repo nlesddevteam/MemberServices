@@ -206,7 +206,8 @@ input {border:1px solid silver;}
 	                                        <select class="form-control" id='recommendation' name='recommendation'>
 	                                        	<option value=''>---Select one---</option>
 	                                        	<%for(InterviewSummaryBean.SummaryRecommendation sr : InterviewSummaryBean.SummaryRecommendation.values()) {
-	                                        			if(sr.equals(InterviewSummaryBean.SummaryRecommendation.UNKNOWN)) continue; %>
+	                                        			if(sr.equals(InterviewSummaryBean.SummaryRecommendation.UNKNOWN)) continue;
+	                                        			if(sr.equals(InterviewSummaryBean.SummaryRecommendation.SHORT_TERM_REPLACEMENT)) continue;%>
 	                                        			<option value='<%=sr.getValue()%>'><%=sr.getText()%></option>
 	                                        	<%}%>
 	                                        </select>

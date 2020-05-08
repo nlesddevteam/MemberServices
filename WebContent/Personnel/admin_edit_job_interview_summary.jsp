@@ -197,7 +197,8 @@
 	                                        <select id='recommendation' name='recommendation'>
 	                                        	<option value=''>---Select one---</option>
 	                                        	<%for(InterviewSummaryBean.SummaryRecommendation sr : InterviewSummaryBean.SummaryRecommendation.values()) {
-	                                        			if(sr.equals(InterviewSummaryBean.SummaryRecommendation.UNKNOWN)) continue; %>
+	                                        			if(sr.equals(InterviewSummaryBean.SummaryRecommendation.UNKNOWN)) continue; 
+	                                        			if(sr.equals(InterviewSummaryBean.SummaryRecommendation.SHORT_TERM_REPLACEMENT)) continue;%>
 	                                        			<option value='<%=sr.getValue()%>' <%= summary.getRecommendation().getValue() == sr.getValue() ? " SELECTED" : "" %>><%=sr.getText()%></option>
 	                                        	<%}%>
 	                                        </select>
