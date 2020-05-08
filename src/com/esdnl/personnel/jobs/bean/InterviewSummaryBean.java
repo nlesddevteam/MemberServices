@@ -191,9 +191,10 @@ public class InterviewSummaryBean {
 	}
 
 	public enum SummaryRecommendation {
-		UNKNOWN(0, "INVALID"), PERMANENT(1, "Recommend for Permanent"), LONG_TERM_REPLACEMENT(2,
-				"Recommend for long-term Replacement"), SHORT_TERM_REPLACEMENT(3, "Recommend for short-term Replacement"), NOT_RECOMMENDED(
-				4, "Not Recommended");
+
+		UNKNOWN(0, "INVALID"), PERMANENT(1, "Highly Recommended"), LONG_TERM_REPLACEMENT(2,
+				"Recommended"), SHORT_TERM_REPLACEMENT(3,
+						"Recommend for short-term Replacement"), NOT_RECOMMENDED(4, "Not Recommended");
 
 		private int value;
 		private String text;
