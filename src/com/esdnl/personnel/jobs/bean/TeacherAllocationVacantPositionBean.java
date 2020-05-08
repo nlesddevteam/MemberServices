@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.commons.lang.StringEscapeUtils;
 import com.esdnl.personnel.jobs.constants.EmploymentConstant;
+import com.esdnl.personnel.jobs.constants.RequestStatus;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 
@@ -180,6 +181,7 @@ public class TeacherAllocationVacantPositionBean {
 							buf.append(" JOBCOMP=\"" +  this.adRequest.getCompetitionNumber() + "\" ");
 							buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
 							buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
+							buf.append(" ADSTATUS=\"APPROVED\" ");
 							//now we check to see if it is filled
 							try {
 								JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(this.adRequest.getCompetitionNumber());
@@ -204,6 +206,11 @@ public class TeacherAllocationVacantPositionBean {
 							buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
 							buf.append(" JOBLINK=\"NONE\" ");
 							buf.append(" RECLINK=\"NONE\" ");
+							if(this.adRequest.getCurrentStatus() == RequestStatus.SUBMITTED) {
+								buf.append(" ADSTATUS=\"NONE\" ");
+							}else {
+								buf.append(" ADSTATUS=\"APPROVED\" ");
+							}
 						}
 					}else{
 						// need to check the school year, if greater than > 19-20
@@ -224,6 +231,7 @@ public class TeacherAllocationVacantPositionBean {
 							buf.append(" ADLINK=\"NONE\" ");
 							buf.append(" ADTITLE=\"NONE\" ");
 							buf.append(" JOBCOMP=\"NONE\" ");
+							buf.append(" ADSTATUS=\"NONE\" ");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
