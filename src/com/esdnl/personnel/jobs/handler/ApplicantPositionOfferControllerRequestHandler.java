@@ -53,8 +53,6 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 
 		try {
 			if (validate_form()) {
-				ApplicantProfileBean profile = (ApplicantProfileBean) request.getSession(false).getAttribute("APPLICANT");
-
 				TeacherRecommendationBean rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
 
 				// check to ensure that we have a valid offer and the correct applicant
@@ -196,16 +194,15 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("AD HR")));
 							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("ADMINISTRATOR")));
 							//send email to HR Pension/benefits for support staff positions
-							boolean sendBC=false;
-							
-							if(job.getIsSupport().equals("Y")) {
+							boolean sendBC = false;
+
+							if (job.getIsSupport().equals("Y")) {
 								to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("PERSONNEL-SUPPORT-BENEFITS")));
 								//send to comptroller group for all jobs support/teaching RTH-BC
 								//uses seperate email from the ms group
-								sendBC=true;
+								sendBC = true;
 							}
-							
-							
+
 							try {
 								EmailBean ebean = new EmailBean();
 
@@ -235,7 +232,7 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 									ebean.send();
 
 								}
-								if(sendBC) {
+								if (sendBC) {
 									ebean.setTo("budgethireapproval@nlesd.ca");
 									ebean.send();
 								}
@@ -389,9 +386,10 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 
 				request.setAttribute("RECOMMENDATION_BEAN", rec);
 				JobOpportunityBean jbean = JobOpportunityManager.getJobOpportunityBean(rec.getCompetitionNumber());
-				if(jbean.getIsSupport().equals("Y")){
-					request.setAttribute("rth", RequestToHireManager.getRequestToHireByCompNum(rec.getJob().getCompetitionNumber()));
-				
+				if (jbean.getIsSupport().equals("Y")) {
+					request.setAttribute("rth",
+							RequestToHireManager.getRequestToHireByCompNum(rec.getJob().getCompetitionNumber()));
+
 				}
 				path = "applicant_offered_position.jsp";
 			}

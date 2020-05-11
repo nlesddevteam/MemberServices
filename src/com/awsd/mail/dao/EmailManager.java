@@ -6,14 +6,15 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
-
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
 
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
 import com.esdnl.dao.DAOUtils;
+
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class EmailManager {
 
@@ -72,13 +73,73 @@ public class EmailManager {
 		}
 	}
 
-	public static void sentEmailBean(int id, String smtp_error) throws EmailException {
+	public static void addEmailBean(EmailBean abean, Date queuedFor) throws EmailException {
 
 		Connection con = null;
 		CallableStatement stat = null;
 
 		try {
 			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			stat = con.prepareCall("begin awsd_user.ms_email.add_email_to_queue(?,?,?,?,?,?,?,?,?); end;");
+
+			stat.setString(1, abean.getFrom());
+			stat.setString(2, abean.getToComplete());
+			stat.setString(3, abean.getCCComplete());
+			stat.setString(4, abean.getBCCComplete());
+			stat.setString(5, abean.getSubject());
+
+			java.sql.Clob newClob = con.createClob(); //oracle.sql.CLOB.createTemporary(con, false, oracle.sql.CLOB.DURATION_SESSION);
+
+			newClob.setString(1, abean.getBody());
+
+			stat.setClob(6, newClob); //((OracleCallableStatement) stat).setCLOB(6, newClob);
+
+			stat.setString(7, abean.getContentType());
+
+			if (abean.getAttachments() != null)
+				stat.setString(8, abean.getAttachments()[0].getAbsolutePath());
+			else
+				stat.setNull(8, OracleTypes.VARCHAR);
+
+			if (queuedFor != null) {
+				stat.setTimestamp(9, new java.sql.Timestamp(queuedFor.getTime()));
+			}
+			else {
+				stat.setTimestamp(9, new java.sql.Timestamp((new Date()).getTime()));
+			}
+
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void addEmailBean(EmailBean abean): " + e);
+			throw new EmailException(e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+
+	public static void sentEmailBean(Connection con, int id, String smtp_error) throws EmailException {
+
+		CallableStatement stat = null;
+
+		try {
 			stat = con.prepareCall("begin awsd_user.ms_email.process_email(?,?); end;");
 
 			stat.setInt(1, id);
@@ -92,10 +153,6 @@ public class EmailManager {
 		finally {
 			try {
 				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
 			}
 			catch (Exception e) {}
 		}
@@ -182,17 +239,16 @@ public class EmailManager {
 		return email;
 	}
 
-	public static EmailBean[] getNextEmailBeanBatch() throws EmailException {
+	public static EmailBean[] getNextEmailBeanBatch(Connection con) throws EmailException {
 
 		Vector<EmailBean> emails = null;
-		Connection con = null;
+
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
 			emails = new Vector<EmailBean>(15);
 
-			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.ms_email.get_next_email_batch; end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.execute();
@@ -213,10 +269,6 @@ public class EmailManager {
 			catch (Exception e) {}
 			try {
 				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
 			}
 			catch (Exception e) {}
 		}
@@ -253,7 +305,7 @@ public class EmailManager {
 
 			if (rs.getString("ATTACHMENT") != null) {
 				abean.setAttachments(new File[] {
-					new File(rs.getString("ATTACHMENT"))
+						new File(rs.getString("ATTACHMENT"))
 				});
 			}
 

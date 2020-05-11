@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.awsd.security.PersonnelApplicantSecurityException;
 import com.awsd.servlet.PersonnelApplicationRequestHandler;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 
@@ -36,6 +37,10 @@ public class PersonnelApplicationRequestHandlerImpl extends RequestHandlerImpl
 			ROOT_DIR = new File(session.getServletContext().getRealPath("/"));
 
 			profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
+		}
+		else {
+			throw new PersonnelApplicantSecurityException("**[MyHRP]** User login required [" + request.getRequestURI()
+					+ "]");
 		}
 
 		return null;
