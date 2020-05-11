@@ -11,6 +11,9 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
        
+<%
+	response.sendRedirect("/MemberServices/memberServices.html");
+%>
 <esd:SecurityCheck permissions='PPGP-VIEW-SUMMARY,PPGP-VIEW-SUMMARY-PROGRAMSPECIALIST' />
 
 <%
