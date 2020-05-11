@@ -410,6 +410,21 @@ public class EmailBean {
 		}
 	}
 
+	public void queue(Date queuedFor) throws EmailException {
+
+		if (this.hasValidAddress()) {
+			if (this.content_type.equals(EmailBean.CONTENTTYPE_HTML) && this.use_template) {
+				String new_body = EmailBean.BASE_TEMPLATE.replace("###EMAIL_BODY###", this.getBody());
+				this.setBody(new_body);
+			}
+
+			EmailManager.addEmailBean(this, queuedFor);
+		}
+		else {
+			throw new EmailException("Email has no valid address. STMP_ERROR=" + this.getSMTPError());
+		}
+	}
+
 	public String toString() {
 
 		StringBuffer buf = new StringBuffer();

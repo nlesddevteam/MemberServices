@@ -6,6 +6,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 
 import com.awsd.mail.bean.EmailBean;
@@ -46,6 +47,68 @@ public class EmailManager {
 				stat.setString(8, abean.getAttachments()[0].getAbsolutePath());
 			else
 				stat.setNull(8, OracleTypes.VARCHAR);
+
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void addEmailBean(EmailBean abean): " + e);
+			throw new EmailException(e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+
+	public static void addEmailBean(EmailBean abean, Date queuedFor) throws EmailException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			stat = con.prepareCall("begin awsd_user.ms_email.add_email_to_queue(?,?,?,?,?,?,?,?,?); end;");
+
+			stat.setString(1, abean.getFrom());
+			stat.setString(2, abean.getToComplete());
+			stat.setString(3, abean.getCCComplete());
+			stat.setString(4, abean.getBCCComplete());
+			stat.setString(5, abean.getSubject());
+
+			java.sql.Clob newClob = con.createClob(); //oracle.sql.CLOB.createTemporary(con, false, oracle.sql.CLOB.DURATION_SESSION);
+
+			newClob.setString(1, abean.getBody());
+
+			stat.setClob(6, newClob); //((OracleCallableStatement) stat).setCLOB(6, newClob);
+
+			stat.setString(7, abean.getContentType());
+
+			if (abean.getAttachments() != null)
+				stat.setString(8, abean.getAttachments()[0].getAbsolutePath());
+			else
+				stat.setNull(8, OracleTypes.VARCHAR);
+
+			if (queuedFor != null) {
+				stat.setTimestamp(9, new java.sql.Timestamp(queuedFor.getTime()));
+			}
+			else {
+				stat.setTimestamp(9, new java.sql.Timestamp((new Date()).getTime()));
+			}
 
 			stat.execute();
 
