@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -83,7 +84,8 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					request.setAttribute("msg", "Recommendation approval has been received.");
 				}
 				else if (StringUtils.isEqual(form.get("op"), "reject")
-						&& (usr.checkPermission("PERSONNEL-ADMIN-APPROVE-RECOMMENDATION") || usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION"))) {
+						&& (usr.checkPermission("PERSONNEL-ADMIN-APPROVE-RECOMMENDATION")
+								|| usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION"))) {
 					RecommendationManager.updateTeacherRecommendationStatus(rec, usr.getPersonnel(),
 							RecommendationStatus.REJECTED);
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
@@ -97,9 +99,10 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					RecommendationManager.updateTeacherRecommendationStatus(rec, usr.getPersonnel(),
 							RecommendationStatus.ACCEPTED);
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
-					if(rec.getJob().getIsSupport().equals("Y")) {
-						RequestToHireBean rbean = RequestToHireManager.getRequestToHireByCompNum(rec.getJob().getCompetitionNumber());
-						if(rbean != null){
+					if (rec.getJob().getIsSupport().equals("Y")) {
+						RequestToHireBean rbean = RequestToHireManager.getRequestToHireByCompNum(
+								rec.getJob().getCompetitionNumber());
+						if (rbean != null) {
 							boolean update = false;
 
 							if (form.exists("start_date")) {
@@ -115,8 +118,9 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 							if (update)
 								RequestToHireManager.updateRequestToHireBeanDates(rbean);
 						}
-						
-					}else {
+
+					}
+					else {
 						AdRequestBean req = AdRequestManager.getAdRequestBean(rec.getJob().getCompetitionNumber());
 						if (req != null) {
 							boolean update = false;
@@ -135,14 +139,15 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 								AdRequestManager.updateAdRequestBean(req);
 						}
 					}
-					
 
 					this.sendNotification(rec, form.get("op"));
 
 					request.setAttribute("msg", "Recommendation acceptance has been received.");
 				}
-				else if (StringUtils.isEqual(form.get("op"), "offer") && usr.checkPermission("PERSONNEL-ADMIN-OFFER-POSITION")) {
-					RecommendationManager.updateTeacherRecommendationStatus(rec, usr.getPersonnel(), RecommendationStatus.OFFERED);
+				else if (StringUtils.isEqual(form.get("op"), "offer")
+						&& usr.checkPermission("PERSONNEL-ADMIN-OFFER-POSITION")) {
+					RecommendationManager.updateTeacherRecommendationStatus(rec, usr.getPersonnel(),
+							RecommendationStatus.OFFERED);
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
 
 					this.sendNotification(rec, form.get("op"));
@@ -166,28 +171,27 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
 
 					JobOpportunityManager.awardJobOpportunityBean(rec.getJob().getCompetitionNumber());
-					
+
 					//now update the teacher vacancy if there was one
 					AdRequestBean adbean = AdRequestManager.getAdRequestBean(rec.getJob().getCompetitionNumber());
-					if(adbean != null) {
+					if (adbean != null) {
 						TeacherAllocationVacantPositionManager.updateTeacherAllocationVacantPositionFilled(adbean.getId());
 					}
-					
 
 					request.setAttribute("msg", "Recommendation has been processed successfully.");
 				}
 				else if (StringUtils.isEqual(form.get("op"), "print_rec")
 						&& usr.checkPermission("PERSONNEL-ADMIN-PROCESS-RECOMMENDATION")) {
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
-					if(rec.getJob().getIsSupport().equals("N")){
+					if (rec.getJob().getIsSupport().equals("N")) {
 						path = "printable_job_teacher_recommendation.jsp";
-					}else{
+					}
+					else {
 						RequestToHireBean rbean = RequestToHireManager.getRequestToHireByCompNum(rec.getCompetitionNumber());
 						request.setAttribute("rbean", rbean);
 						path = "printable_job_teacher_recommendation_ss.jsp";
 					}
 
-					
 				}
 
 				request.setAttribute("RECOMMENDATION_BEAN", rec);
@@ -315,8 +319,8 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 		try {
 			EmailBean ebean = new EmailBean();
 
-			ebean.setSubject("Position Recommendation REJECTED - " + job.getCompetitionNumber() + ": "
-					+ job.getPositionTitle());
+			ebean.setSubject(
+					"Position Recommendation REJECTED - " + job.getCompetitionNumber() + ": " + job.getPositionTitle());
 
 			if (rec.isApproved())
 				ebean.setTo(rec.getApprovedByPersonnel().getEmailAddress());
@@ -406,9 +410,8 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			}
 		}
 
-		if (ass[0].getLocation() > 0
-				&& !(job.getJobType().equals(JobTypeConstant.ADMINISTRATIVE) || job.getJobType().equals(
-						JobTypeConstant.LEADERSHIP))) {
+		if (ass[0].getLocation() > 0 && !(job.getJobType().equals(JobTypeConstant.ADMINISTRATIVE)
+				|| job.getJobType().equals(JobTypeConstant.LEADERSHIP))) {
 
 			if (s != null && s.getSchoolPrincipal() != null) {
 				sendTo.add(s.getSchoolPrincipal());
@@ -437,8 +440,8 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			try {
 				EmailBean ebean = new EmailBean();
 
-				ebean.setSubject("Position Offer Ready To Be Made - " + job.getCompetitionNumber() + ": "
-						+ job.getPositionTitle());
+				ebean.setSubject(
+						"Position Offer Ready To Be Made - " + job.getCompetitionNumber() + ": " + job.getPositionTitle());
 				ebean.setTo(p.getEmailAddress());
 
 				HashMap<String, Object> model = new HashMap<String, Object>();
@@ -487,7 +490,18 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			model.put("expiryDate", rec.getOfferValidDateFormatted());
 			ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/position_offer_app.vm", model));
 			ebean.setFrom("ms@nlesd.ca");
-			ebean.send();
+
+			Calendar cal = Calendar.getInstance();
+			cal.clear(Calendar.MILLISECOND);
+			cal.clear(Calendar.SECOND);
+			cal.clear(Calendar.MINUTE);
+
+			if (cal.get(Calendar.HOUR_OF_DAY) >= 12) {
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+			}
+			cal.set(Calendar.HOUR_OF_DAY, 12);
+
+			ebean.queue(cal.getTime());
 		}
 		catch (EmailException e) {
 			try {
