@@ -741,8 +741,8 @@
 	$(document).ready(function() {		
 	$('.datefield').datepicker({
 		dateFormat: "dd/mm/yy",
-		maxDate: "-4y",
-		minDate: "-6y",
+		maxDate: "-3y",
+		minDate: "-7y",
 		changeYear: true
 	});
 	});	
