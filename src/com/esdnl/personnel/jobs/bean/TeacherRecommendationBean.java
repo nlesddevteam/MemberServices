@@ -17,7 +17,7 @@ import com.esdnl.servlet.FormElementFormat;
 
 public class TeacherRecommendationBean {
 
-	public static final int OFFER_VALID_PERIOD_HOURS = 48;
+	public static final int OFFER_VALID_PERIOD_HOURS = 24;
 
 	private int recommendation_id;
 
