@@ -1092,23 +1092,44 @@ function parseTeacherAllocationBean(data) {
 															$('#hrefspan').text('View Recommedation');
 															$('#hrefad').prop('href', $(this).attr('RECLINK'));
 															$('#divlinks').show();
+															//disable filled checkbox since add created, filled control by rec
+															$('#chk_filled').attr('readonly', 'readonly');
+															$("#chk_filled").attr('disabled', 'disabled');
 														}else if($(this).attr('JOBLINK') != 'NONE'){
 															$('#hrefspan').text('View Job Opportunity');
 															$('#hrefad').prop('href', $(this).attr('JOBLINK'));
 															$('#divlinks').show();
+															//disable filled checkbox since add created, filled control by rec
+															$('#chk_filled').attr('readonly', 'readonly');
+															$("#chk_filled").attr('disabled', 'disabled');
 														}else if($(this).attr('ADLINK') != 'NONE'){
 															$('#hrefspan').text('View  Ad Request');
 															$('#hrefad').prop('href', $(this).attr('ADLINK'));
 															$('#divlinks').show();
+															//if add a
+															if($(this).attr('ADSTATUS') != 'NONE'){
+																
+																$('#chk_filled').attr('readonly', 'readonly');
+																$("#chk_filled").attr('disabled', 'disable');
+															}else{
+																$('#chk_filled').removeAttr("readonly");
+																$("#chk_filled").removeAttr("disabled");
+															}
 														}else if($(this).attr('CREATELINK') != 'NONE'){
 															$('#hrefspan').text('Create Ad Request');
 															$("#hrefad").click(function(){ createAdRequest('-1'); });
 															//$('#hrefad').prop('href', $(this).attr('CREATELINK'));
 															$('#divlinks').show();
+															//enable filled checkbox in case it is manually filled
+															$('#chk_filled').removeAttr("readonly");
+															$("#chk_filled").removeAttr("disabled");
 														}else{
 															$('#hrefspan').text('Create Ad Request');
 															//$('#hrefad').prop('href', $(this).attr('CREATELINK'));
 															$('#divlinks').hide();
+															//enable filled checkbox in case it is manually filled
+															$('#chk_filled').removeAttr("readonly");
+															$("#chk_filled").removeAttr("disabled");
 														}
 													});
 												}
