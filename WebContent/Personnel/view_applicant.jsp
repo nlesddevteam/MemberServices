@@ -123,6 +123,7 @@ Sections with no information will display a red header. Those completed and/or w
 							    <td class="tableResult"><fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></td>
 								</tr> 
 								</c:if>
+								<!-- 
 								<tr>
 							    <td class="tableTitle">Verification Status:</td>
 							    <td colspan=3>							    
@@ -142,34 +143,42 @@ Sections with no information will display a red header. Those completed and/or w
 					    		</c:choose>
 					    		</td>
 							    </tr>
-								
-                                <tr>
-							    <td class="tableTitle">ADDRESS:</td>
-							    <td class="tableResult">
-							    		<%=profile.getAddress1() + " &middot; " +profile.getAddress2() + ", " + profile.getProvince() + " &middot; " + profile.getCountry() + " &middot; " + profile.getPostalcode()%>
-							    </td>
-								</tr>  
-                                 
-                                <tr>
-							    <td class="tableTitle">TELEPHONE:</td>
-							    <td class="tableResult"><%=profile.getHomephone()%></td>
-								</tr>         
-                                  
-                                <%if(!StringUtils.isEmpty(profile.getWorkphone())){%>   
-	                                <tr>
-								    <td class="tableTitle">WORK PHONE:</td>
-								    <td class="tableResult"><%=profile.getWorkphone()%></td>
-									</tr>  
-                                <%}%>
-                                
-                                <%if(!StringUtils.isEmpty(profile.getCellphone())){%>
-	                                <tr>
-								    <td class="tableTitle">CELL PHONE:</td>
-								    <td class="tableResult"><%=profile.getCellphone()%></td>
-									</tr> 
-                                 <%}%>  
-                                                                       
-                                <tr>
+								 -->
+							<tr>
+								<td class="tableTitle">ADDRESS:</td>
+								<td class="tableResult"><%=profile.getAddress1() + " &middot; " + profile.getAddress2() + ", " + profile.getProvince() + " &middot; "
+		+ profile.getCountry() + " &middot; " + profile.getPostalcode()%>
+								</td>
+							</tr>
+
+							<tr>
+								<td class="tableTitle">TELEPHONE:</td>
+								<td class="tableResult"><%=profile.getHomephone()%></td>
+							</tr>
+
+							<%
+								if (!StringUtils.isEmpty(profile.getWorkphone())) {
+							%>
+							<tr>
+								<td class="tableTitle">WORK PHONE:</td>
+								<td class="tableResult"><%=profile.getWorkphone()%></td>
+							</tr>
+							<%
+								}
+							%>
+
+							<%
+								if (!StringUtils.isEmpty(profile.getCellphone())) {
+							%>
+							<tr>
+								<td class="tableTitle">CELL PHONE:</td>
+								<td class="tableResult"><%=profile.getCellphone()%></td>
+							</tr>
+							<%
+								}
+							%>
+
+							<tr>
 							    <td class="tableTitle">EMAIL</td>
 							    
 							    
@@ -252,9 +261,9 @@ Sections with no information will display a red header. Those completed and/or w
 							    <td class="tableTitle">Years of Service:</td>
 							    <td class="tableResult">
 							    	<% 
-							    		if((empbean != null ) && (empbean.getSeniority() != null)) {
+							    		if((empbean != null ) && (empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null)) {
 							    			NumberFormat nf = new DecimalFormat("0.00");
-							    			EmployeeSeniorityBean esb = empbean.getSeniority();
+							    			EmployeeSeniorityBean esb = empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA);
 							    			out.println("PROVINCIAL: " + nf.format(esb.getSeniorityValue1()) + " yrs<br />");
 							    			out.println("OUT OF PROVINCE: " + nf.format(esb.getSeniorityValue2()) + " yrs");
 							    		} 
@@ -699,43 +708,67 @@ Sections with no information will display a red header. Those completed and/or w
                
 
  
- <!--10.  DOCUMENTS ----------------------------------------------------------------------------------------->               
-                
-                
-  <div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section10">   
-	               	<div class="panel-heading"><b>10. DOCUMENTS</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10.jsp">EDIT</a></span></div>
-      			 	<div class="panel-body"> 
-					<div class="table-responsive"> 
- 										<% if((docs != null) && (docs.size() > 0)) {
-	                                  	int i=0; %>
-	                                   <table class="table table-striped table-condensed" style="font-size:11px;">
-      							    <thead>
-      							    <tr>
-                                       <th width="25%">TYPE</th>
-                                       <th width="30%">UPLOAD DATE</th>                                       
-                                       <th width="10%">OPTIONS</th>                                                                           
-                                      </tr>
-                                      </thead>
-                                      <tbody>
-	                                   <% for(ApplicantDocumentBean doc : docs){ %>
-	                                     <tr>
-	                                      <td><%=doc.getType().getDescription()%></td>
-	                                      <td><%=sdf_long.format(doc.getCreatedDate())%></td>	                                      
-	                                      <td><a class='btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>View</a></td>
-	                                      </tr>
-	                                    <%} %>  
-	                                      </tbody>
-	                                      </table>	                                      
-	                                      <% } else {%>                                  
-	                                       <span style="color:Grey;">No Documents currently on file.</span>
-	                                       <script>$("#section10").removeClass("panel-success").addClass("panel-danger");</script>
-	                                    <% } %>
-                              
-</div></div></div></div>
+ <!--10.  DOCUMENTS ----------------------------------------------------------------------------------------->
 
 
-<!-- CRIMINAL OFFENCE DECLARATIONS ----------------------------------------------------------------------------------------->               
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section10">
+			<div class="panel-heading">
+				<b>10. DOCUMENTS</b> <span class="no-print"
+					style="float: right; padding-right: 5px"><a
+					class="btn btn-xs btn-primary"
+					href="applicant_registration_step_10.jsp">EDIT</a></span>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<%
+						if ((docs != null) && (docs.size() > 0)) {
+						int i = 0;
+					%>
+					<table class="table table-striped table-condensed"
+						style="font-size: 11px;">
+						<thead>
+							<tr>
+								<th width="25%">TYPE</th>
+								<th width="30%">UPLOAD DATE</th>
+								<th width="10%">OPTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								for (ApplicantDocumentBean doc : docs) {
+							%>
+							<tr>
+								<td><%=doc.getType().getDescription()%></td>
+								<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+								<td><a class='btn btn-xs btn-primary'
+									href='viewDocument.html?id=<%=doc.getDocumentId()%>'
+									target='_blank'>View</a></td>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+					</table>
+					<%
+						} else {
+					%>
+					<span style="color: Grey;">No Documents currently on file.</span>
+					<script>
+						$("#section10").removeClass("panel-success").addClass(
+								"panel-danger");
+					</script>
+					<%
+						}
+					%>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- CRIMINAL OFFENCE DECLARATIONS ----------------------------------------------------------------------------------------->               
                 
                 
   <div class="panel-group" style="padding-top:5px;">                               
@@ -743,8 +776,10 @@ Sections with no information will display a red header. Those completed and/or w
 	               	<div class="panel-heading"><b>CRIMINAL OFFENCE DECLARATIONS</b><span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10_CODF.jsp">EDIT</a></span></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive">
-									<%if((cods != null) && (cods.size() > 0))  {
-	                                  int i=0; %>	                                  	
+									<%
+										if ((cods != null) && (cods.size() > 0)) {
+										int i = 0;
+									%>	                                  	
 	                                  	<table class="table table-striped table-condensed" style="font-size:11px;">
       							    	<thead>
       							    	<tr>
