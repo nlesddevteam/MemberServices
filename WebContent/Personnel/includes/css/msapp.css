@@ -57,7 +57,7 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 .regionProvincial {color:rgb(153, 51, 51, 1);}
 .regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
 
-
+.msgok,.msgerr {margin:0px auto;position:absolute;top:50%;width:400px;left:50%;margin-left:-200px;}
 
 /* NAVIGATION BAR */
 .navbar-brand {display:none;}

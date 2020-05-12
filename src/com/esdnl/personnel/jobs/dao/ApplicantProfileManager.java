@@ -1208,13 +1208,12 @@ public class ApplicantProfileManager {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SCIENCE_CRS >= "
 						+ params.getScienceCourses() + ") ");
 			}
-
+			
 			if (params.getSocialStudiesCourses() > 0) {
-				sql.append(
-						" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
-								+ params.getSocialStudiesCourses() + ") ");
+				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
+						+ params.getSocialStudiesCourses() + ") ");
 			}
-
+			
 			if (params.getArtCourses() > 0) {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE ART_CRS >= "
 						+ params.getArtCourses() + ") ");
@@ -2101,15 +2100,15 @@ public class ApplicantProfileManager {
 				sqlwhere.append(" and cpos.POSITION_TYPE ='" + params.getCurrentPositionType() + "'");
 			}
 
-			if (params.getUnionCode() > 0) {
+			if(params.getUnionCode() > 0){
 				sqlfrom.append(" left outer join APPLICANT_CURRENT_POSITIONS cpos on app.SIN=cpos.SIN ");
 				sqlfrom.append(" left outer join JOB_RTH_POSITIONS rth on cpos.POSITION_HELD=rth.ID ");
 				sqlwhere.append(" and rth.union_code = " + params.getUnionCode());
 				// we check to see if we need to add the position clause
-				if (params.getCurrentUnionPosition() > 0) {
+				if(params.getCurrentUnionPosition() > 0){
 					sqlwhere.append(" and rth.ID = " + params.getCurrentUnionPosition());
 				}
-				usedCurrent = true;
+				usedCurrent=true;
 			}
 			if ((params.getDegrees() != null) && (params.getDegrees().length > 0)) {
 				sqlfrom.append(" left outer join APPLICANT_EDU_POST_SEC_SS edu on app.SIN=edu.SIN ");
@@ -2172,7 +2171,7 @@ public class ApplicantProfileManager {
 			if (params.isCodeOfConduct()) {
 				sqlfrom.append(" left outer join APPLICANT_DOCUMENT adoc2 on app.SIN=adoc2.APPLICANT_ID ");
 				sqlwhere.append(" and adoc2.DOCUMENT_TYPE=" + DocumentTypeSS.CODE_OF_CONDUCT.getValue());
-			}
+			}			
 			if (params.isFirstAid()) {
 				sqlfrom.append(" left outer join APPLICANT_DOCUMENT adoc3 on app.SIN=adoc3.APPLICANT_ID ");
 				sqlwhere.append(" and adoc3.DOCUMENT_TYPE=" + DocumentTypeSS.FIRST_AID.getValue());
@@ -2184,6 +2183,10 @@ public class ApplicantProfileManager {
 			if (params.isDriversLicense()) {
 				sqlfrom.append(" left outer join APPLICANT_DOCUMENT adoc5 on app.SIN=adoc5.APPLICANT_ID ");
 				sqlwhere.append(" and adoc5.DOCUMENT_TYPE=" + DocumentTypeSS.DRIVERS_LICENSE.getValue());
+			}
+			if (params.isVulnerableSectorCheck()) {
+				sqlfrom.append(" left outer join APPLICANT_DOCUMENT adoc6 on app.SIN=adoc6.APPLICANT_ID ");
+				sqlwhere.append(" and adoc6.DOCUMENT_TYPE=" + DocumentTypeSS.VULNERABLE_SECTOR_CHECK.getValue());
 			}
 
 			//now we filter to applicants for this comp
@@ -2397,7 +2400,7 @@ public class ApplicantProfileManager {
 				aBean.setMajorsList("");
 			}
 			aBean.setProfileType(rs.getString("PROFILETYPE"));
-
+			
 			//now check to see if there is applicantverificationbean
 			try {
 				aBean.setProfileVerified(rs.getBoolean("PROFILEVERIFIED"));

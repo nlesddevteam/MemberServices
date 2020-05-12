@@ -75,7 +75,7 @@ public class ApplicantRegistrationControllerSSRequestHandler implements LoginNot
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("msg", "Error registering applicant.");
+			request.setAttribute("errmsg", "Error registering applicant.");
 			path = "applicant_registration_step_1_ss.jsp";
 		}
 

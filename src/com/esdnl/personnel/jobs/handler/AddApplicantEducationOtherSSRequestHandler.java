@@ -32,12 +32,12 @@ public class AddApplicantEducationOtherSSRequestHandler implements LoginNotRequi
 						ibean.setSIN(profile.getSIN());
 						ibean.setOtherInformation(other_info);
 						ApplicantEducationOtherSSManager.addApplicantEducationOtherSSBean(ibean);
-						request.setAttribute("msg", "Other information successuflly added.");
+						request.setAttribute("msg", "Other information successfully added.");
 						path = "applicant_registration_step_6_ss.jsp";
 				}
 				else {
 					ApplicantEducationOtherSSManager.deleteApplicantEducationOtherSSBean(profile);
-					request.setAttribute("msg", "Successfully removed Other Info.");
+					request.setAttribute("msg", "Successfully removed your other information.");
 					path = "applicant_registration_step_6_ss.jsp";
 				}
 			}

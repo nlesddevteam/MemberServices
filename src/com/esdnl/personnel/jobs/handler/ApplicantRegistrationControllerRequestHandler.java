@@ -103,7 +103,7 @@ public class ApplicantRegistrationControllerRequestHandler implements LoginNotRe
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("msg", "Error registering applicant.");
+			request.setAttribute("errmsg", "Error registering applicant.");
 			path = "applicant_registration_step_1.jsp";
 		}
 

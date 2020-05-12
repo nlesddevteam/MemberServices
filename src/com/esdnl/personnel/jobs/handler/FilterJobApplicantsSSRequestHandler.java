@@ -99,6 +99,8 @@ public class FilterJobApplicantsSSRequestHandler extends RequestHandlerImpl {
 					params.setOhsTraining(true);
 				if (form.exists("cc"))
 					params.setCodeOfConduct(true);
+				if (form.exists("vs"))
+					params.setVulnerableSectorCheck(true);
 				if (form.exists("fa"))
 					params.setFirstAid(true);
 				if (form.exists("whmis"))

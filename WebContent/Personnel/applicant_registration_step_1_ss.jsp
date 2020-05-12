@@ -30,6 +30,7 @@ $("#loadingSpinner").css("display","none");
 .tableResultR {font-weight:normal;width:35%;}
 input {border:1px solid silver;}
 select option[disabled] { display: none;}
+
 </style>
 
 <script type="text/javascript">
@@ -37,7 +38,7 @@ select option[disabled] { display: none;}
 	{
 		check = validateEmail(document.forms[0].email);
 		if(!check){
-			$('#msgerr').css('display','block').html("Email Address is Invalid. Please re-enter a valid email address.").delay(5000).fadeOut();
+			$('.msgerr').css('display','block').html("Email Address is Invalid. Please re-enter a valid email address.").delay(5000).fadeOut();
 			$('#email').focus();
 		}
 			
@@ -67,15 +68,8 @@ select option[disabled] { display: none;}
 </div>
 
 <br/>Please complete/update your profile below. Fields marked * are required. 
-
-						
-
-
-<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}.</div>
-<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
-
-
-<form id="ApplicantRegistrationStep1" action="applicantRegistrationSS.html?step=1" method="post" onsubmit="return checknewprofile()">
+	
+<form id="ApplicantRegistrationStep1" action="applicantRegistrationSS.html?step=1" onsubmit="return checknewprofile()" method="post" >
    									<%if(profile != null){%>
                                     <input type="hidden" name="sin" value="<%=profile.getSIN()%>" >
                                     <input type="hidden" name="op" id="op" value="edit" >
@@ -116,7 +110,7 @@ select option[disabled] { display: none;}
 							    <tbody>
 							    <tr>                        
                                 <td class="tableTitleL">Surname*:</td>
-							    <td class="tableResultL" id="surnameW"><input type="text" name="surname" id="surname" class="form-control" value='<%=(profile!=null)?profile.getSurname():""%>'></td>
+							    <td class="tableResultL" id="surnameW"><input type="text" name="surname" id="surname" class="form-control" value='<%=(profile!=null)?profile.getSurname().replaceAll("'","&#39;"):""%>'></td>
 							    <td class="tableTitleR">First Name*:</td>
 							    <td class="tableResultR" id="firstnameW"><input type="text" name="firstname" id="firstname" class="form-control" value='<%=(profile!=null)?profile.getFirstname() : ""%>'></td>
 							    </tr>
@@ -161,8 +155,7 @@ select option[disabled] { display: none;}
    </div></div></div></div>                          
                              
             			<div class="alert alert-danger" id="divmsg" align="center" style="display:none;"></div> 
-            			
- 							
+		
  							
  							<div align="center"  class="no-print">
  							<%if(profile != null){%>
@@ -179,10 +172,10 @@ select option[disabled] { display: none;}
                                   
                                 </form>
 						<%if(request.getAttribute("msg")!=null){%>
-							<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+							<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 						<%}%>
 						<%if(request.getAttribute("errmsg")!=null){%>
-							<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+							<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 						<%}%>                   
       
       <script>

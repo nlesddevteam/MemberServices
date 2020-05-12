@@ -54,12 +54,12 @@ public class AddApplicantNLESDExperienceSSRequestHandler extends PersonnelApplic
 
 					if(request.getParameter("op") == null){
 						ApplicantNLESDExperienceSSManager.addApplicantNLESDExperienceSS(exp);
-						request.setAttribute("msg", "profile added successfully.");
+						request.setAttribute("msg", "Profile added successfully.");
 						path = "applicant_registration_step_3_ss.jsp";
 					}else{
 						exp.setId(form.getInt("id"));
 						ApplicantNLESDExperienceSSManager.updateApplicantNLESDExperienceSS(exp);
-						request.setAttribute("msg", "profile updated successfully.");
+						request.setAttribute("msg", "Profile updated successfully.");
 						path = "applicant_registration_step_3_ss.jsp";
 					}
 					//now we check to see if they are adding a current position and save that
@@ -102,7 +102,7 @@ public class AddApplicantNLESDExperienceSSRequestHandler extends PersonnelApplic
 								abean.setEndDate(sdf.parse(enddate));
 							}
 							ApplicantCurrentPositionManager.addApplicantCurrentPositionBean(abean);
-							request.setAttribute("msg", "profile updated successfully.");
+							request.setAttribute("msg", "Profile updated successfully.");
 							path = "applicant_registration_step_2_ss.jsp";
 						}
 					}
@@ -113,7 +113,7 @@ public class AddApplicantNLESDExperienceSSRequestHandler extends PersonnelApplic
 			}catch(Exception e)
 			{
 				e.printStackTrace();
-				request.setAttribute("msg", "Could not add applicant profile nlesd experience.");
+				request.setAttribute("errmsg", "Could not add applicant profile nlesd experience.");
 				path = "applicant_registration_step_2_ss.jsp";
 			}
 		}else {

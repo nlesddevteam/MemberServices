@@ -54,15 +54,18 @@
 	</head>
 	
 	<body>
-		
+		<div style="float:right;margin-top:-10px;font-size:72px;color:rgb(0, 128, 0,0.2);font-weight:bold;vertical-align:top;">7</div>
+<div style="font-size:20px;padding-top:10px;color:rgb(0, 128, 0,0.8);font-weight:bold;text-align:left;">
 		Step 7: Pool
-		
-						If you wish to have your application placed in a pool for future openings, 
-						<br />please indicate by checking regions and positions your prefer to work in.
-					      
+</div>
+<br/>	
+						If you wish to have your application placed in a pool for future openings, please indicate by checking regions and positions your prefer to work in.
+	<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info">   
+	               	<div class="panel-heading"><b>7. POOL POSITIONS</b></div>
+      			 	<div class="panel-body"> 				      
 	        <form id="frmPostJob" action="applicantRegistrationSS.html?step=7" method="post">
-	         
-	    Position(s)
+	
 	    <input type="checkbox" name="custodian" id="custodian" <%=hmap.containsKey(ApplicantPoolJobSSConstant.CUSTODIAN.getValue()) ? "CHECKED" : "" %>/>Custodian
 		<input type="checkbox" name="carpenter" id="carpenter" <%=hmap.containsKey(ApplicantPoolJobSSConstant.CARPENTER.getValue()) ? "CHECKED" : "" %>/> Trades - Carpenter (Journeyperson)
 		<input type="checkbox" name="cleaner" id="cleaner" <%=hmap.containsKey(ApplicantPoolJobSSConstant.CLEANER.getValue()) ? "CHECKED" : "" %>/> Cleaner
@@ -132,10 +135,10 @@
 </div></div></div></div>
 
 <%if(request.getAttribute("msg")!=null){%>
-	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <%if(request.getAttribute("errmsg")!=null){%>
-	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>		
 	</body>
 	

@@ -93,9 +93,6 @@ input {border:1px solid silver;}
 SECTION 10A: Editing your Teacher/Educator HR Application Profile 
 </div>
 
-<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
-<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
-
 <br/>Fields marked with * are required.<br/>
 
 <div class="panel-group" style="padding-top:5px;">                               
@@ -186,10 +183,10 @@ SECTION 10A: Editing your Teacher/Educator HR Application Profile
    </div></div></div></div>                           
 	                              
    <%if(request.getAttribute("msg")!=null){%>
-	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <%if(request.getAttribute("errmsg")!=null){%>
-	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>    	                              
 	                              
 	</body>

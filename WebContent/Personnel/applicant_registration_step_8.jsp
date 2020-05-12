@@ -134,13 +134,13 @@ input {border:1px solid silver;}
      						$(xml).find('RCHECK').each(function(){
      							if($(this).find("MESSAGE").text() == "SUCCESS"){
      								
-     								$('#msgok').css('display','block').html("<b>SUCCESS:</b> Reference Request successfully sent.").delay(5000).fadeOut();     									
+     								$('.msgok').css('display','block').html("<b>SUCCESS:</b> Reference Request successfully sent.").delay(5000).fadeOut();     									
 										isvalid=true;
 										$("#refRequest").modal( "hide" );
 							            window.location.href='applicant_registration_step_8.jsp';
 							                
     	                   		}else{
-    	                   			$('#msgerr').css('display','block').html("<b>ERROR:</b> Reference Request failed to send. Please check email address or contact support.").delay(5000).fadeOut(); 
+    	                   			$('.msgerr').css('display','block').html("<b>ERROR:</b> Reference Request failed to send. Please check email address or contact support.").delay(5000).fadeOut(); 
      									
      							}
      						});
@@ -173,10 +173,6 @@ SECTION 8: Editing your Teacher/Educator HR Application Profile
 </div>
 
 <br/>Please add up to 3 references to your online profile.
-
-<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
-<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
-
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
@@ -260,10 +256,10 @@ SECTION 8: Editing your Teacher/Educator HR Application Profile
   </div>
 </div>
 <%if(request.getAttribute("msg")!=null){%>
-	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <%if(request.getAttribute("errmsg")!=null){%>
-	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
                       
 </body>

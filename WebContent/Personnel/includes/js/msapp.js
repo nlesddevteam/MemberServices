@@ -13,8 +13,7 @@ function goBack() {
 /*******************************************************************************
  * check fields for Step 1 Profile
  ******************************************************************************/
-function checknewprofile() {
-		
+function checknewprofile() {	
 	$("#divmsg").css("display","none");
 	var email = $("#email").val();
 	$("#emailW").removeClass("has-error");
@@ -40,8 +39,8 @@ function checknewprofile() {
 	$("#postalcodeW").removeClass("has-error");
 	var homephone = $("#homephone").val();
 	$("#homephoneW").removeClass("has-error");
-	
-	if (email == "") {		
+
+	if (email === "") {		
 		$("#divmsgAI").css("display","block").html("Email is a required field.").delay(5000).fadeOut();
 		$("#emailW").addClass("has-error");
 		$("#email").focus();
@@ -86,7 +85,7 @@ function checknewprofile() {
 		return false;
 	}
 	if (surname == "") {		
-		$("#divmsgPI").css("display","block").html("Surname is a required field.").delay(5000).fadeOut();
+		$("#divmsgPI").css("display","block").text("Surname is a required field.").delay(5000).fadeOut();
 		$("#surnameW").addClass("has-error");
 		$("#surname").focus();
 		return false;

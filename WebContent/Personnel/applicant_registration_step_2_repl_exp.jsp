@@ -39,10 +39,6 @@ input {
 
 <br/>Please complete/update your profile below. Fields marked * are required. 
 
-<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
-<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
-
-
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
 	               	<div class="panel-heading"><b>2c. NLESD REPLACEMENT CONTRACT EXPERIENCE</b></div>
@@ -87,10 +83,10 @@ input {
  </div></div></div></div>
  
 <%if(request.getAttribute("msg")!=null){%>
-	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <%if(request.getAttribute("errmsg")!=null){%>
-	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
  
  <script>

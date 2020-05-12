@@ -13,6 +13,7 @@ public class ApplicantFilterParametersSS {
 	private boolean driversAbstract;
 	private boolean ohsTraining;
 	private boolean codeOfConduct;
+	private boolean vulnerableSectorCheck;
 	private boolean firstAid;
 	private boolean whmis;
 	private boolean driversLicense;
@@ -90,6 +91,12 @@ public class ApplicantFilterParametersSS {
 	public void setCodeOfConduct(boolean codeOfConduct) {
 		this.codeOfConduct = codeOfConduct;
 	}
+	public boolean isVulnerableSectorCheck() {
+		return vulnerableSectorCheck;
+	}
+	public void setVulnerableSectorCheck(boolean vulnerableSectorCheck) {
+		this.vulnerableSectorCheck = vulnerableSectorCheck;
+	}		
 	public boolean isFirstAid() {
 		return firstAid;
 	}
