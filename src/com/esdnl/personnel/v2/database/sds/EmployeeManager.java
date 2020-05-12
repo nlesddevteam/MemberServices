@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
-
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,6 +19,9 @@ import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
 import com.esdnl.personnel.v2.model.sds.constant.LocationConstant;
 import com.esdnl.personnel.v2.model.sds.constant.PositionConstant;
+
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class EmployeeManager {
 
@@ -38,8 +40,14 @@ public class EmployeeManager {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			if (rs.next())
-				eBean = createEmployeeBean(rs);
+			while (rs.next()) {
+				if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+				}
+				else {
+					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
+			}
 		}
 		catch (SQLException e) {
 			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
@@ -78,8 +86,14 @@ public class EmployeeManager {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			if (rs.next())
-				eBean = createEmployeeBean(rs);
+			while (rs.next()) {
+				if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+				}
+				else {
+					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
+			}
 		}
 		catch (SQLException e) {
 			System.err.println("EmployeeBean getEmployeeBeanBySIN(String sin): " + e);
@@ -103,16 +117,17 @@ public class EmployeeManager {
 		return eBean;
 	}
 
-	public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year) throws EmployeeException {
+	public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year)
+			throws EmployeeException {
 
-		Vector<EmployeeBean> v_opps = null;
+		Map<String, EmployeeBean> v_opps = null;
 		EmployeeBean eBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			v_opps = new Vector<EmployeeBean>(5);
+			v_opps = new HashMap<>();
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps(?, ?); end;");
@@ -123,9 +138,13 @@ public class EmployeeManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createEmployeeBean(rs);
-
-				v_opps.add(eBean);
+				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+					v_opps.put(rs.getString("EMP_ID"), eBean);
+				}
+				else {
+					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
 			}
 		}
 		catch (SQLException e) {
@@ -147,20 +166,20 @@ public class EmployeeManager {
 			catch (Exception e) {}
 		}
 
-		return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
 	}
 
 	public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year, String group)
 			throws EmployeeException {
 
-		Vector<EmployeeBean> v_opps = null;
+		Map<String, EmployeeBean> v_opps = null;
 		EmployeeBean eBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			v_opps = new Vector<EmployeeBean>(5);
+			v_opps = new HashMap<>();
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps(?, ?, ?); end;");
@@ -172,9 +191,13 @@ public class EmployeeManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createEmployeeBean(rs);
-
-				v_opps.add(eBean);
+				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+					v_opps.put(rs.getString("EMP_ID"), eBean);
+				}
+				else {
+					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
 			}
 		}
 		catch (SQLException e) {
@@ -196,12 +219,12 @@ public class EmployeeManager {
 			catch (Exception e) {}
 		}
 
-		return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
 	}
 
 	public static EmployeeBean[] getEmployeeBeans(String school_year, String location) throws EmployeeException {
 
-		Vector<EmployeeBean> v_opps = null;
+		Map<String, EmployeeBean> v_opps = null;
 		EmployeeBean eBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
@@ -210,7 +233,7 @@ public class EmployeeManager {
 				com.esdnl.personnel.v2.utils.StringUtils.getCurrentSchoolYear("yyyy", "yy", "-"));
 
 		try {
-			v_opps = new Vector<EmployeeBean>(5);
+			v_opps = new HashMap<>();
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_loc(?, ?); end;");
@@ -223,13 +246,18 @@ public class EmployeeManager {
 			while (rs.next()) {
 
 				if (currentSchoolYear
-						&& ((rs.getDate("END_DATE") != null) && (new java.util.Date(rs.getDate("END_DATE").getTime())).before(new Date()))
+						&& ((rs.getDate("END_DATE") != null)
+								&& (new java.util.Date(rs.getDate("END_DATE").getTime())).before(new Date()))
 						&& StringUtils.equals(rs.getString("TENURE"), "TERM"))
 					continue;
 
-				eBean = createEmployeeBean(rs);
-
-				v_opps.add(eBean);
+				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+					v_opps.put(rs.getString("EMP_ID"), eBean);
+				}
+				else {
+					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
 			}
 		}
 		catch (SQLException e) {
@@ -251,20 +279,21 @@ public class EmployeeManager {
 			catch (Exception e) {}
 		}
 
-		return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
 	}
 
 	public static EmployeeBean[] getEmployeeBeansBySenority(PositionConstant position, String school_year,
-																													LocationConstant location) throws EmployeeException {
+																													LocationConstant location)
+			throws EmployeeException {
 
-		Vector<EmployeeBean> v_opps = null;
+		Map<String, EmployeeBean> v_opps = null;
 		EmployeeBean eBean = null;
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			v_opps = new Vector<EmployeeBean>(5);
+			v_opps = new HashMap<>(5);
 
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_senority(?, ?, ?); end;");
@@ -276,9 +305,13 @@ public class EmployeeManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createEmployeeBean(rs);
-
-				v_opps.add(eBean);
+				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+					v_opps.put(rs.getString("EMP_ID"), eBean);
+				}
+				else {
+					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
 			}
 		}
 		catch (SQLException e) {
@@ -300,11 +333,12 @@ public class EmployeeManager {
 			catch (Exception e) {}
 		}
 
-		return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
 	}
 
 	public static EmployeeBean[] getEmployeeBeansByAvailability(PositionConstant position, String school_year,
-																															LocationConstant location) throws EmployeeException {
+																															LocationConstant location)
+			throws EmployeeException {
 
 		Vector<EmployeeBean> v_opps = null;
 		EmployeeBean eBean = null;
@@ -454,7 +488,7 @@ public class EmployeeManager {
 			}
 			catch (SQLException e) {}
 
-			abean.setSeniority(createEmployeeSeniorityBean(abean, rs));
+			abean.addSeniority(createEmployeeSeniorityBean(abean, rs));
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
