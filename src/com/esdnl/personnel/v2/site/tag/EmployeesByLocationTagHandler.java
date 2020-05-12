@@ -1,7 +1,9 @@
 package com.esdnl.personnel.v2.site.tag;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -84,9 +86,19 @@ public class EmployeesByLocationTagHandler extends TagSupport {
 				out.println(" MULTIPLE");
 			out.println(">");
 
-			if (!StringUtils.isEmpty(this.location))
+			if (!StringUtils.isEmpty(this.location)) {
 				emps = EmployeeManager.getEmployeeBeans(
 						com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(Calendar.getInstance().getTime()), this.location);
+
+				Arrays.sort(emps, new Comparator<EmployeeBean>() {
+
+					@Override
+					public int compare(EmployeeBean o1, EmployeeBean o2) {
+
+						return o1.getFullnameReverse().compareToIgnoreCase(o2.getFullnameReverse());
+					}
+				});
+			}
 
 			//System.err.println("length: " + locs.length);
 
@@ -97,11 +109,10 @@ public class EmployeesByLocationTagHandler extends TagSupport {
 				out.println("<OPTION VALUE='0'>" + includeNA + "</OPTION>");
 
 			for (int i = 0; ((emps != null) && (i < emps.length)); i++)
-				out.println("<OPTION VALUE=\""
-						+ emps[i].getEmpId().trim()
-						+ "\""
+				out.println("<OPTION VALUE=\"" + emps[i].getEmpId().trim() + "\""
 						+ ((!StringUtils.isEmpty(this.value) && (this.value.trim().equals(emps[i].getEmpId().trim()))) ? " SELECTED"
-								: "") + ">" + emps[i].getFullnameReverse() + "</OPTION>");
+								: "")
+						+ ">" + emps[i].getFullnameReverse() + "</OPTION>");
 
 			out.println("</SELECT>");
 		}
