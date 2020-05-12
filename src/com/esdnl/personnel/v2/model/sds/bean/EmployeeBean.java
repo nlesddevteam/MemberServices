@@ -334,7 +334,9 @@ public class EmployeeBean implements IEntity {
 
 	public void addSeniority(EmployeeSeniorityBean seniority) {
 
-		this.seniority.put(seniority.getUnion(), seniority);
+		if (seniority != null) {
+			this.seniority.put(seniority.getUnion(), seniority);
+		}
 	}
 
 	public double getFTE() {
