@@ -123,6 +123,7 @@ Sections with no information will display a red header. Those completed and/or w
 							    <td class="tableResult"><fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></td>
 								</tr> 
 								</c:if>
+								<!-- 
 								<tr>
 							    <td class="tableTitle">Verification Status:</td>
 							    <td colspan=3>							    
@@ -138,34 +139,42 @@ Sections with no information will display a red header. Those completed and/or w
 					    		</c:choose>
 					    		</td>
 							    </tr>
-								
-                                <tr>
-							    <td class="tableTitle">ADDRESS:</td>
-							    <td class="tableResult">
-							    		<%=profile.getAddress1() + " &middot; " +profile.getAddress2() + ", " + profile.getProvince() + " &middot; " + profile.getCountry() + " &middot; " + profile.getPostalcode()%>
-							    </td>
-								</tr>  
-                                 
-                                <tr>
-							    <td class="tableTitle">TELEPHONE:</td>
-							    <td class="tableResult"><%=profile.getHomephone()%></td>
-								</tr>         
-                                  
-                                <%if(!StringUtils.isEmpty(profile.getWorkphone())){%>   
-	                                <tr>
-								    <td class="tableTitle">WORK PHONE:</td>
-								    <td class="tableResult"><%=profile.getWorkphone()%></td>
-									</tr>  
-                                <%}%>
-                                
-                                <%if(!StringUtils.isEmpty(profile.getCellphone())){%>
-	                                <tr>
-								    <td class="tableTitle">CELL PHONE:</td>
-								    <td class="tableResult"><%=profile.getCellphone()%></td>
-									</tr> 
-                                 <%}%>  
-                                                                       
-                                <tr>
+								 -->
+							<tr>
+								<td class="tableTitle">ADDRESS:</td>
+								<td class="tableResult"><%=profile.getAddress1() + " &middot; " + profile.getAddress2() + ", " + profile.getProvince() + " &middot; "
+		+ profile.getCountry() + " &middot; " + profile.getPostalcode()%>
+								</td>
+							</tr>
+
+							<tr>
+								<td class="tableTitle">TELEPHONE:</td>
+								<td class="tableResult"><%=profile.getHomephone()%></td>
+							</tr>
+
+							<%
+								if (!StringUtils.isEmpty(profile.getWorkphone())) {
+							%>
+							<tr>
+								<td class="tableTitle">WORK PHONE:</td>
+								<td class="tableResult"><%=profile.getWorkphone()%></td>
+							</tr>
+							<%
+								}
+							%>
+
+							<%
+								if (!StringUtils.isEmpty(profile.getCellphone())) {
+							%>
+							<tr>
+								<td class="tableTitle">CELL PHONE:</td>
+								<td class="tableResult"><%=profile.getCellphone()%></td>
+							</tr>
+							<%
+								}
+							%>
+
+							<tr>
 							    <td class="tableTitle">EMAIL</td>
 							    
 							    

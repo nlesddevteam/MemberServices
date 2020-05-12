@@ -99,6 +99,7 @@ employment positions and/or applications. Sections with no information will disp
 								    <td class="tableResult"><fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></td>
 									</tr> 
 								</c:if>
+								<!-- 
 								<tr>
 							    <td class="tableTitle">Verification Status:</td>
 							    <td colspan=3>							    
@@ -113,8 +114,9 @@ employment positions and/or applications. Sections with no information will disp
 					    			</c:otherwise>
 					    		</c:choose>
 					    		</td>
-							    </tr>
-                                <tr>
+							  </tr>
+							  -->
+                <tr>
 							    	<td class="tableTitle">ADDRESS:</td>
 							    	<td class="tableResult">
 							    		<%=profile.getAddress1() + " &middot; " +profile.getAddress2() + ", " + profile.getProvince() + " &middot; " + profile.getCountry() + " &middot; " + profile.getPostalcode()%>
