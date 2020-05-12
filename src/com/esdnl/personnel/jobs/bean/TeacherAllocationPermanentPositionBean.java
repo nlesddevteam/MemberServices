@@ -3,6 +3,7 @@ package com.esdnl.personnel.jobs.bean;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
 
 public class TeacherAllocationPermanentPositionBean {
 
@@ -99,20 +100,15 @@ public class TeacherAllocationPermanentPositionBean {
 
 		StringBuffer buf = new StringBuffer();
 
-		buf.append("<TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN POSITION-ID=\""
-				+ this.positionId
-				+ "\" ALLOCATION-ID=\""
-				+ this.allocationId
-				+ "\" EMP-ID=\""
-				+ this.employee.getEmpId().trim()
-				+ "\" EMP-NAME=\""
-				+ this.employee.getFullnameReverse()
-				+ "\" "
-				+ (this.employee.getSeniority() != null ? "SENIORITY-1=\"" + this.employee.getSeniority().getSeniorityValue1()
-						+ "\" SENIORITY-2=\"" + this.employee.getSeniority().getSeniorityValue2() + "\" SENIORITY-3=\""
-						+ this.employee.getSeniority().getSeniorityValue3() + "\" " : "") + "CLASS-SIZE=\"" + this.classSize
-				+ "\" ASSIGNMENT=\"" + StringEscapeUtils.escapeHtml(this.assignment) + "\" UNIT=\"" + this.unit + "\" TENUR=\""
-				+ this.tenur + "\" />");
+		buf.append("<TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN POSITION-ID=\"" + this.positionId + "\" ALLOCATION-ID=\""
+				+ this.allocationId + "\" EMP-ID=\"" + this.employee.getEmpId().trim() + "\" EMP-NAME=\""
+				+ this.employee.getFullnameReverse() + "\" "
+				+ (this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null ? "SENIORITY-1=\""
+						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue1() + "\" SENIORITY-2=\""
+						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue2() + "\" SENIORITY-3=\""
+						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue3() + "\" " : "")
+				+ "CLASS-SIZE=\"" + this.classSize + "\" ASSIGNMENT=\"" + StringEscapeUtils.escapeHtml(this.assignment)
+				+ "\" UNIT=\"" + this.unit + "\" TENUR=\"" + this.tenur + "\" />");
 
 		return buf.toString();
 	}

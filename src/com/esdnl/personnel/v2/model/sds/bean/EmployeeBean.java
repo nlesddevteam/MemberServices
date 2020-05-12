@@ -2,6 +2,8 @@ package com.esdnl.personnel.v2.model.sds.bean;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.esdnl.personnel.v2.model.availability.bean.EmployeeAvailabilityBean;
 import com.esdnl.personnel.v2.model.recognition.bean.IEntity;
@@ -38,7 +40,7 @@ public class EmployeeBean implements IEntity {
 
 	private EmployeeAvailabilityBean current_availability;
 
-	private EmployeeSeniorityBean seniority;
+	private Map<EmployeeSeniorityBean.Union, EmployeeSeniorityBean> seniority;
 
 	public EmployeeBean() {
 
@@ -66,7 +68,7 @@ public class EmployeeBean implements IEntity {
 		this.tenur_code = 999;
 		this.location_prefs = null;
 		this.current_availability = null;
-		this.seniority = null;
+		this.seniority = new HashMap<>();
 		this.FTE = 0;
 		this.positionDescription = null;
 	}
@@ -316,14 +318,23 @@ public class EmployeeBean implements IEntity {
 		this.current_availability = current_availability;
 	}
 
-	public EmployeeSeniorityBean getSeniority() {
+	public EmployeeSeniorityBean getSeniority(EmployeeSeniorityBean.Union union) {
 
-		return seniority;
+		return seniority.get(union);
 	}
 
-	public void setSeniority(EmployeeSeniorityBean seniority) {
+	public EmployeeSeniorityBean getSeniority() {
 
-		this.seniority = seniority;
+		if (seniority.size() < 1)
+			return null;
+
+		return this.seniority.values().stream().filter(
+				s -> !s.getUnion().equals(EmployeeSeniorityBean.Union.NLTA)).findFirst().orElse(null);
+	}
+
+	public void addSeniority(EmployeeSeniorityBean seniority) {
+
+		this.seniority.put(seniority.getUnion(), seniority);
 	}
 
 	public double getFTE() {
@@ -351,13 +362,8 @@ public class EmployeeBean implements IEntity {
 		DecimalFormat df = new DecimalFormat("0.00");
 		StringBuffer buf = new StringBuffer();
 
-		buf.append("<EMPLOYEE-BEAN employee-id=\""
-				+ this.empId.trim()
-				+ "\" first-name=\""
-				+ StringUtils.encodeHTML2(this.firstName)
-				+ "\" last-name=\""
-				+ StringUtils.encodeHTML2(this.lastName)
-				+ "\""
+		buf.append("<EMPLOYEE-BEAN employee-id=\"" + this.empId.trim() + "\" first-name=\""
+				+ StringUtils.encodeHTML2(this.firstName) + "\" last-name=\"" + StringUtils.encodeHTML2(this.lastName) + "\""
 				+ ((this.previousName != null) ? (" previous-name=\"" + StringUtils.encodeHTML2(this.previousName) + "\"") : "")
 				+ " fte=\"" + df.format(this.FTE) + "\" tenure=\"" + this.tenur + "\" position-description=\""
 				+ StringUtils.encodeHTML2(this.getPositionDescription()) + "\" />");

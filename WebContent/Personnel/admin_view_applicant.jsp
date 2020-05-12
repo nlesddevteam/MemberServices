@@ -93,7 +93,7 @@
 <c:set var="password" value="<%=profile.getPassword()%>"/>
 <c:set var="userID" value="<%=profile.getUID()%>"/>
 <c:set var="SDSID" value="<%=empbean != null?empbean.getEmpId():\"N/A\" %>"/>
-<c:set var="seniorityTotal" value="<%=empbean != null && empbean.getSeniority() != null ? empbean.getSeniority().getSeniorityTotal() :\"\"  %>"/> 
+<c:set var="seniorityTotal" value="<%=empbean != null && empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null ? empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityTotal() :\"\"  %>"/> 
 <c:set var="permContractSchool" value="<%=(esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)?esd_exp.getPermanentContractLocationText() :\"N/A\"%>"/>
 <c:set var="permContractPosition" value="<%=(esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)?esd_exp.getPermanentContractPosition() :\"N/A\"%>"/>
 <c:set var="repContractSchool" value="<%=(esd_exp != null)&&(esd_exp.getContractSchool() != 0)&&(esd_exp.getContractSchool() != -1)?esd_exp.getReplacementContractLocationText():\"N/A\"%>"/>
@@ -320,9 +320,9 @@ input {
 							    	<td class="tableTitle">Years of Service:</td>
 							    	<td>
 							    	<% 
-							    		if((empbean != null ) && (empbean.getSeniority() != null)) {
+							    		if((empbean != null ) && (empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null)) {
 							    			NumberFormat nf = new DecimalFormat("0.00");
-							    			EmployeeSeniorityBean esb = empbean.getSeniority();
+							    			EmployeeSeniorityBean esb = empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA);
 							    			out.println("PROVINCIAL: " + nf.format(esb.getSeniorityValue1()) + " yrs<br />");
 							    			out.println("OUT OF PROVINCE: " + nf.format(esb.getSeniorityValue2()) + " yrs");
 							    		} 
