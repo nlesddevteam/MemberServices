@@ -32,10 +32,11 @@
 		{
 		  return /^\d{3}[ ,-]?\d{3}[ ,-]?\d{3}$/.test(fld.value);
 		}
-		
-		function validateDateFormat(fld)
+		//function name changed because another function in msapp.js file has same name
+		//and different format.  stopping form submission
+		function validateDateFormat2(fld)
 		{
-		  return /^\d{2}\/\d{2}\/\d{4}$/.test(fld.value);
+			return /^\d{2}\/\d{2}\/\d{4}$/.test(fld.value);
 		}
 		
     function validateAcceptOffer()
@@ -44,7 +45,7 @@
     	//check that the sin2 and dob are not empty
     	if(!validateSINFormat(document.forms[0].sin2)){
     		alert('Please enter your SOCIAL INSURANCE NUMBER (xxx-xxx-xxx).');
-    	}else if(!validateDateFormat(document.forms[0].dob)){
+    	}else if(!validateDateFormat2(document.forms[0].dob)){
     		alert('Please enter your DATE OF BIRTH (dd/mm/yyyy).');
     	}else if(issupport == "Y"){
     		document.forms[0].op.value='accept'; 
