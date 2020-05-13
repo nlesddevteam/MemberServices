@@ -34,6 +34,7 @@ The Newfoundland and Labrador English School District is in regular contact with
 Information Shared with Schools and District Staff can be found below:
 <br/><br/>
    <ul>
+     	<li><a href="includes/doc/c19-teach-05122020.pdf" target="_blank">May 12 - Memo to Teachers (Recruitment Process for 2020-21)</a>
         <li><a href="includes/doc/c19-lah-05082020.pdf" target="_blank">May 8 - Memo Learning at Home Resource Being Distributed Via Canada Post </a>
   		<li><a href="includes/doc/c19-admin-05072020.pdf" target="_blank">May 7 - Memo to Administrators (Personal Materials Retrieval )</a>
   		<li><a href="includes/doc/c19-admin-04022020.pdf" target="_blank">April 2 - Memo to Administrators/Teachers (Next Steps; General and High School)</a>
