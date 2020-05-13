@@ -90,7 +90,8 @@ employment positions and/or applications. Sections with no information will disp
 							    <tbody>
 							    <tr>
 							    <td class="tableTitle">NAME:</td>  
-							    <td class="tableResult"><%=profile.getFirstname() + " " + ((profile.getMiddlename() != null)?profile.getMiddlename() + " ":"") + profile.getSurname() + ((profile.getMaidenname() != null)?" ("+profile.getMaidenname() + ") ":"")%></td>
+							    <td class="tableResult"><%=profile.getFirstname() + " " + ((profile.getMiddlename() != null)?profile.getMiddlename() + " ":"") + profile.getSurname() + 
+							    (((profile.getMaidenname() != null)&&(profile.getMaidenname() != ""))?(" ("+ profile.getMaidenname()+")"):"")%></td>
 								</tr>								
 								
 								<c:if test="${APPLICANT.modifiedDate ne null}">                               
@@ -110,7 +111,10 @@ employment positions and/or applications. Sections with no information will disp
 					    				</c:if>
 										</c:when>
 					    			<c:otherwise>
-					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> Your Profile has not been verified by HR. Please check again later.</span>
+					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> 
+					    				Your Profile has not been verified by HR. 
+					    				There is nothing you need to do. 
+					    				You can still apply for positions and edit your profile.</span>
 					    			</c:otherwise>
 					    		</c:choose>
 					    		</td>
@@ -405,9 +409,9 @@ employment positions and/or applications. Sections with no information will disp
 	                                </thead>
                                 <tbody>
                                 <% for(ApplicantDocumentBean doc : docs) { %>
-	                             <tr>
-		                             <td><%=sdf_long.format(doc.getCreatedDate()) %></td>
-		                             <td><%=doc.getTypeSS().getDescription() %></td> 
+	                             <tr>		                            
+		                           <td><%=doc.getTypeSS().getDescription() %></td>
+		                            <td><%=sdf_long.format(doc.getCreatedDate()) %></td>
 		                             <td><a class='viewdoc btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                             </tr>
 	                              <%  } %>

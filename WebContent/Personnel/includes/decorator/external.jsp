@@ -56,8 +56,7 @@
 		<script src="/MemberServices/Personnel/includes/js/jquery.cookie.js"></script>
 		<script src="/MemberServices/Personnel/includes/js/bootstrap-multiselect.js"></script>
 		<script src="/MemberServices/Personnel/includes/js/iefix.js"></script>
-	    <script src="/MemberServices/Personnel/includes/js/jquery.validate.js"></script>
-	    <script src="/MemberServices/Personnel/includes/js/msapp.js"></script>
+	    <script src="/MemberServices/Personnel/includes/js/jquery.validate.js"></script>	  
 	   <script src="/MemberServices/Personnel/includes/js/personnel_ajax_v1.js"></script>
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
@@ -181,7 +180,7 @@ If you are experiencing technical difficulties with this system, email Geoff Tay
 
 <!-- ENABLE PRINT FORMATTING -->
 		<script src="/MemberServices/Personnel/includes/js/jQuery.print.js"></script>
-
+		<script src="/MemberServices/Personnel/includes/js/msapp.js"></script>
 		<script>
 		function loadingData() {
 			$("#loadingSpinner").css("display","block");

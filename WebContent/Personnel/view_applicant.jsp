@@ -114,9 +114,9 @@ Sections with no information will display a red header. Those completed and/or w
 							    <tbody>
 							    <tr>
 							    <td class="tableTitle">NAME:</td>  
-							    <td class="tableResult"><%=profile.getFirstname() + " " + ((profile.getMiddlename() != null)?profile.getMiddlename() + " ":"") + profile.getSurname() + ((profile.getMaidenname() != null)?" ("+profile.getMaidenname() + ") ":"")%></td>
-								</tr>								
-								
+							   <td class="tableResult"><%=profile.getFirstname() + " " + ((profile.getMiddlename() != null)?profile.getMiddlename() + " ":"") + profile.getSurname() +
+							    		(((profile.getMaidenname() != null)&&(profile.getMaidenname() != ""))?(" ("+ profile.getMaidenname()+")"):"")%></td>
+								</tr>
 								<c:if test="${APPLICANT.modifiedDate ne null}">                               
                                 <tr>
 							    <td class="tableTitle">LAST MODIFIED:</td>
@@ -134,7 +134,11 @@ Sections with no information will display a red header. Those completed and/or w
 					    				</c:if>
 										</c:when>
 					    			<c:otherwise>
-					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> Your Profile has not been verified by HR. Please check again later.</span>
+					    			<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> 
+					    			Your Profile has not been verified by HR. Please check again later.  
+					    			There is nothing you need to do. 
+					    			You can still apply for positions and edit your profile.
+					    			</span>		
 					    			</c:otherwise>
 					    		</c:choose>
 					    		</td>

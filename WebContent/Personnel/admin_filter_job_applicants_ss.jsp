@@ -156,7 +156,7 @@
 										<input type="checkbox" name="ddiploma" value='<%=entry.getKey()%>'><%=entry.getValue()%>
 										</label>
 									</div>
-								    <%}%>
+								    <%}%> 
 								      </div>
 								    </div>
 								  </div>
@@ -204,6 +204,7 @@
 								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="da" id="da" /> Drivers Abstract</label></div> 
 								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="ohs" id="ohs" /> OHS Training</label></div>
 								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="cc" id="cc" /> Code of Conduct</label></div>
+								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="vs" id="vs" /> Vulnerable Sector Check</label></div>								    
 								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="fa" id="fa" /> First Aid</label></div>
 								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="whmis" id="whmis" /> WHMIS</label></div> 
 								    <div style="float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;"><label class="checkbox-inline"><input type="checkbox" name="dl" id="dl" /> Drivers License</label></div>

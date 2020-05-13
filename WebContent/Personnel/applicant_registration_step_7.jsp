@@ -57,10 +57,7 @@ input {border:1px solid silver;}
 </div>
 <br/>
 Please enter any other information you would like to include in your profile. You are limited to 4000 characters (approx 500 words).
-</br/>
-<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
-<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
-
+<br/>
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
@@ -79,10 +76,10 @@ Please enter any other information you would like to include in your profile. Yo
 </div></div></div></div>
 
 <%if(request.getAttribute("msg")!=null){%>
-	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <%if(request.getAttribute("errmsg")!=null){%>
-	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <script>
 //Configure char count for just this page. Default max is 2460. 4000 for this page.

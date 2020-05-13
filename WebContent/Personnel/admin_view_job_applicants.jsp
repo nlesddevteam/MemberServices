@@ -35,7 +35,7 @@
 	if(job.getJobType().equals(JobTypeConstant.POOL)) {
 		highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
 	}
-
+	
 	int locationId = ((JobOpportunityAssignmentBean) job.get(0)).getLocation();
 
 	ApplicantEducationOtherBean edu_other = null;
@@ -141,7 +141,6 @@
 <style>
 input {
 	border: 1px solid silver;
-	
 }
 .col-highly-recommended {
 	text-align: center;
@@ -361,7 +360,7 @@ input {
 					The type and certificates/courses are displayed for
 					quick reference for <b>non support staff/management positions</b>.
 					(UT = #University Transcripts, TC = #Teaching Certificates, COC =
-					#Code of Conducts, FPD = #French Proficiency (DELF), CEC = #Level 2
+					#Code of Conducts, VSC = #Vulnerable Sector Checks, FPD = #French Proficiency (DELF), CEC = #Level 2
 					Early Childhood Education Certificates , and #CRS = # of Courses)
 					<%}%> 
 					<br />
@@ -381,10 +380,10 @@ input {
 							<%} else {%>
 								<th width='20%'>NAME</th>
 								<th width='20%'>EMAIL</th>
-								<th width='10%'>SENIORITY</th>
+								<th width='10%'>SENIORITY</th>		
 								<% if(highlyRecommendedMap != null) { %>
 									<th>HIGHLY REC'ED</th>
-								<% } %>
+								<% } %>			
 								<th width='10%'>OTHER INFO</th>
 								<th width='10%'>CERT./CRS</th>
 								<th width='10%'>TYPE</th>
@@ -416,7 +415,7 @@ input {
 									<%} else {%> <span style="color: DimGrey;">0</span> 
 									<%}%>
 								</td>
-							<!-- HIGHLY RECOMMENDED -->
+								<!-- HIGHLY RECOMMENDED -->
 							<% if(highlyRecommendedMap != null) { %>
 								<td class='col-highly-recommended <%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "alert-success" : "alert-danger" %>'><%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "YES" : "NO" %></td>
 							<% } %>
@@ -440,6 +439,7 @@ input {
 												int UT = 0; //University Transcripts 1
 												int TC = 0; //Teaching Certificates 2
 												int CC = 0; //Code of Conduct  doc.getType().getValue() 3
+												int VC = 0; //Vunerable Sector Checks 6
 												int FP = 0; //French Proficiency (DELF) doc.getType().getDescription() 4
 												int EC = 0; //Level 2 Early Childhood Education Certificate   5
 								%>
@@ -453,11 +453,13 @@ input {
 														} else if (doc.getType().getValue() == 2) {
 															TC++;
 														} else if (doc.getType().getValue() == 3) {
-															CC++;
+															CC++;															
 														} else if (doc.getType().getValue() == 4) {
 															FP++;
 														} else if (doc.getType().getValue() == 5) {
 															EC++;
+														} else if (doc.getType().getValue() == 6) {
+															VC++;	
 														} else {
 
 														}
@@ -486,8 +488,10 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 	                              
 	                          <!-- #Courses -->
 	                              
-								<td><b>UT:</b> <%=UT%> &middot; <b>TC:</b> <%=TC%><br /> 
-								<b>FPD:</b>	<%=FP%> &middot; <b>COC:</b> <%=CC%><br /> <b>ECE:</b> <%=EC%> &middot; <b>#CRS:</b> <%=coursesCompleted%></td>
+								<td>
+								<b>UT:</b> <%=UT%> &middot; <b>TC:</b> <%=TC%><br /> 
+								<b>FPD:</b>	<%=FP%> &middot; <b>COC:</b> <%=CC%> &middot; <b>VSC:</b> <%=VC%><br /> 
+								<b>ECE:</b> <%=EC%> &middot; <b>#CRS:</b> <%=coursesCompleted%></td>
 
 								<!-- If has 20+ courses or ECE Certificate) AND no teaching certificate -->
 								<% if (((coursesCompleted >= 20) || (EC > 0)) && (TC < 1)) {%>
@@ -509,7 +513,7 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<%}%>
 								
 								<td style="text-align:right;">
-									<% if(shortlistMap.containsKey(applicants[i].getUID())) { %>
+								<% if(shortlistMap.containsKey(applicants[i].getUID())) { %>
 										<span style='font-weight:bold;' class='alert-success'>SHORTLISTED</span><br/>
 									<% } %>
 									<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>" target="_blank">Profile</a>

@@ -49,9 +49,6 @@ SECTION 10: Editing your Teacher/Educator HR Application Profile
 <br/>Various documents/declarations are required to complete the application process. They can be uploaded here. 
 <div class="alert alert-warning" style="padding:1px;text-align:center;margin-top:5px;"><span class="glyphicon glyphicon-info-sign"></span> <b>NOTICE:</b> ONLY PDF DOCUMENTS ARE ACCEPTED <span class="glyphicon glyphicon-info-sign"></span></div>
 
-<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b></b> ${msg}</div>
-<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>
-
 
 	
 <form id="frmPostJob" action="applicantRegistration.html?step=10" method="post" enctype="multipart/form-data" style='padding:0;margin:0;'>
@@ -167,10 +164,10 @@ SECTION 10: Editing your Teacher/Educator HR Application Profile
 	                                
 	                                
    <%if(request.getAttribute("msg")!=null){%>
-	<script>$("#msgok").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>
 <%if(request.getAttribute("errmsg")!=null){%>
-	<script>$("#msgerr").css("display","block").delay(5000).fadeOut();</script>							
+	<script>$(".msgerr").css("display","block").delay(5000).fadeOut();</script>							
 <%}%>                           
 	</body>
 </html>
