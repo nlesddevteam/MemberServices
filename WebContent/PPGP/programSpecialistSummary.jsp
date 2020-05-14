@@ -17,10 +17,6 @@
 <c:set var="centralCount" value="0" />
 <c:set var="avalonCount" value="0" />
 
-
-<%
-	response.sendRedirect("/MemberServices/memberServices.html");
-%>
 <esd:SecurityCheck permissions='PPGP-VIEW-SUMMARY-PROGRAMSPECIALIST' />
 
 <%

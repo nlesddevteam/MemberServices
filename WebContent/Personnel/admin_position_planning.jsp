@@ -37,8 +37,6 @@
 					isPositionPlanningAdmin = false;
 					
 					loadTeacherAllocation("<%= StringUtils.getSchoolYear(new Date()) %>", "<%=loc.getLocationDescription() %>");
-				<% } else if(usr.checkRole("SENIOR EDUCATION OFFICIER") && !usr.checkRole("SEO - PERSONNEL")) {%>
-					isPositionPlanningAdmin = false;
 				<% } %>
 				
 				<%if(usr.checkRole("ADMINISTRATOR")) {%>
