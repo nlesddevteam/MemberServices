@@ -10,9 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/ppgp.tld" prefix="pgp" %>
-<%
-	response.sendRedirect("/MemberServices/memberServices.html");
-%>
+
 <esd:SecurityCheck permissions='PPGP-VIEW' />
 
 <%

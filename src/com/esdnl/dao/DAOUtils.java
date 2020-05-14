@@ -50,7 +50,7 @@ public class DAOUtils {
 			conn = ds.getConnection();
 		}
 		catch (NamingException e) {
-			System.err.println("MemberServices: " + e.getMessage());
+			//System.err.println("MemberServices: " + e.getMessage());
 
 			conn = DriverManager.getConnection(DATA_WAREHOUSE_JDBC_URL, DATA_WAREHOUSE_JDBC_USERNAME,
 					DATA_WAREHOUSE_JDBC_PASSWORD);
