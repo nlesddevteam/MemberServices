@@ -136,6 +136,21 @@ public class EmailManager {
 		}
 	}
 
+	public static void sentEmailBean(int id, String smtp_error) throws EmailException {
+
+		try (Connection con = DAOUtils.getConnection();
+				CallableStatement stat = con.prepareCall("begin awsd_user.ms_email.process_email(?,?); end;")) {
+
+			stat.setInt(1, id);
+			stat.setString(2, smtp_error);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("void deleteEmailBean(int id): " + e);
+			throw new EmailException("Can not delete EmailBean from DB.", e);
+		}
+	}
+
 	public static void sentEmailBean(Connection con, int id, String smtp_error) throws EmailException {
 
 		CallableStatement stat = null;

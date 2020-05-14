@@ -1,8 +1,5 @@
 package com.awsd.mail.service;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -13,7 +10,6 @@ import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
 import com.awsd.mail.dao.EmailManager;
 import com.awsd.mail.transport.SMTPAuthenticatedMail;
-import com.esdnl.dao.DAOUtils;
 
 public class BatchProcessingThread extends Thread {
 
@@ -35,9 +31,7 @@ public class BatchProcessingThread extends Thread {
 		int attempt = 0;
 		int sent = 0;
 
-		try (Connection con = DAOUtils.getConnection();
-				CallableStatement stat = con.prepareCall("begin awsd_user.ms_email.process_email(?,?); end;")) {
-			con.setAutoCommit(false);
+		try {
 
 			System.err.println("<<<<<< BATCH [" + this.getId() + "] PROCESSING STARTED " + start + " >>>>>");
 
@@ -53,7 +47,7 @@ public class BatchProcessingThread extends Thread {
 								email.getContentType(), email.getFrom(), email.getAttachments());
 						//System.err.println(
 						//		"<<<<<< PersistentEmailServiceTimerTask BATCH PROCESSING ***POST MAIL COMPLETE***  >>>>>");
-						EmailManager.sentEmailBean(con, stat, email.getId(), email.getSMTPError());
+						EmailManager.sentEmailBean(email.getId(), email.getSMTPError());
 						//System.err.println(
 						//		"<<<<<< PersistentEmailServiceTimerTask BATCH PROCESSING ***DATABASE UPDATED***  >>>>>");
 
@@ -63,10 +57,6 @@ public class BatchProcessingThread extends Thread {
 
 						if ((sent > 0) && ((sent % 5) == 0)) {
 							System.err.println("BATCH [" + this.getId() + "]: " + sent + " EMAILS PROCESSED.\n");
-
-							stat.executeBatch();
-							con.commit();
-							stat.clearBatch();
 						}
 
 						break;
@@ -95,7 +85,7 @@ public class BatchProcessingThread extends Thread {
 								}
 								smtp_error += "]";
 
-								EmailManager.sentEmailBean(con, stat, email.getId(), email.getSMTPError() + " " + smtp_error);
+								EmailManager.sentEmailBean(email.getId(), email.getSMTPError() + " " + smtp_error);
 								System.out.println("\nMESSAGE:\n" + email + " \nSTATUS: DELETED\nERROR: " + smtp_error + "\n");
 								break;
 							}
@@ -108,7 +98,7 @@ public class BatchProcessingThread extends Thread {
 						}
 					}
 					catch (javax.mail.internet.AddressException e) {
-						EmailManager.sentEmailBean(con, stat, email.getId(), email.getSMTPError() + " " + e.getMessage());
+						EmailManager.sentEmailBean(email.getId(), email.getSMTPError() + " " + e.getMessage());
 						System.out.println("\nMESSAGE:\n" + email + " \nSTATUS: DELETED\nERROR: " + e.getMessage() + "\n");
 						break;
 					}
@@ -116,7 +106,7 @@ public class BatchProcessingThread extends Thread {
 						// e.printStackTrace();
 
 						if (e.getCause() instanceof com.sun.mail.smtp.SMTPAddressFailedException) {
-							EmailManager.sentEmailBean(con, stat, email.getId(), email.getSMTPError() + " " + e.getMessage());
+							EmailManager.sentEmailBean(email.getId(), email.getSMTPError() + " " + e.getMessage());
 							System.out.println("\nMESSAGE:\n" + email + " \nSTATUS: DELETED\nERROR: " + e.getMessage() + "\n");
 							break;
 						}
@@ -141,21 +131,11 @@ public class BatchProcessingThread extends Thread {
 				}
 			}
 
-			//LocalDateTime bStart = LocalDateTime.now();
-			//System.err.println("<<<<<< BATCH [" + this.getId() + "] PROCESSING BATCH STARTED " + bStart + " >>>>>");
-
-			stat.executeBatch();
-			con.commit();
-
-			//LocalDateTime bEnd = LocalDateTime.now();
-			//System.err.println("<<<<<< BATCH [" + this.getId() + "] PROCESSING BATCH FINISHED " + bEnd + " [ELAPSED TIME: "
-			//		+ ChronoUnit.SECONDS.between(bStart, bEnd) + " seconds] >>>>>");
-
 			LocalDateTime end = LocalDateTime.now();
 			System.err.println("<<<<<< BATCH [" + this.getId() + "] PROCESSING FINISHED " + end + " [COUNT: "
 					+ this.batch.size() + ", ELAPSED TIME: " + ChronoUnit.SECONDS.between(start, end) + " seconds] >>>>>");
 		}
-		catch (EmailException | SQLException e) {
+		catch (EmailException e) {
 			e.printStackTrace();
 
 			new EmailAlertThread(e.getClass().toString() + "\n" + e.getMessage()).start();
