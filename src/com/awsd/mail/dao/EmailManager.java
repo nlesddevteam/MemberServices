@@ -6,8 +6,9 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
+import java.util.List;
 
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
@@ -158,6 +159,20 @@ public class EmailManager {
 		}
 	}
 
+	public static void sentEmailBean(Connection con, CallableStatement stat, int id, String smtp_error)
+			throws EmailException {
+
+		try {
+			stat.setInt(1, id);
+			stat.setString(2, smtp_error);
+			stat.addBatch();
+		}
+		catch (SQLException e) {
+			System.err.println("void deleteEmailBean(int id): " + e);
+			throw new EmailException("Can not delete EmailBean from DB.", e);
+		}
+	}
+
 	public static EmailBean getEmailBean(int id) throws EmailException {
 
 		EmailBean email = null;
@@ -239,15 +254,15 @@ public class EmailManager {
 		return email;
 	}
 
-	public static EmailBean[] getNextEmailBeanBatch(Connection con) throws EmailException {
+	public static List<EmailBean> getNextEmailBeanBatch() throws EmailException {
 
-		Vector<EmailBean> emails = null;
-
+		List<EmailBean> emails = new ArrayList<>();
+		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
 
 		try {
-			emails = new Vector<EmailBean>(15);
+			con = DAOUtils.getConnection();
 
 			stat = con.prepareCall("begin ? := awsd_user.ms_email.get_next_email_batch; end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
@@ -256,7 +271,6 @@ public class EmailManager {
 
 			while (rs.next())
 				emails.add(createEmailBean(rs));
-
 		}
 		catch (SQLException e) {
 			System.err.println("EmailBean getNextEmailBeanBatch(): " + e);
@@ -271,9 +285,13 @@ public class EmailManager {
 				stat.close();
 			}
 			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
 		}
 
-		return (EmailBean[]) emails.toArray(new EmailBean[0]);
+		return emails;
 	}
 
 	public static EmailBean createEmailBean(ResultSet rs) {

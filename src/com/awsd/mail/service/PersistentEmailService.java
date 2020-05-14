@@ -8,7 +8,7 @@ public class PersistentEmailService {
 
 	public PersistentEmailService() {
 
-		this(10, 60000, 300000);
+		this(10, 15000, 15000);
 	}
 
 	public PersistentEmailService(int MAX_ATTEMPTS, long delay, long period) {
