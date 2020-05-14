@@ -1038,19 +1038,19 @@ function parseTeacherAllocationBean(data) {
 						
 						.append($('<td>').attr({'valign':'top','align':'center'}).html( 
 								($(this).attr('ADLINK') != 'NONE'? isPositionPlanningAdmin == true ? '<a href="' + $(this).attr('ADLINK') + '" target="_blank">YES</a>': 
-										'YES' : isPositionPlanningAdmin == true ? '<a  href="#" onclick="createAdRequest(\'' + $(this).attr('POSITION-ID') + '\');event.preventDefault();">Create</a>' : '<span>No</span>')))
+										'YES' : isPositionPlanningAdmin == true ? $(this).attr('FILLED') == 'true' ? 'NO' : '<a  href="#" onclick="createAdRequest(\'' + $(this).attr('POSITION-ID') + '\');event.preventDefault();">Create</a>' : '<span>No</span>')))
 										
 						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 
 							isPositionPlanningAdmin == true ? $(this).attr('JOBLINK') == 'NONE' ? 'YES' : '<a href="' + $(this).attr('JOBLINK') +'" target="_blank">YES</a>' : 'YES' )))
 										
 						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('FILLED') == 'false' ? 'NO' : 
-							isPositionPlanningAdmin == true ? $(this).attr('RECLINK') != 'NONE' ? '<a href="' + $(this).attr('RECLINK') + '" target="_blank">YES</a>'  : 'YES' : 'YES')))		
+							isPositionPlanningAdmin == true ? $(this).attr('RECLINK') != 'NONE' ? '<a href="' + $(this).attr('RECLINK') + '" target="_blank">YES</a>'  : 'YES (M)' : 'YES')))		
 						
 						.append($('<td>')
 							.css({'padding-right':'5px'})
 							.attr({'align':'right','valign':'top'})
 							.addClass('vacant-positions-table-row-operations')
-							.append($('<a>')
+							.append( $($(this).attr('FILLED') == 'false' ? '<a>' : '<a style="display:none;">')
 								.addClass('edit-vacant btn btn-xs btn-info')
 								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
 								.text('EDIT')
@@ -1141,7 +1141,7 @@ function parseTeacherAllocationBean(data) {
 										return false;
 									}
 								))
-							.append($('<a>')
+							.append($($(this).attr('FILLED') == 'false' ? '<a>' : '<a style="display:none;">')
 								.addClass('del-vacant btn btn-xs btn-danger')
 								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID'),'ad-title': $(this).attr('ADTITLE'),'compnum':$(this).attr('JOBCOMP')})
 								.text('DEL')
