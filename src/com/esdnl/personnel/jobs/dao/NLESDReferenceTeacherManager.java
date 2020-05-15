@@ -15,7 +15,7 @@ public class NLESDReferenceTeacherManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_ref_chk_tea(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_ref_chk_tea(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, abean.getProvidedBy());
 			stat.setString(3, abean.getProvidedByPosition());
@@ -54,6 +54,7 @@ public class NLESDReferenceTeacherManager {
 			stat.setString(36, abean.getDomain3Comments());
 			stat.setString(37, abean.getDomain4Comments());
 			stat.setString(38, abean.getProfile().getUID());
+			stat.setString(39, abean.getEmailAddress());
 			stat.execute();
 			int id = ((OracleCallableStatement) stat).getInt(1);
 			abean.setId(id);
@@ -121,7 +122,7 @@ public class NLESDReferenceTeacherManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_ref_chk_tea(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_ref_chk_tea(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, abean.getProvidedBy());
 			stat.setString(2, abean.getProvidedByPosition());
 			stat.setString(3, abean.getQ1());
@@ -160,6 +161,7 @@ public class NLESDReferenceTeacherManager {
 			stat.setString(36, abean.getDomain4Comments());
 			stat.setString(37, abean.getProfile().getUID());
 			stat.setInt(38, abean.getId());
+			stat.setString(39, abean.getEmailAddress());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -228,6 +230,7 @@ public class NLESDReferenceTeacherManager {
 			abean.setDomain4Comments(rs.getString("DOMAIN_4_COMMENTS"));
 			abean.setReferenceScale(rs.getString("REFERENCE_SCALE"));
 			abean.setProfile(ApplicantProfileManager.createApplicantProfileBean(rs));
+			abean.setEmailAddress(rs.getString("PROVIDER_EMAIL"));
 		}
 		catch (SQLException e) {
 			abean = null;

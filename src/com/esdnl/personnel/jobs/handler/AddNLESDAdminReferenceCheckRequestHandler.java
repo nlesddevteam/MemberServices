@@ -2,34 +2,37 @@ package com.esdnl.personnel.jobs.handler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awsd.mail.bean.EmailBean;
 import com.esdnl.personnel.jobs.bean.ApplicantEducationOtherBean;
 import com.esdnl.personnel.jobs.bean.ApplicantEsdExperienceBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.ApplicantRefRequestBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.NLESDReferenceAdminBean;
+import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.dao.ApplicantEducationOtherManager;
 import com.esdnl.personnel.jobs.dao.ApplicantEsdExperienceManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
+import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
 import com.esdnl.personnel.jobs.dao.NLESDReferenceAdminManager;
+import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.util.StringUtils;
+import com.esdnl.velocity.VelocityUtils;
 public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImpl {
 	public AddNLESDAdminReferenceCheckRequestHandler() {
 		requiredPermissions = new String[] {
 				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
 		};
-	}
-
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException,
-				IOException {
-		super.handleRequest(request, response);
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("applicant_id"),
 				new RequiredFormElement("ref_provider_name"),
@@ -55,8 +58,16 @@ public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImp
 				new RequiredFormElement("Scale13"),
 				new RequiredFormElement("Scale14"),
 				new RequiredFormElement("Scale15"),
-				new RequiredFormElement("Scale16")
+				new RequiredFormElement("Scale16"),
+				new RequiredFormElement("ref_provider_email")
 		});
+	}
+
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException,
+				IOException {
+		super.handleRequest(request, response);
+
 		if (form.hasValue("op", "APPLICANT_FILTER")) // AJAX CALL
 		{
 			ApplicantProfileBean profiles[] = null;
@@ -123,8 +134,12 @@ public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImp
 					ref = NLESDReferenceAdminManager.getNLESDReferenceAdminBean(form.getInt("reference_id"));
 				else {
 					ref = new NLESDReferenceAdminBean();
-
-					ref.setProfile(ApplicantProfileManager.getApplicantProfileBean(form.get("applicant_id")));
+					//if refrequest exists do not grab dropdown value, use hidden field
+					if(form.exists("refreqid") || form.exists("arefreqid")) {
+						ref.setProfile(ApplicantProfileManager.getApplicantProfileBean(form.get("rapplicant_id")));
+					}else {
+						ref.setProfile(ApplicantProfileManager.getApplicantProfileBean(form.get("applicant_id")));
+					}
 				}
 				ref.setQ1(form.get("Q1"));
 				ref.setQ2(form.get("Q2"));
@@ -154,11 +169,48 @@ public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImp
 				ref.setDomain3Comments(form.get("d3c"));
 				ref.setProvidedBy(form.get("ref_provider_name"));
 				ref.setProvidedByPosition(form.get("ref_provider_position"));
+				ref.setEmailAddress(form.get("ref_provider_email"));
 				ref.setReferenceScale("5");
 				Date d = new Date();
 				ref.setDateProvided(d);
 				if (ref.isNew()) {
 					ref = NLESDReferenceAdminManager.addNLESDReferenceAdminBean(ref);
+					//now we check to see if there is a related refrequestbean
+					//if manual then we add the ApplicantRefRequestBean
+					if(form.exists("mancheck")) {
+						//add new request
+						ReferenceCheckRequestBean refreq = new ReferenceCheckRequestBean();
+						refreq.setCandidateId(ref.getProfile().getSIN());
+						refreq.setCompetitionNumber(form.get("jobcomp"));
+						refreq.setCheckRequester(usr.getPersonnel());
+						refreq.setReferenceType("A");
+						refreq.setReferredEmail(ref.getEmailAddress());
+						refreq.setReferenceId(ref.getId());
+						refreq = ReferenceCheckRequestManager.addReferenceCheckRequestBean(refreq);
+						ReferenceCheckRequestManager.updateReferenceCheckRequestBean(refreq);
+					}else if (form.exists("refreqid")) {
+						ReferenceCheckRequestBean refchk = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("refreqid"));
+
+						if (refchk != null) {
+							refchk.setReferenceId(ref.getId());
+							ReferenceCheckRequestManager.updateReferenceCheckRequestBean(refchk);
+						}
+					}else if (form.exists("arefreqid")) {//now we check to see if there is a related apprefrequest
+						//update applicant_ref_request
+						ApplicantRefRequestManager.applicantReferenceCompleted(form.getInt("arefreqid"), "Reference Completed", ref.getId());
+						//send email to applicant informing it is complete
+						EmailBean ebean = new EmailBean();
+						ebean.setTo(new String[] {
+								ApplicantProfileManager.getApplicantProfileBean(form.get("rapplicant_id")).getEmail()
+						});
+						ebean.setFrom("ms@nlesd.ca");
+						ebean.setSubject("Reference Check Requested Completed By " + ref.getProvidedBy());
+						HashMap<String, Object> model = new HashMap<String, Object>();
+						model.put("reqEmail", ref.getProvidedBy());
+						ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/send_applicant_completed_request.vm", model));
+						ebean.send();
+						
+					}
 				}
 				else {
 					NLESDReferenceAdminManager.updateNLESDReferenceAdminBean(ref);
@@ -166,7 +218,8 @@ public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImp
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");
-				path = "view_nlesd_admin_reference.jsp";
+				//send back to add page and show messages instead of view pages which some people might not have permissions
+				path = "add_nlesd_admin_reference.jsp";
 
 			}
 			catch (Exception e) {
@@ -181,6 +234,41 @@ public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImp
 				request.setAttribute("FORM", form);
 				request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
 			}
+			//add logic to determine what objects need to be added
+			//administrator, principal, email
+			boolean hideSearch=false;
+			if(form.exists("refreq")) {
+				//request on the shortlist/recommedation
+				hideSearch=true;
+				//now we pass back the ref request bean
+				ApplicantRefRequestBean rbean=ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("refreq"));
+				request.setAttribute("arefreq", rbean);
+			}else if(form.exists("id")) {
+				//request by applicant
+				try {
+					ReferenceCheckRequestBean rbean = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("id"));
+					request.setAttribute("refreq", rbean);
+				} catch (NullPointerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JobOpportunityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				hideSearch=true;
+			}else if(form.exists("uid")) { 
+				//manually ref check
+				try {
+					request.setAttribute("PROFILE", ApplicantProfileManager.getApplicantProfileBean(form.get("uid")));
+					hideSearch=true;
+				} catch (JobOpportunityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				//selected from ms menu
+			}
+			request.setAttribute("hidesearch",hideSearch);
 			path = "add_nlesd_admin_reference.jsp";
 		}
 		return path;

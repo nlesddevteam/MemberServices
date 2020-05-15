@@ -52,17 +52,17 @@ public class SendReferenceRequestAjaxRequestHandler implements LoginNotRequiredR
 					String refTypeUrl="";
 					
 					if(reftype.equals("A")){
-						refTypeUrl="http://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=admin&refreq="+ apprefid;
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/addNLESDAdminReference.html?reftype=admin&refreq="+ apprefid;
 					}else if(reftype.equals("G")){
-						refTypeUrl="http://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=guide&refreq="+ apprefid;
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/addNLESDGuideReference.html?reftype=guide&refreq="+ apprefid;
 					}else if(reftype.equals("T")){
-						refTypeUrl="http://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=teacher&refreq="+ apprefid;
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/addNLESDTeacherReference.html?reftype=teacher&refreq="+ apprefid;
 					}else if(reftype.equals("E")){
-						refTypeUrl="http://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=external&refreq="+ apprefid;
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=external&refreq="+ apprefid;
 					}else if(reftype.equals("SS")){
-						refTypeUrl="http://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=support&refreq="+ apprefid;
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=support&refreq="+ apprefid;
 					}else if(reftype.equals("M")){
-						refTypeUrl="http://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=manage&refreq="+ apprefid;
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=manage&refreq="+ apprefid;
 					}
 					
 					EmailBean ebean = new EmailBean();

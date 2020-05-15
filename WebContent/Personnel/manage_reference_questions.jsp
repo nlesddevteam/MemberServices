@@ -148,7 +148,7 @@
 													 </tr>
 													 <tr>
 													    <td>11.</td>
-													    <td>Dependability (punctality and attendance)</td>
+													    <td>Dependability (punctuality and attendance)</td>
 													    <td><span class="tableAnswer"><%=ref.getScale11()%></span></td>
 													 </tr>
 													 <tr>

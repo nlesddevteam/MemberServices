@@ -20,12 +20,6 @@ public class AddNLESDSupportReferenceCheckRequestHandler extends RequestHandlerI
 		requiredPermissions = new String[] {
 				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
 		};
-	}
-
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException,
-				IOException {
-		super.handleRequest(request, response);
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("applicant_id"),
 				new RequiredFormElement("ref_provider_name"),
@@ -34,7 +28,7 @@ public class AddNLESDSupportReferenceCheckRequestHandler extends RequestHandlerI
 				new RequiredFormElement("Q2"),
 				new RequiredFormElement("Q3"),
 				new RequiredFormElement("Q11"),
-				new RequiredFormElement("Q12"),
+				new RequiredFormElement("Q10"),
 				new RequiredFormElement("Scale1"),
 				new RequiredFormElement("Scale2"),
 				new RequiredFormElement("Scale3"),
@@ -51,6 +45,13 @@ public class AddNLESDSupportReferenceCheckRequestHandler extends RequestHandlerI
 				new RequiredFormElement("Scale14"),
 				new RequiredFormElement("provider_email")
 		});
+	}
+
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException,
+				IOException {
+		super.handleRequest(request, response);
+
 		if (form.hasValue("op", "APPLICANT_FILTER")) // AJAX CALL
 		{
 			ApplicantProfileBean profiles[] = null;
@@ -156,7 +157,7 @@ public class AddNLESDSupportReferenceCheckRequestHandler extends RequestHandlerI
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");
-				path = "view_nlesd_support_reference.jsp";
+				path = "add_nlesd_support_reference.jsp";
 
 			}
 			catch (Exception e) {

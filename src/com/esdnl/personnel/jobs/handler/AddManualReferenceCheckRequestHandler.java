@@ -7,11 +7,9 @@ import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityAssignmentBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
-import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityAssignmentManager;
-import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
 import com.esdnl.servlet.RequestHandlerImpl;
 public class AddManualReferenceCheckRequestHandler extends RequestHandlerImpl {
 	public AddManualReferenceCheckRequestHandler() {
@@ -30,28 +28,32 @@ public class AddManualReferenceCheckRequestHandler extends RequestHandlerImpl {
 			String reftype = form.get("reftype");
 			JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 			ApplicantProfileBean profile = ApplicantProfileManager.getApplicantProfileBean(uid);
-			//add new request
-			ReferenceCheckRequestBean refreq = new ReferenceCheckRequestBean();
-			refreq.setCandidateId(uid);
-			refreq.setCompetitionNumber(job.getCompetitionNumber());
-			refreq.setCheckRequester(usr.getPersonnel());
-			refreq.setReferenceType(reftype);
-			refreq = ReferenceCheckRequestManager.addReferenceCheckRequestBean(refreq);
-			request.setAttribute("REFERENCE_CHECK_REQUEST_BEAN", refreq);
 			AdRequestBean ad = AdRequestManager.getAdRequestBean(job.getCompetitionNumber());
 			request.setAttribute("AD_REQUEST_BEAN", ad);
 			request.setAttribute("JOB", job);
 			JobOpportunityAssignmentBean[] ass = JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(job);
-			request.setAttribute("JOB_ASSIGNMENTS", ass);
+			request.setAttribute("ASS", ass);
 			request.setAttribute("PROFILE", profile);
 			if(reftype.equals("ADMIN"))
 			{
-				path = "nlesd_admin_reference_checklist.jsp";
-			}else  if (reftype.equals("GUIDE"))
-			{
-				path = "nlesd_guide_reference_checklist.jsp";
+				request.setAttribute("mancheck", "Y");
+				path = "add_nlesd_admin_reference.jsp";
+			}else  if (reftype.equals("GUIDE")){
+				request.setAttribute("mancheck", "Y");
+				path = "add_nlesd_guide_reference.jsp";
+			}else  if (reftype.equals("TEACHER")){
+				request.setAttribute("mancheck", "Y");
+				path = "add_nlesd_teacher_reference.jsp";
+			}else  if (reftype.equals("MANAGE")){
+				request.setAttribute("mancheck", "Y");
+				path = "add_nlesd_manage_reference.jsp";
+			}else  if (reftype.equals("SUPPORT")){
+				request.setAttribute("mancheck", "Y");
+				path = "add_nlesd_support_reference.jsp";
 			}else{
-				path = "nlesd_teacher_reference_checklist.jsp";	
+				//path = "nlesd_external_reference_checklist_app.jsp";
+				request.setAttribute("mancheck", "Y");
+				path = "add_nlesd_external_reference.jsp";
 			}
 		}
 		catch (Exception e) {
@@ -59,6 +61,7 @@ public class AddManualReferenceCheckRequestHandler extends RequestHandlerImpl {
 			request.setAttribute("msg", e.getMessage());
 			path = null;
 		}
+		request.setAttribute("hidesearch",true);
 		return path;
 	}
 }

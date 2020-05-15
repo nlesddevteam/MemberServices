@@ -15,7 +15,7 @@ public class NLESDReferenceExternalManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_ref_chk_ext(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_ref_chk_ext(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, abean.getProvidedBy());
 			stat.setString(3, abean.getProvidedByPosition());
@@ -52,6 +52,7 @@ public class NLESDReferenceExternalManager {
 			stat.setString(34, abean.getDomain3Comments());
 			stat.setString(35, abean.getDomain4Comments());
 			stat.setString(36, abean.getProfile().getUID());
+			stat.setString(37, abean.getEmailAddress());
 			stat.execute();
 			int id = ((OracleCallableStatement) stat).getInt(1);
 			abean.setId(id);
