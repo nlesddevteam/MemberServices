@@ -39,7 +39,7 @@ public class NLESDReferenceExternalBean {
 	private String domain3Comments;
 	private String domain4Comments;
 	private String referenceScale;
-	
+	private String emailAddress;
 	public int getId() {
 		return id;
 	}
@@ -351,6 +351,12 @@ public class NLESDReferenceExternalBean {
 			total++;
 		}
 		return total;
+	}
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 }
 

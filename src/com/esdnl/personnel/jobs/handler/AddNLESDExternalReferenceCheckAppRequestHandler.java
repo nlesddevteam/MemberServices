@@ -12,9 +12,11 @@ import com.awsd.mail.bean.EmailBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.ApplicantRefRequestBean;
 import com.esdnl.personnel.jobs.bean.NLESDReferenceExternalBean;
+import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
 import com.esdnl.personnel.jobs.dao.NLESDReferenceExternalManager;
+import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.PublicAccessRequestHandlerImpl;
@@ -28,11 +30,42 @@ public class AddNLESDExternalReferenceCheckAppRequestHandler extends PublicAcces
 	public AddNLESDExternalReferenceCheckAppRequestHandler() {
 
 		this.validator = new FormValidator(new FormElement[] {
-				new RequiredFormElement("refreqid"), new RequiredFormElement("applicant_id"),
+				new RequiredFormElement("applicant_id"),
 				new RequiredSetValueFormElement("confirm", new String[] {
 						"true"
 				})
-				// TODO: DO WE NEED TO VALIDATE ANYMORE FIELDS
+		});
+		validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("applicant_id"),
+				new RequiredFormElement("ref_provider_name"),
+				new RequiredFormElement("ref_provider_position"),
+				new RequiredFormElement("Q1"),
+				new RequiredFormElement("Q2"),
+				new RequiredFormElement("Q3"),
+				new RequiredFormElement("Q4"),
+				new RequiredFormElement("Scale1"),
+				new RequiredFormElement("Scale2"),
+				new RequiredFormElement("Scale3"),
+				new RequiredFormElement("Scale4"),
+				new RequiredFormElement("Scale5"),
+				new RequiredFormElement("Scale6"),
+				new RequiredFormElement("Scale7"),
+				new RequiredFormElement("Scale8"),
+				new RequiredFormElement("Scale9"),
+				new RequiredFormElement("Scale10"),
+				new RequiredFormElement("Scale11"),
+				new RequiredFormElement("Scale12"),
+				new RequiredFormElement("Scale13"),
+				new RequiredFormElement("Scale14"),
+				new RequiredFormElement("Scale15"),
+				new RequiredFormElement("Scale16"),
+				new RequiredFormElement("Scale17"),
+				new RequiredFormElement("Scale18"),
+				new RequiredFormElement("Scale19"),
+				new RequiredFormElement("Scale20"),
+				new RequiredFormElement("Scale21"),
+				new RequiredFormElement("Scale22"),
+				new RequiredFormElement("ref_provider_email")
 		});
 	}
 
@@ -41,14 +74,19 @@ public class AddNLESDExternalReferenceCheckAppRequestHandler extends PublicAcces
 				IOException {
 
 		super.handleRequest(request, response);
-
+		ApplicantRefRequestBean refReq = null;
+		ReferenceCheckRequestBean rbean = null;
 		if (validate_form()) {
 			try {
-
-				ApplicantRefRequestBean refReq = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("refreqid"));
+				if(form.exists("arefreqid")) {
+					refReq = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("arefreqid"));
+				}else if(form.exists("refreqid")) {
+					rbean = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("refreqid"));
+				}
+				
 				ApplicantProfileBean profile = ApplicantProfileManager.getApplicantProfileBean(form.get("applicant_id"));
 
-				if ((refReq != null) && (profile != null)) {
+				if ((refReq != null || rbean != null) && (profile != null)) {
 					NLESDReferenceExternalBean ref = null;
 					ref = new NLESDReferenceExternalBean();
 					ref.setProfile(profile);
@@ -88,24 +126,51 @@ public class AddNLESDExternalReferenceCheckAppRequestHandler extends PublicAcces
 					ref.setProvidedByPosition(form.get("ref_provider_position"));
 					ref.setReferenceScale("3");
 					ref.setDateProvided(new Date());
-
+					ref.setEmailAddress(form.get("ref_provider_email"));
 					ref = NLESDReferenceExternalManager.addNLESDReferenceExternalBean(ref);
-					//update applicant_ref_request
-					ApplicantRefRequestManager.applicantReferenceCompleted(refReq.getId(), "Reference Completed", ref.getId());
-					//send email to applicant informing it is complete
+					if(form.exists("mancheck")) {
+						//add new request
+						ReferenceCheckRequestBean refreq = new ReferenceCheckRequestBean();
+						refreq.setCandidateId(ref.getProfile().getSIN());
+						refreq.setCompetitionNumber(form.get("jobcomp"));
+						refreq.setCheckRequester(usr.getPersonnel());
+						refreq.setReferenceType("G");
+						refreq.setReferredEmail(ref.getEmailAddress());
+						refreq.setReferenceId(ref.getId());
+						refreq = ReferenceCheckRequestManager.addReferenceCheckRequestBean(refreq);
+						ReferenceCheckRequestManager.updateReferenceCheckRequestBean(refreq);
+					}else if (form.exists("refreqid")) {
+						ReferenceCheckRequestBean refchk = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("refreqid"));
+						if (refchk != null) {
+							refchk.setReferenceId(ref.getId());
+							ReferenceCheckRequestManager.updateReferenceCheckRequestBean(refchk);
+						}
+					}else if (form.exists("arefreqid")) {//now we check to see if there is a related apprefrequest
+						//update applicant_ref_request
+						ApplicantRefRequestManager.applicantReferenceCompleted(refReq.getId(), "Reference Completed", ref.getId());
+						//send email to applicant informing it is complete
 
-					EmailBean ebean = new EmailBean();
-					ebean.setTo(new String[] {
-							profile.getEmail()
-					});
-					ebean.setFrom("ms@nlesd.ca");
-					ebean.setSubject("Reference Check Requested Completed By " + form.get("ref_provider_name"));
-					HashMap<String, Object> model = new HashMap<String, Object>();
-					model.put("reqEmail", form.get("ref_provider_name"));
-					ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/send_applicant_completed_request.vm", model));
-					ebean.send();
+						EmailBean ebean = new EmailBean();
+						ebean.setTo(new String[] {
+								profile.getEmail()
+						});
+						ebean.setFrom("ms@nlesd.ca");
+						ebean.setSubject("Reference Check Requested Completed By " + form.get("ref_provider_name"));
+						HashMap<String, Object> model = new HashMap<String, Object>();
+						model.put("reqEmail", form.get("ref_provider_name"));
+						ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/send_applicant_completed_request.vm", model));
+						ebean.send();
+					}
+					
 
-					request.setAttribute("REFERENCE_BEAN", ref);
+					//request.setAttribute("REFERENCE_BEAN", ref);
+					if(refReq != null) {
+						request.setAttribute("arefreq", refReq);
+					}
+					if(rbean != null) {
+						request.setAttribute("refreq", rbean);
+					}
+					
 					request.setAttribute("PROFILE", ref.getProfile());
 					request.setAttribute("msg", "Reference submitted successfully. Thank you!");
 				}
@@ -114,7 +179,7 @@ public class AddNLESDExternalReferenceCheckAppRequestHandler extends PublicAcces
 					request.setAttribute("FORM", form);
 				}
 
-				path = "view_nlesd_external_reference.jsp";
+				path = "nlesd_external_reference_checklist_app.jsp";
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);

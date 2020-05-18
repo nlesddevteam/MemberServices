@@ -12,9 +12,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+<esd:SecurityCheck
+	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 <%
+	//no mandatory items on page load since hr admin/principal could be loading page to search for 
+	//candidates so profile would be null and no reference request object
 	User usr = (User) session.getAttribute("usr");
-	NLESDReferenceTeacherBean refbean = (NLESDReferenceTeacherBean) request.getAttribute("REFERENCE_BEAN");
 	String val1="1";
 	String val2="2";
 	String val3="3";
@@ -29,6 +32,7 @@
 	pageContext.setAttribute("val4", val4);
 	pageContext.setAttribute("val5", val5);
 	pageContext.setAttribute("refscale", refscale);
+	
 %>
 
 <html>
@@ -36,6 +40,14 @@
 		<title>MyHRP Applicant Profiling System</title>
 		<script>
 			$('document').ready(function(){
+				if($('#hidesearch').val() == 'true'){
+					$('#panelsearch').hide();
+					$('#candidateFound').show();
+					
+				}else{
+					$('#panelsearch').show();
+					$('#candidateFound').hide();
+				}
 				$('#filter_applicant').click(function(){search_applicants();});
 				$('#applicant_filter').change(function(){search_applicants();});
 				$('#applicant_list').change(function(){
@@ -95,20 +107,41 @@
 				
 				$('#btnSubmit').click(function(){
 					var is_valid = true;
-					if($('#applicant_list').val() == -1) {
+					//hide the error messages
+					$('#section0Error').css('display','none');
+					$('#section1Error').css('display','none');
+					$('#section2Error').css('display','none');
+					$('#section3Error').css('display','none');
+					$('#section4Error').css('display','none');
+					$('#section5Error').css('display','none');
+					$('#section6Error').css('display','none');
+					if($("#applicant_list").is(":visible")){
+						if($('#applicant_list').val() == -1) {
+							is_valid = false;
+							$('#searchMsgSuccess').html('Results found. Please select from dropdown list.').css('display','block').delay(6000).fadeOut();
+							$('#candidatesFound').show();	
+							$('#applicant_list').focus();
+						}
+					}
+					if($('#ref_provider_name').val() == ''){
 						is_valid = false;
-						$('#searchMsgSuccess').html('Results found. Please select from dropdown list.').css('display','block').delay(6000).fadeOut();
-						$('#candidatesFound').show();	
-						$('#applicant_list').focus();
-					}					
-					else if($('#ref_provider_name').val() == ''){
-						is_valid = false;
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+						$('#section0Error').html('Please enter Person Providing Reference.')
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_name').focus();
-					} 
-					else if($('#ref_provider_position').val() == ''){
-						is_valid = false;						
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+					}else if($('#ref_provider_email').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter Provider Email.')
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if(!(validateEmailAddress($('#ref_provider_email').val()))){
+						is_valid = false;
+						$('#section0Error').html('Please enter valid Email.')
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if($('#ref_provider_position').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter Position.')
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_position').focus();
 					}
 					
@@ -117,7 +150,7 @@
 							|| !$("input[name='Q5']:checked").val() || !$("input[name='Q6']:checked").val()) {
 						
 						is_valid = false;
-						$('#section1Error').css('display','block').delay(5000).fadeOut();
+						$('#section1Error').css('display','block').delay(5000);
 						$('#Q1').focus();
 					}
 					
@@ -125,7 +158,7 @@
 					else if(!$("input[name='Scale1']:checked").val() || !$("input[name='Scale2']:checked").val() || !$("input[name='Scale3']:checked").val()
 								|| !$("input[name='Scale4']:checked").val() || !$("input[name='Scale5']:checked").val() || !$("input[name='Scale6']:checked").val()) {
 						is_valid = false;
-						$('#section2Error').css('display','block').delay(5000).fadeOut();
+						$('#section2Error').css('display','block').delay(5000);
 						$('#Scale1').focus();	
 					}
 					
@@ -133,7 +166,7 @@
 					else if(!$("input[name='Scale7']:checked").val() || !$("input[name='Scale8']:checked").val() || !$("input[name='Scale9']:checked").val()
 								|| !$("input[name='Scale10']:checked").val() || !$("input[name='Scale11']:checked").val()) {
 						is_valid = false;
-						$('#section3Error').css('display','block').delay(5000).fadeOut();
+						$('#section3Error').css('display','block').delay(5000);
 						$('#Scale7').focus();	
 					}
 					
@@ -141,7 +174,7 @@
 					else if(!$("input[name='Scale12']:checked").val() || !$("input[name='Scale13']:checked").val() || !$("input[name='Scale14']:checked").val()
 							|| !$("input[name='Scale15']:checked").val() || !$("input[name='Scale16']:checked").val()) {
 						is_valid = false;
-						$('#section4Error').css('display','block').delay(5000).fadeOut();
+						$('#section4Error').css('display','block').delay(5000);
 						$('#Scale12').focus();	
 					}
 					
@@ -150,22 +183,29 @@
 					else if(!$("input[name='Scale17']:checked").val() || !$("input[name='Scale18']:checked").val() || !$("input[name='Scale19']:checked").val()
 							|| !$("input[name='Scale20']:checked").val() || !$("input[name='Scale21']:checked").val() || !$("input[name='Scale22']:checked").val()) {
 						is_valid = false;
-						$('#section5Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale17').focus();	
+						$('#section5Error').css('display','block').delay(5000);
+						$('#Scale18').focus();	
 					}					
 					
 					
 					
 					else if($("select[name='Q7']").val() == -1) {
 						is_valid = false;
-						$('#section6Error').css('display','block').delay(5000).fadeOut();
+						$('#section6Error').css('display','block').delay(5000);
 						$("select[name='Q7']").focus();
 					}
 					return is_valid;
 				});
 							
 			});
-
+			function validateEmailAddress(mail) 
+			{
+			 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+			  {
+			    return (true)
+			  }
+			    return (false)
+			}
 			function search_applicants(){
 				if($('#applicant_filter').val() == '') {
 					$('#searchMsgError').html('Please enter search criteria.').css('display','block').delay(4000).fadeOut();					
@@ -244,6 +284,7 @@
 			                            
 <form action="addNLESDTeacherReference.html" method="POST" name="admin_rec_form" id="admin_rec_form">
 			                                	<input type='hidden' name="confirm" value="true" />
+			                                	<input type='hidden' name="hidesearch" id="hidesearch" value='${hidesearch}'>
 			                                	
 			                                	<c:if test="${ REFERENCE_BEAN ne null}">
 			                                		<input type='hidden' name='reference_id' value='${ REFERENCE_BEAN.id }' />
@@ -253,7 +294,7 @@
 									
 <!-- Candidate Information -------------------------------------------------------------------------->			
 									
-<div class="panel panel-success">
+<div class="panel panel-success" id="panelsearch">
   <div class="panel-heading">Candidate Select</div>
   <div class="panel-body">
   								<div id="searchMsgError" class="alert alert-danger" style="text-align:center;display:none;"></div>								
@@ -288,7 +329,8 @@
 							    	<tr>
 									    <td class="tableTitle">NAME:</td>
 									    <td class="tableResult"><span id="candidate_name"></span></td>
-							    	</tr><tr>							    
+							    	</tr>
+							    	<tr>							    
 									    <td class="tableTitle">ADDRESS:</td>
 									    <td class="tableResult"><span id="candidate_address"></span></td>
 							    	</tr><tr>							   
@@ -318,17 +360,105 @@
 <div id="candidateFound" style="display:none;">	
 	
 <div class="panel panel-success">
-  <div class="panel-heading">Referencee Information</div>
+<c:if test="${ mancheck ne null }">
+  <div class="panel-heading">Competition Information</div>
   	<div class="panel-body">
   	<div class="alert alert-danger" id="section0Error" style="display:none;">Please enter the position of the person providing reference.</div>		
-  		<input type="hidden" name="ref_provider_name" value="<%=usr.getPersonnel().getFullName() %>" />	
+  		<input type="hidden" name="mancheck" value="Y" />	
 									<div class="table-responsive"> 
 		      			 	       		<table class="table table-striped table-condensed" style="font-size:12px;">							   
 										    <tbody>
-											    <tr>
-												    <td class="tableTitle">PROVIDING REFERENCE:</td>
-												    <td class="tableResult" style="text-transform:Capitalize;"><%= usr.getPersonnel().getFullNameReverse() %></td>
+										    	<tr style="border-bottom:1px solid silver;">
+												    <td class="tableTitle">COMP. #:</td>
+												    <td class="tableResult">${JOB ne null ? JOB.getCompetitionNumber() : ''}
+												    <input type='hidden' id='jobcomp' name='jobcomp' value="${JOB ne null ? JOB.getCompetitionNumber() : ''}">
+												    </td>
 											    </tr>
+											    <tr>
+												    <td class="tableTitle">REGION:</td>
+												    <td class="tableResult">${ ASS ne null ? ASS[0].getRegionText() :''}</td>
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">POSITION:</td>
+												    <td class="tableResult">${JOB ne null ? JOB.getPositionTitle() : ''}</td>
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">LOCATION:</td>
+												    <td class="tableResult">${ASS ne null ? ASS[0].getLocation() > 0 ? ASS[0].getLocationText() : '' :''}</td>
+											    </tr>
+											    
+										    </tbody>
+									    </table>
+									</div>
+	
+	
+	</div>
+
+</c:if>
+
+
+
+  <div class="panel-heading">Referencee Information</div>
+  	<div class="panel-body">
+  	<div class="alert alert-danger" id="section0Error" style="display:none;">Please enter the position of the person providing reference.</div>
+  		<c:if test="${mancheck eq null }">
+  			<input type="hidden" name="ref_provider_name" value="<%=usr.getPersonnel().getFullName() %>" />	
+  		</c:if>		
+  		
+									<div class="table-responsive"> 
+		      			 	       		<table class="table table-striped table-condensed" style="font-size:12px;">							   
+										    <tbody>
+										    		<c:choose>
+										    		<c:when test="${ arefreq ne null }">
+														<tr>
+												    		<td class="tableTitle">CANDIDATE:</td>
+												    		<td class="tableResult" style="text-transform:Capitalize;">${ arefreq.applicantName }
+												    		<input type='hidden' id='arefreqid' name='arefreqid' value='${ arefreq.id}' />
+												    		<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ arefreq.applicantId }' />	
+												    		</td>
+											    		</tr>
+													</c:when>
+													<c:when test="${ refreq ne null }">
+														<tr>
+												    		<td class="tableTitle">CANDIDATE:</td>
+												    		<td class="tableResult" style="text-transform:Capitalize;">${ refreq.applicantName }
+												    		<input type='hidden' id='refreqid' name='refreqid' value='${ refreq.requestId}' />
+												    		<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ refreq.candidateId }' />
+												    		</td>
+											    		</tr>
+													</c:when>
+													<c:when test="${ mancheck ne null }">
+														<td class="tableTitle">CANDIDATE:</td>
+											    		<td class="tableResult" style="text-transform:Capitalize;">${PROFILE.getFullName()}
+														<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ PROFILE.getSIN()}' />
+													</c:when>
+													</c:choose>
+												<tr>
+												    <td class="tableTitle">PROVIDING REFERENCE:</td>
+												    <c:choose>
+												    	<c:when test="${mancheck ne null}">
+												    		<td class="tableResult"><input type="text" id="ref_provider_name" class="form-control input-sm" placeholder="Enter Provider" name="ref_provider_name" value=""/></td>
+												    	</c:when>
+												    	<c:otherwise>
+												    		<td class="tableResult" style="text-transform:Capitalize;"><%= usr.getPersonnel().getFullNameReverse() %></td>
+												    	</c:otherwise>
+												    </c:choose>
+												    
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">PROVIDER EMAIL:</td>
+												    <c:choose>
+												    	<c:when test="${ arefreq ne null}">
+												    	    <td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ arefreq.emailAddress }"/></td>
+											    		</c:when>
+											    		<c:when test="${ usr ne null}">
+												    	    <td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ mancheck ne null ? '' : usr.personnel.emailAddress }"/></td>
+											    		</c:when>
+											    		<c:otherwise>
+											    			<td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value=""/></td>
+											    		</c:otherwise>
+												    </c:choose>
+												</tr>
 											    <tr style="border-bottom:1px solid silver;">
 												    <td class="tableTitle">POSITION:</td>
 												    <td class="tableResult"><input type="text" id="ref_provider_position" class="form-control input-sm" placeholder="Enter your Job Position" name="ref_provider_position" value='${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.providedByPosition : "" }' /></td>
@@ -363,7 +493,7 @@
 												     <tr>
 													    <td>Q1.</td>
 													    <td>Did the candidate ask permission to use your name as a reference? &nbsp;
-													    <input type="radio" name="Q1" value="Yes" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q1 eq 'Yes' ? "CHECKED" : "" } />Yes &nbsp;  
+													    <input type="radio" name="Q1" id="Q1" value="Yes" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q1 eq 'Yes' ? "CHECKED" : "" } />Yes &nbsp;  
 														<input type="radio" name="Q1" value="No" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q1 eq 'No' ? "CHECKED" : "" } />No
 														</td>
 													 </tr>
@@ -836,7 +966,7 @@ $('#d3c').keypress(function(e) {
 													    <td>S18.</td>
 													    <td>This teacher maintains accurate records:</td>
 													    <td>
-													       	<input type="radio" name="Scale18" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale18 eq val1 ? "CHECKED" : "" } /><%=val1%>  
+													       	<input type="radio" name="Scale18" id="Scale18" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale18 eq val1 ? "CHECKED" : "" } /><%=val1%>  
 															<input type="radio" name="Scale18" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale18 eq val2 ? "CHECKED" : "" } ><%=val2%> 
 															<input type="radio" name="Scale18" value="<%=val3%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale18 eq val3 ? "CHECKED" : "" } ><%=val3%>  
 															<input type="radio" name="Scale18" value="<%=val4%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale18 eq val4 ? "CHECKED" : "" } ><%=val4%>

@@ -43,7 +43,7 @@ public class ReferenceCheckRequestManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createReferenceCheckRequestBean(rs);
+				eBean = createReferenceCheckRequestBean(rs,false);
 
 				v_opps.add(eBean);
 			}
@@ -89,7 +89,7 @@ public class ReferenceCheckRequestManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			if (rs.next())
-				eBean = createReferenceCheckRequestBean(rs);
+				eBean = createReferenceCheckRequestBean(rs,true);
 
 		}
 		catch (SQLException e) {
@@ -244,7 +244,7 @@ public class ReferenceCheckRequestManager {
 		}
 	}
 
-	public static ReferenceCheckRequestBean createReferenceCheckRequestBean(ResultSet rs) {
+	public static ReferenceCheckRequestBean createReferenceCheckRequestBean(ResultSet rs, boolean extra) {
 
 		ReferenceCheckRequestBean abean = null;
 
@@ -261,6 +261,18 @@ public class ReferenceCheckRequestManager {
 				abean.setCheckRequester(PersonnelDB.getPersonnel(rs.getInt("REQUESTER_ID")));
 			}
 			catch (PersonnelException e) {}
+			if(extra) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(rs.getString("SURNAME"));
+				if(rs.getString("MAIDENNAME")!= null) {
+					sb.append("(nee " + rs.getString("MAIDENNAME") + ")");
+				}
+				sb.append(", " + rs.getString("FIRSTNAME"));
+				if(rs.getString("MIDDLENAME")!= null) {
+					sb.append(" " + rs.getString("MIDDLENAME"));
+				}
+				abean.setApplicantName(sb.toString());
+			}
 		}
 		catch (SQLException e) {
 			abean = null;

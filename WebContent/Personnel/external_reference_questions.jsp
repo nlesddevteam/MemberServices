@@ -26,6 +26,7 @@
    				<tr><td class="tableTitle">Candidates Name:</td><td class="tableResult"><%= profile.getFullName() %></td></tr>
 				<tr><td class="tableTitle">Person providing reference:</td><td class="tableResult"><%= ref.getProvidedBy() %></td></tr>
 				<tr><td class="tableTitle">Position:</td><td class="tableResult"><%=ref.getProvidedByPosition() %></td></tr>
+				<tr><td class="tableTitle">Email:</td><td class="tableResult"><%=ref.getEmailAddress()%></td></tr>
 				<tr><td class="tableTitle">Date Provided:</td><td class="tableResult"><%=ref.getDateProvided() %></td></tr>
 				</tbody>
 				</table>
@@ -63,7 +64,7 @@
 													 </tr>
 													 <tr>
 													    <td>Q3.</td>
-													    <td>In what capcity are you able to assess the performance of this candidate?
+													    <td>In what capacity are you able to assess the performance of this candidate?
 														<br/><span class="tableAnswer"><%=ref.getQ3() %></span>
 														</td>
 													 </tr>
@@ -258,7 +259,7 @@
 													 </tr>
 													 <tr>
 													    <td>3e.</td>
-													    <td>Demostrating flexibility and responsiveness:</td>
+													    <td>Demonstrating flexibility and responsiveness:</td>
 													     <td><span class="tableAnswer"><%=ref.getScale16()%></span></td>
 													 </tr>																										
 							                        

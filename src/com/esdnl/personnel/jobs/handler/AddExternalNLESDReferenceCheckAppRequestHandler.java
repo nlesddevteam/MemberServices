@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.ApplicantRefRequestBean;
+import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
+import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.PublicAccessRequestHandlerImpl;
@@ -20,7 +22,7 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 	public AddExternalNLESDReferenceCheckAppRequestHandler() {
 
 		this.validator = new FormValidator(new FormElement[] {
-				new RequiredFormElement("reftype"), new RequiredFormElement("refreq")
+				new RequiredFormElement("reftype")
 		});
 	}
 
@@ -29,27 +31,40 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 				IOException {
 
 		super.handleRequest(request, response);
-
+		ApplicantRefRequestBean abean = null;
+		ReferenceCheckRequestBean rbean = null;
+		ApplicantProfileBean profile= null;
 		if (validate_form()) {
 			try {
-				ApplicantRefRequestBean abean = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("refreq"));
-				ApplicantProfileBean profile = ApplicantProfileManager.getApplicantProfileBean(abean.getApplicantId());
+				if(form.exists("refreq")) {
+					abean = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("refreq"));
+					profile = ApplicantProfileManager.getApplicantProfileBean(abean.getApplicantId());
+				}else if(form.exists("id")) {
+					rbean = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("id"));
+					profile = ApplicantProfileManager.getApplicantProfileBean(rbean.getCandidateId());
+				}
+				
+				
 
-				if ((abean != null) && (profile != null)) {
+				if ((abean != null || rbean != null) && (profile != null)) {
 					String referenceType = form.get("reftype").toString();
 
 					//now we load the correct page
 					//TODO: ARE ALL OF THESE PUBLICALLY AVAILABLE!!!!
+					//admin, guide, and teacher only available to people logged into MS and correct rights
+					//teacher guide and admin to be removed in future after all old links have been completed
 					if (referenceType.equals("admin")) {
-						path = "nlesd_admin_reference_checklist_app.jsp";
+						request.setAttribute("hidesearch",true);
+						path = "add_nlesd_admin_reference.jsp";
 					}
 					else if (referenceType.equals("guide")) {
-						path = "nlesd_guide_reference_checklist_app.jsp";
+						request.setAttribute("hidesearch",true);
+						path = "add_nlesd_guide_reference.jsp";
 					}
 					else if (referenceType.equals("teacher")) {
-						path = "nlesd_teacher_reference_checklist_app.jsp";
-					}
-					else if (referenceType.equals("external")) {
+						request.setAttribute("hidesearch",true);
+						path = "add_nlesd_teacher_reference.jsp";
+					}else if (referenceType.equals("external")) {
 						path = "nlesd_external_reference_checklist_app.jsp";
 					}
 					else if (referenceType.equals("support")) {
@@ -64,7 +79,12 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 					}
 
 					request.setAttribute("PROFILE", profile);
-					request.setAttribute("REFREQUEST", abean);
+					if(abean != null) {
+						request.setAttribute("arefreq", abean);
+					}
+					if(rbean != null) {
+						request.setAttribute("refreq", rbean);
+					}
 				}
 				else {
 					path = "/MemberServices/memberservices.html";

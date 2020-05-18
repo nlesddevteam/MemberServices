@@ -23,7 +23,7 @@ public class NLESDReferenceGuideBean {
 	private String scale8;
 	private String scale9;
 	private String referenceScale;
-	
+	private String emailAddress;
 	public int getId() {
 		return id;
 	}
@@ -197,5 +197,11 @@ public class NLESDReferenceGuideBean {
 		}
 		
 		return total;
+	}
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 }
