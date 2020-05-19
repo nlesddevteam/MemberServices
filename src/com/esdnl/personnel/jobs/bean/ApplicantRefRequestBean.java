@@ -13,6 +13,7 @@ public class ApplicantRefRequestBean {
 	private int fkAppSup;
 	private String referenceType;
 	private String applicantId;
+	private String applicantName;
 	public String getReferenceType() {
 		return referenceType;
 	}
@@ -70,5 +71,11 @@ public class ApplicantRefRequestBean {
 	public String getDateStatusFormatted()
 	{
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.dateStatus);
+	}
+	public String getApplicantName() {
+		return applicantName;
+	}
+	public void setApplicantName(String applicantName) {
+		this.applicantName = applicantName;
 	}
 }

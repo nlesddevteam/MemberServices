@@ -18,7 +18,8 @@
 	redirectTo="/Personnel/admin_index.jsp" />
 	
 <%
-	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("REFREQUEST");
+	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("arefreq");
+	ReferenceCheckRequestBean rbean =(ReferenceCheckRequestBean) request.getAttribute("refreq");
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("PROFILE");
 	
 	String val1="0";
@@ -27,12 +28,6 @@
 	String val4="3";
 	String val5="4";
 	String val6="5";
-	Personnel p = null;
-	try{
-		p = PersonnelDB.getPersonnelByEmail(refReq.getEmailAddress());
-	}catch (Exception e){
-		p=null;
-	}
 	
 %>
 <html>
@@ -43,19 +38,36 @@
 			$('document').ready(function(){
 				$('#btnSubmit').click(function(){
 					var is_valid = true;
+					//hide the error messages
+					$('#section0Error').css('display','none');
+					$('#section1Error').css('display','none');
+					$('#section2Error').css('display','none');
+					$('#section3Error').css('display','none');
 					if($('#ref_provider_name').val() == ''){
 						is_valid = false;
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+						$('#section0Error').html('Please enter Provider.');
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_name').focus();
-					} 
-					else if($('#ref_provider_position').val() == ''){
-						is_valid = false;						
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+					}else if($('#ref_provider_email').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter Provider Email.');
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if(!(validateEmailAddress($('#ref_provider_email').val()))){
+						is_valid = false;
+						$('#section0Error').html('Please enter valid Email.');
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					
+					}else if($('#ref_provider_position').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter Provider Position.');
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_position').focus();
 					}
 					else if(!$("input[name='Q1']:checked").val() || $("input[name='Q2']").val() == '' || $("input[name='Q3']").val() == '') {
 						is_valid = false;
-						$('#section1Error').css('display','block').delay(5000).fadeOut();
+						$('#section1Error').css('display','block').delay(5000);
 						$('#Q1').focus();
 					}
 					else if(!$("input[name='Scale1']:checked").val() || !$("input[name='Scale2']:checked").val() || !$("input[name='Scale3']:checked").val() 
@@ -64,13 +76,14 @@
  							|| !$("input[name='Scale10']:checked").val() || !$("input[name='Scale11']:checked").val() || !$("input[name='Scale12']:checked").val()
 							|| !$("input[name='Scale13']:checked").val() || !$("input[name='Scale14']:checked").val()) {
 						is_valid = false;
-						$('#section2Error').css('display','block').delay(5000).fadeOut();
+						$('#section2Error').css('display','block').delay(5000);
 						$('#Scale1').focus();	
 					}
 					else if($('[name="Q10"]:checked').length <= 0 || $('[name="Q11"]:checked').length <= 0){
 						is_valid = false;
-						$('#section3Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale1').focus();
+						$('#section0Error').html('Please enter anwsers for  Q10 and Q11.');
+						$('#section3Error').css('display','block').delay(5000);
+						$('#Q10').focus();
 					}
 					return is_valid;
 				});
@@ -120,8 +133,7 @@
 			                            
                        <form action="addNLESDSupportReferenceApp.html" method="POST" name="admin_nlesd_rec_form" id="admin_nlesd_rec_form">
 						<input type='hidden' id='applicant_id' name='applicant_id' value='<%= profile.getUID() %>' />
-                      	<input type='hidden' id='confirm' name='confirm' value='true' />
-                          <input type='hidden' id='reqreqid' name='refreqid' value='<%= refReq ==  null ? -1 : refReq.getId() %>' />	
+                      	<input type='hidden' id='confirm' name='confirm' value='true' />	
 
 
 <!-- Referencee Information -------------------------------------------------------------------------->	
@@ -135,19 +147,31 @@
 									<div class="table-responsive"> 
 		      			 	       		<table class="table table-striped table-condensed" style="font-size:12px;">							   
 										    <tbody>
-										        <tr>
-												    <td class="tableTitle">CANDIDATE:</td>
-												    <td class="tableResult" style="text-transform:Capitalize;"><%= profile.getFullName() %></td>
-											    </tr>
-											    <tr>
+										        <c:choose>
+									    		<c:when test="${ arefreq ne null }">
+													<tr>
+											    		<td class="tableTitle">CANDIDATE:</td>
+											    		<td class="tableResult" style="text-transform:Capitalize;">${ arefreq.applicantName }
+											    		<input type='hidden' id='arefreqid' name='arefreqid' value='${ arefreq.id}' />
+											    		<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ arefreq.applicantId }' />	
+											    		</td>
+										    		</tr>
+												</c:when>
+												<c:when test="${ refreq ne null }">
+													<tr>
+											    		<td class="tableTitle">CANDIDATE:</td>
+											    		<td class="tableResult" style="text-transform:Capitalize;">${ refreq.applicantName }
+											    		<input type='hidden' id='refreqid' name='refreqid' value='${ refreq.requestId}' />
+											    		<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ refreq.candidateId }' />
+											    		</td>
+										    		</tr>
+												</c:when>
+												</c:choose>	
+											     <tr>
 												    <td class="tableTitle">PROVIDING REFERENCE:</td>
 												    <td class="tableResult" style="text-transform:Capitalize;">
-											<%if(!(p == null)){ %>
-												<input type="text" name="ref_provider_name" id="ref_provider_name" class="form-control" value="<%=p.getFullName()%>" readonly>
-											<%} else{ %>
-												<input type="text" name="ref_provider_name" id="ref_provider_name" class="form-control">
-											<%}%>
-												    </td>
+														<input type="text" name="ref_provider_name" id="ref_provider_name" class="form-control">
+													</td>
 											    </tr>
 											    <tr style="border-bottom:1px solid silver;">
 												    <td class="tableTitle">POSITION:</td>
@@ -155,6 +179,20 @@
 												    <input type="text" class="form-control" name="ref_provider_position" id="ref_provider_position" placeholder="Enter your Job Title/Position" maxlength="130">												    
 												    </td>
 											    </tr>
+											    <tr>
+												    <td class="tableTitle">PROVIDER EMAIL:</td>
+													<c:choose>
+												    	<c:when test="${ arefreq ne null}">
+												    	    <td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ arefreq.emailAddress }"/></td>
+											    		</c:when>
+											    		<c:when test="${ refreq ne null}">
+												    	    <td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ refreq.getReferrerEmail()}"/></td>
+											    		</c:when>
+											    		<c:otherwise>
+											    			<td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value=""/></td>
+											    		</c:otherwise>
+												    </c:choose>
+												</tr>
 										    </tbody>
 									    </table>
 									</div>
@@ -330,7 +368,7 @@
 													 </tr>					
 													 <tr>
 													    <td>9.</td>
-													    <td>Ability to work independetly with minimum supervision</td>
+													    <td>Ability to work independently with minimum supervision</td>
 													    <td>
 													    <input type="radio" name="Scale9" value="<%=val1%>"> <%=val1%>
 														<input type="radio" name="Scale9" value="<%=val2%>"> <%=val2%>
@@ -342,7 +380,7 @@
 													 </tr>	
 													 <tr>
 													    <td>10.</td>
-													    <td>Open to contructive criticism and advice</td>
+													    <td>Open to constructive criticism and advice</td>
 													    <td>
 													    <input type="radio" name="Scale10" value="<%=val1%>"> <%=val1%>
 														<input type="radio" name="Scale10" value="<%=val2%>"> <%=val2%>
@@ -376,7 +414,7 @@
 														<input type="radio" name="Scale12" value="<%=val6%>"> <%=val6%>
 														</td>
 													 </tr>																		
-													 <tr>
+													 <tr style="display:none;">
 													    <td>13.</td>
 													    <td>Personal appearance and hygiene</td>
 													    <td>
@@ -385,11 +423,11 @@
 														<input type="radio" name="Scale13" value="<%=val3%>"> <%=val3%>
 														<input type="radio" name="Scale13" value="<%=val4%>"> <%=val4%>
 														<input type="radio" name="Scale13" value="<%=val5%>"> <%=val5%>
-														<input type="radio" name="Scale13" value="<%=val6%>"> <%=val6%>
+														<input type="radio" name="Scale13" value="<%=val6%>" checked> <%=val6%>
 														</td>
 													 </tr>						
 													 <tr>
-													    <td>14.</td>
+													    <td>13.</td>
 													    <td>Indvidual's performance compared to others with similar duties</td>
 													    <td>
 													    <input type="radio" name="Scale14" value="<%=val1%>"> <%=val1%>
@@ -431,7 +469,7 @@
 													   	<td>Q4.</td>
 													    <td>
 													    Please give a brief description of the applicant's duties while in your employ<br/>
-													    <div id="Q4_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q4_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q4" id="Q4" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q4_remain">2450</span></div>
 													    </td>
@@ -440,7 +478,7 @@
 													   	<td>Q5.</td>
 													    <td>
 													    Please comment on the applicant's strengths<br/>
-													    <div id="Q5_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q5_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q5" id="Q5" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q5_remain">2450</span></div>
 													    </td>
@@ -449,7 +487,7 @@
 													   	<td>Q6.</td>
 													    <td>
 													    Please comment on the applicant's weaknesses<br/>
-													    <div id="Q6_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q6_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q6" id="Q6" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q6_remain">2450</span></div>
 													    </td>
@@ -460,7 +498,7 @@
 																	<input type="radio" name="Q7" value="Yes">Yes &nbsp; 
 																	<input type="radio" name="Q7" value="No">No
 													    <br/>If yes, please comment<br/>
-													    <div id="Q7_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q7_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q7C" id="Q7C" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q7_remain">2450</span></div>
 													    </td>
@@ -471,7 +509,7 @@
 																	<input type="radio" name="Q8" value="Yes">Yes &nbsp; 
 																	<input type="radio" name="Q8" value="No">No
 													    <br/>If yes, please comment<br/>
-													    <div id="Q8_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q8_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q8C" id="Q8C" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q8_remain">2450</span></div>
 													    </td>
@@ -480,14 +518,14 @@
 													   	<td>Q9.</td>
 													    <td>
 													    What was the applicant's reason for leaving you employ?
-													    <div id="Q9_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q9_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q9" id="Q9" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q9_remain">2450</span></div>
 													    </td>
 													 </tr>
 												      <tr>
 													   	<td>Q10.</td>
-													    <td>Would you hire/rehire the applicant? <input type="radio" name="Q10" value="Yes">Yes &nbsp; <input type="radio" name="Q10" value="No">No
+													    <td>Would you hire/rehire the applicant? <input type="radio" name="Q10" id="Q10" value="Yes">Yes &nbsp; <input type="radio" name="Q10" value="No">No
 													    </td>
 													 </tr>
 													 <tr>
@@ -504,7 +542,7 @@
 													 <tr>
 													   	<td>Q12.</td>
 													    <td>Thank you for taking the time to provide this reference.<br/>Is there any other information you'd like to provide that might be helpful in making a hiring decision?
-													   <div id="Q12_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													   <div id="Q12_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 													    <textarea name="Q12" id="Q12" class="form-control"></textarea>
 													    <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q12_remain">2450</span></div>
 													    	

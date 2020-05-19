@@ -192,7 +192,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 
 		SchoolZoneBean zone = null;
 
-		if (this.getLocation() < 0) {
+		if (this.getLocation() <= 0) {
 			try {
 				switch (this.location) {
 				case -3000:

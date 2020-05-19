@@ -9,20 +9,53 @@ import com.esdnl.personnel.jobs.bean.ApplicantEducationOtherBean;
 import com.esdnl.personnel.jobs.bean.ApplicantEsdExperienceBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
-import com.esdnl.personnel.jobs.bean.NLESDReferenceAdminBean;
 import com.esdnl.personnel.jobs.bean.NLESDReferenceExternalBean;
 import com.esdnl.personnel.jobs.dao.ApplicantEducationOtherManager;
 import com.esdnl.personnel.jobs.dao.ApplicantEsdExperienceManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
-import com.esdnl.personnel.jobs.dao.NLESDReferenceAdminManager;
 import com.esdnl.personnel.jobs.dao.NLESDReferenceExternalManager;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.util.StringUtils;
 public class AddNLESDExternalReferenceCheckRequestHandler extends RequestHandlerImpl {
 	public AddNLESDExternalReferenceCheckRequestHandler() {
 		requiredPermissions = new String[] {
 				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
 		};
+		validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("applicant_id"),
+				new RequiredFormElement("ref_provider_name"),
+				new RequiredFormElement("ref_provider_position"),
+				new RequiredFormElement("Q1"),
+				new RequiredFormElement("Q2"),
+				new RequiredFormElement("Q3"),
+				new RequiredFormElement("Q4"),
+				new RequiredFormElement("Scale1"),
+				new RequiredFormElement("Scale2"),
+				new RequiredFormElement("Scale3"),
+				new RequiredFormElement("Scale4"),
+				new RequiredFormElement("Scale5"),
+				new RequiredFormElement("Scale6"),
+				new RequiredFormElement("Scale7"),
+				new RequiredFormElement("Scale8"),
+				new RequiredFormElement("Scale9"),
+				new RequiredFormElement("Scale10"),
+				new RequiredFormElement("Scale11"),
+				new RequiredFormElement("Scale12"),
+				new RequiredFormElement("Scale13"),
+				new RequiredFormElement("Scale14"),
+				new RequiredFormElement("Scale15"),
+				new RequiredFormElement("Scale16"),
+				new RequiredFormElement("Scale17"),
+				new RequiredFormElement("Scale18"),
+				new RequiredFormElement("Scale19"),
+				new RequiredFormElement("Scale20"),
+				new RequiredFormElement("Scale21"),
+				new RequiredFormElement("Scale22"),
+				new RequiredFormElement("ref_provider_email")
+		});
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -89,7 +122,7 @@ public class AddNLESDExternalReferenceCheckRequestHandler extends RequestHandler
 			path = null;
 		}
 
-		else if (form.hasValue("confirm", "true")) {
+		else if (form.hasValue("confirm", "true") && validate_form()) {
 			try {
 				NLESDReferenceExternalBean ref = null;
 				ref = new NLESDReferenceExternalBean();
@@ -134,6 +167,7 @@ public class AddNLESDExternalReferenceCheckRequestHandler extends RequestHandler
 				ref.setDomain4Comments(form.get("d4c"));
 				ref.setProvidedBy(form.get("ref_provider_name"));
 				ref.setProvidedByPosition(form.get("ref_provider_position"));
+				ref.setEmailAddress(form.get("ref_provider_email"));
 				ref.setReferenceScale("3");
 				Date d = new Date();
 				ref.setDateProvided(d);
@@ -148,7 +182,7 @@ public class AddNLESDExternalReferenceCheckRequestHandler extends RequestHandler
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");
-				path = "view_nlesd_external_reference.jsp";
+				path = "add_nlesd_external_reference.jsp";
 
 			}
 			catch (Exception e) {

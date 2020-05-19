@@ -15,6 +15,7 @@ public class ReferenceCheckRequestBean {
 	private Date request_date;
 	private Personnel requester;
 	private String referenceType;
+	private String applicantName;
 	
 	
 	public ReferenceCheckRequestBean(){
@@ -140,5 +141,13 @@ public class ReferenceCheckRequestBean {
 		
 		return scale;
 		
+	}
+
+	public String getApplicantName() {
+		return applicantName;
+	}
+
+	public void setApplicantName(String applicantName) {
+		this.applicantName = applicantName;
 	}
 }

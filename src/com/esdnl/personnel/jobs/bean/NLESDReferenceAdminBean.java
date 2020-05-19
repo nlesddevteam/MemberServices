@@ -33,7 +33,7 @@ public class NLESDReferenceAdminBean {
 	private String domain2Comments;
 	private String domain3Comments;
 	private String referenceScale;
-	
+	private String emailAddress;
 	public int getId() {
 		return id;
 	}
@@ -296,6 +296,12 @@ public class NLESDReferenceAdminBean {
 	}
 	public void setReferenceScale(String referenceScale) {
 		this.referenceScale = referenceScale;
+	}
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 }

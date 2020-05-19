@@ -14,24 +14,19 @@
 			<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 			<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%
-	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("REFREQUEST");
+	ApplicantRefRequestBean refReq = (ApplicantRefRequestBean) request.getAttribute("arefreq");
+	ReferenceCheckRequestBean rbean =(ReferenceCheckRequestBean) request.getAttribute("refreq");
 	ApplicantProfileBean profile = (ApplicantProfileBean) request.getAttribute("PROFILE");
 	
-	if((refReq == null) || (profile == null)) {
+	if((refReq == null && rbean == null) || (profile == null)) {
 		response.sendRedirect("/MemberServices/memberservices.html");
 	}
 	
-  String val1="0";
+  	String val1="0";
 	String val2="1";
 	String val3="2";
 	String val4="3";
-	Personnel p = null;
-	try{
-		p = PersonnelDB.getPersonnelByEmail(refReq.getEmailAddress());
-	}
-	catch (Exception e){
-		p=null;
-	}
+	
 	
 	
 %>
@@ -47,45 +42,55 @@
 					var is_valid = true;
 					if($('#ref_provider_name').val() == ''){
 						is_valid = false;
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_name').focus();
-					} 
-					else if($('#ref_provider_position').val() == ''){
-						is_valid = false;						
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+					}else if($('#ref_provider_email').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter Provider Email.')
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if(!(validateEmailAddress($('#ref_provider_email').val()))){
+						is_valid = false;
+						$('#section0Error').html('Please enter valid Email.')
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if($('#ref_provider_position').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter provider position.');
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_position').focus();
 					}
 					else if(!$("input[name='Q1']:checked").val() || $("input[name='Q2']").val() == '' || $("input[name='Q3']").val() == '' || $("textarea[name='Q4']").val() == '') {
 						is_valid = false;
-						$('#section1Error').css('display','block').delay(5000).fadeOut();
+						$('#section1Error').css('display','block').delay(5000);
 						$('#Q1').focus();
 					}
 					else if(!$("input[name='Scale1']:checked").val() || !$("input[name='Scale2']:checked").val() || !$("input[name='Scale3']:checked").val() || !$("input[name='Scale4']:checked").val()										
 							|| !$("input[name='Scale5']:checked").val() || !$("input[name='Scale6']:checked").val()) {
-						$('#section2Error').css('display','block').delay(5000).fadeOut();
+						$('#section2Error').css('display','block').delay(5000);
 						$('#Scale1').focus();
 						is_valid = false;
 					}		
 					else if(!$("input[name='Scale7']:checked").val() || !$("input[name='Scale8']:checked").val()
 							|| !$("input[name='Scale9']:checked").val() || !$("input[name='Scale10']:checked").val() || !$("input[name='Scale11']:checked").val()) {
-						$('#section3Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale1').focus();
+						$('#section3Error').css('display','block').delay(5000);
+						$('#Scale7').focus();
 						is_valid = false;
 						
 					} else if(!$("input[name='Scale12']:checked").val()
 							|| !$("input[name='Scale13']:checked").val() || !$("input[name='Scale14']:checked").val() || !$("input[name='Scale15']:checked").val() || !$("input[name='Scale16']:checked").val()) {
-						$('#section4Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale1').focus();
+						$('#section4Error').css('display','block').delay(5000);
+						$('#Scale12').focus();
 						is_valid = false;
 					} else if (!$("input[name='Scale17']:checked").val() || !$("input[name='Scale18']:checked").val() || !$("input[name='Scale19']:checked").val() || !$("input[name='Scale20']:checked").val()
 							|| !$("input[name='Scale21']:checked").val() || !$("input[name='Scale22']:checked").val()) {
 						is_valid = false;
-						$('#section5Error').css('display','block').delay(5000).fadeOut();
-						$('#S1').focus();
+						$('#section5Error').css('display','block').delay(5000);
+						$('#Scale17').focus();
 					}
 					else if($('[name="radQ7"]:checked').length <= 0){
 						is_valid = false;
-						$('#section6Error').css('display','block').delay(5000).fadeOut;
+						$('#section6Error').css('display','block').delay(5000);
 						$("select[name='radQ7']").focus();
 					}
 					return is_valid;
@@ -122,7 +127,6 @@
 			                                <form action="addNLESDExternalReferenceApp.html" method="POST" name="admin_nlesd_rec_form" id="admin_nlesd_rec_form">
 												<input type='hidden' id='applicant_id' name='applicant_id' value='<%= profile.getUID() %>' />
 			                                	<input type='hidden' id='confirm' name='confirm' value='true' />
-			                                    <input type='hidden' id='reqreqid' name='refreqid' value='<%= refReq.getId() %>' />	
 												
 
 <!-- Referencee Information -------------------------------------------------------------------------->	
@@ -136,10 +140,26 @@
 									<div class="table-responsive"> 
 		      			 	       		<table class="table table-striped table-condensed" style="font-size:12px;">							   
 										    <tbody>
-										        <tr>
-												    <td class="tableTitle">CANDIDATE:</td>
-												    <td class="tableResult" style="text-transform:Capitalize;"><%= profile.getFullName() %></td>
-											    </tr>											    
+										        <c:choose>
+									    		<c:when test="${ arefreq ne null }">
+													<tr>
+											    		<td class="tableTitle">CANDIDATE:</td>
+											    		<td class="tableResult" style="text-transform:Capitalize;">${ arefreq.applicantName }
+											    		<input type='hidden' id='arefreqid' name='arefreqid' value='${ arefreq.id}' />
+											    		<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ arefreq.applicantId }' />	
+											    		</td>
+										    		</tr>
+												</c:when>
+												<c:when test="${ refreq ne null }">
+													<tr>
+											    		<td class="tableTitle">CANDIDATE:</td>
+											    		<td class="tableResult" style="text-transform:Capitalize;">${ refreq.applicantName }
+											    		<input type='hidden' id='refreqid' name='refreqid' value='${ refreq.requestId}' />
+											    		<input type='hidden' name='rapplicant_id' id='rapplicant_id' value='${ refreq.candidateId }' />
+											    		</td>
+										    		</tr>
+												</c:when>
+											</c:choose>											    
 											    <tr>
 												    <td class="tableTitle">PROVIDING REFERENCE:</td>
 												    <td class="tableResult" style="text-transform:Capitalize;">
@@ -153,6 +173,20 @@
 												    <input type="text" class="form-control" name="ref_provider_position" id="ref_provider_position" placeholder="Enter your Job Title/Position" maxlength="130">												    
 												    </td>
 											    </tr>
+											    <tr>
+												    <td class="tableTitle">PROVIDER EMAIL:</td>
+													<c:choose>
+												    	<c:when test="${ arefreq ne null}">
+												    	    <td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ arefreq.emailAddress }"/></td>
+											    		</c:when>
+											    		<c:when test="${ refreq ne null}">
+												    	    <td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ refreq.getReferrerEmail()}"/></td>
+											    		</c:when>
+											    		<c:otherwise>
+											    			<td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value=""/></td>
+											    		</c:otherwise>
+												    </c:choose>
+												</tr>
 										    </tbody>
 									    </table>
 									</div>
@@ -179,7 +213,7 @@
 												     <tr>
 													    <td>Q1.</td>
 													    <td>Did the candidate ask permission to use your name as a reference? &nbsp; 
-														<input type="radio" name="Q1" value="Yes">Yes  &nbsp; 
+														<input type="radio" name="Q1" id="Q1" value="Yes">Yes  &nbsp; 
 														<input type="radio" name="Q1" value="No">No
 														</td>
 													 </tr>
@@ -191,7 +225,7 @@
 													 </tr>
 													 <tr>
 													    <td>Q3.</td>
-													    <td>In what capcity are you able to assess the performance of this candidate?
+													    <td>In what capacity are you able to assess the performance of this candidate?
 														<input type="text" name="Q3" class="form-control input-sm" value="" />
 														</td>
 													 </tr>
@@ -234,7 +268,7 @@
 													    <td>1a.</td>
 													    <td>Demonstrating knowledge of content and pedagogy:</td>
 													    <td>
-														   	<input type="radio" name="Scale1" value="<%=val1%>"> <%=val1%> 
+														   	<input type="radio" name="Scale1" id="Scale1" value="<%=val1%>"> <%=val1%> 
 															<input type="radio" name="Scale1" value="<%=val2%>"> <%=val2%>
 															<input type="radio" name="Scale1" value="<%=val3%>"> <%=val3%>
 															<input type="radio" name="Scale1" value="<%=val4%>"> <%=val4%>
@@ -293,7 +327,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d1c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d1c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d1c" name="d1c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain1Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d1c_remain">2450</span></div>
 													     </td>
@@ -330,7 +364,7 @@
 													    <td>2a.</td>
 													    <td>Creating an environment of respect and rapport:</td>
 													    <td>
-														   	<input type="radio" name="Scale7" value="<%=val1%>"> <%=val1%> 
+														   	<input type="radio" name="Scale7" id="Scale7" value="<%=val1%>"> <%=val1%> 
 															<input type="radio" name="Scale7" value="<%=val2%>"> <%=val2%>
 															<input type="radio" name="Scale7" value="<%=val3%>"> <%=val3%>
 															<input type="radio" name="Scale7" value="<%=val4%>"> <%=val4%>
@@ -380,7 +414,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d2c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d2c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d2c" name="d2c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain2Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d2c_remain">2450</span></div>
 													     </td>
@@ -418,7 +452,7 @@
 													    <td>3a.</td>
 													    <td>Communicating clearly and accurately:</td>
 													    <td>
-														   	<input type="radio" name="Scale12" value="<%=val1%>"> <%=val1%> 
+														   	<input type="radio" name="Scale12" id="Scale12" value="<%=val1%>"> <%=val1%> 
 															<input type="radio" name="Scale12" value="<%=val2%>"> <%=val2%>
 															<input type="radio" name="Scale12" value="<%=val3%>"> <%=val3%>
 															<input type="radio" name="Scale12" value="<%=val4%>"> <%=val4%>
@@ -456,7 +490,7 @@
 													 </tr>
 													 <tr>
 													    <td>3e.</td>
-													    <td>Demostrating flexibility and responsiveness:</td>
+													    <td>Demonstrating flexibility and responsiveness:</td>
 													    <td>
 														   	<input type="radio" name="Scale16" value="<%=val1%>"> <%=val1%> 
 															<input type="radio" name="Scale16" value="<%=val2%>"> <%=val2%>
@@ -468,7 +502,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d3c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d3c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d3c" name="d3c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain3Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d3c_remain">2450</span></div>
 													     </td>
@@ -506,7 +540,7 @@
 													    <td>4a.</td>
 													    <td>Reflecting on teaching:</td>
 													    <td>
-														   	<input type="radio" name="Scale17" value="<%=val1%>"> <%=val1%> 
+														   	<input type="radio" name="Scale17" id="Scale17" value="<%=val1%>"> <%=val1%> 
 															<input type="radio" name="Scale17" value="<%=val2%>"> <%=val2%>
 															<input type="radio" name="Scale17" value="<%=val3%>"> <%=val3%>
 															<input type="radio" name="Scale17" value="<%=val4%>"> <%=val4%>
@@ -565,7 +599,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d4c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d4c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d4c" name="d4c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain4Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d4c_remain">2450</span></div>
 													     </td>
@@ -606,7 +640,7 @@
 													 <tr>
 													   	<td colspan=2>
 													   	Additional Comments:
-								<div id="Q7_Comment_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+								<div id="Q7_Comment_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 								<textarea class="form-control" id="Q7_Comment" name="Q7_Comment">${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q7Comment ne null ? REFERENCE_BEAN.q7Comment : "" }</textarea>
 								<div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q7_Comment_remain">2450</span></div>
 													   	</td>													    

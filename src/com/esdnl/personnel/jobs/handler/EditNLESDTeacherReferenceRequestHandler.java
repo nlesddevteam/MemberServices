@@ -64,6 +64,7 @@ public class EditNLESDTeacherReferenceRequestHandler extends RequestHandlerImpl 
 				}
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
+				request.setAttribute("hidesearch",true);
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);

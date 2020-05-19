@@ -52,6 +52,10 @@
 							<td class="tableResult"><%=ref.getProvidedBy()%></td>
 						</tr>
 						<tr>
+							<td class="tableTitle">Email:</td>
+							<td class="tableResult"><%=ref.getEmailAddress()%></td>
+						</tr>
+						<tr>
 							<td class="tableTitle">Position:</td>
 							<td class="tableResult"><%=ref.getProvidedByPosition()%></td>
 						</tr>

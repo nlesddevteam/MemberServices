@@ -15,7 +15,7 @@ public class NLESDReferenceGuideManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_ref_chk_gui(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_ref_chk_gui(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, abean.getProvidedBy());
 			stat.setString(3, abean.getProvidedByPosition());
@@ -36,6 +36,7 @@ public class NLESDReferenceGuideManager {
 			stat.setString(18, abean.getScale8());
 			stat.setString(19, abean.getScale9());
 			stat.setString(20, abean.getProfile().getUID());
+			stat.setString(21, abean.getEmailAddress());
 			stat.execute();
 			int id = ((OracleCallableStatement) stat).getInt(1);
 			abean.setId(id);
@@ -103,7 +104,7 @@ public class NLESDReferenceGuideManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_ref_chk_gui(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_ref_chk_gui(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, abean.getProvidedBy());
 			stat.setString(2, abean.getProvidedByPosition());
 			stat.setString(3, abean.getQ1());
@@ -124,6 +125,7 @@ public class NLESDReferenceGuideManager {
 			stat.setString(18, abean.getScale9());
 			stat.setString(19, abean.getProfile().getUID());
 			stat.setInt(20, abean.getId());
+			stat.setString(21, abean.getEmailAddress());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -173,6 +175,7 @@ public class NLESDReferenceGuideManager {
 			abean.setScale8(rs.getString("SCALE8"));
 			abean.setScale9(rs.getString("SCALE9"));
 			abean.setReferenceScale(rs.getString("REFERENCE_SCALE"));
+			abean.setEmailAddress(rs.getString("PROVIDER_EMAIL"));
 			abean.setProfile(ApplicantProfileManager.createApplicantProfileBean(rs));
 		}
 		catch (SQLException e) {

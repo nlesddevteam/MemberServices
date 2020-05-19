@@ -12,21 +12,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
+<esd:SecurityCheck
+	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 <%
 	User usr = (User) session.getAttribute("usr");
-	NLESDReferenceExternalBean refbean = (NLESDReferenceExternalBean) request.getAttribute("REFERENCE_BEAN");
 	String val1="0";
 	String val2="1";
 	String val3="2";
 	String val4="3";
-	if(!(refbean == null)){
-		if(refbean.getReferenceScale().equals("4")){
-			val1="1";
-			val2="2";
-			val3="3";
-			val4="4";
-		}
-	}
 	pageContext.setAttribute("val1", val1);
 	pageContext.setAttribute("val2", val2);
 	pageContext.setAttribute("val3", val3);
@@ -39,6 +32,14 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<script>
 			$('document').ready(function(){
+				if($('#hidesearch').val() == 'true'){
+					$('#panelsearch').hide();
+					$('#candidateFound').show();
+					
+				}else{
+					$('#panelsearch').show();
+					$('#candidateFound').hide();
+				}
 				$('#filter_applicant').click(function(){search_applicants();});
 				$('#applicant_filter').change(function(){search_applicants();});
 				$('#applicant_list').change(function(){
@@ -98,6 +99,13 @@
 
 				$('#btnSubmit').click(function(){
 					var is_valid = true;
+					//hide the error messages
+					$('#section0Error').css('display','none');
+					$('#section1Error').css('display','none');
+					$('#section2Error').css('display','none');
+					$('#section3Error').css('display','none');
+					$('#section4Error').css('display','none');
+					$('#section5Error').css('display','none');
 					if($('#applicant_list').val() == -1) {
 						is_valid = false;
 						$('#searchMsgSuccess').html('Results found. Please select from dropdown list.').css('display','block').delay(6000).fadeOut();
@@ -106,44 +114,57 @@
 					}					
 					else if($('#ref_provider_name').val() == ''){
 						is_valid = false;
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_name').focus();
-					} 
-					else if($('#ref_provider_position').val() == ''){
-						is_valid = false;						
-						$('#section0Error').css('display','block').delay(5000).fadeOut();
+					}else if($('#ref_provider_email').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter Provider Email.')
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if(!(validateEmailAddress($('#ref_provider_email').val()))){
+						is_valid = false;
+						$('#section0Error').html('Please enter valid Email.')
+						$('#section0Error').css('display','block').delay(5000);
+						$('#ref_provider_email').focus();
+					}else if($('#ref_provider_position').val() == ''){
+						is_valid = false;
+						$('#section0Error').html('Please enter provider position.');
+						$('#section0Error').css('display','block').delay(5000);
 						$('#ref_provider_position').focus();
 					}
 					else if(!$("input[name='Q1']:checked").val() || $("input[name='Q2']").val() == '' || $("input[name='Q3']").val() == '' || $("textarea[name='Q4']").val() == '') {
 						is_valid = false;
-						$('#section1Error').css('display','block').delay(5000).fadeOut();
+						$('#section1Error').css('display','block').delay(5000);
 						$('#Q1').focus();
 					}
 					else if(!$("input[name='Scale1']:checked").val() || !$("input[name='Scale2']:checked").val() || !$("input[name='Scale3']:checked").val() || !$("input[name='Scale4']:checked").val()										
 							|| !$("input[name='Scale5']:checked").val() || !$("input[name='Scale6']:checked").val()) {
-						$('#section2Error').css('display','block').delay(5000).fadeOut();
+						is_valid = false;
+						$('#section2Error').css('display','block').delay(5000);
 						$('#Scale1').focus();		
 					}		
 					else if(!$("input[name='Scale7']:checked").val() || !$("input[name='Scale8']:checked").val()
 							|| !$("input[name='Scale9']:checked").val() || !$("input[name='Scale10']:checked").val() || !$("input[name='Scale11']:checked").val()) {
-						$('#section3Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale1').focus();
+						is_valid = false;
+						$('#section3Error').css('display','block').delay(5000);
+						$('#Scale7').focus();
 						
 						
 					} else if(!$("input[name='Scale12']:checked").val()
 							|| !$("input[name='Scale13']:checked").val() || !$("input[name='Scale14']:checked").val() || !$("input[name='Scale15']:checked").val() || !$("input[name='Scale16']:checked").val()) {
-						$('#section4Error').css('display','block').delay(5000).fadeOut();
-						$('#Scale1').focus();
+						is_valid = false;
+						$('#section4Error').css('display','block').delay(5000);
+						$('#Scale12').focus();
 						
 					} else if (!$("input[name='Scale17']:checked").val() || !$("input[name='Scale18']:checked").val() || !$("input[name='Scale19']:checked").val() || !$("input[name='Scale20']:checked").val()
 							|| !$("input[name='Scale21']:checked").val() || !$("input[name='Scale22']:checked").val()) {
 						is_valid = false;
-						$('#section5Error').css('display','block').delay(5000).fadeOut();
-						$('#S1').focus();
+						$('#section5Error').css('display','block').delay(5000);
+						$('#S17').focus();
 					}
 					else if($('[name="radQ7"]:checked').length <= 0){
 						is_valid = false;
-						$('#section6Error').css('display','block').delay(5000).fadeOut;
+						$('#section6Error').css('display','block').delay(5000);
 						$("select[name='radQ7']").focus();
 					}
 					return is_valid;
@@ -223,13 +244,13 @@
 			                            
                        <form action="addNLESDExternalReference.html" method="POST" name="admin_rec_form" id="admin_rec_form">
                        	<input type='hidden' name="confirm" value="true" />
-                       	
+                       	<input type='hidden' name="hidesearch" id="hidesearch" value='${hidesearch}'>
                        	<c:if test="${ REFERENCE_BEAN ne null}">
                        		<input type='hidden' name='reference_id' value='${ REFERENCE_BEAN.id }' />
                        	</c:if>
 
 
-<div class="panel panel-success">
+<div class="panel panel-success" id="panelsearch">
   <div class="panel-heading">Candidate Select</div>
   <div class="panel-body">
   								<div id="searchMsgError" class="alert alert-danger" style="text-align:center;display:none;"></div>								
@@ -264,12 +285,12 @@
 									    <td class="tableTitle">NAME:</td>
 									    <td class="tableResult"><span id="candidate_name"></span></td>
 							    	</tr>
-							    	<!-- Hide this info for external reference -->
-							    	<tr style="display:none;">							    
+							    	<!-- internal form used in member services no external access -->
+							    	<tr>							    
 									    <td class="tableTitle">ADDRESS:</td>
 									    <td class="tableResult"><span id="candidate_address"></span></td>
 							    	</tr>
-							    	<tr style="display:none;">								   
+							    	<tr>								   
 			                            <td class="tableTitle">TELEPHONE:</td>
 									    <td class="tableResult"><span id="candidate_telephone"></span></td>					    
 							   		</tr>
@@ -294,6 +315,41 @@
 
 
 <div class="panel panel-success">
+<c:if test="${ mancheck ne null }">
+  <div class="panel-heading">Competition Information</div>
+  	<div class="panel-body">
+  	<div class="alert alert-danger" id="section0Error" style="display:none;">Please enter the position of the person providing reference.</div>		
+  		<input type="hidden" name="mancheck" value="Y" />	
+									<div class="table-responsive"> 
+		      			 	       		<table class="table table-striped table-condensed" style="font-size:12px;">							   
+										    <tbody>
+										    	<tr style="border-bottom:1px solid silver;">
+												    <td class="tableTitle">COMP. #:</td>
+												    <td class="tableResult">${JOB ne null ? JOB.getCompetitionNumber() : ''}
+												    <input type='hidden' id='jobcomp' name='jobcomp' value="${JOB ne null ? JOB.getCompetitionNumber() : ''}">
+												    </td>
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">REGION:</td>
+												    <td class="tableResult">${ ASS ne null ? ASS[0].getRegionText() :''}</td>
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">POSITION:</td>
+												    <td class="tableResult">${JOB ne null ? JOB.getPositionTitle() : ''}</td>
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">LOCATION:</td>
+												    <td class="tableResult">${ASS ne null ? ASS[0].getLocation() > 0 ? ASS[0].getLocationText() : '' :''}</td>
+											    </tr>
+											    
+										    </tbody>
+									    </table>
+									</div>
+	
+	
+	</div>
+
+</c:if>
   <div class="panel-heading">Referencee Information</div>
   	<div class="panel-body">
   	<div class="alert alert-danger" id="section0Error" style="display:none;">Please enter the Position of the person providing reference.</div>		
@@ -308,6 +364,10 @@
 											    <tr style="border-bottom:1px solid silver;">
 												    <td class="tableTitle">POSITION:</td>
 												    <td class="tableResult"><input type="text" id="ref_provider_position" class="form-control input-sm" placeholder="Enter your Job Position" name="ref_provider_position" value='${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.providedByPosition : "" }' /></td>
+											    </tr>
+											    <tr>
+												    <td class="tableTitle">PROVIDER EMAIL:</td>
+												   	<td class="tableResult"><input type="text" id="ref_provider_email" class="form-control input-sm" placeholder="Enter your Email" name="ref_provider_email" value="${ usr.personnel.emailAddress }"/></td>
 											    </tr>
 										    </tbody>
 									    </table>
@@ -334,7 +394,7 @@
 												     <tr>
 													    <td>Q1.</td>
 													    <td>Did the candidate ask permission to use your name as a reference? &nbsp; 
-														<input type="radio" name="Q1" value="Yes" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q1 eq 'Yes' ? "CHECKED" : "" } />Yes  &nbsp; 
+														<input type="radio" name="Q1" id="Q1" value="Yes" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q1 eq 'Yes' ? "CHECKED" : "" } />Yes  &nbsp; 
 														<input type="radio" name="Q1" value="No" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q1 eq 'No' ? "CHECKED" : "" } />No
 														</td>
 													 </tr>
@@ -353,7 +413,7 @@
 													 <tr>
 													    <td>Q4.</td>
 													    <td>In which subjects/classes have you observed the candidate's performance?
-													    <div id="Q4_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+													    <div id="Q4_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 														<textarea name="Q4"  id="Q4" class="form-control">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.q4 : "" }</textarea>
 														<div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q4_remain">2450</span></div>
 														</td>
@@ -389,7 +449,7 @@
 													    <td>1a.</td>
 													    <td>Demonstrating knowledge of content and pedagogy:</td>
 													    <td>
-														   	<input type="radio" name="Scale1" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale1 eq val1 ? "CHECKED" : "" }> <%=val1%> 
+														   	<input type="radio" name="Scale1" id="Scale1" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale1 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale1" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale1 eq val2 ? "CHECKED" : "" }> <%=val2%>
 															<input type="radio" name="Scale1" value="<%=val3%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale1 eq val3 ? "CHECKED" : "" }> <%=val3%>
 															<input type="radio" name="Scale1" value="<%=val4%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale1 eq val4 ? "CHECKED" : "" }> <%=val4%>
@@ -448,7 +508,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d1c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d1c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d1c" name="d1c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain1Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d1c_remain">2450</span></div>
 													     </td>
@@ -485,7 +545,7 @@
 													    <td>2a.</td>
 													    <td>Creating an environment of respect and rapport:</td>
 													    <td>
-														   	<input type="radio" name="Scale7" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale7 eq val1 ? "CHECKED" : "" }> <%=val1%> 
+														   	<input type="radio" name="Scale7" id="Scale7" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale7 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale7" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale7 eq val2 ? "CHECKED" : "" }> <%=val2%>
 															<input type="radio" name="Scale7" value="<%=val3%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale7 eq val3 ? "CHECKED" : "" }> <%=val3%>
 															<input type="radio" name="Scale7" value="<%=val4%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale7 eq val4 ? "CHECKED" : "" }> <%=val4%>
@@ -535,7 +595,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d2c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d2c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d2c" name="d2c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain2Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d2c_remain">2450</span></div>
 													     </td>
@@ -573,7 +633,7 @@
 													    <td>3a.</td>
 													    <td>Communicating clearly and accurately:</td>
 													    <td>
-														   	<input type="radio" name="Scale12" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale12 eq val1 ? "CHECKED" : "" }> <%=val1%> 
+														   	<input type="radio" name="Scale12" id="Scale12" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale12 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale12" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale12 eq val2 ? "CHECKED" : "" }> <%=val2%>
 															<input type="radio" name="Scale12" value="<%=val3%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale12 eq val3 ? "CHECKED" : "" }> <%=val3%>
 															<input type="radio" name="Scale12" value="<%=val4%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale12 eq val4 ? "CHECKED" : "" }> <%=val4%>
@@ -611,7 +671,7 @@
 													 </tr>
 													 <tr>
 													    <td>3e.</td>
-													    <td>Demostrating flexibility and responsiveness:</td>
+													    <td>Demonstrating flexibility and responsiveness:</td>
 													    <td>
 														   	<input type="radio" name="Scale16" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale16 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale16" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale16 eq val2 ? "CHECKED" : "" }> <%=val2%>
@@ -623,7 +683,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d3c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d3c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d3c" name="d3c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain3Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d3c_remain">2450</span></div>
 													     </td>
@@ -661,7 +721,7 @@
 													    <td>4a.</td>
 													    <td>Reflecting on teaching:</td>
 													    <td>
-														   	<input type="radio" name="Scale17" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale17 eq val1 ? "CHECKED" : "" }> <%=val1%> 
+														   	<input type="radio" name="Scale17" id="Scale17" value="<%=val1%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale17 eq val1 ? "CHECKED" : "" }> <%=val1%> 
 															<input type="radio" name="Scale17" value="<%=val2%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale17 eq val2 ? "CHECKED" : "" }> <%=val2%>
 															<input type="radio" name="Scale17" value="<%=val3%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale17 eq val3 ? "CHECKED" : "" }> <%=val3%>
 															<input type="radio" name="Scale17" value="<%=val4%>" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.scale17 eq val4 ? "CHECKED" : "" }> <%=val4%>
@@ -720,7 +780,7 @@
 													 <tr>
 													 
 													    <td colspan=3>Comments:<br/>
-													     <div id="d4c_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>									
+													     <div id="d4c_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>									
 													     <textarea class="form-control" id="d4c" name="d4c">${ REFERENCE_BEAN ne null ? REFERENCE_BEAN.domain4Comments : "" }</textarea>
 													     <div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="d4c_remain">2450</span></div>
 													     </td>
@@ -761,7 +821,7 @@
 													 <tr>
 													   	<td colspan=2>
 													   	Additional Comments:
-								<div id="Q7_Comment_Error" class="alert alert-danger" style="display:none;">ERROR: Charater limit exceeded. You are only allowed to input 2450 characters.</div>
+								<div id="Q7_Comment_Error" class="alert alert-danger" style="display:none;">ERROR: Character limit exceeded. You are only allowed to input 2450 characters.</div>
 								<textarea class="form-control" id="Q7_Comment" name="Q7_Comment">${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q7Comment ne null ? REFERENCE_BEAN.q7Comment : "" }</textarea>
 								<div style="width:100%;margin-top:2px;text-align:right;font-size:9;color:grey;">Max Characters: 2450 - Remain: <span id="Q7_Comment_remain">2450</span></div>
 													   	</td>													    

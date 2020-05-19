@@ -66,7 +66,7 @@ public class ApplicantRefRequestManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createApplicantRefRequestBean(rs);
+				eBean = createApplicantRefRequestBean(rs,true);
 			}
 		}
 		catch (SQLException e) {
@@ -106,7 +106,7 @@ public class ApplicantRefRequestManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createApplicantRefRequestBean(rs);
+				eBean = createApplicantRefRequestBean(rs,false);
 			}
 		}
 		catch (SQLException e) {
@@ -176,7 +176,7 @@ public class ApplicantRefRequestManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createApplicantRefRequestBean(rs);
+				eBean = createApplicantRefRequestBean(rs,false);
 			}
 		}
 		catch (Exception e) {
@@ -279,7 +279,7 @@ public class ApplicantRefRequestManager {
 		}
 
 	}	
-	public static ApplicantRefRequestBean createApplicantRefRequestBean(ResultSet rs) {
+	public static ApplicantRefRequestBean createApplicantRefRequestBean(ResultSet rs,boolean extra) {
 
 		ApplicantRefRequestBean aBean = null;
 		try {
@@ -296,6 +296,18 @@ public class ApplicantRefRequestManager {
 			aBean.setFkReference(rs.getInt("FK_REFERENCE"));
 			aBean.setReferenceType(rs.getString("REFERENCE_TYPE"));
 			aBean.setApplicantId(rs.getString("APPLICANT_ID"));
+			if(extra) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(rs.getString("SURNAME"));
+				if(rs.getString("MAIDENNAME")!= null) {
+					sb.append("(nee " + rs.getString("MAIDENNAME") + ")");
+				}
+				sb.append(", " + rs.getString("FIRSTNAME"));
+				if(rs.getString("MIDDLENAME")!= null) {
+					sb.append(" " + rs.getString("MIDDLENAME"));
+				}
+				aBean.setApplicantName(sb.toString());
+			}
 		}
 		catch (SQLException e) {
 			aBean = null;

@@ -166,14 +166,14 @@
 													 </tr>					
 													 <tr>
 													    <td>9.</td>
-													    <td>Ability to work independetly with minimum supervision</td>
+													    <td>Ability to work independently with minimum supervision</td>
 													    <td>
 													    <span class="tableAnswer"><%= ref.getScale9()%></span>
 														</td>
 													 </tr>	
 													 <tr>
 													    <td>10.</td>
-													    <td>Open to contructive criticism and advice</td>
+													    <td>Open to constructive criticism and advice</td>
 													    <td>
 													    <span class="tableAnswer"><%= ref.getScale10()%></span>
 														</td>
@@ -192,7 +192,7 @@
 													    <span class="tableAnswer"><%= ref.getScale12()%></span>
 														</td>
 													 </tr>																		
-													 <tr>
+													 <tr style="display:none;">
 													    <td>13.</td>
 													    <td>Personal appearance and hygiene</td>
 													    <td>

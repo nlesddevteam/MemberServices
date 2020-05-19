@@ -6,25 +6,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.awsd.mail.bean.EmailBean;
+import com.esdnl.personnel.jobs.bean.ApplicantRefRequestBean;
 import com.esdnl.personnel.jobs.bean.NLESDReferenceSSManageBean;
+import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
 import com.esdnl.personnel.jobs.dao.NLESDReferenceSSManageManager;
+import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.PublicAccessRequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
+import com.esdnl.servlet.RequiredSetValueFormElement;
 import com.esdnl.util.StringUtils;
 import com.esdnl.velocity.VelocityUtils;
 public class AddNLESDManageReferenceCheckAppRequestHandler extends PublicAccessRequestHandlerImpl {
 	public AddNLESDManageReferenceCheckAppRequestHandler() {
-
-		
-	}
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException,
-				IOException {
-		super.handleRequest(request, response);
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("applicant_id"),
 				new RequiredFormElement("ref_provider_name"),
@@ -33,7 +30,7 @@ public class AddNLESDManageReferenceCheckAppRequestHandler extends PublicAccessR
 				new RequiredFormElement("Q2"),
 				new RequiredFormElement("Q3"),
 				new RequiredFormElement("Q11"),
-				new RequiredFormElement("Q12"),
+				new RequiredFormElement("Q10"),
 				new RequiredFormElement("Scale1"),
 				new RequiredFormElement("Scale2"),
 				new RequiredFormElement("Scale3"),
@@ -48,11 +45,28 @@ public class AddNLESDManageReferenceCheckAppRequestHandler extends PublicAccessR
 				new RequiredFormElement("Scale12"),
 				new RequiredFormElement("Scale13"),
 				new RequiredFormElement("Scale14"),
-				new RequiredFormElement("Scale15")
+				new RequiredFormElement("Scale15"),
+				new RequiredFormElement("applicant_id"),
+				new RequiredFormElement("ref_provider_email"),
+				new RequiredSetValueFormElement("confirm", new String[] {
+						"true"
+				})
 		});
-		if (form.hasValue("confirm", "true") && validate_form()) {
+		
+	}
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException,
+				IOException {
+		super.handleRequest(request, response);
+		ApplicantRefRequestBean refReq = null;
+		ReferenceCheckRequestBean rbean = null;
+		if (validate_form()) {
 			try {
-				int refreqid=Integer.parseInt(form.get("refreqid"));
+				if(form.exists("arefreqid")) {
+					refReq = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("arefreqid"));
+				}else if(form.exists("refreqid")) {
+					rbean = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("refreqid"));
+				}
 				NLESDReferenceSSManageBean ref = null;
 				ref = new NLESDReferenceSSManageBean();
 				ref.setProfile(ApplicantProfileManager.getApplicantProfileBean(form.get("applicant_id")));
@@ -88,23 +102,48 @@ public class AddNLESDManageReferenceCheckAppRequestHandler extends PublicAccessR
 				ref.setProvidedBy(form.get("ref_provider_name"));
 				ref.setProvidedByPosition(form.get("ref_provider_position"));
 				ref.setReferenceScale("5");
+				ref.setProviderEmail(form.get("ref_provider_email"));
 				Date d = new Date();
 				ref.setDateProvided(d);
 				ref = NLESDReferenceSSManageManager.addNLESDReferenceSSManageBean(ref);
-				//update applicant_ref_request
-				ApplicantRefRequestManager.applicantReferenceCompleted(refreqid, "Reference Completed", ref.getId());
-				//send email to applicant informing it is complete
-				EmailBean ebean = new EmailBean();
-				ebean.setTo(new String[] {
-						ApplicantProfileManager.getApplicantProfileBean(form.get("applicant_id")).getEmail()
-				});
-				ebean.setFrom("ms@nlesd.ca");
-				ebean.setSubject("Reference Check Requested Completed By " + form.get("ref_provider_name"));
-				HashMap<String, Object> model = new HashMap<String, Object>();
-				model.put("reqEmail", form.get("ref_provider_name"));
-				ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/send_applicant_completed_request.vm", model));
-				ebean.send();
-				request.setAttribute("REFERENCE_BEAN", ref);
+				if(form.exists("mancheck")) {
+					//add new request
+					ReferenceCheckRequestBean refreq = new ReferenceCheckRequestBean();
+					refreq.setCandidateId(ref.getProfile().getSIN());
+					refreq.setCompetitionNumber(form.get("jobcomp"));
+					refreq.setCheckRequester(usr.getPersonnel());
+					refreq.setReferenceType("G");
+					refreq.setReferredEmail(ref.getProviderEmail());
+					refreq.setReferenceId(ref.getId());
+					refreq = ReferenceCheckRequestManager.addReferenceCheckRequestBean(refreq);
+					ReferenceCheckRequestManager.updateReferenceCheckRequestBean(refreq);
+				}else if (form.exists("refreqid")) {
+					ReferenceCheckRequestBean refchk = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("refreqid"));
+					if (refchk != null) {
+						refchk.setReferenceId(ref.getId());
+						ReferenceCheckRequestManager.updateReferenceCheckRequestBean(refchk);
+					}
+				}else if (form.exists("arefreqid")) {//now we check to see if there is a related apprefrequest
+					//update applicant_ref_request
+					ApplicantRefRequestManager.applicantReferenceCompleted(form.getInt("arefreqid"), "Reference Completed", ref.getId());
+					//send email to applicant informing it is complete
+					EmailBean ebean = new EmailBean();
+					ebean.setTo(new String[] {
+							ApplicantProfileManager.getApplicantProfileBean(form.get("applicant_id")).getEmail()
+					});
+					ebean.setFrom("ms@nlesd.ca");
+					ebean.setSubject("Reference Check Requested Completed By " + form.get("ref_provider_name"));
+					HashMap<String, Object> model = new HashMap<String, Object>();
+					model.put("reqEmail", form.get("ref_provider_name"));
+					ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/send_applicant_completed_request.vm", model));
+					ebean.send();
+				}
+				if(refReq != null) {
+					request.setAttribute("arefreq", refReq);
+				}
+				if(rbean != null) {
+					request.setAttribute("refreq", rbean);
+				}
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");
 				path = "nlesd_manage_reference_checklist_app.jsp";
