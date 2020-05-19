@@ -21,11 +21,14 @@
 	redirectTo="/Personnel/admin_index.jsp" />
 
 <%
-	if(request.getAttribute("filterparams")==null){
-		session.setAttribute("sfilterparams",null); 
-	}else{
+	if(request.getMethod().equalsIgnoreCase("POST")) {
+		session.setAttribute("sfilterparams", null);
+	}
+	
+	if(request.getAttribute("filterparams") != null){
 		session.setAttribute("sfilterparams",request.getAttribute("filterparams"));
 	}
+		
 	User usr = (User) session.getAttribute("usr");
 	JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_APPLICANTS");
@@ -214,7 +217,7 @@ input {
 
 				<div class="table-responsive">
 					<c:choose>
-						<c:when test="${filterparams ne null }">
+						<c:when test="${sfilterparams ne null }">
 								<div class="panel-group">
   									<div class="panel panel-default">
     									<div class="panel-heading">
@@ -222,7 +225,7 @@ input {
         										<a data-toggle="collapse" id="selDegs" href="#degrees"><span class="glyphicon glyphicon-triangle-bottom"></span> My Filter(s)</a>
       										</h4>
     								</div>
-    								<div id="degrees" class="panel-collapse collapse in">
+    								<div class="panel-collapse collapse in">
     									
     										<table class="table table-condensed table-striped"
 						style="font-size: 11px; background-color: #FFFFFF;">
@@ -230,10 +233,10 @@ input {
     										<td width="20%">Permanent NLESD Contract?</td>
     										<td width="20%">
     											<c:choose>
-    												<c:when test="${filterparams.permanentContract eq 'Y' }">
+    												<c:when test="${sfilterparams.permanentContract eq 'Y' }">
     													Yes
     												</c:when>
-    												<c:when test="${filterparams.permanentContract eq 'N' }">
+    												<c:when test="${sfilterparams.permanentContract eq 'N' }">
     													No
     												</c:when>
     												<c:otherwise>
@@ -243,69 +246,69 @@ input {
     										</td>
     										<td width="20%"># Math Courses:</td>
     										<td width="20%">
-    											${filterparams.mathCourses }
+    											${sfilterparams.mathCourses }
     										</td>
     										<td width="20%">
-    										Degree(s): ${filterparams.getDegreesString() }
+    										Degree(s): ${sfilterparams.getDegreesString() }
     										</td>
     										</tr>
     										<tr>
     										<td width="20%">Permanent Exp (Months):</td>
     										<td width="20%">
-    											${filterparams.permanentExp }
+    											${sfilterparams.permanentExp }
     										</td>
     										<td width="20%"># English Courses:</td>
     										<td width="20%">
-    											${filterparams.englishCourses }
+    											${sfilterparams.englishCourses }
     										</td>
     										<td width="20%">
-    											Major Subject Group(s): ${filterparams.getMajorsSubjectGroupsString() } 
+    											Major Subject Group(s): ${sfilterparams.getMajorsSubjectGroupsString() } 
     										</td>
     										</tr>
     										<tr>
     										<td width="20%">Replacement Exp (Months):</td>
     										<td width="20%">
-    											${filterparams.replacementExp }
+    											${sfilterparams.replacementExp }
     										</td>
     										<td width="20%"># Music Courses:</td>
     										<td width="20%">
-    											${filterparams.musicCourses }
+    											${sfilterparams.musicCourses }
     										</td>
     										<td width="20%">
-    										Major(s): ${filterparams.getMajorsString() }
+    										Major(s): ${sfilterparams.getMajorsString() }
     										</td>
     										</tr>
     										<tr>
     										<td width="20%">Repl + Perm (Months):</td>
     										<td width="20%">
-    											${filterparams.totalExp }
+    											${sfilterparams.totalExp }
     										</td>
     										<td width="20%"># Technology Courses:</td>
     										<td width="20%">
-    											${filterparams.technologyCourses }
+    											${sfilterparams.technologyCourses }
     										</td>
     										<td width="20%">
-    											Minor Subject Group(s): ${filterparams.getMinorsSubjectGroupsString() } 
+    											Minor Subject Group(s): ${sfilterparams.getMinorsSubjectGroupsString() } 
     										</td>
     										</tr>
     										<tr>
     										<td width="20%"># Sub Days:</td>
     										<td width="20%">
-    											${filterparams.subDays }
+    											${sfilterparams.subDays }
     										</td>
     										<td width="20%"># Science Courses:</td>
     										<td width="20%">
-    											${filterparams.scienceCourses }
+    											${sfilterparams.scienceCourses }
     										</td>
     										<td width="20%">
-    											Minors(s): ${filterparams.getMinorsString() }
+    											Minors(s): ${sfilterparams.getMinorsString() }
     										</td>
     										</tr>
     										<tr>
     										<td width="20%">TLA Courses > 20 / CEC L2:</td>
     										<td width="20%">
     											<c:choose>
-    												<c:when test="${filterparams.isTLARequirements()}">
+    												<c:when test="${sfilterparams.isTLARequirements()}">
     													Yes
     												</c:when>
     												<c:otherwise>
@@ -315,33 +318,38 @@ input {
     										</td>
     										<td width="20%"># Social Studies Courses:</td>
     										<td width="20%">
-    											${filterparams.socialStudiesCourses }
+    											${sfilterparams.socialStudiesCourses }
     										</td>
     										<td width="20%" rowspan='3'>
-    											Regional Preferences: ${filterparams.getRegionsString()}
+    											Regional Preferences: ${sfilterparams.getRegionsString()}
     										</td>
     										</tr>
     										<tr>
     										<td width="20%"># Special Ed Courses:</td>
     										<td width="20%">
-    											${filterparams.specialEducationCourses}
+    											${sfilterparams.specialEducationCourses}
     										</td>
     										<td width="20%"># Art Courses:</td>
     										<td width="20%">
-    											${filterparams.artCourses }
+    											${sfilterparams.artCourses }
     										</td>
     										</tr>
     										<tr>
     										<td width="20%"># French Courses:</td>
     										<td width="20%">
-    											${filterparams.frenchCourses}
+    											${sfilterparams.frenchCourses}
     										</td>
     										<td width="20%">Level Of Prof Training:</td>
     										<td width="20%">
-    											${filterparams.getTrainingString() }
+    											${sfilterparams.getTrainingString() }
     										</td>
     										</tr>
     										</table>
+    										<div style='text-align:right;padding-right: 5px;'>
+    											<form method="POST" action="admin_view_job_applicants.jsp">
+    												<button class='btn btn-success' type="submit">Clear Filters</button>
+    											</form>
+    										</div>
       									</div>
     								</div>
   									
@@ -516,7 +524,7 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<% if(shortlistMap.containsKey(applicants[i].getUID())) { %>
 										<span style='font-weight:bold;' class='alert-success'>SHORTLISTED</span><br/>
 									<% } %>
-									<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>" target="_blank">Profile</a>
+									<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
 									<% if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("MANAGER OF HR - PERSONNEL")) {%> 
 									<a href="#" data-toggle="confirmation" data-title="Are you sure you wish to withdraw <%=applicants[i].getFullNameReverse()%> from this competition?"
 									class="btn btn-danger btn-xs" comp-num='<%=job.getCompetitionNumber()%>' uid='<%=applicants[i].getSIN()%>'>Withdraw</a> 
