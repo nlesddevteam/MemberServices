@@ -34,6 +34,7 @@ if(opp != null){
 
 session.setAttribute("JOB", null);
 session.setAttribute("SUBLIST", null);
+session.setAttribute("sfilterparams", null);
 %>
 
 <html>

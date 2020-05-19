@@ -63,7 +63,8 @@ public class RemoveShortlistApplicantRequestHandler implements RequestHandler {
 					ApplicantProfileManager.removeShortlistApplicant(request.getParameter("sin"), opp);
 					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 					session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
-					ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+					session.setAttribute("SHORTLISTMAP", ApplicantProfileManager.getApplicantShortlistMap(opp));
 					AdRequestBean ad = AdRequestManager.getAdRequestBean(opp.getCompetitionNumber());
 					request.setAttribute("AD_REQUEST", ad);
 					path = "admin_view_job_applicants_shortlist.jsp";
