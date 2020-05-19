@@ -5,6 +5,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.commons.collections4.ListUtils;
 
@@ -15,8 +18,9 @@ import com.awsd.mail.dao.EmailManager;
 public class PersistentEmailServiceTimerTask extends TimerTask {
 
 	public static boolean RUNNING = false;
-	public LocalDateTime start = null;
+	public static LocalDateTime start = null;
 
+	private static ExecutorService executor = Executors.newCachedThreadPool();
 	private int MAX_ATTEMPTS;
 
 	public PersistentEmailServiceTimerTask() {
@@ -52,23 +56,20 @@ public class PersistentEmailServiceTimerTask extends TimerTask {
 
 			if ((batch != null) && (batch.size() > 0)) {
 				System.err.println("<<<<<< BATCH PROCESSING TOTAL BATCH SIZE: " + batch.size() + "  >>>>>");
-				List<List<EmailBean>> batches = ListUtils.partition(batch, 35);
-				System.err.println("<<<<<< BATCH PROCESSING BATCH COUNT: " + batches.size() + "  >>>>>");
 
-				List<Thread> threads = new ArrayList<Thread>();
+				int batchSize = batch.size() / Runtime.getRuntime().availableProcessors();
+
+				List<List<EmailBean>> batches = ListUtils.partition(batch, batchSize > 0 ? batchSize : 1);
+				System.err.println("<<<<<< BATCH PROCESSING THREAD COUNT: " + batches.size() + "  >>>>>");
+
+				List<Callable<Integer>> workers = new ArrayList<>();
 				for (List<EmailBean> b : batches) {
-					Thread t = new BatchProcessingThread(b, this.MAX_ATTEMPTS);
-					t.start();
-					threads.add(t);
+					workers.add(new BatchProcessingThread(b, this.MAX_ATTEMPTS));
 				}
-				for (Thread t : threads) {
-					try {
-						t.join();
-					}
-					catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+				executor.invokeAll(workers);
+
+				workers = null;
+				batches = null;
 			}
 			else {
 				System.out.println("<<<<<< PersistentEmailServiceTimerTask BATCH PROCESSING: EMAIL QUEUE EMPTY  >>>>>");
@@ -81,6 +82,9 @@ public class PersistentEmailServiceTimerTask extends TimerTask {
 			new EmailAlertThread(e.getClass().toString() + "\n" + e.getMessage()).start();
 
 		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		LocalDateTime end = LocalDateTime.now();
 
@@ -90,5 +94,9 @@ public class PersistentEmailServiceTimerTask extends TimerTask {
 				+ batch.size() + ", ELAPSED TIME: " + diff + " seconds] >>>>>");
 
 		RUNNING = false;
+
+		batch = null;
+
+		System.gc();
 	}
 }
