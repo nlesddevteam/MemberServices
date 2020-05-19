@@ -1141,7 +1141,7 @@ function parseTeacherAllocationBean(data) {
 										return false;
 									}
 								))
-							.append($($(this).attr('FILLED') == 'false' ? '<a>' : '<a style="display:none;">')
+							.append($($(this).attr('FILLED') == 'false' ? '<a>' : isPositionPlanningAdmin == true ? $(this).attr('RECLINK') == 'NONE' ? '<a>' : '<a style="display:none;">' :'<a style="display:none;">')
 								.addClass('del-vacant btn btn-xs btn-danger')
 								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID'),'ad-title': $(this).attr('ADTITLE'),'compnum':$(this).attr('JOBCOMP')})
 								.text('DEL')
