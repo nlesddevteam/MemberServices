@@ -65,31 +65,45 @@
 					});
 					
 				
-					$('#majorsgroup').change(function(){
+					$('input[name=majorsgroup]').change(function(){
+						var _self = $(this);
 						$.post('/MemberServices/Personnel/admin/ajax/getSubjectGroupSubjects.html', 
 								{
-									'groupids[]' : [$('#majorsgroup').val()],
+									'groupids[]' : [_self.val()],
 									'ajax' : true
 								},
 								function(data) {
 									if($(data).find('GET-SUBJECT-GROUP-SUBJECTS-RESPONSE').length > 0) {
 										$(data).find('SubjectBean').each(function(){
-											$("#majors option[value='" + $(this).attr('subject-id') + "']").attr("selected", "selected");
+											var input = $("input[name=majors][value='" + $(this).attr('subject-id') + "']");
+											if(input.is(':checked')) {
+												input.prop("checked", false);
+											}
+											else {
+												input.prop("checked", true);
+											}
 										});
 									}
 								}, 'xml');
 					});
 					
-					$('#minorsgroup').change(function(){
+					$('input[name=minorsgroup]').change(function(){
+						var _self = $(this);
 						$.post('/MemberServices/Personnel/admin/ajax/getSubjectGroupSubjects.html', 
 								{
-									'groupids[]' : [$('#minorsgroup').val()],
+									'groupids[]' : [_self.val()],
 									'ajax' : true
 								},
 								function(data) {
 									if($(data).find('GET-SUBJECT-GROUP-SUBJECTS-RESPONSE').length > 0) {
 										$(data).find('SubjectBean').each(function(){
-											$("#minors option[value='" + $(this).attr('subject-id') + "']").attr("selected", "selected");
+											var input = $("input[name=minors][value='" + $(this).attr('subject-id') + "']");
+											if(input.is(':checked')) {
+												input.prop("checked", false);
+											}
+											else {
+												input.prop("checked", true);
+											}
 										});
 									}
 								}, 'xml');
