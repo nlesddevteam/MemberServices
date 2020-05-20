@@ -31,7 +31,7 @@ import com.esdnl.velocity.VelocityUtils;
 public class AddNLESDAdminReferenceCheckRequestHandler extends RequestHandlerImpl {
 	public AddNLESDAdminReferenceCheckRequestHandler() {
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-SUBMIT-REFERENCE"
 		};
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("applicant_id"),
