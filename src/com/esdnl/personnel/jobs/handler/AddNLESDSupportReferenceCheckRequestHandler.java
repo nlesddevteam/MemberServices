@@ -18,7 +18,7 @@ import com.esdnl.util.StringUtils;
 public class AddNLESDSupportReferenceCheckRequestHandler extends RequestHandlerImpl {
 	public AddNLESDSupportReferenceCheckRequestHandler() {
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-SUBMIT-REFERENCE"
 		};
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("applicant_id"),

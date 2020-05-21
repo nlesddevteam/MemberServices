@@ -16,7 +16,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS"/>
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-SUBMIT-REFERENCE"/>
 
 <%
 User usr = (User) session.getAttribute("usr");
