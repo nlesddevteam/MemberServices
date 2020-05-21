@@ -3432,7 +3432,10 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.ResendTeacherRecommendationNotificationsAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/ajax/resendRecommendationNotifications.html</URL-Pattern>
     </Request-Handler>
-    
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ApplicantViewCompetitionInterviewSummaryRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/applicantViewCompetitionInterviewSummary.html</URL-Pattern>
+    </Request-Handler>
     
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.v2.site.availability.handler.EmployeeNotAvailableRequestHandler</Request-Handler-Class>
