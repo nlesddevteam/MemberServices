@@ -15,7 +15,7 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <esd:SecurityCheck
-	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,PERSONNEL-SUBMIT-REFERENCE" />
 <%
 User usr = (User) session.getAttribute("usr");
 String val1="0";
