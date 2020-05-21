@@ -26,6 +26,7 @@
     <pattern>/Personnel/applicantRegistration*.html</pattern>
     <pattern>/Personnel/applicantSubPrefs.html</pattern>
     <pattern>/Personnel/applicantsecurity.html</pattern>
+    <pattern>/Personnel/applicantView*</pattern>
     <pattern>/Personnel/applicant_*</pattern>      
     <pattern>/Personnel/view_applicant*</pattern>
     <pattern>/Personnel/logout*</pattern>
