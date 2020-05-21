@@ -497,7 +497,12 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			cal.clear(Calendar.MINUTE);
 
 			if (cal.get(Calendar.HOUR_OF_DAY) >= 12) {
-				cal.add(Calendar.DAY_OF_MONTH, 1);
+				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+					cal.add(Calendar.DAY_OF_MONTH, 3);
+				}
+				else {
+					cal.add(Calendar.DAY_OF_MONTH, 1);
+				}
 			}
 			cal.set(Calendar.HOUR_OF_DAY, 12);
 
