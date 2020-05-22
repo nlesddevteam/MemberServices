@@ -62,6 +62,7 @@
     		    $("#display_error_message_bottom").css("display","none");
     		    
         	});
+			
 			</script>
 			<script>
    			$(document).ready(function () {
@@ -134,10 +135,7 @@
 													<td class="field_content">${rule.dateUploadedFormatted}</td>
 													<td class="field_content">
 													
-													<button type="button" class="btn btn-xs btn-primary menuBCS" onclick="closeMenu();loadMainDivPage('../${rule.viewPath}');">View</button>		      					   					
-			      					
-													
-													<a href='../${rule.viewPath}' class="menuBCS" target='_blank'>
+													<a href='../${rule.viewPath}' class="menuBCS1" target='_blank' >
 													<img src="includes/img/viewsm-off.png" class="img-swap" title="View Document" border=0 style="padding-top:3px;padding-bottom:3px;"></a> &nbsp; 
 													</td>
 							      				</tr>
@@ -333,6 +331,8 @@
     		    $("#BCS-table-C tr:odd").css("background-color", "#f2f2f2");
     		    
         	});
+			
+
 			</script>
 	
 	
