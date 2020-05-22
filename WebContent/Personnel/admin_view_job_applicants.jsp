@@ -39,6 +39,11 @@
 		highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
 	}
 	
+	Map<String, ApplicantProfileBean> permApplicants = null;
+	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
+		permApplicants = ApplicantProfileManager.getCompetitionPermanentCandidates(job.getCompetitionNumber());
+	}
+	
 	int locationId = ((JobOpportunityAssignmentBean) job.get(0)).getLocation();
 
 	ApplicantEducationOtherBean edu_other = null;
@@ -214,6 +219,7 @@ input {
 
 				</div>
 				<br />
+				
 
 				<div class="table-responsive">
 					<c:choose>
@@ -361,18 +367,22 @@ input {
 					<%
 						if (applicants.length > 0) {
 					%>
-
-					Below is a table of current applicants for this position sorted by
-					seniority. 
-					<%if (job.getIsSupport().equals("N")) { %>
-					The type and certificates/courses are displayed for
-					quick reference for <b>non support staff/management positions</b>.
-					(UT = #University Transcripts, TC = #Teaching Certificates, COC =
-					#Code of Conducts, VSC = #Vulnerable Sector Checks, FPD = #French Proficiency (DELF), CEC = #Level 2
-					Early Childhood Education Certificates , and #CRS = # of Courses)
+					<p>
+						Below is a table of current applicants for this position sorted by
+						seniority. 
+						<%if (job.getIsSupport().equals("N")) { %>
+						The type and certificates/courses are displayed for
+						quick reference for <b>non support staff/management positions</b>.
+						(UT = #University Transcripts, TC = #Teaching Certificates, COC =
+						#Code of Conducts, VSC = #Vulnerable Sector Checks, FPD = #French Proficiency (DELF), CEC = #Level 2
+						Early Childhood Education Certificates , and #CRS = # of Courses)
 					<%}%> 
-					<br />
-					<br />
+					</p>
+					
+					<% if(permApplicants != null) { %>
+						<p class='alert-success'># Permanemt Status Applicants: <%= permApplicants.size() %></p>
+					<% } %>
+					
 					<table id="jobsapp" class="table table-condensed table-striped"
 						style="font-size: 11px; background-color: #FFFFFF;">
 						<thead>
@@ -412,7 +422,12 @@ input {
 							<tr class='applicant-list<%=(isLabWestSchool ? " lab-west-school" : "")%>' uid='<%=applicants[i].getSIN()%>'>
 							
 							<!-- NAME -->	
-								<td valign='top'><%=applicants[i].getFullName().replace("'", "&#39;")%></td>
+							<td valign='top'>
+								<%=applicants[i].getFullName().replace("'", "&#39;")%>
+								<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>
+									<br /><span class='alert-success'>PERM</span> 
+								<% } %>
+							</td>
 								
 							<!-- EMAIL -->	
 								<td valign='top'><a	href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
