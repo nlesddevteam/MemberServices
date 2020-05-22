@@ -1050,7 +1050,7 @@ function parseTeacherAllocationBean(data) {
 							.css({'padding-right':'5px'})
 							.attr({'align':'right','valign':'top'})
 							.addClass('vacant-positions-table-row-operations')
-							.append( $($(this).attr('FILLED') == 'false' ? '<a>' : '<a style="display:none;">')
+							.append( $('<a>')
 								.addClass('edit-vacant btn btn-xs btn-info')
 								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
 								.text('EDIT')
