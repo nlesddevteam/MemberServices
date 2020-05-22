@@ -380,7 +380,7 @@ input {
 					</p>
 					
 					<% if(permApplicants != null) { %>
-						<p class='alert-success'># Permanemt Status Applicants: <%= permApplicants.size() %></p>
+						<p class='alert-success'># Permanent Status Applicants: <%= permApplicants.size() %></p>
 					<% } %>
 					
 					<table id="jobsapp" class="table table-condensed table-striped"
