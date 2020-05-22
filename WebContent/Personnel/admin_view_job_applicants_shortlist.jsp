@@ -45,9 +45,14 @@
   
   Map<String, ArrayList<InterviewSummaryBean>> interviewSummaryMap = InterviewSummaryManager.getInterviewSummaryBeansMapByShortlist(job);
   
+  Map<String, ApplicantProfileBean> permApplicants = null;
+	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
+		permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
+	}
+	
   Calendar rec_search_cal = Calendar.getInstance();
   rec_search_cal.clear();
-  rec_search_cal.set(2019, Calendar.MAY, 1);
+  rec_search_cal.set(2020, Calendar.MAY, 1);
   Date rec_search_date = rec_search_cal.getTime();
   int statusi=0;
   RequestToHireBean rth = null;
@@ -61,18 +66,14 @@
   }
 %>
 
-
 <html>
 <head>
 	<title>MyHRP Applicant Profiling System</title>
-	
-<script>
-	$("#loadingSpinner").css("display","none");
-</script>
-
 
 	<script type="text/javascript">
-	$('document').ready(function(){
+	$("#loadingSpinner").css("display","none");
+	
+	$(function(){
 	
 		$('#add_applicant_dialog').dialog({
 			'autoOpen': false,
@@ -90,8 +91,6 @@
 						parseAddApplicantResponse(data);
 					}, "xml");
 		});
-		
-		
 		
 		$('#mark-shortlist-complete').click(function(){
 			if(confirm('Are you sure you want to mark this shortlist as complete?')){
@@ -113,6 +112,11 @@
 		
 		$('.btn-action').button();
 		
+		$("#jobsapp").DataTable({
+			"order": [[ 2, "desc" ]],
+			"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+		});
+		
 	});
 
 	function showAddApplicantDialog(uid) {
@@ -129,170 +133,174 @@
 		$('#response_msg').html(msg);
 		$('#response_msg').show();
 	}
+	
 	function openDecline(appid){
 		$('#sin').val(appid);
 		$('#prindecline').modal('show');
 	}
+	
 	function interviewDeclined(){
 		$('#prindecline').modal('hide');
 		var url ="declineInterviewShortlistApplicant.html";
 		$('#frmdecline').attr('action',url);
 		$('#frmdecline').submit();
 	}
-		
 </script>
-<script>
- $('document').ready(function(){
-	  $("#jobsapp").DataTable(
-		{"order": [[ 2, "desc" ]],
-		"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
-		
-		}	  
-	  );
- });
-    </script>
     
-    <style>
-		input {    
-    border:1px solid silver;
-		}
+<style>
+		input { border:1px solid silver; }
 		.btn {font-size:11px;}
 </style>	
 </head>
 <body>
 
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success">   
-	               	<div class="panel-heading"><b>Competition # <%=job.getCompetitionNumber()%> Short List</b> (Total Applicants: <%=applicants.length%>)</div>
-      			 	<div class="panel-body">
-									<%if(request.getAttribute("msg")!=null){%>                                  	
-                                  	<div class="alert alert-danger">                                    	
-                                      	<%=(String)request.getAttribute("msg")%>
-                                     </div>
-                                  <%}%>
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<b>Competition # <%=job.getCompetitionNumber()%> Short List</b> (Total Applicants: <%=applicants.length%>)
+			</div>
+			<div class="panel-body">
+				<% if (request.getAttribute("msg") != null) { %>
+					<div class="alert alert-danger">
+						<%=(String) request.getAttribute("msg")%>
+					</div>
+				<% } %>
 
-  
-                    <div class="table-responsive"> 
-							  
-  
-                                  
-                                  <%if(applicants.length > 0){ %>
-                                  
-                                   <table id="jobsapp" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
-								    <thead>
-								      <tr>
-								     								       								      	
-								        <th width='20%'>NAME</th>									        
-									    <th width='15%'>EMAIL/TELEPHONE</th>
-									    <th width='9%'>SENIORITY</th>
-									    <th width="10%">STATUS</th>				        
-									    <th width='46%'>POSITION/OPTIONS</th>									       					        
-								      </tr>
-								    </thead>
-								    <tbody>
-                                  
-                                  <%
-                                  	TeacherRecommendationBean[] recs = null;                                  	
-                                  	String cssClass = "NoPosition";
-                                  	String cssText = "No Position";
-                                  	String position = null;
-                                  	DecimalFormat df = new DecimalFormat("0.00");
-                                  	boolean hasJobSpecificInterviewSummary = false;
-                                  	boolean declinedInterview = false;
-                                  	JobTypeConstant jtype = null;
-                                  	
-                                    for(int i=0; i < applicants.length; i++){
-                                    	position = "";
-                                    	if(!declinedInterviewMap.containsKey(applicants[i].getUID())) {
-                                    		cssClass = "NoPosition";
-                                    		cssText = "No Position";
-                                    		declinedInterview = false;
-	                                    	position = null;
-	                                    	recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
-	                                    	
-	                                    	if((recs != null) && (recs.length > 0)){
-	                                    		if(recs[0].getJob() != null){
-	                                    			jtype = recs[0].getJob().getJobType();
-	                                    			String jobtype ="";
-	                                    			if(jtype.equal(JobTypeConstant.TLA_REGULAR) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)){
-	                                    				jobtype=" TLA";
-	                                    			}else if(jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.REPLACEMENT)){
-	                                    				jobtype=" Teaching";
-	                                    			}else if (jtype.equal(JobTypeConstant.ADMINISTRATIVE)){
-	                                    				jobtype=" Administrative";
-	                                    			}else if (jtype.equal(JobTypeConstant.LEADERSHIP)){
-	                                    				jobtype=" Leadership";
-	                                    			}
-		                                    		if(jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.TLA_REGULAR)){
-		                                    			if(recs[0].getTotalUnits() < 1.0){
-		                                    				cssClass = "PermanentPartTimePosition";
-		                                    				cssText = "Permanent/ Part Time";
-		                                    				position = jobtype + " " + recs[0].getEmploymentStatus() + " Part-time (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
-		                                    			}
-		                                    			else{
-		                                    				cssClass = "PermanentFullTimePosition";
-		                                    				cssText = "Permanent/ Full Time";
-		                                    				position = jobtype + " " + recs[0].getEmploymentStatus()  + " Full-time @ " + recs[0].getJob().getJobLocation() ;
-		                                    			}
-		                                    		}
-		                                    		else if(jtype.equal(JobTypeConstant.REPLACEMENT) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)){
-		                                    			cssClass = "ReplacementPosition";
-		                                    			cssText = "Replacement";
-		                                    			position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype +" Replacement (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
-		                                    		}
-		                                    		else if(jtype.equal(JobTypeConstant.TRANSFER)){
-		                                    			cssClass = "TransferPosition";
-		                                    			cssText = "Transfer";
-		                                    			position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype + " Transfer (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
-		                                    		}
-	                                    		}
-	                                    		
-	                                    		if(position != null) {
-	                                    			cssText = "Already Accepted Position";
-	                                    			position += " - Accepted: " + recs[0].getOfferAcceptedDateFormatted();
-	                                    		}
-	                                    	}
-	                                    		
-	                                   		hasJobSpecificInterviewSummary = false;
-	                                   		
-	                                   		if(interviewSummaryMap.containsKey(applicants[i].getUID())) {
-	                                   			for(InterviewSummaryBean isg : interviewSummaryMap.get(applicants[i].getUID())){
-	                                   				if(isg.getCompetition().getCompetitionNumber().equals(job.getCompetitionNumber())){
-	                                   					hasJobSpecificInterviewSummary = true;
-	                                   					break;
-	                                   				}
-	                                   			}
-	                                   		}
-                                    	}
-                                    	else {
-                                    		cssClass = "DeclinedInterview";
-                                    		declinedInterview = true;
-                                    	}
-                                    %>	
-                                   
-	                                    <tr>
-	                                    <%statusi++; %>
-	                                        
-	                                    	<td style="vertical-align:middle;"><%=applicants[i].getSurname()%>, <%=applicants[i].getFirstname()%></td>	                                    	
-	                                    	<td style="vertical-align:middle;">
-	                                    	<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br/>
-	                                    	Tel: <%=applicants[i].getHomephone()%>
-	                                    	</td>
-	                                    	<td style="vertical-align:middle;">
-	                                    	<%if (applicants[i].getSenority() > 0) {%>
-                                                      <span style='color:red;'><%= applicants[i].getSenority()%></span>
-                                            <%} else {%>
-                                            <span style="color:DimGrey;">0</span>
-                                                <%}%>
-	                                    	</td>
-	                                    	<td style="text-align:center;vertical-align:middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>"><%=cssText%></td>
-	                                    		                                    	
-	                                    	
-	                                    	<td>
-	                                    	<div style="padding-top:5px;text-align:right;">	                                    	
-	                                        <a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>" >Profile</a>
-	                                        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
-	                                        	<%
+				<div class="table-responsive">
+					<% if (applicants.length > 0) { %>
+					
+					<% if((permApplicants != null) && (permApplicants.size() > 0)) { %>
+						<p class='alert alert-success' style='font-weight:bold;'># Permanemt Status Applicants: <%= permApplicants.size() %>. This competition qualifies for a SENIORITY-BASED HIRE</p>
+					<% } %>
+
+					<table id="jobsapp" class="table table-condensed table-striped"
+						style="font-size: 11px; background-color: #FFFFFF;">
+						<thead>
+							<tr>
+								<th width='20%'>NAME</th>
+								<th width='15%'>EMAIL/TELEPHONE</th>
+								<th width='9%'>SENIORITY</th>
+								<th width="10%">STATUS</th>
+								<th width='46%'>POSITION/OPTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<%
+								TeacherRecommendationBean[] recs = null;
+								String cssClass = "NoPosition";
+								String cssText = "No Position";
+								String position = null;
+								DecimalFormat df = new DecimalFormat("0.00");
+								boolean hasJobSpecificInterviewSummary = false;
+								boolean declinedInterview = false;
+								JobTypeConstant jtype = null;
+
+							for (int i = 0; i < applicants.length; i++) {
+								position = "";
+								if (!declinedInterviewMap.containsKey(applicants[i].getUID())) {
+									cssClass = "NoPosition";
+									cssText = "No Position";
+									declinedInterview = false;
+									position = null;
+									recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
+
+									if ((recs != null) && (recs.length > 0)) {
+										if (recs[0].getJob() != null) {
+											jtype = recs[0].getJob().getJobType();
+											String jobtype = "";
+											if (jtype.equal(JobTypeConstant.TLA_REGULAR) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
+												jobtype = " TLA";
+											}
+											else if (jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.REPLACEMENT)) {
+												jobtype = " Teaching";
+											}
+											else if (jtype.equal(JobTypeConstant.ADMINISTRATIVE)) {
+												jobtype = " Administrative";
+											}
+											else if (jtype.equal(JobTypeConstant.LEADERSHIP)) {
+												jobtype = " Leadership";
+											}
+											if (jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.TLA_REGULAR)) {
+												if (recs[0].getTotalUnits() < 1.0) {
+													cssClass = "PermanentPartTimePosition";
+													cssText = "Permanent/ Part Time";
+													position = jobtype + " " + recs[0].getEmploymentStatus() + " Part-time ("
+															+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+												}
+												else {
+													cssClass = "PermanentFullTimePosition";
+													cssText = "Permanent/ Full Time";
+													position = jobtype + " " + recs[0].getEmploymentStatus() + " Full-time @ "
+															+ recs[0].getJob().getJobLocation();
+												}
+											}
+											else if (jtype.equal(JobTypeConstant.REPLACEMENT) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
+												cssClass = "ReplacementPosition";
+												cssText = "Replacement";
+												position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype + " Replacement ("
+														+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+											}
+											else if (jtype.equal(JobTypeConstant.TRANSFER)) {
+												cssClass = "TransferPosition";
+												cssText = "Transfer";
+												position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype + " Transfer ("
+														+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+											}
+										}
+		
+										if (position != null) {
+											cssText = "Already Accepted Position";
+											position += " - Accepted: " + recs[0].getOfferAcceptedDateFormatted();
+										}
+									}
+
+									hasJobSpecificInterviewSummary = false;
+
+									if (interviewSummaryMap.containsKey(applicants[i].getUID())) {
+										for (InterviewSummaryBean isg : interviewSummaryMap.get(applicants[i].getUID())) {
+											if (isg.getCompetition().getCompetitionNumber().equals(job.getCompetitionNumber())) {
+												hasJobSpecificInterviewSummary = true;
+												break;
+											}
+										}
+									}
+								}
+								else {
+									cssClass = "DeclinedInterview";
+									declinedInterview = true;
+								}
+							%>
+
+							<tr>
+								<%statusi++; %>
+
+								<td style="vertical-align: middle;"><%=applicants[i].getSurname()%>,
+									<%=applicants[i].getFirstname()%>
+								</td>
+								<td style="vertical-align: middle;">
+									<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br />Tel: <%=applicants[i].getHomephone()%>
+								</td>
+								<td style="vertical-align: middle;">
+									<%if (applicants[i].getSenority() > 0) {%> 
+										<span style='color: red;'><%= applicants[i].getSenority()%></span> 
+									<%} else {%>
+										<span style="color: DimGrey;">0</span> 
+									<%}%>
+									<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>
+										<br /><span class='alert-success'>PERM</span> 
+									<% } %>
+								</td>
+								<td style="text-align: center; vertical-align: middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>">
+									<%=cssText%>
+								</td>
+
+								<td>
+									<div style="padding-top: 5px; text-align: right;">
+										<a class='btn btn-xs btn-primary'
+											href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
+										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+											<%
 	                                        		if(!job.isAwarded() && !job.isCancelled() && !job.isShortlistComplete() && !declinedInterview)
 	                                        			out.println("<a class='btn btn-xs btn-danger' href='removeShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Remove</a>");
 	                                        	
@@ -301,36 +309,37 @@
                                         			}
 	                                        		else {
 	                                        	%>
-	                                        			<script>
+											<script>
 	                                        			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
 	                                        			</script>
-	                                        			
-	                                        	<%
+
+											<%
 	                                        		}
 	                                        		
 	                                        		if(job.getJobType().equal(JobTypeConstant.POOL) && !declinedInterview)
 	                                        			out.println("<a class='btn btn-xs btn-success' href='#' onclick='showAddApplicantDialog(" + applicants[i].getUID() + ");' >Add To</a>");
 	                                        		
 	                                        	%>
-	                                        </esd:SecurityAccessRequired>
-	                                        <esd:SecurityAccessRequired permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
-	                                        <%
+										</esd:SecurityAccessRequired>
+										<esd:SecurityAccessRequired
+											permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
+											<%
 	                                        	if(!declinedInterview){
                                 					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "')\">Interview Declined?</a>");
                                 				}
                                     			else {
                                     		%>
-                                    			<script>
+											<script>
                                     			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
                                     			</script>
-                                    			
-                                    		<%
+
+											<%
                                     			}
 	                                        %>
-	                                        </esd:SecurityAccessRequired>
-	                                        <% if(guide != null && !declinedInterview) { %>
-		                                        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
-		                                        	<% 
+										</esd:SecurityAccessRequired>
+										<% if(guide != null && !declinedInterview) { %>
+										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+											<% 
 		                                        	//out.println(applicants[i].getUID() + ":" + interviewSummaryMap.containsKey(applicants[i].getUID()));
 		                                        	
 		                                        		if(!interviewSummaryMap.containsKey(applicants[i].getUID()) || job.getJobType().equal(JobTypeConstant.POOL)) {
@@ -342,9 +351,10 @@
 			                                        			+ "' >Interview Summaries</a>");
 		                                        		}
 		                                        	%>
-		                                        </esd:SecurityAccessRequired>
-		                                        <esd:SecurityAccessRequired permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
-		                                        	<% 
+										</esd:SecurityAccessRequired>
+										<esd:SecurityAccessRequired
+											permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
+											<% 
 		                                        		/**
 		                                        		if(!hasJobSpecificInterviewSummary || job.getJobType().equal(JobTypeConstant.POOL)) {
 		                                        			out.println("<a class='btn-action' href='addInterviewSummary.html?applicant_id=" + applicants[i].getUID() 
@@ -365,88 +375,118 @@
 		                                        		}
 		                                        		
 		                                        	%>
-		                                        </esd:SecurityAccessRequired>
-		                                      <% } %>
-		                                      <% if(!declinedInterview) { %>
-		                                      	<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference Request</a>
-		                                      <% } %>
-		                                     
-		                                      </div>
-	                                    	
-	                                    	  <div style="float:left;color:DimGrey;padding-top:3px;">
-	                                    			<%if(!StringUtils.isEmpty(position)){ %>
-				                                 		<b><%=cssText%> Position:</b> <%=position %>
-				                                 	<%} else {%>
-				                                 		No current position information available for <%=applicants[i].getFirstname()%>.
-				                                 	<%} %>
-	                                    	  <br/>
-	                                    	  </div>
-	                                      </td>
-	                                     
-	                                    </tr>
-                                 		<%}%>
-                                 		 </tbody>
-                                 		 </table>
-                                 	<%}else{%>
-                                    No applicants currently short listed for this competition.
-                                  <%}%>                                  	
-                                  </div> 
-                                   
-                      
- <!-- ADMINISTRATIVE FUNCTIONS -->
-		<br/><br/>                             
-	<div class="no-print" align="center">
-  		
-            						<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER,AD HR,ASSISTANT DIRECTORS">
-                                  	<%if(!job.isAwarded() && !job.isCancelled()) { %>	
-	                                 		<%if(!job.isShortlistComplete()){ %>
-	                   	              			<%if(job.isClosed()){ %>	                                 			
-	                                 					<a id='mark-shortlist-complete' class='btn btn-xs btn-success' href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK SHORTLIST AS COMPLETE</a>
-	                                 			<%}%>
-	                                 		<%}else{%>
-	                                 			<div class="alert alert-success">Shortlist marked as complete <%= job.getFormattedShortlistCompleteDate() %>.</div>
-	                                 			<a id='mark-shortlist-reopen' class='btn btn-xs btn-danger' href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=false'>REOPEN / UNLOCK SHORTLIST</a>
-	                                 				
-	                                 		<%}%>
-	                                 	<%}else{%>
-	                                 		<%if(job.isShortlistComplete()){ %>
-		                                 		<div class="alert alert-success">Shortlist marked as complete <%= job.getFormattedShortlistCompleteDate() %>.</div>
-	                                 		<%}else{%>
-	                                 			<%if(job.isClosed()){ %>
-	                                 			<a id='mark-shortlist-complete' class='btn btn-xs btn-success' href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK SHORTLIST AS COMPLETE</a>
-	                                 			<%}%>                                 		
-	                                 		<%}%>
-	                                 	<%}%>
-                                 	</esd:SecurityAccessRequired>
-            
-            
-            					<%if(job.getIsSupport().equals("Y")){ %>
-            						<a class="btn-xs btn btn-primary"  href='printable_shortlist_ss.jsp' target="_blank">Print Profiles</a>
-            					<%}else{ %>
-            						<a class="btn-xs btn btn-primary"  href='printable_shortlist.jsp' target="_blank">Print Profiles</a>
-            						<%} %>	
-                                <%if((rec != null) && (rec.length > 0)){%>
-                                	<a onclick="loadingData()" class="btn btn-xs btn-primary"  href='admin_view_job_recommendation_list.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View Recommendation(s)</a>
-                                <%}else if(!job.isAwarded() && !job.isCancelled() && job.isClosed()  && job.isShortlistComplete()
+										</esd:SecurityAccessRequired>
+										<% } %>
+										<% if(!declinedInterview) { %>
+										<a href="#" class="btn btn-xs btn-warning"
+											title="Reference Request"
+											onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference
+											Request</a>
+										<% } %>
+
+									</div>
+
+									<div style="float: left; color: DimGrey; padding-top: 3px;">
+										<%if(!StringUtils.isEmpty(position)){ %>
+										<b><%=cssText%> Position:</b>
+										<%=position %>
+										<%} else {%>
+										No current position information available for
+										<%=applicants[i].getFirstname()%>.
+										<%} %>
+										<br />
+									</div>
+								</td>
+
+							</tr>
+							<%}%>
+						</tbody>
+					</table>
+					<%}else{%>
+					No applicants currently short listed for this competition.
+					<%}%>
+				</div>
+
+
+				<!-- ADMINISTRATIVE FUNCTIONS -->
+				<br />
+				<br />
+				<div class="no-print" align="center">
+
+					<esd:SecurityAccessRequired
+						roles="ADMINISTRATOR,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER,AD HR,ASSISTANT DIRECTORS">
+						<%if(!job.isAwarded() && !job.isCancelled()) { %>
+						<%if(!job.isShortlistComplete()){ %>
+						<%if(job.isClosed()){ %>
+						<a id='mark-shortlist-complete' class='btn btn-xs btn-success'
+							href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK
+							SHORTLIST AS COMPLETE</a>
+						<%}%>
+						<%}else{%>
+						<div class="alert alert-success">
+							Shortlist marked as complete
+							<%= job.getFormattedShortlistCompleteDate() %>.
+						</div>
+						<a id='mark-shortlist-reopen' class='btn btn-xs btn-danger'
+							href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=false'>REOPEN
+							/ UNLOCK SHORTLIST</a>
+
+						<%}%>
+						<%}else{%>
+						<%if(job.isShortlistComplete()){ %>
+						<div class="alert alert-success">
+							Shortlist marked as complete
+							<%= job.getFormattedShortlistCompleteDate() %>.
+						</div>
+						<%}else{%>
+						<%if(job.isClosed()){ %>
+						<a id='mark-shortlist-complete' class='btn btn-xs btn-success'
+							href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK
+							SHORTLIST AS COMPLETE</a>
+						<%}%>
+						<%}%>
+						<%}%>
+					</esd:SecurityAccessRequired>
+
+
+					<%if(job.getIsSupport().equals("Y")){ %>
+					<a class="btn-xs btn btn-primary" href='printable_shortlist_ss.jsp'
+						target="_blank">Print Profiles</a>
+					<%}else{ %>
+					<a class="btn-xs btn btn-primary" href='printable_shortlist.jsp'
+						target="_blank">Print Profiles</a>
+					<%} %>
+					<%if((rec != null) && (rec.length > 0)){%>
+					<a onclick="loadingData()" class="btn btn-xs btn-primary"
+						href='admin_view_job_recommendation_list.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View
+						Recommendation(s)</a>
+					<%}else if(!job.isAwarded() && !job.isCancelled() && job.isClosed()  && job.isShortlistComplete()
                                 		&& (ad != null || rth != null) && (applicants.length > 0) && ((rec == null) || (rec.length < 1))){%>
-                                  <a class="btn btn-xs btn-success"  href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
-                                <%}%>
-                                <%if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW")){%>
-                                  <a class="btn btn-xs btn-danger" href='admin_view_job_applicants.jsp'>Back to Applicant List</a>
-                                  <a class="btn-xs btn btn-primary"  href='viewShortlistAudit.html?comp_num=<%=job.getCompetitionNumber()%>' target="_blank">View Shortlist Audit</a>
-                                <%}%>        
-	              
-  			
-  	</div>                              
-                                
-                              
-  
-  
- </div></div></div>
-  
-                        
-  
-  <!-- Add Applicant -->
+					<a class="btn btn-xs btn-success"
+						href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make
+						Recommendation</a>
+					<%}%>
+					<%if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW")){%>
+					<a class="btn btn-xs btn-danger"
+						href='admin_view_job_applicants.jsp'>Back to Applicant List</a> <a
+						class="btn-xs btn btn-primary"
+						href='viewShortlistAudit.html?comp_num=<%=job.getCompetitionNumber()%>'
+						target="_blank">View Shortlist Audit</a>
+					<%}%>
+
+
+				</div>
+
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Add Applicant -->
   
   <div id="add_applicant_dialog" title="Add Applicant To Competition...">
 		<table cellspacing='3' cellpadding='3' border='0' align="center">
@@ -489,9 +529,8 @@
 					</table>
 				</td>
 			</tr>
-			
-			<div id='response_msg alert alert-warning'>Click &quot;Add&quot; to confirm.</div>
 		</table>
+		<div id='response_msg alert alert-warning'>Click &quot;Add&quot; to confirm.</div>
 	</div>
 	
 	

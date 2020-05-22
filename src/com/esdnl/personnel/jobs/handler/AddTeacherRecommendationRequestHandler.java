@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -127,59 +128,67 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							new RequiredFormElement("comp_num"), new RequiredFormElement("candidate_name"),
 							new RequiredPatternFormElement("dob", FormElementPattern.DATE_PATTERN),
 							new RequiredSelectionFormElement("position", -1),
-							new RequiredSelectionFormElement("recommended_status", -1), 
+							new RequiredSelectionFormElement("recommended_status", -1),
 							new RequiredFormElement("References_Satisfactory"), new RequiredFormElement("Special_Conditions")
 					});
 
-					
 					if (validate_form()) {
 						try {
 							JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 
+							boolean seniorityHire = false;
+							Map<String, ApplicantProfileBean> permApplicants = null;
+							if (job.getJobType().equal(JobTypeConstant.REGULAR)) {
+								permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(
+										job.getCompetitionNumber());
+								seniorityHire = (permApplicants.size() > 0);
+							}
+
 							HashMap<String, ArrayList<GradeSubjectPercentUnitBean>> all_jobs_gsu = (HashMap<String, ArrayList<GradeSubjectPercentUnitBean>>) session.getAttribute(
 									"ALL_JOBS_GSU_BEANS");
 							ArrayList<GradeSubjectPercentUnitBean> gsu_beans = null;
-							if(job.getIsSupport().equals("N")){	
+							if (job.getIsSupport().equals("N")) {
 								//new RequiredFormElement("reference_id"),
 								//new RequiredFormElement("interview_summary_id"),
 								//new RequiredFormElement("Interview_Panel"),
 								//form validation moved here since support staff might not have them
-								ApplicantProfileBean pbean = ApplicantProfileManager.getApplicantProfileBean(form.get("candidate_name"));
-								if(!(pbean.isProfileVerified())){
+								ApplicantProfileBean pbean = ApplicantProfileManager.getApplicantProfileBean(
+										form.get("candidate_name"));
+								if (!(pbean.isProfileVerified())) {
 									request.setAttribute("msg", "Please verify candidate's profile.");
 									request.setAttribute("FORM", form);
-			
+
 									path = "admin_job_teacher_recommendation.jsp";
 									return path;
 								}
-								if(form.getInt("reference_id") <= 0) {
+								if (form.getInt("reference_id") <= 0) {
 									request.setAttribute("msg", "Please select reference.");
 									request.setAttribute("FORM", form);
-			
+
 									path = "admin_job_teacher_recommendation.jsp";
 									return path;
 								}
-								if(form.getInt("interview_summary_id") <= 0) {
+								if (!seniorityHire && form.getInt("interview_summary_id") <= 0) {
 									request.setAttribute("msg", "Please select interview summary.");
 									request.setAttribute("FORM", form);
-			
+
 									path = "admin_job_teacher_recommendation.jsp";
 									return path;
 								}
-								if(form.get("Interview_Panel") == null) {
+								if (form.get("Interview_Panel") == null) {
 									request.setAttribute("msg", "Please add interview panel.");
 									request.setAttribute("FORM", form);
-			
+
 									path = "admin_job_teacher_recommendation.jsp";
 									return path;
 								}
 								if (all_jobs_gsu != null)
 									gsu_beans = (ArrayList<GradeSubjectPercentUnitBean>) all_jobs_gsu.get(job.getCompetitionNumber());
-			
+
 								if ((gsu_beans == null) || (gsu_beans.size() <= 0)) {
 									request.setAttribute("msg", "Please indicate position breakdown (SECTION 2).");
 									request.setAttribute("FORM", form);
-			
+
 									path = "admin_job_teacher_recommendation.jsp";
 									return path;
 								}
@@ -187,29 +196,37 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 									request.setAttribute("msg",
 											"Please ensure that the position breakdown percentage total matches the position unit allocation.");
 									request.setAttribute("FORM", form);
-			
+
 									path = "admin_job_teacher_recommendation.jsp";
 									return path;
 								}
 							}
 							TeacherRecommendationBean bean = new TeacherRecommendationBean();
 							//check for new no ref/summary checkbox
-							if(job.getIsSupport().equals("Y")){	
-								if(form.get("chknoref") == null) {
+							if (job.getIsSupport().equals("Y")) {
+								if (form.get("chknoref") == null) {
 									bean.setReferenceId(form.getInt("reference_id"));
-									bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
-									if(form.get("Interview_Panel") ==  "") {
+									if (!seniorityHire) {
+										bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
+									}
+									else {
+										bean.setInterviewSummaryId(-1);
+									}
+									if (form.get("Interview_Panel") == "") {
 										bean.setInterviewPanel("N/A");
-									}else {
+									}
+									else {
 										bean.setInterviewPanel(form.get("Interview_Panel"));
 									}
-									
-								}else {
+
+								}
+								else {
 									bean.setReferenceId(-1);
 									bean.setInterviewSummaryId(-1);
 									bean.setInterviewPanel("N/A");
 								}
-							}else {
+							}
+							else {
 								bean.setReferenceId(form.getInt("reference_id"));
 								bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
 								bean.setInterviewPanel(form.get("Interview_Panel"));
@@ -220,7 +237,7 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							bean.setCompetitionNumber(job.getCompetitionNumber());
 							bean.setCurrentStatus(RecommendationStatus.RECOMMENDED);
 							bean.setEmploymentStatus(EmploymentConstant.get(form.getInt("recommended_status")));
-							
+
 							bean.setOtherComments(form.get("Other_Comments"));
 							if (job.getIsSupport().equals("N")) {
 								bean.setPositionType(PositionTypeConstant.get(form.getInt("position")));
@@ -387,44 +404,44 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 			}
 			 */
 			//check to see what type of position it is ADMIN/LEADERSHIP should goto director
-			
-				if (job.getJobType().equals(JobTypeConstant.ADMINISTRATIVE)
-						|| job.getJobType().equals(JobTypeConstant.LEADERSHIP)) {
-					Personnel admins[] = PersonnelDB.getPersonnelByRole("ASSOCIATE ASSISTANT DIRECTOR");
-					for (int i = 0; i < admins.length; i++) {
-						sendTo.add(admins[i]);
-					}
-				}
-				else {
-					if (sendTo.size() <= 0) {
-						if (ass[0].getLocation() > 0) {//send to SEO for Region
-							NLESDRegionalMailHelperBean mh = new NLESDRegionalMailHelperBean(ass[0].getLocationZone().getZoneId());
 
-							for (int j = 0; j < mh.getRegionalHRAdmins().length; j++) {
-								sendTo.add(mh.getRegionalHRAdmins()[j]);
-							}
-						}
-						else {
-							for (Personnel p : PersonnelDB.getPersonnelByRole("SEO - PERSONNEL")) {
-								sendTo.add(p);
-							}
+			if (job.getJobType().equals(JobTypeConstant.ADMINISTRATIVE)
+					|| job.getJobType().equals(JobTypeConstant.LEADERSHIP)) {
+				Personnel admins[] = PersonnelDB.getPersonnelByRole("ASSOCIATE ASSISTANT DIRECTOR");
+				for (int i = 0; i < admins.length; i++) {
+					sendTo.add(admins[i]);
+				}
+			}
+			else {
+				if (sendTo.size() <= 0) {
+					if (ass[0].getLocation() > 0) {//send to SEO for Region
+						NLESDRegionalMailHelperBean mh = new NLESDRegionalMailHelperBean(ass[0].getLocationZone().getZoneId());
+
+						for (int j = 0; j < mh.getRegionalHRAdmins().length; j++) {
+							sendTo.add(mh.getRegionalHRAdmins()[j]);
 						}
 					}
-
-					// send email HR ADE
-					Personnel admins[] = PersonnelDB.getPersonnelByRole("AD HR");
-					for (int i = 0; i < admins.length; i++) {
-						sendTo.add(admins[i]);
-					}
-
-					sendTo.remove(rec.getRecommendedByPersonnel());
-
-					for (Personnel p : PersonnelDB.getPersonnelByRole("ADMINISTRATOR")) {
-						sendTo.add(p);
+					else {
+						for (Personnel p : PersonnelDB.getPersonnelByRole("SEO - PERSONNEL")) {
+							sendTo.add(p);
+						}
 					}
 				}
-				
-				for (Personnel p : sendTo) {
+
+				// send email HR ADE
+				Personnel admins[] = PersonnelDB.getPersonnelByRole("AD HR");
+				for (int i = 0; i < admins.length; i++) {
+					sendTo.add(admins[i]);
+				}
+
+				sendTo.remove(rec.getRecommendedByPersonnel());
+
+				for (Personnel p : PersonnelDB.getPersonnelByRole("ADMINISTRATOR")) {
+					sendTo.add(p);
+				}
+			}
+
+			for (Personnel p : sendTo) {
 				try {
 
 					EmailBean ebean = new EmailBean();

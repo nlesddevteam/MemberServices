@@ -215,32 +215,37 @@ function parseCurrentInterviewSummariesResponse(data) {
 	//formatting interview summary beans
 	var summary_str = "<div class='alert alert-danger'>No interview summary on record.</div>";
 	
-	if($(data).find("INTERVIEW-SUMMARY").length > 0) {	
-		summary_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
-		
-		summary_str += "<tr><th width='10%'>DATE</th><th width='10%'>COMP.#</th><th width='30%'>POSITION</th><th width='30%'>RECOMMENDATION</th><th width='10%'>SELECT</th><th width='10%'>OPTIONS</th></tr>";
-		$(data).find("INTERVIEW-SUMMARY").each(function(){
-		
-			//created date
-			summary_str += "<tr><td>" + $(this).attr('created') + "</td>";
+	if(isSeniorityHire) {
+		var summary_str = "<div class='alert alert-success'>SENIORITY-BASED HIRE.</div>";
+	}
+	else {
+		if($(data).find("INTERVIEW-SUMMARY").length > 0) {	
+			summary_str = "<table class='table table-condensed' style='font-size:11px;border-bottom:1px solid DimGrey;'>";
 			
-			//competition
-			summary_str += "<td>" + $(this).attr('competitionNumber') + "</td>";
+			summary_str += "<tr><th width='10%'>DATE</th><th width='10%'>COMP.#</th><th width='30%'>POSITION</th><th width='30%'>RECOMMENDATION</th><th width='10%'>SELECT</th><th width='10%'>OPTIONS</th></tr>";
+			$(data).find("INTERVIEW-SUMMARY").each(function(){
 			
-			//position
-			summary_str += "<td>" + $(this).attr('position') + "</td>";
+				//created date
+				summary_str += "<tr><td>" + $(this).attr('created') + "</td>";
+				
+				//competition
+				summary_str += "<td>" + $(this).attr('competitionNumber') + "</td>";
+				
+				//position
+				summary_str += "<td>" + $(this).attr('position') + "</td>";
+				
+				//recommendation
+				summary_str += "<td>" + $(this).attr('recommendation') + "</td>";
+				
+				//select reference
+				summary_str += "<td><input class='interview-summary-select' type='radio' value='" + $(this).attr('interviewSummaryId') + "' name='interview_summary_id' /></td>";
+				
+				//view interview summary
+				summary_str += "<td><a class='btn btn-xs btn-primary' href='viewInterviewSummary.html?id=" + $(this).attr('interviewSummaryId') + "'>VIEW</a></td></tr>";
+			});
 			
-			//recommendation
-			summary_str += "<td>" + $(this).attr('recommendation') + "</td>";
-			
-			//select reference
-			summary_str += "<td><input class='interview-summary-select' type='radio' value='" + $(this).attr('interviewSummaryId') + "' name='interview_summary_id' /></td>";
-			
-			//view interview summary
-			summary_str += "<td><a class='btn btn-xs btn-primary' href='viewInterviewSummary.html?id=" + $(this).attr('interviewSummaryId') + "'>VIEW</a></td></tr>";
-		});
-		
-		summary_str += "</table>";
+			summary_str += "</table>";
+		}
 	}
 	
 	$('#current_interview_summaries').html(summary_str);	
@@ -257,49 +262,46 @@ function onCandidateSelected(sin) {
 	  $('#btn-refresh-candidate-info').hide();
 	  
 	  return;
-  }
-  
-  $('#candidate_info').hide();
-  $('#candidate-recommendation-info').hide();
-  $('#btn-refresh-candidate-info').hide();
-  $('#candidate_loading_msg').show();
-  
-  var data = {};
-  data.op = 'CANDIDATE_DETAILS';
-  data.sin = sin;
-  var name=$("#candidate_name option:selected").text();
- 
-  
-  $('#candidate_name_s').html(name);
-  
-  
-  $.post('addJobTeacherRecommendation.html', data, function(xml){
-	  parseCandidateSelection(xml);
-  });
+	}
+	  
+	$('#candidate_info').hide();
+	$('#candidate-recommendation-info').hide();
+	$('#btn-refresh-candidate-info').hide();
+	$('#candidate_loading_msg').show();
+	  
+	var data = {};
+	data.op = 'CANDIDATE_DETAILS';
+	data.sin = sin;
+	var name=$("#candidate_name option:selected").text();
+	  
+	$('#candidate_name_s').html(name);
+	  
+	$.post('addJobTeacherRecommendation.html', data, function(xml){
+		parseCandidateSelection(xml);
+	});
 }
 
 
-
+var isSeniorityHire = false;
 function onReferenceAndInterviewSummarySelected(){
-	if($("#jobtype").val() == "N"){
-		if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
+	if($("#jobtype").val() == "N") {
+		if((isSeniorityHire || ($('input.interview-summary-select:checked').length > 0)) && ($('input.reference-select:checked').length > 0)){
 			$('#candidate-recommendation-info').show();
 		}
 		else {
 			$('#candidate-recommendation-info').hide();
 		}
-	}else{
-		if($('#chknoref:checked').length <= 0){
+	}
+	else{
+		if($('#chknoref:checked').length <= 0) {
 			if($('input.interview-summary-select:checked').length > 0 && $('input.reference-select:checked').length > 0){
 				$('#candidate-recommendation-info').show();
 			}
 			else {
 				$('#candidate-recommendation-info').hide();
 			}
-			
 		}
 	}
-	
 }
 
 function onSendReferenceCheckRequest() {

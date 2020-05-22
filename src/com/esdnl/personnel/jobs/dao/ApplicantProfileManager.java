@@ -26,6 +26,7 @@ import com.esdnl.personnel.jobs.bean.SubListBean;
 import com.esdnl.personnel.jobs.constants.DocumentType;
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
 import com.esdnl.personnel.jobs.dao.comparator.IntegerReverseComparator;
+import com.esdnl.personnel.v2.utils.StringUtils;
 
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -1208,12 +1209,13 @@ public class ApplicantProfileManager {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SCIENCE_CRS >= "
 						+ params.getScienceCourses() + ") ");
 			}
-			
+
 			if (params.getSocialStudiesCourses() > 0) {
-				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
-						+ params.getSocialStudiesCourses() + ") ");
+				sql.append(
+						" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE SSTUDIES_CRS >= "
+								+ params.getSocialStudiesCourses() + ") ");
 			}
-			
+
 			if (params.getArtCourses() > 0) {
 				sql.append(" AND APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.APPLICANT_EDU_OTHER WHERE ART_CRS >= "
 						+ params.getArtCourses() + ") ");
@@ -2100,15 +2102,15 @@ public class ApplicantProfileManager {
 				sqlwhere.append(" and cpos.POSITION_TYPE ='" + params.getCurrentPositionType() + "'");
 			}
 
-			if(params.getUnionCode() > 0){
+			if (params.getUnionCode() > 0) {
 				sqlfrom.append(" left outer join APPLICANT_CURRENT_POSITIONS cpos on app.SIN=cpos.SIN ");
 				sqlfrom.append(" left outer join JOB_RTH_POSITIONS rth on cpos.POSITION_HELD=rth.ID ");
 				sqlwhere.append(" and rth.union_code = " + params.getUnionCode());
 				// we check to see if we need to add the position clause
-				if(params.getCurrentUnionPosition() > 0){
+				if (params.getCurrentUnionPosition() > 0) {
 					sqlwhere.append(" and rth.ID = " + params.getCurrentUnionPosition());
 				}
-				usedCurrent=true;
+				usedCurrent = true;
 			}
 			if ((params.getDegrees() != null) && (params.getDegrees().length > 0)) {
 				sqlfrom.append(" left outer join APPLICANT_EDU_POST_SEC_SS edu on app.SIN=edu.SIN ");
@@ -2171,7 +2173,7 @@ public class ApplicantProfileManager {
 			if (params.isCodeOfConduct()) {
 				sqlfrom.append(" left outer join APPLICANT_DOCUMENT adoc2 on app.SIN=adoc2.APPLICANT_ID ");
 				sqlwhere.append(" and adoc2.DOCUMENT_TYPE=" + DocumentTypeSS.CODE_OF_CONDUCT.getValue());
-			}			
+			}
 			if (params.isFirstAid()) {
 				sqlfrom.append(" left outer join APPLICANT_DOCUMENT adoc3 on app.SIN=adoc3.APPLICANT_ID ");
 				sqlwhere.append(" and adoc3.DOCUMENT_TYPE=" + DocumentTypeSS.FIRST_AID.getValue());
@@ -2332,6 +2334,101 @@ public class ApplicantProfileManager {
 		return apps;
 	}
 
+	public static Map<String, ApplicantProfileBean> getCompetitionPermanentCandidates(String comp_num)
+			throws JobOpportunityException {
+
+		Map<String, ApplicantProfileBean> apps = null;
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			apps = new HashMap<String, ApplicantProfileBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.get_perm_applicants(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, comp_num);
+			stat.setString(3, StringUtils.getSchoolYear(new java.util.Date()));
+
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				apps.put(rs.getString("sin"), createApplicantProfileBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("Map<String, ApplicantProfileBean> getCompetitionPermanentCandidates(String comp_num): " + e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return apps;
+	}
+
+	public static Map<String, ApplicantProfileBean> getCompetitionShortlistPermanentCandidates(String comp_num)
+			throws JobOpportunityException {
+
+		Map<String, ApplicantProfileBean> apps = null;
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			apps = new HashMap<String, ApplicantProfileBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.get_shortlist_perm_apps(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, comp_num);
+			stat.setString(3, StringUtils.getSchoolYear(new java.util.Date()));
+
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				apps.put(rs.getString("sin"), createApplicantProfileBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(
+					"Map<String, ApplicantProfileBean> getCompetitionShortlistPermanentCandidates(String comp_num): " + e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return apps;
+	}
+
 	public static ApplicantProfileBean createApplicantProfileBean(ResultSet rs) {
 
 		ApplicantProfileBean aBean = null;
@@ -2400,7 +2497,7 @@ public class ApplicantProfileManager {
 				aBean.setMajorsList("");
 			}
 			aBean.setProfileType(rs.getString("PROFILETYPE"));
-			
+
 			//now check to see if there is applicantverificationbean
 			try {
 				aBean.setProfileVerified(rs.getBoolean("PROFILEVERIFIED"));
