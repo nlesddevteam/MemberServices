@@ -1,5 +1,6 @@
 <%@ page language="java"
          import="java.util.*,
+         				 java.util.stream.*,
                  java.text.*,
                  com.awsd.school.*,
                  com.awsd.school.bean.*,
@@ -43,6 +44,7 @@
   Collection<ApplicantPositionOfferBean> emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile); 
   Map<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   Collection<InterviewSummaryBean> interviewSummaries = InterviewSummaryManager.getInterviewSummaryBeans(profile);
+  interviewSummaries = interviewSummaries.stream().filter(isb -> isb.getCompetition().getJobAwardedDate() != null).collect(Collectors.toList());
   
   EmployeeBean empbean = null;
   if(!StringUtils.isEmpty(profile.getSIN2())){
