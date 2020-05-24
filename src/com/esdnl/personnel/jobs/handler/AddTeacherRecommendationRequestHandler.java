@@ -206,12 +206,8 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							if (job.getIsSupport().equals("Y")) {
 								if (form.get("chknoref") == null) {
 									bean.setReferenceId(form.getInt("reference_id"));
-									if (!seniorityHire) {
-										bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
-									}
-									else {
-										bean.setInterviewSummaryId(-1);
-									}
+									bean.setInterviewSummaryId(!seniorityHire ? form.getInt("interview_summary_id") : -1);
+
 									if (form.get("Interview_Panel") == "") {
 										bean.setInterviewPanel("N/A");
 									}
@@ -228,7 +224,7 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							}
 							else {
 								bean.setReferenceId(form.getInt("reference_id"));
-								bean.setInterviewSummaryId(form.getInt("interview_summary_id"));
+								bean.setInterviewSummaryId(!seniorityHire ? form.getInt("interview_summary_id") : -1);
 								bean.setInterviewPanel(form.get("Interview_Panel"));
 							}
 							bean.setCandidate2(form.get("candidate_2"));
