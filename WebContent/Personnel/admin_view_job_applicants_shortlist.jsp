@@ -275,8 +275,11 @@
 							<tr>
 								<%statusi++; %>
 
-								<td style="vertical-align: middle;"><%=applicants[i].getSurname()%>,
-									<%=applicants[i].getFirstname()%>
+								<td style="vertical-align: middle;">
+									<%=applicants[i].getSurname()%>,<%=applicants[i].getFirstname()%>
+									<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>
+										<br /><span class='alert-success'>PERM</span> 
+									<% } %>
 								</td>
 								<td style="vertical-align: middle;">
 									<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br />Tel: <%=applicants[i].getHomephone()%>
@@ -287,9 +290,6 @@
 									<%} else {%>
 										<span style="color: DimGrey;">0</span> 
 									<%}%>
-									<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>
-										<br /><span class='alert-success'>PERM</span> 
-									<% } %>
 								</td>
 								<td style="text-align: center; vertical-align: middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>">
 									<%=cssText%>
