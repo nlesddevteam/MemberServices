@@ -33,9 +33,8 @@ public class ApplicantVerificationRequestHandler extends RequestHandlerImpl {
 				abean.setVerifiedBy(usr.getPersonnel().getPersonnelID());
 				ApplicantVerificationManager.addApplicantVerificationBean(abean);
 				request.setAttribute("msg", "Applicant profile has been verified.");
-				ApplicantProfileBean profile = (ApplicantProfileBean) request.getSession(false).getAttribute("APPLICANT");
-				ApplicantProfileBean refreshprofile = ApplicantProfileManager.getApplicantProfileBean(profile.getSIN());
-				if(profile.getProfileType().equals("S")) {
+				ApplicantProfileBean refreshprofile = ApplicantProfileManager.getApplicantProfileBean(appid);
+				if(refreshprofile.getProfileType().equals("S")) {
 					path = "admin_view_applicant_ss.jsp";
 				}else {
 					path = "admin_view_applicant.jsp";
