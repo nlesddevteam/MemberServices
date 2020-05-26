@@ -16,6 +16,7 @@
   User usr = (User) session.getAttribute("usr");
 
 	RecommendationStatisticsBean stats = RecommendationStatisticsManager.getRecommendationStatisticsBean();
+	TeacherAllocationVacancyStatisticsBean vstats = TeacherAllocationVacancyStatisticsManager.getVacancyStats("2020-21");
 %>
 
 <html>
@@ -35,11 +36,46 @@
 					<br/>&nbsp;<br/>
 					<b>NOTICE: </b>Due to the information and data layout this application provides, we advise using a tablet or laptop/desktop computer to use this system.
 					
-					
 					<br/>&nbsp;<br/>
 					
+					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 					<div class="container">
-						<div class='row justify-content-center'>
+						<div class='row '>
+							<div class='col col-md-12'>
+								<table class="table table-sm table-striped table-bordered">
+									<caption><%= vstats.getSchoolYear() %> Vacancy Processing Statistics</caption>
+									<thead>
+										<tr>
+											<th scope="col">Vacancies</th>
+											<th scope="col">Ad Submitted</th>
+											<th scope="col">Ad Approved</th>
+											<th scope="col">Ad Posted</th>
+											<th scope="col">Rec Submitted</th>
+											<th scope="col">Rec Approved</th>
+											<th scope="col">Rec Accepted</th>
+											<th scope="col">Rec Offered</th>
+											<th scope="col">Filled By Competition</th>
+											<th scope="col">Filled Manually</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td scope="row"><%= vstats.getTotalVacancies() %></td>
+											<td><%= vstats.getTotalAdSubmitted() %></td>
+											<td><%= vstats.getTotalAdApproved() %></td>
+											<td><%= vstats.getTotalAdPosted() %></td>
+											<td><%= vstats.getTotalRecommendationSubmitted() %></td>
+											<td><%= vstats.getTotalRecommendationApproved() %></td>
+											<td><%= vstats.getTotalRecommendationAccepted() %></td>
+											<td><%= vstats.getTotalRecommendationOffered() %></td>
+											<td><%= vstats.getTotalFilledByCompetition()  %></td>
+											<td><%= vstats.getTotalFilledManually() %></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class='row '>
 							<div class='col col-md-6'>
 								<table class="table table-sm table-striped table-bordered">
 									<caption>Position Offer Statistics</caption>
@@ -61,6 +97,7 @@
 							</div>
 						</div>
 					</div>
+					</esd:SecurityAccessRequired>
 					
 					<div class="alert alert-warning" style="text-align:center"><b>****** ACCESS TO INFORMATION PRIVACY NOTICE / WARNING ******</b><br/>
 					The NLESD is committed to the protection of all personal information collected, used and/or disclosed in the operation and management of its activities.  
