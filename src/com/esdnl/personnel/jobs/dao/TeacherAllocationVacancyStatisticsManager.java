@@ -78,6 +78,7 @@ public class TeacherAllocationVacancyStatisticsManager {
 			stats.setTotalVacancies(rs.getInt("TOTAL_VACANCIES"));
 			stats.setTotalAdApproved(rs.getInt("AD_APPROVED"));
 			stats.setTotalAdSubmitted(rs.getInt("AD_SUBMITTED"));
+			stats.setTotalAdPosted(rs.getInt("AD_POSTED"));
 			stats.setTotalFilledByCompetition(rs.getInt("FILLED_COMP"));
 			stats.setTotalFilledManually(rs.getInt("FILLED_MANUAL"));
 			stats.setTotalNoAdCreated(rs.getInt("NO_AD_CREATED"));
