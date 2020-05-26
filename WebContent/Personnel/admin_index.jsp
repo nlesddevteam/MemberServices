@@ -46,37 +46,42 @@
 									<caption><%= vstats.getSchoolYear() %> Vacancy Processing Statistics</caption>
 									<thead>
 										<tr>
-											<th scope="col">Vacancies</th>
-											<th scope="col">Ad Submitted</th>
-											<th scope="col">Ad Approved</th>
-											<th scope="col">Ad Posted</th>
-											<th scope="col">Rec Submitted</th>
-											<th scope="col">Rec Approved</th>
-											<th scope="col">Rec Accepted</th>
-											<th scope="col">Rec Offered</th>
-											<th scope="col">Filled By Competition</th>
-											<th scope="col">Filled Manually</th>
+											<th rowspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>Total<br/>Vacancies</th>
+											<th colspan='3' style='text-align:center; border-right: 5px solid #e4e4e4;'>Ad Requests</th>
+											<th colspan='4' style='text-align:center; border-right: 5px solid #e4e4e4;'>Recommendations</th>
+											<th colspan='2' style='text-align:center;'>Positions Filled</th>
+										</tr>
+										<tr>
+											<th scope="col" style='text-align:center;'>Submitted</th>
+											<th scope="col" style='text-align:center;'>Approved</th>
+											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Posted</th>
+											<th scope="col" style='text-align:center;'>Submitted</th>
+											<th scope="col" style='text-align:center;'>Approved</th>
+											<th scope="col" style='text-align:center;'>Accepted</th>
+											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Offered</th>
+											<th scope="col" style='text-align:center;'>By Competition</th>
+											<th scope="col" style='text-align:center;'>Manually</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td scope="row"><%= vstats.getTotalVacancies() %></td>
-											<td><%= vstats.getTotalAdSubmitted() %></td>
-											<td><%= vstats.getTotalAdApproved() %></td>
-											<td><%= vstats.getTotalAdPosted() %></td>
-											<td><%= vstats.getTotalRecommendationSubmitted() %></td>
-											<td><%= vstats.getTotalRecommendationApproved() %></td>
-											<td><%= vstats.getTotalRecommendationAccepted() %></td>
-											<td><%= vstats.getTotalRecommendationOffered() %></td>
-											<td><%= vstats.getTotalFilledByCompetition()  %></td>
-											<td><%= vstats.getTotalFilledManually() %></td>
+											<td scope="row" style='text-align:center; border-right: 5px solid #e4e4e4;'><%= vstats.getTotalVacancies() %></td>
+											<td style='text-align:center;'><%= vstats.getTotalAdSubmitted() %></td>
+											<td style='text-align:center;'><%= vstats.getTotalAdApproved() %></td>
+											<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= vstats.getTotalAdPosted() %></td>
+											<td style='text-align:center;'><%= vstats.getTotalRecommendationSubmitted() %></td>
+											<td style='text-align:center;'><%= vstats.getTotalRecommendationApproved() %></td>
+											<td style='text-align:center;'><%= vstats.getTotalRecommendationAccepted() %></td>
+											<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= vstats.getTotalRecommendationOffered() %></td>
+											<td style='text-align:center;'><%= vstats.getTotalFilledByCompetition()  %></td>
+											<td style='text-align:center;'><%= vstats.getTotalFilledManually() %></td>
 										</tr>
 										<tr>
-											<td colspan='8' class='text-success' style='text-align:right; font-weight: bold;'>Total Filled</td>
+											<td colspan='8' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
 											<td colspan='2' class='text-success' style='text-align:center; font-weight: bold;'><%= vstats.getTotalFilledByCompetition() + vstats.getTotalFilledManually()  %></td>
 										</tr>
 										<tr>
-											<td colspan='8' class='text-danger' style='text-align:right; font-weight: bold;'>Total Outstanding</td>
+											<td colspan='8' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
 											<td colspan='2' class='text-danger' style='text-align:center; font-weight: bold;'><%= vstats.getTotalVacancies() - (vstats.getTotalFilledByCompetition() + vstats.getTotalFilledManually()) %></td>
 										</tr>
 									</tbody>
@@ -89,16 +94,16 @@
 									<caption>Position Offer Statistics</caption>
 									<thead>
 										<tr>
-											<th scope="col">Queued</th>
-											<th scope="col">In-progress</th>
-											<th scope="col">Expired</th>
+											<th scope="col" style='text-align:center;'>Queued</th>
+											<th scope="col" style='text-align:center;'>In-progress</th>
+											<th scope="col" style='text-align:center;'>Expired</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td scope="row"><%= stats.getOffersQueued() %></td>
-											<td><%= stats.getOffersInProgress() %></td>
-											<td><%= stats.getOffersExpired() %></td>
+											<td scope="row" style='text-align:center;'><%= stats.getOffersQueued() %></td>
+											<td style='text-align:center;'><%= stats.getOffersInProgress() %></td>
+											<td style='text-align:center;'><%= stats.getOffersExpired() %></td>
 										</tr>
 									</tbody>
 								</table>
