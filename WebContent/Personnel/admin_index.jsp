@@ -71,6 +71,14 @@
 											<td><%= vstats.getTotalFilledByCompetition()  %></td>
 											<td><%= vstats.getTotalFilledManually() %></td>
 										</tr>
+										<tr>
+											<td colspan='8' class='text-success' style='text-align:right; font-weight: bold;'>Total Filled</td>
+											<td colspan='2' class='text-success' style='text-align:center; font-weight: bold;'><%= vstats.getTotalFilledByCompetition() + vstats.getTotalFilledManually()  %></td>
+										</tr>
+										<tr>
+											<td colspan='8' class='text-danger' style='text-align:right; font-weight: bold;'>Total Outstanding</td>
+											<td colspan='2' class='text-danger' style='text-align:center; font-weight: bold;'><%= vstats.getTotalVacancies() - (vstats.getTotalFilledByCompetition() + vstats.getTotalFilledManually()) %></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
