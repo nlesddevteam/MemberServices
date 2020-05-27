@@ -48,9 +48,9 @@
 					<br/>&nbsp;<br/>
 					
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
-					<div class="container">
-						<div class='row '>
-							<div class='col col-md-12'>
+					<div class="container" style='margin-left: 0px;padding-left: 0px;'>
+						<div class='row'>
+							<div class='col col-md-12 col-sm-12 col-lg-12'>
 								<table class="table table-sm table-striped table-bordered">
 									<caption><%= statsSchoolYear %> Vacancy Processing Statistics</caption>
 									<thead>
@@ -59,7 +59,7 @@
 											<th rowspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>Total<br/>Vacancies</th>
 											<th colspan='3' style='text-align:center; border-right: 5px solid #e4e4e4;'>Ad Requests</th>
 											<th colspan='4' style='text-align:center; border-right: 5px solid #e4e4e4;'>Recommendations</th>
-											<th colspan='2' style='text-align:center;'>Positions Filled</th>
+											<th colspan='4' style='text-align:center;'>Positions Filled</th>
 										</tr>
 										<tr>
 											<th scope="col" style='text-align:center;'>Submitted</th>
@@ -69,8 +69,10 @@
 											<th scope="col" style='text-align:center;'>Approved</th>
 											<th scope="col" style='text-align:center;'>Accepted</th>
 											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Offered</th>
-											<th scope="col" style='text-align:center;'>By Competition</th>
-											<th scope="col" style='text-align:center;'>Manually</th>
+											<th scope="col" style='text-align:center;'>Comp</th>
+											<th scope="col" style='text-align:center;'>Manual</th>
+											<th scope="col" style='text-align:center;'>Total</th>
+											<th scope="col" style='text-align:center;'>Left</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -102,6 +104,8 @@
 												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalRecommendationOffered() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition()  %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalFilledManually() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalVacancies() - (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) %></td>
 											</tr>
 										<% } %>
 										<tr>
@@ -116,14 +120,16 @@
 												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOffered %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalFilledByCompetition  %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalFilledManually %></td>
+												<td style='text-align:center; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+												<td style='text-align:center; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 											</tr>
 										<tr>
 											<td colspan='9' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
-											<td colspan='2' class='text-success' style='text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %></td>
+											<td colspan='4' class='text-success' style='text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 										</tr>
 										<tr>
 											<td colspan='9' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
-											<td colspan='2' class='text-danger' style='text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
+											<td colspan='4' class='text-danger' style='text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 										</tr>
 									</tbody>
 								</table>
