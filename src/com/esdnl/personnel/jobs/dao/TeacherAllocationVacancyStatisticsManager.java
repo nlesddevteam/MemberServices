@@ -4,10 +4,15 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.awsd.school.SchoolException;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.TeacherAllocationVacancyStatisticsBean;
+import com.nlesd.school.bean.SchoolZoneBean;
+import com.nlesd.school.service.SchoolZoneService;
 
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -47,6 +52,62 @@ public class TeacherAllocationVacancyStatisticsManager {
 			catch (Exception ex) {}
 
 			System.err.println("TeacherAllocationVacancyStatisticsBean getVacancyStats(String schoolYear): " + e);
+			throw new JobOpportunityException("Can not add TeacherAllocationVacancyStatisticsBean to DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return stats;
+	}
+
+	public static Map<SchoolZoneBean, TeacherAllocationVacancyStatisticsBean> getVacancyStatsByRegion(String schoolYear)
+			throws JobOpportunityException {
+
+		Map<SchoolZoneBean, TeacherAllocationVacancyStatisticsBean> stats = new HashMap<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_vac_stats_by_region(?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolYear);
+
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				stats.put(SchoolZoneService.getSchoolZoneBean(rs.getInt("ZONE_ID")),
+						createTeacherAllocationVacancyStatisticsBean(rs));
+			}
+		}
+		catch (SQLException | SchoolException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println(
+					"Map<SchoolZoneBean, TeacherAllocationVacancyStatisticsBean> getVacancyStatsByRegion(String schoolYear): "
+							+ e);
 			throw new JobOpportunityException("Can not add TeacherAllocationVacancyStatisticsBean to DB.", e);
 		}
 		finally {

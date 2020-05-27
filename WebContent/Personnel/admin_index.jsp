@@ -2,7 +2,15 @@
 <!-- APPLICATION FOR NLESD STAFF (MEMBER) SERVICES -->
 <!-- HTML 5 BOOTSTRAP 3.3.7 JQUERY 3.3.1 -->
 
-<%@ page language ="java" session = "true" import = "com.awsd.security.*, com.esdnl.personnel.jobs.bean.*, com.esdnl.personnel.jobs.dao.*" isThreadSafe="false"%>
+<%@ page language ="java" session = "true" isThreadSafe="false"%>
+<%@ page import = "java.util.*, 
+									java.util.stream.*, 
+									com.awsd.security.*, 
+									com.esdnl.personnel.jobs.bean.*, 
+									com.esdnl.personnel.jobs.dao.*, 
+									com.nlesd.school.bean.*, 
+									com.nlesd.school.service.*,
+									org.apache.commons.lang.*" %>
 
 <!-- LOAD JAVA TAG LIBRARIES -->
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
@@ -15,8 +23,9 @@
 <%
   User usr = (User) session.getAttribute("usr");
 
+	String statsSchoolYear = "2020-21";
 	RecommendationStatisticsBean stats = RecommendationStatisticsManager.getRecommendationStatisticsBean();
-	TeacherAllocationVacancyStatisticsBean vstats = TeacherAllocationVacancyStatisticsManager.getVacancyStats("2020-21");
+	Map<SchoolZoneBean,TeacherAllocationVacancyStatisticsBean> vacancyStatsByRegion = TeacherAllocationVacancyStatisticsManager.getVacancyStatsByRegion(statsSchoolYear);
 %>
 
 <html>
@@ -43,9 +52,10 @@
 						<div class='row '>
 							<div class='col col-md-12'>
 								<table class="table table-sm table-striped table-bordered">
-									<caption><%= vstats.getSchoolYear() %> Vacancy Processing Statistics</caption>
+									<caption><%= statsSchoolYear %> Vacancy Processing Statistics</caption>
 									<thead>
 										<tr>
+											<th rowspan='2' style='text-align:center;'>Region</th>
 											<th rowspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>Total<br/>Vacancies</th>
 											<th colspan='3' style='text-align:center; border-right: 5px solid #e4e4e4;'>Ad Requests</th>
 											<th colspan='4' style='text-align:center; border-right: 5px solid #e4e4e4;'>Recommendations</th>
@@ -64,25 +74,56 @@
 										</tr>
 									</thead>
 									<tbody>
+										<% 
+											int totalVacancies = 0, totalFilledByCompetition = 0, totalFilledManually = 0;
+											int totalAdSubmitted = 0, totalAdApproved = 0, totalAdPosted = 0;
+											int totalRecSubmitted = 0, totalRecApproved = 0, totalRecAccepted = 0, totalRecOffered = 0;
+											for (Map.Entry<SchoolZoneBean, TeacherAllocationVacancyStatisticsBean> entry : vacancyStatsByRegion.entrySet()) { 
+												totalVacancies += entry.getValue().getTotalVacancies();
+												totalFilledByCompetition += entry.getValue().getTotalFilledByCompetition();
+												totalFilledManually += entry.getValue().getTotalFilledManually();
+												totalAdSubmitted += entry.getValue().getTotalAdSubmitted();
+												totalAdApproved += entry.getValue().getTotalAdApproved();
+												totalAdPosted += entry.getValue().getTotalAdPosted();
+												totalRecSubmitted += entry.getValue().getTotalRecommendationSubmitted();
+												totalRecApproved += entry.getValue().getTotalRecommendationApproved();
+												totalRecAccepted += entry.getValue().getTotalRecommendationAccepted();
+												totalRecOffered += entry.getValue().getTotalRecommendationOffered();
+										%>
+											<tr>
+												<td scope="row"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
+												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalVacancies() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalAdSubmitted() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalAdApproved() %></td>
+												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalAdPosted() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationSubmitted() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationApproved() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationAccepted() %></td>
+												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalRecommendationOffered() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition()  %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalFilledManually() %></td>
+											</tr>
+										<% } %>
 										<tr>
-											<td scope="row" style='text-align:center; border-right: 5px solid #e4e4e4;'><%= vstats.getTotalVacancies() %></td>
-											<td style='text-align:center;'><%= vstats.getTotalAdSubmitted() %></td>
-											<td style='text-align:center;'><%= vstats.getTotalAdApproved() %></td>
-											<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= vstats.getTotalAdPosted() %></td>
-											<td style='text-align:center;'><%= vstats.getTotalRecommendationSubmitted() %></td>
-											<td style='text-align:center;'><%= vstats.getTotalRecommendationApproved() %></td>
-											<td style='text-align:center;'><%= vstats.getTotalRecommendationAccepted() %></td>
-											<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= vstats.getTotalRecommendationOffered() %></td>
-											<td style='text-align:center;'><%= vstats.getTotalFilledByCompetition()  %></td>
-											<td style='text-align:center;'><%= vstats.getTotalFilledManually() %></td>
+												<td scope="row" style='border-top: double #333333;'>Totals</td>
+												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalVacancies %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalAdSubmitted %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalAdApproved %></td>
+												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalAdPosted %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalRecSubmitted %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalRecApproved %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalRecAccepted %></td>
+												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOffered %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalFilledByCompetition  %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalFilledManually %></td>
+											</tr>
+										<tr>
+											<td colspan='9' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
+											<td colspan='2' class='text-success' style='text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %></td>
 										</tr>
 										<tr>
-											<td colspan='8' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
-											<td colspan='2' class='text-success' style='text-align:center; font-weight: bold;'><%= vstats.getTotalFilledByCompetition() + vstats.getTotalFilledManually()  %></td>
-										</tr>
-										<tr>
-											<td colspan='8' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
-											<td colspan='2' class='text-danger' style='text-align:center; font-weight: bold;'><%= vstats.getTotalVacancies() - (vstats.getTotalFilledByCompetition() + vstats.getTotalFilledManually()) %></td>
+											<td colspan='9' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
+											<td colspan='2' class='text-danger' style='text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 										</tr>
 									</tbody>
 								</table>
