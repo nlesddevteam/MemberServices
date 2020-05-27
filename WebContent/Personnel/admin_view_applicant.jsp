@@ -39,6 +39,13 @@
   ApplicantEsdExperienceBean esd_exp = ApplicantEsdExperienceManager.getApplicantEsdExperienceBean(profile.getSIN());
   ApplicantEducationBean[] edu = ApplicantEducationManager.getApplicantEducationBeans(profile.getSIN());
   ApplicantEducationOtherBean edu_oth = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());
+  boolean validEduOther = false;
+  if(!(edu_oth == null)){
+	  if(edu_oth.getFormatedTeachingCertificateIssuedDate() != null && edu_oth.getTeachingCertificateLevel() != null){
+		  validEduOther = true;
+	  }
+  }
+  
   ApplicantEsdReplacementExperienceBean[] rpl = ApplicantEsdReplExpManager.getApplicantEsdReplacementExperienceBeans(profile.getSIN());
   ApplicantSubstituteTeachingExpBean[] sub = ApplicantSubExpManager.getApplicantSubstituteTeachingExpBeans(profile.getSIN());
   ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
@@ -98,6 +105,7 @@
 <c:set var="permContractPosition" value="<%=(esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)?esd_exp.getPermanentContractPosition() :\"N/A\"%>"/>
 <c:set var="repContractSchool" value="<%=(esd_exp != null)&&(esd_exp.getContractSchool() != 0)&&(esd_exp.getContractSchool() != -1)?esd_exp.getReplacementContractLocationText():\"N/A\"%>"/>
 <c:set var="repContractEndDate" value="<%=(esd_exp != null)&&(esd_exp.getContractSchool() != 0)&&(esd_exp.getContractSchool() != -1)?esd_exp.getFormattedContractEndDate():\"N/A\"%>"/>
+<c:set var="validEduOtherVar" value="<%=validEduOther%>"/>
 <html>
 <head>
 <title>MyHRP Applicant Profiling System</title>
@@ -255,10 +263,20 @@ input {
 					    					</c:if>
 									</c:when>
 					    			<c:otherwise>
-					    				<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span>
-					    					<esd:SecurityAccessRequired roles="ADMINISTRATOR,MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
-											<button type="button" class="btn btn-success btn-xs" id="butVerify" style="margin-left:10px;"><span class="glyphicon glyphicon-thumbs-up"></span> Verify</button>
-											</esd:SecurityAccessRequired>
+					    				<c:choose>
+					    					<c:when test="${ validEduOtherVar eq true}">
+					    						<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> This Profile has not been verified.</span>
+					    						<esd:SecurityAccessRequired roles="ADMINISTRATOR,MANAGER OF HR,MANAGER OF HR - PERSONNEL,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER">
+													<button type="button" class="btn btn-success btn-xs" id="butVerify" style="margin-left:10px;"><span class="glyphicon glyphicon-thumbs-up"></span> Verify</button>
+												</esd:SecurityAccessRequired>
+					    					</c:when>
+					    					<c:otherwise>
+					    						<span style="color:Red;"><span class="glyphicon glyphicon-remove"></span> Applicant has incomplete profile:  Missing Other Education - Certification Level and/or Certification Issue Date </span>
+					    					
+					    					</c:otherwise>
+					    				</c:choose>
+					    				
+					    				
 					    			</c:otherwise>
 					    		</c:choose>
 					    		</td>

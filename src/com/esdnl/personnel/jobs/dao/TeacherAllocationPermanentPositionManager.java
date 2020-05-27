@@ -260,6 +260,17 @@ public class TeacherAllocationPermanentPositionManager {
 			abean.setAssignment(rs.getString("ASSIGNMENT"));
 			abean.setUnit(rs.getDouble("UNIT"));
 			abean.setTenur(rs.getString("TENUR"));
+			try {
+				if(rs.getString("SIN") != null) {
+					abean.setApplicantLink("viewApplicantProfile.html?sin=" + rs.getString("SIN"));
+					
+				}else {
+					abean.setApplicantLink("NONE");
+				}
+			}
+			catch (Exception e) {
+				abean.setApplicantLink("NONE");
+			}
 		}
 		catch (SQLException e) {
 			abean = null;

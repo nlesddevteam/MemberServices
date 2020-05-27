@@ -898,7 +898,7 @@ function parseTeacherAllocationBean(data) {
 					.append($('<tr>')
 						.addClass('permanent-positions-table-row')
 						.addClass('displayText' + ((parseFloat($(this).attr('UNIT')) <= 0) ? ' redundant-position' : ''))
-						.append($('<td>').text($(this).attr('EMP-NAME')))
+						.append($('<td>').html( $(this).attr('PROFILE-LINK') == 'NONE' ? $(this).attr('EMP-NAME') : '<a href="' + $(this).attr('PROFILE-LINK') + '" target="_blank">' + $(this).attr('EMP-NAME') + '</a>') )
 						.append($('<td>').text(parseFloat($(this).attr('SENIORITY-1')).toFixed(2)))
 						.append($('<td>').text($(this).attr('TENUR')))
 						.append($('<td>').text($(this).attr('ASSIGNMENT')))
