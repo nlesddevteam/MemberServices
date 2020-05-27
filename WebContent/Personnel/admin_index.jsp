@@ -104,8 +104,8 @@
 												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalRecommendationOffered() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition()  %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalFilledManually() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalVacancies() - (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) %></td>
+												<td class='text-success' style='font-weight: bold; text-align:center;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
+												<td class='text-danger' style='font-weight: bold; text-align:center;'><%= entry.getValue().getTotalVacancies() - (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) %></td>
 											</tr>
 										<% } %>
 										<tr>
@@ -120,8 +120,8 @@
 												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOffered %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalFilledByCompetition  %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalFilledManually %></td>
-												<td style='text-align:center; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
-												<td style='text-align:center; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
+												<td class='text-success' style='font-weight: bold; text-align:center; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+												<td class='text-danger' style='font-weight: bold; text-align:center; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 											</tr>
 										<tr>
 											<td colspan='9' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
