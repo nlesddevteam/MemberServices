@@ -14,6 +14,7 @@ public class TeacherAllocationPermanentPositionBean {
 	private double unit;
 	private String assignment;
 	private String tenur;
+	private String applicantLink;
 
 	public TeacherAllocationPermanentPositionBean() {
 
@@ -24,6 +25,7 @@ public class TeacherAllocationPermanentPositionBean {
 		this.unit = 0.0;
 		this.assignment = null;
 		this.tenur = null;
+		this.applicantLink=null;
 	}
 
 	public int getPositionId() {
@@ -108,9 +110,18 @@ public class TeacherAllocationPermanentPositionBean {
 						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue2() + "\" SENIORITY-3=\""
 						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue3() + "\" " : "")
 				+ "CLASS-SIZE=\"" + this.classSize + "\" ASSIGNMENT=\"" + StringEscapeUtils.escapeHtml(this.assignment)
-				+ "\" UNIT=\"" + this.unit + "\" TENUR=\"" + this.tenur + "\" />");
+				+ "\" UNIT=\"" + this.unit + "\" TENUR=\"" + this.tenur + "\"" 
+				+ " PROFILE-LINK=\"" + this.applicantLink + "\"" + "  />");
 
 		return buf.toString();
+	}
+
+	public String getApplicantLink() {
+		return applicantLink;
+	}
+
+	public void setApplicantLink(String applicantLink) {
+		this.applicantLink = applicantLink;
 	}
 
 }
