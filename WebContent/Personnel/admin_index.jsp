@@ -67,7 +67,7 @@
 											<th scope="col" style='text-align:center;'>App</th>
 											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Posted</th>
 											<th scope="col" style='text-align:center;'>None</th>
-											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>> 48 HRS<BR/>No Rec</th>
+											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>> 48 Hrs<BR/>No Rec</th>
 											<th scope="col" style='text-align:center;'>Sub</th>
 											<th scope="col" style='text-align:center;'>App</th>
 											<th scope="col" style='text-align:center;'>Acc</th>
