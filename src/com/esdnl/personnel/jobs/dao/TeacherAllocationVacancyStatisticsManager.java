@@ -150,6 +150,7 @@ public class TeacherAllocationVacancyStatisticsManager {
 			stats.setTotalShortlistNoRecemmendation(rs.getInt("SHORTLIST_NO_REC"));
 			stats.setTotalRecommendationOfferRejected(rs.getInt("REC_OFFER_REJECTED"));
 			stats.setTotalNoShortlist(rs.getInt("NO_SHORTLIST"));
+			stats.setTotalRecommendationOfferExpired(rs.getInt("REC_OFFER_EXPIRED"));
 		}
 		catch (SQLException e) {
 			stats = null;

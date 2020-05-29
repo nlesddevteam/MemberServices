@@ -101,7 +101,7 @@ $(document).ready(function() {
 		      </div>
 		    </div>
 		    <div class="form-group">
-		      <label class="control-label col-sm-2" for="email">Start Date:</label>
+		      <label class="control-label col-sm-2" for="email">Expiry Date:</label>
 		      <div class="col-sm-10">
 		        <p class="form-control-static">${ contract.contractExpiryDateFormatted}</p>
 		      </div>
