@@ -58,17 +58,19 @@
 											<th rowspan='2' style='text-align:center;'>Region</th>
 											<th rowspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>Total<br/>Vacancies</th>
 											<th colspan='3' style='text-align:center; border-right: 5px solid #e4e4e4;'>Ad Requests</th>
-											<th colspan='4' style='text-align:center; border-right: 5px solid #e4e4e4;'>Recommendations</th>
+											<th rowspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>SL > 48 HRS<BR/>No Rec</th>
+											<th colspan='5' style='text-align:center; border-right: 5px solid #e4e4e4;'>Recommendations</th>
 											<th colspan='4' style='text-align:center;'>Positions Filled</th>
 										</tr>
 										<tr>
-											<th scope="col" style='text-align:center;'>Submitted</th>
-											<th scope="col" style='text-align:center;'>Approved</th>
+											<th scope="col" style='text-align:center;'>Sub</th>
+											<th scope="col" style='text-align:center;'>App</th>
 											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Posted</th>
-											<th scope="col" style='text-align:center;'>Submitted</th>
-											<th scope="col" style='text-align:center;'>Approved</th>
-											<th scope="col" style='text-align:center;'>Accepted</th>
-											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Offered</th>
+											<th scope="col" style='text-align:center;'>Sub</th>
+											<th scope="col" style='text-align:center;'>App</th>
+											<th scope="col" style='text-align:center;'>Acc</th>
+											<th scope="col" style='text-align:center;'>Off</th>
+											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Off<BR/>Rej</th>
 											<th scope="col" style='text-align:center;'>Comp</th>
 											<th scope="col" style='text-align:center;'>Manual</th>
 											<th scope="col" style='text-align:center;'>Total</th>
@@ -78,8 +80,8 @@
 									<tbody>
 										<% 
 											int totalVacancies = 0, totalFilledByCompetition = 0, totalFilledManually = 0;
-											int totalAdSubmitted = 0, totalAdApproved = 0, totalAdPosted = 0;
-											int totalRecSubmitted = 0, totalRecApproved = 0, totalRecAccepted = 0, totalRecOffered = 0;
+											int totalAdSubmitted = 0, totalAdApproved = 0, totalAdPosted = 0, totalShortlistedNoRecommendation = 0;
+											int totalRecSubmitted = 0, totalRecApproved = 0, totalRecAccepted = 0, totalRecOffered = 0, totalRecOfferRejected = 0;
 											for (Map.Entry<SchoolZoneBean, TeacherAllocationVacancyStatisticsBean> entry : vacancyStatsByRegion.entrySet()) { 
 												totalVacancies += entry.getValue().getTotalVacancies();
 												totalFilledByCompetition += entry.getValue().getTotalFilledByCompetition();
@@ -91,6 +93,8 @@
 												totalRecApproved += entry.getValue().getTotalRecommendationApproved();
 												totalRecAccepted += entry.getValue().getTotalRecommendationAccepted();
 												totalRecOffered += entry.getValue().getTotalRecommendationOffered();
+												totalShortlistedNoRecommendation += entry.getValue().getTotalShortlistNoRecemmendation();
+												totalRecOfferRejected += entry.getValue().getTotalRecommendationOfferRejected();
 										%>
 											<tr>
 												<td scope="row"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
@@ -98,10 +102,12 @@
 												<td style='text-align:center;'><%= entry.getValue().getTotalAdSubmitted() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalAdApproved() %></td>
 												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalAdPosted() %></td>
+												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalShortlistNoRecemmendation() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationSubmitted() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationApproved() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationAccepted() %></td>
-												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalRecommendationOffered() %></td>
+												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationOffered() %></td>
+												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalRecommendationOfferRejected() %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition()  %></td>
 												<td style='text-align:center;'><%= entry.getValue().getTotalFilledManually() %></td>
 												<td class='text-success' style='font-weight: bold; text-align:center;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
@@ -114,21 +120,23 @@
 												<td style='text-align:center; border-top: double #333333;'><%= totalAdSubmitted %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalAdApproved %></td>
 												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalAdPosted %></td>
+												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalShortlistedNoRecommendation %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalRecSubmitted %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalRecApproved %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalRecAccepted %></td>
-												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOffered %></td>
+												<td style='text-align:center; border-top: double #333333;'><%= totalRecOffered %></td>
+												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOfferRejected %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalFilledByCompetition  %></td>
 												<td style='text-align:center; border-top: double #333333;'><%= totalFilledManually %></td>
 												<td class='text-success' style='font-weight: bold; text-align:center; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 												<td class='text-danger' style='font-weight: bold; text-align:center; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 											</tr>
 										<tr>
-											<td colspan='9' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
+											<td colspan='11' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
 											<td colspan='4' class='text-success' style='text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 										</tr>
 										<tr>
-											<td colspan='9' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
+											<td colspan='11' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
 											<td colspan='4' class='text-danger' style='text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 										</tr>
 									</tbody>
