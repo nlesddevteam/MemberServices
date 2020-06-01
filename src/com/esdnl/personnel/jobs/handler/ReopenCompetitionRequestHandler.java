@@ -1,9 +1,11 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.TeacherRecommendationBean;
@@ -17,23 +19,26 @@ import com.esdnl.servlet.RequiredFormElement;
 public class ReopenCompetitionRequestHandler extends RequestHandlerImpl {
 
 	public ReopenCompetitionRequestHandler() {
+
 		requiredRoles = new String[] {
-			"ADMINISTRATOR","SEO - PERSONNEL"
+				"ADMINISTRATOR", "SEO - PERSONNEL"
 		};
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("comp_num")
 		});
 	}
+
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
+
 		super.handleRequest(request, response);
 		if (validate_form()) {
 			try {
 				//update the awarded date for comp to null
-				JobOpportunityManager.reopenCompetition(form.get("comp_num"));
+				JobOpportunityManager.reopenCompetition(form.get("comp_num"), usr.getPersonnel().getPersonnelID());
 				//now get objects to send back to bpage
-				JobOpportunityBean job  = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
+				JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
 				TeacherRecommendationBean[] rec = RecommendationManager.getTeacherRecommendationBean(form.get("comp_num"));
 				request.setAttribute("msg", "Competition has been reopened");
 				request.setAttribute("comp", job);

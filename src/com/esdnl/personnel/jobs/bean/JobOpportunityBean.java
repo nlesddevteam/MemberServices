@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 
+import com.awsd.personnel.Personnel;
+import com.awsd.personnel.PersonnelDB;
+import com.awsd.personnel.PersonnelException;
 import com.awsd.school.SubjectDB;
 import com.awsd.school.SubjectException;
 import com.esdnl.personnel.jobs.constants.EmploymentConstant;
@@ -38,10 +41,12 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	private Date cancelled_date;
 	private boolean private_candidate_list;
 	private Date shortlistCompleteDate;
+	private int reopenedById;
+	private Personnel reopenedBy;
+	private Date reopenedDate;
 
 	private boolean unadvertise;
 	private String isSupport;
-	
 
 	public JobOpportunityBean() {
 
@@ -62,6 +67,9 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 		this.cancelled_date = null;
 		this.private_candidate_list = false;
 		this.shortlistCompleteDate = null;
+		this.reopenedById = 0;
+		this.reopenedBy = null;
+		this.reopenedDate = null;
 	}
 
 	public void setCompetitionNumber(String competition_number) {
@@ -328,6 +336,47 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 		return (this.getShortlistCompleteDate() != null);
 	}
 
+	public Date getReopenedDate() {
+
+		return reopenedDate;
+	}
+
+	public String getFormattedReopenedDate() {
+
+		SimpleDateFormat sdf = new SimpleDateFormat(JobOpportunityBean.DATE_FORMAT_STRING_COMP_END_DATE);
+
+		return sdf.format(this.getReopenedDate());
+	}
+
+	public void setReopenedDate(Date reopenedDate) {
+
+		this.reopenedDate = reopenedDate;
+	}
+
+	public boolean isReopened() {
+
+		return (this.getReopenedDate() != null);
+	}
+
+	public int getReopenedById() {
+
+		return this.reopenedById;
+	}
+
+	public Personnel getReopenedBy() throws PersonnelException {
+
+		if ((this.reopenedById > 0) && (this.reopenedBy == null)) {
+			this.reopenedBy = PersonnelDB.getPersonnel(this.reopenedById);
+		}
+
+		return this.reopenedBy;
+	}
+
+	public void setReopenedById(int reopenedById) {
+
+		this.reopenedById = reopenedById;
+	}
+
 	public String toString() {
 
 		return "Competition Number: " + this.competition_number;
@@ -365,12 +414,14 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 
 			out.append("<TABLE width='100%' cellpadding='0' cellspacing='0'>");
 			out.append("<TR><TD colspan='2' class='displayPositionTitle'>" + this.getPositionTitle() + "</TD></TR>");
-			out.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'>Competition #:</TD><TD width='*' class='displayCompetitionNumber'> "
-					+ this.getCompetitionNumber() + "</TD></TR>");
+			out.append(
+					"<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'>Competition #:</TD><TD width='*' class='displayCompetitionNumber'> "
+							+ this.getCompetitionNumber() + "</TD></TR>");
 
 			if (abean.length > 0) {
-				out.append("<TR  style='padding-top:5px;'><TD width='125px' class='displayLocation'>Location(s):</TD><TD width='*' class='displayCompetitionNumber'><B>"
-						+ abean[0].getLocationText() + "</B></TD></TR>");
+				out.append(
+						"<TR  style='padding-top:5px;'><TD width='125px' class='displayLocation'>Location(s):</TD><TD width='*' class='displayCompetitionNumber'><B>"
+								+ abean[0].getLocationText() + "</B></TD></TR>");
 				for (int i = 1; i < abean.length; i++)
 					out.append("<TR><TD width='125px'>&nbsp;</TD><TD width='*' class='displayCompetitionNumber'>"
 							+ abean[i].getLocationText() + "</TD></TR>");
@@ -378,7 +429,8 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 				for (int j = 0; j < abean.length; j++) {
 					edu = AssignmentEducationManager.getAssignmentEducationBeans(abean[j]);
 					if (edu.length > 0) {
-						out.append("<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Education Required:</TD><TD width='*' class='displayCompetitionNumber'>&nbsp;</TD></TR>");
+						out.append(
+								"<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Education Required:</TD><TD width='*' class='displayCompetitionNumber'>&nbsp;</TD></TR>");
 						for (int k = 0; k < edu.length; k++)
 							out.append("<TR><TD width='125px'>&nbsp;</TD><TD width='*' class='displayCompetitionNumber'>"
 									+ DegreeManager.getDegreeBeans(edu[k].getDegreeId()).getTitle() + "</TD></TR>");
@@ -386,7 +438,8 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 
 					mjr = AssignmentMajorMinorManager.getAssignmentMajorMinorBeans(abean[j]);
 					if (mjr.length > 0) {
-						out.append("<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Major(s) Required:</TD><TD width='*' class='displayCompetitionNumber'>&nbsp;</TD></TR>");
+						out.append(
+								"<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Major(s) Required:</TD><TD width='*' class='displayCompetitionNumber'>&nbsp;</TD></TR>");
 						for (int l = 0; l < mjr.length; l++) {
 							if (mjr[l].getMajorId() > 0)
 								out.append("<TR><TD width='125px'>&nbsp;</TD><TD width='*' class='displayCompetitionNumber'>"
@@ -394,7 +447,8 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 						}
 					}
 					if (mjr.length > 0) {
-						out.append("<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Minor(s) Required:</TD><TD width='*' class='displayCompetitionNumber'>&nbsp;</TD></TR>");
+						out.append(
+								"<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Minor(s) Required:</TD><TD width='*' class='displayCompetitionNumber'>&nbsp;</TD></TR>");
 						for (int l = 0; l < mjr.length; l++) {
 							if (mjr[l].getMinorId() > 0)
 								out.append("<TR><TD width='125px'>&nbsp;</TD><TD width='*' class='displayCompetitionNumber'>"
@@ -403,15 +457,16 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 					}
 
 					trnmtd = AssignmentTrainingMethodManager.getAssignmentTrainingMethodBeans(abean[j]);
-					
+
 					if (trnmtd.length > 0) {
 						try {
-							out.append("<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Training Method:</TD><TD width='*' class='displayCompetitionNumber'>"
-									+ trnmtd[0].getTrainingMethod().getDescription() + "</TD></TR>");
+							out.append(
+									"<TR style='padding-top:5px;'><TD width='125px' class='displayEducationRequired'>Training Method:</TD><TD width='*' class='displayCompetitionNumber'>"
+											+ trnmtd[0].getTrainingMethod().getDescription() + "</TD></TR>");
 						}
 						catch (NullPointerException ex) {
-							System.err.println(">>>>>>>> NULL POINTER EXCEPTION: ASSIGN_ID="
-									+ trnmtd[0].getJobOpportunityAssignmentId());
+							System.err.println(
+									">>>>>>>> NULL POINTER EXCEPTION: ASSIGN_ID=" + trnmtd[0].getJobOpportunityAssignmentId());
 						}
 						for (int s = 1; s < trnmtd.length; s++)
 							out.append("<TR><TD width='125px'>&nbsp;</TD><TD width='*' class='displayCompetitionNumber'>"
@@ -419,8 +474,8 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 					}
 				}
 			}
-			out.append("<TR><TD  colspan='2' class='displayAdText'>" + this.getJobAdText().replaceAll("\n", "<BR>")
-					+ "</TD></TR>");
+			out.append(
+					"<TR><TD  colspan='2' class='displayAdText'>" + this.getJobAdText().replaceAll("\n", "<BR>") + "</TD></TR>");
 
 			out.append("</TABLE>");
 		}
@@ -435,10 +490,12 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	}
 
 	public String getIsSupport() {
+
 		return isSupport;
 	}
 
 	public void setIsSupport(String isSupport) {
+
 		this.isSupport = isSupport;
 	}
 }

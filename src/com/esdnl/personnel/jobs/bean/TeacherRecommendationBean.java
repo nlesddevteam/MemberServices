@@ -658,25 +658,18 @@ public class TeacherRecommendationBean {
 		boolean check = false;
 
 		if (this.isRecommended()) {
-			if (!this.isApproved() && this.isRejected()) // rejected by
-				// recommendation approver
-				// (i.e. ed)
+			if (!this.isApproved() && this.isRejected()) {
+				// rejected by recommendation approver (i.e. ed)
 				check = true;
-			else if (this.isApproved() && !this.isAccepted() && this.isRejected()) // rejected
-				// by
-				// recommendation
-				// accepter
-				// after
-				// it
-				// has
-				// been
-				// approved
-				// (i.e.
-				// lillian)
+			}
+			else if (this.isApproved() && !this.isAccepted() && this.isRejected()) {
+				// rejected by recommendation accepter after it has been approved (i.e. // lillian)
 				check = true;
+			}
 			else if (this.isApproved() && this.isAccepted() && this.isOfferMade()
-					&& (this.isOfferRejected() || this.isOfferIgnored()))
+					&& (this.isOfferRejected() || this.isOfferIgnored())) {
 				check = true;
+			}
 		}
 
 		return check;
