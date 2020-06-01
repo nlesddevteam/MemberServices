@@ -17,6 +17,7 @@ public class TeacherAllocationVacancyStatisticsBean {
 	private int totalRecommendationApproved;
 	private int totalRecommendationAccepted;
 	private int totalRecommendationOffered;
+	private int totalRecommendationOfferAccepted;
 	private int totalRecommendationOfferRejected;
 	private int totalRecommendationOfferExpired;
 
@@ -152,6 +153,16 @@ public class TeacherAllocationVacancyStatisticsBean {
 	public void setTotalShortlistNoRecemmendation(int totalShortlistNoRecemmendation) {
 
 		this.totalShortlistNoRecemmendation = totalShortlistNoRecemmendation;
+	}
+
+	public int getTotalRecommendationOfferAccepted() {
+
+		return totalRecommendationOfferAccepted;
+	}
+
+	public void setTotalRecommendationOfferAccepted(int totalRecommendationOfferAccepted) {
+
+		this.totalRecommendationOfferAccepted = totalRecommendationOfferAccepted;
 	}
 
 	public int getTotalRecommendationOfferRejected() {
