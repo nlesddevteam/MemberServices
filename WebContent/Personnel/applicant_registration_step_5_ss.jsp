@@ -82,7 +82,7 @@
 	SECTION 4: Editing your Support Staff/Management HR Application Profile 
 </div>
 <br/><br/>
-
+    <form id="ApplicantRegistrationStep1"  action="applicantRegistrationSS.html?step=5a"  method="post" >
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
 	               	<div class="panel-heading"><b>4a. HIGH SCHOOL EDUCATION</b></div>
@@ -91,7 +91,7 @@
 					<div class="table-responsive"> 
 					
 		
-                           <form id="ApplicantRegistrationStep1"  method="post" >
+                       
                                   <%if(edu != null){%>
                                     	<input type="hidden" name="heducationlevel" id="heducationlevel" value="<%= edu.getEducationLevel()%>" >
                                     	<input type="hidden" name="hgraduated" id="hgraduated" value="<%= edu.getGraduated()%>" >
@@ -164,10 +164,10 @@
                                </table>     
                                     
                                     
-                                     <div align="center"><a class="btn btn-xs btn-danger" href="view_applicant_ss.jsp">Back to Profile</a> <input type="button" value="Save/Update"  class="btn btn-xs btn-success" onclick="checkneweducation()"></div>
+                                     <div align="center"><a class="btn btn-xs btn-danger" href="view_applicant_ss.jsp">Back to Profile</a> <input type="submit" value="Save/Update"  class="btn btn-xs btn-success" onclick="checkneweducation()"></div>
                                   
                                
- </div></div></div></div>                               
+ </div></div></div></div>                           
 	               	<div class="panel panel-info">   
 	               	<div class="panel-heading"><b>4b. DEGREES/DIPLOMAS/CERTIFICATES</b></div>
       			 	<div class="panel-body"> 
@@ -251,10 +251,13 @@
                                      	
                                         <div align="center" style="color:Silver;">Note: Degree/Diploma/Certificate Added Entries save automatically. Press Save/Update for High School Education changes<br/></div>
                         
-                           </form>
+                   
                            
                            
- </div></div></div></div>                          
+ </div></div></div></div>   
+ 
+ 
+         </form>                       
  						<%if(request.getAttribute("msg")!=null){%>
 							<script>$(".msgok").css("display","block").delay(5000).fadeOut();</script>							
 						<%}%>
