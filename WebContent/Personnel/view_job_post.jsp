@@ -4,7 +4,8 @@
                  com.esdnl.personnel.jobs.constants.*,
                  com.awsd.security.*,
                  java.util.*,java.lang.*,
-                 java.text.*"
+                 java.text.*,
+                 org.apache.commons.lang.*"
         isThreadSafe="false"%>
 
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
@@ -201,7 +202,10 @@ function parseAddApplicantResponse(data){
                                 <%}%>
                                 
                                 <%if((opp != null) && (opp.isCancelled())){ %>
-                                	<span style="color:red;">Position cancelled on <%= opp.getFormatedCancelledDate() %></span>
+                                	<span style="color:red;">Position cancelled on <%= opp.getFormatedCancelledDate() %></span><br/>
+                                <%}%>
+                                <%if((opp != null) && (opp.isReopened())){ %>
+                                	<span style="color:red;">Position reopened on <%= opp.getFormattedReopenedDate() %> by <%= StringUtils.capitaliseAllWords(opp.getReopenedBy().getFullNameReverse()) %></span>
                                 <%}%>
 			     </td>
 			     </tr>

@@ -1460,8 +1460,23 @@ public class JobOpportunityManager {
 
 			jBean.setPrivateCandidateList(rs.getBoolean("CANDIDATELIST_PRIVATE"));
 			jBean.setIsSupport(rs.getString("IS_SUPPORT"));
-			if (rs.getDate("SHORTLIST_COMPLETE_DATE") != null)
+
+			if (rs.getDate("SHORTLIST_COMPLETE_DATE") != null) {
 				jBean.setShortlistCompleteDate(new java.util.Date(rs.getTimestamp("SHORTLIST_COMPLETE_DATE").getTime()));
+			}
+			else {
+				jBean.setShortlistCompleteDate(null);
+			}
+
+			jBean.setReopenedById(rs.getInt("REOPENED_BY"));
+
+			if (rs.getDate("REOPENED_DATE") != null) {
+				jBean.setReopenedDate(new java.util.Date(rs.getTimestamp("REOPENED_DATE").getTime()));
+			}
+			else {
+				jBean.setReopenedDate(null);
+			}
+
 			if (jBean.getIsSupport().contentEquals("Y")) {
 				jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, false));
 			}
@@ -1478,7 +1493,7 @@ public class JobOpportunityManager {
 		return jBean;
 	}
 
-	public static void reopenCompetition(String comp_num) {
+	public static void reopenCompetition(String comp_num, int reopenedById) {
 
 		Connection con = null;
 		CallableStatement stat = null;
@@ -1488,12 +1503,13 @@ public class JobOpportunityManager {
 			con.setAutoCommit(false);
 
 			// get the opportunity info
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.reopen_competition(?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.reopen_competition(?,?); end;");
 			stat.setString(1, comp_num);
+			stat.setInt(2, reopenedById);
 			stat.execute();
 		}
 		catch (SQLException e) {
-			System.err.println("void reopenCompetition(String comp_num): " + e);
+			System.err.println("void reopenCompetition(String comp_num, int reopenedById): " + e);
 		}
 		finally {
 			try {

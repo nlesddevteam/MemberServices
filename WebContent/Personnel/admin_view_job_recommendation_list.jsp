@@ -65,8 +65,7 @@
 					<%}%>
 
 					<% if(rec.length > 0) { %>
-						<table id="jobsapp" class="table table-condensed table-striped"
-							style="font-size: 11px; background-color: #FFFFFF;">
+						<table id="jobsapp" class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF;">
 							<thead>
 								<tr>
 									<th width='25%'>RECOMMENDATION DATE</th>
@@ -79,15 +78,20 @@
 								<%
 									boolean all_expired = true;
 									boolean existing_rec = false;
+									boolean existing_non_processed_rec = false;
 									for (int i = 0; i < rec.length; i++) {
 										if (!rec[i].isExpired()) {
 											all_expired = false;
 										}
-										if (!existing_rec) {
+										if (!existing_rec || !existing_non_processed_rec) {
 											if (!rec[i].getCurrentStatus().equals(RecommendationStatus.REJECTED) 
 													&& !rec[i].getCurrentStatus().equals(RecommendationStatus.OFFER_REJECTED)
 													&& !rec[i].isOfferIgnored()) {
 												existing_rec = true;
+												
+												if(!rec[i].getCurrentStatus().equal(RecommendationStatus.PROCESSED)) {
+													existing_non_processed_rec = true;
+												}
 											}
 										}
 								%>
@@ -111,7 +115,7 @@
 						<div align="center">
 							<a class="btn btn-xs btn-info" href='view_job_post.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View Job Post</a>
 							<% if(!job.isAwarded()) { %>
-								<% if(all_expired && !existing_rec) { %>
+								<% if((all_expired && !existing_rec) || (job.isReopened() && !existing_non_processed_rec)) { %>
 									<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
 								<% } %>
 							<% } else { %>
