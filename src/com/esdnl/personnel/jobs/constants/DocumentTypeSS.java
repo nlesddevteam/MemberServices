@@ -13,8 +13,9 @@ public class DocumentTypeSS {
 	public static final DocumentTypeSS DEGREES = new DocumentTypeSS(108, "Degrees");
 	public static final DocumentTypeSS CERTIFICATES = new DocumentTypeSS(109, "Certificates");
 	public static final DocumentTypeSS VULNERABLE_SECTOR_CHECK = new DocumentTypeSS(110, "Vulnerable Sector Check");
+	public static final DocumentTypeSS LETTER = new DocumentTypeSS(99, "District Letter");
 	public static final DocumentTypeSS[] ALL = new DocumentTypeSS[] {
-		DRIVERS_ABSTRACT,OHS_TRAINING,CODE_OF_CONDUCT,FIRST_AID,WHMIS,DRIVERS_LICENSE,UNIVERSITY_TRANSSCRIPT,DEGREES,CERTIFICATES,VULNERABLE_SECTOR_CHECK
+		DRIVERS_ABSTRACT,OHS_TRAINING,CODE_OF_CONDUCT,FIRST_AID,WHMIS,DRIVERS_LICENSE,UNIVERSITY_TRANSSCRIPT,DEGREES,CERTIFICATES,VULNERABLE_SECTOR_CHECK,LETTER
 	};
 
 	private DocumentTypeSS(int value, String desc) {

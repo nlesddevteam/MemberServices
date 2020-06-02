@@ -594,3 +594,56 @@ function NoReferenceSelected(){
 		}
 	}
 }
+/*******************************************************************************
+ * add new applicant letter
+ ******************************************************************************/
+function addApplicantLetter() {
+	var ltitle = $("#ltitle").val();
+	var lfile = $('#ldocument')[0].files[0];
+	var applicantid = $("#id").val();
+	var requestd = new FormData();
+	requestd.append('lettertitle', ltitle);
+	requestd.append('letterdocument', lfile);
+	requestd.append('applicantid', applicantid);
+	$.ajax({
+		url : "ajax/addApplicantLetter.html",
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$("#tblletters").find("tr:gt(0)").remove();
+			var i = 1;
+			$(xml).find('LETTER').each(
+					function() {
+						if ($(this).find("MESSAGE").text() == "ADDED") {
+							var newrow = "<tr>";
+							newrow += "<td>" + $(this).find("LETTERTITLE").text() + "</td>";
+							newrow += "<td>" + $(this).find("LETTERDATE").text() + "</td>";
+							newrow += "<td class='no-print'>";
+							newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("LETTERID").text() + "' target='_blank'>VIEW</a> &nbsp;";
+							newrow += "<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=" + $(this).find("LETTERID").text() + "'>DELETE</a>";
+							newrow += "</td>";
+							newrow += "</tr>";
+							$('table#tblletters tr:last').after(
+									newrow);
+							$('#letterspan').text("Letter has been added.");
+							$('#letteralert').show();
+							
+							
+						} else {
+								$('#letterspan').text($(this).find("MESSAGE").text());
+								$('#letteralert').show();
+						}
+					});
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			$('#letterspan').text(textStatus);
+			$('#letteralert').show();
+		},
+		dataType : "text",
+		async : false
+	});
+	$('#add_letter_dialog').modal('hide');
+}

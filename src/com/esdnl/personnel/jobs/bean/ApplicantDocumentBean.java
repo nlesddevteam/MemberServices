@@ -1,4 +1,5 @@
 package com.esdnl.personnel.jobs.bean;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.esdnl.personnel.jobs.constants.DocumentType;
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
@@ -98,6 +99,14 @@ public class ApplicantDocumentBean {
 
 	public void setTypeSS(DocumentTypeSS typeSS) {
 		this.typeSS = typeSS;
+	}
+	public String getCreatedDateFormatted() {
+		if(this.getCreatedDate() != null) {
+			SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+			return sdf_long.format(this.createdDate);
+		}else {
+			return "";
+		}
 	}
 
 }
