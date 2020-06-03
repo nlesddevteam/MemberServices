@@ -212,6 +212,8 @@ public class ApplicantDocumentManager {
 
 			while (rs.next()) {
 				eBean = createApplicantDocumentBean(rs);
+				
+				
 
 				v_opps.add(eBean);
 			}
@@ -333,7 +335,53 @@ public class ApplicantDocumentManager {
 			}
 			
 			return v_opps;
-}
+	}
+	public static Collection<ApplicantDocumentBean> getNewApplicantLetters(String sin,Integer numdays) throws JobOpportunityException {
+		ArrayList<ApplicantDocumentBean> v_opps = null;
+		ApplicantDocumentBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			v_opps = new ArrayList<ApplicantDocumentBean>(3);
+		
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_new_app_letters(?, ?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, sin);
+			stat.setInt(3, numdays);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+		
+			while (rs.next()) {
+				eBean = createApplicantDocumentBean(rs);
+		
+				v_opps.add(eBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("Collection<ApplicantDocumentBean> getNewApplicantLetters(String sin,Integer numdays) throws JobOpportunityException: "
+					+ e);
+			throw new JobOpportunityException("Can not extract ApplicantDocumentBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		
+		return v_opps;
+	}	
 	public static ApplicantDocumentBean createApplicantDocumentBean(ResultSet rs) {
 
 		ApplicantDocumentBean abean = null;

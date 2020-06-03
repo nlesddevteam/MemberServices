@@ -181,7 +181,23 @@ $("#loadingSpinner").css("display","none");
   		$('#frmverify').attr('action',url);
 		$('#frmverify').submit();
 			
-	});  	
+	});
+	
+  	$('#btn_confirm_letter').click(function(){
+  		$('#dalertadds').hide();
+  		$('#dalertadd').hide();
+  		if($('#ltitle').val() == ""){
+  			$('#dmessageadd').text("Please enter title");
+  			$('#dalertadd').show();
+  		}else if($('#ldocument').val() == ""){
+  			$('#dmessageadd').text("Please select letter");
+  			$('#dalertadd').show();
+  		}else{
+  			//$('#dmessageadds').text("Good to Go");
+  		  	//$('#dalertadds').show();
+  		  	addApplicantLetter();
+  		}
+	});
   	
   });
 
@@ -585,6 +601,10 @@ input {
 	                                    		if(!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) 
 		                                    			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"))
 		                                    		continue;
+	                                    	}else{
+	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.LETTER)) {
+	                                    			continue;
+	                                    		}
 	                                    	}
                                %>
 							    <tr>							   
@@ -621,7 +641,78 @@ input {
 					</div>
 </div>                                  	
                                   	
-  <%} %>                            
+  <%} %>
+  
+<!-- Letters --------------------------------------------------------------->
+
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section12">   
+	               	<div class="panel-heading">
+	               	<table width="100%">
+	               	<tr><td align="left"><b>Letters</b></td>
+	               	<td align="right">
+	               		<a href="#" data-toggle="modal" data-target="#add_letter_dialog" id="btn_show_add_letter_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Letter</a>
+	               	</td>
+	               	</tr>
+	               	<tr><td colspan='2'>
+	               		<br />
+	               		<div class="alert alert-warning" role="alert" id="letteralert" style="display:none;">
+  							<span id="letterspan"></span>
+						</div>
+	               	</table>
+	               	</div>
+      			 	<div class="panel-body"> 	
+	
+					<div class="table-responsive"> 
+      			 	       
+      			 	       
+							  <% if((docs != null) && (docs.size() > 0))
+                              { %>
+                              
+                              <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;" id="tblletters">
+									    <thead>
+									    
+									      <tr style="border-top:1px solid black;">
+									      	<th width='60%'>Title</th>
+									        <th width='25%'>UPLOADED</th>
+									        <th class="no-print" width='15%'>OPTIONS</th>		
+									      </tr>
+									    </thead>
+							    
+							    <tbody>
+                              
+                              
+                              <%
+                                	int i=0;
+                                  for(ApplicantDocumentBean doc : docs)
+                                  {
+                                  	//only select roles get docs other then transcripts.
+                                  	if(!doc.getTypeSS().equal(DocumentTypeSS.LETTER)){
+                                  		continue;
+                                  	}
+                               %>
+							    <tr>							   
+							    <td><%=doc.getDescription()%></td>	
+							    <td><%=sdf_long.format(doc.getCreatedDate())%></td>						    
+							    <td class="no-print">
+							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp;
+							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
+							    </td>
+							    </tr>
+							    <%  }%>
+							    </tbody>
+							    </table>
+							    <%}	else { %>							   
+                                    <span style="color:Grey;">No Letter(s) currently on file.</span>
+                                    <script>$("#section12").removeClass("panel-success").addClass("panel-danger");</script>
+                                 <% } %> 
+							    
+							    
+						
+					</div>
+					</div>
+					</div>                              
+</div>                              
 
 <!-- CRIMINAL OFFENCE DECLARATIONS --------------------------------------------------------------->
 <% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) { %>
@@ -753,6 +844,38 @@ input {
 <form id="frmverify">
    	<input id="appid" name ="appid" type="hidden" value="<%=profile.getSIN()%>">
 </form>                      
+ <!-- Modal for adding new letter -->
+<div id="add_letter_dialog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Applicant Letter</h4>
+                <div class="alert alert-danger" style="display:none;" id="dalertadd" align="center">
+							<span id="dmessageadd"></span>
+				</div>
+				<div class="alert alert-success" style="display:none;" id="dalertadds" align="center">
+							<span id="dmessageadds"></span>
+				</div>
+              </div>
+               <div class="modal-body">
+                   <p class="text-warning" id="title3">Letter Title:</p>
+		    		<p>
+		    		<input type="text" id="ltitle" name="ltitle" size="35">					
+		    		</p>
+                   <p class="text-warning" id="title3">Letter:</p>
+		    		<p>
+		    		<input type="file" id="ldocument" name="ldocument" accept="application/pdf">(PDF file format only)					
+		    		</p>
+			</div>
+      <div class="modal-footer">
+      	<button type="button" id='btn_confirm_letter' class="btn btn-success btn-xs" style="float:left;">Add Letter</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+      </div>
+    </div>
 
+  </div>
+</div>
+</div>
 </body>
 </html>

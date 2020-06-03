@@ -1050,7 +1050,7 @@ input {
 						<tbody>
 							<%
 								for (ApplicantDocumentBean doc : docs) {
-							%>
+									if(!doc.getType().equals(DocumentType.LETTER)){ %>
 							<tr>
 								<td><%=doc.getType().getDescription()%></td>
 								<td><%=sdf_long.format(doc.getCreatedDate())%></td>
@@ -1058,6 +1058,7 @@ input {
 									href='viewDocument.html?id=<%=doc.getDocumentId()%>'
 									target='_blank'>View</a></td>
 							</tr>
+							<%} %>
 							<%
 								}
 							%>
@@ -1079,6 +1080,44 @@ input {
 			</div>
 		</div>
 	</div>
+
+ <!--10.  Letters ----------------------------------------------------------------------------------------->               
+                
+                
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section10b">   
+	               	<div class="panel-heading"><b>District Letters</b></div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive"> 
+ 										<% if((docs != null) && (docs.size() > 0)) {
+	                                  	int i=0; %>
+	                                   <table class="table table-striped table-condensed" style="font-size:11px;">
+      							    <thead>
+      							    <tr>
+                                       <th width="25%">TITLE</th>
+                                       <th width="30%">UPLOAD DATE</th>
+                                       <th width="10%">OPTIONS</th>                                    
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+	                                   <% for(ApplicantDocumentBean doc : docs){ 
+	                                   		if(doc.getType().equals(DocumentType.LETTER)){ %>
+	                                   		<tr>
+	                                      		<td><%=doc.getDescription()%></td>
+	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      			<td><a class='btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>View</a></td>
+	                                      				                                      
+	                                      	</tr>
+	                                      <% } %>
+	                                    <%} %>  
+	                                      </tbody>
+	                                      </table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Documents currently on file.</span>
+	                                       <script>$("#section10b").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+                              
+</div></div></div></div>
 
 	<!-- CRIMINAL OFFENCE DECLARATIONS ----------------------------------------------------------------------------------------->
 	<div class="panel-group" style="padding-top: 5px;">

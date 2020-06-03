@@ -408,12 +408,14 @@ employment positions and/or applications. Sections with no information will disp
 	                                </tr>
 	                                </thead>
                                 <tbody>
-                                <% for(ApplicantDocumentBean doc : docs) { %>
-	                             <tr>		                            
-		                           <td><%=doc.getTypeSS().getDescription() %></td>
-		                            <td><%=sdf_long.format(doc.getCreatedDate()) %></td>
-		                             <td><a class='viewdoc btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
-	                             </tr>
+                                <% for(ApplicantDocumentBean doc : docs) { 
+                                	if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER)){ %>
+	                             	<tr>		                            
+		                           		<td><%=doc.getTypeSS().getDescription() %></td>
+		                            	<td><%=sdf_long.format(doc.getCreatedDate()) %></td>
+		                             	<td><a class='viewdoc btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                             	</tr>
+	                             <%} %>
 	                              <%  } %>
 	                              </tbody>
 	                              </table>
@@ -423,6 +425,44 @@ employment positions and/or applications. Sections with no information will disp
 	                              <%} %>
                                 
  </div></div></div></div>
+
+  <!--10.  Letters ----------------------------------------------------------------------------------------->               
+                
+                
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section10b">   
+	               	<div class="panel-heading"><b>District Letters</b></div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive"> 
+ 										<% if((docs != null) && (docs.size() > 0)) {
+	                                  	int i=0; %>
+	                                   <table class="table table-striped table-condensed" style="font-size:11px;">
+      							    <thead>
+      							    <tr>
+                                       <th width="25%">TITLE</th>
+                                       <th width="30%">UPLOAD DATE</th>
+                                       <th width="10%">OPTIONS</th>                                    
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+	                                   <% for(ApplicantDocumentBean doc : docs){ 
+	                                   		if(doc.getTypeSS().equals(DocumentTypeSS.LETTER)){ %>
+	                                   		<tr>
+	                                      		<td><%=doc.getDescription()%></td>
+	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      			<td><a class='btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>View</a></td>
+	                                      				                                      
+	                                      	</tr>
+	                                      <% } %>
+	                                    <%} %>  
+	                                      </tbody>
+	                                      </table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Documents currently on file.</span>
+	                                       <script>$("#section10b").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+                              
+</div></div></div></div> 
    <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section11">   
 	               	<div class="panel-heading"><b>8. CRIMINAL OFFENCE DECLARATIONS</b><span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10_CODF.jsp">EDIT</a></span></div>
