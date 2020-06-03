@@ -40,12 +40,11 @@
   ApplicantEducationBean[] edu = ApplicantEducationManager.getApplicantEducationBeans(profile.getSIN());
   ApplicantEducationOtherBean edu_oth = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());
   boolean validEduOther = false;
-  if(!(edu_oth == null)){
-	  if(edu_oth.getFormatedTeachingCertificateIssuedDate() != null && edu_oth.getTeachingCertificateLevel() != null){
+  if((edu_oth != null) && (edu_oth.getFormatedTeachingCertificateIssuedDate() != null) && (edu_oth.getTeachingCertificateLevel() != null)){
 		  validEduOther = true;
-	  }
   }
   
+  ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
   ApplicantEsdReplacementExperienceBean[] rpl = ApplicantEsdReplExpManager.getApplicantEsdReplacementExperienceBeans(profile.getSIN());
   ApplicantSubstituteTeachingExpBean[] sub = ApplicantSubExpManager.getApplicantSubstituteTeachingExpBeans(profile.getSIN());
   ApplicantExperienceOtherBean[] exp_other = ApplicantExpOtherManager.getApplicantExperienceOtherBeans(profile.getSIN());
@@ -80,9 +79,8 @@
   cal.clear(Calendar.SECOND);
   cal.clear(Calendar.MILLISECOND);
   cal.add(Calendar.MONTH, -6);
-  
   Date six_months = cal.getTime();
-  ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
+  
 %>
 <!-- Clean up the code and use jstl vars. this should be moved after. -->
 <c:set var="nameDisplay" value="<%=profile.getSurname() + \", \" + profile.getFirstname()%>"/>
@@ -1092,137 +1090,122 @@ input {
 
 <!-- DOCUMENTATION --------------------------------------------------------------->
 
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section12">   
-	               	<div class="panel-heading"><b>Documents</b></div>
-      			 	<div class="panel-body"> 	
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section12">
+			<div class="panel-heading">
+				<b>Documents</b>
+			</div>
+			<div class="panel-body">
+
+				<div class="table-responsive">
+
+					<% if ((docs != null) && (docs.size() > 0)) { %>
+						<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;">
+							<thead>
 	
-					<div class="table-responsive"> 
-      			 	       
-      			 	       
-							  <% if((docs != null) && (docs.size() > 0))
-                              { %>
-                              
-                              <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
-									    <thead>
-									    
-									      <tr style="border-top:1px solid black;">
-									      	<th width='50%'>TYPE</th>
-									        <th width='20%'>UPLOADED</th>
-									        <th width='15%'>STATUS</th>								       								        
-									        <th class="no-print" width='15%'>OPTIONS</th>		
-									      </tr>
-									    </thead>
-							    
-							    <tbody>
-                              
-                              
-                              <%
-                                	int i=0;
-                                  for(ApplicantDocumentBean doc : docs)
-                                  {
-                                  	//only select roles get docs other then transcripts.
-                                  	if((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) 
-                                  			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) || (doc.getType().equal(DocumentType.LETTER)))
-                                  		continue;
-                               %>
-							    <tr>							   
-							    <td><%=doc.getType().getDescription()%></td>	
-							    <td><%=sdf_long.format(doc.getCreatedDate())%></td>						    
-							    <td><%=((doc.getType().equal(DocumentType.CODE_OF_CONDUCT) && doc.getCreatedDate().before(six_months))? "<span style='color:Red;'>** OUTDATED **</span>" : "<span style='color:Green;'>OK</span>")%></td>
-							    <td class="no-print">
-							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp;
-							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
-							    </td>
-							    </tr>
-							    <%  }%>
-							    </tbody>
-							    </table>
-							    <%}	else { %>							   
-                                    <span style="color:Grey;">No Documentation currently on file.</span>
-                                    <script>$("#section12").removeClass("panel-success").addClass("panel-danger");</script>
-                                 <% } %> 
-							    
-							    
-						
-					</div>
-					</div>
-					</div>
-</div>
+								<tr style="border-top: 1px solid black;">
+									<th width='50%'>TYPE</th>
+									<th width='20%'>UPLOADED</th>
+									<th width='15%'>STATUS</th>
+									<th class="no-print" width='15%'>OPTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									int i = 0;
+									for (ApplicantDocumentBean doc : docs) {
+										//only select roles get docs other then transcripts.
+										if ((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) && !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) || (doc.getType().equal(DocumentType.LETTER))) {
+											continue;
+										}
+								%>
+								<tr>
+									<td><%=doc.getType().getDescription()%></td>
+									<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+									<td><%=((doc.getType().equal(DocumentType.CODE_OF_CONDUCT) && doc.getCreatedDate().before(six_months)) ? "<span style='color:Red;'>** OUTDATED **</span>" : "<span style='color:Green;'>OK</span>")%></td>
+									<td class="no-print"><a class='viewdoc btn btn-xs btn-info'
+										href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>'
+										target='_blank'>VIEW</a> &nbsp; <a
+										class='viewdoc delete-doc btn btn-xs btn-danger'
+										href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
+									</td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					<% } else { %>
+						<span style="color: Grey;">No Documentation currently on file.</span>
+						<script>$("#section12").removeClass("panel-success").addClass("panel-danger");</script>
+					<% } %>
 
-<!-- Letters --------------------------------------------------------------->
-
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section12">   
-	               	<div class="panel-heading">
-	               	<table width="100%">
-	               	<tr><td align="left"><b>Letters</b></td>
-	               	<td align="right">
-	               		<a href="#" data-toggle="modal" data-target="#add_letter_dialog" id="btn_show_add_letter_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Letter</a>
-	               	</td>
-	               	</tr>
-	               	<tr><td colspan='2'>
-	               		<br />
-	               		<div class="alert alert-warning" role="alert" id="letteralert" style="display:none;">
-  							<span id="letterspan"></span>
-						</div>
-	               	</table>
-	               	</div>
-      			 	<div class="panel-body"> 	
+				</div>
+			</div>
+		</div>
+	</div>
 	
-					<div class="table-responsive"> 
-      			 	       
-      			 	       
-							  <% if((docs != null) && (docs.size() > 0))
-                              { %>
-                              
-                              <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;" id="tblletters">
-									    <thead>
-									    
-									      <tr style="border-top:1px solid black;">
-									      	<th width='60%'>Title</th>
-									        <th width='25%'>UPLOADED</th>
-									        <th class="no-print" width='15%'>OPTIONS</th>		
-									      </tr>
-									    </thead>
-							    
-							    <tbody>
-                              
-                              
-                              <%
-                                	int i=0;
-                                  for(ApplicantDocumentBean doc : docs)
-                                  {
-                                  	//only select roles get docs other then transcripts.
-                                  	if(!doc.getType().equal(DocumentType.LETTER)) 
-                                  		continue;
-                               %>
-							    <tr>							   
-							    <td><%=doc.getDescription()%></td>	
-							    <td><%=sdf_long.format(doc.getCreatedDate())%></td>						    
-							    <td class="no-print">
-							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp;
-							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
-							    </td>
-							    </tr>
-							    <%  }%>
-							    </tbody>
-							    </table>
-							    <%}	else { %>							   
-                                    <span style="color:Grey;">No Letter(s) currently on file.</span>
-                                    <script>$("#section12").removeClass("panel-success").addClass("panel-danger");</script>
-                                 <% } %> 
-							    
-							    
-						
-					</div>
-					</div>
-					</div>
-</div>                             
-                             
+	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+	<!-- Letters --------------------------------------------------------------->
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section16">
+			<div class="panel-heading">
+				<table width="100%">
+					<tr>
+						<td align="left"><b>Letters</b></td>
+						<td align="right"><a href="#" data-toggle="modal" data-target="#add_letter_dialog" id="btn_show_add_letter_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Letter</a></td>
+					</tr>
+					<tr>
+						<td colspan='2'>
+							<div class="alert alert-warning" role="alert" id="letteralert" style="display: none;">
+								<span id="letterspan"></span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					
+						<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblletters">
+							<thead>
+								<tr style="border-top: 1px solid black;">
+									<th width='60%'>Title</th>
+									<th width='25%'>UPLOADED</th>
+									<th class="no-print" width='15%'>OPTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% 
+									if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.LETTER)).count() > 0)) {
+										for (ApplicantDocumentBean doc : docs) {
+											//only select roles get docs other then transcripts.
+											if (!doc.getType().equal(DocumentType.LETTER)) {
+												continue;
+											} 
+								%>
+									<tr>
+										<td><%=doc.getDescription()%></td>
+										<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+										<td class="no-print">
+											<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp; <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
+										</td>
+									</tr>
+								<% }
+								 } else { %>
+									<tr><td colspan='3' style="color: Grey;">No Letter(s) currently on file.<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script></td></tr>
+								<% } %>
+							</tbody>
+						</table>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	</esd:SecurityAccessRequired>
 
-<!-- CRIMINAL OFFENCE DECLARATIONS --------------------------------------------------------------->
-<% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) { %>
+	<!-- CRIMINAL OFFENCE DECLARATIONS --------------------------------------------------------------->
+<%
+	if (usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) {
+%>
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section13">   
@@ -1232,8 +1215,9 @@ input {
 					<div class="table-responsive"> 
       			 	       
       			 	      
-							  <% if((cods != null) && (cods.size() > 0))
-                              { %>
+							  <%
+       			 	             			 	      							  	if ((cods != null) && (cods.size() > 0)) {
+       			 	             			 	      							  %>
                                
                                 <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
 									    <thead>
@@ -1280,7 +1264,7 @@ input {
 <% if(highlyRecommendedPools.size() > 0) { %>
 	<!-- HIGHLY RECOMMENDED POOLS --------------------------------------------------------------->
 	<div class="panel-group no-print" style="padding-top: 5px;">
-		<div class="panel panel-success" id="section14">
+		<div class="panel panel-success" id="section15">
 			<div class="panel-heading">
 				<b>Pool Competitions with HIGHLY RECOMMENDED status</b>
 			</div>

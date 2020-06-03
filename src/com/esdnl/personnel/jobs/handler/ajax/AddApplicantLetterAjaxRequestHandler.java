@@ -42,7 +42,8 @@ public class AddApplicantLetterAjaxRequestHandler extends RequestHandlerImpl {
 
 		if (validate_form()) {
 			try {
-				String filename = save_file("letterdocument",ApplicantDocumentBean.DOCUMENT_BASEPATH + DocumentType.LETTER.getValue());
+				String filename = save_file("letterdocument",
+						ApplicantDocumentBean.DOCUMENT_BASEPATH + DocumentType.LETTER.getValue());
 				ApplicantDocumentBean dbean = new ApplicantDocumentBean();
 				ApplicantProfileBean profile = ApplicantProfileManager.getApplicantProfileBean(form.get("applicantid"));
 				dbean.setApplicant(profile);
@@ -62,12 +63,13 @@ public class AddApplicantLetterAjaxRequestHandler extends RequestHandlerImpl {
 				audit.setWho(String.valueOf(usr.getPersonnel().getPersonnelID()));
 
 				audit.saveBean();
-				
-				ArrayList<ApplicantDocumentBean> alist = (ArrayList<ApplicantDocumentBean>) ApplicantDocumentManager.getApplicantDocumentBean(profile, DocumentType.LETTER);
+
+				ArrayList<ApplicantDocumentBean> alist = (ArrayList<ApplicantDocumentBean>) ApplicantDocumentManager.getApplicantDocumentBean(
+						profile, DocumentType.LETTER);
 				String xml = null;
 				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-				sb.append("<TEST>");
-				for(ApplicantDocumentBean abean : alist) {
+				sb.append("<ADD-APPLICANT-LETTER-RESPONSE>");
+				for (ApplicantDocumentBean abean : alist) {
 					sb.append("<LETTER>");
 					sb.append("<LETTERID>" + abean.getDocumentId() + "</LETTERID>");
 					sb.append("<LETTERTITLE>" + abean.getDescription() + "</LETTERTITLE>");
@@ -75,7 +77,7 @@ public class AddApplicantLetterAjaxRequestHandler extends RequestHandlerImpl {
 					sb.append("<MESSAGE>ADDED</MESSAGE>");
 					sb.append("</LETTER>");
 				}
-				sb.append("</TEST>");
+				sb.append("</ADD-APPLICANT-LETTER-RESPONSE>");
 				xml = StringUtils.encodeXML(sb.toString());
 				PrintWriter out = response.getWriter();
 				response.setContentType("text/xml");
@@ -87,11 +89,11 @@ public class AddApplicantLetterAjaxRequestHandler extends RequestHandlerImpl {
 			catch (Exception e) {
 				String xml = null;
 				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-				sb.append("<LETTERS>");
+				sb.append("<ADD-APPLICANT-LETTER-RESPONSE>");
 				sb.append("<LETTER>");
 				sb.append("<MESSAGE>" + e.getMessage() + "</MESSAGE>");
 				sb.append("</LETTER>");
-				sb.append("</LETTERS>");
+				sb.append("</ADD-APPLICANT-LETTER-RESPONSE>");
 				xml = StringUtils.encodeXML(sb.toString());
 				PrintWriter out = response.getWriter();
 				response.setContentType("text/xml");
@@ -104,11 +106,11 @@ public class AddApplicantLetterAjaxRequestHandler extends RequestHandlerImpl {
 		else {
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-			sb.append("<LETTERS>");
+			sb.append("<ADD-APPLICANT-LETTER-RESPONSE>");
 			sb.append("<LETTER>");
 			sb.append("<MESSAGE>" + this.validator.getErrorString() + "</MESSAGE>");
 			sb.append("</LETTER>");
-			sb.append("</LETTERS>");
+			sb.append("</ADD-APPLICANT-LETTER-RESPONSE>");
 			xml = StringUtils.encodeXML(sb.toString());
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/xml");

@@ -614,33 +614,39 @@ function addApplicantLetter() {
 		processData : false,
 		success : function(xml) {
 			$("#tblletters").find("tr:gt(0)").remove();
-			var i = 1;
 			$(xml).find('LETTER').each(
-					function() {
-						if ($(this).find("MESSAGE").text() == "ADDED") {
-							var newrow = "<tr>";
-							newrow += "<td>" + $(this).find("LETTERTITLE").text() + "</td>";
-							newrow += "<td>" + $(this).find("LETTERDATE").text() + "</td>";
-							newrow += "<td class='no-print'>";
-							newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("LETTERID").text() + "' target='_blank'>VIEW</a> &nbsp;";
-							newrow += "<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=" + $(this).find("LETTERID").text() + "'>DELETE</a>";
-							newrow += "</td>";
-							newrow += "</tr>";
-							$('table#tblletters tr:last').after(
-									newrow);
-							$('#letterspan').text("Letter has been added.");
+				function() {
+					if ($(this).find("MESSAGE").text() == "ADDED") {
+						var newrow = "<tr>";
+						newrow += "<td>" + $(this).find("LETTERTITLE").text() + "</td>";
+						newrow += "<td>" + $(this).find("LETTERDATE").text() + "</td>";
+						newrow += "<td class='no-print'>";
+						newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("LETTERID").text() + "' target='_blank'>VIEW</a> &nbsp;";
+						newrow += "<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=" + $(this).find("LETTERID").text() + "'>DELETE</a>";
+						newrow += "</td>";
+						newrow += "</tr>";
+						$('#tblletters tr:last').after(newrow);
+						$('#letterspan').text("Letter has been added.");
+						$('#letteralert').show();
+					} 
+					else {
+							$('#letterspan').text($(this).find("MESSAGE").text());
 							$('#letteralert').show();
-							
-							
-						} else {
-								$('#letterspan').text($(this).find("MESSAGE").text());
-								$('#letteralert').show();
-						}
-					});
+					}
+				});
+			
+			$("#letteralert").fadeTo(3000, 500).slideUp(500, function(){
+			    $("#letteralert").slideUp(500);
+			});
+			
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			$('#letterspan').text(textStatus);
 			$('#letteralert').show();
+			
+			$("#letteralert").fadeTo(10000, 500).slideUp(500, function(){
+			    $("#letteralert").slideUp(500);
+			});
 		},
 		dataType : "text",
 		async : false
