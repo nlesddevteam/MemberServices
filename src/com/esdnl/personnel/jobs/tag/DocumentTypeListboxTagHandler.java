@@ -52,12 +52,16 @@ public class DocumentTypeListboxTagHandler extends TagSupport {
 			out.println(">");
 
 			out.println("<OPTION VALUE='-1'>--- Select Document Type ---</OPTION>");
-			for (DocumentType type : DocumentType.ALL)
-				out.println("<OPTION VALUE=\""
-						+ type.getValue()
-						+ "\""
+			for (DocumentType type : DocumentType.ALL) {
+				if (type.equal(DocumentType.LETTER)) {
+					continue;
+				}
+
+				out.println("<OPTION VALUE=\"" + type.getValue() + "\""
 						+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == type.getValue())) ? " SELECTED"
-								: "") + ">" + type.getDescription() + "</OPTION>");
+								: "")
+						+ ">" + type.getDescription() + "</OPTION>");
+			}
 
 			out.println("</SELECT>");
 		}
