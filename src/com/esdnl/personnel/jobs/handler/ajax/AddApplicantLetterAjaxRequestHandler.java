@@ -27,6 +27,10 @@ public class AddApplicantLetterAjaxRequestHandler extends RequestHandlerImpl {
 
 	public AddApplicantLetterAjaxRequestHandler() {
 
+		this.requiredPermissions = new String[] {
+				"PERSONNEL-ADMIN-VIEW"
+		};
+
 		this.validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("lettertitle", "Letter title required."),
 				new RequiredFormElement("applicantid", "Applicant id missing.")
