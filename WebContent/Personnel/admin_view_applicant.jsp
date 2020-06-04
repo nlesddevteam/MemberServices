@@ -1388,121 +1388,147 @@ input {
    	<input id="appid" name ="appid" type="hidden" value="<%=profile.getSIN()%>">
    </form>                        
 <!-- SUBLIST SELECT --------------------------------------------------------------->
+<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+		<!-- Modal Revised for Bootstrap -->
+		<div id="add_applicant_dialog" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add to Sub List:</h4>
+					</div>
+					<div class="modal-body">
 
-<!-- Modal Revised for Bootstrap -->
-<div id="add_applicant_dialog" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add to Sub List:</h4>
-      </div>
-      <div class="modal-body">
-      
-				  <div class="form-group">	
-				  <select name='sublist_id' id='sublist_id' class="form-control" multiple='multiple' style="height:150px;text-transform:Capitalize;">
-						<c:forEach items="${SUBLISTBEANS_BY_REGION}" var="entry">
-							 <optgroup title="${entry.key.name}" label="${entry.key.name}">
-							 		<c:forEach items="${entry.value}" var="sublist">
-										<option value='${sublist.id}'>${sublist.title}</option> 			
-							 		</c:forEach>
-							 </optgroup>
-						</c:forEach>
-					</select> 
-				   </div>
-				 <div class="alert alert-info" id="response_msg">Select a Sub List from above to add to. (Selet multiple by holding the CTRL key while clicking)</div>
-				  
-				  
-				
-      </div>
-      <div class="modal-footer">
-        <button type="button" id='btn_add_applicant' class="btn btn-success btn-xs" style="float:left;">Add to Sublist</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+						<div class="form-group">
+							<select name='sublist_id' id='sublist_id' class="form-control"
+								multiple='multiple'
+								style="height: 150px; text-transform: Capitalize;">
+								<c:forEach items="${SUBLISTBEANS_BY_REGION}" var="entry">
+									<optgroup title="${entry.key.name}" label="${entry.key.name}">
+										<c:forEach items="${entry.value}" var="sublist">
+											<option value='${sublist.id}'>${sublist.title}</option>
+										</c:forEach>
+									</optgroup>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="alert alert-info" id="response_msg">Select a Sub
+							List from above to add to. (Selet multiple by holding the CTRL
+							key while clicking)</div>
 
-  </div>
-</div>
- <!-- Modal for shortlisting -->
-<div id="add_shortlist_dialog" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Applicant to Shortlist</h4>
-      </div>
-      <div class="modal-body">
-      
-				  <div class="form-group">
-				  <h4 class="modal-title">Reason For Short Listing Applicant:</h4>	
-				  <textarea rows="10" cols="60" id="shortlistreason"></textarea> 
-				   </div>
-				 <div class="alert alert-info" id="response_msg_sl" style="display:none;">Please enter reason for short listing applicant</div>
-				  
-				  
-				
-      </div>
-      <div class="modal-footer">
-      	<button type="button" id='btn_add_shortlist_ok' class="btn btn-success btn-xs" style="float:left;">Add to Shortlist</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
-      </div>
-    </div>
 
-  </div>
-</div>
- <!-- Modal for confirming applicant verification -->
-<div id="confirm_verify_dialog" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Applicant Verification</h4>
-      </div>
-      <div class="modal-body">
-      <div class="form-group">
-		<h4 class="modal-title">Are you sure you want to verify applicant?</h4>	
-	 </div>
-      <div class="modal-footer">
-      	<button type="button" id='btn_confirm_verify' class="btn btn-success btn-xs" style="float:left;">Verify</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
-      </div>
-    </div>
 
-  </div>
-</div>
-</div>
- <!-- Modal for adding new letter -->
-<div id="add_letter_dialog" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Applicant Letter</h4>
-                <div class="alert alert-danger" style="display:none;" id="dalertadd" align="center">
-							<span id="dmessageadd"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id='btn_add_applicant'
+							class="btn btn-success btn-xs" style="float: left;">Add
+							to Sublist</button>
+						<button type="button" class="btn btn-danger btn-xs"
+							data-dismiss="modal">Close</button>
+					</div>
 				</div>
-				<div class="alert alert-success" style="display:none;" id="dalertadds" align="center">
-							<span id="dmessageadds"></span>
-				</div>
-              </div>
-               <div class="modal-body">
-                   <p class="text-warning" id="title3">Letter Title:</p>
-		    		<p>
-		    		<input type="text" id="ltitle" name="ltitle" size="35">					
-		    		</p>
-                   <p class="text-warning" id="title3">Letter:</p>
-		    		<p>
-		    		<input type="file" id="ldocument" name="ldocument" accept="application/pdf">(PDF file format only)					
-		    		</p>
+
 			</div>
-      <div class="modal-footer">
-      	<button type="button" id='btn_confirm_letter' class="btn btn-success btn-xs" style="float:left;">Add Letter</button>  <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+		</div>
+		
+		<!-- Modal for shortlisting -->
+		<div id="add_shortlist_dialog" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add Applicant to Shortlist</h4>
+					</div>
+					<div class="modal-body">
 
-  </div>
-</div>
-</div>
+						<div class="form-group">
+							<h4 class="modal-title">Reason For Short Listing Applicant:</h4>
+							<textarea rows="10" cols="60" id="shortlistreason"></textarea>
+						</div>
+						<div class="alert alert-info" id="response_msg_sl"
+							style="display: none;">Please enter reason for short
+							listing applicant</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id='btn_add_shortlist_ok'
+							class="btn btn-success btn-xs" style="float: left;">Add
+							to Shortlist</button>
+						<button type="button" class="btn btn-danger btn-xs"
+							data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		<!-- Modal for confirming applicant verification -->
+		<div id="confirm_verify_dialog" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Applicant Verification</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<h4 class="modal-title">Are you sure you want to verify
+								applicant?</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id='btn_confirm_verify'
+								class="btn btn-success btn-xs" style="float: left;">Verify</button>
+							<button type="button" class="btn btn-danger btn-xs"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal for adding new letter -->
+		<div id="add_letter_dialog" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add Applicant Letter</h4>
+						<div class="alert alert-danger" style="display: none;"
+							id="dalertadd" align="center">
+							<span id="dmessageadd"></span>
+						</div>
+						<div class="alert alert-success" style="display: none;"
+							id="dalertadds" align="center">
+							<span id="dmessageadds"></span>
+						</div>
+					</div>
+					<div class="modal-body">
+						<input type='hidden' id='addedbyid' name='addedbyid' value='<%= usr.getPersonnel().getPersonnelID() %>' />
+						<p class="text-warning" id="title3">Letter Title:</p>
+						<p>
+							<input type="text" id="ltitle" name="ltitle" size="35">
+						</p>
+						<p class="text-warning" id="title3">Letter:</p>
+						<p>
+							<input type="file" id="ldocument" name="ldocument"
+								accept="application/pdf">(PDF file format only)
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id='btn_confirm_letter'
+							class="btn btn-success btn-xs" style="float: left;">Add
+							Letter</button>
+						<button type="button" class="btn btn-danger btn-xs"
+							data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</esd:SecurityAccessRequired>
 </body>
 </html>
