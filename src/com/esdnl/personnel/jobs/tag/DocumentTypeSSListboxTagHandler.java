@@ -1,10 +1,14 @@
 package com.esdnl.personnel.jobs.tag;
+
 import java.io.IOException;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
+
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
 import com.esdnl.util.StringUtils;
+
 public class DocumentTypeSSListboxTagHandler extends TagSupport {
 
 	private static final long serialVersionUID = 4362564658920999975L;
@@ -48,12 +52,16 @@ public class DocumentTypeSSListboxTagHandler extends TagSupport {
 			out.println(">");
 
 			out.println("<OPTION VALUE='-1'>--- Select Document Type ---</OPTION>");
-			for (DocumentTypeSS type : DocumentTypeSS.ALL)
-				out.println("<OPTION VALUE=\""
-						+ type.getValue()
-						+ "\""
+			for (DocumentTypeSS type : DocumentTypeSS.ALL) {
+				if (type.equal(DocumentTypeSS.LETTER)) {
+					continue;
+				}
+
+				out.println("<OPTION VALUE=\"" + type.getValue() + "\""
 						+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == type.getValue())) ? " SELECTED"
-								: "") + ">" + type.getDescription() + "</OPTION>");
+								: "")
+						+ ">" + type.getDescription() + "</OPTION>");
+			}
 
 			out.println("</SELECT>");
 		}
