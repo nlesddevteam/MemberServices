@@ -7,7 +7,7 @@
          import="com.esdnl.personnel.jobs.constants.*,
         		 java.util.TreeMap,
                  com.esdnl.personnel.jobs.dao.*,
-                 com.awsd.security.*"%>
+                 com.awsd.security.*, java.util.*"%>
 
 <!-- LOAD JAVA TAG LIBRARIES -->
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -68,7 +68,7 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 		<script src="/MemberServices/Personnel/includes/js/bootstrap-multiselect.js"></script>
 		<script src="/MemberServices/Personnel/includes/js/iefix.js"></script>
 	    <script src="/MemberServices/Personnel/includes/js/jquery.validate.js"></script>	    
-	   <script src="/MemberServices/Personnel/includes/js/personnel_ajax_v2.js"></script>
+	   <script src="/MemberServices/Personnel/includes/js/personnel_ajax_v2.js?<%= (new Date()).getTime() %>"></script>
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/fnReloadAjax.js"></script>
 		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
