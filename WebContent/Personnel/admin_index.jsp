@@ -34,7 +34,7 @@
 		<style>
 		th {
 				text-transform:Uppercase;
-				background-color: Grey;
+				background-color: rgba(0, 102, 255,0);
 				color:White;
 				font-size:14px;
 				text-align:center;			
@@ -64,39 +64,38 @@
                    		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
                   	</c:if>			
                   	
-					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">					
+					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">			
+					
+					<div style="font-size:14px;font-weight:bold;color:#1F4279;"><%= statsSchoolYear %> Vacancy Processing Statistics</div>
+							
 								<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">								
-									<thead>
-									<tr>
-									<th colspan="18"><%= statsSchoolYear %> Vacancy Processing Statistics</th>
-									</tr>
-									</thead>
-											<tbody>
+									
+										<tbody>
 										<tr>
-											<td rowspan='2' style="background-color:rgba(0, 0, 0,1);color:White;text-transform:Uppercase;font-weight:bold;">Region</td>
-											<td rowspan='2' style="background-color:rgba(105, 105, 105,1);color:White;text-transform:Uppercase;font-weight:bold;">Total<br/>Vacancies</td>
-											<td colspan='3' style="background-color:rgba(255, 127, 80,1);color:White;text-transform:Uppercase;font-weight:bold;">Ad Requests</td>
-											<td colspan='2' style="background-color:rgba(95, 158, 160,1);color:White;text-transform:Uppercase;font-weight:bold;">Shortlists</td>
-											<td colspan='7' style="background-color:rgba(60, 179, 113,1);color:White;text-transform:Uppercase;font-weight:bold;">Recommendations</td>
-											<td colspan='4' style="background-color:rgba(205, 92, 92,1);color:White;text-transform:Uppercase;font-weight:bold;">Positions Filled</td>
+											<td rowspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Region</td>
+											<td rowspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Total<br/>Vacancies</td>
+											<td colspan='3' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Ad Requests</td>
+											<td colspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Shortlists</td>
+											<td colspan='7' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Recommendations</td>
+											<td colspan='4' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Positions Filled</td>
 										</tr>
 										<tr>
-											<td scope="col" style="background-color:rgba(255, 127, 80,1);color:White;">Sub</td>
-											<td scope="col" style="background-color:rgba(255, 127, 80,1);color:White;">App</td>
-											<td scope="col" style="background-color:rgba(255, 127, 80,1);color:White;">Pst</td>
-											<td scope="col" style="background-color:rgba(95, 158, 160,1);color:White;">No</td>
-											<td scope="col" style='background-color:rgba(95, 158, 160,1);color:White;white-space: nowrap;'>> 48 Hrs<br/>No Rec</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Sub</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">App</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Acc</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off Acc</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off Rej</td>
-											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off Exp</td>
-											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Comp</td>
-											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Manual</td>
-											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Total</td>
-											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Left</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Sub</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">App</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Pst</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">No</td>
+											<td scope="col" style='color: rgba(0,0,0,1);white-space: nowrap;'>> 48 Hrs<br/>No Rec</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Sub</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">App</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Acc</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Off</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Off Acc</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Off Rej</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Off Exp</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Comp</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Manual</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Total</td>
+											<td scope="col" style="color: rgba(0,0,0,1);">Left</td>
 										</tr>
 								
 							
@@ -154,7 +153,7 @@
 												<td class="regionRow<%=rowCnt%> text-danger" style='font-weight: bold;'><%= entry.getValue().getTotalVacancies() - (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) %></td>
 											</tr>
 											
-											<% if (entry.getKey().getZoneName().equalsIgnoreCase("Avalon")) { %>										
+											 <% if (entry.getKey().getZoneName().equalsIgnoreCase("Avalon")) { %>										
 												<script>$(".regionRow<%=rowCnt%>").addClass("region1");</script>
 											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Central")) {%>	
 												<script>$(".regionRow<%=rowCnt%>").addClass("region2");</script>
@@ -169,52 +168,51 @@
 											
 										<% } %>
 										<tr>
-												<td scope="row" style='background-color:rgba(0, 0, 0,1);font-weight:bold;color:White;border-top: double #333333;'>TOTALS:</td>
-												<td style='background-color:rgba(105, 105, 105,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalVacancies %></td>
-												<td style='background-color:rgba(255, 127, 80,0.3);border-top: double #333333;'><%= totalAdSubmitted %></td>
-												<td style='background-color:rgba(255, 127, 80,0.3);border-top: double #333333;'><%= totalAdApproved %></td>
-												<td style='background-color:rgba(255, 127, 80,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalAdPosted %></td>
-												<td style='background-color:rgba(95, 158, 160,0.3);border-top: double #333333;'><%= totalNoShortlist %></td>
-												<td style='background-color:rgba(95, 158, 160,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalShortlistedNoRecommendation %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecSubmitted %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecApproved %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecAccepted %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecOffered %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecOfferAccepted %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecOfferRejected %></td>
-												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOfferExpired %></td>
-												<td style='background-color:rgba(205, 92, 92,0.3);border-top: double #333333;'><%= totalFilledByCompetition  %></td>
-												<td style='background-color:rgba(205, 92, 92,0.3);border-top: double #333333;'><%= totalFilledManually %></td>
-												<td class='text-success' style='background-color:rgba(205, 92, 92,0.3);font-weight: bold; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
-												<td class='text-danger' style='background-color:rgba(205, 92, 92,0.3);font-weight: bold; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
+												<td scope="row" style='font-weight:bold;color:rgba(0,0,0,1);border-top: double #333333;'>TOTALS:</td>
+												<td style='border-top: double #333333; '><%= totalVacancies %></td>
+												<td style='border-top: double #333333;'><%= totalAdSubmitted %></td>
+												<td style='border-top: double #333333;'><%= totalAdApproved %></td>
+												<td style='border-top: double #333333; '><%= totalAdPosted %></td>
+												<td style='border-top: double #333333;'><%= totalNoShortlist %></td>
+												<td style='border-top: double #333333; '><%= totalShortlistedNoRecommendation %></td>
+												<td style='border-top: double #333333;'><%= totalRecSubmitted %></td>
+												<td style='border-top: double #333333;'><%= totalRecApproved %></td>
+												<td style='border-top: double #333333;'><%= totalRecAccepted %></td>
+												<td style='border-top: double #333333;'><%= totalRecOffered %></td>
+												<td style='border-top: double #333333;'><%= totalRecOfferAccepted %></td>
+												<td style='border-top: double #333333;'><%= totalRecOfferRejected %></td>
+												<td style='border-top: double #333333;'><%= totalRecOfferExpired %></td>
+												<td style='border-top: double #333333;'><%= totalFilledByCompetition  %></td>
+												<td style='border-top: double #333333;'><%= totalFilledManually %></td>
+												<td class='text-success' style='font-weight: bold; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+												<td class='text-danger' style='font-weight: bold; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 											</tr>
 										<tr>
-											<td colspan='14' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled:</td>
+											<td colspan='14' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Filled:</td>
 											<td colspan='4' style='color:Green;text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 										</tr>
 										<tr>
-											<td colspan='14' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding:</td>
+											<td colspan='14' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Outstanding:</td>
 											<td colspan='4' style='color:Red;text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 										</tr>
 									</tbody>
 								</table>
 							
-								<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">
-									<thead>
-									<tr>
-									<th colspan="3">Position Offer Statistics</th>
-									</tr>
-									</thead>
+							
+							
+							<div style="font-size:14px;font-weight:bold;color:#1F4279;">Position Offer Statistics</div>
+							
+								<table class="table table-sm table-bordered" style="width:100%;max-width:600px;font-size:11px;width:100%;background-color:White;">									
 									<tbody>
 										<tr>
-											<td scope="col" style='text-align:center;text-transform:Uppercase;background-color:Navy;color:White;'>Queued</td>
-											<td scope="col" style='text-align:center;text-transform:Uppercase;background-color:Green;color:White;'>In-progress</td>
-											<td scope="col" style='text-align:center;text-transform:Uppercase;background-color:Red;color:White;'>Expired</td>
+											<td scope="col" style='font-weight:bold;text-align:center;text-transform:Uppercase;background-color:Navy;color:White;'>Queued</td>
+											<td scope="col" style='font-weight:bold;text-align:center;text-transform:Uppercase;background-color:Green;color:White;'>In-progress</td>
+											<td scope="col" style='font-weight:bold;text-align:center;text-transform:Uppercase;background-color:Red;color:White;'>Expired</td>
 										</tr>							
 									     <tr>
-											<td scope="row" style='text-align:center;'><%= stats.getOffersQueued() %></td>
-											<td style='text-align:center;'><%= stats.getOffersInProgress() %></td>
-											<td style='text-align:center;'><%= stats.getOffersExpired() %></td>
+											<td scope="row" style='text-align:center;font-size:18;color:Navy;'><%= stats.getOffersQueued() %></td>
+											<td style='text-align:center;font-size:18;color:Green;'><%= stats.getOffersInProgress() %></td>
+											<td style='text-align:center;font-size:18;color:Red;'><%= stats.getOffersExpired() %></td>
 										</tr>
 									</tbody>
 								</table>
