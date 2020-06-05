@@ -179,46 +179,51 @@ function parseAddApplicantResponse(data){
 	<div class="alert alert-warning" style="text-align:center;">                                       
 		<%=(String)request.getAttribute("msg")%>
 	</div>
-<%}%>	
+<%}%>
 
-<div class="panel panel-success">
-  <div class="panel-heading"><b>Viewing Job Post <%=request.getParameter("comp_num")%></b></div>
-  <div class="panel-body">
-  				<div class="table-responsive">      			 	       
-      			<job:ViewPost job="<%= opp %>" />
-   				<input type="hidden" id="filtertype" name="fitlertype" value="<%=opp != null ? opp.getIsSupport() : "T"%>">
-   				<table class='table table-striped table-condensed' style='font-size:12px;'>
-   				
-   				<tbody>
-			     <tr>
-			     <td class='tableTitle'>STATUS:</td>
-			     <td class='tableResult'>
-			     				<%if((opp != null) && (opp.isCandidateListPrivate())){ %>
-                                	<span style="color:red;">Candidate List is Private</span><br/>
-                                <%}%>
-                                
-                                <%if(ad != null){%>
-	                                <span>Ad Requested by <span style="text-transform:Capitalize;"><%= ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().getFullNameReverse() + (ad.isUnadvertised()?" is <b>unadvertised</b>":"")%></span></span><br/>
-                                <%}%>
-                                
-                                <%if((opp != null) && (opp.isCancelled())){ %>
-                                	<span style="color:red;">Position cancelled on <%= opp.getFormatedCancelledDate() %></span><br/>
-                                <%}%>
-                                <%if((opp != null) && (opp.isReopened())){ %>
-                                	<span style="color:red;">Position reopened on <%= opp.getFormattedReopenedDate() %> by <%= StringUtils.capitaliseAllWords(opp.getReopenedBy().getFullNameReverse()) %></span>
-                                <%}%>
-			     </td>
-			     </tr>
-    
-			     </tbody>
-			     </table>
-   				</div>				
-							
-</div>
-</div>	
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<b>Viewing Job Post <%=request.getParameter("comp_num")%></b>
+		</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<job:ViewPost job="<%=opp%>" />
+				<input type="hidden" id="filtertype" name="fitlertype"
+					value="<%=opp != null ? opp.getIsSupport() : "T"%>">
+				<table class='table table-striped table-condensed'
+					style='font-size: 12px;'>
+
+					<tbody>
+						<tr>
+							<td class='tableTitle'>STATUS:</td>
+							<td class='tableResult'>
+								<% if ((opp != null) && (opp.isCandidateListPrivate())) { %> 
+									<span style="color: red;">Candidate List is Private</span><br /> 
+								<% } %> 
+								<% if (ad != null) { %>
+									<span>Ad Requested by <span style="text-transform: Capitalize;"><%=ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().getFullNameReverse() + (ad.isUnadvertised() ? " is <b>unadvertised</b>" : "")%></span></span><br />
+								<% } %> 
+								<% if ((opp != null) && (opp.isCancelled())) { %> 
+									<span style="color: red;">Position cancelled on <%=opp.getFormatedCancelledDate()%></span><br />
+								<% } %> 
+								<% if ((opp != null) && (opp.isReopened())) { %> 
+ 									<span style="color: red;">Position reopened on <%=opp.getFormattedReopenedDate()%> by <%=StringUtils.capitaliseAllWords(opp.getReopenedBy().getFullNameReverse())%></span>
+								<% } %>
+								<% if ((opp != null) && (opp.isAwarded())) { %> 
+ 									<span style="color: red;">Position Awarded on <%=opp.getFormatedJobAwardedDate()%></span>
+								<% } %>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
 
 
-<!-- ADMINISTRATIVE FUNCTIONS -->
+	<!-- ADMINISTRATIVE FUNCTIONS -->
 		                             
 <div class="no-print" align="center">
                     
