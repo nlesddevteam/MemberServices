@@ -60,7 +60,10 @@
 					<b>NOTICE: </b>Due to the information and data layout this application provides, we advise using a tablet or laptop/desktop computer to use this system.
 					
 					<br/>&nbsp;<br/>
-					
+					 <c:if test="${ msg ne null }">  
+                   		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
+                  	</c:if>			
+                  	
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">					
 								<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">								
 									<thead>
@@ -225,7 +228,7 @@
 										
 					
 					 <c:if test="${ msg ne null }">  
-                   		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;">${ msg } </div>     
+                   		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
                   	</c:if>					
 					
 					</div>	
