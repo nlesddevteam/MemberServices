@@ -68,10 +68,7 @@
    
   HashMap<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   
-  EmployeeBean empbean = null;
-  if(!StringUtils.isEmpty(profile.getSIN2())){
-  	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
-  }
+  EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(profile);
   
   Calendar cal = Calendar.getInstance();
   cal.clear(Calendar.HOUR);
@@ -97,7 +94,7 @@
 <c:set var="emailAddress" value="<%=profile.getEmail()%>"/>
 <c:set var="password" value="<%=profile.getPassword()%>"/>
 <c:set var="userID" value="<%=profile.getUID()%>"/>
-<c:set var="SDSID" value="<%=empbean != null?empbean.getEmpId():\"N/A\" %>"/>
+<c:set var="SDSID" value="<%=((empbean != null) && org.apache.commons.lang.StringUtils.isNotBlank(empbean.getEmpId()))?empbean.getEmpId():\"N/A\" %>"/>
 <c:set var="seniorityTotal" value="<%=empbean != null && empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null ? empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityTotal() :\"\"  %>"/> 
 <c:set var="permContractSchool" value="<%=(esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)?esd_exp.getPermanentContractLocationText() :\"N/A\"%>"/>
 <c:set var="permContractPosition" value="<%=(esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)?esd_exp.getPermanentContractPosition() :\"N/A\"%>"/>

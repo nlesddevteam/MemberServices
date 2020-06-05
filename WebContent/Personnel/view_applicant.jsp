@@ -46,10 +46,7 @@
   Collection<InterviewSummaryBean> interviewSummaries = InterviewSummaryManager.getInterviewSummaryBeans(profile);
   interviewSummaries = interviewSummaries.stream().filter(isb -> isb.getCompetition().getJobAwardedDate() != null).collect(Collectors.toList());
   
-  EmployeeBean empbean = null;
-  if(!StringUtils.isEmpty(profile.getSIN2())){
-  	empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
-  }
+  EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(profile);
   
   SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
   SimpleDateFormat sdf_medium = new SimpleDateFormat("MMM d, yyyy");
