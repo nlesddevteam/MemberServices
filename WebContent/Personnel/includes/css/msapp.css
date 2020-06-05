@@ -32,24 +32,24 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 
 /* REGION COLORS */
 .regionDefault {background-color: #1F4279;}
-.region1 {background-color:rgba(191, 0, 0, 0.2);}
+.region1 {background-color:rgba(191, 0, 0, 0.1);}
 .region1a {border-left:10px solid rgba(191, 0, 0, 0.3);}
 .region1solid {background-color:rgba(191, 0, 0, 1);}
 .region1half {background-color:rgba(191, 0, 0, 0.5);}
-.region2 {background-color:rgba(0, 191, 0, 0.2);}
+.region2 {background-color:rgba(0, 191, 0, 0.1);}
 .region2a {border-left:10px solid rgba(0, 191, 0, 0.3);}
 .region2solid {background-color:rgba(0, 191, 0, 1);}
 .region2half {background-color:rgba(0, 191, 0, 0.5);}
-.region3 {background-color:rgba(255, 132, 0, 0.2);}
+.region3 {background-color:rgba(255, 132, 0, 0.1);}
 .region3solid {background-color:rgba(255, 132, 0, 1);}
 .region3half {background-color:rgba(255, 132, 0, 0.5);}
 .region3a {border-left:10px solid rgba(255, 132, 0, 0.3);}
-.region4 {background-color:rgba(127, 130, 255, 0.2);}
+.region4 {background-color:rgba(127, 130, 255, 0.1);}
 .region4a {border-left:10px solid rgba(127, 130, 255, 0.3);}
 .region4solid {background-color:rgba(127, 130, 255,1);}
 .region4half {background-color:rgba(127, 130, 255, 0.5);}
 .region5text {color:rgba(128, 0, 128, 1);}
-.region5 {background-color:rgba(128, 0, 128, 0.2);}
+.region5 {background-color:rgba(128, 0, 128, 0.1);}
 .region5a {border-left:10px solid rgba(128, 0, 128, 0.3);}
 .region5txt {color:rgba(128, 0, 128, 1);}
 .region5solid {background-color:rgba(128, 0, 128,1);}
