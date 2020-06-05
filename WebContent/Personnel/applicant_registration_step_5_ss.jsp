@@ -164,7 +164,7 @@
                                </table>     
                                     
                                     
-                                     <div align="center"><a class="btn btn-xs btn-danger" href="view_applicant_ss.jsp">Back to Profile</a> <input type="submit" value="Save/Update"  class="btn btn-xs btn-success" onclick="checkneweducation()"></div>
+                                     <div align="center"><input type="submit" value="Save/Update"  class="btn btn-xs btn-success" onclick="checkneweducation()">  <a class="btn btn-xs btn-danger" href="view_applicant_ss.jsp">Back to Profile</a> </div>
                                   
                                
  </div></div></div></div>                           
@@ -240,7 +240,7 @@
                            		</tr>
                               </tbody>
                               </table>
-                                       <div align="center"><input type="button" class="btn btn-success btn-xs" value="Add Degree/Diploma/Certificate" onclick="checkneweducationpost()"></div>
+                                       <div align="center"><input type="submit" class="btn btn-success btn-xs" value="Add Degree/Diploma/Certificate" onclick="checkneweducationpostdegree()">  <a class="btn btn-xs btn-danger" href="view_applicant_ss.jsp">Back to Profile</a> </div>
                                       
                                         <hr>
                                       
@@ -254,8 +254,10 @@
                    
                            
                            
- </div></div></div></div>   
+ </div></div></div>
  
+ 
+
  
          </form>                       
  						<%if(request.getAttribute("msg")!=null){%>

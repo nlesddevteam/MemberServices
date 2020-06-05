@@ -395,7 +395,7 @@ function checkneweducation() {
 /*******************************************************************************
  * check fields for Step 5 Profile Add Education Post Sec
  *  ******************************************************************************/
-function checkneweducationpost() {
+function checkneweducationpostdegree()  {
 	
 	var institution = $("#institution").val();
 	$("#institutionW").removeClass("has-error");
@@ -423,7 +423,9 @@ function checkneweducationpost() {
 		$("#to_date").focus();
 		return false;
 	}
-	
+	 $("#ApplicantRegistrationStep1").attr('action', 'applicantRegistrationSS.html?step=5b');
+	 $("#ApplicantRegistrationStep1").submit();
+
 	return true;
 }
 /*******************************************************************************
@@ -578,7 +580,7 @@ function ajaxRequestInfo()
 	                   				
  								}else{
  									alert($(this).find("ERROR").text());
- 									
+ 									//$('#msgerrstep1').css('display','block').html("We could not find the email in our system. Did you create your security question when you initially registered? If not, we cannot reset your password. Please contact support.").delay(5000).fadeOut();
  								}
 
 
