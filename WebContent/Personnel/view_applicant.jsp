@@ -169,7 +169,7 @@ input {
 							.getJobOpportunityAssignmentBeans(letter.getJob());
 						%>
 						<li><a class="menu"
-							href="/MemberServices/Personnel/viewLetterOfEmployment.html?id=<%=letter.getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + letter.getJob().getPositionTitle() + ")"%> - - <%= letter.getRecommendation().getOfferAcceptedDateFormatted() %></a></li>
+							href="/MemberServices/Personnel/viewLetterOfEmployment.html?id=<%=letter.getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + letter.getJob().getPositionTitle() + ")"%> - <%= letter.getRecommendation().getOfferAcceptedDateFormatted() %></a></li>
 						<%
 							}
 						%>
