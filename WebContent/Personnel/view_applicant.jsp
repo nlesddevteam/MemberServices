@@ -129,7 +129,7 @@ input {
 							.getJobOpportunityAssignmentBeans(current_offers[i].getJob());
 						%>
 						<li><a class="menu"
-							href="/MemberServices/Personnel/applicantPositionOfferController.html?id=<%=current_offers[i].getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + current_offers[i].getJob().getPositionTitle() + ")"%></a></li>
+							href="/MemberServices/Personnel/applicantPositionOfferController.html?id=<%=current_offers[i].getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + current_offers[i].getJob().getPositionTitle() + ")"%> - <%= current_offers[i].getRecommendation().getOfferAcceptedDateFormatted() %></a></li>
 						<%
 							}
 						%>
