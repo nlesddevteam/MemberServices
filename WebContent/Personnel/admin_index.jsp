@@ -31,6 +31,20 @@
 <html>
 	<head>		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+		<style>
+		th {
+				text-transform:Uppercase;
+				background-color: Grey;
+				color:White;
+				font-size:14px;
+				text-align:center;			
+		}
+		td {
+				text-align:center;
+				background-color:white;
+		}
+	
+		</style>
 	</head>
 
 	<body>
@@ -40,49 +54,51 @@
 					<div class="pageHeader">Human Resources Administration</div>
 					<div class="pageBody">
 					Welcome <span style="text-transform:capitalize;"><%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></span> to your 
-					NLESD Applicant Profiling System Adminstration Site. Please use the navigation menu above to continue. Not all menu items are available to all users. You will only see options available for your current job position. 
+					NLESD Applicant Profiling System Administration Site. Please use the navigation menu above to continue. Not all menu items are available to all users. You will only see options available for your current job position. 
 					
 					<br/>&nbsp;<br/>
 					<b>NOTICE: </b>Due to the information and data layout this application provides, we advise using a tablet or laptop/desktop computer to use this system.
 					
 					<br/>&nbsp;<br/>
 					
-					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
-					<div class="container" style='margin-left: 0px;padding-left: 0px;'>
-						<div class='row'>
-							<div class='col col-md-12 col-sm-12 col-lg-12'>
-								<table class="table table-sm table-striped table-bordered">
-									<caption><%= statsSchoolYear %> Vacancy Processing Statistics</caption>
+					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">					
+								<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">								
 									<thead>
-										<tr>
-											<th rowspan='2' style='text-align:center;'>Region</th>
-											<th rowspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>Total<br/>Vacancies</th>
-											<th colspan='3' style='text-align:center; border-right: 5px solid #e4e4e4;'>Ad Requests</th>
-											<th colspan='2' style='text-align:center; border-right: 5px solid #e4e4e4;'>Shortlists</th>
-											<th colspan='7' style='text-align:center; border-right: 5px solid #e4e4e4;'>Recommendations</th>
-											<th colspan='4' style='text-align:center;'>Positions Filled</th>
-										</tr>
-										<tr>
-											<th scope="col" style='text-align:center;'>Sub</th>
-											<th scope="col" style='text-align:center;'>App</th>
-											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Pst</th>
-											<th scope="col" style='text-align:center;'>No</th>
-											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4; white-space: nowrap;'>> 48 Hrs<br/>No Rec</th>
-											<th scope="col" style='text-align:center;'>Sub</th>
-											<th scope="col" style='text-align:center;'>App</th>
-											<th scope="col" style='text-align:center;'>Acc</th>
-											<th scope="col" style='text-align:center;'>Off</th>
-											<th scope="col" style='text-align:center;'>Off Acc</th>
-											<th scope="col" style='text-align:center;'>Off Rej</th>
-											<th scope="col" style='text-align:center; border-right: 5px solid #e4e4e4;'>Off Exp</th>
-											<th scope="col" style='text-align:center;'>Comp</th>
-											<th scope="col" style='text-align:center;'>Manual</th>
-											<th scope="col" style='text-align:center;'>Total</th>
-											<th scope="col" style='text-align:center;'>Left</th>
-										</tr>
+									<tr>
+									<th colspan="18"><%= statsSchoolYear %> Vacancy Processing Statistics</th>
+									</tr>
 									</thead>
-									<tbody>
+											<tbody>
+										<tr>
+											<td rowspan='2' style="background-color:rgba(0, 0, 0,1);color:White;text-transform:Uppercase;font-weight:bold;">Region</td>
+											<td rowspan='2' style="background-color:rgba(105, 105, 105,1);color:White;text-transform:Uppercase;font-weight:bold;">Total<br/>Vacancies</td>
+											<td colspan='3' style="background-color:rgba(255, 127, 80,1);color:White;text-transform:Uppercase;font-weight:bold;">Ad Requests</td>
+											<td colspan='2' style="background-color:rgba(95, 158, 160,1);color:White;text-transform:Uppercase;font-weight:bold;">Shortlists</td>
+											<td colspan='7' style="background-color:rgba(60, 179, 113,1);color:White;text-transform:Uppercase;font-weight:bold;">Recommendations</td>
+											<td colspan='4' style="background-color:rgba(205, 92, 92,1);color:White;text-transform:Uppercase;font-weight:bold;">Positions Filled</td>
+										</tr>
+										<tr>
+											<td scope="col" style="background-color:rgba(255, 127, 80,1);color:White;">Sub</td>
+											<td scope="col" style="background-color:rgba(255, 127, 80,1);color:White;">App</td>
+											<td scope="col" style="background-color:rgba(255, 127, 80,1);color:White;">Pst</td>
+											<td scope="col" style="background-color:rgba(95, 158, 160,1);color:White;">No</td>
+											<td scope="col" style='background-color:rgba(95, 158, 160,1);color:White;white-space: nowrap;'>> 48 Hrs<br/>No Rec</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Sub</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">App</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Acc</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off Acc</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off Rej</td>
+											<td scope="col" style="background-color:rgba(60, 179, 113,1);color:White;">Off Exp</td>
+											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Comp</td>
+											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Manual</td>
+											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Total</td>
+											<td scope="col" style="background-color:rgba(205, 92, 92,1);color:White;">Left</td>
+										</tr>
+								
+							
 										<% 
+											int rowCnt = 0;
 											int totalVacancies = 0, totalFilledByCompetition = 0, totalFilledManually = 0;
 											int totalAdSubmitted = 0, totalAdApproved = 0, totalAdPosted = 0, totalNoShortlist = 0, totalShortlistedNoRecommendation = 0;
 											int totalRecSubmitted = 0, totalRecApproved = 0, totalRecAccepted = 0, totalRecOffered = 0, totalRecOfferAccepted = 0, totalRecOfferRejected = 0, totalRecOfferExpired = 0;
@@ -103,81 +119,103 @@
 												totalRecOfferExpired += entry.getValue().getTotalRecommendationOfferExpired();
 												totalRecOfferAccepted += entry.getValue().getTotalRecommendationOfferAccepted();
 										%>
-											<tr>
-												<td scope="row"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
-												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalVacancies() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalAdSubmitted() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalAdApproved() %></td>
-												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalAdPosted() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalNoShortlist() %></td>
-												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalShortlistNoRecemmendation() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationSubmitted() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationApproved() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationAccepted() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationOffered() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationOfferAccepted() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalRecommendationOfferRejected() %></td>
-												<td style='text-align:center; border-right: 5px solid #e4e4e4;'><%= entry.getValue().getTotalRecommendationOfferExpired() %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalFilledByCompetition()  %></td>
-												<td style='text-align:center;'><%= entry.getValue().getTotalFilledManually() %></td>
-												<td class='text-success' style='font-weight: bold; text-align:center;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
-												<td class='text-danger' style='font-weight: bold; text-align:center;'><%= entry.getValue().getTotalVacancies() - (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) %></td>
+										<%rowCnt++; %>
+											<tr>											
+											<% if (entry.getKey().getZoneName().equalsIgnoreCase("Avalon")) { %>
+												<td scope="row" class="region1half"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>												
+											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Central")) {%>	
+												<td scope="row" class="region2half"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
+											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Western")) {%>
+												<td scope="row" class="region3half"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
+											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Labrador")) {%>
+												<td scope="row" class="region4half"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
+											<%} else {%>
+												<td scope="row" class="region5half"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
+											<%} %>												
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalVacancies() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdSubmitted() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdApproved() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdPosted() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalNoShortlist() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalShortlistNoRecemmendation() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationSubmitted() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationApproved() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationAccepted() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOffered() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOfferAccepted() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOfferRejected() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOfferExpired() %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalFilledByCompetition()  %></td>
+												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalFilledManually() %></td>
+												<td class="regionRow<%=rowCnt%> text-success" style='font-weight: bold;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
+												<td class="regionRow<%=rowCnt%> text-danger" style='font-weight: bold;'><%= entry.getValue().getTotalVacancies() - (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) %></td>
 											</tr>
+											
+											<% if (entry.getKey().getZoneName().equalsIgnoreCase("Avalon")) { %>										
+												<script>$(".regionRow<%=rowCnt%>").addClass("region1");</script>
+											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Central")) {%>	
+												<script>$(".regionRow<%=rowCnt%>").addClass("region2");</script>
+											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Western")) {%>
+										        <script>$(".regionRow<%=rowCnt%>").addClass("region3");</script>
+											<%} else if (entry.getKey().getZoneName().equalsIgnoreCase("Labrador")) {%>
+											    <script>$(".regionRow<%=rowCnt%>").addClass("region4");</script>
+											<%} else {%>
+										      <script>$(".regionRow<%=rowCnt%>").addClass("region5");</script>
+											<%} %>
+											
+											
 										<% } %>
 										<tr>
-												<td scope="row" style='border-top: double #333333;'>Totals</td>
-												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalVacancies %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalAdSubmitted %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalAdApproved %></td>
-												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalAdPosted %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalNoShortlist %></td>
-												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalShortlistedNoRecommendation %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalRecSubmitted %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalRecApproved %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalRecAccepted %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalRecOffered %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalRecOfferAccepted %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalRecOfferRejected %></td>
-												<td style='text-align:center; border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOfferExpired %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalFilledByCompetition  %></td>
-												<td style='text-align:center; border-top: double #333333;'><%= totalFilledManually %></td>
-												<td class='text-success' style='font-weight: bold; text-align:center; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
-												<td class='text-danger' style='font-weight: bold; text-align:center; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
+												<td scope="row" style='background-color:rgba(0, 0, 0,1);font-weight:bold;color:White;border-top: double #333333;'>TOTALS:</td>
+												<td style='background-color:rgba(105, 105, 105,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalVacancies %></td>
+												<td style='background-color:rgba(255, 127, 80,0.3);border-top: double #333333;'><%= totalAdSubmitted %></td>
+												<td style='background-color:rgba(255, 127, 80,0.3);border-top: double #333333;'><%= totalAdApproved %></td>
+												<td style='background-color:rgba(255, 127, 80,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalAdPosted %></td>
+												<td style='background-color:rgba(95, 158, 160,0.3);border-top: double #333333;'><%= totalNoShortlist %></td>
+												<td style='background-color:rgba(95, 158, 160,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalShortlistedNoRecommendation %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecSubmitted %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecApproved %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecAccepted %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecOffered %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecOfferAccepted %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333;'><%= totalRecOfferRejected %></td>
+												<td style='background-color:rgba(60, 179, 113,0.3);border-top: double #333333; border-right: 5px solid #e4e4e4;'><%= totalRecOfferExpired %></td>
+												<td style='background-color:rgba(205, 92, 92,0.3);border-top: double #333333;'><%= totalFilledByCompetition  %></td>
+												<td style='background-color:rgba(205, 92, 92,0.3);border-top: double #333333;'><%= totalFilledManually %></td>
+												<td class='text-success' style='background-color:rgba(205, 92, 92,0.3);font-weight: bold; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+												<td class='text-danger' style='background-color:rgba(205, 92, 92,0.3);font-weight: bold; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 											</tr>
 										<tr>
-											<td colspan='14' class='text-success' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled</td>
-											<td colspan='4' class='text-success' style='text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+											<td colspan='14' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Filled:</td>
+											<td colspan='4' style='color:Green;text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 										</tr>
 										<tr>
-											<td colspan='14' class='text-danger' style='text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding</td>
-											<td colspan='4' class='text-danger' style='text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
+											<td colspan='14' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold; border-right: 5px solid #e4e4e4;'>Total Outstanding:</td>
+											<td colspan='4' style='color:Red;text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 										</tr>
 									</tbody>
 								</table>
-							</div>
-						</div>
-						<div class='row '>
-							<div class='col col-md-6'>
-								<table class="table table-sm table-striped table-bordered">
-									<caption>Position Offer Statistics</caption>
+							
+								<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">
 									<thead>
-										<tr>
-											<th scope="col" style='text-align:center;'>Queued</th>
-											<th scope="col" style='text-align:center;'>In-progress</th>
-											<th scope="col" style='text-align:center;'>Expired</th>
-										</tr>
+									<tr>
+									<th colspan="3">Position Offer Statistics</th>
+									</tr>
 									</thead>
 									<tbody>
 										<tr>
+											<td scope="col" style='text-align:center;text-transform:Uppercase;background-color:Navy;color:White;'>Queued</td>
+											<td scope="col" style='text-align:center;text-transform:Uppercase;background-color:Green;color:White;'>In-progress</td>
+											<td scope="col" style='text-align:center;text-transform:Uppercase;background-color:Red;color:White;'>Expired</td>
+										</tr>							
+									     <tr>
 											<td scope="row" style='text-align:center;'><%= stats.getOffersQueued() %></td>
 											<td style='text-align:center;'><%= stats.getOffersInProgress() %></td>
 											<td style='text-align:center;'><%= stats.getOffersExpired() %></td>
 										</tr>
 									</tbody>
 								</table>
-							</div>
-						</div>
-					</div>
+							
 					</esd:SecurityAccessRequired>
 					
 					<div class="alert alert-warning" style="text-align:center"><b>****** ACCESS TO INFORMATION PRIVACY NOTICE / WARNING ******</b><br/>

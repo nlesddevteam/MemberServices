@@ -34,7 +34,7 @@ public class DeleteApplicantEducationPostSSRequestHandler implements LoginNotReq
 	    catch(JobOpportunityException e)
 	    {
 	      e.printStackTrace();
-	      request.setAttribute("msg", "Could not delete applicant education support staff.");
+	      request.setAttribute("msgerr", "Could not delete applicant education support staff.");
 	      path = "applicant_registration_step_5_ss.jsp";
 	    }
 	    

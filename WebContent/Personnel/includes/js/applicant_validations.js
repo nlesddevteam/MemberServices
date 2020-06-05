@@ -303,7 +303,7 @@ function checkneweducation() {
 /*******************************************************************************
  * check fields for Step 5 Profile Add Education Post Sec
  *  ******************************************************************************/
-function checkneweducationpost() {
+function checkneweducationpost1() {
 	$("#divmsg").hide();
 	var institution = $("#institution").val();
 	var from_date = $("#from_date").val();
