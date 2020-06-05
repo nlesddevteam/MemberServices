@@ -13,6 +13,7 @@ import java.util.Vector;
 import org.apache.commons.lang.StringUtils;
 
 import com.esdnl.dao.DAOUtils;
+import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.v2.database.availability.EmployeeAvailabilityManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
@@ -97,6 +98,52 @@ public class EmployeeManager {
 		}
 		catch (SQLException e) {
 			System.err.println("EmployeeBean getEmployeeBeanBySIN(String sin): " + e);
+			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return eBean;
+	}
+
+	public static EmployeeBean getEmployeeBeanByApplicantProfile(ApplicantProfileBean profile) throws EmployeeException {
+
+		EmployeeBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_appid(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, profile.getUID());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+					eBean = createEmployeeBean(rs);
+				}
+				else {
+					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("EmployeeBean getEmployeeBeanByApplicantProfile(ApplicantProfileBean profile): " + e);
 			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
 		}
 		finally {
