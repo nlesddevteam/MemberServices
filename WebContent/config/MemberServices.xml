@@ -586,8 +586,15 @@
     <Request-Handler>
       <Request-Handler-Class>com.awsd.strike.handler.ViewDailySchoolStrikeInfoHistoryRequestHandler</Request-Handler-Class>
       <URL-Pattern>/StrikeCentral/viewSchoolStrikeHistory.html</URL-Pattern>
+    </Request-Handler>    
+    <Request-Handler>
+      <Request-Handler-Class>com.awsd.travel.handler.GetTravelClaimPDItemAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Travel/getPDClaimEventDetails.html</URL-Pattern>
     </Request-Handler>
-    
+    <Request-Handler>
+      <Request-Handler-Class>com.awsd.travel.handler.SupervisorViewPreviousClaimsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Travel/viewPreviousApproved.html</URL-Pattern>
+    </Request-Handler> 
     <Request-Handler>
       <Request-Handler-Class>com.awsd.travel.handler.ViewTravelClaimSystemRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Travel/viewTravelClaimSystem.html</URL-Pattern>
@@ -3863,10 +3870,10 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.CreateVacantPositionAdAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/ajax/createVacantPositionAd.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
+    </Request-Handler>     
+     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AddApplicantLetterAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/ajax/addApplicantLetter.html</URL-Pattern>
-    </Request-Handler>                                                                                                                
+    </Request-Handler>                                                                                                         
   </Request-Handlers>
 </Member-Services-Config>
