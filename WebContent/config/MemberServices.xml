@@ -3837,6 +3837,10 @@
       <URL-Pattern>/Personnel/reopenCompetition.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.RepostCompetitionRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/repostCompetition.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewPostTransferRoundSettingsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewPTRSettings.html</URL-Pattern>
     </Request-Handler>

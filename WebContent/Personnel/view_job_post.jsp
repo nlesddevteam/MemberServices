@@ -223,63 +223,56 @@ function parseAddApplicantResponse(data){
 	</div>
 
 
-	<!-- ADMINISTRATIVE FUNCTIONS -->
-		                             
-<div class="no-print" align="center">
-                    
-                <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">	                                       
-		             <%if(opp != null){%>
-				     <a href='#' title='Print this page (pre-formatted)' class="btn btn-xs btn-primary" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a>
-		             <% } %>			                                					
-                </esd:SecurityAccessRequired>                               				
-                                       
-                <%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
-	           <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">	                                         					
-		       		<a class="btn btn-xs btn-primary" href='viewJobInterviewGuide.html?comp_num=<%=request.getParameter("comp_num")%>'>View/Set Interview Guide</a>
-		       </esd:SecurityAccessRequired>
-               <% } %>
-                                         				
-				<%if(!opp.isCandidateListPrivate() || usr.checkPermission("PERSONNEL-ADMIN-VIEW-PRIVATE-CANDIDATE-LIST")){ %>
-					<%if(!(opp.getJobType().equal(JobTypeConstant.LEADERSHIP) && usr.checkRole("SENIOR EDUCATION OFFICIER")) || usr.checkRole("JOB APPS - VIEW PRIVATE")){ %>
-  				    <a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>
-  				
- 				<%}%>
- 				<% if(opp.getJobType().equal(JobTypeConstant.POOL)) { %>
- 					<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewPoolHighlyRecommendedList.html?comp_num=<%=request.getParameter("comp_num")%>'>View Highly Recommended</a>
- 				<% } %>
- 			<%}%>
-                                          			
-       		<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
-        		<%if(usr.checkPermission("PERSONNEL-ADMIN-ADVANCED") || ((ad != null) && ad.isUnadvertised() && ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().equals(usr.getPersonnel()))){%>
-          			<a data-toggle="modal" data-target="#add_applicant_dialog" id="btn_show_add_applicant_dialog" class="btn btn-xs btn-success" href="#" onclick="return false;">Add Applicant</a>
-          		<%}%>
-			<%}%>
-		                            						
-		    <%if((rec != null)&& (rec.length > 0)){%>
-			<a class="btn btn-xs btn-primary"  href='admin_view_job_recommendation_list.jsp?comp_num=<%=request.getParameter("comp_num")%>'>View Recommendation(s)</a>
-			<%}%>
-		    
-		    <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EXTENDED">
-	                                       
-	        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-MODIFY">
-               <% if ((opp != null) && (!opp.isAwarded() && !opp.isClosed())) {%>
-               		<a class="btn btn-xs btn-danger" href="#" data-toggle="modal" data-target="#deletePost">Delete Post</a>               	
-                 	<a class="btn btn-xs btn-info"  href='admin_post_job.jsp?comp_num=<%=request.getParameter("comp_num")%>'>Edit Post</a>
-               <%}%>
-               <%if ((opp != null) && (!opp.isCancelled() && !opp.isAwarded())) {%>
-                 	<a class="btn btn-xs btn-warning" href="#" data-toggle="modal" data-target="#cancelPost">Cancel Post</a>
-               <%}%>
-            </esd:SecurityAccessRequired>
-                                                  
-             
-          </esd:SecurityAccessRequired>
-          
-                     
-          
-          <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
-      
+<!-- ADMINISTRATIVE FUNCTIONS -->
+<div class="no-print" align="center"> 	                                       
+	<%if(opp != null){%>
+		<a href='#' title='Print this page (pre-formatted)' class="btn btn-xs btn-primary" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a>
+	<% } %>			                                					
+	<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
+		<a class="btn btn-xs btn-primary" href='viewJobInterviewGuide.html?comp_num=<%=request.getParameter("comp_num")%>'>View/Set Interview Guide</a>
+	<% } %>
+	                     				
+	                                         				
+	<%if(!opp.isCandidateListPrivate() || usr.checkPermission("PERSONNEL-ADMIN-VIEW-PRIVATE-CANDIDATE-LIST")){ %>
+		<%if(!(opp.getJobType().equal(JobTypeConstant.LEADERSHIP) && usr.checkRole("SENIOR EDUCATION OFFICIER")) || usr.checkRole("JOB APPS - VIEW PRIVATE")){ %>
+			<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>		
+	 	<%}%>
+	 	<% if(opp.getJobType().equal(JobTypeConstant.POOL)) { %>
+	 		<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewPoolHighlyRecommendedList.html?comp_num=<%=request.getParameter("comp_num")%>'>View Highly Recommended</a>
+	 	<% } %>
+	<%}%>
+	                                          			
+	<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
+		<%if(usr.checkPermission("PERSONNEL-ADMIN-ADVANCED") || ((ad != null) && ad.isUnadvertised() && ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().equals(usr.getPersonnel()))){%>
+			<a data-toggle="modal" data-target="#add_applicant_dialog" id="btn_show_add_applicant_dialog" class="btn btn-xs btn-success" href="#" onclick="return false;">Add Applicant</a>
+	  <%}%>
+	<%}%>
+			                            						
+	<%if((rec != null)&& (rec.length > 0)){%>
+		<a class="btn btn-xs btn-primary"  href='admin_view_job_recommendation_list.jsp?comp_num=<%=request.getParameter("comp_num")%>'>View Recommendation(s)</a>
+	<%}%>
+			    
+	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EXTENDED">                               
+		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-MODIFY">
+	  	<% if ((opp != null) && (!opp.isAwarded() && !opp.isClosed())) {%>
+	    	<a class="btn btn-xs btn-danger" href="#" data-toggle="modal" data-target="#deletePost">Delete Post</a>               	
+	      <a class="btn btn-xs btn-info"  href='admin_post_job.jsp?comp_num=<%=request.getParameter("comp_num")%>'>Edit Post</a>
+	    <%}%>
+	    <%if ((opp != null) && (!opp.isCancelled() && !opp.isAwarded())) {%>
+	    	<a class="btn btn-xs btn-warning" href="#" data-toggle="modal" data-target="#cancelPost">Cancel Post</a>
+	    <%}%>
+		</esd:SecurityAccessRequired>            
+	</esd:SecurityAccessRequired>
+	
+	<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
+		<% if((opp != null) && !opp.isAwarded() && !opp.isCancelled() && opp.isClosed()) { %>
+			<a class="btn btn-xs btn-primary" onclick="return confirm('Are you sure you want to RE-POST this competition?');" href='repostCompetition.html?comp_num=<%=opp.getCompetitionNumber()%>'>Re-Post Competition</a>
+		<% } %>
+	</esd:SecurityAccessRequired>
+	          
+	<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>     
 </div>                               
-    <br/>                    
+                  
 <!-- Add Job Applicant Modal Revised for Bootstrap ----------------------------------------------------------------->
 <div id="add_applicant_dialog" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -314,7 +307,6 @@ function parseAddApplicantResponse(data){
 
   </div>
 </div>
-
 
 <!-- Modal for Delete Post ------------------------------------------------------------------------------------>
 <div id="deletePost" class="modal fade" role="dialog">
