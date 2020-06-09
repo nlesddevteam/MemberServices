@@ -42,10 +42,18 @@
   
 	User usr = (User)session.getAttribute("usr");
   
-  Calendar rec_search_cal = Calendar.getInstance();
-  rec_search_cal.clear();
-  rec_search_cal.set(2015, Calendar.JUNE, 1);
-  Date rec_search_date = rec_search_cal.getTime();
+	Calendar cal = Calendar.getInstance();
+  cal.clear(Calendar.HOUR_OF_DAY);
+  cal.clear(Calendar.MINUTE);
+  cal.clear(Calendar.SECOND);
+  cal.clear(Calendar.MILLISECOND);
+  if(cal.get(Calendar.MONTH) < Calendar.MAY) {
+  	cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
+  }
+  cal.set(Calendar.MONTH, Calendar.MAY);
+  cal.set(Calendar.DAY_OF_MONTH, 1);
+  
+  Date rec_search_date = cal.getTime();
   
   int totalapplicants = 0;
   int totalregion = 0;
