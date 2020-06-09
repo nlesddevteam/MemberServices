@@ -43,6 +43,21 @@
   int statusi=0;
   int regionNum=0;
   TreeMap<String, ApplicantProfileBean> all_applicants = new TreeMap<String, ApplicantProfileBean>();   
+  
+  Calendar cal = Calendar.getInstance();
+  cal.clear(Calendar.HOUR_OF_DAY);
+  cal.clear(Calendar.MINUTE);
+  cal.clear(Calendar.SECOND);
+  cal.clear(Calendar.MILLISECOND);
+  
+
+  if(cal.get(Calendar.MONTH) < Calendar.MAY) {
+  	cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
+  }
+  cal.set(Calendar.MONTH, Calendar.MAY);
+  cal.set(Calendar.DAY_OF_MONTH, 1);
+  
+  Date positionAcceptanceCutOffDate = cal.getTime();
 %>
 
 
@@ -169,8 +184,9 @@ input {
 								cssText = "No Position";
 								position = null;
 								rec = app.getMostRecentAcceptedRecommendation();
+								
 								try {
-									if (rec != null) {
+									if (rec != null && rec.getOfferAcceptedDate().after(positionAcceptanceCutOffDate)) {
 										if (rec.getJob().getJobType().equal(JobTypeConstant.REGULAR)) {
 											if (rec.getTotalUnits() < 1.0) {
 												cssClass = "PermanentPartTimePosition";
