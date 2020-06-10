@@ -17,8 +17,8 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 public class RequestToHireManager {
-	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924,2008,482,8));
-	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427,7,4007,285));
+	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924,2008,482));
+	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427,4007,285));
 	
 	public static RequestToHireBean addRequestToHireBean(RequestToHireBean abean) throws JobOpportunityException {
 

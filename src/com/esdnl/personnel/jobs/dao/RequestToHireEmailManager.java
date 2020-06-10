@@ -17,8 +17,8 @@ import com.esdnl.personnel.jobs.constants.RequestToHireStatus;
 import com.esdnl.velocity.VelocityUtils;
 
 public class RequestToHireEmailManager {
-	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924,2008,482,8));
-	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427,4007,285,7));
+	public static ArrayList<Integer> vistaschools = new ArrayList<>(Arrays.asList(231,232,234,235,237,240,242,243,246,428,430,431,471,924,2008,482));
+	public static ArrayList<Integer> burinschools = new ArrayList<>(Arrays.asList(209,213,214,218,219,220,223,224,225,226,228,229,427,4007,285));
 	public static void sendRequestToHireEmail(RequestToHireBean rbean, User usr, boolean resend){
 		//first check zone
 		int zoneid;
