@@ -95,6 +95,7 @@ $(document).ready(function() {
 				<th class="listdata">Cell Phone</th>
 				<th class="listdata">DL Number</th>
 				<th class="listdata">DL Class</th>
+				<th class="listdata">DL Expiry</th>
 				<th class="listdata">DA Run Date</th>
 				<th class="listdata">DA Convictions</th>
 				<th class="listdata">DA Suspensions</th>
@@ -102,6 +103,7 @@ $(document).ready(function() {
 				<th class="listdata">FA Expiry Date</th>
 				<th class="listdata">PCC Date</th>
 				<th class="listdata">SCA Date</th>
+				<th class="listdata">PRCVSQ Date</th>
 				<th class="listdata">Findings of Guilt</th>
 				<th class="listdata">DL Front</th>
 				<th class="listdata">DL Back</th>
@@ -137,7 +139,8 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.homePhone}</td>
 	      					<td class="field_content">${rule.cellPhone}</td>
 	      					<td class="field_content">${rule.dlNumber}</td>
-	      					<td class="field_content">${rule.dlClassText}</td>	      					
+	      					<td class="field_content">${rule.dlClassText}</td>
+	      					<td class="field_content">${rule.dlExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.daRunDate}</td>
 	      					<td class="field_content">${rule.daConvictions}</td>
 	      					<td class="field_content">${rule.daSuspensions}</td>
@@ -145,6 +148,7 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.faExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.pccDateFormatted}</td>
 	      					<td class="field_content">${rule.scaDateFormatted}</td>
+	      					<td class="field_content">${rule.prcvsqDateFormatted}</td>
 	      					<td class="field_content">${rule.findingsOfGuilt}</td>
 	      					<td class="field_content">${rule.dlFront}</td>
 	      					<td class="field_content">${rule.dlBack}</td>
