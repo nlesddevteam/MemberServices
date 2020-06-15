@@ -44,7 +44,7 @@
   Collection<ApplicantPositionOfferBean> emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile); 
   Map<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   Collection<InterviewSummaryBean> interviewSummaries = InterviewSummaryManager.getInterviewSummaryBeans(profile);
-  interviewSummaries = interviewSummaries.stream().filter(isb -> isb.getCompetition().getJobAwardedDate() != null).collect(Collectors.toList());
+  interviewSummaries = interviewSummaries.stream().filter(isb -> isb.getCompetition().getJobAwardedDate() != null && !isb.getCompetition().isUnadvertise()).collect(Collectors.toList());
   
   EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(profile);
   
