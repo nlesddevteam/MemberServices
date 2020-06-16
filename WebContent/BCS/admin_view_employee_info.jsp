@@ -93,7 +93,7 @@ $(document).ready(function() {
 	      	    }
 				if(!($("#hidrc").val() == 0)){
 					$("#contractor").val($("#hidrc").val());
-					$('#contractor').attr("disabled", true);
+					//$('#contractor').attr("disabled", true);
 	      	    }
 				$("#dlexpirydate").change(function(){
 					checkdate('DLEXP');
