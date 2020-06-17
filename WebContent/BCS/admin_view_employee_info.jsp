@@ -349,6 +349,22 @@ $(document).ready(function() {
 		        <input class="form-control" id="dlnumber" name="dlnumber" type="text" placeholder="Enter Driver Licence Number" value="${employee.dlNumber}">
 		      </div>
 		    </div>
+		    <div class="form-group">
+				<label class="control-label col-sm-3" for="email"></label>
+		      	<div class="col-sm-5">
+		      		<div class="row">
+		      			<div class="col-sm-5">
+		        			<button type='button' onclick="checkdl()">Check Licence Number</button>
+		        		</div>
+		        		<div class="col-sm-5">
+		        			<div  id="dlvalid" style="display:none;">
+  								<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
+							</div>
+		        		</div>
+		        	</div>
+		        </div>
+
+		    </div>
 	        <div class="form-group">
 	                <label class="control-label col-sm-3" for="email">Expiry Date:</label> 
 	                <div class="col-sm-5">

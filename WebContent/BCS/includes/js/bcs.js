@@ -6632,3 +6632,49 @@ function adjustServiceTime(){
 	}
 	$("#continuousservice").val(stime);
 }
+function checkdl(){
+	if ($("#dlnumber").val() == "") {
+		$('#display_error_message_top').text(
+				"Please enter Driver Licence Number").css(
+				"display", "block").delay(6000).fadeOut();
+		return false;
+	}
+	var requestd = new FormData();
+	requestd.append('dlnumber', $("#dlnumber").val());
+	$.ajax({
+		url : 'checkDriverLicence.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTORSTATUS').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "Valid Number") {
+							$("#dlvalid").show();
+							$('#dlspan').css('background-color', 'green');
+							$("#dlspan").text($(this).find("MESSAGE").text());
+						}else if ($(this).find("MESSAGE").text() == "Duplicate Number") {
+							$("#dlvalid").show();
+							$('#dlspan').css('background-color', 'red');
+							$("#dlspan").text($(this).find("MESSAGE").text());
+						} else {
+							$("#dlvalid").show();
+							$('#dlspan').css('background-color', 'red');
+							$("#dlspan").text($(this).find("MESSAGE").text());
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
