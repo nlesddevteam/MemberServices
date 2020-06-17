@@ -1259,6 +1259,38 @@ public class BussingContractorEmployeeManager {
 		}
 		return abean;
 	}
+	public static boolean checkEmployeeDLNumber(String dlnumber)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		boolean check=false;
+		ResultSet rs = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.check_dl_number(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2,dlnumber);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				check=true;
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("boolean checkEmployeeDLNumber(String dlnumber) " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return check;
+	}	
 	public static BussingContractorEmployeeBean createBussingContractorEmployeeBeanFull(ResultSet rs)  {
 		//new function that will replace old one once all queries have been updated with full data being returned in one query
 		BussingContractorEmployeeBean abean = null;

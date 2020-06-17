@@ -1655,19 +1655,16 @@ function addNewEmployee(usert) {
 							}
 
 						} else {
-							$("#body_error_message_bottom").text(
-									$(this).find("MESSAGE").text()).delay(6000)
-									.fadeOut();
-							;
+							
+							$("#display_success_message_bottom").text($(this).find("MESSAGE").text()).css("display",
+							"block");
 
 						}
 
 					});
 		},
 		error : function(xhr, textStatus, error) {
-			$("#body_errorm_essage_bottom").html(error).css("display", "block")
-					.delay(6000).fadeOut();
-
+			$("#body_errorm_essage_bottom").html(error).css("display", "block");
 		},
 		dataType : "text",
 		async : false
