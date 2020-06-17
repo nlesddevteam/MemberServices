@@ -1214,7 +1214,7 @@ input {
 									<td><%= isb.getCompetition().getPositionTitle( )%></td>
 									<td><%= sdf_medium.format(isb.getCreated()) %></td>
 									<td><a class="btn btn-xs btn-primary"
-										href="/MemberServices/Personnel/applicantViewCompetitionInterviewSummary.html?id=<%= isb.getInterviewSummaryId() %>" target="_blank">VIEW</a></td>
+										href="/MemberServices/Personnel/applicantViewCompetitionInterviewSummary.html?id=<%= isb.getInterviewSummaryId() %>">VIEW</a></td>
 								</tr>
 							<% } %>
 						</tbody>
@@ -1250,8 +1250,7 @@ input {
 									<td><%= j.getCompetitionNumber() %></td>
 									<td><%= j.getPositionTitle( )%></td>
 									<td><%= j.getJobLocation() %></td>
-									<td><a href="" class="btn btn-xs btn-primary showModal"
-										data-href="/employment/view_job_post.jsp?comp_num=<%=j.getCompetitionNumber()%>">VIEW</a></td>
+									<td><a href="/employment/view_job_post.jsp?comp_num=<%=j.getCompetitionNumber()%>" class="btn btn-xs btn-primary ">VIEW</a></td>
 								</tr>
 							<% } %>
 						</tbody>
@@ -1292,8 +1291,7 @@ input {
 								<td><%=jobs[i].getCompetitionNumber()%></td>
 								<td><%=jobs[i].getPositionTitle()%></td>
 								<td><%=jobs[i].getFormatedCompetitionEndDate()%></td>
-								<td><a href="" class="btn btn-xs btn-primary showModal"
-									data-href="/employment/view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>">VIEW</a></td>
+								<td><a class="btn btn-xs btn-primary" href="/employment/view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>">VIEW</a></td>
 							</tr>
 							<%
 								}

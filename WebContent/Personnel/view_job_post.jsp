@@ -272,7 +272,7 @@ function parseAddApplicantResponse(data){
 	          
 	<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>     
 </div>                               
-                  
+                 <br/><br/> 
 <!-- Add Job Applicant Modal Revised for Bootstrap ----------------------------------------------------------------->
 <div id="add_applicant_dialog" class="modal fade" role="dialog">
   <div class="modal-dialog">

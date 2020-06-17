@@ -1378,7 +1378,9 @@ input {
                                      <% }} %>
                                      
                                    <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>  
+                                   <br/><br/>
                        </div>
+
 
   </esd:SecurityAccessRequired>                         
    <form id="frmverify">
