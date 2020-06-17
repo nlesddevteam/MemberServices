@@ -56,7 +56,7 @@ public class AddNewContractorEmployeeAdminRequestHandler extends RequestHandlerI
 			try {
 				//check to see if it is a driver position and if the dl number not in use
 				if(form.getInt("employeeposition") == 20 && BussingContractorEmployeeManager.checkEmployeeDLNumber(form.get("dlnumber"))) {
-					message="Employee record on file with identical Driver License Number";
+					message="Employee record on file with identical Driver Licence Number";
 				}else {
 					BussingContractorBean bcbean = null;
 					if(form.exists("contractor")){
