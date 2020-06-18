@@ -194,6 +194,14 @@ public class AddNLESDGuideReferenceCheckRequestHandler extends RequestHandlerImp
 				else {
 					NLESDReferenceGuideManager.updateNLESDReferenceGuideBean(ref);
 				}
+				
+				//add one final check to see if a principal is adding reequest through member services and they
+				//have a pending request for the applicant
+				if(!(form.exists("arefreqid")) && !(form.exists("mancheck")) && !(form.exists("refreqid"))) {
+					//reference completed using search on the form
+					ApplicantRefRequestManager.updateRefRequestNoLink(ref.getId(), "G", "Reference Completed", usr.getPersonnel().getEmailAddress().toUpperCase() , ref.getProfile().getSIN());
+				}
+				
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());
 				request.setAttribute("msg", "Reference submitted successfully. Thank you!");

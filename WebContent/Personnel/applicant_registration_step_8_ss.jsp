@@ -82,11 +82,10 @@
     	//send ajax
     	var reftype=null;
     	reftype=$('select[name=selType]').val();
-        
-    	
-    	
-		
-    	$.ajax(
+    	if(reftype == '-1'){
+    		reftype="S";
+    	}
+        $.ajax(
      				{
      					type: "POST",  
      					url: "sendApplicantRefRequest.html",

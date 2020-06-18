@@ -278,6 +278,60 @@ public class ApplicantRefRequestManager {
 			catch (Exception e) {}
 		}
 
+	}
+	public static void deleteReferenceRequestBySupervisor(int sid){
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.PERSONNEL_JOBS_PKG.delete_ref_request_by_sid(?); end;");
+			stat.setInt(1, sid );
+			stat.execute();
+					}
+		catch (Exception e) {
+			System.err.println("deleteReferenceRequestBySupervisor(int sid) " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+	}
+	public static void updateRefRequestNoLink(int rid,String rtype, String rstatus, String emaila, String aid){
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.PERSONNEL_JOBS_PKG.update_ref_request_no_link(?,?,?,?,?); end;");
+			stat.setInt(1, rid );
+			stat.setString(2, rtype );
+			stat.setString(3, rstatus );
+			stat.setString(4, emaila );
+			stat.setString(5, aid );
+			stat.execute();
+					}
+		catch (Exception e) {
+			System.err.println("void updateRefRequestNoLink(int rid,String rtype, String rstatus, String emaila, String aid) " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
 	}	
 	public static ApplicantRefRequestBean createApplicantRefRequestBean(ResultSet rs,boolean extra) {
 
