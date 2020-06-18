@@ -39,62 +39,79 @@
 		</script>
 		
 	</head>
-	
-	<body>
-    <div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success">   
-	               	<div class="panel-heading"><b>${guide.title} for ${guide.schoolYear}</b></div>
-      			 	<div class="panel-body">
-  					Rank each answer from ${guide.ratingScaleBottom} to ${guide.ratingScaleTop}, with ${guide.ratingScaleTop} being outstanding. 			
-							                                 
-       <div class="table-responsive">
-       			<c:if test="${param.vji ne 'readOnly'}">	
-      								<div style="float:right;padding-top:5px;padding-bottom:5px;">   											
-					
-					
-	     								<form id='frm-interview-guide' action="" method="post">	
-	     								    <a class="btn btn-xs btn-info" href="javascript:history.go(-1);">Back to List</a>		     							
-		                                    <a class="btn btn-xs btn-primary" href="editInterviewGuide.html?guideId=${guide.guideId}">Edit</a>
-		                                    <a class="btn btn-xs btn-danger" id="btn-delete">Delete</a>
-											<c:choose>										
-		    									<c:when test="${guide.activeList == true}">
-		       										<button type="button" id='btn-deactivelist' class="btn btn-xs btn-warning">Deactivate List</button>
-		    									</c:when>
-		    									<c:otherwise>
-		        									<button type="button" id='btn-activelist' class="btn btn-xs btn-success">Activate List</button>
-		    									</c:otherwise>	    								
-											</c:choose> 
-										</form>	
-										
-				
-										
-										
-                            		</div>
-              </c:if>      
-      							<table id='interview-guide-list' class="table table-condensed table-striped" style="font-size:12px;background-color:#FFFFFF;">
-								    <thead>
-								      <tr style="border-top:1px solid grey;">
-								        <th width='5%'>#</th>
-								        <th width='85%'>QUESTION/COMPETENCY</th>
-								        <th width='10%'>WEIGHT</th>	
-								      </tr>
-								    </thead>
-								    <tbody>
-									    <c:forEach items="${guide.questions}" var='q' varStatus='status'>
-		     								<tr> 	     								
-		     									<td>${status.index + 1}.</td>	
-										        <td>${q.question}</td>										        
-												<td>${q.weight}</td>											
-											</tr>
-	     								</c:forEach>  
-								       <tr><td colspan="3" style="border-top:1px solid grey;"></td></tr>   
-								    </tbody>
-						  		</table>
-		
-		<c:if test="${param.vji eq 'readOnly'}">
-		<div align="center"><a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a></div>
-		</c:if>
+
+<body>
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<b>${guide.title} for ${guide.schoolYear}</b>
+			</div>
+			<div class="panel-body">
+				Rank each answer from ${guide.ratingScaleBottom} to
+				${guide.ratingScaleTop}, with ${guide.ratingScaleTop} being
+				outstanding.
+
+				<div class="table-responsive">
+					<c:if test="${param.vji ne 'readOnly'}">
+						<div style="float: right; padding-top: 5px; padding-bottom: 5px;">
+							<form id='frm-interview-guide' action="" method="post">
+								<a class="btn btn-xs btn-info" href="javascript:history.go(-1);">Back to List</a> 
+								<c:if test="${guide.interviewSummaryCount le 0}">
+									<a class="btn btn-xs btn-primary" href="editInterviewGuide.html?guideId=${guide.guideId}">Edit</a>
+									<a class="btn btn-xs btn-danger" id="btn-delete">Delete</a>
+								</c:if>
+								<c:choose>
+									<c:when test="${guide.activeList == true}">
+										<button type="button" id='btn-deactivelist'
+											class="btn btn-xs btn-warning">Deactivate List</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" id='btn-activelist'
+											class="btn btn-xs btn-success">Activate List</button>
+									</c:otherwise>
+								</c:choose>
+							</form>
+						</div>
+						<div style='clear:both;'></div>
+					</c:if>
+					<c:if test="${guide.interviewSummaryCount gt 0}">
+						<div class="alert alert-success">
+							<b>${guide.interviewSummaryCount}</b> interviews associated with this guide, and cannot be editied or deleted.
+						</div>
+					</c:if>
+					<table id='interview-guide-list'
+						class="table table-condensed table-striped"
+						style="font-size: 12px; background-color: #FFFFFF;">
+						<thead>
+							<tr style="border-top: 1px solid grey;">
+								<th width='5%'>#</th>
+								<th width='85%'>QUESTION/COMPETENCY</th>
+								<th width='10%'>WEIGHT</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${guide.questions}" var='q' varStatus='status'>
+								<tr>
+									<td>${status.index + 1}.</td>
+									<td>${q.question}</td>
+									<td>${q.weight}</td>
+								</tr>
+							</c:forEach>
+							<tr>
+								<td colspan="3" style="border-top: 1px solid grey;"></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<c:if test="${param.vji eq 'readOnly'}">
+						<div align="center">
+							<a class="btn btn-xs btn-danger"
+								href="javascript:history.go(-1);">Back</a>
+						</div>
+					</c:if>
+				</div>
+			</div>
 		</div>
-                        
-	</body>
+	</div>
+</body>
 </html>

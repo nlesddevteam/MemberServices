@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.InterviewGuideBean;
 import com.esdnl.personnel.jobs.bean.InterviewGuideQuestionBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class InterviewGuideManager {
 
@@ -33,7 +33,7 @@ public class InterviewGuideManager {
 			stat.setString(2, abean.getTitle());
 			stat.setInt(3, abean.getRatingScaleBottom());
 			stat.setInt(4, abean.getRatingScaleTop());
-			stat.setString(5,abean.getSchoolYear());
+			stat.setString(5, abean.getSchoolYear());
 			stat.setBoolean(6, abean.getActiveList());
 			stat.setString(7, abean.getGuideType());
 
@@ -105,9 +105,9 @@ public class InterviewGuideManager {
 			stat.setString(2, abean.getTitle());
 			stat.setInt(3, abean.getRatingScaleBottom());
 			stat.setInt(4, abean.getRatingScaleTop());
-			stat.setString(5,abean.getSchoolYear());
+			stat.setString(5, abean.getSchoolYear());
 			stat.setBoolean(6, abean.getActiveList());
-			stat.setString(7,abean.getGuideType());
+			stat.setString(7, abean.getGuideType());
 			stat.execute();
 			stat.close();
 
@@ -412,6 +412,14 @@ public class InterviewGuideManager {
 			abean.setSchoolYear(rs.getString("schoolyear"));
 			abean.setActiveList(rs.getBoolean("active"));
 			abean.setGuideType(rs.getString("GUIDE_TYPE"));
+
+			//interview count might not be available.
+			try {
+				abean.setInterviewSummaryCount(rs.getInt("interview_count"));
+			}
+			catch (SQLException e) {
+				abean.setInterviewSummaryCount(0);
+			}
 		}
 		catch (Exception e) {
 			abean = null;
@@ -437,7 +445,7 @@ public class InterviewGuideManager {
 
 		return abean;
 	}
-	
+
 	public static Collection<InterviewGuideBean> getActiveInterviewGuideBeans() throws JobOpportunityException {
 
 		Collection<InterviewGuideBean> guides = null;
@@ -461,7 +469,7 @@ public class InterviewGuideManager {
 					guide.setNumberOfQuestions(rs.getInt("qcount"));
 					guides.add(guide);
 				}
-				
+
 			}
 		}
 		catch (SQLException e) {
@@ -485,7 +493,9 @@ public class InterviewGuideManager {
 
 		return guides;
 	}
-	public static Collection<InterviewGuideBean> getActiveInterviewGuideBeansByType(String stype) throws JobOpportunityException {
+
+	public static Collection<InterviewGuideBean> getActiveInterviewGuideBeansByType(String stype)
+			throws JobOpportunityException {
 
 		Collection<InterviewGuideBean> guides = null;
 		InterviewGuideBean guide = null;
@@ -509,7 +519,7 @@ public class InterviewGuideManager {
 					guide.setNumberOfQuestions(rs.getInt("qcount"));
 					guides.add(guide);
 				}
-				
+
 			}
 		}
 		catch (SQLException e) {
@@ -533,7 +543,7 @@ public class InterviewGuideManager {
 
 		return guides;
 	}
-	
+
 	public static Collection<InterviewGuideBean> getInactiveInterviewGuideBeans() throws JobOpportunityException {
 
 		Collection<InterviewGuideBean> guides = null;
@@ -557,7 +567,7 @@ public class InterviewGuideManager {
 					guide.setNumberOfQuestions(rs.getInt("qcount"));
 					guides.add(guide);
 				}
-				
+
 			}
 		}
 		catch (SQLException e) {
@@ -581,7 +591,9 @@ public class InterviewGuideManager {
 
 		return guides;
 	}
-	public static Collection<InterviewGuideBean> getInactiveInterviewGuideBeansByType(String gtype) throws JobOpportunityException {
+
+	public static Collection<InterviewGuideBean> getInactiveInterviewGuideBeansByType(String gtype)
+			throws JobOpportunityException {
 
 		Collection<InterviewGuideBean> guides = null;
 		InterviewGuideBean guide = null;
@@ -595,7 +607,7 @@ public class InterviewGuideManager {
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_inactive_interview_guide_t(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2,gtype);
+			stat.setString(2, gtype);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
@@ -605,7 +617,7 @@ public class InterviewGuideManager {
 					guide.setNumberOfQuestions(rs.getInt("qcount"));
 					guides.add(guide);
 				}
-				
+
 			}
 		}
 		catch (SQLException e) {
@@ -629,7 +641,5 @@ public class InterviewGuideManager {
 
 		return guides;
 	}
-
-
 
 }

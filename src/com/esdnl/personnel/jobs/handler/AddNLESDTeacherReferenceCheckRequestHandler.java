@@ -3,11 +3,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.awsd.mail.bean.EmailBean;
 import com.esdnl.personnel.jobs.bean.ApplicantEducationOtherBean;
 import com.esdnl.personnel.jobs.bean.ApplicantEsdExperienceBean;
@@ -228,6 +226,13 @@ public class AddNLESDTeacherReferenceCheckRequestHandler extends RequestHandlerI
 				}
 				else {
 					NLESDReferenceTeacherManager.updateNLESDReferenceTeacherBean(ref);
+				}
+				
+				//add one final check to see if a principal is adding reequest through member services and they
+				//have a pending request for the applicant
+				if(!(form.exists("arefreqid")) && !(form.exists("mancheck")) && !(form.exists("refreqid"))) {
+					//reference completed using search on the form
+					ApplicantRefRequestManager.updateRefRequestNoLink(ref.getId(), "T", "Reference Completed", usr.getPersonnel().getEmailAddress().toUpperCase() , ref.getProfile().getSIN());
 				}
 				request.setAttribute("REFERENCE_BEAN", ref);
 				request.setAttribute("PROFILE", ref.getProfile());

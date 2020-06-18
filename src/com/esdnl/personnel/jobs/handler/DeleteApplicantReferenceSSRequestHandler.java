@@ -3,38 +3,46 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.awsd.servlet.LoginNotRequiredRequestHandler;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantSupervisorManager;
-import com.esdnl.util.StringUtils;
-public class DeleteApplicantReferenceSSRequestHandler implements LoginNotRequiredRequestHandler {
-
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.PersonnelApplicationRequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
+public class DeleteApplicantReferenceSSRequestHandler extends PersonnelApplicationRequestHandlerImpl 
+{
+	public DeleteApplicantReferenceSSRequestHandler() {
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("del", "ID required for deletion")
+		});
+	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-				IOException {
+			IOException {
 
+		super.handleRequest(request, response);
 		String path;
-		try {
-
-			String id = request.getParameter("del");
-
-			if (StringUtils.isEmpty(id)) {
-				request.setAttribute("msg", "ID required for deletion.");
-				path = "applicant_registration_step_8_ss.jsp";
-			}
-			else {
+		if (validate_form()) {
+			try {
+				String id = request.getParameter("del");
+				//delete the supervisor
 				ApplicantSupervisorManager.deleteApplicantSupervisorBean(Integer.parseInt(id));
-
+				//delete any linked ref requests
+				ApplicantRefRequestManager.deleteReferenceRequestBySupervisor(Integer.parseInt(id));
 				request.setAttribute("msg", "Reference successfully deleted.");
 				path = "applicant_registration_step_8_ss.jsp";
 			}
-
-		}
-		catch (JobOpportunityException e) {
-			e.printStackTrace();
-			request.setAttribute("msg", "Could not reference.");
+			catch (JobOpportunityException e) {
+				e.printStackTrace();
+				request.setAttribute("msg", "Could not reference.");
+				path = "applicant_registration_step_8_ss.jsp";
+			}
+		}else {
+			request.setAttribute("errmsg", this.validator.getErrorString());
 			path = "applicant_registration_step_8_ss.jsp";
 		}
+
 
 		return path;
 	}

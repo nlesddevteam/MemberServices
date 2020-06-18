@@ -118,6 +118,10 @@ input {border:1px solid silver;}
         		reftype="E";
         	}else{
         		reftype=$('select[name=selType]').val();
+        		if(reftype == "-1"){
+        			//default to teaching
+        			reftype='T';
+        		}
         	}
     	}
     	
