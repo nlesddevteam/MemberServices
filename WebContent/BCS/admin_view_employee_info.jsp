@@ -774,7 +774,7 @@ $(document).ready(function() {
 		      	<br />
 		      		<div class="alert alert-danger" id="employeeerrormessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     				<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
-		      	<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="checkemployee('A','Y');">Update Employee</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      	<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdateemployee('A','Y');">Update Employee</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        <c:if test = "${employee.status != 2 && employee.status != 0}">
 		        	<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         				<button type="button" class="btn btn-xs btn-success" onclick="openApproveEmp();">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

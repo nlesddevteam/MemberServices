@@ -666,7 +666,7 @@ $(document).ready(function() {
     				<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>	      	
 		      	
 		      	
-		        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="checkemployee('U','Y');">Update Employee</button>
+		        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdateemployee('U','Y');">Update Employee</button>
 		      </div>
 		    </div>
 			 
