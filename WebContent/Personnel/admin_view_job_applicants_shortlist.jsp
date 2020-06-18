@@ -43,7 +43,8 @@
   
   InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);
   
-  Map<String, ArrayList<InterviewSummaryBean>> interviewSummaryMap = InterviewSummaryManager.getInterviewSummaryBeansMapByShortlist(job);
+  Map<String, ArrayList<InterviewSummaryBean>> interviewSummaryMap = (job.getJobType().equals(JobTypeConstant.TLA_REGULAR) || job.getJobType().equals(JobTypeConstant.TLA_REPLACEMENT)) 
+  		? InterviewSummaryManager.getTLAInterviewSummaryBeansMapByShortlist(job) : InterviewSummaryManager.getInterviewSummaryBeansMapByShortlist(job);
   
   Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {

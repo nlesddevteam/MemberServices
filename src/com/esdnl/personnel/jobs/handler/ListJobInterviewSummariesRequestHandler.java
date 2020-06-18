@@ -1,14 +1,18 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.InterviewSummaryBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.InterviewSummaryManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
@@ -46,13 +50,23 @@ public class ListJobInterviewSummariesRequestHandler extends RequestHandlerImpl 
 				if (profile != null && job != null) {
 					request.setAttribute("profile", profile);
 					request.setAttribute("job", job);
-					request.setAttribute("summaries", InterviewSummaryManager.getInterviewSummaryBeans(profile));
+
+					Collection<InterviewSummaryBean> isb = InterviewSummaryManager.getInterviewSummaryBeans(profile);
+
+					if (job.getJobType().equals(JobTypeConstant.TLA_REGULAR)
+							|| job.getJobType().equals(JobTypeConstant.TLA_REGULAR)) {
+						isb = isb.stream().filter(s -> s.getCompetition().getJobType().equals(JobTypeConstant.TLA_REGULAR)
+								|| s.getCompetition().getJobType().equals(JobTypeConstant.TLA_REPLACEMENT)).collect(
+										Collectors.toList());
+					}
+
+					request.setAttribute("summaries", isb);
 
 					path = "admin_list_job_interview_summaries.jsp";
 				}
 				else {
-					request.setAttribute("msg",
-							"Applicant [id=" + form.get("id") + "] and/or Competition[" + form.get("comp_num") + "] cannot be found.");
+					request.setAttribute("msg", "Applicant [id=" + form.get("id") + "] and/or Competition[" + form.get("comp_num")
+							+ "] cannot be found.");
 
 					path = "admin_index.jsp";
 				}

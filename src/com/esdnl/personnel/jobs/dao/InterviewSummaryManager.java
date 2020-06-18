@@ -9,9 +9,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.InterviewSummaryBean;
@@ -19,9 +16,13 @@ import com.esdnl.personnel.jobs.bean.InterviewSummaryScoreBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
 public class InterviewSummaryManager {
 
-	public static InterviewSummaryBean addInterviewSummaryBean(InterviewSummaryBean abean) throws JobOpportunityException {
+	public static InterviewSummaryBean addInterviewSummaryBean(InterviewSummaryBean abean)
+			throws JobOpportunityException {
 
 		Connection con = null;
 		CallableStatement stat = null;
@@ -48,7 +49,8 @@ public class InterviewSummaryManager {
 			if (id > 0) {
 				abean.setInterviewSummaryId(id);
 
-				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_interview_summary_score(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+				stat = con.prepareCall(
+						"begin ? := awsd_user.personnel_jobs_pkg.add_interview_summary_score(?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 				for (InterviewSummaryScoreBean iss : abean.getInterviewSummaryScoreBeans()) {
 					iss.setInterviewSummaryId(abean.getInterviewSummaryId());
@@ -84,8 +86,8 @@ public class InterviewSummaryManager {
 			}
 			catch (Exception ex) {}
 
-			System.err.println("InterviewSummaryBean InterviewSummaryManager.addInterviewSummaryBean(InterviewSummaryBean abean): "
-					+ e);
+			System.err.println(
+					"InterviewSummaryBean InterviewSummaryManager.addInterviewSummaryBean(InterviewSummaryBean abean): " + e);
 			throw new JobOpportunityException("Can not add InterviewSummaryBean to DB.", e);
 		}
 		finally {
@@ -129,7 +131,8 @@ public class InterviewSummaryManager {
 			stat.execute();
 			stat.close();
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_interview_summary_score(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall(
+					"begin ? := awsd_user.personnel_jobs_pkg.add_interview_summary_score(?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			for (InterviewSummaryScoreBean iss : abean.getInterviewSummaryScoreBeans()) {
 				iss.setInterviewSummaryId(abean.getInterviewSummaryId());
@@ -263,8 +266,8 @@ public class InterviewSummaryManager {
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("InterviewSummaryBean getInterviewSummaryBean(ApplicantProfileBean profile, JobOpportunityBean job): "
-					+ e);
+			System.err.println(
+					"InterviewSummaryBean getInterviewSummaryBean(ApplicantProfileBean profile, JobOpportunityBean job): " + e);
 			throw new JobOpportunityException("Can not extract InterviewSummaryBean from DB.", e);
 		}
 		finally {
@@ -387,8 +390,64 @@ public class InterviewSummaryManager {
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("Collection<InterviewSummaryBean> getInterviewSummaryBeansByShortlist(JobOpportunityBean job): "
-					+ e);
+			System.err.println(
+					"Collection<InterviewSummaryBean> getInterviewSummaryBeansByShortlist(JobOpportunityBean job): " + e);
+			throw new JobOpportunityException("Can not extract InterviewSummaryBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return summaries;
+	}
+
+	public static Collection<InterviewSummaryBean> getTLAInterviewSummaryBeansByShortlist(JobOpportunityBean job)
+			throws JobOpportunityException {
+
+		Collection<InterviewSummaryBean> summaries = null;
+		InterviewSummaryBean summary = null;
+		InterviewSummaryScoreBean summaryScore = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			summaries = new ArrayList<InterviewSummaryBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_tla_interview_sums_sl(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, job.getCompetitionNumber());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				if ((summary == null) || (summary.getInterviewSummaryId() != rs.getInt("summary_id"))) {
+					summary = createInterviewSummaryBean(rs);
+
+					summaries.add(summary);
+				}
+
+				summaryScore = createInterviewSummaryScoreBean(rs);
+				if (summaryScore != null && summaryScore.getInterviewSummaryId() == summary.getInterviewSummaryId()) {
+					summary.addInterviewSummaryScoreBean(summaryScore);
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(
+					"Collection<InterviewSummaryBean> getInterviewSummaryBeansByShortlist(JobOpportunityBean job): " + e);
 			throw new JobOpportunityException("Can not extract InterviewSummaryBean from DB.", e);
 		}
 		finally {
@@ -415,6 +474,22 @@ public class InterviewSummaryManager {
 		Map<String, ArrayList<InterviewSummaryBean>> map = new HashMap<String, ArrayList<InterviewSummaryBean>>();
 
 		for (InterviewSummaryBean isb : getInterviewSummaryBeansByShortlist(job)) {
+			if (!map.containsKey(isb.getCandidate().getUID())) {
+				map.put(isb.getCandidate().getUID(), new ArrayList<InterviewSummaryBean>());
+			}
+
+			((ArrayList<InterviewSummaryBean>) map.get(isb.getCandidate().getUID())).add(isb);
+		}
+
+		return map;
+	}
+
+	public static Map<String, ArrayList<InterviewSummaryBean>> getTLAInterviewSummaryBeansMapByShortlist(JobOpportunityBean job)
+			throws JobOpportunityException {
+
+		Map<String, ArrayList<InterviewSummaryBean>> map = new HashMap<String, ArrayList<InterviewSummaryBean>>();
+
+		for (InterviewSummaryBean isb : getTLAInterviewSummaryBeansByShortlist(job)) {
 			if (!map.containsKey(isb.getCandidate().getUID())) {
 				map.put(isb.getCandidate().getUID(), new ArrayList<InterviewSummaryBean>());
 			}
@@ -459,7 +534,8 @@ public class InterviewSummaryManager {
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("Collection<InterviewSummaryBean> getInterviewSummaryBean(ApplicantProfileBean profile): " + e);
+			System.err.println(
+					"Collection<InterviewSummaryBean> getInterviewSummaryBean(ApplicantProfileBean profile): " + e);
 			throw new JobOpportunityException("Can not extract InterviewSummaryBean from DB.", e);
 		}
 		finally {
@@ -526,8 +602,8 @@ public class InterviewSummaryManager {
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("Collection<InterviewSummaryBean> getPoolInterviewSummaryBeans(ApplicantProfileBean profile): "
-					+ e);
+			System.err.println(
+					"Collection<InterviewSummaryBean> getPoolInterviewSummaryBeans(ApplicantProfileBean profile): " + e);
 			throw new JobOpportunityException("Can not extract InterviewSummaryBean from DB.", e);
 		}
 		finally {
