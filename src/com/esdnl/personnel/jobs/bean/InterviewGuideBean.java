@@ -16,7 +16,7 @@ public class InterviewGuideBean {
 	private boolean activeList;
 	private int numberOfQuestions;
 	private String guideType;
-	
+	private int interviewSummaryCount;
 
 	public InterviewGuideBean() {
 
@@ -25,9 +25,10 @@ public class InterviewGuideBean {
 		this.questions = new ArrayList<InterviewGuideQuestionBean>();
 		this.ratingScaleTop = 5;
 		this.ratingScaleBottom = 1;
-		this.activeList=false;
-		this.schoolYear="";
-		this.numberOfQuestions=0;
+		this.activeList = false;
+		this.schoolYear = "";
+		this.numberOfQuestions = 0;
+		this.interviewSummaryCount = 0;
 	}
 
 	public int getGuideId() {
@@ -118,35 +119,54 @@ public class InterviewGuideBean {
 
 		this.modifiedDate = modifiedDate;
 	}
+
 	public boolean getActiveList() {
+
 		return activeList;
 	}
 
 	public void setActiveList(boolean activeList) {
+
 		this.activeList = activeList;
 	}
 
 	public String getSchoolYear() {
+
 		return schoolYear;
 	}
 
 	public void setSchoolYear(String schoolYear) {
+
 		this.schoolYear = schoolYear;
 	}
 
 	public int getNumberOfQuestions() {
+
 		return numberOfQuestions;
 	}
 
 	public void setNumberOfQuestions(int numberOfQuestions) {
+
 		this.numberOfQuestions = numberOfQuestions;
 	}
 
 	public String getGuideType() {
+
 		return guideType;
 	}
 
 	public void setGuideType(String guideType) {
+
 		this.guideType = guideType;
+	}
+
+	public int getInterviewSummaryCount() {
+
+		return interviewSummaryCount;
+	}
+
+	public void setInterviewSummaryCount(int interviewSummaryCount) {
+
+		this.interviewSummaryCount = interviewSummaryCount;
 	}
 }
