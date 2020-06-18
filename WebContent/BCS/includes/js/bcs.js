@@ -1203,7 +1203,7 @@ function deletevehicledocument(docname, id,trantype) {
 /*******************************************************************************
  * add new/update employee check
  ******************************************************************************/
-function checkemployee(usert,validatedates) {
+function checkemployee(usert,validatedates,bypass) {
 	$("#mainalert").hide();
 	$("#mainalerts").hide();
 	var selected = $("#employeeposition").val();
@@ -1437,7 +1437,9 @@ function checkemployee(usert,validatedates) {
 					"block");
 					$('#documents').tab('show');
 					$("#darundate").focus();
-					showBypassDialog();
+					if(bypass){
+						showBypassDialog();	
+					}
 					return false;
 		}
 		//now we check to see if it falls in the date range
@@ -1450,7 +1452,9 @@ function checkemployee(usert,validatedates) {
 				"block");
 				$('#documents').tab('show');
 				$("#darundate").focus();
-				showBypassDialog();
+				if(bypass){
+					showBypassDialog();	
+				}
 				return false;
 			}
 		}else{
@@ -1462,7 +1466,9 @@ function checkemployee(usert,validatedates) {
 						"block");
 						$('#documents').tab('show');
 						$("#darundate").focus();
-						showBypassDialog();
+						if(bypass){
+							showBypassDialog();	
+						}
 						return false;
 			}
 		}
@@ -1481,7 +1487,9 @@ function checkemployee(usert,validatedates) {
 						"block");
 						$('#documents').tab('show');
 						$("#prvvsqdate").focus();
-						showBypassDialog();
+						if(bypass){
+							showBypassDialog();	
+						}
 						return false;
 			}
 			//now we check to see if it falls in the date range
@@ -1496,7 +1504,9 @@ function checkemployee(usert,validatedates) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
-									showBypassDialog();
+									if(bypass){
+										showBypassDialog();	
+									}
 									return false;
 							
 						}
@@ -1509,7 +1519,9 @@ function checkemployee(usert,validatedates) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
-									showBypassDialog();
+									if(bypass){
+										showBypassDialog();	
+									}
 									return false;
 						}
 					}
@@ -1523,7 +1535,9 @@ function checkemployee(usert,validatedates) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
-									showBypassDialog();
+									if(bypass){
+										showBypassDialog();	
+									}
 									return false;
 						}
 					}else{
@@ -1535,7 +1549,9 @@ function checkemployee(usert,validatedates) {
 									"block");
 									$('#documents').tab('show');
 									$("#prcvsqdate").focus();
-									showBypassDialog();
+									if(bypass){
+										showBypassDialog();	
+									}
 									return false;
 						}
 					}
@@ -1555,7 +1571,9 @@ function checkemployee(usert,validatedates) {
 					"block");
 					$('#documents').tab('show');
 					$("#dlexpirydate").focus();
-					showBypassDialog();
+					if(bypass){
+						showBypassDialog();	
+					}
 					return false;
 		}
 	}
@@ -1570,7 +1588,9 @@ function checkemployee(usert,validatedates) {
 			"block");
 			$('#documents').tab('show');
 			$("#faexpirydate").focus();
-			showBypassDialog();
+			if(bypass){
+				showBypassDialog();	
+			}
 			return false;
 		}
 	}
@@ -1583,7 +1603,9 @@ function checkemployee(usert,validatedates) {
 			"block");
 			$('#documents').tab('show');
 			$("#scadate").focus();
-			showBypassDialog();
+			if(bypass){
+				showBypassDialog();	
+			}
 			return false;
 		}
 	}
@@ -1602,12 +1624,7 @@ function checkemployee(usert,validatedates) {
 	// all good
 	$("#body_error_message_top").css("display", "none");
 	$("#body_error_message_bottom").css("display", "none");
-	// updateCompanyInformation();
-	if ($("#cid").val() <= -1) {
-		addNewEmployee(usert);
-	} else {
-		updateEmployee(usert);
-	}
+	return true;
 }
 /*******************************************************************************
  * Calls ajax post to update/insert company info
@@ -1615,7 +1632,7 @@ function checkemployee(usert,validatedates) {
 function addNewEmployee(usert) {
 	var isvalid = false;
 	var form = $('#contact-form-up')[0]; // You need to use standard
-											// javascript object here
+										// javascript object here
 	var formData = new FormData(form);
 	var poststring = "";
 	if (usert == "A") {
@@ -1821,14 +1838,19 @@ function updateEmployee(usert) {
  * the span id's with correct info
  ******************************************************************************/
 function openApproveEmp() {
-	$("#modaltitle").text("Approve Employee");
-	$("#modaltext")
+	if(checkemployee("A","Y",false)){
+		$("#modaltitle").text("Approve Employee");
+		$("#modaltext")
 			.text(
 					"Are you sure you would like to approve "
 							+ $("#hidfullname").val());
-	$("#trantype").val("A");
-	$("#modalnotes").hide();
-	$('#myModal').modal('show');
+		$("#trantype").val("A");
+		$("#modalnotes").hide();
+		$('#myModal').modal('show');
+	}else{
+		$("#display_error_message_bottom").html("Employee has incomplete information, unable to approve").css("display",
+		"block");
+	}
 }
 function openRejectEmp() {
 	$("#modaltitle").text("Reject Employee");
@@ -1855,11 +1877,13 @@ function approverejectemployee() {
 	var ttype = $('#trantype').val();
 	if (ttype == "A") {
 		approveemployee();
+		
 	} else if (ttype == "R") {
 		rejectemployee();
 	} else if (ttype == "S") {
 		suspendemployee();
 	}
+	$("#display_error_message_bottom").hide();
 }
 /*******************************************************************************
  * Calls ajax post for approve contractor
@@ -6418,7 +6442,8 @@ function showBypassDialog(){
 		// now we add the onclick event
 		$("#buttonleftby").click(function(event) {
 			event.preventDefault();
-			checkemployee('A','N');
+			//checkemployee('A','N',false);
+			addupdateemployee('A','N',false);
 			$('#myModal3').modal('hide');
 
 		});
@@ -6677,4 +6702,14 @@ function checkdl(){
 
 	});
 
+}
+function addupdateemployee(usert,validatedates) {
+	if(checkemployee(usert,validatedates,true)){
+		// updateCompanyInformation();
+		if ($("#cid").val() <= -1) {
+			addNewEmployee(usert);
+		} else {
+			updateEmployee(usert);
+		}
+	}
 }
