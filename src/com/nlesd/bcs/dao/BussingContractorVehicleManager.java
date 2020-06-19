@@ -23,7 +23,8 @@ public class BussingContractorVehicleManager {
 			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_vehicle(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(2, vbean.getvMake() );
-			stat.setInt(3, vbean.getvModel());
+			//stat.setInt(3, vbean.getvModel());
+			stat.setInt(3, vbean.getWheelchairAccessible());
 			stat.setString(4, vbean.getvYear());
 			stat.setString(5, vbean.getvSerialNumber());
 			stat.setString(6, vbean.getvPlateNumber());
@@ -194,7 +195,8 @@ public class BussingContractorVehicleManager {
 			con.setAutoCommit(true);
 			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_vehicle_by_id(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setInt(1, vbean.getvMake() );
-			stat.setInt(2, vbean.getvModel());
+			//stat.setInt(2, vbean.getvModel());
+			stat.setInt(2, vbean.getWheelchairAccessible());
 			stat.setString(3, vbean.getvYear());
 			stat.setString(4, vbean.getvSerialNumber());
 			stat.setString(5, vbean.getvPlateNumber());
@@ -1165,6 +1167,24 @@ public class BussingContractorVehicleManager {
 				abean.setMiscHEInsFile2(rs.getString("MISCHEINSFILE2"));
 				abean.setRegFile(rs.getString("REGFILE"));
 				abean.setInsFile(rs.getString("INSFILE"));
+				//wheelchair accessible: uses orginal vmodel column since no longer needed
+				abean.setWheelchairAccessible(rs.getInt("VMODEL"));
+				//extra fields for automated warning messages
+				try {
+					//using one big query
+					if(rs.getString("COMPANY") !=  null) {
+						abean.setCompanyName(rs.getString("COMPANY"));
+					}else {
+						abean.setCompanyName(rs.getString("CFNAME") + " " + rs.getString("CFNAME"));
+					}
+					
+					abean.setCompanyEmail(rs.getString("CEMAIL"));
+					abean.setWarningNotes(rs.getString("WTYPE"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setCompanyName("");
+					abean.setCompanyEmail("");
+				}
 		}
 		catch (SQLException e) {
 				abean = null;
@@ -1240,6 +1260,25 @@ public class BussingContractorVehicleManager {
 				abean.setMiscHEInsFile2(rs.getString("MISCHEINSFILE2"));
 				abean.setRegFile(rs.getString("REGFILE"));
 				abean.setInsFile(rs.getString("INSFILE"));
+				//wheelchair accessible: uses orginal vmodel column since no longer needed
+				abean.setWheelchairAccessible(rs.getInt("VMODEL"));
+				//extra fields for automated warning messages
+				try {
+					//using one big query
+					if(rs.getString("COMPANY") !=  null) {
+						abean.setCompanyName(rs.getString("COMPANY"));
+					}else {
+						abean.setCompanyName(rs.getString("CFNAME") + " " + rs.getString("CFNAME"));
+					}
+					
+					abean.setCompanyEmail(rs.getString("CEMAIL"));
+					abean.setWarningNotes(rs.getString("WTYPE"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setCompanyName("");
+					abean.setCompanyEmail("");
+					abean.setWarningNotes("No Warning Text");
+				}
 		}
 		catch (SQLException e) {
 				abean = null;

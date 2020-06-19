@@ -344,6 +344,7 @@ public class BuildCustomReportManager {
 		            }
 				}
 				sbtabledata.append("</TR>");
+				
 			}
 		}
 		catch (SQLException e) {
@@ -381,7 +382,12 @@ public class BuildCustomReportManager {
 		}else if(colname.equals("VTYPE") || colname.equals("VEHICLETYPE")){
 			returnvalue=DropdownManager.getDropdownItemText((int)colval);
 		}else if(colname.equals("VMODEL")){
-			returnvalue=DropdownManager.getDropdownItemText((int)colval);
+			//returnvalue=DropdownManager.getDropdownItemText((int)colval);
+			if((int)colval == 1) {
+				returnvalue ="Yes";
+			}else {
+				returnvalue ="No"; 
+			}
 		}else if(colname.equals("VSIZE") || colname.equals("VEHICLESIZE")){
 			returnvalue=DropdownManager.getDropdownItemText((int)colval);
 		}else if(colname.equals("VEHSTATUS")){

@@ -258,7 +258,17 @@ $(document).ready(function() {
 			  		</select>
 			  		</div>
 	            </div>
-
+	          	<div class="form-group">
+	                <label class="control-label col-sm-3" for="email">Wheelchair Accessible:</label>
+	                <div class="col-sm-5">
+        				<p>
+        					<select class="form-control" id="vwheel" name="vwheel"  style="width:auto;">
+	                			<option value="1" ${vehicle.vModel eq 1 ? 'SELECTED':''}>Yes</option>
+	                			<option value="0" ${vehicle.vModel le 0 ? 'SELECTED':''}>No</option>
+	                		</select>
+        				</p>
+      		  		</div>
+	            </div>	
 	            <div class="form-group">
 	                <label class="control-label col-sm-3" for="email">Unit Number:</label>
 	                <div class="col-sm-5">
@@ -266,11 +276,8 @@ $(document).ready(function() {
         				<input class="form-control" id="unitnumber" name="unitnumber" type="text" placeholder="Enter unit number" value="${vehicle.unitNumber}">
         				</p>
       		  		</div>
-	            </div>	            
-                                                                          
-				
-			  
-			  </div>
+	            </div>
+	            </div>
 				<div id="documents" class="tab-pane fade">
 				   <div class="alert alert-danger" id="doc_details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     				<div class="alert alert-success" id="doc_details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>

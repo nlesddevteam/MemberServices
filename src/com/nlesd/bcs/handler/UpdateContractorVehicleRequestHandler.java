@@ -52,7 +52,9 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 				updatedby=bcbean.getContractorName();
 				vbean.setContractorId(bcbean.getId());
 				vbean.setvMake(form.getInt("vmake"));
-				vbean.setvModel(-1);
+				//vbean.setvModel(-1);
+				//using vmodel for wheelchair accessible
+				vbean.setWheelchairAccessible(form.getInt("vwheel"));
 				vbean.setvYear(form.get("vyear"));
 				vbean.setvSerialNumber(form.get("vserialnumber"));
 				vbean.setvPlateNumber(form.get("vplatenumber"));

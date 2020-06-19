@@ -50,6 +50,9 @@ public class BussingContractorVehicleBean implements Serializable {
 	private String miscHEInsFile2;
 	private String regFile;
 	private String insFile;
+	private String companyName;//used with main screen warnings for contractors and automated ones
+	private String companyEmail;//used with main screen warnings for contractors and automated ones
+	private int wheelchairAccessible = -1;
 	public String getFallInsFile() {
 		return fallInsFile;
 	}
@@ -382,6 +385,24 @@ public class BussingContractorVehicleBean implements Serializable {
 	}
 	public void setInsurancePolicyNumber(String insurancePolicyNumber) {
 		this.insurancePolicyNumber = insurancePolicyNumber;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getCompanyEmail() {
+		return companyEmail;
+	}
+	public void setCompanyEmail(String companyEmail) {
+		this.companyEmail = companyEmail;
+	}
+	public int getWheelchairAccessible() {
+		return wheelchairAccessible;
+	}
+	public void setWheelchairAccessible(int wheelchairAccessible) {
+		this.wheelchairAccessible = wheelchairAccessible;
 	}
 	
 	
