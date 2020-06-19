@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -82,6 +83,13 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 					NLESDReferenceListBean[] refs = NLESDReferenceListManager.getReferenceBeansByApplicant(sin);
 					JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
 					Collection<InterviewSummaryBean> interviews = InterviewSummaryManager.getInterviewSummaryBeans(profile);
+					if (job.getJobType().equals(JobTypeConstant.TLA_REGULAR)
+							|| job.getJobType().equals(JobTypeConstant.TLA_REGULAR)) {
+						interviews = interviews.stream().filter(
+								s -> s.getCompetition().getJobType().equals(JobTypeConstant.TLA_REGULAR)
+										|| s.getCompetition().getJobType().equals(JobTypeConstant.TLA_REPLACEMENT)).collect(
+												Collectors.toList());
+					}
 					Collection<ReferenceCheckRequestBean> ref_chks = ReferenceCheckRequestManager.getReferenceCheckRequestBeans(
 							job, profile);
 
