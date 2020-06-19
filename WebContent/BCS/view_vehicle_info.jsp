@@ -580,7 +580,7 @@ $(document).ready(function() {
 		  			  	<div class="form-group">        
 			      <div class="col-sm-offset-3 col-sm-9">
 			      	<br />
-			        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="confirmVehicleFields('C','Y');">Update Information</button>
+			        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdatevehicle('C','Y');">Update Information</button>
 			      </div>
 			    </div>
 			    <div class="alert alert-danger" id="vehicleerrormessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         

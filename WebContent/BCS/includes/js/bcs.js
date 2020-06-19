@@ -673,7 +673,7 @@ function updateCompanyInformation() {
 /*******************************************************************************
  * Check add new vehicle fields
  ******************************************************************************/
-function confirmVehicleFields(usertype,validatedates) {
+function confirmVehicleFields(usertype,validatedates,bypass) {
 
 	var vmake = $("#vmake").val();
 	var vmodel = $("#vmodel").val();
@@ -779,18 +779,13 @@ function confirmVehicleFields(usertype,validatedates) {
 	}
 	//check the date fields
 	if(validatedates == "Y"){
-		if(!(checkdatefields())){
-			return false;
-		}
+			if(!(checkdatefields(bypass))){
+				return false;
+			}
 	}
 	// all good
 	$("#mainalert").hide();
-	// updateCompanyInformation();
-	if ($("#vid").val() <= 0) {
-		addNewVehicle(usertype);
-	} else {
-		updateVehicle(usertype);
-	}
+	return true;
 
 }
 /*******************************************************************************
@@ -1988,13 +1983,15 @@ function rejectemployee() {
  * the span id's with correct info
  ******************************************************************************/
 function openApproveVeh() {
-	$("#modaltitle").text("Approve Vehicle");
-	$("#modaltext").text(
-			"Are you sure you would like to approve vehicle plate number:  "
-					+ $("#hidfullname").val());
-	$("#trantype").val("A");
-	$("#modalnotes").hide();
-	$('#myModal').modal('show');
+	if(confirmVehicleFields("A","Y",false)){
+		$("#modaltitle").text("Approve Vehicle");
+		$("#modaltext").text(
+				"Are you sure you would like to approve vehicle plate number:  "
+						+ $("#hidfullname").val());
+		$("#trantype").val("A");
+		$("#modalnotes").hide();
+		$('#myModal').modal('show');
+	}
 }
 function openRejectVeh() {
 	$("#modaltitle").text("Reject Vehicle");
@@ -6012,7 +6009,6 @@ function ajaxGetTrainingById(trainingid) {
 											$('#buttonlefttr').text("YES");
 											$('#buttonrighttr').text("NO");
 											// now we add the onclick event
-											alert("here");
 											$("#buttonlefttr").click(function(event) {
 												event.preventDefault();
 												if (checknewtraining()) {
@@ -6326,7 +6322,7 @@ function checkdate(datetype){
 		}
 	}
 }
-function checkdatefields(){
+function checkdatefields(bypass){
 
 		if(!($("#rdate").val() == "")){
 			var today = new Date();
@@ -6336,7 +6332,9 @@ function checkdatefields(){
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Registration Expiry Date must be in future and no more than 1 year")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6349,7 +6347,9 @@ function checkdatefields(){
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Insurance Expiry Date must be in future and no more than 1 year")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6362,7 +6362,9 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Fall Inspection Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6375,7 +6377,9 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Winter Inspection Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6388,7 +6392,9 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Fall H.E. Inspection Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6401,7 +6407,9 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 1 must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6414,7 +6422,9 @@ function checkdatefields(){
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 2 must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000).fadeOut();
-				showBypassDialogV();
+				if(bypass){
+					showBypassDialogV();
+				}
 				return false;
 			}
 		}
@@ -6460,7 +6470,7 @@ function showBypassDialogV(){
 		// now we add the onclick event
 		$("#buttonleftby").click(function(event) {
 			event.preventDefault();
-			confirmVehicleFields('A','N');
+			addupdatevehicle('A','N',false);
 			$('#myModal3').modal('hide');
 
 		});
@@ -6710,6 +6720,17 @@ function addupdateemployee(usert,validatedates) {
 			addNewEmployee(usert);
 		} else {
 			updateEmployee(usert);
+		}
+	}
+}
+
+function addupdatevehicle(usert,validates){
+	// updateCompanyInformation();
+	if(confirmVehicleFields(usert,validates,true)){
+		if ($("#vid").val() <= 0) {
+			addNewVehicle(usert);
+		} else {
+			updateVehicle(usert);
 		}
 	}
 }
