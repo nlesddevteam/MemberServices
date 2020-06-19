@@ -639,7 +639,7 @@ $(document).ready(function() {
     				<div class="alert alert-success" id="vehiclesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 		      		<div class="col-sm-offset-2 col-sm-10" id="divbuttons">
       					<br />
-      					<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="confirmVehicleFields('A','Y');">Update Information</button>
+      					<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdatevehicle('A','Y');">Update Information</button>
       					<c:if test = "${vehicle.vStatus != 2 && vehicle.vStatus != 0}">
       						<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         					<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;<button type="button" class="btn btn-xs btn-danger" onclick="openRejectVeh();">Reject</button>
