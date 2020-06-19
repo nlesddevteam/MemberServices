@@ -86,6 +86,7 @@ $(document).ready(function() {
 				<th class="listdata">Plate Number</th>
 				<th class="listdata">Type</th>
 				<th class="listdata">Size</th>
+				<th class="listdata">Wheelchair Accessible</th>
 				<th class="listdata">Owner</th>
 				<th class="listdata">Registration Expiry Date</th>
 				<th class="listdata">Insurance Expiry Date</th>
@@ -120,6 +121,7 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.vPlateNumber}</td>
 	      					<td class="field_content">${rule.typeText}</td>
 	      					<td class="field_content">${rule.sizeText}</td>
+	      					<td class="field_content">${rule.vModel eq 1 ? 'Yes' : 'No'}</td>
 	      					<td class="field_content">${rule.vOwner}</td>
 	      					<td class="field_content">${rule.regExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.insExpiryDateFormatted}</td>

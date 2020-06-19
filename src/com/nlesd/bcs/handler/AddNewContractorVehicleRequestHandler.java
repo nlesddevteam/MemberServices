@@ -46,7 +46,9 @@ public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequest
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 				BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 				vbean.setvMake(form.getInt("vmake"));
-				vbean.setvModel(-1);
+				//vbean.setvModel(-1);
+				//using vmodel for wheelchair accessible
+				vbean.setWheelchairAccessible(form.getInt("vwheel"));
 				vbean.setvYear(form.get("vyear"));
 				vbean.setvSerialNumber(form.get("vserialnumber"));
 				vbean.setvPlateNumber(form.get("vplatenumber"));
