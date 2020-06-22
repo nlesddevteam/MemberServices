@@ -31,8 +31,15 @@ public class BussingContractorSystemContractManager {
 				stat.setTimestamp(6, new Timestamp(vbean.getContractExpiryDate().getTime()));
 			}
 			stat.setString(7, vbean.getAddedBy());
-			stat.setInt(8,vbean.getVehicleType());
-			stat.setInt(9,vbean.getVehicleSize());
+			//using to pass issubcontracted and subcontractor
+			//stat.setInt(8,vbean.getVehicleType());
+			//stat.setInt(9,vbean.getVehicleSize());
+			stat.setInt(8,vbean.getSubContractorId());
+			if(vbean.isSubContracted()) {
+				stat.setInt(9,1);
+			}else {
+				stat.setInt(9,-1);
+			}
 			if(vbean.getContractStartDate() == null){
 				stat.setTimestamp(10, null);
 			}else{
@@ -288,8 +295,15 @@ public class BussingContractorSystemContractManager {
 			}
 			stat.setString(6, vbean.getAddedBy());
 			stat.setInt(7,vbean.getId());
-			stat.setInt(8,vbean.getVehicleType());
-			stat.setInt(9,vbean.getVehicleSize());
+			//using to pass issubcontracted and subcontractor
+			//stat.setInt(8,vbean.getVehicleType());
+			//stat.setInt(9,vbean.getVehicleSize());
+			stat.setInt(8,vbean.getSubContractorId());
+			if(vbean.isSubContracted()) {
+				stat.setInt(9,1);
+			}else {
+				stat.setInt(9,-1);
+			}
 			if(vbean.getContractStartDate() == null){
 				stat.setTimestamp(10, null);
 			}else{
@@ -712,6 +726,12 @@ public class BussingContractorSystemContractManager {
 					abean.setContractStartDate(new java.util.Date(rs.getTimestamp("CONTRACTSTARTDATE").getTime()));
 				}
 				abean.setContractHistory(BussingContractorSystemContractHistoryManager.getBussingContractorSystemContractStatus(abean.getId()));
+				abean.setSubContractorId(rs.getInt("VEHICLETYPE"));
+				if(rs.getInt("VEHICLESIZE") == 1) {
+					abean.setSubContracted(true);
+				}else {
+					abean.setSubContracted(false);
+				}
 		}
 		catch (SQLException e) {
 				abean = null;
@@ -744,6 +764,12 @@ public class BussingContractorSystemContractManager {
 				ts= rs.getTimestamp("CONTRACTSTARTDATE");
 				if(ts != null){
 					abean.setContractStartDate(new java.util.Date(rs.getTimestamp("CONTRACTSTARTDATE").getTime()));
+				}
+				abean.setSubContractorId(rs.getInt("VEHICLETYPE"));
+				if(rs.getInt("VEHICLESIZE") == 1) {
+					abean.setSubContracted(true);
+				}else {
+					abean.setSubContracted(false);
 				}
 		}
 		catch (SQLException e) {

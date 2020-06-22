@@ -23,6 +23,8 @@ public class BussingContractorSystemContractBean implements Serializable {
 	private Date contractStartDate;
 	private BussingContractorSystemContractHistoryBean contractHistory;
 	private int boardOwned;
+	private boolean subContracted;
+	private int subContractorId;
 	public int getId() {
 		return id;
 	}
@@ -140,5 +142,17 @@ public class BussingContractorSystemContractBean implements Serializable {
 	}
 	public int getBoardOwned() {
 		return boardOwned;
+	}
+	public boolean isSubContracted() {
+		return subContracted;
+	}
+	public void setSubContracted(boolean subContracted) {
+		this.subContracted = subContracted;
+	}
+	public int getSubContractorId() {
+		return subContractorId;
+	}
+	public void setSubContractorId(int subContractorId) {
+		this.subContractorId = subContractorId;
 	}
 }
