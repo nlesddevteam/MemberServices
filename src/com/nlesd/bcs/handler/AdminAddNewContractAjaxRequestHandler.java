@@ -68,8 +68,16 @@ public class AdminAddNewContractAjaxRequestHandler extends RequestHandlerImpl{
 						vbean.setContractExpiryDate(sdf.parse(form.get("contractexpirydate").toString()));
 					}
 					vbean.setAddedBy(usr.getPersonnel().getFullNameReverse());
-					vbean.setVehicleSize(-1);
-					vbean.setVehicleType(-1);
+					//vbean.setVehicleSize(-1);
+					//vbean.setVehicleType(-1);
+					//using vehicle size for issubcontracted
+					//using vehicle type for subcontractor
+					if(form.exists("subcon")) {
+						vbean.setSubContracted(true);
+					}else {
+						vbean.setSubContracted(false);
+					}
+					vbean.setSubContractorId(form.getInt("subcontractor"));
 					if(form.get("contractstartdate").isEmpty())
 					{
 						vbean.setContractStartDate(null);

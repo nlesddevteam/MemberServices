@@ -254,6 +254,32 @@ $(document).ready(function() {
 		                </div>
 					</div>
 					<div class="form-group">
+		                <label class="control-label col-sm-2" for="email">Is Sub Contracted Out:</label> 
+		                <div class="col-sm-5">
+		                    <label class="radio-inline"><input  id="subcon" name="subcon"  type="checkbox" 
+		                    value="1" ${contract.subContracted == true ? 'CHECKED' : ''}></label>
+		                </div>
+					</div>
+					<div class="form-group">
+				  		<br />
+		                <label class="control-label col-sm-2" for="email">Subcontractor:</label>
+		                <div class="col-md-5">
+		                <select class="form-control" id="subcontractor" name="subcontractor"  style="width:auto;">
+		                	<option value="-1">None</option>
+							<c:forEach var="entry" items="${allcontractors}">
+								<c:choose>
+								<c:when test = "${contract.subContractorId == entry.id }">
+									<option value='${entry.id}' SELECTED>${entry.company}( ${entry.lastName}, ${entry.firstName})</option>
+								</c:when>
+								<c:otherwise>
+									<option value='${entry.id}'>${entry.company}( ${entry.lastName}, ${entry.firstName})</option>
+								</c:otherwise>
+								</c:choose>
+							</c:forEach>
+				  		</select>
+				  		</div>
+			      	</div>
+					<div class="form-group">
 				    		<label class="control-label col-sm-2" for="email">Route(s):</label>
 		      				<div class="col-sm-10">
 
