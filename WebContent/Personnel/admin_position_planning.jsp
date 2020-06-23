@@ -553,38 +553,48 @@
           					               	<input id='txt_endTermDate' name='txt_endTermDate' class='form-control'/>
           								</div>
           						 </div>			
-          					</div>	
-          					
-          				   <div class="row">          					
-         			             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-         			             		<div class="input-group">		
-          					               	<span class="input-group-addon">Unit:</span>      							
-          									<input id='txt_vacancyUnit' name='txt_vacancyUnit' class='form-control'/>          									
-          								</div>
-          						</div>
-          						 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-          						 		<div class="checkbox">
-  											<label><input id='chk_advertised' name='chk_advertised' type='checkbox'/> Position Advertised?</label>
-										</div>      						 
-          						</div>
-          						 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-          						 		<div class="checkbox">
-  											<label><input id='chk_filled' name='chk_filled' type='checkbox' /> Position Filled?</label>
-										</div> 
-          						</div>
-          						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-          						<%if(usr.checkRole("ADMINISTRATOR") || usr.checkRole("SENIOR EDUCATION OFFICIER")) {%>
-          						 		<div style="display:none;" id="divlinks">
-  											<a  id="hrefad" target="_blank">
-  													<button type="button" class="btn btn-primary">
-  														<span id="hrefspan"></span>
-  													</button>
-  											</a>
+          					</div>
+
+										<div class="row">
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+												<div class="input-group">
+													<span class="input-group-addon">Unit:</span> <input
+														id='txt_vacancyUnit' name='txt_vacancyUnit'
+														class='form-control' />
+												</div>
+											</div>
+											<!--  
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+												<div class="checkbox">
+													<label><input id='chk_advertised'
+														name='chk_advertised' type='checkbox' /> Position
+														Advertised?</label>
+												</div>
+											</div>
+											-->
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+												<div class="checkbox">
+													<label><input id='chk_filled' name='chk_filled'
+														type='checkbox' /> Position Filled?</label>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+												<%
+													if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("SENIOR EDUCATION OFFICIER")) {
+												%>
+												<div style="display: none;" id="divlinks">
+													<a id="hrefad" target="_blank">
+														<button type="button" class="btn btn-primary">
+															<span id="hrefspan"></span>
+														</button>
+													</a>
+												</div>
+												<%
+													}
+												%>
+											</div>
 										</div>
-								<%} %>		 
-          						</div>
-          					</div>	
-          					<div class="row">
+														<div class="row">
           					<div id='add-vacancy-position-message' class="alert alert-warning" style="display:none;"></div>
              				</div>
              				<div class="row no-print" align="center" style="margin-top:5px;margin-bottom:5px;">			
