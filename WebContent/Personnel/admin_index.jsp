@@ -138,7 +138,7 @@
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdSubmitted() %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdApproved() %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdPosted() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalNoShortlist() %></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithNoShortlist.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalNoShortlist() %></a></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalShortlistNoRecemmendation() %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationSubmitted() %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationApproved() %></td>
