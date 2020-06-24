@@ -4,7 +4,8 @@
                   com.esdnl.personnel.jobs.bean.*,
                   com.esdnl.personnel.jobs.dao.*,
                   com.esdnl.personnel.jobs.constants.*,
-                  com.esdnl.util.*" 
+                  com.esdnl.util.*,
+                  org.apache.commons.lang.*" 
          isThreadSafe="false"%>
 
 		<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -76,6 +77,7 @@
 							</thead>
 							<tbody>
 								<%
+									boolean reopened_displayed = false;
 									boolean all_expired = true;
 									boolean existing_rec = false;
 									boolean existing_non_processed_rec = false;
@@ -94,7 +96,13 @@
 												}
 											}
 										}
-								%>
+										
+										if(job.isReopened() && rec[i].getCurrentStatus().equal(RecommendationStatus.PROCESSED) && job.getReopenedDate().after(rec[i].getRecommendedDate()) && !reopened_displayed) {
+											out.println("<tr><td colspan='4' class='alert-info' style='text-align:center;'><b>Position reopened on " + job.getFormattedReopenedDate() 
+												+ " by " + org.apache.commons.lang.StringUtils.capitaliseAllWords(job.getReopenedBy().getFullNameReverse()) + "</b></td></tr>");
+											reopened_displayed = true;
+								 		} 
+								 	%>
 									<tr>
 										<td><%=rec[i].getRecommendedDateFormatted()%></td>
 										<td><%=rec[i].getCandidate().getFullNameReverse()%></td>

@@ -64,6 +64,8 @@ $(document).ready(function() {
 				date_expiry.datepicker(options);
 				var date_birth=$('#birthdate');
 				date_birth.datepicker(options);
+				var date_codexpiry=$('#coddate');
+				date_codexpiry.datepicker(options);
 				$('.zoomimg').hover(function() {
 				    $(this).css("cursor", "pointer");
 				    $(this).animate({
@@ -543,6 +545,43 @@ $(document).ready(function() {
 					
 				</div>
 				       
+	       </div>
+	       <img src="includes/img/bar.png" height=1 width=100%><br/>
+				   	<span style="font-size:14px;color:Grey;margin-bottom:10px;">Criminal Offence Declaration</span>
+	       
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Expiry Date:</label> 
+                <div class="col-sm-9">
+                    <input class="form-control" id="coddate" name="coddate" placeholder="MM/DD/YYYY" type="text" 
+                    value="${employee.codExpiryDate == null ? '' : employee.codExpiryDateFormatted}">
+                    <br />
+	                    <div id="divscadate" name="divscadate" style="display:none;">
+	                    <span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">&nbsp; Criminal Offence Declaration has expired&nbsp;</span>
+	                    </div>
+                </div>
+	       </div>
+      	  <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Criminal Offence Declaration File:</label> 
+                <div class="col-sm-5">
+					<c:choose>
+	                	<c:when test = "${employee.codDocument != null}">
+	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
+	                	<br/><br/><a href="${spath}${dpath}${employee.codDocument}" title="Click to open" target="_blank">Current Document (${employee.codDocument})</a>
+	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('15','${employee.id}','${employee.codDocument}');">Delete File</button>
+	                	&nbsp;&nbsp;&nbsp;
+	                	<br/><br/>To Update		               	
+	                	</c:when>
+	                	<c:otherwise>
+	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','15');">View History</button>
+	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
+	                	</c:otherwise>
+                	</c:choose> 
+                     document, choose file below to upload:
+                	<br/><br/>             
+                
+					<input type="file" id="coddocument" name="coddocument" accept="application/pdf">
+					(PDF file format only)<br/>
+                </div>                
 	       </div>
 	       <img src="includes/img/bar.png" height=1 width=100%><br/>
 				   	<span style="font-size:14px;color:Grey;margin-bottom:10px;">Confidentiality Agreement</span>
