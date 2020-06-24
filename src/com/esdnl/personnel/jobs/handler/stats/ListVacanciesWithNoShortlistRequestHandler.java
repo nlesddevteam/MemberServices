@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.esdnl.personnel.jobs.dao.TeacherAllocationVacancyStatisticsManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
@@ -41,7 +43,8 @@ public class ListVacanciesWithNoShortlistRequestHandler extends RequestHandlerIm
 				if (zone != null) {
 					request.setAttribute("VACANCIES",
 							TeacherAllocationVacancyStatisticsManager.getVacanciesWithNoShortlist(form.get("sy"), zone));
-					request.setAttribute("VacancyListTitle", "Vacancies with No Shortlist");
+					request.setAttribute("VacancyListTitle",
+							"Vacancies with No Shortlist - " + StringUtils.capitaliseAllWords(zone.getZoneName()) + " Region");
 					path = "admin_view_stats_vacancy_list.jsp";
 				}
 				else {
