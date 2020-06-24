@@ -3875,6 +3875,12 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AddApplicantLetterAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/ajax/addApplicantLetter.html</URL-Pattern>
     </Request-Handler>
+    
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithNoShortlistRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithNoShortlist.html</URL-Pattern>
+    </Request-Handler>
+    
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.bcs.handler.CheckDriverLicenceAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/BCS/checkDriverLicence.html</URL-Pattern>
