@@ -112,6 +112,8 @@ $(document).ready(function() {
 				<th class="listdata">PRCVSQ Document</th>
 				<th class="listdata">PCC Document</th>
 				<th class="listdata">SCA Document</th>
+				<th class="listdata">CODDocument</th>
+				<th class="listdata">COD Expiry Date</th>
 				<th class="listdata">Status</th>
 				<th class="listdata">Status By</th>
 				<th class="listdata">Status Date</th>
@@ -157,6 +159,8 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.prcvsqDocument}</td>
 	      					<td class="field_content">${rule.pccDocument}</td>
 	      					<td class="field_content">${rule.scaDocument}</td>
+	      					<td class="field_content">${rule.codDocument}</td>
+	      					<td class="field_content">${rule.codExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.statusText}</td>
 	      					<td class="field_content">${rule.approvedBy}</td>
 	      					<td class="field_content">${rule.dateApprovedFormatted}</td>

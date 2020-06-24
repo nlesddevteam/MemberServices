@@ -54,6 +54,10 @@ public class BussingContractorEmployeeBean implements Serializable {
 	private Date birthDate;
 	private String daSuspensions;
 	private String daAccidents;
+	private String companyName;//used with main screen warnings for contractors and automated ones
+	private String companyEmail;//used with main screen warnings for contractors and automated ones
+	private Date codExpiryDate;
+	private String codDocument;
 	public int getId() {
 		return id;
 	}
@@ -436,5 +440,36 @@ public class BussingContractorEmployeeBean implements Serializable {
 	}
 	public void setDaAccidents(String daAccidents) {
 		this.daAccidents = daAccidents;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getCompanyEmail() {
+		return companyEmail;
+	}
+	public void setCompanyEmail(String companyEmail) {
+		this.companyEmail = companyEmail;
+	}
+	public Date getCodExpiryDate() {
+		return codExpiryDate;
+	}
+	public void setCodExpiryDate(Date codExpiryDate) {
+		this.codExpiryDate = codExpiryDate;
+	}
+	public String getCodDocument() {
+		return codDocument;
+	}
+	public void setCodDocument(String codDocument) {
+		this.codDocument = codDocument;
+	}
+	public String getCodExpiryDateFormatted() {
+		if(this.codExpiryDate!= null){
+			return new SimpleDateFormat("MM/dd/yyyy").format(this.codExpiryDate);
+		}else{
+			return "";
+		}
 	}
 }

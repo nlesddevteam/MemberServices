@@ -18,7 +18,7 @@ public class BussingContractorEmployeeManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(2, vbean.getContractorId());
 			stat.setInt(3, vbean.getEmployeePosition());
@@ -85,6 +85,12 @@ public class BussingContractorEmployeeManager {
 			}
 			stat.setString(36,vbean.getDaSuspensions());
 			stat.setString(37,vbean.getDaAccidents());
+			if(vbean.getCodExpiryDate() == null){
+				stat.setTimestamp(38, null);
+			}else{
+				stat.setTimestamp(38, new Timestamp(vbean.getCodExpiryDate().getTime()));
+			}
+			stat.setString(39,vbean.getCodDocument());
 			stat.execute();
 			Integer sid= ((OracleCallableStatement) stat).getInt(1);
 			vbean.setId(sid);
@@ -221,7 +227,7 @@ public class BussingContractorEmployeeManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setInt(1, vbean.getContractorId());
 			stat.setInt(2, vbean.getEmployeePosition());
 			stat.setString(3, vbean.getStartDate());
@@ -288,6 +294,12 @@ public class BussingContractorEmployeeManager {
 			}
 			stat.setString(36,vbean.getDaSuspensions());
 			stat.setString(37,vbean.getDaAccidents());
+			if(vbean.getCodExpiryDate() == null){
+				stat.setTimestamp(38, null);
+			}else{
+				stat.setTimestamp(38, new Timestamp(vbean.getCodExpiryDate().getTime()));
+			}
+			stat.setString(39,vbean.getCodDocument());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -1253,6 +1265,11 @@ public class BussingContractorEmployeeManager {
 				abean.setBcBean(BussingContractorManager.getBussingContractorById(abean.getContractorId()));
 				abean.setDaSuspensions(rs.getString("DASUSPENSIONS"));
 				abean.setDaAccidents(rs.getString("DAACCIDENTS"));
+				abean.setCodDocument(rs.getString("CODDOCUMENT"));
+				ts= rs.getTimestamp("CODEXPIRYDATE");
+				if(ts != null){
+					abean.setCodExpiryDate(new java.util.Date(rs.getTimestamp("CODEXPIRYDATE").getTime()));
+				}
 		}
 		catch (SQLException e) {
 				abean = null;
@@ -1368,6 +1385,11 @@ public class BussingContractorEmployeeManager {
 				
 				abean.setDaSuspensions(rs.getString("DASUSPENSIONS"));
 				abean.setDaAccidents(rs.getString("DAACCIDENTS"));
+				abean.setCodDocument(rs.getString("CODDOCUMENT"));
+				ts= rs.getTimestamp("CODEXPIRYDATE");
+				if(ts != null){
+					abean.setCodExpiryDate(new java.util.Date(rs.getTimestamp("CODEXPIRYDATE").getTime()));
+				}
 		}
 		catch (SQLException e) {
 				abean = null;

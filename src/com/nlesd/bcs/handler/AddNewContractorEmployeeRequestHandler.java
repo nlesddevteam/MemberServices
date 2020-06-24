@@ -108,6 +108,12 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 					}else{
 						vbean.setBirthDate(sdf.parse(form.get("birthdate").toString()));
 					}
+					if(form.get("coddate").isEmpty())
+					{
+						vbean.setCodExpiryDate(null);
+					}else{
+						vbean.setCodExpiryDate(sdf.parse(form.get("coddate").toString()));
+					}
 					vbean.setDaSuspensions(form.get("dasuspensions"));
 					vbean.setDaAccidents(form.get("daaccidents"));
 					//now we do the documents
@@ -140,6 +146,10 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 					if(form.getUploadFile("scadocument").getFileSize() > 0){
 						docfilename=save_file("scadocument", filelocation);
 						vbean.setScaDocument(docfilename);
+					}
+					if(form.getUploadFile("coddocument").getFileSize() > 0){
+						docfilename=save_file("coddocument", filelocation);
+						vbean.setCodDocument(docfilename);
 					}
 					vbean.setStatus(EmployeeStatusConstant.NOTREVIEWED.getValue());
 					
@@ -214,6 +224,16 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setActionBy(bcbean.getContractorName());
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(7);
+						FileHistoryManager.addFileHistory(fhb);
+					}
+					if(!(vbean.getCodDocument() ==  null)) {
+						//now we save document history record
+						FileHistoryBean fhb = new FileHistoryBean();
+						fhb.setFileName(vbean.getCodDocument());
+						fhb.setFileAction("UPLOADED");
+						fhb.setActionBy(bcbean.getContractorName());
+						fhb.setParentObjectId(vbean.getId());
+						fhb.setParentObjectType(15);
 						FileHistoryManager.addFileHistory(fhb);
 					}
 					//update audit trail

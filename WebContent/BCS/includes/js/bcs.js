@@ -452,39 +452,39 @@ function confirmSecurityFields() {
 	var cnewpass = $("#cnpassword").val();
 	var squestion = $("#question").val();
 	var sanswer = $("#answer").val();
+	$("#display_error_message_top").hide();
 	if (newpass == "") {
-		$("#errormessage").text("Please enter password")
-				.CSS("display", "block");
-		$("#mainalert").show();
+		$("#display_error_message_top").html("Please enter password").css("display", "block");
+		$("#display_error_message_top").show();
 	} else if (cnewpass == "") {
-		$("#errormessage").text("Please enter confirm password");
-		$("#mainalert").show();
-	} else if (newpass.length < 7) {
-		$("#errormessage").text("Password must be 7 characters or more");
-		$("#mainalert").show();
-	} else if (cnewpass.length < 7) {
-		$("#errormessage")
-				.text("Confirm password must be 7 characters or more");
-		$("#mainalert").show();
+		$("#display_error_message_top").html("Please enter confirm password").css("display", "block");
+		$("#display_error_message_top").show();
+	} else if (newpass.length < 6) {
+		$("#display_error_message_top").html("Password must be 6 characters or more").css("display", "block");
+		$("#display_error_message_top").html();
+	} else if (cnewpass.length < 6) {
+		$("#display_error_message_top")
+				.html("Confirm password must be 6 characters or more").css("display", "block");
+		$("#display_error_message_top").show();
 	} else if (newpass != cnewpass) {
-		$("#errormessage").text("Password must match confirm password");
-		$("#mainalert").show();
+		$("#display_error_message_top").html("Password must match confirm password").css("display", "block");
+		$("#display_error_message_top").show();
 	} else if (squestion == "") {
-		$("#errormessage").text("Please enter security question");
-		$("#mainalert").show();
+		$("#display_error_message_top").html("Please enter security question").css("display", "block");
+		$("#display_error_message_top").show();
 	} else if (squestion.length < 5) {
-		$("#errormessage").text(
-				"Security question must be 5 characters or more");
-		$("#mainalert").show();
+		$("#display_error_message_top").html(
+				"Security question must be 5 characters or more").css("display", "block");
+		$("#display_error_message_top").show();
 	} else if (sanswer == "") {
-		$("#errormessage").text("Please enter answer");
-		$("#mainalert").show();
+		$("#display_error_message_top").html("Please enter answer").css("display", "block");
+		$("#display_error_message_top").show();
 	} else if (sanswer.length < 5) {
-		$("#errormessage").text("Answer must be 5 characters or more");
-		$("#mainalert").show();
+		$("#display_error_message_top").html("Answer must be 5 characters or more").css("display", "block");
+		$("#display_error_message_top").show();
 	} else {
 		// new password valid
-		$("#mainalerts").hide();
+		$("#display_error_message_top").hide();
 		updateSecInformation(newpass, cnewpass, squestion, sanswer);
 
 	}

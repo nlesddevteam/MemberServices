@@ -132,6 +132,12 @@ public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerI
 					}else{
 						vbean.setBirthDate(sdf.parse(form.get("birthdate").toString()));
 					}
+					if(form.get("coddate").isEmpty())
+					{
+						vbean.setCodExpiryDate(null);
+					}else{
+						vbean.setCodExpiryDate(sdf.parse(form.get("coddate").toString()));
+					}
 					vbean.setFindingsOfGuilt(form.get("findingsofguilt"));
 					vbean.setDaSuspensions(form.get("dasuspensions"));
 					vbean.setDaAccidents(form.get("daaccidents"));
@@ -263,6 +269,24 @@ public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerI
 						FileHistoryManager.addFileHistory(fhb);
 					}else{
 						vbean.setScaDocument(origbean.getScaDocument());
+					}
+					if(form.getUploadFile("coddocument").getFileSize() > 0){
+						docfilename=save_file("coddocument", filelocation);
+						vbean.setCodDocument(docfilename);
+						//now we update the history record
+						FileHistoryBean fhb = new FileHistoryBean();
+						if(origbean.getCodDocument() == null) {
+							fhb.setFileName("No Previous File");
+						}else {
+							fhb.setFileName(origbean.getCodDocument());
+						}
+						fhb.setFileAction("DOCUMENT REPLACED");
+						fhb.setActionBy(usr.getLotusUserFullName());
+						fhb.setParentObjectId(vbean.getId());
+						fhb.setParentObjectType(15);
+						FileHistoryManager.addFileHistory(fhb);
+					}else{
+						vbean.setCodDocument(origbean.getScaDocument());
 					}
 					vbean.setStatus(origbean.getStatus());
 				
