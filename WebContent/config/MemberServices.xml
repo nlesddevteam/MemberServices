@@ -3884,6 +3884,18 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesShortlistedWithNoRecommendationRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/listVacanciesShortlistedWithNoRecommendation.html</URL-Pattern>
     </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithExpiredOfferRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithExpiredOffer.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithRejectedOfferRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithRejectedOffer.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithAcceptedOfferRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithAcceptedOffer.html</URL-Pattern>
+    </Request-Handler>
     
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.bcs.handler.CheckDriverLicenceAjaxRequestHandler</Request-Handler-Class>

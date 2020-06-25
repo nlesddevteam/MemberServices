@@ -144,9 +144,9 @@
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationApproved() %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationAccepted() %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOffered() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOfferAccepted() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOfferRejected() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOfferExpired() %></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithAcceptedOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOfferAccepted() %></a></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithRejectedOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOfferRejected() %></a></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithExpiredOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOfferExpired() %></a></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalFilledByCompetition()  %></td>
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalFilledManually() %></td>
 												<td class="regionRow<%=rowCnt%> text-success" style='font-weight: bold;'><%= entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually() %>&nbsp;(<%= (entry.getValue().getTotalFilledByCompetition() + entry.getValue().getTotalFilledManually()) * 100 / entry.getValue().getTotalVacancies()  %>%)</td>
