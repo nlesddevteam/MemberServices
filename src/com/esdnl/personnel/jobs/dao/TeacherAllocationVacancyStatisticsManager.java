@@ -408,6 +408,232 @@ public class TeacherAllocationVacancyStatisticsManager {
 		return vacancies;
 	}
 
+	public static Collection<JobOpportunityBean> getVacanciesOffered(String schoolYear, SchoolZoneBean zone)
+			throws JobOpportunityException {
+
+		Collection<JobOpportunityBean> vacancies = new ArrayList<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_vac_offered(?,?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolYear);
+			stat.setInt(3, zone.getZoneId());
+
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				vacancies.add(JobOpportunityManager.createJobOpportunityBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println(
+					"Collection<JobOpportunityBean> getVacanciesOffered(String schoolYear, SchoolZoneBean zone): " + e);
+			throw new JobOpportunityException("Can not retrieve JobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return vacancies;
+	}
+
+	public static Collection<JobOpportunityBean> getVacanciesWithRecommendationAccepted(String schoolYear,
+																																											SchoolZoneBean zone)
+			throws JobOpportunityException {
+
+		Collection<JobOpportunityBean> vacancies = new ArrayList<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_vac_rec_accepted(?,?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolYear);
+			stat.setInt(3, zone.getZoneId());
+
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				vacancies.add(JobOpportunityManager.createJobOpportunityBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println(
+					"Collection<JobOpportunityBean> getVacanciesWithRecommendationAccepted(String schoolYear, SchoolZoneBean zone): "
+							+ e);
+			throw new JobOpportunityException("Can not retrieve JobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return vacancies;
+	}
+
+	public static Collection<JobOpportunityBean> getVacanciesWithRecommendationApproved(String schoolYear,
+																																											SchoolZoneBean zone)
+			throws JobOpportunityException {
+
+		Collection<JobOpportunityBean> vacancies = new ArrayList<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_vac_rec_approved(?,?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolYear);
+			stat.setInt(3, zone.getZoneId());
+
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				vacancies.add(JobOpportunityManager.createJobOpportunityBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println(
+					"Collection<JobOpportunityBean> getVacanciesWithRecommendationApproved(String schoolYear, SchoolZoneBean zone): "
+							+ e);
+			throw new JobOpportunityException("Can not retrieve JobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return vacancies;
+	}
+
+	public static Collection<JobOpportunityBean> getVacanciesWithRecommendationSubmitted(	String schoolYear,
+																																												SchoolZoneBean zone)
+			throws JobOpportunityException {
+
+		Collection<JobOpportunityBean> vacancies = new ArrayList<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_vac_rec_submitted(?,?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolYear);
+			stat.setInt(3, zone.getZoneId());
+
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				vacancies.add(JobOpportunityManager.createJobOpportunityBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println(
+					"Collection<JobOpportunityBean> getVacanciesWithRecommendationSubmitted(String schoolYear, SchoolZoneBean zone): "
+							+ e);
+			throw new JobOpportunityException("Can not retrieve JobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return vacancies;
+	}
+
 	public static TeacherAllocationVacancyStatisticsBean createTeacherAllocationVacancyStatisticsBean(ResultSet rs) {
 
 		TeacherAllocationVacancyStatisticsBean stats = null;
