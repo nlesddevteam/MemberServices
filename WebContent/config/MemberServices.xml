@@ -3896,6 +3896,22 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithAcceptedOfferRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/listVacanciesWithAcceptedOffer.html</URL-Pattern>
     </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesOfferedRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithCurrentOffer.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithRecommendationAcceptedRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithRecommendationAccepted.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithRecommendationApprovedRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithRecommendationApproved.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithRecommendationSubmittedRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithRecommendationSubmitted.html</URL-Pattern>
+    </Request-Handler>
     
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.bcs.handler.CheckDriverLicenceAjaxRequestHandler</Request-Handler-Class>

@@ -140,10 +140,10 @@
 												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdPosted() %></td>
 												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithNoShortlist.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalNoShortlist() %></a></td>
 												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesShortlistedWithNoRecommendation.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalShortlistNoRecemmendation() %></a></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationSubmitted() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationApproved() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationAccepted() %></td>
-												<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalRecommendationOffered() %></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithRecommendationSubmitted.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationSubmitted() %></a></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithRecommendationApproved.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationApproved() %></a></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithRecommendationAccepted.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationAccepted() %></a></td>
+												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithCurrentOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOffered() %></a></td>
 												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithAcceptedOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOfferAccepted() %></a></td>
 												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithRejectedOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOfferRejected() %></a></td>
 												<td class="regionRow<%=rowCnt%>"><a href="listVacanciesWithExpiredOffer.html?sy=<%= statsSchoolYear %>&zid=<%= entry.getKey().getZoneId() %>"><%= entry.getValue().getTotalRecommendationOfferExpired() %></a></td>
