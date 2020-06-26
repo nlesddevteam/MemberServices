@@ -198,19 +198,19 @@ function parseAddApplicantResponse(data){
 							<td class='tableTitle'>STATUS:</td>
 							<td class='tableResult'>
 								<% if ((opp != null) && (opp.isCandidateListPrivate())) { %> 
-									<span style="color: red;">Candidate List is Private</span><br /> 
+									<span class='alert-danger'>Candidate List is Private</span><br /> 
 								<% } %> 
 								<% if (ad != null) { %>
 									<span>Ad Requested by <span style="text-transform: Capitalize;"><%=ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().getFullNameReverse() + (ad.isUnadvertised() ? " is <b>unadvertised</b>" : "")%></span></span><br />
 								<% } %> 
 								<% if ((opp != null) && (opp.isCancelled())) { %> 
-									<span style="color: red;">Position cancelled on <%=opp.getFormatedCancelledDate()%></span><br />
+									<span class='alert-danger'>Position cancelled on <%=opp.getFormatedCancelledDate()%></span><br />
 								<% } %> 
 								<% if ((opp != null) && (opp.isReopened())) { %> 
- 									<span style="color: red;">Position reopened on <%=opp.getFormattedReopenedDate()%> by <%=StringUtils.capitaliseAllWords(opp.getReopenedBy().getFullNameReverse())%></span>
+ 									<span class='alert-danger'>Position reopened on <%=opp.getFormattedReopenedDate()%> by <%=StringUtils.capitaliseAllWords(opp.getReopenedBy().getFullNameReverse())%></span><br />
 								<% } %>
 								<% if ((opp != null) && (opp.isAwarded())) { %> 
- 									<span style="color: red;">Position Awarded on <%=opp.getFormatedJobAwardedDate()%></span>
+ 									<span class='alert-danger'>Position Awarded on <%=opp.getFormatedJobAwardedDate()%></span><br />
 								<% } %>
 							</td>
 						</tr>
