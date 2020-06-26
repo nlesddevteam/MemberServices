@@ -3,6 +3,7 @@
                  com.esdnl.personnel.jobs.dao.*,
                  com.esdnl.personnel.jobs.constants.*,
                  com.awsd.security.*,
+                 com.awsd.school.*,
                  java.util.*,java.lang.*,
                  java.text.*,
                  org.apache.commons.lang.*"
@@ -233,7 +234,12 @@ function parseAddApplicantResponse(data){
 	<% } %>
 	                     				
 	                                         				
-	<%if(!opp.isCandidateListPrivate() || usr.checkPermission("PERSONNEL-ADMIN-VIEW-PRIVATE-CANDIDATE-LIST")){ %>
+	<%
+		SchoolFamily family = ((opp.get(0) != null) && (opp.get(0).getSchool() != null)) ? SchoolFamilyDB.getSchoolFamily(opp.get(0).getSchool()) : null;
+		
+		boolean isFOS = ((family != null) && (usr.getPersonnel().getPersonnelID() == family.getProgramSpecialistID()));
+		
+		if(!opp.isCandidateListPrivate() || usr.checkPermission("PERSONNEL-ADMIN-VIEW-PRIVATE-CANDIDATE-LIST") || isFOS){ %>
 		<%if(!(opp.getJobType().equal(JobTypeConstant.LEADERSHIP) && usr.checkRole("SENIOR EDUCATION OFFICIER")) || usr.checkRole("JOB APPS - VIEW PRIVATE")){ %>
 			<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>		
 	 	<%}%>
