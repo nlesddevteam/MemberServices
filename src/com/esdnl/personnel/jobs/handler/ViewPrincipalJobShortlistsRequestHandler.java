@@ -1,7 +1,9 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,14 +26,13 @@ public class ViewPrincipalJobShortlistsRequestHandler implements RequestHandler 
 		String path;
 		HttpSession session = null;
 		User usr = null;
-		JobOpportunityBean[] opps = null;
 
 		try {
 			session = request.getSession(false);
 			if ((session != null) && (session.getAttribute("usr") != null)) {
 				usr = (User) session.getAttribute("usr");
-				if (!(usr.getUserPermissions().containsKey("PERSONNEL-PRINCIPAL-VIEW") || usr.getUserPermissions().containsKey(
-						"PERSONNEL-VICEPRINCIPAL-VIEW"))) {
+				if (!(usr.getUserPermissions().containsKey("PERSONNEL-PRINCIPAL-VIEW")
+						|| usr.getUserPermissions().containsKey("PERSONNEL-VICEPRINCIPAL-VIEW"))) {
 					throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
 				}
 			}
@@ -39,14 +40,11 @@ public class ViewPrincipalJobShortlistsRequestHandler implements RequestHandler 
 				throw new SecurityException("User login required.");
 			}
 
-			opps = JobOpportunityManager.getJobOpportunityBeans(usr.getPersonnel().getSchool().getSchoolID());
-
 			//filter only job with completed shortlists
-			ArrayList<JobOpportunityBean> jobs = new ArrayList<JobOpportunityBean>();
-			for (JobOpportunityBean job : opps) {
-				if (job.isShortlistComplete() && !job.isCandidateListPrivate())
-					jobs.add(job);
-			}
+			List<JobOpportunityBean> jobs = Arrays.asList(
+					JobOpportunityManager.getJobOpportunityBeans(usr.getPersonnel().getSchool().getSchoolID())).stream().filter(
+							j -> j.isShortlistComplete() && !j.isCandidateListPrivate() && !j.isSupport()).collect(
+									Collectors.toList());
 
 			request.setAttribute("PRINCIPAL_SHORTLISTS", (JobOpportunityBean[]) jobs.toArray(new JobOpportunityBean[0]));
 			path = "admin_view_principal_job_shortlists.jsp";

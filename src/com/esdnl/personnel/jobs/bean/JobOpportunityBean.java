@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.awsd.personnel.Personnel;
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.PersonnelException;
@@ -497,5 +499,10 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	public void setIsSupport(String isSupport) {
 
 		this.isSupport = isSupport;
+	}
+
+	public boolean isSupport() {
+
+		return StringUtils.equals(this.getIsSupport(), "Y");
 	}
 }
