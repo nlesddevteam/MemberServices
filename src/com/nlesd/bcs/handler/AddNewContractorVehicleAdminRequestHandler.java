@@ -55,19 +55,22 @@ public class AddNewContractorVehicleAdminRequestHandler extends RequestHandlerIm
 		if (validate_form()) {
 			try {
 				BussingContractorBean bcbean = null;
-				if(form.exists("contractor")){
-					bcbean = BussingContractorManager.getBussingContractorById(form.getInt("contractor"));
-				}else{
-					if(usr.checkPermission("BCS-VIEW-WESTERN")){
-						bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.WESTERN.getValue());
+				if(BussingContractorVehicleManager.checkVehicleSerialNumber(form.get("vserialnumber"))) {
+					message="Vehicle record on file with identical Serial Number";
+				}else {
+					if(form.exists("contractor")){
+						bcbean = BussingContractorManager.getBussingContractorById(form.getInt("contractor"));
+					}else{
+						if(usr.checkPermission("BCS-VIEW-WESTERN")){
+							bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.WESTERN.getValue());
+						}
+						if(usr.checkPermission("BCS-VIEW-CENTRAL")){
+							bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.CENTRAL.getValue());
+						}
+						if(usr.checkPermission("BCS-VIEW-LABRADOR")){
+							bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.LABRADOR.getValue());
+						}
 					}
-					if(usr.checkPermission("BCS-VIEW-CENTRAL")){
-						bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.CENTRAL.getValue());
-					}
-					if(usr.checkPermission("BCS-VIEW-LABRADOR")){
-						bcbean = BussingContractorManager.getBussingContractorById(BoardOwnedContractorsConstant.LABRADOR.getValue());
-					}
-				}
 					vbean.setContractorId(bcbean.getId());
 					vbean.setvMake(form.getInt("vmake"));
 					//vbean.setvModel(-1);
@@ -248,9 +251,10 @@ public class AddNewContractorVehicleAdminRequestHandler extends RequestHandlerIm
 							+ ") added on  " + dateTimeInstance.format(Calendar.getInstance().getTime()) + " by " + usr.getLotusUserFullNameReverse());
 					atbean.setContractorId(vbean.getContractorId());
 					AuditTrailManager.addAuditTrail(atbean);
-					}catch(Exception e){
-						message = e.getMessage();
-					}
+				}
+			}catch(Exception e){
+				message = e.getMessage();
+			}
 		}else {
 			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
 		}

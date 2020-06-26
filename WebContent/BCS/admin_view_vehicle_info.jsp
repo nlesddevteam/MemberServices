@@ -255,6 +255,21 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 	            <div class="form-group">
+				<label class="control-label col-sm-2" for="email"></label>
+		      	<div class="col-sm-5">
+		      		<div class="row">
+		      			<div class="col-sm-5">
+		        			<button type='button' onclick="checksn()">Check Serial Number</button>
+		        		</div>
+		        		<div class="col-sm-5">
+		        			<div  id="dlvalid" style="display:none;">
+  								<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
+							</div>
+		        		</div>
+		        	</div>
+		        </div>
+				</div>
+	            <div class="form-group">
 	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Plate Number:</label>
 	                <div class="col-sm-5">
         				<p><input class="form-control" id="vplatenumber" name="vplatenumber" type="text" placeholder="Enter plate number" value="${vehicle.vPlateNumber}"></p>
