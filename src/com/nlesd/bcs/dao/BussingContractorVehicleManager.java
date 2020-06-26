@@ -1099,6 +1099,38 @@ public class BussingContractorVehicleManager {
 			catch (Exception e) {}
 		}
 		return list;
+	}
+	public static boolean checkVehicleSerialNumber(String sn)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		boolean check=false;
+		ResultSet rs = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.check_vehicle_sn(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2,sn);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				check=true;
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static boolean checkVehicleSerialNumber(String sn)" + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return check;
 	}	
 	public static BussingContractorVehicleBean createBussingContractorVehicleBean(ResultSet rs) {
 		BussingContractorVehicleBean abean = null;
