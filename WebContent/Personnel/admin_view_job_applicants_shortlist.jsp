@@ -417,35 +417,34 @@
 					<esd:SecurityAccessRequired
 						roles="ADMINISTRATOR,SEO - PERSONNEL,SENIOR EDUCATION OFFICIER,AD HR,ASSISTANT DIRECTORS">
 						<%if(!job.isAwarded() && !job.isCancelled()) { %>
-						<%if(!job.isShortlistComplete()){ %>
-						<%if(job.isClosed()){ %>
-						<a id='mark-shortlist-complete' class='btn btn-xs btn-success'
-							href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK
-							SHORTLIST AS COMPLETE</a>
-						<%}%>
+							<%if(!job.isShortlistComplete()){ %>
+								<%if(job.isClosed()){ %>
+									<a id='mark-shortlist-complete' class='btn btn-xs btn-success'
+										href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK
+										SHORTLIST AS COMPLETE</a>
+								<%}%>
+							<%}else{%>
+								<div class="alert alert-success">
+									Shortlist marked as complete
+									<%= job.getFormattedShortlistCompleteDate() %>.
+								</div>
+								<a id='mark-shortlist-reopen' class='btn btn-xs btn-danger'
+									href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=false'>REOPEN
+									/ UNLOCK SHORTLIST</a>
+							<%}%>
 						<%}else{%>
-						<div class="alert alert-success">
-							Shortlist marked as complete
-							<%= job.getFormattedShortlistCompleteDate() %>.
-						</div>
-						<a id='mark-shortlist-reopen' class='btn btn-xs btn-danger'
-							href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=false'>REOPEN
-							/ UNLOCK SHORTLIST</a>
-
-						<%}%>
-						<%}else{%>
-						<%if(job.isShortlistComplete()){ %>
-						<div class="alert alert-success">
-							Shortlist marked as complete
-							<%= job.getFormattedShortlistCompleteDate() %>.
-						</div>
-						<%}else{%>
-						<%if(job.isClosed()){ %>
-						<a id='mark-shortlist-complete' class='btn btn-xs btn-success'
-							href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK
-							SHORTLIST AS COMPLETE</a>
-						<%}%>
-						<%}%>
+							<%if(job.isShortlistComplete()){ %>
+								<div class="alert alert-success">
+									Shortlist marked as complete
+									<%= job.getFormattedShortlistCompleteDate() %>.
+								</div>
+							<%}else{%>
+								<%if(job.isClosed()){ %>
+									<a id='mark-shortlist-complete' class='btn btn-xs btn-success'
+										href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=true'>MARK
+										SHORTLIST AS COMPLETE</a>
+								<%}%>
+							<%}%>
 						<%}%>
 					</esd:SecurityAccessRequired>
 
