@@ -39,18 +39,18 @@ public class DeleteApplicantProfileRequestHandler extends RequestHandlerImpl {
 			try {
 				ApplicantProfileManager.deleteApplicantProfile(form.get("uid"));
 
-				request.setAttribute("msg", "Applicant profile deleted successfully.");
+				request.setAttribute("msgOK", "Applicant profile deleted successfully.");
 			}
 			catch (JobOpportunityException e) {
 				e.printStackTrace(System.err);
 
 				request.setAttribute("FORM", form);
-				request.setAttribute("msg", "Could not view reference.");
+				request.setAttribute("msgERR", "Could not view reference.");
 			}
 		}
 		else {
 			request.setAttribute("FORM", form);
-			request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
+			request.setAttribute("msgERR", StringUtils.encodeHTML(validator.getErrorString()));
 		}
 
 		return path;
