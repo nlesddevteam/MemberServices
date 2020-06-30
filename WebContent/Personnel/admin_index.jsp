@@ -216,9 +216,9 @@
 											<td scope="col" style='font-weight:bold;text-align:center;text-transform:Uppercase;background-color:Red;color:White;'>Expired</td>
 										</tr>							
 									     <tr>
-											<td scope="row" style='text-align:center;font-size:18;color:Navy;'><%= stats.getOffersQueued() %></td>
-											<td style='text-align:center;font-size:18;color:Green;'><%= stats.getOffersInProgress() %></td>
-											<td style='text-align:center;font-size:18;color:Red;'><%= stats.getOffersExpired() %></td>
+											<td scope="row" style='text-align:center;font-size:18;color:Navy;'><a href="listVacanciesWithOffersQueued.html" target="_blank"><%= stats.getOffersQueued() %></a></td>
+											<td style='text-align:center;font-size:18;color:Green;'><a href="listVacanciesWithOffersInprogress.html" target="_blank"><%= stats.getOffersInProgress() %></a></td>
+											<td style='text-align:center;font-size:18;color:Red;'><a href="listVacanciesWithOffersExpired.html" target="_blank"><%= stats.getOffersExpired() %></a></td>
 										</tr>
 									</tbody>
 								</table>

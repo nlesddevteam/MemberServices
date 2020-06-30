@@ -3913,6 +3913,18 @@
       <URL-Pattern>/Personnel/listVacanciesWithRecommendationSubmitted.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithOffersQueuedRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithOffersQueued.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithOffersInprogressRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithOffersInprogress.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithOffersExpiredRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithOffersExpired.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
       <Request-Handler-Class>com.nlesd.bcs.handler.CheckDriverLicenceAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/BCS/checkDriverLicence.html</URL-Pattern>
     </Request-Handler>
