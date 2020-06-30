@@ -60,8 +60,14 @@
 					<b>NOTICE: </b>Due to the information and data layout this application provides, we advise using a tablet or laptop/desktop computer to use this system.
 					
 					<br/>&nbsp;<br/>
-					 <c:if test="${ msg ne null }">  
-                   		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
+					<c:if test="${ msg ne null }">  
+                   		<div class="alert alert-warning" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
+                  	</c:if>	
+                  	<c:if test="${ msgOK ne null }">  
+                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msg } </div>     
+                  	</c:if>	
+                  	<c:if test="${ msgERR ne null }">  
+                   		<div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
                   	</c:if>			
                   	
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">			
@@ -226,7 +232,13 @@
 										
 					
 					 <c:if test="${ msg ne null }">  
-                   		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
+                   		<div class="alert alert-warning"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
+                  	</c:if>	
+                  	<c:if test="${ msgOK ne null }">  
+                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msg } </div>     
+                  	</c:if>	
+                  	<c:if test="${ msgERR ne null }">  
+                   		<div class="alert alert-danger"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
                   	</c:if>					
 					
 					</div>	

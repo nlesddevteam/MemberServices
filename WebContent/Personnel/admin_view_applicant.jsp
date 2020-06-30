@@ -1413,7 +1413,7 @@ input {
 							</select>
 						</div>
 						<div class="alert alert-info" id="response_msg">Select a Sub
-							List from above to add to. (Selet multiple by holding the CTRL
+							List from above to add to. (Select multiple by holding the CTRL
 							key while clicking)</div>
 
 
