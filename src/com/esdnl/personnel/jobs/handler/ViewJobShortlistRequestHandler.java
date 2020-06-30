@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.awsd.school.SchoolFamily;
 import com.awsd.school.SchoolFamilyDB;
+import com.awsd.school.SchoolFamilyException;
 import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
@@ -50,9 +51,15 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 
 				opp = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
 
-				SchoolFamily family = ((opp.get(0) != null) && (opp.get(0).getSchool() != null))
-						? SchoolFamilyDB.getSchoolFamily(opp.get(0).getSchool())
-						: null;
+				SchoolFamily family = null;
+				try {
+					family = ((opp.get(0) != null) && (opp.get(0).getSchool() != null))
+							? SchoolFamilyDB.getSchoolFamily(opp.get(0).getSchool())
+							: null;
+				}
+				catch (SchoolFamilyException e) {
+					family = null;
+				}
 
 				boolean isFOS = ((family != null) && (usr.getPersonnel().getPersonnelID() == family.getProgramSpecialistID()));
 

@@ -235,7 +235,13 @@ function parseAddApplicantResponse(data){
 	                     				
 	                                         				
 	<%
-		SchoolFamily family = ((opp.get(0) != null) && (opp.get(0).getSchool() != null)) ? SchoolFamilyDB.getSchoolFamily(opp.get(0).getSchool()) : null;
+		SchoolFamily family = null;
+		try{
+			family = ((opp.get(0) != null) && (opp.get(0).getSchool() != null)) ? SchoolFamilyDB.getSchoolFamily(opp.get(0).getSchool()) : null;
+		}
+		catch(SchoolFamilyException e) {
+			family = null;
+		}
 		
 		boolean isFOS = ((family != null) && (usr.getPersonnel().getPersonnelID() == family.getProgramSpecialistID()));
 		
