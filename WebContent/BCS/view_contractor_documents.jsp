@@ -40,6 +40,7 @@ $(document).ready(function() {
         	      date_input.datepicker(options);
 
 });
+
 		</script> 
 
 		<script>
@@ -49,7 +50,7 @@ $(document).ready(function() {
     		});  
    			});
 		</script> 		
-		   		    
+<%pageContext.setAttribute("now", new java.util.Date()); %> 		   		    
 	<div id="printJob">	
 					
 			<div class="BCSHeaderText">Contractor Documents</div>
@@ -64,9 +65,9 @@ $(document).ready(function() {
      		 <thead>
 		     		<tr class="listHeader">
 		      		<th width="30%" class="listdata">Document Title</th>
-		      		<th width="40%" class="listdata">Document Type</th>
+		      		<th width="30%" class="listdata">Document Type</th>
 		      		<th width="10%" class="listdata">Uploaded</th>
-		      		<th width="10%" class="listdata">Expiry</th>
+		      		<th width="20%" class="listdata">Expiry/Date Issued</th>
 		      		<th width="10%" class="listdata">Options</th>
 		      		
 		      		
@@ -82,7 +83,17 @@ $(document).ready(function() {
 		      					<td class="field_content">${rule.documentTitle}</td>
 		      					<td class="field_content">${rule.typeString}</td>
 		      					<td class="field_content">${rule.dateUploadedFormatted}</td>
-		      					<td class="field_content">${rule.expiryDateFormatted}</td>
+		      					<td class="field_content">${rule.expiryDateFormatted}
+		      					<c:choose>
+		      						<c:when test="${rule.documentType eq 63}">
+		      							<c:choose>
+		      								<c:when test="${now gt rule.getDocExpiryDate(45) }">
+		      									&nbsp;&nbsp;&nbsp;&nbsp;<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">Expired</span>
+		      								</c:when>
+		      							</c:choose>
+		      						</c:when>
+		      					</c:choose>
+		      					</td>
 		      					<td class="field_content">
 		      					<button type="button" class="btn btn-xs btn-primary" onclick="window.open('${spath}${rule.viewPath}','_blank');">View</button>
 		      					<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedocdialogc('${rule.documentTitle}','${rule.id}');">Del</button>
@@ -137,7 +148,7 @@ $(document).ready(function() {
                     <p>
                     <input class="form-control" id="documenttitle" name="documenttitle" placeholder="document title" type="text">
                     </p>
-                    <p class="text-warning" id="title2">Expiry Date (If document has expiry date then please enter):</p>
+                    <p class="text-warning" id="title2">Expiry Date/Date Issued:</p>
                     <p>
 	                <input class="form-control" id="expirydate" name="expirydate" placeholder="MM/DD/YYY" type="text">
 	                </p>

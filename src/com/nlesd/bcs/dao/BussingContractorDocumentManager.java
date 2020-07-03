@@ -119,7 +119,7 @@ public class BussingContractorDocumentManager {
 			catch (Exception e) {}
 		}
 		return check;
-	}	
+	}
 	public static BussingContractorDocumentBean createBussingContractorDocumentBean(ResultSet rs) {
 		BussingContractorDocumentBean abean = null;
 		try {
@@ -139,6 +139,23 @@ public class BussingContractorDocumentManager {
 					abean.setExpiryDate(new java.util.Date(rs.getTimestamp("EXPIRYDATE").getTime()));
 				}
 				abean.setTypeString(rs.getString("DD_TEXT"));
+				//extra fields for automated warning messages
+				try {
+					//using one big query
+					if(rs.getString("COMPANY") !=  null) {
+						abean.setCompanyName(rs.getString("COMPANY"));
+					}else {
+						abean.setCompanyName(rs.getString("CFNAME") + " " + rs.getString("CFNAME"));
+					}
+					
+					abean.setCompanyEmail(rs.getString("CEMAIL"));
+					abean.setWarningNotes(rs.getString("WTYPE"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setCompanyName("");
+					abean.setCompanyEmail("");
+					abean.setWarningNotes("No Warning Text");
+				}
 				
 		}catch (SQLException e) {
 				abean = null;

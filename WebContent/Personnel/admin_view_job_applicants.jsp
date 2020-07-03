@@ -2,10 +2,11 @@
 	import="com.esdnl.personnel.jobs.bean.*,
          				 com.esdnl.personnel.jobs.constants.*,
          				 com.esdnl.personnel.jobs.dao.*,
-         				   com.esdnl.personnel.jobs.bean.*,                
+         				 com.esdnl.personnel.jobs.bean.*,                
          				 com.awsd.security.*,         				 
          				 com.awsd.mail.bean.*,         				 
-         				 java.util.*"
+         				 java.util.*,
+         				 java.util.stream.*"
 	isThreadSafe="false"%>
 
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -42,6 +43,11 @@
 	Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
 		permApplicants = ApplicantProfileManager.getCompetitionPermanentCandidates(job.getCompetitionNumber());
+		
+		if(session.getAttribute("sfilterparams") != null) {
+			List<String> filteredApplicants = Arrays.stream(applicants).map(a -> a.getUID()).collect(Collectors.toList());
+			permApplicants = permApplicants.entrySet().stream().filter(e -> filteredApplicants.contains(e.getKey())).collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())) ;
+		}
 	}
 	
 	int locationId = ((JobOpportunityAssignmentBean) job.get(0)).getLocation();
