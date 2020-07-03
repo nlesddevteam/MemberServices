@@ -10,6 +10,7 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.BussingContractorSystemContractBean;
 import com.nlesd.bcs.dao.BussingContractorCompanyManager;
+import com.nlesd.bcs.dao.BussingContractorDocumentManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
 import com.nlesd.bcs.dao.BussingContractorSecurityManager;
 import com.nlesd.bcs.dao.BussingContractorSystemContractManager;
@@ -34,6 +35,7 @@ public class ViewContractorInformationAdminRequestHandler extends RequestHandler
 	    	request.setAttribute("sec",BussingContractorSecurityManager.getBussingContractorSecurityById(form.getInt("cid")));
 	    	request.setAttribute("letters", BussingContractorSystemLetterOnFileManager.getLettersOnFile(form.getInt("cid"), "C"));
 	    	request.setAttribute("spath",request.getContextPath());
+	    	request.setAttribute("docs",BussingContractorDocumentManager.getBussingContractorDocumentsById(form.getInt("cid")));
 	    	ArrayList<BussingContractorSystemContractBean> list  = BussingContractorSystemContractManager.getContractsForContractor(form.getInt("cid"));
 		    request.setAttribute("contracts", list);
 	    	path = "admin_view_contractor_info.jsp";

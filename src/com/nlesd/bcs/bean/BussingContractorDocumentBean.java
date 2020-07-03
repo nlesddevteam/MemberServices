@@ -1,7 +1,9 @@
 package com.nlesd.bcs.bean;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class BussingContractorDocumentBean implements Serializable {
@@ -16,6 +18,9 @@ public class BussingContractorDocumentBean implements Serializable {
 	private Date dateUploaded;
 	private Date expiryDate;
 	private String typeString;
+	private String warningNotes;//used with main screen warnings for contractors and automated ones
+	private String companyName;//used with main screen warnings for contractors and automated ones
+	private String companyEmail;//used with main screen warnings for contractors and automated ones
 	public int getId() {
 		return id;
 	}
@@ -87,5 +92,43 @@ public class BussingContractorDocumentBean implements Serializable {
 		}else{
 			return "";
 		}
+	}
+	public Date getDocExpiryDate(int numofdays) {
+		Date rdate = null;
+		if(this.expiryDate == null) {
+			rdate=null;
+		}else {
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		    Calendar c = Calendar.getInstance();
+		    try {
+				c.setTime(sdf.parse(this.getExpiryDateFormatted()));
+				c.add(Calendar.DATE, numofdays);
+				rdate =  c.getTime();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+		}
+		return rdate;
+		
+	}
+	public String getWarningNotes() {
+		return warningNotes;
+	}
+	public void setWarningNotes(String warningNotes) {
+		this.warningNotes = warningNotes;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getCompanyEmail() {
+		return companyEmail;
+	}
+	public void setCompanyEmail(String companyEmail) {
+		this.companyEmail = companyEmail;
 	}
 }
