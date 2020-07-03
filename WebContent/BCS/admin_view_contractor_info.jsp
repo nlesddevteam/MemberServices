@@ -30,6 +30,7 @@ if(tabs != null){
 	settab="L";
 }
 pageContext.setAttribute("settab1", settab);
+
 %>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -221,7 +222,7 @@ $(document).ready(function() {
   
 </script>
 		
-	<%pageContext.setAttribute("now", new java.util.Date()); %>   		
+	<%pageContext.setAttribute("now", new java.util.Date()); %> 		
 	<div id="printJob">	
 				  		<div class="alert alert-danger" id="body_error_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     	        <div class="alert alert-success" id="body_success_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
@@ -238,6 +239,7 @@ $(document).ready(function() {
 	    		<li class="active"><a data-toggle="tab" href="#contact">Contact Information</a></li>
 	    		<li><a data-toggle="tab" href="#company">Company Information</a></li>
 	    		<li><a data-toggle="tab" href="#security">Security Information</a></li>
+	    		<li><a data-toggle="tab" href="#documents">Documents</a></li>
 	    		<li><a data-toggle="tab" href="#letters">Letters On File</a></li>
 	    		<li><a data-toggle="tab" href="#contracts">Contracts</a></li>
 	  		  </ul>
@@ -581,7 +583,72 @@ $(document).ready(function() {
 				    </div>
 				    
 		    	</div>
-		    			<div id="letters" class="tab-pane fade">
+		    	<div id="documents" class="tab-pane fade">
+		    		<div class="alert alert-success" id="documents_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
+		    			<p>	
+		    			
+				  <div id="BCS-Search">
+				 	<table id="BCS-table-docs" width="100%" class="BCSTable">
+		     		<thead>
+		     		<tr style="border-bottom:1px solid grey;" class="listHeader">
+		      		<th width="25%" class="listdata">Type</th>
+		      		<th width="30%" class="listdata">Title</th>
+		      		<th width="20%" class="listdata">Expiry/Date Issued</th>
+		      		<th width="10%" class="listdata">Date Uploaded</th>
+		      		<th width="15%" class="listdata">Options ${fn:length(docs) > 0}</th>
+		      		</tr>
+		      		</thead>
+		      		<tbody>
+					<c:choose>
+		      		<c:when test="${fn:length(docs) > 0}">
+			      		<c:forEach items="${docs}" var="rule">
+			      		<c:set var="countDocsU" value="${countDocsU + 1}" />
+		 					<tr style="border-bottom:1px solid silver;">
+		      					<td class="field_content">${rule.typeString}</td>
+		      					<td class="field_content">${rule.documentTitle}</td>
+		      					<td class="field_content">${rule.expiryDate ne null ? rule.expiryDateFormatted : ''}
+		      					<c:choose>
+		      						<c:when test="${rule.documentType eq 63}">
+		      							<c:choose>
+		      								<c:when test="${now gt rule.getDocExpiryDate(45) }">
+		      									&nbsp;&nbsp;&nbsp;&nbsp;<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">Expired</span>
+		      								</c:when>
+		      							</c:choose>
+		      						</c:when>
+		      					</c:choose>
+		      					
+		      					</td>
+		      					<td class="field_content">${rule.dateUploadedFormatted}</td>
+		      					<td align="right" class="field_content">
+		      					<button type="button" class="btn btn-xs btn-primary" onclick="window.open('${spath}${rule.viewPath}','_blank');">View</button>
+		      					<button type="button" class="btn btn-xs btn-danger" onclick="opendeleteletterdialog('${rule.documentTitle}','${rule.id}','C');">Del</button>
+
+								
+								</td>
+		      				</tr>
+
+		        		</c:forEach>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<tr><td colspan='5' style="color:Red;">No documents found.</td></tr>
+		        		</c:otherwise>
+		        		</c:choose>		      		
+		        	</tbody>	
+	      		</table>
+	      		<img src="includes/img/bar.png" width="100%" style="padding-bottom:10px;">
+	      			      		
+	      		
+	    <c:choose>
+      	<c:when test="${countDocsU >0 }">
+      		<script>$('#documents_success_message').html("There are <b>${countDocsU}</b> on file.").css("display","block").delay(4000).fadeOut();</script>
+      	</c:when>
+      	</c:choose>
+	      		 
+	      		</div>
+	    </div>
+	
+		    	
+		    	<div id="letters" class="tab-pane fade">
 		    			<div class="alert alert-danger" id="letters_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
            				<div class="alert alert-success" id="letters_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
 		    			<p>

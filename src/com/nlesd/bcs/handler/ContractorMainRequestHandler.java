@@ -27,7 +27,9 @@ public class ContractorMainRequestHandler extends BCSApplicationRequestHandlerIm
 			//get list of vehicle warnings
 			request.setAttribute("vwarnings", BussingContractorWarningsManager.getVehicleWarnings(ebean.getId())); 
 			//get list of sys docs warnings
-			request.setAttribute("dwarnings", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsMessages()); 
+			request.setAttribute("dwarnings", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsMessages());
+			//get list of contractors docs that are expired
+			request.setAttribute("docwarnings", BussingContractorWarningsManager.getDocumentWarnings(ebean.getId())); 
 			path = "contractor_main.jsp";
 		}
 

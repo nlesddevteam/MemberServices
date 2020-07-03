@@ -112,7 +112,7 @@
 							Welcome to your Student Transportation Management System. To start, review any messages below and/or navigate options to manage your employees, vehicles, and contracts via the menu above.						 
 							  <br/>
 							   
-							   	<div class="BCSHeaderText">System Messages or Warnings <span id="sysCount"></span></div>
+							   	<div class="BCSHeaderText">System Messages or Warnings <<span id="sysCount"></span></div>
    									<div class="alert alert-success" id="sysmes_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     								<div class="alert alert-danger" id="sysmes_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 	
    									
@@ -259,7 +259,54 @@
 								      		<script>$('#BCS-table-C').css("display","none");$('#veh_success_message').html("There are no <span style='text-transform:lowercase;'>vehicle warning messages or warnings</span> at this time.").css("display","block");</script>
 								      	</c:otherwise>
 								    </c:choose>
+							  		<br />							  		
+							  		<div class="BCSHeaderText">Contractor Documents Messages or Warnings <span id="cdocCount"></span></div>
+							  		<div class="alert alert-danger" id="cdoc_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
+    								<div class="alert alert-success" id="cdoc_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
+   									 <table id="BCS-table-CDOC" width="100%" class="BCSTable">
+							  		<thead>
+							  			<tr class="listHeader">
+							  				<th width="20%" class="listdata" style="padding:2px;">Document Title</th>
+							  				<th width="20%" class="listdata" style="padding:2px;">Document Type</th>
+							  				<th width="20%" class="listdata" style="padding:2px;">Expiry/Date Issued</th>
+							  				<th width="40%" class="listdata" style="padding:2px;">Warning</th>
+							  			</tr>
+							  		</thead>
+							  		<tbody>
+									<c:choose>
+						      			<c:when test="${fn:length(docwarnings) > 0}">
+							      			<c:forEach items="${docwarnings}" var="rule">
+							      			<c:set var="countdocwarningsMessages" value="${countdocwarningsMessages + 1}" />
+							 					<tr style="border-bottom:1px solid silver;">
+							 					<td class="field_content">${rule.documentTitle}</td>
+							      					<td class="field_content">${rule.typeString}</td>
+							      					<td class="field_content">${rule.expiryDateFormatted}</td>
+							      					<td class="field_content">${rule.warningNotes}</td>
+							      					
+							      				</tr>
+						        			</c:forEach>
+	        							</c:when>
+	        							<c:otherwise>
+	        								<tr><td colspan='5' style="color:Red;">No contractor documents messages or warnings</td></tr>
+	        							</c:otherwise>
+	        						</c:choose>
+	        						
+	        						
+	        						
+							  		</tbody>
+							  		</table>	
 							  		
+							  		<c:choose>
+								      	<c:when test="${countdocwarningsMessages >0 }">
+								      		<script>
+								      		$('#cdoc_error_message').html("There are <b>${countdocwarningsMessages}</b> <span style='text-transform:lowercase;'>contractor documents warning messages</span> found.").css("display","block").delay(4000).fadeOut();
+								      		$('#cdocCount').html('(${countdocwarningsMessages})');
+								      		</script>
+								      	</c:when>
+								      	<c:otherwise>
+								      		<script>$('#BCS-table-CDOC').css("display","none");$('#cdoc_success_message').html("There are no <span style='text-transform:lowercase;'>contractor documents warning messages or warnings</span> at this time.").css("display","block");</script>
+								      	</c:otherwise>
+								    </c:choose>
 							  		
 							  								  			
 							</div>
