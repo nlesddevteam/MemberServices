@@ -648,37 +648,24 @@ input {
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section12">   
 	               	<div class="panel-heading">
-	               	<table width="100%">
-	               	<tr><td align="left"><b>Letters</b></td>
-	               	<td align="right">
+	              <b>Letters</b>
+	               	<div style="float:right;">
 	               		<a href="#" data-toggle="modal" data-target="#add_letter_dialog" id="btn_show_add_letter_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Letter</a>
-	               	</td>
-	               	</tr>
-	               	<tr><td colspan='2'>
-	               		<br />
-	               		<div class="alert alert-warning" role="alert" id="letteralert" style="display:none;">
-  							<span id="letterspan"></span>
-						</div>
-	               	</table>
-	               	</div>
-      			 	<div class="panel-body"> 	
-	
-					<div class="table-responsive"> 
+	              </div>
+	              	</div>
+      			 	<div class="panel-body"> 							
+					<div class="table-responsive">     			 	       
       			 	       
-      			 	       
-							  <% if((docs != null) && (docs.size() > 0))
-                              { %>
+							  <% if((docs != null) && (docs.size() > 0))  { %>
                               
                               <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;" id="tblletters">
-									    <thead>
-									    
+									    <thead>									    
 									      <tr style="border-top:1px solid black;">
 									      	<th width='60%'>Title</th>
 									        <th width='25%'>UPLOADED</th>
 									        <th class="no-print" width='15%'>OPTIONS</th>		
 									      </tr>
-									    </thead>
-							    
+									    </thead>							    
 							    <tbody>
                               
                               
