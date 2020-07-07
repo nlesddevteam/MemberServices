@@ -389,11 +389,11 @@ input {
 								    					empbean.getCurrentPositions().stream()
 								    						.filter(p -> p.getFteHours() > 0)
 								    						.sorted((EmployeePositionBean p1, EmployeePositionBean p2) -> {
-								    							if((p1.getStartDate() != null) && (p2.getStartDate() != null) && (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
-								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
-								    							}
-								    							else if((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
+								    							if((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
 								    								return -1 * p1.getEndDate().compareTo(p2.getEndDate());
+								    							}
+								    							else  if((p1.getStartDate() != null) && (p2.getStartDate() != null) && (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
+								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
 								    							}
 								    							else {
 								    								return 0;
