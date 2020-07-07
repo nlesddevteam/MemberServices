@@ -255,7 +255,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else if(this.location == 833 || this.location == 834 || this.location == 835 || this.location == 836 || this.location == 837 || this.location == 285 ||this.location == 842 ) {
+			}else if(this.location == 833 || this.location == 834 || this.location == 835 || this.location == 836 || this.location == 837 || this.location == 285 ||this.location == 842 ||this.location == 843 ) {
 				try {
 					zone = SchoolZoneService.getSchoolZoneBean(2);
 				} catch (SchoolException e) {
