@@ -191,6 +191,9 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 					case 3036: //Nova Central GF-Windsor Bus
 						location_id = 835;
 						break;
+					case 3037: //Nova Central GF-Windsor Bus
+						location_id = 843;
+						break;	
 					case 3031: //Nova Central Lewisporte BusDep
 						location_id = 836;
 						break;

@@ -1169,24 +1169,17 @@ input {
 	<div class="panel-group" style="padding-top: 5px;">
 		<div class="panel panel-success" id="section16">
 			<div class="panel-heading">
-				<table width="100%">
-					<tr>
-						<td align="left"><b>Letters</b></td>
-						<td align="right"><a href="#" data-toggle="modal" data-target="#add_letter_dialog" id="btn_show_add_letter_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Letter</a></td>
-					</tr>
-					<tr>
-						<td colspan='2'>
-							<div class="alert alert-warning" role="alert" id="letteralert" style="display: none;">
-								<span id="letterspan"></span>
-							</div>
-						</td>
-					</tr>
-				</table>
-			</div>
+				<b>Letters</b>
+				<div style="float:right;">
+				<a href="#" data-toggle="modal" data-target="#add_letter_dialog" id="btn_show_add_letter_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Letter</a>
+				</div>
+				</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					
-						<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblletters">
+				
+						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.LETTER)).count() > 0)) { %>
+								
+								<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblletters">
 							<thead>
 								<tr style="border-top: 1px solid black;">
 									<th width='60%'>Title</th>
@@ -1194,10 +1187,10 @@ input {
 									<th class="no-print" width='15%'>OPTIONS</th>
 								</tr>
 							</thead>
-							<tbody>
-								<% 
-									if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.LETTER)).count() > 0)) {
-										for (ApplicantDocumentBean doc : docs) {
+							<tbody>									
+										
+										
+								<%	for (ApplicantDocumentBean doc : docs) {
 											//only select roles get docs other then transcripts.
 											if (!doc.getType().equal(DocumentType.LETTER)) {
 												continue;
@@ -1210,12 +1203,14 @@ input {
 											<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp; <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
 										</td>
 									</tr>
-								<% }
-								 } else { %>
-									<tr><td colspan='3' style="color: Grey;">No Letter(s) currently on file.<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script></td></tr>
 								<% } %>
-							</tbody>
+								</tbody>
 						</table>
+								<% } else { %>
+									<span style="color: Grey;">No Letter(s) currently on file.</span>
+									<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script>								
+								<% } %>
+							
 					
 				</div>
 			</div>

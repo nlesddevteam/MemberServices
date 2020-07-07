@@ -135,6 +135,9 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		case 842: 
 			txt="Vista Depot Satellite Office";
 			break;
+		case 843: 
+			txt="Central Botwood Bus Depot";
+			break;	
 		case 285: 
 			txt="Burin Bus Depot";
 			break;			
