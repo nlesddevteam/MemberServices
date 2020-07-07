@@ -384,7 +384,7 @@ input {
 							    		<%
 							    			if(empbean != null) { 
 							    				List<EmployeePositionBean> positions = empbean.getCurrentPositions();
-							    				if(positions.size() > 0) {
+							    				if(positions != null && positions.size() > 0) {
 								    				out.println(
 								    					empbean.getCurrentPositions().stream()
 								    						.filter(p -> p.getFteHours() > 0)

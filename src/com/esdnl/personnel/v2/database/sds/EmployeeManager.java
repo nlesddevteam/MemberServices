@@ -585,7 +585,7 @@ public class EmployeeManager {
 			position.setEmployee(emp);
 			position.setSchoolYear(rs.getString("SCHOOL_YR"));
 			position.setName(rs.getString("NAME"));
-			position.setEmpId(rs.getString("EMP_ID").trim());
+			position.setEmpId(rs.getString("EMP_ID"));
 			position.setPosition(rs.getString("POSITION"));
 			position.setPositionType(PositionType.get(rs.getString("POSITION_TYPE")));
 
@@ -603,7 +603,7 @@ public class EmployeeManager {
 				position.setEndDate(null);
 			}
 
-			position.setSin(rs.getString("SIN").trim());
+			position.setSin(rs.getString("SIN"));
 			position.setLocation(rs.getString("LOCATION"));
 			position.setTenure(rs.getString("TENURE"));
 			position.setFteHours(rs.getDouble("FTE_HRS"));
