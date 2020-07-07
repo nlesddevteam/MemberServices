@@ -362,11 +362,27 @@ input {
 							    	%>
 							    	</td>
 							    </tr>
+							    
 							    <tr>
-							    	<td class="tableTitle">Current Contract:</td>
+										<td colspan='1' class='tableTitle'>Self-Reported Contract:</td>
+								    <c:choose>
+									    <c:when test="${permContractSchool ne null }">
+										    <td colspan='3'>${permContractSchool} ending ${permContractPosition} - PERMANENT</td>
+									    </c:when>
+									    <c:when test="${repContractSchool ne null }">
+										    <td colspan='3'>${repContractSchool} ending ${repContractEndDate} - REPLACEMENT</td>
+									    </c:when>
+									    <c:otherwise>
+										    	<td colspan='3'>N/A</td>
+									    </c:otherwise>
+								    </c:choose>
+							    </tr>
+							    
+							    <tr>
+							    	<td class='tableTitle'>SDS Current Contract:</td>
 							    	<td colspan='3'>
 							    		<%
-							    			if(empbean != null) {
+							    			if(empbean != null) { 
 							    				List<EmployeePositionBean> positions = empbean.getCurrentPositions();
 							    				if(positions.size() > 0) {
 								    				out.println(
@@ -377,7 +393,7 @@ input {
 								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
 								    							}
 								    							else if((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
-								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
+								    								return -1 * p1.getEndDate().compareTo(p2.getEndDate());
 								    							}
 								    							else {
 								    								return 0;

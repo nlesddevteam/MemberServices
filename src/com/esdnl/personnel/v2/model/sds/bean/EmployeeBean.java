@@ -1,8 +1,10 @@
 package com.esdnl.personnel.v2.model.sds.bean;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.esdnl.personnel.v2.model.availability.bean.EmployeeAvailabilityBean;
@@ -41,6 +43,7 @@ public class EmployeeBean implements IEntity {
 	private EmployeeAvailabilityBean current_availability;
 
 	private Map<EmployeeSeniorityBean.Union, EmployeeSeniorityBean> seniority;
+	private Map<String, List<EmployeePositionBean>> positions;
 
 	public EmployeeBean() {
 
@@ -71,6 +74,7 @@ public class EmployeeBean implements IEntity {
 		this.seniority = new HashMap<>();
 		this.FTE = 0;
 		this.positionDescription = null;
+		this.positions = new HashMap<>();
 	}
 
 	public String getEmpId() {
@@ -357,6 +361,39 @@ public class EmployeeBean implements IEntity {
 	public void setPositionDescription(String positionDescription) {
 
 		this.positionDescription = positionDescription;
+	}
+
+	public void addPosition(EmployeePositionBean position) {
+
+		if (position != null) {
+			if (!positions.containsKey(position.getSchoolYear())) {
+				positions.put(position.getSchoolYear(), new ArrayList<>());
+				positions.get(position.getSchoolYear()).add(position);
+			}
+			else {
+				boolean exists = this.positions.get(position.getSchoolYear()).stream().anyMatch(p -> p.equals(position));
+
+				if (!exists) {
+					positions.get(position.getSchoolYear()).add(position);
+				}
+			}
+		}
+	}
+
+	public List<EmployeePositionBean> getPositions(String schoolYear) {
+
+		return this.positions.get(schoolYear);
+	}
+
+	public List<EmployeePositionBean> getCurrentPositions() {
+
+		List<EmployeePositionBean> tmp = getPositions(com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(new Date()));
+
+		if (tmp == null) {
+			tmp = getPositions(com.esdnl.personnel.v2.utils.StringUtils.getPreviousSchoolYear(new Date()));
+		}
+
+		return tmp;
 	}
 
 	public String toXML() {
