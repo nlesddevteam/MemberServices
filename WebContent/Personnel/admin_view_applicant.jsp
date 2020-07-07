@@ -1,5 +1,6 @@
 <%@ page language="java"
          import="java.util.*,
+         					java.util.stream.*,
                   java.text.*,
                   com.awsd.security.*,
                   com.awsd.school.*,
@@ -362,18 +363,41 @@ input {
 							    	</td>
 							    </tr>
 							    <tr>
-							    	<td class="tableTitle">Permanent Contract School:</td>
-							    	<td>${permContractSchool}</td>
-							    	<td class="tableTitle">Permanent Contract Position:</td>
-							    	<td>${permContractPosition}</td>
+							    	<td class="tableTitle">Current Contract:</td>
+							    	<td colspan='3'>
+							    		<%
+							    			if(empbean != null) {
+							    				List<EmployeePositionBean> positions = empbean.getCurrentPositions();
+							    				if(positions.size() > 0) {
+								    				out.println(
+								    					empbean.getCurrentPositions().stream()
+								    						.filter(p -> p.getFteHours() > 0)
+								    						.sorted((EmployeePositionBean p1, EmployeePositionBean p2) -> {
+								    							if((p1.getStartDate() != null) && (p2.getStartDate() != null) && (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
+								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
+								    							}
+								    							else if((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
+								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
+								    							}
+								    							else {
+								    								return 0;
+								    							}
+								    						})
+								    						.map(p -> p.toString())
+								    						.collect(Collectors.joining("<br />"))
+								    				);
+							    				}
+							    				else {
+							    					out.println("N/A");
+							    				}
+							    			}
+							    			else {
+							    				out.println("N/A");
+							    			}
+							    		%>
+							    	</td>
 							    </tr>
-							    <tr>
-							    	<td class="tableTitle">Replacement Contract School:</td>
-							    	<td>${repContractSchool}</td>
-							    	<td class="tableTitle">Replacement Contract End Date:</td>
-							    	<td>${repContractEndDate}</td>
-							    </tr>
-
+							    
 							    </tbody>
 							    </table>
       			 	       
