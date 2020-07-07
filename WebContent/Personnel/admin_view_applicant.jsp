@@ -366,10 +366,10 @@ input {
 							    <tr>
 										<td colspan='1' class='tableTitle'>Self-Reported Contract:</td>
 								    <c:choose>
-									    <c:when test="${permContractSchool ne null }">
+									    <c:when test="${permContractSchool ne 'N/A' }">
 										    <td colspan='3'>${permContractSchool} ending ${permContractPosition} - PERMANENT</td>
 									    </c:when>
-									    <c:when test="${repContractSchool ne null }">
+									    <c:when test="${repContractSchool ne 'N/A' }">
 										    <td colspan='3'>${repContractSchool} ending ${repContractEndDate} - REPLACEMENT</td>
 									    </c:when>
 									    <c:otherwise>
