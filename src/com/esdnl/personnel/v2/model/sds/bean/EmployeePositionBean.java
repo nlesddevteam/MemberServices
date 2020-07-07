@@ -179,7 +179,8 @@ public class EmployeePositionBean {
 	public String toString() {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		String tmp = schoolYear + ": " + location + " - " + position + " " + fteHours + " FTE (" + tenure + ")";
+		String tmp = schoolYear + ": " + location + " - " + position + " " + fteHours + (fteHours <= 1 ? " FTE " : " Hrs ")
+				+ "(" + tenure + ")";
 
 		if (this.startDate != null) {
 			tmp += " started " + sdf.format(this.startDate);
