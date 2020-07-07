@@ -17,6 +17,8 @@ import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.v2.database.availability.EmployeeAvailabilityManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean.PositionType;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
 import com.esdnl.personnel.v2.model.sds.constant.LocationConstant;
 import com.esdnl.personnel.v2.model.sds.constant.PositionConstant;
@@ -47,6 +49,7 @@ public class EmployeeManager {
 				}
 				else {
 					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					eBean.addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -93,6 +96,7 @@ public class EmployeeManager {
 				}
 				else {
 					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					eBean.addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -139,6 +143,7 @@ public class EmployeeManager {
 				}
 				else {
 					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					eBean.addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -191,6 +196,7 @@ public class EmployeeManager {
 				}
 				else {
 					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -244,6 +250,7 @@ public class EmployeeManager {
 				}
 				else {
 					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -304,6 +311,7 @@ public class EmployeeManager {
 				}
 				else {
 					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -358,6 +366,7 @@ public class EmployeeManager {
 				}
 				else {
 					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 				}
 			}
 		}
@@ -536,6 +545,7 @@ public class EmployeeManager {
 			catch (SQLException e) {}
 
 			abean.addSeniority(createEmployeeSeniorityBean(abean, rs));
+			abean.addPosition(createEmployeePositionBean(abean, rs));
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -564,5 +574,44 @@ public class EmployeeManager {
 		}
 
 		return seniority;
+	}
+
+	public static EmployeePositionBean createEmployeePositionBean(EmployeeBean emp, ResultSet rs) {
+
+		EmployeePositionBean position = null;
+
+		try {
+			position = new EmployeePositionBean();
+			position.setEmployee(emp);
+			position.setSchoolYear(rs.getString("SCHOOL_YR"));
+			position.setName(rs.getString("NAME"));
+			position.setEmpId(rs.getString("EMP_ID").trim());
+			position.setPosition(rs.getString("POSITION"));
+			position.setPositionType(PositionType.get(rs.getString("POSITION_TYPE")));
+
+			if (rs.getDate("START_DATE") != null) {
+				position.setStartDate(new java.util.Date(rs.getDate("START_DATE").getTime()));
+			}
+			else {
+				position.setStartDate(null);
+			}
+
+			if (rs.getDate("END_DATE") != null) {
+				position.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
+			}
+			else {
+				position.setEndDate(null);
+			}
+
+			position.setSin(rs.getString("SIN").trim());
+			position.setLocation(rs.getString("LOCATION"));
+			position.setTenure(rs.getString("TENURE"));
+			position.setFteHours(rs.getDouble("FTE_HRS"));
+		}
+		catch (SQLException e) {
+			position = null;
+		}
+
+		return position;
 	}
 }
