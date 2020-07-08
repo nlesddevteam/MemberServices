@@ -396,7 +396,7 @@ input {
 								    								return -1 * p1.getStartDate().compareTo(p2.getStartDate());
 								    							}
 								    							else {
-								    								return 0;
+								    								return -1 * p1.getSchoolYear().compareTo(p2.getSchoolYear());
 								    							}
 								    						})
 								    						.map(p -> p.toString())
@@ -745,11 +745,7 @@ input {
 					</div>
 					</div>
 </div>                               
-                          
-             
-                               
-	                                
-                                 
+                                                 
 <!-- NLESD PERMANENT EXPERIENCE --------------------------------------------------------------->
 
 	<div class="panel-group" style="padding-top: 5px;">
@@ -794,8 +790,8 @@ input {
 								<% int cnt = 1;
 									for(EmployeePositionBean p : empbean.getPermanentPositions()) { %>
 										<tr>
-											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>[<%= cnt++ %>][<i><%= p.getSchoolYear() %></i>]&nbsp;<%= sdf.format(p.getStartDate()) %></td>
-											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getEndDate() != null ? sdf.format(p.getEndDate()) : "&nbsp;" %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>[<%= cnt++ %>][<i><%= p.getSchoolYear() %></i>]&nbsp;<%= p.getStartDateFormatted() %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getEndDate() != null ? p.getEndDateFormatted() : "&nbsp;" %></td>
 											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getLocation() %></td>
 											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>
 												<%= p.getPosition() %> (<%= p.getTenure() %>) (<span <%= p.isLeave() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getPositionType() %></span>) <%= p.isError() ? "(ERROR)" : "" %>
@@ -860,11 +856,11 @@ input {
 								<% int cnt = 1;
 									for(EmployeePositionBean p : empbean.getReplacementPositions()) { %>
 										<tr>
-											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>[<%= cnt++ %>][<i><%= p.getSchoolYear() %></i>]&nbsp;<%= p.getSchoolYear() %>&nbsp;<%= sdf.format(p.getStartDate()) %></td>
-											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getEndDate() != null ? sdf.format(p.getEndDate()) : "&nbsp;" %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>[<%= cnt++ %>][<i><%= p.getSchoolYear() %></i>]&nbsp;<%= p.getStartDateFormatted() %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getEndDate() != null ? p.getEndDateFormatted() : "&nbsp;" %></td>
 											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getLocation() %></td>
 											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>
-												<%= p.getPosition() %> (<%= p.getTenure() %>) (<span <%= p.isLeave() ? " class='text-danger' style='font-weight: bold;'" : "" %>> <%= p.getPositionType() %></span>) <%= p.isError() ? "(ERROR)" : "" %>
+												<%= p.getPosition() %> (<%= p.getTenure() %>) (<span <%= p.isLeave() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getPositionType() %></span>) <%= p.isError() ? "(ERROR)" : "" %>
 											</td>
 										</tr>
 								<% } %>

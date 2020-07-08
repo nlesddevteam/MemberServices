@@ -138,12 +138,14 @@ public class EmployeeManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-				}
-				else {
-					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					eBean.addPosition(createEmployeePositionBean(eBean, rs));
+				if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
+					if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+						eBean = createEmployeeBean(rs);
+					}
+					else {
+						eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+						eBean.addPosition(createEmployeePositionBean(eBean, rs));
+					}
 				}
 			}
 		}

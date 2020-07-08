@@ -404,7 +404,7 @@ public class EmployeeBean implements IEntity {
 
 	public List<EmployeePositionBean> getReplacementPositions() {
 
-		return getPositions().values().stream().flatMap(List::stream).filter(p -> p.isTerm()).sorted(
+		return getPositions().values().stream().flatMap(List::stream).filter(p -> p.isTerm() && !p.isSubstitute()).sorted(
 				(EmployeePositionBean p1, EmployeePositionBean p2) -> {
 					if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
 							&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {

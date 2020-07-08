@@ -10,6 +10,8 @@ import org.apache.commons.lang.StringUtils;
 
 public class EmployeePositionBean {
 
+	private static SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+
 	public enum PositionType {
 
 		UNKNOWN, LEAVE, REGULAR, REPLACEMENT;
@@ -160,6 +162,11 @@ public class EmployeePositionBean {
 		this.position = position;
 	}
 
+	public boolean isSubstitute() {
+
+		return StringUtils.isNotBlank(this.position) && StringUtils.contains(this.position.toLowerCase(), "substitute");
+	}
+
 	public PositionType getPositionType() {
 
 		return positionType;
@@ -190,6 +197,11 @@ public class EmployeePositionBean {
 		return startDate;
 	}
 
+	public String getStartDateFormatted() {
+
+		return this.startDate != null ? sdf.format(this.startDate) : "UNKNOWN";
+	}
+
 	public void setStartDate(Date startDate) {
 
 		this.startDate = startDate;
@@ -198,6 +210,11 @@ public class EmployeePositionBean {
 	public Date getEndDate() {
 
 		return endDate;
+	}
+
+	public String getEndDateFormatted() {
+
+		return this.endDate != null ? sdf.format(this.endDate) : "UNKNOWN";
 	}
 
 	public void setEndDate(Date endDate) {
@@ -257,8 +274,10 @@ public class EmployeePositionBean {
 
 	public boolean isError() {
 
-		return (this.endDate != null && this.endDate.before(this.startDate))
-				|| !com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(this.startDate).equals(this.schoolYear);
+		return (this.startDate == null) || (this.endDate == null)
+				|| (this.endDate != null && this.startDate != null && this.endDate.before(this.startDate))
+				|| (this.startDate != null
+						&& !com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(this.startDate).equals(this.schoolYear));
 	}
 
 	@Override
