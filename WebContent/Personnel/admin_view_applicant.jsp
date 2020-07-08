@@ -750,99 +750,141 @@ input {
                                
 	                                
                                  
-<!-- NLESD PERMANENT EXPERIENCE --------------------------------------------------------------->    
-	
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section4">   
-	               	<div class="panel-heading"><b>NLESD Permanent Experience</b> (Total Months: <%=((esd_exp != null)?Integer.toString(esd_exp.getPermanentLTime()):"UNKNOWN")%>)</div>
-      			 	<div class="panel-body"> 	
-					
-					<div class="table-responsive"> 
-      			 	       
-      			 	       <% if((per != null) && (per.length > 0))
-                                  {
-                                  %>
-							    
-							    <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
-									    <thead>									    
-									      <tr style="border-top:1px solid black;">
-									        <th width='20%'>FROM</th>
-									        <th width='20%'>TO</th>
-									        <th width='20%'>SCHOOL</th>								        
-									        <th width='40%'>GRADES AND/OR SUBJECTS TAUGHT</th>		
-									      </tr>
-									    </thead>
-							    
-							    <tbody>				    
-							    
-							    <%						    	
-                                    for(int i=0; i < per.length; i ++)
-                                    { %>							    
-							    <tr>
-							    <td><%=sdf.format(per[i].getFrom())%></td>
-							    <td><%=sdf.format(per[i].getTo())%></td>
-							    <td><%=SchoolDB.getSchool(per[i].getSchoolId()).getSchoolName()%></td>
-							    <td><%=per[i].getGradesSubjects()%></td>							    
-							    </tr>							    
-							    <%}%>							    
-							    </tbody>
-							    </table>							    
-							    <%} else {%>
-                                   <span style="color:Grey;">No NLESD Permanent Experience currently on file.</span>
-                                   <script>$("#section4").removeClass("panel-success").addClass("panel-danger");</script>
-                                <% } %>
-							    
-					</div>		    
-					</div>
-					</div>
-</div>
+<!-- NLESD PERMANENT EXPERIENCE --------------------------------------------------------------->
 
-                             
-                           
-                                 
-<!-- NLESD REPLACEMENT EXPERIENCE --------------------------------------------------------------->    
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section4">
+			<div class="panel-heading">
+				<b>NLESD Permanent Experience</b> (Total Months: <%=((esd_exp != null) ? Integer.toString(esd_exp.getPermanentLTime()) : "UNKNOWN")%>)
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<%
+						boolean hasPermanents = (empbean != null) && empbean.hasPermanentPositions();
+						if (((per != null) && (per.length > 0)) || hasPermanents) {
+					%>
+					<table class="table table-condensed table-striped"
+						style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;">
+						<thead>
+							<tr style="border-top: 1px solid black;">
+								<th width='20%'>FROM</th>
+								<th width='20%'>TO</th>
+								<th width='20%'>SCHOOL</th>
+								<th width='40%'>GRADES AND/OR SUBJECTS TAUGHT</th>
+							</tr>
+						</thead>
+
+						<tbody>
+						<tr><td colspan='4'><i><b>Self-Reported Permanent Positions:</b></i></td></tr>
+						<% if((per != null) && (per.length > 0)) { %>
+							<% int cnt = 1; 
+								for (int i = 0; i < per.length; i++) { %>
+								<tr>
+									<td>[<%= cnt++ %>]&nbsp;<%=sdf.format(per[i].getFrom())%></td>
+									<td><%=sdf.format(per[i].getTo())%></td>
+									<td><%=SchoolDB.getSchool(per[i].getSchoolId()).getSchoolName()%></td>
+									<td><%=per[i].getGradesSubjects()%></td>
+								</tr>
+							<% } %>
+						<% } else { %>
+							<tr><td colspan='4'>No records found.</td></tr>
+						<% } %>
+						<tr><td colspan='4'><i><b>SDS Permanent Positions:</b></i></td></tr>
+						<% if(hasPermanents) { %>
+								<% int cnt = 1;
+									for(EmployeePositionBean p : empbean.getPermanentPositions()) { %>
+										<tr>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>[<%= cnt++ %>][<i><%= p.getSchoolYear() %></i>]&nbsp;<%= sdf.format(p.getStartDate()) %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getEndDate() != null ? sdf.format(p.getEndDate()) : "&nbsp;" %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getLocation() %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>
+												<%= p.getPosition() %> (<%= p.getTenure() %>) (<span <%= p.isLeave() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getPositionType() %></span>) <%= p.isError() ? "(ERROR)" : "" %>
+											</td>
+										</tr>
+								<% } %>
+						<% } else { %>
+							<tr><td colspan='4'>No records found.</td></tr>
+						<% } %>
+						</tbody>
+					</table>
+					<% } else { %>
+						<span style="color: Grey;">No NLESD Permanent Experience currently on file.</span>
+						<script>$("#section4").removeClass("panel-success").addClass("panel-danger");</script>
+					<% } %>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- NLESD REPLACEMENT EXPERIENCE --------------------------------------------------------------->
+
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section5">
+			<div class="panel-heading">
+				<b>NLESD Replacement Contract Experience</b> (Total Months: <%=((esd_exp != null) ? Integer.toString(esd_exp.getReplacementTime()) : "UNKNOWN")%>)
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<%
+						boolean hasReplacements = (empbean != null) && empbean.hasReplacementPositions();
+						if (((rpl != null) && (rpl.length > 0)) || hasReplacements) {
+					%>
+					<table class="table table-condensed table-striped"
+						style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;">
+						<thead>
+							<tr style="border-top: 1px solid black;">
+								<th width='20%'>FROM</th>
+								<th width='20%'>TO</th>
+								<th width='20%'>SCHOOL</th>
+								<th width='40%'>GRADES AND/OR SUBJECTS TAUGHT</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td colspan='4'><i><b>Self-Reported Replacement Positions:</b></i></td></tr>
+							<% if((rpl != null) && (rpl.length > 0)) { %>
+								<% int cnt = 1; 
+									for (int i = 0; i < rpl.length; i++) { %>
+									<tr>
+										<td>[<%= cnt++ %>]&nbsp;<%=sdf.format(rpl[i].getFrom())%></td>
+										<td><%=sdf.format(rpl[i].getTo())%></td>
+										<td><%=SchoolDB.getSchool(rpl[i].getSchoolId()).getSchoolName()%></td>
+										<td><%=rpl[i].getGradesSubjects()%></td>
+									</tr>
+								<% } %>
+							<% } else { %>
+								<tr><td colspan='4'>No records found.</td></tr>
+							<% } %>
+							<tr><td colspan='4'><i><b>SDS Replacement Positions:</b></i></td></tr>
+							<% if(hasReplacements) { %>
+								<% int cnt = 1;
+									for(EmployeePositionBean p : empbean.getReplacementPositions()) { %>
+										<tr>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>[<%= cnt++ %>][<i><%= p.getSchoolYear() %></i>]&nbsp;<%= p.getSchoolYear() %>&nbsp;<%= sdf.format(p.getStartDate()) %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getEndDate() != null ? sdf.format(p.getEndDate()) : "&nbsp;" %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>><%= p.getLocation() %></td>
+											<td <%= p.isError() ? " class='text-danger' style='font-weight: bold;'" : "" %>>
+												<%= p.getPosition() %> (<%= p.getTenure() %>) (<span <%= p.isLeave() ? " class='text-danger' style='font-weight: bold;'" : "" %>> <%= p.getPositionType() %></span>) <%= p.isError() ? "(ERROR)" : "" %>
+											</td>
+										</tr>
+								<% } %>
+							<% } else { %>
+								<tr><td colspan='4'>No records found.</td></tr>
+							<% } %>
+						</tbody>
+					</table>
+					<% } else { %>
+						<span style="color: Grey;">No Replacement Contract Experience currently on file.</span>
+						<script>$("#section5").removeClass("panel-success").addClass("panel-danger");</script>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section5">   
-	               	<div class="panel-heading"><b>NLESD Replacement Contract Experience</b>  (Total Months: <%=((esd_exp != null)?Integer.toString(esd_exp.getReplacementTime()):"UNKNOWN")%>)</div>
-      			 	<div class="panel-body">
-      			 	<div class="table-responsive"> 
-								<%
-							    if((rpl != null) && (rpl.length > 0))
-                                  { %>
-                                <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
-									    <thead>									    
-									      <tr style="border-top:1px solid black;">
-									        <th width='20%'>FROM</th>
-									        <th width='20%'>TO</th>
-									        <th width='20%'>SCHOOL</th>								        
-									        <th width='40%'>GRADES AND/OR SUBJECTS TAUGHT</th>		
-									      </tr>
-									    </thead>							    
-							    <tbody>
-							     <% for(int i=0; i < rpl.length; i ++) {%>
-							    <tr>
-							    <td><%=sdf.format(rpl[i].getFrom()) %></td>
-							    <td><%=sdf.format(rpl[i].getTo()) %></td>
-							    <td><%=SchoolDB.getSchool(rpl[i].getSchoolId()).getSchoolName() %></td>
-							    <td><%=rpl[i].getGradesSubjects() %></td>
-							    </tr>
-							    <% } %>
-							    </tbody>
-							    </table>							    
-							    <%} else { %>
-                                   <span style="color:Grey;">No Replacement Contract Experience currently on file.</span>
-                                   <script>$("#section5").removeClass("panel-success").addClass("panel-danger");</script>
-                                <% } %> 
-					</div>
-					</div>
-					</div>
-</div>
-   
-                     
 
-<!-- SUBSTITUE TEACHING EXPERIENCE --------------------------------------------------------------->
+	<!-- SUBSTITUE TEACHING EXPERIENCE --------------------------------------------------------------->
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section6">   

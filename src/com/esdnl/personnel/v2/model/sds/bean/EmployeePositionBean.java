@@ -1,7 +1,10 @@
 package com.esdnl.personnel.v2.model.sds.bean;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -26,6 +29,58 @@ public class EmployeePositionBean {
 		}
 	}
 
+	public enum TenureType {
+
+		UNKNOWN(false), CASU(false), TEMP(false), TERM(false), TENP1(true), TENP2(true), TENP3(true), TENTM(true), PR1TM(
+				true), PR2TM(true), PR3TM(true), PROB1(true), PROB2(true), PROB3(true), PERM(true), TENUR(true);
+
+		private boolean permType;
+
+		private TenureType(boolean permType) {
+
+			this.permType = permType;
+		}
+
+		public boolean isPermType() {
+
+			return this.permType;
+		}
+
+		public static TenureType get(String tenure) {
+
+			TenureType tmp = UNKNOWN;
+
+			for (TenureType tt : values()) {
+				if (tt.name().equalsIgnoreCase(tenure)) {
+					tmp = tt;
+					break;
+				}
+			}
+
+			return tmp;
+		}
+
+		public static List<TenureType> getPermList() {
+
+			return Arrays.stream(values()).filter(t -> t.isPermType()).collect(Collectors.toList());
+		}
+
+		public static List<TenureType> getTermList() {
+
+			return Arrays.stream(TenureType.values()).filter(t -> !t.isPermType()).collect(Collectors.toList());
+		}
+
+		public static boolean isPerm(TenureType tt) {
+
+			return getPermList().contains(tt);
+		}
+
+		public static boolean isTerm(TenureType tt) {
+
+			return getTermList().contains(tt);
+		}
+	}
+
 	private EmployeeBean employee;
 	private String schoolYear;
 	private String name;
@@ -36,7 +91,7 @@ public class EmployeePositionBean {
 	private Date endDate;
 	private String sin;
 	private String location;
-	private String tenure;
+	private TenureType tenure;
 	private double fteHours;
 
 	public EmployeePositionBean() {
@@ -51,7 +106,7 @@ public class EmployeePositionBean {
 		this.endDate = null;
 		this.sin = "";
 		this.location = "";
-		this.tenure = "";
+		this.tenure = TenureType.UNKNOWN;
 		this.fteHours = 0.0;
 	}
 
@@ -115,6 +170,21 @@ public class EmployeePositionBean {
 		this.positionType = positionType;
 	}
 
+	public boolean isLeave() {
+
+		return EmployeePositionBean.PositionType.LEAVE.equals(getPositionType());
+	}
+
+	public boolean isReplacement() {
+
+		return EmployeePositionBean.PositionType.REPLACEMENT.equals(getPositionType());
+	}
+
+	public boolean isRegular() {
+
+		return EmployeePositionBean.PositionType.REPLACEMENT.equals(getPositionType());
+	}
+
 	public Date getStartDate() {
 
 		return startDate;
@@ -155,14 +225,24 @@ public class EmployeePositionBean {
 		this.location = location;
 	}
 
-	public String getTenure() {
+	public TenureType getTenure() {
 
 		return tenure;
 	}
 
-	public void setTenure(String tenure) {
+	public void setTenure(TenureType tenure) {
 
 		this.tenure = tenure;
+	}
+
+	public boolean isPerm() {
+
+		return TenureType.isPerm(this.tenure);
+	}
+
+	public boolean isTerm() {
+
+		return TenureType.isTerm(this.tenure);
 	}
 
 	public double getFteHours() {
@@ -175,12 +255,18 @@ public class EmployeePositionBean {
 		this.fteHours = fteHours;
 	}
 
+	public boolean isError() {
+
+		return (this.endDate != null && this.endDate.before(this.startDate))
+				|| !com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(this.startDate).equals(this.schoolYear);
+	}
+
 	@Override
 	public String toString() {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		String tmp = schoolYear + ": " + location + " - " + position + " " + fteHours + (fteHours <= 1 ? " FTE " : " Hrs ")
-				+ "(" + tenure + ")";
+				+ "(" + tenure.name() + ")";
 
 		if (this.startDate != null) {
 			tmp += " started " + sdf.format(this.startDate);
@@ -190,8 +276,7 @@ public class EmployeePositionBean {
 			tmp += " ending " + sdf.format(this.endDate);
 		}
 
-		tmp += " (" + (this.positionType.equals(PositionType.LEAVE) ? "<b>" : "") + this.getPositionType()
-				+ (this.positionType.equals(PositionType.LEAVE) ? "</b>" : "") + ")";
+		tmp += " (" + (isLeave() ? "<b>" : "") + this.getPositionType() + (isLeave() ? "</b>" : "") + ")";
 
 		return tmp;
 	}

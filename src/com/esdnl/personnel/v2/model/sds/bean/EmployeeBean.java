@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.esdnl.personnel.v2.model.availability.bean.EmployeeAvailabilityBean;
 import com.esdnl.personnel.v2.model.recognition.bean.IEntity;
@@ -394,6 +395,57 @@ public class EmployeeBean implements IEntity {
 		}
 
 		return tmp;
+	}
+
+	public Map<String, List<EmployeePositionBean>> getPositions() {
+
+		return this.positions;
+	}
+
+	public List<EmployeePositionBean> getReplacementPositions() {
+
+		return getPositions().values().stream().flatMap(List::stream).filter(p -> p.isTerm()).sorted(
+				(EmployeePositionBean p1, EmployeePositionBean p2) -> {
+					if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
+							&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
+						return p1.getEndDate().compareTo(p2.getEndDate());
+					}
+					else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
+							&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
+						return p1.getStartDate().compareTo(p2.getStartDate());
+					}
+					else {
+						return p1.getSchoolYear().compareTo(p2.getSchoolYear());
+					}
+				}).collect(Collectors.toList());
+	}
+
+	public boolean hasReplacementPositions() {
+
+		return getReplacementPositions().size() > 0;
+	}
+
+	public List<EmployeePositionBean> getPermanentPositions() {
+
+		return getPositions().values().stream().flatMap(List::stream).filter(p -> p.isPerm()).sorted(
+				(EmployeePositionBean p1, EmployeePositionBean p2) -> {
+					if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
+							&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
+						return p1.getEndDate().compareTo(p2.getEndDate());
+					}
+					else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
+							&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
+						return p1.getStartDate().compareTo(p2.getStartDate());
+					}
+					else {
+						return p1.getSchoolYear().compareTo(p2.getSchoolYear());
+					}
+				}).collect(Collectors.toList());
+	}
+
+	public boolean hasPermanentPositions() {
+
+		return getPermanentPositions().size() > 0;
 	}
 
 	public String toXML() {
