@@ -605,7 +605,7 @@ public class EmployeeManager {
 
 			position.setSin(rs.getString("SIN"));
 			position.setLocation(rs.getString("LOCATION"));
-			position.setTenure(rs.getString("TENURE"));
+			position.setTenure(EmployeePositionBean.TenureType.get(rs.getString("TENURE")));
 			position.setFteHours(rs.getDouble("FTE_HRS"));
 		}
 		catch (SQLException e) {
