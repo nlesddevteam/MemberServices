@@ -41,7 +41,13 @@
   ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
   Map<String, JobOpportunityBean> highlyRecommendedPools = JobOpportunityManager.getApplicantHighlyRecommendedPoolCompetitionsMap(profile.getSIN());
   ApplicantPositionOfferBean[] current_offers = ApplicantPositionOfferManager.getApplicantPositionOfferBeans(profile);
-  Collection<ApplicantPositionOfferBean> emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile); 
+  
+  Collection<ApplicantPositionOfferBean> emp_letters = ApplicantPositionOfferManager.getApplicantEmploymentLetters(profile).stream()
+  		.sorted((ApplicantPositionOfferBean p1, ApplicantPositionOfferBean p2) -> {
+  			return  -1 * p1.getRecommendation().getOfferAcceptedDate().compareTo(p2.getRecommendation().getOfferAcceptedDate());
+  		})
+  		.collect(Collectors.toList()); 
+  
   Map<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   Collection<InterviewSummaryBean> interviewSummaries = InterviewSummaryManager.getInterviewSummaryBeans(profile);
   interviewSummaries = interviewSummaries.stream().filter(isb -> isb.getCompetition().getJobAwardedDate() != null && !isb.getCompetition().isUnadvertise()).collect(Collectors.toList());
@@ -119,33 +125,22 @@ input {
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<%
-						if (current_offers != null && current_offers.length > 0) {
-					%>
+					<% if (current_offers != null && current_offers.length > 0) { %>
 					<ul>
 						<%
 							for (int i = 0; i < current_offers.length; i++) {
-							JobOpportunityAssignmentBean[] ass = JobOpportunityAssignmentManager
-							.getJobOpportunityAssignmentBeans(current_offers[i].getJob());
+							JobOpportunityAssignmentBean[] ass = JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(current_offers[i].getJob());
 						%>
-						<li><a class="menu"
-							href="/MemberServices/Personnel/applicantPositionOfferController.html?id=<%=current_offers[i].getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + current_offers[i].getJob().getPositionTitle() + ")"%></a></li>
-						<%
-							}
-						%>
+						<li><a class="menu" href="/MemberServices/Personnel/applicantPositionOfferController.html?id=<%=current_offers[i].getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + current_offers[i].getJob().getPositionTitle() + ")"%></a></li>
+						<% } %>
 					</ul>
-					<%
-						} else {
-					%>
+					<% } else { %>
 					No current offer(s) currently posted.
 					<script>
 						$("#section14").removeClass("panel-success").addClass(
 								"panel-danger");
 					</script>
-					<%
-						}
-					%>
-
+					<% } %>
 				</div>
 			</div>
 		</div>
@@ -324,7 +319,7 @@ input {
 					<div class="table-responsive">  
    								
    						  	
-                               <%if((esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)){%>
+                               <% if((esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)){ %>
                                <table class="table table-striped table-condensed" style="font-size:11px;">
    						  		<tbody>	
                                 <tr>
