@@ -37,7 +37,7 @@ $(document).ready(function() {
 		
 		<c:choose>
 		<c:when test="${query eq '1'}">
-				<c:set var="query" value="Employee(s) Pending Approval"/>				
+				<c:set var="query" value="Employee(s) Not Submitted"/>				
 		</c:when>
 		<c:when test="${query eq '2'}">
 				<c:set var="query" value="Approved Employee(s)"/>				
@@ -50,6 +50,9 @@ $(document).ready(function() {
 		</c:when>
 		<c:when test="${query eq '-1'}">
 				<c:set var="query" value="Employees"/>				
+		</c:when>
+		<c:when test="${query eq '6'}">
+				<c:set var="query" value="Employee(s) Pending Approval"/>				
 		</c:when>
 		<c:otherwise>Employee(s)</c:otherwise>
 		</c:choose>
@@ -84,13 +87,17 @@ $(document).ready(function() {
 	      					<td class="field_content">	      					
 	      					<c:choose>
 	         				<c:when test = "${rule.status eq 1}">
-	         				<span style="background-color:Yellow;color:black;padding:1px;text-transform:uppercase;">&nbsp;PENDING REVIEW&nbsp;</span>
+	         				<span style="background-color:Yellow;color:black;padding:1px;text-transform:uppercase;">&nbsp;${ rule.statusText}&nbsp;</span>
 	         				</c:when>
 	         				<c:when test = "${rule.status eq 2}">
 	         				<span style="background-color:Green;color:white;padding:1px;text-transform:uppercase;">&nbsp;${ rule.statusText}&nbsp;</span>
 	         				</c:when>
 	                  		<c:when test = "${rule.status eq 3}">	                  		
 	            				<span style="background-color:Red;color:white;padding:1px;text-transform:uppercase;">&nbsp;${rule.statusText}&nbsp;</span>
+	         				
+	         				</c:when>
+	         				<c:when test = "${rule.status eq 6}">	                  		
+	            				<span style="background-color:Blue;color:white;padding:1px;text-transform:uppercase;">&nbsp;${rule.statusText}&nbsp;</span>
 	         				
 	         				</c:when>
 	         				<c:otherwise>

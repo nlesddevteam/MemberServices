@@ -132,6 +132,7 @@ public class BussingContractorSystemCountsManager {
 					ebean.setSuspendedContractorsEmployees(rs.getInt("suspended"));
 					ebean.setRemovedContractorsEmployees(rs.getInt("removed"));
 					ebean.setTotalContractorsEmployees(rs.getInt("total"));
+					ebean.setNotSubmittedContractorsEmployees(rs.getInt("notsubmitted"));
 				}else if(ctype == "CV"){
 					ebean.setSubmittedContractorsVehicles(rs.getInt("submitted"));
 					ebean.setApprovedContractorsVehicles(rs.getInt("approved"));

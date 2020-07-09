@@ -75,6 +75,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
      <li><a href="#"><i class="fa fa-fw fa-users"></i> Employee</a>
         <ul>
         	<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('adminViewEmployee.html?vid=-1');"><i class="fa fa-fw fa-search"></i> Add New Employee</a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=ns');"><i class="fa fa-fw fa-clock-o"></i> Not Submitted <% if (cbean.getNotSubmittedContractorsEmployees()!=0) {out.print("("+cbean.getNotSubmittedContractorsEmployees()+")");};%></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=p');"><i class="fa fa-fw fa-clock-o"></i> Pending Approval <% if (cbean.getSubmittedContractorsEmployees()!=0) {out.print("("+cbean.getSubmittedContractorsEmployees()+")");};%></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=a');"><i class="fa fa-fw fa-check"></i> Approved <% if (cbean.getApprovedContractorsEmployees()!=0) {out.print("("+cbean.getApprovedContractorsEmployees()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=s');"><i class="fa fa-fw fa-ban"></i> Suspended <% if (cbean.getSuspendedContractorsEmployees()!=0) {out.print("("+cbean.getSuspendedContractorsEmployees()+")");}; %></a></li>
