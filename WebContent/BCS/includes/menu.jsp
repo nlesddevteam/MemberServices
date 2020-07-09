@@ -87,6 +87,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
      <li><a href="#"><i class="fa fa-fw fa-bus"></i> Vehicle</a>
         <ul>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('adminViewVehicle.html?cid=-1');"><i class="fa fa-fw fa-search"></i> Add New Vehicle</a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=ns');"><i class="fa fa-fw fa-clock-o"></i> Not Submitted <% if (cbean.getNotSubmittedContractorsVehicles()!=0) {out.print("("+cbean.getNotSubmittedContractorsVehicles()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=p');"><i class="fa fa-fw fa-clock-o"></i> Pending Approval <% if (cbean.getSubmittedContractorsVehicles()!=0) {out.print("("+cbean.getSubmittedContractorsVehicles()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=a');"><i class="fa fa-fw fa-check"></i> Approved <% if (cbean.getApprovedContractorsVehicles()!=0) {out.print("("+cbean.getApprovedContractorsVehicles()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=s');"><i class="fa fa-fw fa-ban"></i> Suspended <% if (cbean.getSuspendedContractorsVehicles()!=0) {out.print("("+cbean.getSuspendedContractorsVehicles()+")");}; %></a></li>

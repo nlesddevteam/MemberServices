@@ -45,7 +45,7 @@ $(document).ready(function() {
 		
 		<c:choose>
 		<c:when test="${query eq '1'}">
-				<c:set var="query" value="Vehicle(s) Pending Approval"/>				
+				<c:set var="query" value="Vehicle(s) Not Submitted"/>				
 		</c:when>
 		<c:when test="${query eq '2'}">
 				<c:set var="query" value="Approved Vehicle(s)"/>				
@@ -58,6 +58,9 @@ $(document).ready(function() {
 		</c:when>
 		<c:when test="${query eq '-1'}">
 				<c:set var="query" value="Vehicle(s)"/>				
+		</c:when>
+				<c:when test="${query eq '6'}">
+				<c:set var="query" value="Vehicle(s) Pending Approval"/>				
 		</c:when>
 		<c:otherwise>Vehicle(s)</c:otherwise>
 		</c:choose>

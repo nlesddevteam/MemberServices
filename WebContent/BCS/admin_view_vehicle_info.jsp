@@ -129,7 +129,7 @@ $(document).ready(function() {
 		      			<c:choose>
          				<c:when test = "${vehicle.vStatus eq 1}">
          				
-         				<span style="background-color:yellow;color:black;padding:3px;text-transform:uppercase;">&nbsp;NOT YET APPROVED&nbsp;</span>
+         				<span style="background-color:yellow;color:black;padding:3px;text-transform:uppercase;">&nbsp;NOT YET SUBMITTED&nbsp;</span>
             				<p class="form-control-static">${ vehicle.statusText}</p>
             				
          				</c:when>
@@ -145,6 +145,10 @@ $(document).ready(function() {
          				</c:when>
          				<c:when test = "${vehicle.vStatus  eq 4}">
          					<span style="background-color:black;color:white;padding:3px;text-transform:uppercase;">&nbsp;SUSPENDED&nbsp;</span>
+            				<p class="form-control-static">${vehicle.statusText}</p>         				
+         				</c:when>
+         				<c:when test = "${vehicle.vStatus  eq 6}">
+         					<span style="background-color:blue;color:white;padding:3px;text-transform:uppercase;">&nbsp;SUBMITTED FOR APPROVAL&nbsp;</span>
             				<p class="form-control-static">${vehicle.statusText}</p>         				
          				</c:when>
          				<c:otherwise>
@@ -664,9 +668,14 @@ $(document).ready(function() {
 		      		<div class="col-sm-offset-2 col-sm-10" id="divbuttons">
       					<br />
       					<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdatevehicle('A','Y');">Update Information</button>
-      					<c:if test = "${vehicle.vStatus != 2 && vehicle.vStatus != 0}">
+      					<c:if test = "${vehicle.vStatus == 6 }">
       						<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
-        					<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;<button type="button" class="btn btn-xs btn-danger" onclick="openRejectVeh();">Reject</button>
+        					<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;
+        					</esd:SecurityAccessRequired>
+      					</c:if>
+      					<c:if test = "${vehicle.vStatus == 6}">
+      						<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
+        						<button type="button" class="btn btn-xs btn-danger" onclick="openRejectVeh();">Reject</button>
       						</esd:SecurityAccessRequired>
       					</c:if>
       					<c:if test = "${vehicle.vStatus eq 2}">

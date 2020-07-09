@@ -36,7 +36,7 @@ public class ViewVehiclesApprovalsRequestHandler extends RequestHandlerImpl
 				cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
 			}
 			if(status.equals("p")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.SUBMITTED.getValue(),cid);
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.SUBMITTEDFORREVIEW.getValue(),cid);
 				reporttitle="Vehicles Awaiting Approval";
 			}else if(status.equals("a")){
 				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.APPROVED.getValue(),cid);
@@ -50,11 +50,14 @@ public class ViewVehiclesApprovalsRequestHandler extends RequestHandlerImpl
 			}else if(status.equals("re")){
 				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.REMOVED.getValue(),cid);
 				reporttitle="Vehicles Removed";
+			}else if(status.equals("ns")){
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.SUBMITTED.getValue(),cid);
+				reporttitle="Vehicles Not Submitted";
 			}
 		}else{
 			vehicles = new ArrayList<BussingContractorVehicleBean>();
 			if(status.equals("p")){
-				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.SUBMITTED.getValue());
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.SUBMITTEDFORREVIEW.getValue());
 				reporttitle="Vehicles Awaiting Approval";
 			}else if(status.equals("a")){
 				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.APPROVED.getValue());
@@ -68,6 +71,9 @@ public class ViewVehiclesApprovalsRequestHandler extends RequestHandlerImpl
 			}else if(status.equals("re")){
 				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.REMOVED.getValue());
 				reporttitle="Vehicles Removed";
+			}else if(status.equals("ns")){
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.SUBMITTED.getValue());
+				reporttitle="Vehicles Not Submitted";
 			}
 		}
 

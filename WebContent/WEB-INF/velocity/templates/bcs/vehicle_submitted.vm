@@ -1,0 +1,20 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+The following vehicle has been submitted for approval
+</p>
+<p>
+Vehicle
+</p>
+<p>
+$vname
+</p>
+<p>
+Company
+</p>
+<p>
+$cname
+</p>
+<p>
+Thank You,<br />
+</p>
+</div>
