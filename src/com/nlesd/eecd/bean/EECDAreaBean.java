@@ -15,6 +15,7 @@ public class EECDAreaBean implements Serializable {
 	private String completedBy;
 	private String eligibleTeachers;
 	private String required;
+	private String schoolYear;
 	public int getId() {
 		return id;
 	}
@@ -86,5 +87,11 @@ public class EECDAreaBean implements Serializable {
 	}
 	public void setRequired(String required) {
 		this.required = required;
+	}
+	public String getSchoolYear() {
+		return schoolYear;
+	}
+	public void setSchoolYear(String schoolYear) {
+		this.schoolYear = schoolYear;
 	}
 }
