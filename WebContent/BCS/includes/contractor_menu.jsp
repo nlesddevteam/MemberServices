@@ -41,7 +41,8 @@
      <li><a href="#"><i class="fa fa-fw fa-users"></i> Employees</a>
         <ul>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('addNewEmployee.html?vid=-1');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
-           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=1');"><i class="fa fa-fw fa-clock-o"></i> Pending Approval</a></li>
+           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=1');"><i class="fa fa-fw fa-clock-o"></i> Not Submitted</a></li>
+           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=6');"><i class="fa fa-fw fa-clock-o"></i> Pending Approval</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=2');"><i class="fa fa-fw fa-check"></i> View Approved</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=4');"><i class="fa fa-fw fa-ban"></i> View Suspended</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=3');"><i class="fa fa-fw fa-close"></i> Not Approved</a></li>

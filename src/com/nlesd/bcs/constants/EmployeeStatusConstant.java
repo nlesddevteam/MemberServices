@@ -3,13 +3,14 @@ package com.nlesd.bcs.constants;
 public class EmployeeStatusConstant {
 	private int value;
 	private String desc;
-	public static final EmployeeStatusConstant NOTREVIEWED= new EmployeeStatusConstant(1, "Not Yet Reviewed By District");
+	public static final EmployeeStatusConstant NOTREVIEWED= new EmployeeStatusConstant(1, "Not Yet Submitted");
 	public static final EmployeeStatusConstant APPROVED= new EmployeeStatusConstant(2, "Approved");
 	public static final EmployeeStatusConstant NOTAPPROVED= new EmployeeStatusConstant(3, "Not Approved");
 	public static final EmployeeStatusConstant SUSPENDED= new EmployeeStatusConstant(4, "Suspended");
 	public static final EmployeeStatusConstant REMOVED= new EmployeeStatusConstant(5, "Removed From System");
+	public static final EmployeeStatusConstant SUBMITTEDFORREVIEW =new EmployeeStatusConstant(6, "Submitted For Approval");
 	public static final EmployeeStatusConstant[] ALL = new EmployeeStatusConstant[] {
-		NOTREVIEWED, APPROVED, NOTAPPROVED,SUSPENDED,REMOVED
+		NOTREVIEWED, APPROVED, NOTAPPROVED,SUSPENDED,REMOVED,SUBMITTEDFORREVIEW
 	};
 
 	private EmployeeStatusConstant(int value, String desc) {

@@ -91,6 +91,16 @@ $(document).ready(function() {
 					checkdate('SCADATE');
 				})
 				
+				if($("#estatus").val() == 1 || $("#estatus").val() == 3 || $("#estatus").val() == 4){
+					if(checkemployee('U','Y','N')){
+						$("#submitapp").show();
+					}else{
+						$("#submitapp").hide();
+					}
+				}else{
+					$("#submitapp").hide();
+				}
+				
 });
 		</script>
 	<%pageContext.setAttribute("now", new java.util.Date()); %>   
@@ -115,7 +125,7 @@ $(document).ready(function() {
 	  			<br/>
 	  	<div id="details" class="tab-pane fade in active" style="font-size:11px;">
 	  				<div class="form-group">
-		      			<label class="control-label col-sm-3" for="email">Status:</label>
+		      			<label class="control-label col-sm-3" for="email">Status:<input type="hidden" id="estatus" value="${employee.status}"></label>
 		      			<div class="col-sm-5">
 			      		<c:choose>
 	         				<c:when test = "${employee.status eq 1}">
@@ -143,6 +153,10 @@ $(document).ready(function() {
 	            				Notes: ${employee.statusNotes}</p>
 	         				
 	         				</c:when>
+	         				<c:when test = "${employee.status eq 6}">
+	                  	
+	            				<p class="form-control-static"><span style="background-color:BLue;color:white;padding:3px;text-transform:uppercase;">&nbsp;${employee.statusText}&nbsp;</span><br/>
+	            			</c:when>
 	         				<c:otherwise>
 	            				
 	            				<p class="form-control-static"><span style="background-color:black;color:white;padding:3px;text-transform:uppercase;">&nbsp;N/A&nbsp;</span></p>
@@ -696,18 +710,19 @@ $(document).ready(function() {
 		
 		</div>
 		<img src="includes/img/bar.png" height=1 width=100%><br/><br/>   
-				    <div class="form-group">  
-				       
-		      <div class="col-sm-offset-3 col-sm-9">
-		      	
-		      	
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="email"></label>  
+			<div class="col-sm-5">
 		      	<div class="alert alert-danger" id="employeeerrormessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-    				<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>	      	
-		      	
-		      	
-		        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdateemployee('U','Y');">Update Employee</button>
+    			<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>	      	
+		      	<div class="form-inline">
+		        	<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdateemployee('U','N');">Update Employee</button>
+		       		<button type="button" class="btn btn-xs btn-primary" id="submitapp" name="submitapp" onclick="submitemployeeapproval();">Submit For Approval</button>
+		      		
 		      </div>
-		    </div>
+		   </div>
+		</div>
+
 			 
 		 </form>
 	</div>

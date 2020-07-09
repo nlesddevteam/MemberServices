@@ -1307,6 +1307,31 @@ public class BussingContractorEmployeeManager {
 			catch (Exception e) {}
 		}
 		return check;
+	}
+	public static void updateContractorEmployeeStatus(Integer vid,Integer vstatus)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_emp_status(?,?); end;");
+			stat.setInt(1, vid);
+			stat.setInt(2, vstatus);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("updateContractorEmployeeStatus(Integer vid,Integer vstatus)" + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}	
 	public static BussingContractorEmployeeBean createBussingContractorEmployeeBeanFull(ResultSet rs)  {
 		//new function that will replace old one once all queries have been updated with full data being returned in one query

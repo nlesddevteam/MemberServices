@@ -88,7 +88,48 @@ public class EECDAreaManager {
 			catch (Exception e) {}
 		}
 		return list;
-	}	
+	}
+	public static ArrayList<EECDAreaBean> getAllEECDAreasByPIDSchooYear(int pid, String sy) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<EECDAreaBean> list = new ArrayList<EECDAreaBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.eecd_pkg.get_all_ta_areas_list_sy(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, pid);
+			stat.setString(3, sy);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				EECDAreaBean abean = new EECDAreaBean();
+				abean = createEECDAreaBean(rs,true);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<EECDAreaBean> getAllEECDAreasByPIDSchooYear(int pid, String sy): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}		
 	public static int addAreaDescription(EECDAreaBean vbean) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -517,6 +558,7 @@ public class EECDAreaManager {
 				abean.setCompletedBy(rs.getString("COMPLETED_BY"));
 				abean.setEligibleTeachers(rs.getString("ELIGIBLE_TEACHERS"));
 				abean.setRequired(rs.getString("REQUIRED"));
+				abean.setSchoolYear(rs.getString("SCHOOL_YEAR"));
 			}
 		catch (SQLException e) {
 				abean = null;

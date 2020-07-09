@@ -25,7 +25,7 @@ public class ViewEECDRequestHandler extends RequestHandlerImpl {
 				IOException {
 		super.handleRequest(request, response);
 		ArrayList<EECDAreaBean> list = new ArrayList<EECDAreaBean>();
-		list = EECDAreaManager.getAllEECDAreasByPID(usr.getPersonnel().getPersonnelID());
+		list = EECDAreaManager.getAllEECDAreasByPIDSchooYear(usr.getPersonnel().getPersonnelID(),Utils.getCurrentSchoolYear());
 		request.setAttribute("areas", list);
 		//now we get their selections if any
 		TreeMap<Integer,EECDTeacherAreaBean>talist = new TreeMap<Integer,EECDTeacherAreaBean>();

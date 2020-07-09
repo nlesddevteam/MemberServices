@@ -76,8 +76,11 @@
       	<div align="center" style="font-size:10px;padding-top:5px;">Did you forget your password?<br/>    	
       	 <button type="button" style="margin:3px;" class="btn btn-xs btn-danger" onclick="openReset();">Retrieve Your Password</button>      	
       	<br/>
+      	
+      	<div id="hidreg" style="display:none;">
       	Don't have an account? Click below to register as a NLESD Busing Operator.<br/>
       	<button type="button" style="margin:3px;" class="btn btn-xs btn-primary" onclick="window.location='register.html';">Operator Registration</button><br/>      
+      	</div>
       <button type="button" style="margin:3px;" class="btn btn-xs btn-warning" onclick="window.location='http://www.nlesd.ca';">Exit to NLESD</button>
       </div>
       	<div class="alert alert-success" role="alert" id="success_message" style="display:none;"><i class="glyphicon glyphicon-thumbs-up"></i> <span id="successspan"></span></div>                   	      

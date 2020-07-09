@@ -1213,6 +1213,7 @@ function checkemployee(usert,validatedates,bypass) {
 	var startmonth = $("#vmonth").val();
 	var startyear = $("#vyear").val();
 	var birthdate = $("#birthdate").val();
+
 	if (selected < 1) {
 		$("#body_error_message_bottom").html("Please enter position type").css(
 				"display", "block");
@@ -1298,120 +1299,124 @@ function checkemployee(usert,validatedates,bypass) {
 		$("#vyear").focus();
 		return false;
 	}
-	// now we check to see if it is a driver and check for DL Info
-	if (selected == 20) {
-		var dlnumber = $("#dlnumber").val();
-		var dlexpirydate = $("#dlexpirydate").val();
-		var dlclass = $("#dlclass").val();
-		if (dlnumber == "") {
-			$("#body_error_message_top").html(
-					"Please enter driver licence number").css("display",
-					"block");
-
-			$('.nav-tabs a:last').tab('show')
-			$("#dlnumber").focus();
-			return false;
+	//new change from Ian, they can save the employee without all required information
+	if(validatedates == "Y"){
+	
+		// now we check to see if it is a driver and check for DL Info
+		if (selected == 20) {
+			var dlnumber = $("#dlnumber").val();
+			var dlexpirydate = $("#dlexpirydate").val();
+			var dlclass = $("#dlclass").val();
+			if (dlnumber == "") {
+				$("#body_error_message_top").html(
+						"Please enter driver licence number").css("display",
+						"block");
+	
+				$('.nav-tabs a:last').tab('show')
+				$("#dlnumber").focus();
+				return false;
+			}
+			if (dlexpirydate == "") {
+				$("#body_error_message_top").html(
+						"Please enter driver licence expiry date").css("display",
+						"block");
+				$('.nav-tabs a:last').tab('show')
+				$("#dlexpirydate").focus();
+				return false;
+			}
+			if (dlclass < 1) {
+				$("#body_error_message_top").html(
+						"Please select driver licence class").css("display",
+						"block");
+				$('.nav-tabs a:last').tab('show')
+				$("#dlclass").focus();
+				return false;
+			}
 		}
-		if (dlexpirydate == "") {
-			$("#body_error_message_top").html(
-					"Please enter driver licence expiry date").css("display",
-					"block");
-			$('.nav-tabs a:last').tab('show')
-			$("#dlexpirydate").focus();
-			return false;
+		//check files to make sure they are pdf
+		if(!($("#dlfront").val() == "")){
+			if(!(checkfileextension($("#dlfront").val()))){
+				$("#body_error_message_top").html(
+				"Licence Image Front: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#dlfront").focus();
+				return false;
+			}
 		}
-		if (dlclass < 1) {
-			$("#body_error_message_top").html(
-					"Please select driver licence class").css("display",
-					"block");
-			$('.nav-tabs a:last').tab('show')
-			$("#dlclass").focus();
-			return false;
+		if(!($("#dlback").val() == "")){
+			if(!(checkfileextension($("#dlback").val()))){
+				$("#body_error_message_top").html(
+				"Licence Image Back: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#dlback").focus();
+				return false;
+			}
 		}
-	}
-	//check files to make sure they are pdf
-	if(!($("#dlfront").val() == "")){
-		if(!(checkfileextension($("#dlfront").val()))){
-			$("#body_error_message_top").html(
-			"Licence Image Front: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#dlfront").focus();
-			return false;
+		if(!($("#dadocument").val() == "")){
+			if(!(checkfileextension($("#dadocument").val()))){
+				$("#body_error_message_top").html(
+				"Driver Abstract File: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#dadocument").focus();
+				return false;
+			}
 		}
-	}
-	if(!($("#dlback").val() == "")){
-		if(!(checkfileextension($("#dlback").val()))){
-			$("#body_error_message_top").html(
-			"Licence Image Back: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#dlback").focus();
-			return false;
+		if(!($("#fadocument").val() == "")){
+			if(!(checkfileextension($("#fadocument").val()))){
+				$("#body_error_message_top").html(
+				"First Aid/Epipen File: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#fadocument").focus();
+				return false;
+			}
 		}
-	}
-	if(!($("#dadocument").val() == "")){
-		if(!(checkfileextension($("#dadocument").val()))){
-			$("#body_error_message_top").html(
-			"Driver Abstract File: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#dadocument").focus();
-			return false;
+		if(!($("#prcvsqdocument").val() == "")){
+			if(!(checkfileextension($("#prcvsqdocument").val()))){
+				$("#body_error_message_top").html(
+				"PRC/VSQ File: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#prcvsqdocument").focus();
+				return false;
+			}
 		}
-	}
-	if(!($("#fadocument").val() == "")){
-		if(!(checkfileextension($("#fadocument").val()))){
-			$("#body_error_message_top").html(
-			"First Aid/Epipen File: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#fadocument").focus();
-			return false;
+		if(!($("#pccdocument").val() == "")){
+			if(!(checkfileextension($("#pccdocument").val()))){
+				$("#body_error_message_top").html(
+				"Provincial Court Check File: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#pccdocument").focus();
+				return false;
+			}
 		}
-	}
-	if(!($("#prcvsqdocument").val() == "")){
-		if(!(checkfileextension($("#prcvsqdocument").val()))){
-			$("#body_error_message_top").html(
-			"PRC/VSQ File: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#prcvsqdocument").focus();
-			return false;
-		}
-	}
-	if(!($("#pccdocument").val() == "")){
-		if(!(checkfileextension($("#pccdocument").val()))){
-			$("#body_error_message_top").html(
-			"Provincial Court Check File: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#pccdocument").focus();
-			return false;
-		}
-	}
-	if(!($("#scadocument").val() == "")){
-		if(!(checkfileextension($("#scadocument").val()))){
-			$("#body_error_message_top").html(
-			"Signed File: Only pdf files accepted").css("display",
-			"block");
-			$('#documents').tab('show');
-			//$('.nav-tabs a:last').tab('show');
-			
-			$("#scadocument").focus();
-			return false;
+		if(!($("#scadocument").val() == "")){
+			if(!(checkfileextension($("#scadocument").val()))){
+				$("#body_error_message_top").html(
+				"Signed File: Only pdf files accepted").css("display",
+				"block");
+				$('#documents').tab('show');
+				//$('.nav-tabs a:last').tab('show');
+				
+				$("#scadocument").focus();
+				return false;
+			}
 		}
 	}
 	//check dates to make sure they are in range
@@ -6766,6 +6771,46 @@ function checksn(){
 							$("#dlvalid").show();
 							$('#dlspan').css('background-color', 'red');
 							$("#dlspan").text($(this).find("MESSAGE").text());
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+function submitemployeeapproval(){
+	var requestd = new FormData();
+	requestd.append('empid', $("#cid").val());
+	$.ajax({
+		url : 'submitEmployeeApproval.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTOR').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUBMITTED") {
+							$("#display_success_message_top").html("Employee Submitted For Approval").css("display",
+							"block").delay(6000);
+							$("#employeesuccessmessage").html("Employee Submitted For Approval").css("display",
+							"block").delay(6000);
+							$("#submitapp").hide();
+						} else {
+							
+							$("#display_error_message_top").html($(this).find("MESSAGE").text()).css("display",
+							"block").delay(6000);
+							$("#employeeerrormessage").html($(this).find("MESSAGE").text()).css("display",
+							"block").delay(6000);
 						}
 
 					});

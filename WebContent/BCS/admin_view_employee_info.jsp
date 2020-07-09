@@ -143,7 +143,7 @@ $(document).ready(function() {
 			      		<br/>
 			      		<c:choose>
 	         				<c:when test = "${employee.status eq 1}">	         				
-	         				<span style="background-color:yellow;color:black;padding:3px;text-transform:uppercase;">&nbsp;NOT YET REVIEWED&nbsp;</span>	         				
+	         				<span style="background-color:yellow;color:black;padding:3px;text-transform:uppercase;">&nbsp;NOT YET SUBMITTED&nbsp;</span>	         				
 	            				<p class="form-control-static">${ employee.statusText}</p>
 	            				
 	         				</c:when>
@@ -163,6 +163,9 @@ $(document).ready(function() {
 	         				<c:when test = "${employee.status eq 4}">
 	         					<span style="background-color:black;color:White;padding:3px;text-transform:uppercase;">&nbsp;SUSPENDED&nbsp;</span>
 	         				</c:when>
+	         				<c:when test = "${employee.status eq 6}">
+	         					<span style="background-color:blue;color:White;padding:3px;text-transform:uppercase;">&nbsp;SUBMITTED FOR APPROVAL&nbsp;</span>
+	         				</c:when>	         				
 	         				<c:otherwise>
 	            				<span></span>
 	            			</c:otherwise>

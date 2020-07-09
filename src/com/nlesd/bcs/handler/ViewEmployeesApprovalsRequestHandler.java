@@ -44,7 +44,7 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 					cid = BoardOwnedContractorsConstant.LABRADOR.getValue();
 				}
 				if(status.equals("p")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.NOTREVIEWED.getValue(),cid);
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.SUBMITTEDFORREVIEW.getValue(),cid);
 					reporttitle="Employees Awaiting Approval";
 				}else if(status.equals("a")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.APPROVED.getValue(),cid);
@@ -58,10 +58,13 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 				}else if(status.equals("re")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.REMOVED.getValue(),cid);
 					reporttitle="Employees Removed";
+				}else if(status.equals("ns")){
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.NOTREVIEWED.getValue(),cid);
+					reporttitle="Employees Not Submitted";
 				}
 			}else{
 				if(status.equals("p")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.NOTREVIEWED.getValue());
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.SUBMITTEDFORREVIEW.getValue());
 					reporttitle="Employees Awaiting Approval";
 				}else if(status.equals("a")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.APPROVED.getValue());
@@ -75,6 +78,9 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 				}else if(status.equals("re")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.REMOVED.getValue());
 					reporttitle="Employees Removed";
+				}else if(status.equals("ns")){
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.NOTREVIEWED.getValue());
+					reporttitle="Employees Not Submitted";
 				}
 			}
 
