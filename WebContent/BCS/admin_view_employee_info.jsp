@@ -822,7 +822,7 @@ $(document).ready(function() {
         				<button type="button" class="btn btn-xs btn-success" onclick="openApproveEmp();">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         			</esd:SecurityAccessRequired>
       			</c:if>
-      			<c:if test = "${employee.status eq 1}">
+      			<c:if test = "${employee.status eq 6}">
       				<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         				<button type="button" class="btn btn-xs btn-danger" onclick="openRejectEmp();">Reject</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         				</esd:SecurityAccessRequired>
