@@ -1256,7 +1256,7 @@ public class ApplicantProfileManager {
 					if (i > 0)
 						sql.append(" OR ");
 
-					sql.append("MAJOR_ID = " + params.getMajors()[i]);
+					sql.append("MAJOR_ID = " + params.getMajors()[i] + " OR MAJOR_ID_O = " + params.getMajors()[i]);
 				}
 				sql.append(") ");
 			}
@@ -1267,7 +1267,8 @@ public class ApplicantProfileManager {
 					if (i > 0)
 						sql.append(" OR ");
 
-					sql.append("MINOR_ID = " + params.getMinors()[i]);
+					sql.append("MINOR_ID = " + params.getMinors()[i] + "OR MAJOR_ID = " + params.getMinors()[i]
+							+ " OR MAJOR_ID_O = " + params.getMinors()[i]);
 				}
 				sql.append(") ");
 			}
