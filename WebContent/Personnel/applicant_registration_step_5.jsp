@@ -34,7 +34,7 @@
 	SECTION 5: Editing your Teacher/Educator HR Application Profile
 </div>
 
-<br/>Please complete/update your profile below. Fields marked * are required.
+<br/>Please complete/update your profile below. Fields marked * are required. Use whole numbers (# 0, 1, 2 etc ) where required and if no major, minor, or degree, select Not Applicable.
 
 <div class="panel-group" style="padding-top:5px;">
 	               	<div class="panel panel-info">
@@ -58,9 +58,9 @@
 								</tr>
 								<tr>
 							    <td class="tableTitleL"># Major Courses*:</td>
-				                <td class="tableResultL"><input type="text" name="major_courses" id="major_courses" class="form-control"></td>
+				                <td class="tableResultL"><input type="text" name="major_courses" id="major_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc"></td>
 							    <td class="tableTitleR"># Minor Courses*:</td>
-				                <td class="tableResultR"><input type="text" name="minor_courses" id="minor_courses" class="form-control"></td>
+				                <td class="tableResultR"><input type="text" name="minor_courses" id="minor_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc"></td>
 								</tr>
 								<tr>
 								<td colspan=4>
@@ -69,12 +69,12 @@
 										    <div class="panel-heading">
 										      <h4 class="panel-title">
 										        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-										        SELECT MAJOR(s) (Click to Open)</a>
+										        SELECT MAJOR(s)* (Click to Open)</a>
 										      </h4>
 										    </div>
 										    <div id="collapse1" class="panel-collapse collapse">
 										      <div class="panel-body">										      
-										      Please select up to a maximum of two (2) majors from the list below.<br/>
+										      Please select up to a maximum of two (2) majors from the list below. <b>If no Major, select Not Applicable.</b><br/>
 										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
 										      <job:MajorMinor id="major" cls="form-control"/></div>
 										      <div class="alert alert-danger majorError" style="display:none;">ERROR: Sorry, you can only select a maximum of two (2) majors.</div>
@@ -84,12 +84,12 @@
 										    <div class="panel-heading">
 										      <h4 class="panel-title">
 										        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-										        SELECT MINOR (Click to Open)</a>
+										        SELECT MINOR* (Click to Open) </a>
 										      </h4>
 										    </div>
 										    <div id="collapse2" class="panel-collapse collapse">
 										      <div class="panel-body">
-										       Please select up to one (1) minor from the list below. You CANNOT select a minor IF you have two (2) majors selected in previous step.<br/>
+										       Please select up to one (1) minor from the list below. You CANNOT select a minor IF you have two (2) majors selected in previous step. <b>If no Minor, select Not Applicable.</b><br/>
 										       <div class="alert alert-danger minorError" style="display:none;">ERROR: Sorry, you cannot select a minor with two (2) majors.</div>										        
 										      <job:MajorMinor id="minor" cls="form-control"/>
 										      <div class="alert alert-danger minorError" style="display:none;">ERROR: Sorry, you cannot select a minor with 2 majors.</div>										     
@@ -100,11 +100,13 @@
 										    <div class="panel-heading">
 										      <h4 class="panel-title">
 										        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-										        SELECT DEGREE CONFERRED (Click to Open)</a>
+										        SELECT DEGREE CONFERRED* (Click to Open)</a>
 										      </h4>
 										    </div>
 										    <div id="collapse3" class="panel-collapse collapse">
-										      <div class="panel-body"><job:Degrees id="degree" cls="form-control"/></div>
+										      <div class="panel-body">
+										      Please select up to one (1) degree from the list below. <b>If no Degree, select Not Applicable.</b><br/>
+										      <job:Degrees id="degree" cls="form-control"/></div>
 										    </div>
 										  </div>
 										</div>
