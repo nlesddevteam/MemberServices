@@ -41,7 +41,7 @@ public class SendAllApplicantLoginInfoEmailRequestHandler extends RequestHandler
 						email.setTo(profile[i].getEmail());
 						email.setSubject("NLESD Job Opportuntity System - Login Information");
 						email.setBody("Email: " + profile[i].getEmail() + "<BR><BR>Password: " + profile[i].getPassword());
-						email.setFrom("noreply@esdnl.ca");
+						email.setFrom("noreply@nlesd.ca");
 						email.send();
 					}
 					catch (Exception e) {

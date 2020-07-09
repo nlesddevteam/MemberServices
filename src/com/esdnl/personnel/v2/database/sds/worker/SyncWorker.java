@@ -33,7 +33,7 @@ public class SyncWorker extends Thread{
 				e.printStackTrace(new PrintWriter(sw));
 				
 				EmailBean email = new EmailBean();
-				email.setTo("chriscrane@esdnl.ca");
+				email.setTo("chriscrane@nlesd.ca");
 				email.setSubject("HR Sync Manager ERROR Notification");
 				email.setBody(sw.toString());
 				email.send();

@@ -88,7 +88,7 @@ public class AddRecognitionNominationRequestHandler extends PublicAccessRequestH
 					if (monitor != null) {
 						EmailBean email = new EmailBean();
 						email.setTo(new String[] {
-								"chriscrane@esdnl.ca", monitor.getEmailAddress()
+								"chriscrane@nlesd.ca", monitor.getEmailAddress()
 						});
 						email.setSubject("Nomination Received: " + bean.getNominationPeriod().getCategory().getName() + " - "
 								+ bean.getNomineeFullName());

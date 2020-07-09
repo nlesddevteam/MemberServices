@@ -43,9 +43,9 @@ public class SendApplicantLoginInfoEmailRequestHandler extends RequestHandlerImp
 				if (profile != null) {
 					EmailBean email = new EmailBean();
 					email.setTo(profile.getEmail());
-					email.setSubject("NLESD Job Opportunity System - Login Information");
+					email.setSubject("NLESD MyHR Portal - Login Information");
 					email.setBody("Email: " + profile.getEmail() + "<BR><BR>Password: " + profile.getPassword());
-					email.setFrom("noreply@esdnl.ca");
+					email.setFrom("noreply@nlesd.ca");
 					email.send();
 
 					//generate XML.
