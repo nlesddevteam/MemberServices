@@ -64,10 +64,10 @@
                    		<div class="alert alert-warning" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
                   	</c:if>	
                   	<c:if test="${ msgOK ne null }">  
-                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msg } </div>     
+                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msgOK } </div>     
                   	</c:if>	
                   	<c:if test="${ msgERR ne null }">  
-                   		<div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
+                   		<div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msgERR } </div>     
                   	</c:if>			
                   	
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">			
@@ -235,10 +235,10 @@
                    		<div class="alert alert-warning"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
                   	</c:if>	
                   	<c:if test="${ msgOK ne null }">  
-                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msg } </div>     
+                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msgOK } </div>     
                   	</c:if>	
                   	<c:if test="${ msgERR ne null }">  
-                   		<div class="alert alert-danger"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msg } </div>     
+                   		<div class="alert alert-danger"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msgERR } </div>     
                   	</c:if>					
 					
 					</div>	

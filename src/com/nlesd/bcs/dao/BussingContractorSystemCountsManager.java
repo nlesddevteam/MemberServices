@@ -140,6 +140,7 @@ public class BussingContractorSystemCountsManager {
 					ebean.setSuspendedContractorsVehicles(rs.getInt("suspended"));
 					ebean.setRemovedContractorsVehicles(rs.getInt("removed"));
 					ebean.setTotalContractorsVehicles(rs.getInt("total"));
+					ebean.setNotSubmittedContractorsVehicles(rs.getInt("vnotsubmitted"));
 				}		
 		}catch (SQLException e) {
 			System.err.println("createBussingContractorSystemContractBean(ResultSet rs,BussingContractorSystemCountsBean ebean, String ctype): "

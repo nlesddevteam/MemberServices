@@ -24,6 +24,7 @@ public class BussingContractorSystemCountsBean implements Serializable {
 	private int removedContractorsVehicles;
 	private int totalContractorsVehicles;
 	private int notSubmittedContractorsEmployees;
+	private int notSubmittedContractorsVehicles;
 	public int getSubmittedContractors() {
 		return submittedContractors;
 	}
@@ -137,6 +138,12 @@ public class BussingContractorSystemCountsBean implements Serializable {
 	}
 	public void setNotSubmittedContractorsEmployees(int notSubmittedContractorsEmployees) {
 		this.notSubmittedContractorsEmployees = notSubmittedContractorsEmployees;
+	}
+	public int getNotSubmittedContractorsVehicles() {
+		return notSubmittedContractorsVehicles;
+	}
+	public void setNotSubmittedContractorsVehicles(int notSubmittedContractorsVehicles) {
+		this.notSubmittedContractorsVehicles = notSubmittedContractorsVehicles;
 	}
 	
 }

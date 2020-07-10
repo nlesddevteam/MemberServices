@@ -817,12 +817,12 @@ $(document).ready(function() {
 		      		<div class="alert alert-danger" id="employeeerrormessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     				<div class="alert alert-success" id="employeesuccessmessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 		      	<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdateemployee('A','Y');">Update Employee</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        <c:if test = "${employee.status != 2 && employee.status != 0}">
+		        <c:if test = "${employee.status == 6}">
 		        	<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         				<button type="button" class="btn btn-xs btn-success" onclick="openApproveEmp();">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         			</esd:SecurityAccessRequired>
       			</c:if>
-      			<c:if test = "${employee.status eq 1}">
+      			<c:if test = "${employee.status eq 6}">
       				<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         				<button type="button" class="btn btn-xs btn-danger" onclick="openRejectEmp();">Reject</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         				</esd:SecurityAccessRequired>

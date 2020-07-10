@@ -102,6 +102,15 @@ $(document).ready(function() {
         	      	$("#mheidate2").change(function(){
         				checkdate('MHEIDATE2');
         			});
+        	      	if($("#vstatus").val() == 1 || $("#vstatus").val() == 3 || $("#vstatus").val() == 4){
+    					if(confirmVehicleFields('U','Y',true)){
+        	      			$("#submitapp").show();
+    					}else{
+    						$("#submitapp").hide();
+    					}
+    				}else{
+    					$("#submitapp").hide();
+    				}
 });
 </script>
 <script>
@@ -130,7 +139,7 @@ $(document).ready(function() {
   			<br/>
 	  			
 	  				  	<div class="form-group">
-			      			<label class="control-label col-sm-3" for="email">Status:</label>
+			      			<label class="control-label col-sm-3" for="email">Status:<input type="hidden" id="vstatus" value="${vehicle.vStatus}"></label>
 				      		<c:choose>
 		         				<c:when test = "${vehicle.vStatus eq 1}">
 		         				<div class="col-sm-5">
@@ -149,6 +158,11 @@ $(document).ready(function() {
 		            				<span style="color:Red;">Not Approved on ${ vehicle.dateApprovedFormatted}</span><br/>
 		            				Notes: ${vehicle.statusNotes}
 		         				</div>
+		         				</c:when>
+		         				<c:when test = "${vehicle.vStatus eq 6}">
+		         				<div class="col-sm-5">
+		            				<span style="background-color:blue;color:white;padding:3px;">&nbsp;${ vehicle.statusText}&nbsp;</span>
+		            				</div>
 		         				</c:when>
 		         				<c:otherwise>
 		            				<div class="col-sm-5"><span style="background-color:Black;color:white;padding:3px;">&nbsp;N/A&nbsp;</span></div>
@@ -584,10 +598,14 @@ $(document).ready(function() {
 
 				
 		  </div>
-		  			  	<div class="form-group">        
-			      <div class="col-sm-offset-3 col-sm-9">
+		  <div class="form-group">        
+			      <label class="control-label col-sm-3" for="email"></label>  
+					<div class="col-sm-5">
 			      	<br />
-			        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdatevehicle('C','Y');">Update Information</button>
+			      	<div class="form-inline">
+			        <button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdatevehicle('C','N');">Update Information</button>
+			      <button type="button" class="btn btn-xs btn-primary" id="submitapp" name="submitapp" onclick="submitvehicleapproval();">Submit For Approval</button>
+			      	</div>
 			      </div>
 			    </div>
 			    <div class="alert alert-danger" id="vehicleerrormessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         

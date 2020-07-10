@@ -674,7 +674,8 @@ function updateCompanyInformation() {
  * Check add new vehicle fields
  ******************************************************************************/
 function confirmVehicleFields(usertype,validatedates,bypass) {
-
+	$("#display_error_message_bottom").hide();
+	$("#display_error_message_top").hide();
 	var vmake = $("#vmake").val();
 	var vmodel = $("#vmodel").val();
 	var vyear = $("#vyear").val();
@@ -690,7 +691,7 @@ function confirmVehicleFields(usertype,validatedates,bypass) {
 	var vmakeother = $("#vmakeother").val();
 	if (vmake == "-1") {
 		$("#display_error_message_bottom").text("Please select vehicle make")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 		$("#vmake").focus();
 		return false;
 	}
@@ -698,75 +699,48 @@ function confirmVehicleFields(usertype,validatedates,bypass) {
 		if (vmakeother == "") {
 			$("#display_error_message_bottom")
 					.text("Please enter vehicle make").css("display", "block")
-					.delay(4000).fadeOut();
+					.delay(4000);
 			$("#vmakeother").focus();
 			return false;
 		}
 	}
 	if (vmodel == "") {
 		$("#display_error_message_bottom").text("Please enter vehicle model")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 
 		return false;
 	}
 	if (vyear == "-1") {
 		$("#display_error_message_bottom").text("Please select vehicle year")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 
 		return false;
 	}
 	if (vserialnumber == "") {
 		$("#display_error_message_bottom").text("Please enter serial number")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 
 		return false;
 	}
 	if (vplatenumber == "") {
 		$("#display_error_message_bottom").text("Please enter plate number")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 
 		return false;
 	}
 	if (vtype == "-1") {
 		$("#display_error_message_bottom").text("Please select vehicle type")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 
 		return false;
 	}
 	if (vsize == "-1") {
 		$("#display_error_message_bottom").text("Please select vehicle size")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 
 		return false;
 	}
-	if (vrowner == "") {
-		$("#display_error_message_bottom")
-				.text("Please enter registered owner").css("display", "block")
-				.delay(4000).fadeOut();
 
-		return false;
-	}
-	if (rdate == "") {
-		$("#display_error_message_bottom").text(
-				"Please enter registration expiry date")
-				.css("display", "block").delay(4000).fadeOut();
-
-		return false;
-	}
-	if (idate == "") {
-		$("#display_error_message_bottom").text(
-				"Please enter insurance expiry date").css("display", "block")
-				.delay(4000).fadeOut();
-
-		return false;
-	}
-	if (insuranceprovider == "") {
-		$("#display_error_message_bottom").text(
-				"Please enter insurance provider").css("display", "block")
-				.delay(4000).fadeOut();
-
-		return false;
-	}
 	if (usertype == "A") {
 		var selectedc = $("#contractor").val();
 		if (selectedc < 1) {
@@ -779,6 +753,38 @@ function confirmVehicleFields(usertype,validatedates,bypass) {
 	}
 	//check the date fields
 	if(validatedates == "Y"){
+		
+			if((bypass)){
+				if (vrowner == "") {
+					$("#display_error_message_bottom")
+							.text("Please enter registered owner").css("display", "block")
+							.delay(4000);
+
+					return false;
+				}
+				if (rdate == "") {
+					$("#display_error_message_bottom").text(
+							"Please enter registration expiry date")
+							.css("display", "block").delay(4000);
+
+					return false;
+				}
+				if (idate == "") {
+					$("#display_error_message_bottom").text(
+							"Please enter insurance expiry date").css("display", "block")
+							.delay(4000);
+
+					return false;
+				}
+				if (insuranceprovider == "") {
+					$("#display_error_message_bottom").text(
+							"Please enter insurance provider").css("display", "block")
+							.delay(4000);
+
+					return false;
+				}
+				
+			}
 			if(!(checkdatefields(bypass))){
 				return false;
 			}
@@ -6336,7 +6342,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#rdate').datepicker('getDate');
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Registration Expiry Date must be in future and no more than 1 year")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6351,7 +6357,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#idate').datepicker('getDate');
 			if ((Date.parse(today) > Date.parse(selectedDate)) || (Date.parse(selectedDate) > Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Insurance Expiry Date must be in future and no more than 1 year")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6366,7 +6372,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#fidate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Fall Inspection Date must be in past and no more than 1 year ")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6381,7 +6387,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#widate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Winter Inspection Date must be in past and no more than 1 year ")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6396,7 +6402,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#fheidate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Fall H.E. Inspection Date must be in past and no more than 1 year ")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6411,7 +6417,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#mheidate1').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 1 must be in past and no more than 1 year ")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6426,7 +6432,7 @@ function checkdatefields(bypass){
 			var selectedDate = $('#mheidate2').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
 				$("#display_error_message_bottom").text("Misc H.E. Inspection Date 2 must be in past and no more than 1 year ")
-				.css("display", "block").delay(4000).fadeOut();
+				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
 				}
@@ -6803,6 +6809,46 @@ function submitemployeeapproval(){
 							$("#display_success_message_top").html("Employee Submitted For Approval").css("display",
 							"block").delay(6000);
 							$("#employeesuccessmessage").html("Employee Submitted For Approval").css("display",
+							"block").delay(6000);
+							$("#submitapp").hide();
+						} else {
+							
+							$("#display_error_message_top").html($(this).find("MESSAGE").text()).css("display",
+							"block").delay(6000);
+							$("#employeeerrormessage").html($(this).find("MESSAGE").text()).css("display",
+							"block").delay(6000);
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+function submitvehicleapproval(){
+	var requestd = new FormData();
+	requestd.append('vid', $("#vid").val());
+	$.ajax({
+		url : 'submitVehicleApproval.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTOR').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUBMITTED") {
+							$("#display_success_message_top").html("Vehicle Submitted For Approval").css("display",
+							"block").delay(6000);
+							$("#employeesuccessmessage").html("Vehicle Submitted For Approval").css("display",
 							"block").delay(6000);
 							$("#submitapp").hide();
 						} else {

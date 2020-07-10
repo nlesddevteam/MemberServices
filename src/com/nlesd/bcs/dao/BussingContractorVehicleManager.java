@@ -1131,6 +1131,31 @@ public class BussingContractorVehicleManager {
 			catch (Exception e) {}
 		}
 		return check;
+	}
+	public static void updateContractorVehicleStatus(Integer vid,Integer vstatus)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_veh_status(?,?); end;");
+			stat.setInt(1, vid);
+			stat.setInt(2, vstatus);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("updateContractorVehicleStatus(Integer vid,Integer vstatus)" + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}	
 	public static BussingContractorVehicleBean createBussingContractorVehicleBean(ResultSet rs) {
 		BussingContractorVehicleBean abean = null;
