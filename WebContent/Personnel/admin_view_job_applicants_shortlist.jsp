@@ -17,7 +17,7 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-VIEW-SHORTLIST" />
 <esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "JOB", "JOB_SHORTLIST", "JOB_SHORTLIST_DECLINES_MAP" }%>'
 	scope='<%=PageContext.SESSION_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />

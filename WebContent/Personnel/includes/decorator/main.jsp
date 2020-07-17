@@ -511,7 +511,9 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 						                           <ul class="dropdown-menu">
                                   						<li><a onclick="loadingData()" href="/MemberServices/Personnel/addRequestToHire.html">Add New Request</a></li>
                                   						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyRequests.html">View My Requests</a></li>
-							         				
+                                  						<%if(usr.checkRole("RTH-SUBMIT-REQUEST")){%>
+							         						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyShortlists.html">View My Shortlists</a></li>
+							         					<%} %>
 							         				<%if(usr.checkPermission("PERSONNEL-RTH-VIEW-APPROVALS")){%>
 							         					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyApprovals.html">View My Approvals</a></li>
 							         				<%} %>

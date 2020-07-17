@@ -16,7 +16,7 @@
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-VIEW-SHORTLIST" />
 
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
