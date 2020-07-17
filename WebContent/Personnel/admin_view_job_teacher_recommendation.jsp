@@ -18,7 +18,7 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job"%>
 
 <esd:SecurityCheck
-	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-VIEW-SHORTLIST" />
 <esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{"JOB"}%>'
 	scope='<%=PageContext.SESSION_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />

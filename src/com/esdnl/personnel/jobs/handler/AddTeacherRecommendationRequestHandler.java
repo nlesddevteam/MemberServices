@@ -60,7 +60,7 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 	public AddTeacherRecommendationRequestHandler() {
 
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","RTH-VIEW-SHORTLIST"
 		};
 	}
 

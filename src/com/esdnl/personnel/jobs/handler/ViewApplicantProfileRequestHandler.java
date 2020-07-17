@@ -23,7 +23,7 @@ public class ViewApplicantProfileRequestHandler extends RequestHandlerImpl {
 	public ViewApplicantProfileRequestHandler() {
 
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","RTH-VIEW-SHORTLIST"
 		};
 
 		validator = new FormValidator(new FormElement[] {

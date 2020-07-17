@@ -1522,4 +1522,51 @@ public class JobOpportunityManager {
 			catch (Exception e) {}
 		}
 	}
+	public static JobOpportunityBean[] getSSShortlistJobOpportunityBeans(int supervid) throws JobOpportunityException {
+
+		Vector<JobOpportunityBean> v_opps = null;
+		JobOpportunityBean jBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		try {
+			v_opps = new Vector<JobOpportunityBean>(5);
+
+			con = DAOUtils.getConnection();
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_ss_shortlist_man(?,?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, supervid);
+			stat.setString(3,String.valueOf(supervid));
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				jBean = createJobOpportunityBean(rs);
+
+				v_opps.add(jBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("JobOpportunityBean[] getSSShortlistJobOpportunityBeans(int superid, String rby): " + e);
+			throw new JobOpportunityException("Can not extract JobOpportunityBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return (JobOpportunityBean[]) v_opps.toArray(new JobOpportunityBean[0]);
+	}
 }
