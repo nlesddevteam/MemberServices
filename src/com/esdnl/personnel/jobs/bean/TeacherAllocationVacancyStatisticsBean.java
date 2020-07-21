@@ -8,12 +8,14 @@ public class TeacherAllocationVacancyStatisticsBean {
 	private int totalAdSubmitted;
 	private int totalAdApproved;
 	private int totalAdPosted;
+	private int totalCompetitionsInProgress;
 	private int totalFilledByCompetition;
 	private int totalFilledManually;
 
 	private int totalNoShortlist;
 	private int totalShortlistNoRecemmendation;
 	private int totalRecommendationSubmitted;
+	private int totalRecommendationRejected;
 	private int totalRecommendationApproved;
 	private int totalRecommendationAccepted;
 	private int totalRecommendationOffered;
@@ -65,6 +67,16 @@ public class TeacherAllocationVacancyStatisticsBean {
 		this.totalAdSubmitted = totalAdSubmitted;
 	}
 
+	public int getTotalRecommendationRejected() {
+
+		return totalRecommendationRejected;
+	}
+
+	public void setTotalRecommendationRejected(int totalRecommendationRejected) {
+
+		this.totalRecommendationRejected = totalRecommendationRejected;
+	}
+
 	public int getTotalAdApproved() {
 
 		return totalAdApproved;
@@ -83,6 +95,16 @@ public class TeacherAllocationVacancyStatisticsBean {
 	public void setTotalAdPosted(int totalAdPosted) {
 
 		this.totalAdPosted = totalAdPosted;
+	}
+
+	public int getTotalCompetitionsInProgress() {
+
+		return totalCompetitionsInProgress;
+	}
+
+	public void setTotalCompetitionsInProgress(int totalCompetitionsInProgress) {
+
+		this.totalCompetitionsInProgress = totalCompetitionsInProgress;
 	}
 
 	public int getTotalFilledByCompetition() {

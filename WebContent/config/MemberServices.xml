@@ -3913,6 +3913,10 @@
       <URL-Pattern>/Personnel/listVacanciesWithRecommendationSubmitted.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithRecommendationRejectedRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/listVacanciesWithRecommendationRejected.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.stats.ListVacanciesWithOffersQueuedRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/listVacanciesWithOffersQueued.html</URL-Pattern>
     </Request-Handler>

@@ -634,6 +634,63 @@ public class TeacherAllocationVacancyStatisticsManager {
 		return vacancies;
 	}
 
+	public static Collection<JobOpportunityBean> getVacanciesWithRecommendationRejected(String schoolYear,
+																																											SchoolZoneBean zone)
+			throws JobOpportunityException {
+
+		Collection<JobOpportunityBean> vacancies = new ArrayList<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_2_pkg.get_vac_rec_rejected(?,?); end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolYear);
+			stat.setInt(3, zone.getZoneId());
+
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				vacancies.add(JobOpportunityManager.createJobOpportunityBean(rs));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println(
+					"Collection<JobOpportunityBean> getVacanciesWithRecommendationRejected(	String schoolYear, SchoolZoneBean zone): "
+							+ e);
+			throw new JobOpportunityException("Can not retrieve JobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return vacancies;
+	}
+
 	public static TeacherAllocationVacancyStatisticsBean createTeacherAllocationVacancyStatisticsBean(ResultSet rs) {
 
 		TeacherAllocationVacancyStatisticsBean stats = null;
@@ -646,10 +703,12 @@ public class TeacherAllocationVacancyStatisticsManager {
 			stats.setTotalAdApproved(rs.getInt("AD_APPROVED"));
 			stats.setTotalAdSubmitted(rs.getInt("AD_SUBMITTED"));
 			stats.setTotalAdPosted(rs.getInt("AD_POSTED"));
+			stats.setTotalCompetitionsInProgress(rs.getInt("COMP_INPROGRESS"));
 			stats.setTotalFilledByCompetition(rs.getInt("FILLED_COMP"));
 			stats.setTotalFilledManually(rs.getInt("FILLED_MANUAL"));
 			stats.setTotalNoAdCreated(rs.getInt("NO_AD_CREATED"));
 			stats.setTotalRecommendationSubmitted(rs.getInt("REC_SUBMITTED"));
+			stats.setTotalRecommendationRejected(rs.getInt("REC_REJECTED"));
 			stats.setTotalRecommendationApproved(rs.getInt("REC_APPROVED"));
 			stats.setTotalRecommendationAccepted(rs.getInt("REC_ACCEPTED"));
 			stats.setTotalRecommendationOffered(rs.getInt("REC_OFFERED"));
