@@ -84,13 +84,14 @@
 									<tr>
 										<td rowspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Region</td>
 										<td rowspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Total<br/>Vacancies</td>
-										<td colspan='3' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Ad Requests</td>
+										<td colspan='4' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Ad Requests</td>
 										<td rowspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Comp<br/>In<br/>Prog</td>
 										<td colspan='2' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Shortlists</td>
 										<td colspan='8' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Recommendations</td>
 										<td colspan='4' style="color: rgba(0,0,0,1);text-transform:Uppercase;font-weight:bold;">Positions Filled</td>
 									</tr>
 									<tr>
+										<td scope="col" style="color: rgba(0,0,0,1);">No</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">Sub</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">App</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">Pst</td>
@@ -112,12 +113,13 @@
 									<% 
 										int rowCnt = 0;
 										int totalVacancies = 0, totalFilledByCompetition = 0, totalFilledManually = 0;
-										int totalAdSubmitted = 0, totalAdApproved = 0, totalAdPosted = 0, totalCompInProgress = 0,  totalNoShortlist = 0, totalShortlistedNoRecommendation = 0;
+										int totalNoAdCreated = 0, totalAdSubmitted = 0, totalAdApproved = 0, totalAdPosted = 0, totalCompInProgress = 0,  totalNoShortlist = 0, totalShortlistedNoRecommendation = 0;
 										int totalRecSubmitted = 0, totalRecRejected = 0, totalRecApproved = 0, totalRecAccepted = 0, totalRecOffered = 0, totalRecOfferAccepted = 0, totalRecOfferRejected = 0, totalRecOfferExpired = 0;
 										for (Map.Entry<SchoolZoneBean, TeacherAllocationVacancyStatisticsBean> entry : vacancyStatsByRegion.entrySet()) { 
 											totalVacancies += entry.getValue().getTotalVacancies();
 											totalFilledByCompetition += entry.getValue().getTotalFilledByCompetition();
 											totalFilledManually += entry.getValue().getTotalFilledManually();
+											totalNoAdCreated += entry.getValue().getTotalNoAdCreated();
 											totalAdSubmitted += entry.getValue().getTotalAdSubmitted();
 											totalAdApproved += entry.getValue().getTotalAdApproved();
 											totalAdPosted += entry.getValue().getTotalAdPosted();
@@ -148,6 +150,7 @@
 											<td scope="row" class="region5half"><%= StringUtils.capitalize(entry.getKey().getZoneName()) %></td>
 										<%} %>												
 											<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalVacancies() %></td>
+											<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalNoAdCreated() %></td>
 											<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdSubmitted() %></td>
 											<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdApproved() %></td>
 											<td class="regionRow<%=rowCnt%>"><%= entry.getValue().getTotalAdPosted() %></td>
@@ -184,6 +187,7 @@
 									<tr>
 											<td scope="row" style='font-weight:bold;color:rgba(0,0,0,1);border-top: double #333333;'>TOTALS:</td>
 											<td style='font-weight: bold;border-top: double #333333; '><%= totalVacancies %></td>
+											<td style='font-weight: bold;border-top: double #333333;'><%= totalNoAdCreated %></td>
 											<td style='font-weight: bold;border-top: double #333333;'><%= totalAdSubmitted %></td>
 											<td style='font-weight: bold;border-top: double #333333;'><%= totalAdApproved %></td>
 											<td style='font-weight: bold;border-top: double #333333; '><%= totalAdPosted %></td>
@@ -204,11 +208,11 @@
 											<td class='text-danger' style='font-weight: bold; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 										</tr>
 									<tr>
-										<td colspan='16' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Filled:</td>
+										<td colspan='17' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Filled:</td>
 										<td colspan='4' style='color:Green;text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 									</tr>
 									<tr>
-										<td colspan='16' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Outstanding:</td>
+										<td colspan='17' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Outstanding:</td>
 										<td colspan='4' style='color:Red;text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 									</tr>
 								</tbody>
