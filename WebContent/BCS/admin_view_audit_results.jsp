@@ -63,12 +63,13 @@ $(document).ready(function() {
 		
 	<%pageContext.setAttribute("now", new java.util.Date()); %>   		
 	<div id="printJob">	
-		 <div class="BCSHeaderText">View Audit Entries</div>			 
+		 <div class="BCSHeaderText">View Audit Entries</div>
+		 <div class="BCSHeaderText">${rtype} : ${bcname} Between ${sdate} And ${edate}</div>			 
 			  <br />
 			   <div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     		<div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 			 <div id="BCS-Search">
-			 Below is a table of the <b>${companyname} Employee(s)</b> data as requested. Depending on the data returned, you may need to scroll to see other data column and/or row fields. 
+				Depending on the data returned, you may need to scroll to see other data column and/or row fields. 
 			 If you require to sort data in a column, you can click on the arrows located to the right in each column title header. 
 			 To export this data to Excel, CSV or to print/copy, you can select either option below to download a copy to open or print.
 			
@@ -80,7 +81,6 @@ $(document).ready(function() {
 				<th class="listdata">Contractor</th>
 				<th class="listdata">Date</th>
 				<th class="listdata">Notes</th>
-				<th class="listdata"></th>
 				
 				</thead>
 				<tbody>
@@ -92,17 +92,7 @@ $(document).ready(function() {
 	 						<td class="field_content">${rule.bcBean.contractorName}</td>
 	      					<td class="field_content">${rule.entryDateFormatted}</td>
 	      					<td class="field_content">${rule.entryNotes}</td>
-	      					<c:choose>
-	      						<c:when test="${rule.viewUrl ne ''}">
-	      							<td class="field_content">
-	      								<button type='button' class='btn btn-xs btn-primary' onclick="${rule.viewUrl}">View</button>
-	      							</td>
-	      						</c:when>
-	      						<c:otherwise>
-	      							<td class="field_content"></td>
-	      							
-	      						</c:otherwise>
-	      					</c:choose>	
+				
 	      					
 	      				</tr>
 	        		</c:forEach>

@@ -156,7 +156,30 @@ $(document).ready(function() {
          				</c:otherwise>
       					</c:choose>
       					</div>
-        			</div> 	  	
+        			</div>
+        			<div class="form-group">
+	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Serial Number:</label>
+	                <div class="col-sm-5">
+        				<p>
+        				<input class="form-control" id="vserialnumber" name="vserialnumber" type="text" placeholder="Enter serial number" value="${vehicle.vSerialNumber}">
+        				</p>
+      		  		</div>
+	            </div>
+	            <div class="form-group">
+				<label class="control-label col-sm-2" for="email"></label>
+		      	<div class="col-sm-5">
+		      		<div class="row">
+		      			<div class="col-sm-5">
+		        			<button type='button' onclick="checksn('A')">Check Serial Number</button>
+		        		</div>
+		        		<div class="col-sm-5">
+		        			<div  id="dlvalid" style="display:none;">
+  								<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
+							</div>
+		        		</div>
+		        	</div>
+		        </div>
+				</div>  	  	
         			<div class="form-group">		  	
 		                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Contractor:</label>
 		                <div class="col-sm-5">
@@ -188,7 +211,8 @@ $(document).ready(function() {
 			  			</c:forEach>
 				  		</select>
 				  		</div>
-	      			</div> 
+	      			</div>
+
 			   	<div class="form-group">
 	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Vehicle Make:</label><input type="hidden" id="vid" name="vid" value="${vehicle.id}">
 	                <input type="hidden" id="settab1" name="settab1" value="${settab1}">
@@ -250,29 +274,7 @@ $(document).ready(function() {
         				</p>
       		  		</div>
 	            </div>
-	            <div class="form-group">
-	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Serial Number:</label>
-	                <div class="col-sm-5">
-        				<p>
-        				<input class="form-control" id="vserialnumber" name="vserialnumber" type="text" placeholder="Enter serial number" value="${vehicle.vSerialNumber}">
-        				</p>
-      		  		</div>
-	            </div>
-	            <div class="form-group">
-				<label class="control-label col-sm-2" for="email"></label>
-		      	<div class="col-sm-5">
-		      		<div class="row">
-		      			<div class="col-sm-5">
-		        			<button type='button' onclick="checksn()">Check Serial Number</button>
-		        		</div>
-		        		<div class="col-sm-5">
-		        			<div  id="dlvalid" style="display:none;">
-  								<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
-							</div>
-		        		</div>
-		        	</div>
-		        </div>
-				</div>
+
 	            <div class="form-group">
 	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Plate Number:</label>
 	                <div class="col-sm-5">

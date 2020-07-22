@@ -71,7 +71,7 @@
 		
 	<%pageContext.setAttribute("now", new java.util.Date()); %>   		
 	<div id="printJob">	
-		<div class="BCSHeaderText">View Contractor Employees</div>
+		<div class="BCSHeaderText">Select Date Audit Report Values</div>
 		<p>	
 		<div class="alert alert-danger" id="body_error_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 		 </p>
@@ -130,7 +130,7 @@
 			  	 
 			  </p>			  	
 			  	<p>
-			  	<input type="button" value="Run Audit"  onclick="getDateAuditLogEntries();">
+			  	<input type="button" value="Run Audit"  onclick="checkDateAuditLogFields();">
 
 			</p>
 			

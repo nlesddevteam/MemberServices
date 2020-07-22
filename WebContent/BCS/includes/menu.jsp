@@ -117,7 +117,12 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesReport.html');"><i class="fa fa-fw fa-car"></i> Vehicle Reports</a></li>
            <esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">
            		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewAllContractors.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Reports</a></li>
-        	</esd:SecurityAccessRequired>
+           		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Audit Report</a></li>
+           		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectDateAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Date Audit Report</a></li>
+           	</esd:SecurityAccessRequired>
+           	<esd:SecurityAccessRequired permissions="BCS-WEEKLY-REPORT-STATUS">
+           	<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('weeklyReportStatus.html');"><i class="fa fa-fw fa-file-text-o"></i> Weekly Report Status</a></li>
+           	</esd:SecurityAccessRequired>
         </ul>
      </li>
   </ul>

@@ -3947,6 +3947,34 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewManagerSuperJobShortlistsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewMyShortlists.html</URL-Pattern>
-    </Request-Handler>                                                                                                                                 
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.CheckSerialNumberContractorAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/checkSerialNumberCon.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.CheckDriverLicenceContractorAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/checkDriverLicenceCon.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.AdminSelectAuditRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/selectAuditRequest.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.AdminSubmitAuditRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/submitAudit.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.AdminSelectDateAuditRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/selectDateAuditRequest.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.AdminSubmitDateAuditRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/submitDateAudit.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.ViewWeeklyReportStatusRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/weeklyReportStatus.html</URL-Pattern>
+    </Request-Handler>                                                                                                                                     
   </Request-Handlers>
 </Member-Services-Config>
