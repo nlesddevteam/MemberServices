@@ -185,31 +185,39 @@
 										
 									<% } %>
 									<tr>
-											<td scope="row" style='font-weight:bold;color:rgba(0,0,0,1);border-top: double #333333;'>TOTALS:</td>
-											<td style='font-weight: bold;border-top: double #333333; '><%= totalVacancies %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalNoAdCreated %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalAdSubmitted %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalAdApproved %></td>
-											<td style='font-weight: bold;border-top: double #333333; '><%= totalAdPosted %></td>
-											<td style='font-weight: bold;border-top: double #333333; '><%= totalCompInProgress %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalNoShortlist %></td>
-											<td style='font-weight: bold;border-top: double #333333; '><%= totalShortlistedNoRecommendation %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecSubmitted %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecRejected %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecApproved %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecAccepted %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecOffered %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecOfferAccepted %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecOfferRejected %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalRecOfferExpired %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalFilledByCompetition  %></td>
-											<td style='font-weight: bold;border-top: double #333333;'><%= totalFilledManually %></td>
-											<td class='text-success' style='font-weight: bold; border-top: double #333333'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
-											<td class='text-danger' style='font-weight: bold; border-top: double #333333'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
-										</tr>
+										<td scope="row" style='font-weight:bold;color:rgba(0,0,0,1);border-top: double #333333;background-color: #fafafa;'>TOTALS:</td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalVacancies %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalNoAdCreated %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalAdSubmitted %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalAdApproved %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa; '><%= totalAdPosted %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa; '><%= totalCompInProgress %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalNoShortlist %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa; '><%= totalShortlistedNoRecommendation %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecSubmitted %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecRejected %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecApproved %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecAccepted %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecOffered %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecOfferAccepted %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecOfferRejected %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecOfferExpired %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalFilledByCompetition  %></td>
+										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalFilledManually %></td>
+										<td class='text-success' style='font-weight: bold; border-top: double #333333;background-color: #fafafa;'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+										<td class='text-danger' style='font-weight: bold; border-top: double #333333;background-color: #fafafa;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
+									</tr>
 									<tr>
-										<td colspan='17' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Filled:</td>
-										<td colspan='4' style='color:Green;text-align:center; font-weight: bold;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+										<td colspan='2' style='background-color: #fafafa;border-bottom: solid 1px #a0a0a0;'>&nbsp;</td>
+										<td colspan='4' style='font-weight: bold;background-color: #fafafa;border-bottom: solid 1px #a0a0a0;'><%= totalNoAdCreated + totalAdSubmitted + totalAdApproved + totalAdPosted %></td>
+										<td style='background-color: #fafafa;border-bottom: solid 1px #a0a0a0;'>&nbsp;</td>
+										<td colspan='2' style='font-weight: bold;background-color: #fafafa;border-bottom: solid 1px #a0a0a0;'><%= totalNoShortlist + totalShortlistedNoRecommendation %></td>
+										<td colspan='8' style='font-weight: bold;background-color: #fafafa;border-bottom: solid 1px #a0a0a0;'><%= totalRecSubmitted + totalRecRejected + totalRecApproved + totalRecAccepted +  totalRecOffered + totalRecOfferAccepted + totalRecOfferRejected + totalRecOfferExpired %></td>
+										<td colspan='4' style='background-color: #fafafa;border-bottom: solid 1px #a0a0a0;'>&nbsp;</td>
+									</tr>
+									<tr>
+										<td colspan='17' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold;border-top: solid 1px #a0a0a0;'>Total Filled:</td>
+										<td colspan='4' style='color:Green;text-align:center; font-weight: bold;border-top: solid 1px #a0a0a0;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
 									</tr>
 									<tr>
 										<td colspan='17' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Outstanding:</td>
