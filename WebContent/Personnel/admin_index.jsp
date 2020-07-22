@@ -96,7 +96,7 @@
 										<td scope="col" style="color: rgba(0,0,0,1);">App</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">Pst</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">No</td>
-										<td scope="col" style='color: rgba(0,0,0,1);white-space: nowrap;'>> 48 Hrs<br/>No Rec</td>
+										<td scope="col" style='color: rgba(0,0,0,1);'>No Rec</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">Sub</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">Rej</td>
 										<td scope="col" style="color: rgba(0,0,0,1);">App</td>
