@@ -63,7 +63,8 @@ $(document).ready(function() {
 		
 	<%pageContext.setAttribute("now", new java.util.Date()); %>   		
 	<div id="printJob">	
-		 <div class="BCSHeaderText">View Date Audit Entries</div>			 
+		 <div class="BCSHeaderText">View Date Audit Entries</div>
+		 <div class="BCSHeaderText">${dstring} : ${bcname} Between ${sdate} And ${edate}</div>			 
 			  <br />
 			   <div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     		<div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>

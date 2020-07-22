@@ -896,6 +896,12 @@ function updateVehicle(usertype) {
 							// $("#pageContentBody").load(surl);
 							$("#pageContentBody").load(surl);
 						} else {
+							//alert("here");
+							//var test = '<%= Session["scheck"] %>';
+							//if(test != null){
+								//alert("here2");
+								//window.location.href="contractorLogin.html";
+							//}
 							$("#vehicleerrormessage").text(
 									$(this).find("MESSAGE").text()).css(
 									"display", "block").delay(4000).fadeOut();
@@ -6678,12 +6684,18 @@ function adjustServiceTime(){
 	}
 	$("#continuousservice").val(stime);
 }
-function checkdl(){
+function checkdl(usert){
 	if ($("#dlnumber").val() == "") {
 		$('#display_error_message_top').text(
 				"Please enter Driver Licence Number").css(
 				"display", "block").delay(6000).fadeOut();
 		return false;
+	}
+	var surl ="";
+	if(usert == "A"){
+		surl="checkDriverLicence.html";
+	}else{
+		surl="checkDriverLicenceCon.html";
 	}
 	var requestd = new FormData();
 	requestd.append('dlnumber', $("#dlnumber").val());
@@ -6745,17 +6757,24 @@ function addupdatevehicle(usert,validates){
 		}
 	}
 }
-function checksn(){
+function checksn(usert){
 	if ($("#vserialnumber").val() == "") {
 		$('#display_error_message_top').text(
 				"Please enter Serial Number").css(
 				"display", "block").delay(6000).fadeOut();
 		return false;
 	}
+	var surl ="";
+	if(usert == "A"){
+		surl="checkSerialNumber.html";
+	}else{
+		surl="checkSerialNumberCon.html";
+	}
+		
 	var requestd = new FormData();
 	requestd.append('sn', $("#vserialnumber").val());
 	$.ajax({
-		url : 'checkSerialNumber.html',
+		url : surl,
 		type : 'POST',
 		data : requestd,
 		contentType : false,
@@ -6857,6 +6876,7 @@ function submitvehicleapproval(){
 							"block").delay(6000);
 							$("#employeeerrormessage").html($(this).find("MESSAGE").text()).css("display",
 							"block").delay(6000);
+							
 						}
 
 					});
@@ -6870,4 +6890,102 @@ function submitvehicleapproval(){
 
 	});
 
+}
+/*******************************************************************************
+ * check for add new training
+ ******************************************************************************/
+function checkAuditLogFields() {
+	$("#body_error_message_top").hide();
+	var sdate = $.trim($('#sdate').val());
+	var edate = $.trim($('#edate').val());
+	var selecteda = $("#selectaudit").val();
+	var selectedc= $("#selectcon").val();
+	if (sdate == "") {
+		$("#body_error_message_top").html("Please select From date").css("display",
+				"block").delay(6000);
+		return false;
+	}
+	if (edate == "") {
+		$("#body_error_message_top").html("Please select To date").css("display",
+				"block").delay(6000).fadeOut();
+		return false;
+	}
+	if (selecteda < 1) {
+		$("#body_error_message_top").html("Please select Audit Type").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	}
+	if (selectedc < 1) {
+		$("#body_error_message_top").html("Please select Contractor").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	}
+	
+	//$("#frmAudit").submit(); // Submit the form
+	var values="?selectcon=" + selectedc + "&selectaudit=" + selecteda + "&edate=" + edate + "&sdate=" + sdate;
+	var surl = "submitAudit.html" + values;
+	$('#loadingSpinner').css("display","inline");
+	$("#pageContentBody").load(surl);
+	
+	return true;
+}
+/*******************************************************************************
+ * check for add new training
+ ******************************************************************************/
+function checkDateAuditLogFields() {
+	$("#body_error_message_top").hide();
+	var sdate = $.trim($('#sdate').val());
+	var edate = $.trim($('#edate').val());
+	var selectedt = $("#selecttype").val();
+	var selectedc= $("#selectcon").val();
+	var selectedf = $("#selectfield").val();
+	var selectedfv = $("#selectfieldv").val();
+	if (sdate == "") {
+		$("#body_error_message_top").html("Please select From date").css("display",
+				"block").delay(6000);
+		return false;
+	}
+	if (edate == "") {
+		$("#body_error_message_top").html("Please select To date").css("display",
+				"block").delay(6000).fadeOut();
+		return false;
+	}
+	if (selectedt < 1) {
+		$("#body_error_message_top").html("Please select Audit Type").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	}
+	if (selectedc < 1) {
+		$("#body_error_message_top").html("Please select Contractor").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	}
+	if(selectedt == 1){
+		if (selectedf < 1) {
+			$("#body_error_message_top").html("Please select Date field").css("display",
+			"block").delay(6000).fadeOut();
+			return false;
+		}
+	}else{
+		if (selectedfv < 1) {
+			$("#body_error_message_top").html("Please select Date field").css("display",
+			"block").delay(6000).fadeOut();
+			return false;
+		}
+	}
+	
+	//$("#frmAudit").submit(); // Submit the form
+	var values="?selectcon=" + selectedc + "&selecttype=" + selectedt + "&edate=" + edate + "&sdate=" + sdate + "&selectfield=" + selectedf + "&selectfieldv=" + selectedfv;
+	var surl = "submitDateAudit.html" + values;
+	$('#loadingSpinner').css("display","inline");
+	$("#pageContentBody").load(surl);
+	
+	return true;
+}
+function updateweeklystatus(statusvalue){
+	var values="?stype=" + statusvalue;
+	var surl = "weeklyReportStatus.html" + values;
+	$('#loadingSpinner').css("display","inline");
+	$("#pageContentBody").load(surl);
+	
 }

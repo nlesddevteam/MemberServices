@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +32,7 @@ import com.awsd.security.addressbook.handler.ViewAddressBookRequestHandler;
 import com.awsd.travel.handler.ViewTravelClaimSystemRequestHandler;
 import com.esdnl.audit.IAuditable;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+
 
 public class ControllerServlet extends HttpServlet {
 
@@ -250,6 +250,15 @@ public class ControllerServlet extends HttpServlet {
 			vprops.setProperty("runtime.log.logsystem.log4j.logger", "velocity");
 
 			Velocity.init(vprops);
+			
+			//start bcs weekly warnings service
+			try {
+				Class.forName("com.nlesd.bcs.service.ReportSchedulerService");
+			}
+			catch (NoClassDefFoundError e) {
+				System.err.println("COULD NOT FIND com.nlesd.bcs.service.ReportSchedulerService");
+			}
+			
 		}
 		catch (ParserConfigurationException e) {
 			System.err.println("ControllerServlet(init): " + e);
@@ -346,8 +355,7 @@ public class ControllerServlet extends HttpServlet {
 					}
 
 					return;
-				}
-				else {
+				}else {
 					viewURL = rh.handleRequest(request, response);
 				}
 

@@ -59,8 +59,9 @@
 		
 		
 	<%pageContext.setAttribute("now", new java.util.Date()); %>   		
-	<div id="printJob">	
-		<div class="BCSHeaderText">View Contractor Employees</div>	
+	<div id="printJob">
+		<form id="frmAudit" action="submitAudit.html" method="post">	
+		<div class="BCSHeaderText">Select Operator Audit Report Values</div>	
 		<p>
 			<div class="alert alert-danger" id="body_error_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 		</p>
@@ -72,8 +73,6 @@
 			  		<option value="-1">Please select</option>
 			  		<option value="1">Contractor Login</option>
 			  		<option value="2">Contractor Information Changes(Employees/Vehicles)</option>
-			  		<option value="3">Contractor Employee Date Changes</option>
-			  		<option value="4">Contractor Vehicle Date Changes</option>
 			  	</select>
 			  </p>
 			  Select Contractor			  
@@ -98,9 +97,9 @@
 			  	 
 			  </p>			  	
 			  	<p>
-			  	<input type="button" value="Run Audit"  onclick="getAuditLogEntries();">
+			  	<input type="button" value="Run Audit"  onclick="checkAuditLogFields()">
 
 			</p>
-			
+			</form>
 		</div>
 	

@@ -29,6 +29,7 @@ if(tabs != null){
 	settab="D";
 }
 pageContext.setAttribute("settab1", settab);
+
 %>
 <script>
 			
@@ -112,6 +113,7 @@ $(document).ready(function() {
     					$("#submitapp").hide();
     				}
 });
+
 </script>
 <script>
    			$(document).ready(function () {
@@ -169,6 +171,29 @@ $(document).ready(function() {
 		         				</c:otherwise>
 		      				</c:choose>
         				</div>
+        		<div class="form-group">
+	                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Serial Number:</label>
+	                <div class="col-sm-5">
+        				<p>
+        				<input class="form-control" id="vserialnumber" name="vserialnumber" type="text" placeholder="Enter serial number" value="${vehicle.vSerialNumber}">
+        				</p>
+      		  		</div>
+	            </div>
+	            <div class="form-group">
+				<label class="control-label col-sm-3" for="email"></label>
+		      	<div class="col-sm-5">
+		      		<div class="row">
+		      			<div class="col-sm-5">
+		        			<button type='button' onclick="checksn('C')">Check Serial Number</button>
+		        		</div>
+		        		<div class="col-sm-5">
+		        			<div  id="dlvalid" style="display:none;">
+  								<span id="dlspan"style="color:White;background-color:Red;padding:2px;text-transform:uppercase;"></span>
+							</div>
+		        		</div>
+		        	</div>
+		        </div>
+				</div>		
 			   	<div class="form-group">
 	                <label class="control-label col-sm-3" for="email">Vehicle Make:</label>
 	                <input type="hidden" id="vid" name="vid" value="${vehicle.id}">
@@ -223,13 +248,7 @@ $(document).ready(function() {
 						</select>
 	            		</div>
 	            </div>
-	            <div class="form-group">
-	                <label class="control-label col-sm-3" for="email">Serial Number:</label>
-	                <div class="col-sm-5">
-	                    <input class="form-control" id="vserialnumber" name="vserialnumber" type="text" placeholder="Enter serial number" value="${vehicle.vSerialNumber}">
-	                </div>
-	            </div>
-	            <div class="form-group">
+				<div class="form-group">
 	                <label class="control-label col-sm-3" for="email">Plate Number:</label>
 	                <div class="col-sm-5">
 	                    <input class="form-control" id="vplatenumber" name="vplatenumber" type="text" placeholder="Enter plate number" value="${vehicle.vPlateNumber}">
@@ -613,7 +632,6 @@ $(document).ready(function() {
 		  </form>	
 		  </div>
 
-	
 	
 		
 

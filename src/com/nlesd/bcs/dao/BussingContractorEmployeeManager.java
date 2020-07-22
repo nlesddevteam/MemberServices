@@ -1270,6 +1270,22 @@ public class BussingContractorEmployeeManager {
 				if(ts != null){
 					abean.setCodExpiryDate(new java.util.Date(rs.getTimestamp("CODEXPIRYDATE").getTime()));
 				}
+				//extra fields for automated warning messages
+				try {
+					//using one big query
+					if(rs.getString("COMPANY") !=  null) {
+						abean.setCompanyName(rs.getString("COMPANY"));
+					}else {
+						abean.setCompanyName(rs.getString("CFNAME") + " " + rs.getString("CFNAME"));
+					}
+					
+					abean.setCompanyEmail(rs.getString("CEMAIL"));
+					abean.setWarningNotes(rs.getString("WTYPE"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setCompanyName("");
+					abean.setCompanyEmail("");
+				}
 		}
 		catch (SQLException e) {
 				abean = null;
@@ -1414,6 +1430,22 @@ public class BussingContractorEmployeeManager {
 				ts= rs.getTimestamp("CODEXPIRYDATE");
 				if(ts != null){
 					abean.setCodExpiryDate(new java.util.Date(rs.getTimestamp("CODEXPIRYDATE").getTime()));
+				}
+				//extra fields for automated warning messages
+				try {
+					//using one big query
+					if(rs.getString("COMPANY") !=  null) {
+						abean.setCompanyName(rs.getString("COMPANY"));
+					}else {
+						abean.setCompanyName(rs.getString("CFNAME") + " " + rs.getString("CFNAME"));
+					}
+					
+					abean.setCompanyEmail(rs.getString("CEMAIL"));
+					abean.setWarningNotes(rs.getString("WTYPE"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setCompanyName("");
+					abean.setCompanyEmail("");
 				}
 		}
 		catch (SQLException e) {

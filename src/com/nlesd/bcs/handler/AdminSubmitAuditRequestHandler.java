@@ -12,8 +12,10 @@ import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
+import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
+import com.nlesd.bcs.dao.BussingContractorManager;
 public class AdminSubmitAuditRequestHandler extends RequestHandlerImpl {
 	public AdminSubmitAuditRequestHandler() {
 		this.requiredPermissions = new String[] {
@@ -32,8 +34,9 @@ public class AdminSubmitAuditRequestHandler extends RequestHandlerImpl {
 		if (validate_form()) {
 			int audittype = Integer.parseInt(request.getParameter("selectaudit").toString());
 			int contractor = Integer.parseInt(request.getParameter("selectcon").toString());
+			BussingContractorBean bcbean = BussingContractorManager.getBussingContractorById(contractor);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		
+			String rtype="";
 			
 			Date sdate = null;
 			Date edate= null;
@@ -48,11 +51,17 @@ public class AdminSubmitAuditRequestHandler extends RequestHandlerImpl {
 			ArrayList<AuditTrailBean> list = new ArrayList<AuditTrailBean>();
 			if(audittype == 1){
 				list = AuditTrailManager.getAuditEntriesLogins(contractor, sdate, edate, EntryTypeConstant.CONTRACTORLOGIN.getValue());
+				rtype="Contractor Login";
 			}else if(audittype ==2){
 				list = AuditTrailManager.getAuditEntriesEmpVeh(contractor, sdate, edate, EntryTypeConstant.CONTRACTORCOMPANYUPDATED.getValue(),EntryTypeConstant.CONTRACTORDOCDELETED.getValue());
+				rtype="Contractor Information Changes(Employees/Vehicles)";
 			}
 			
 			request.setAttribute("auditentries", list);
+			request.setAttribute("rtype", rtype);
+			request.setAttribute("bcname", bcbean.getContractorName());
+			request.setAttribute("sdate", new SimpleDateFormat("MM/dd/yyyy").format(sdate));
+			request.setAttribute("edate", new SimpleDateFormat("MM/dd/yyyy").format(edate));
 			path = "admin_view_audit_results.jsp";
 		}else {
 			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));

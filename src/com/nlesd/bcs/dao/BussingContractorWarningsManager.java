@@ -5,16 +5,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.TreeMap;
-
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
+import com.awsd.mail.bean.EmailBean;
+import com.awsd.mail.bean.EmailException;
 import com.esdnl.dao.DAOUtils;
+import com.esdnl.velocity.VelocityUtils;
 import com.nlesd.bcs.bean.BussingContractorDocumentBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.bean.BussingContractorWarningsBean;
+import com.nlesd.bcs.constants.EmployeeStatusConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
+import com.nlesd.bcs.constants.VehicleStatusConstant;
 public class BussingContractorWarningsManager {
 	public static ArrayList<BussingContractorWarningsBean> getWarningsByTable(String tablename) {
 		Connection con = null;
@@ -306,6 +312,7 @@ public class BussingContractorWarningsManager {
 		ResultSet rs = null;
 		TreeMap<String,ArrayList<BussingContractorEmployeeBean>> employeelist = new TreeMap<String,ArrayList<BussingContractorEmployeeBean>>();
 		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
+		ArrayList<String> suspendedliste = new ArrayList<String>();
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
@@ -320,7 +327,53 @@ public class BussingContractorWarningsManager {
 					alist.add(ebean);
 					employeelist.put(ebean.getCompanyName(), alist);
 				}
+				//finally we check to see if it is expired and make sure status set to suspended
+				if(ebean.getWarningNotes().equals("Driver Licence Expired/Expiring")) {
+					//now we check the correct date is less than today
+					if(ebean.getDlExpiryDate() != null) {
+						if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
+							if(ebean.getDlExpiryDate().before(new Date())) {
+								//update status to suspended
+								//BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.SUSPENDED.getValue());
+								suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
+								+ "): Status set to suspended for Driver Licence Expired </p>");
+							}
+						}
+					}
+				}
+				if(ebean.getWarningNotes().equals("First Aid/Epipen Expired (Expiring)")) {
+					//now we check the correct date is less than today
+					if(ebean.getFaExpiryDate() != null) {
+						if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
+							if(ebean.getFaExpiryDate().before(new Date())) {
+								//update status to suspended
+								//BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.SUSPENDED.getValue());
+								suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
+								+ "): Status set to suspended for First Aid/Epipen Expired </p>");
+							}
+						}
+					}
+				}
 			}
+			//now we send the message
+			if(!suspendedliste.isEmpty()) {
+				EmailBean email = new EmailBean();
+				email.setTo("transportation@nlesd.ca");
+				email.setBCC("rodneybatten@nlesd.ca");
+				email.setFrom("bussingcontractorsystem@nlesd.ca");
+				email.setSubject("NLESD Bussing Contractor System Suspended Employees");
+				HashMap<String, Object> model = new HashMap<String, Object>();
+				// set values to be used in template
+				StringBuilder sb = new StringBuilder();
+				for(String s: suspendedliste) {
+					sb.append(s);
+				}
+				model.put("elist", sb.toString());
+				model.put("etype","Employee(s)");
+				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				email.send();
+			}
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -330,6 +383,12 @@ public class BussingContractorWarningsManager {
 			catch (Exception ex) {}
 			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeeWarningsAutomated(String sql): "
 					+ e);
+		//} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally {
 			try {
@@ -349,6 +408,7 @@ public class BussingContractorWarningsManager {
 		ResultSet rs = null;
 		TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist = new TreeMap<String,ArrayList<BussingContractorVehicleBean>>();
 		BussingContractorVehicleBean ebean = new BussingContractorVehicleBean();
+		ArrayList<String> suspendedliste = new ArrayList<String>();
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
@@ -363,6 +423,51 @@ public class BussingContractorWarningsManager {
 					alist.add(ebean);
 					vehiclelist.put(ebean.getCompanyName(), alist);
 				}
+				//finally we check to see if it is expired and make sure status set to suspended
+				if(ebean.getWarningNotes().equals("Registration Expiry Date  has Past")) {
+					//now we check the correct date is less than today
+					if(ebean.getRegExpiryDate() != null) {
+						if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
+							if(ebean.getRegExpiryDate().before(new Date())) {
+								//update status to suspended
+									//BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUSPENDED.getValue());
+									suspendedliste.add("<p>SN:" + ebean.getvSerialNumber() + " PN:" + ebean.getvPlateNumber() + "(" + ebean.getCompanyName()
+								+ "): Status set to suspended for Registration Expired </p>");
+							}
+						}
+					}
+				}
+				if(ebean.getWarningNotes().equals("Insurance Expiry Date  has Past")) {
+					//now we check the correct date is less than today
+					if(ebean.getInsExpiryDate() != null) {
+						if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
+							if(ebean.getInsExpiryDate().before(new Date())) {
+								//update status to suspended
+								//BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUSPENDED.getValue());
+								suspendedliste.add("<p>SN:" + ebean.getvSerialNumber() + " PN:" + ebean.getvPlateNumber() + "(" + ebean.getCompanyName()
+								+ "): Status set to suspended for Insurance Expired </p>");
+							}
+						}
+					}
+				}
+			}
+			//now we send the message
+			if(!suspendedliste.isEmpty()) {
+				EmailBean email = new EmailBean();
+				email.setTo("transportation@nlesd.ca");
+				email.setBCC("rodneybatten@nlesd.ca");
+				email.setFrom("bussingcontractorsystem@nlesd.ca");
+				email.setSubject("NLESD Bussing Contractor System Suspended Vehicles");
+				HashMap<String, Object> model = new HashMap<String, Object>();
+				// set values to be used in template
+				StringBuilder sb = new StringBuilder();
+				for(String s: suspendedliste) {
+					sb.append(s);
+				}
+				model.put("elist", sb.toString());
+				model.put("etype","Vehicles(s)");
+				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				email.send();
 			}
 		}
 		catch (SQLException e) {
@@ -373,6 +478,9 @@ public class BussingContractorWarningsManager {
 			catch (Exception ex) {}
 			System.err.println("TreeMap<String,ArrayList<BussingContractorVehicleBean>> getVehicleWarningsAutomatedTM(String sql): "
 					+ e);
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally {
 			try {
