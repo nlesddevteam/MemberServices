@@ -71,6 +71,11 @@
   
   EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(profile);
   
+  Collection<InterviewSummaryBean> interviewSummaries = InterviewSummaryManager.getInterviewSummaryBeans(profile)
+  		.stream().filter(isb -> (isb.getCompetition().getJobAwardedDate() != null || isb.getCompetition().getJobType().equal(JobTypeConstant.POOL)) && !isb.getCompetition().isUnadvertise()).collect(Collectors.toList());
+  
+  SimpleDateFormat sdf_medium = new SimpleDateFormat("MMM d, yyyy");
+  
   Calendar cal = Calendar.getInstance();
   cal.clear(Calendar.HOUR);
   cal.clear(Calendar.MINUTE);
@@ -1272,193 +1277,260 @@ input {
 	</div>
 	</esd:SecurityAccessRequired>
 
+<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL">
 	<!-- CRIMINAL OFFENCE DECLARATIONS --------------------------------------------------------------->
-<%
-	if (usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) {
-%>
+		<div class="panel-group" style="padding-top: 5px;">
+			<div class="panel panel-success" id="section13">
+				<div class="panel-heading">
+					<b>Criminal Offence Declarations</b>
+				</div>
+				<div class="panel-body">
 
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section13">   
-	               	<div class="panel-heading"><b>Criminal Offence Declarations</b></div>
-      			 	<div class="panel-body"> 	
-					
-					<div class="table-responsive"> 
-      			 	       
-      			 	      
-							  <%
-       			 	             			 	      							  	if ((cods != null) && (cods.size() > 0)) {
-       			 	             			 	      							  %>
-                               
-                                <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
-									    <thead>
-									      <tr style="border-top:1px solid black;">
-									        <th width='25%'>DECLARATION DATE</th>
-									        <th width='60%'>OFFENCES PRESENT</th>	
-									        <th width='15%' class="no-print">OPTIONS</th>					       								        
-									      </tr>
-									    </thead>
-							    
-							    <tbody>
-                               
-                               <%
-                               int i=0;
-                                  for(ApplicantCriminalOffenceDeclarationBean cod : cods)
-                                  {
-                               %>
-							    <tr>
-							    <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
-							    <td><%=((cod.getOffences() != null)?cod.getOffences().size():0)%></td>							    
-							    <td class="no-print">
-							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>' target='_blank'>VIEW</a>
-							    <a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
-							    </td>
-							    
-							    </tr>
-							    <%  }%>
-							    </tbody>
-							    </table>
-							    
-							    <%}  else { %>							   
-                                    <span style="color:Grey;">None CODs currently on file.</span>
-                                    <script>$("#section13").removeClass("panel-success").addClass("panel-danger");</script>
-                                 <% } %> 
-					</div>
-	
-	
-					</div>
-					</div>
-</div>
- <% } %>                               
-              
+					<div class="table-responsive">
+						<%
+							if ((cods != null) && (cods.size() > 0)) {
+						%>
 
-<% if(highlyRecommendedPools.size() > 0) { %>
-	<!-- HIGHLY RECOMMENDED POOLS --------------------------------------------------------------->
+						<table class="table table-condensed table-striped"
+							style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;">
+							<thead>
+								<tr style="border-top: 1px solid black;">
+									<th width='25%'>DECLARATION DATE</th>
+									<th width='60%'>OFFENCES PRESENT</th>
+									<th width='15%' class="no-print">OPTIONS</th>
+								</tr>
+							</thead>
+
+							<tbody>
+
+								<%
+									int i = 0;
+								for (ApplicantCriminalOffenceDeclarationBean cod : cods) {
+								%>
+								<tr>
+									<td><%=sdf_long.format(cod.getDeclarationDate())%></td>
+									<td><%=((cod.getOffences() != null) ? cod.getOffences().size() : 0)%></td>
+									<td class="no-print"><a
+										class='viewdoc btn btn-xs btn-info'
+										href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'
+										target='_blank'>VIEW</a> <a
+										class='viewdoc delete-cod btn btn-xs btn-danger'
+										href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
+									</td>
+
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+
+						<%
+							} else {
+						%>
+						<span style="color: Grey;">None CODs currently on file.</span>
+						<script>$("#section13").removeClass("panel-success").addClass("panel-danger");</script>
+						<%
+							}
+						%>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</esd:SecurityAccessRequired>              
+ 
+ <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+ 	<!-- INTERVIEW SUMMARIES ----------------------------------------------------------------------------------------->
+	<% if (interviewSummaries.size() > 0) { %>
+		<div class="panel-group" style="padding-top: 5px;">
+			<div class="panel panel-success" id="section12">
+				<div class="panel-heading">
+					<b>Recent Interview Summaries</b>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-condensed"
+							style="font-size: 11px;">
+							<thead>
+								<tr>
+									<th width="20%">COMP #</th>
+									<th width="50%">TITLE</th>
+									<th width="20%">DATE</th>
+									<th width="10%">OPTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for (InterviewSummaryBean isb : interviewSummaries) { %>
+									<tr>
+										<td><%= isb.getCompetition().getCompetitionNumber() %></td>
+										<td><%= isb.getCompetition().getPositionTitle( )%></td>
+										<td><%= sdf_medium.format(isb.getCreated()) %></td>
+										<td><a class="btn btn-xs btn-primary"
+											href="/MemberServices/Personnel/applicantViewCompetitionInterviewSummary.html?id=<%= isb.getInterviewSummaryId() %>">VIEW</a></td>
+									</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% } %>
+
+	<% if(highlyRecommendedPools.size() > 0) { %>
+		<!-- HIGHLY RECOMMENDED POOLS --------------------------------------------------------------->
+		<div class="panel-group no-print" style="padding-top: 5px;">
+			<div class="panel panel-success" id="section15">
+				<div class="panel-heading">
+					<b>Pool Competitions with HIGHLY RECOMMENDED status</b>
+				</div>
+				<div class="panel-body">
+					<table class="table table-condensed table-striped" id="hcpools" style="font-size: 11px;">
+						<thead>
+							<tr>
+								<th>COMPETITION NUMBER</th>
+								<th>TITLE</th>
+								<th>LOCATION</th>
+								<th class="no-print">OPTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for(JobOpportunityBean j : highlyRecommendedPools.values()) { %>
+								<tr>
+									<td><%= j.getCompetitionNumber() %></td>
+									<td><%= j.getPositionTitle() %></td>
+									<td><%= j.getJobLocation() %></td>
+									<td class="no-print"><a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>View</a></td>
+								</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	<% } %> 
+
+	<!-- POSITIONS APPLIED FOR --------------------------------------------------------------->
 	<div class="panel-group no-print" style="padding-top: 5px;">
-		<div class="panel panel-success" id="section15">
+		<div class="panel panel-success" id="section14">
 			<div class="panel-heading">
-				<b>Pool Competitions with HIGHLY RECOMMENDED status</b>
+				<b>Positions Applied</b>
 			</div>
 			<div class="panel-body">
-				<table class="table table-condensed table-striped" id="hcpools" style="font-size: 11px;">
-					<thead>
-						<tr>
-							<th>COMPETITION NUMBER</th>
-							<th>TITLE</th>
-							<th>LOCATION</th>
-							<th class="no-print">OPTIONS</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% for(JobOpportunityBean j : highlyRecommendedPools.values()) { %>
-							<tr>
-								<td><%= j.getCompetitionNumber() %></td>
-								<td><%= j.getPositionTitle() %></td>
-								<td><%= j.getJobLocation() %></td>
-								<td class="no-print"><a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>View</a></td>
-							</tr>
-						<% } %>
-					</tbody>
-				</table>
+
+				<c:choose>
+					<c:when test='${fn:length(jobs) gt 0}'>
+						<table class="table table-condensed table-striped" id="jobsapp"
+							style="font-size: 11px;">
+							<thead>
+								<tr>
+									<th>COMPETITION NUMBER</th>
+									<th>TITLE</th>
+									<th>DATE APPLIED</th>
+									<th>LOCATION</th>
+									<th class="no-print">OPTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items='${jobs}' var='g'>
+									<tr>
+										<td>${g.compNum}</td>
+										<td>${g.posTitle}</td>
+										<td>${g.formattedAppliedDate}</td>
+										<td>${g.schoolName}</td>
+										<td class="no-print"><a class='btn btn-xs btn-info'
+											href='view_job_post.jsp?comp_num=${g.compNum}'>View</a></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+
+					</c:when>
+					<c:otherwise>
+						<span style="color: Grey;">No Applications on file.</span>
+						<script>$("#section14").removeClass("panel-success").addClass("panel-danger");</script>
+					</c:otherwise>
+				</c:choose>
+
 			</div>
 		</div>
 	</div>
-<% } %>                
-
-<!-- POSITIONS APPLIED FOR --------------------------------------------------------------->
 	
-<div class="panel-group no-print" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section14">   
-	               	<div class="panel-heading"><b>Positions Applied</b></div>
-      			 	<div class="panel-body"> 	
-	                     
-											<c:choose>
-			                                  	<c:when test='${fn:length(jobs) gt 0}'>			                                  	
-			                                  	<table class="table table-condensed table-striped" id="jobsapp" style="font-size:11px;">
-				                                <thead>
-			                                 	<tr>
-			                                 		<th>COMPETITION NUMBER</th>
-			                                 		<th>TITLE</th>
-			                                 		<th>DATE APPLIED</th>
-			                                 		<th>LOCATION</th>
-			                                 		<th class="no-print">OPTIONS</th>
-			                                 	</tr>
-					                             </thead>
-			                                 	<tbody>
-			                                  	<c:forEach items='${jobs}' var='g'>
-		                                  			<tr>
-		                                  			<td>${g.compNum}</td>
-		                                  			<td>${g.posTitle}</td>
-		                                  			<td>${g.formattedAppliedDate}</td>
-		                                  			<td>${g.schoolName}</td>
-		                                  			<td class="no-print"><a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=${g.compNum}'>View</a></td>
-				                					</tr>
-				                				</c:forEach>
-				                				</tbody>
-			                					</table>
-				                				
-		                                  		</c:when>
-												<c:otherwise>
-													<span style="color:Grey;">No Applications on file.</span>
-													<script>$("#section14").removeClass("panel-success").addClass("panel-danger");</script>
-												</c:otherwise>
-											</c:choose>
-											
-					</div>
-					</div>
-</div>
-
+	</esd:SecurityAccessRequired>
                              
                             
 <!-- OPTIONS --------------------------------------------------------------->    
-<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">                        
-	
-					<div align="center" class="no-print" style="padding-bottom:10px;">
-					
-                                
-                                	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
-                                  	<a href='#' title='Print this page (pre-formatted)' class='btn btn-xs btn-info' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Profile</a>
-                                  	<a id='btn_delete_applicant' class="btn btn-xs btn-danger" href='deleteApplicant.html?uid=<%=profile.getUID()%>'><span class="glyphicon glyphicon-remove"></span> Delete Applicant</a>
-                                	</esd:SecurityAccessRequired>
-                                  <%if(session.getAttribute("JOB") != null){
-                                  		JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
-                                  		InterviewGuideBean guide = null;
-                                  		
-                                  		if(job != null) {
-                                  			guide = InterviewGuideManager.getInterviewGuideBean(job);
-                                  		}
-                                  %>
-                                    <a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
-                                   	<% if(!job.isShortlistComplete() && job.isClosed()) { %>
-                                   			<%if(guide != null){ %>
-                                   				<%if(validReference){ %>
-                                   					<a  class="btn btn-xs btn-primary" id="btn_add_shortlist"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
-                                   				<%}else{ %>
-                                   					<a href='#' onclick="alert('Applicant has no current Reference on file. Reference needs to be completed before applicant can be shortlisted.'); return false;" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
-                                   				<%} %>
-                                   			<%}else{ %>
-                                   				<a href='#' onclick="alert('Interview guide must be set for competition <%=job.getCompetitionNumber() %> before shortlist can be created.'); return false;" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
-                                   			<%} %>
-                                   			
-                                    <% } %>
-                                  <%}else if(session.getAttribute("SUBLIST") != null){
-                                  		ApplicantSubListInfoBean li = (ApplicantSubListInfoBean)sublists.get(new Integer(((SubListBean)session.getAttribute("SUBLIST")).getId())); %>
-                                      <a href='admin_view_sublist_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
-                                      <%
-                                      if((li != null) && li.isNewApplicant()){ %>
-                                      <br/><a href='shortListApplicant.html?sin=<%=profile.getSIN()%>' class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
-                                      <a href='applicantNotApproved.html?sin=<%=profile.getSIN()%>' class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span> Not Approved</a>
-                                     
-                                     <% }} %>
-                                     
-                                   <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>  
-                                   <br/><br/>
-                       </div>
+<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 
+		<div align="center" class="no-print" style="padding-bottom: 10px;">
+			<esd:SecurityAccessRequired
+				permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
+				<a href='#' title='Print this page (pre-formatted)'
+					class='btn btn-xs btn-info'
+					onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span
+					class="glyphicon glyphicon-print"></span> Print Profile</a>
+				<a id='btn_delete_applicant' class="btn btn-xs btn-danger"
+					href='deleteApplicant.html?uid=<%=profile.getUID()%>'><span
+					class="glyphicon glyphicon-remove"></span> Delete Applicant</a>
+			</esd:SecurityAccessRequired>
+			<%
+				if (session.getAttribute("JOB") != null) {
+				JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+				InterviewGuideBean guide = null;
 
-  </esd:SecurityAccessRequired>                         
+				if (job != null) {
+					guide = InterviewGuideManager.getInterviewGuideBean(job);
+				}
+			%>
+			<a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span
+				class="glyphicon glyphicon-search"></span> View Applicants</a>
+			<% if (!job.isShortlistComplete() && job.isClosed()) { %>
+				<% if (guide != null) { %>
+					<% if (validReference) { %>
+						<a class="btn btn-xs btn-primary" id="btn_add_shortlist"><span
+							class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+					<% } else { %>
+						<a href='#'
+							onclick="alert('Applicant has no current Reference on file. Reference needs to be completed before applicant can be shortlisted.'); return false;"
+							class="btn btn-xs btn-primary"><span
+							class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+					<% } %>
+				<% } else { %>
+					<a href='#'
+						onclick="alert('Interview guide must be set for competition <%=job.getCompetitionNumber()%> before shortlist can be created.'); return false;"
+						class="btn btn-xs btn-primary"><span
+						class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+				<% } %>
+			<% } %>
+			<%
+				} else if (session.getAttribute("SUBLIST") != null) {
+					ApplicantSubListInfoBean li = (ApplicantSubListInfoBean) sublists.get(new Integer(((SubListBean) session.getAttribute("SUBLIST")).getId())); %>
+					<a href='admin_view_sublist_applicants.jsp'
+						class='btn btn-xs btn-info'><span
+						class="glyphicon glyphicon-search"></span> View Applicants</a>
+					<% if ((li != null) && li.isNewApplicant()) { %>
+						<br />
+						<a href='shortListApplicant.html?sin=<%=profile.getSIN()%>'
+							class="btn btn-xs btn-primary"><span
+							class="glyphicon glyphicon-plus"></span> Add to Shortlist</a> <a
+							href='applicantNotApproved.html?sin=<%=profile.getSIN()%>'
+							class="btn btn-xs btn-danger"><span
+							class="glyphicon glyphicon-remove"></span> Not Approved</a>
+
+					<%} %> 
+			<% } %>
+			<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
+			<br />
+			<br />
+		</div>
+
+	</esd:SecurityAccessRequired>                         
+
    <form id="frmverify">
    	<input id="appid" name ="appid" type="hidden" value="<%=profile.getSIN()%>">
    </form>                        
+
 <!-- SUBLIST SELECT --------------------------------------------------------------->
 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 		<!-- Modal Revised for Bootstrap -->
@@ -1488,8 +1560,6 @@ input {
 						<div class="alert alert-info" id="response_msg">Select a Sub
 							List from above to add to. (Select multiple by holding the CTRL
 							key while clicking)</div>
-
-
 
 					</div>
 					<div class="modal-footer">
