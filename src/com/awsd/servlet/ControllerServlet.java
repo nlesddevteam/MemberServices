@@ -252,12 +252,12 @@ public class ControllerServlet extends HttpServlet {
 			Velocity.init(vprops);
 			
 			//start bcs weekly warnings service
-			try {
-				Class.forName("com.nlesd.bcs.service.ReportSchedulerService");
-			}
-			catch (NoClassDefFoundError e) {
-				System.err.println("COULD NOT FIND com.nlesd.bcs.service.ReportSchedulerService");
-			}
+			//try {
+				//Class.forName("com.nlesd.bcs.service.ReportSchedulerService");
+		//	}
+			//catch (NoClassDefFoundError e) {
+				//System.err.println("COULD NOT FIND com.nlesd.bcs.service.ReportSchedulerService");
+			//}
 			
 		}
 		catch (ParserConfigurationException e) {
