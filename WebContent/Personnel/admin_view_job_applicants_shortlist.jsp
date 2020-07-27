@@ -65,6 +65,11 @@
 	  }
 	  
   }
+  
+  boolean recInProgress = false;
+  if((rec != null) && (rec.length > 0)) {
+  	recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed()) || !(rec[0].isProcessed() && job.isReopened() && job.getReopenedDate().after(rec[0].getProcessedDate()));
+  }
 %>
 
 <html>
@@ -428,9 +433,11 @@
 									Shortlist marked as complete
 									<%= job.getFormattedShortlistCompleteDate() %>.
 								</div>
-								<a id='mark-shortlist-reopen' class='btn btn-xs btn-danger'
-									href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=false'>REOPEN
-									/ UNLOCK SHORTLIST</a>
+								<% if(!recInProgress) { %>
+									<a id='mark-shortlist-reopen' class='btn btn-xs btn-danger'
+										href='markJobShortlistComplete.html?comp_num=<%= job.getCompetitionNumber() %>&closed=false'>REOPEN
+										/ UNLOCK SHORTLIST</a>
+								<% } %>
 							<%}%>
 						<%}else{%>
 							<%if(job.isShortlistComplete()){ %>
