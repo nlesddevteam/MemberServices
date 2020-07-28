@@ -270,7 +270,7 @@ function parseAddApplicantResponse(data){
 	<%}%>
 	                                          			
 	<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
-		<%if(usr.checkPermission("PERSONNEL-ADMIN-ADVANCED") || ((ad != null) && ad.isUnadvertised() && ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().equals(usr.getPersonnel())) && !recInProgress){%>
+		<%if((usr.checkPermission("PERSONNEL-ADMIN-ADVANCED") || ((ad != null) && ad.isUnadvertised() && ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().equals(usr.getPersonnel()))) && !recInProgress){%>
 			<a data-toggle="modal" data-target="#add_applicant_dialog" id="btn_show_add_applicant_dialog" class="btn btn-xs btn-success" href="#" onclick="return false;">Add Applicant</a>
 	  <%}%>
 	<%}%>
