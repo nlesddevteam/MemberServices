@@ -1477,48 +1477,49 @@ input {
 			<%
 				if (session.getAttribute("JOB") != null) {
 				JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
-				InterviewGuideBean guide = null;
+				InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);;
 
-				if (job != null) {
-					guide = InterviewGuideManager.getInterviewGuideBean(job);
+				TeacherRecommendationBean[]  rec = RecommendationManager.getTeacherRecommendationBean(job.getCompetitionNumber());
+				
+				boolean recInProgress = false;
+				if((rec != null) && (rec.length > 0)) {
+					recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed());
+					
+					if(rec[0].isProcessed() && job.isReopened() && job.getReopenedDate().after(rec[0].getProcessedDate())) {
+						recInProgress = false;
+					}
 				}
+				
+				boolean isShortlisted = ApplicantProfileManager.getApplicantShortlistMap(job).containsKey(profile.getUID());
 			%>
-			<a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span
-				class="glyphicon glyphicon-search"></span> View Applicants</a>
-			<% if (!job.isShortlistComplete() && job.isClosed()) { %>
-				<% if (guide != null) { %>
-					<% if (validReference) { %>
-						<a class="btn btn-xs btn-primary" id="btn_add_shortlist"><span
-							class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+				<a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
+				<% if (!job.isShortlistComplete() && job.isClosed() && !recInProgress) { %>
+					<% if (guide != null) { %>
+						<% if (validReference) { %>
+							<% if(!isShortlisted) { %>
+								<a class="btn btn-xs btn-primary" id="btn_add_shortlist"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+							<% } else { %>
+								<span class='text-danger'>Already Shortlisted</span>
+							<% } %>
+						<% } else { %>
+							<a href='#'
+								onclick="alert('Applicant has no current Reference on file. Reference needs to be completed before applicant can be shortlisted.'); return false;"
+								class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+						<% } %>
 					<% } else { %>
 						<a href='#'
-							onclick="alert('Applicant has no current Reference on file. Reference needs to be completed before applicant can be shortlisted.'); return false;"
-							class="btn btn-xs btn-primary"><span
-							class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+							onclick="alert('Interview guide must be set for competition <%=job.getCompetitionNumber()%> before shortlist can be created.'); return false;"
+							class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
 					<% } %>
-				<% } else { %>
-					<a href='#'
-						onclick="alert('Interview guide must be set for competition <%=job.getCompetitionNumber()%> before shortlist can be created.'); return false;"
-						class="btn btn-xs btn-primary"><span
-						class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
 				<% } %>
-			<% } %>
-			<%
-				} else if (session.getAttribute("SUBLIST") != null) {
+			<% } else if (session.getAttribute("SUBLIST") != null) {
 					ApplicantSubListInfoBean li = (ApplicantSubListInfoBean) sublists.get(new Integer(((SubListBean) session.getAttribute("SUBLIST")).getId())); %>
-					<a href='admin_view_sublist_applicants.jsp'
-						class='btn btn-xs btn-info'><span
-						class="glyphicon glyphicon-search"></span> View Applicants</a>
+					<a href='admin_view_sublist_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
 					<% if ((li != null) && li.isNewApplicant()) { %>
 						<br />
-						<a href='shortListApplicant.html?sin=<%=profile.getSIN()%>'
-							class="btn btn-xs btn-primary"><span
-							class="glyphicon glyphicon-plus"></span> Add to Shortlist</a> <a
-							href='applicantNotApproved.html?sin=<%=profile.getSIN()%>'
-							class="btn btn-xs btn-danger"><span
-							class="glyphicon glyphicon-remove"></span> Not Approved</a>
-
-					<%} %> 
+						<a href='shortListApplicant.html?sin=<%=profile.getSIN()%>' class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a> 
+						<a href='applicantNotApproved.html?sin=<%=profile.getSIN()%>' class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span> Not Approved</a>
+					<% } %> 
 			<% } %>
 			<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
 			<br />
