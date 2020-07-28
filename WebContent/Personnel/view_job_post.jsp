@@ -37,6 +37,16 @@ if(opp != null){
 session.setAttribute("JOB", null);
 session.setAttribute("SUBLIST", null);
 session.setAttribute("sfilterparams", null);
+
+boolean recInProgress = false;
+if((rec != null) && (rec.length > 0)) {
+	recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed());
+	
+	if(rec[0].isProcessed() && opp.isReopened() && opp.getReopenedDate().after(rec[0].getProcessedDate())) {
+		recInProgress = false;
+	}
+}
+boolean hasShortlist = ApplicantProfileManager.getApplicantShortlistMap(opp).size() > 0;
 %>
 
 <html>
@@ -213,6 +223,9 @@ function parseAddApplicantResponse(data){
 								<% if ((opp != null) && (opp.isAwarded())) { %> 
  									<span class='alert-danger'>Position Awarded on <%=opp.getFormatedJobAwardedDate()%></span><br />
 								<% } %>
+								<% if (recInProgress) { %> 
+ 									<span class='alert-danger'>Recommendation in progress for candidate <%= StringUtils.capitaliseAllWords(rec[0].getCandidate().getFullNameReverse()) %></span><br />
+								<% } %>
 							</td>
 						</tr>
 
@@ -232,8 +245,7 @@ function parseAddApplicantResponse(data){
 	<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
 		<a class="btn btn-xs btn-primary" href='viewJobInterviewGuide.html?comp_num=<%=request.getParameter("comp_num")%>'>View/Set Interview Guide</a>
 	<% } %>
-	                     				
-	                                         				
+	                     				                                   				
 	<%
 		SchoolFamily family = null;
 		try{
@@ -247,7 +259,10 @@ function parseAddApplicantResponse(data){
 		
 		if(!opp.isCandidateListPrivate() || usr.checkPermission("PERSONNEL-ADMIN-VIEW-PRIVATE-CANDIDATE-LIST") || isFOS){ %>
 		<%if(!(opp.getJobType().equal(JobTypeConstant.LEADERSHIP) && usr.checkRole("SENIOR EDUCATION OFFICIER")) || usr.checkRole("JOB APPS - VIEW PRIVATE")){ %>
-			<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>		
+			<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>
+			<% if(hasShortlist && opp.isClosed()) { %>
+				<a onclick="loadingData()" class="btn btn-xs btn-success" href='viewJobShortList.html?comp_num=<%=opp.getCompetitionNumber()%>'>View Shortlist</a>
+			<% } %>
 	 	<%}%>
 	 	<% if(opp.getJobType().equal(JobTypeConstant.POOL)) { %>
 	 		<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewPoolHighlyRecommendedList.html?comp_num=<%=request.getParameter("comp_num")%>'>View Highly Recommended</a>
@@ -270,15 +285,15 @@ function parseAddApplicantResponse(data){
 	    	<a class="btn btn-xs btn-danger" href="#" data-toggle="modal" data-target="#deletePost">Delete Post</a>               	
 	      <a class="btn btn-xs btn-info"  href='admin_post_job.jsp?comp_num=<%=request.getParameter("comp_num")%>'>Edit Post</a>
 	    <%}%>
-	    <%if ((opp != null) && (!opp.isCancelled() && !opp.isAwarded())) {%>
+	    <%if ((opp != null) && (!opp.isCancelled() && !opp.isAwarded()) && !recInProgress) {%>
 	    	<a class="btn btn-xs btn-warning" href="#" data-toggle="modal" data-target="#cancelPost">Cancel Post</a>
 	    <%}%>
 		</esd:SecurityAccessRequired>            
 	</esd:SecurityAccessRequired>
 	
 	<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
-		<% if((opp != null) && !opp.isAwarded() && !opp.isCancelled() && opp.isClosed()) { %>
-			<a class="btn btn-xs btn-primary" onclick="return confirm('Are you sure you want to RE-POST this competition?');" href='repostCompetition.html?comp_num=<%=opp.getCompetitionNumber()%>'>Re-Post Competition</a>
+		<% if((opp != null) && !opp.isAwarded() && !opp.isCancelled() && opp.isClosed() && !recInProgress) { %>
+			<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to RE-POST this competition?');" href='repostCompetition.html?comp_num=<%=opp.getCompetitionNumber()%>'>Re-Post Competition</a>
 		<% } %>
 	</esd:SecurityAccessRequired>
 	          
