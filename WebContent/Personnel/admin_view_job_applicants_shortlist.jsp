@@ -68,7 +68,11 @@
   
   boolean recInProgress = false;
   if((rec != null) && (rec.length > 0)) {
-  	recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed()) || !(rec[0].isProcessed() && job.isReopened() && job.getReopenedDate().after(rec[0].getProcessedDate()));
+  	recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed());
+  	
+  	if(rec[0].isProcessed() && job.isReopened() && job.getReopenedDate().after(rec[0].getProcessedDate())) {
+  		recInProgress = false;
+  	}
   }
 %>
 
