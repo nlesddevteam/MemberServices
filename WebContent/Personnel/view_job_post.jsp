@@ -261,7 +261,7 @@ function parseAddApplicantResponse(data){
 		<%if(!(opp.getJobType().equal(JobTypeConstant.LEADERSHIP) && usr.checkRole("SENIOR EDUCATION OFFICIER")) || usr.checkRole("JOB APPS - VIEW PRIVATE")){ %>
 			<a class="btn btn-xs btn-primary" onclick="loadingData()" href='viewJobApplicants.html?comp_num=<%=request.getParameter("comp_num")%>'>View Applicants</a>
 			<% if(hasShortlist && opp.isClosed()) { %>
-				<a onclick="loadingData()" class="btn btn-xs btn-success" href='viewJobShortList.html?comp_num=<%=opp.getCompetitionNumber()%>'>View Shortlist</a>
+				<a onclick="loadingData()" class="btn btn-xs btn-info" href='viewJobShortList.html?comp_num=<%=opp.getCompetitionNumber()%>'>View Shortlist</a>
 			<% } %>
 	 	<%}%>
 	 	<% if(opp.getJobType().equal(JobTypeConstant.POOL)) { %>
@@ -270,7 +270,7 @@ function parseAddApplicantResponse(data){
 	<%}%>
 	                                          			
 	<%if(opp != null && !opp.isCancelled() && !opp.isAwarded()){%>
-		<%if(usr.checkPermission("PERSONNEL-ADMIN-ADVANCED") || ((ad != null) && ad.isUnadvertised() && ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().equals(usr.getPersonnel()))){%>
+		<%if(usr.checkPermission("PERSONNEL-ADMIN-ADVANCED") || ((ad != null) && ad.isUnadvertised() && ad.getHistory(RequestStatus.SUBMITTED).getPersonnel().equals(usr.getPersonnel())) && !recInProgress){%>
 			<a data-toggle="modal" data-target="#add_applicant_dialog" id="btn_show_add_applicant_dialog" class="btn btn-xs btn-success" href="#" onclick="return false;">Add Applicant</a>
 	  <%}%>
 	<%}%>
