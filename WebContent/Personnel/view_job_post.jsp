@@ -40,7 +40,7 @@ session.setAttribute("sfilterparams", null);
 
 boolean recInProgress = false;
 if((rec != null) && (rec.length > 0)) {
-	recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed());
+	recInProgress = (!rec[0].isRejected() && !rec[0].isOfferRejected() && !rec[0].isProcessed() && !rec[0].isOfferIgnored());
 	
 	if(rec[0].isProcessed() && opp.isReopened() && opp.getReopenedDate().after(rec[0].getProcessedDate())) {
 		recInProgress = false;
