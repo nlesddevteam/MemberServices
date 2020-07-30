@@ -1041,7 +1041,9 @@ function parseTeacherAllocationBean(data) {
 										'YES' : isPositionPlanningAdmin == true ? $(this).attr('FILLED') == 'true' ? 'NO' : '<a  href="#" onclick="createAdRequest(\'' + $(this).attr('POSITION-ID') + '\');event.preventDefault();">Create</a>' : '<span>No</span>')))
 										
 						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('ADVERTISED') == 'false' ? 'NO' : 
-							isPositionPlanningAdmin == true ? $(this).attr('JOBLINK') == 'NONE' ? 'YES' : '<a href="' + $(this).attr('JOBLINK') +'" target="_blank">YES</a>' : 'YES' )))
+							isPositionPlanningAdmin == true ? 
+								($(this).attr('JOBLINK') == 'NONE' ?  ($(this).attr('JOBCANCELLED') == 'true' ? '<span class="text-danger">CANCELLED</span>' : 'YES') : '<a href="' + $(this).attr('JOBLINK') + '" target="_blank">' + ($(this).attr('JOBCANCELLED') == 'true' ? '<span class="text-danger">CANCELLED</span>' : 'YES') + '</a>')
+								: $(this).attr('JOBCANCELLED') == 'true' ? '<span class="text-danger">CANCELLED</span>' : 'YES' )))
 										
 						.append($('<td>').attr({'valign':'top','align':'center'}).html(($(this).attr('FILLED') == 'false' ? 'NO' : 
 							isPositionPlanningAdmin == true ? $(this).attr('RECLINK') != 'NONE' ? '<a href="' + $(this).attr('RECLINK') + '" target="_blank">YES</a>'  : 'YES (M)' : 'YES')))		

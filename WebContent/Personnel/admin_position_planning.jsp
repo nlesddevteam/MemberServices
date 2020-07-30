@@ -24,7 +24,7 @@
 	<head>
 		<title>MyHRP Applicant Profiling System</title>				
 		<script type="text/javascript" src='includes/js/encoder.js'></script>
-		<script type="text/javascript" src='includes/js/position_planning.js'></script>
+		<script type="text/javascript" src='includes/js/position_planning.js?<%= new Date().getTime() %>'></script>
 		<script type="text/javascript">
 			$('document').ready(function(){
 				$.ajaxSetup({ cache: false });
