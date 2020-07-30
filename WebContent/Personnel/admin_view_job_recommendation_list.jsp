@@ -123,7 +123,7 @@
 						<div align="center">
 							<a class="btn btn-xs btn-info" href='view_job_post.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View Job Post</a>
 							<% if(!job.isAwarded()) { %>
-								<% if(job.isShortlistComplete() && ((all_expired && !existing_rec) || (job.isReopened() && !existing_non_processed_rec))) { %>
+								<% if(job.isShortlistComplete() && (all_expired || !existing_rec || (job.isReopened() && !existing_non_processed_rec))) { %>
 									<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
 								<% } else if(!job.isShortlistComplete()) { %>
 									<span class='alert-danger'>Shortlist NOT Complete</span>
