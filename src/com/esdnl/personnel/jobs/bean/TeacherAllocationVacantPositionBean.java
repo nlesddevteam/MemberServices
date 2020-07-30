@@ -2,7 +2,9 @@ package com.esdnl.personnel.jobs.bean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.apache.commons.lang.StringEscapeUtils;
+
 import com.esdnl.personnel.jobs.constants.EmploymentConstant;
 import com.esdnl.personnel.jobs.constants.RequestStatus;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
@@ -38,7 +40,7 @@ public class TeacherAllocationVacantPositionBean {
 		this.advertised = false;
 		this.filled = false;
 		this.adRequest = null;
-		this.schoolYear=null;
+		this.schoolYear = null;
 	}
 
 	public int getPositionId() {
@@ -152,112 +154,128 @@ public class TeacherAllocationVacantPositionBean {
 	}
 
 	public String toXML() {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-			StringBuffer buf = new StringBuffer();
-			
-			buf.append("<TEACHER-ALLOCATION-VACANT-POSITION-BEAN POSITION-ID=\""
-					+ this.positionId
-					+ "\" ALLOCATION-ID=\""
-					+ this.allocationId
-					+ "\" JOB-DESCRIPTION=\""
-					+ StringEscapeUtils.escapeHtml(this.jobDescription)
-					+ "\" TYPE-ID=\""
-					+ this.type.getValue()
-					+ "\" TYPE-DESCRIPTION=\""
-					+ this.type.getDescription()
-					+ "\" "
-					+ (this.employee != null ? "EMP-ID=\"" + this.employee.getEmpId().trim() + "\" EMP-NAME=\""
-							+ this.employee.getFullnameReverse() + "\" " : "") + "VACANCY-REASON=\""
-					+ StringEscapeUtils.escapeHtml(this.vacancyReason) + "\" "
-					+ (this.getTermStart() != null ? "TERM-START=\"" + sdf.format(this.getTermStart()) + "\" " : "")
-					+ (this.getTermEnd() != null ? "TERM-END=\"" + sdf.format(this.getTermEnd()) + "\" " : "") + "UNIT=\""
-					+ this.unit + "\" ADVERTISED=\"" + this.isAdvertised() + "\" FILLED=\"" + this.isFilled() + "\" ");
-					//check to see if there is a link to the job ad
-					//send ad title job comp numb to show on delete confirm
-					if(!(this.adRequest == null)){
-						if(!(this.adRequest.getCompetitionNumber() == null)){
-							buf.append(" JOBLINK=\"" + "view_job_post.jsp?comp_num=" + this.adRequest.getCompetitionNumber() + "\" ");
-							buf.append(" JOBCOMP=\"" +  this.adRequest.getCompetitionNumber() + "\" ");
-							buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
-							buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
-							buf.append(" ADSTATUS=\"APPROVED\" ");
-							//now we check to see if it is filled
-							try {
-								JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(this.adRequest.getCompetitionNumber());
-								if(!(job == null)){
-									if(job.isAwarded()){
-										buf.append(" RECLINK=\"" + "admin_view_job_recommendation_list.jsp?comp_num=" + this.adRequest.getCompetitionNumber() + "\" ");
-									}else{
-										buf.append(" RECLINK=\"NONE\" ");
-									}
-								}else{
-									buf.append(" RECLINK=\"NONE\" ");
-								}
-							} catch (JobOpportunityException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
-						}else{
-							//send back the link to the ad request
-							buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
-							buf.append(" JOBCOMP=\"NONE\" ");
-							buf.append(" ADTITLE=\"" +  this.adRequest.getTitle() + "\" ");
-							buf.append(" JOBLINK=\"NONE\" ");
-							buf.append(" RECLINK=\"NONE\" ");
-							if(this.adRequest.getCurrentStatus() == RequestStatus.SUBMITTED) {
-								buf.append(" ADSTATUS=\"NONE\" ");
-							}else {
-								buf.append(" ADSTATUS=\"APPROVED\" ");
-							}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		StringBuffer buf = new StringBuffer();
+
+		buf.append("<TEACHER-ALLOCATION-VACANT-POSITION-BEAN POSITION-ID=\"" + this.positionId + "\" ALLOCATION-ID=\""
+				+ this.allocationId + "\" JOB-DESCRIPTION=\"" + StringEscapeUtils.escapeHtml(this.jobDescription)
+				+ "\" TYPE-ID=\"" + this.type.getValue() + "\" TYPE-DESCRIPTION=\"" + this.type.getDescription() + "\" "
+				+ (this.employee != null
+						? "EMP-ID=\"" + this.employee.getEmpId().trim() + "\" EMP-NAME=\"" + this.employee.getFullnameReverse()
+								+ "\" "
+						: "")
+				+ "VACANCY-REASON=\"" + StringEscapeUtils.escapeHtml(this.vacancyReason) + "\" "
+				+ (this.getTermStart() != null ? "TERM-START=\"" + sdf.format(this.getTermStart()) + "\" " : "")
+				+ (this.getTermEnd() != null ? "TERM-END=\"" + sdf.format(this.getTermEnd()) + "\" " : "") + "UNIT=\""
+				+ this.unit + "\" ADVERTISED=\"" + this.isAdvertised() + "\" FILLED=\"" + this.isFilled() + "\" ");
+		//check to see if there is a link to the job ad
+		//send ad title job comp numb to show on delete confirm
+		if (!(this.adRequest == null)) {
+			if (!(this.adRequest.getCompetitionNumber() == null)) {
+				buf.append(" JOBLINK=\"" + "view_job_post.jsp?comp_num=" + this.adRequest.getCompetitionNumber() + "\" ");
+				buf.append(" JOBCOMP=\"" + this.adRequest.getCompetitionNumber() + "\" ");
+				buf.append(" ADTITLE=\"" + this.adRequest.getTitle() + "\" ");
+				buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
+				buf.append(" ADSTATUS=\"APPROVED\" ");
+				//now we check to see if it is filled
+				try {
+					JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(this.adRequest.getCompetitionNumber());
+					if (!(job == null)) {
+						if (job.isCancelled()) {
+							buf.append(" JOBCANCELLED=\"true\" ");
 						}
-					}else{
-						// need to check the school year, if greater than > 19-20
-						try {
-							if(this.schoolYear != null) {
-								String[] years = this.schoolYear.split("-");
-								if(Integer.parseInt(years[1]) > 20) {
-									//add link for creating ad request
-									buf.append(" CREATELINK=\"" + "createAdForVacantPosition?posid=" + this.getPositionId()+ "\" ");
-								}else {
-									buf.append(" CREATELINK=\"NONE\" ");
-								}
-							}else {
-								buf.append(" CREATELINK=\"NONE\" ");
-							}
-							buf.append(" JOBLINK=\"NONE\" ");
-							buf.append(" RECLINK=\"NONE\" ");
-							buf.append(" ADLINK=\"NONE\" ");
-							buf.append(" ADTITLE=\"NONE\" ");
-							buf.append(" JOBCOMP=\"NONE\" ");
-							buf.append(" ADSTATUS=\"NONE\" ");
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						else {
+							buf.append(" JOBCANCELLED=\"false\" ");
 						}
 
+						if (job.isAwarded()) {
+							buf.append(" RECLINK=\"" + "admin_view_job_recommendation_list.jsp?comp_num="
+									+ this.adRequest.getCompetitionNumber() + "\" ");
+						}
+						else {
+							buf.append(" RECLINK=\"NONE\" ");
+						}
 					}
-					
-					buf.append("/>");
+					else {
+						buf.append(" RECLINK=\"NONE\" ");
+					}
+				}
+				catch (JobOpportunityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-			return buf.toString();
-		
-}
+			}
+			else {
+				//send back the link to the ad request
+				buf.append(" ADLINK=\"" + "viewAdRequest.html?rid=" + this.adRequest.getId() + "\" ");
+				buf.append(" JOBCOMP=\"NONE\" ");
+				buf.append(" ADTITLE=\"" + this.adRequest.getTitle() + "\" ");
+				buf.append(" JOBLINK=\"NONE\" ");
+				buf.append(" RECLINK=\"NONE\" ");
+				if (this.adRequest.getCurrentStatus() == RequestStatus.SUBMITTED) {
+					buf.append(" ADSTATUS=\"NONE\" ");
+				}
+				else {
+					buf.append(" ADSTATUS=\"APPROVED\" ");
+				}
+			}
+		}
+		else {
+			// need to check the school year, if greater than > 19-20
+			try {
+				if (this.schoolYear != null) {
+					String[] years = this.schoolYear.split("-");
+					if (Integer.parseInt(years[1]) > 20) {
+						//add link for creating ad request
+						buf.append(" CREATELINK=\"" + "createAdForVacantPosition?posid=" + this.getPositionId() + "\" ");
+					}
+					else {
+						buf.append(" CREATELINK=\"NONE\" ");
+					}
+				}
+				else {
+					buf.append(" CREATELINK=\"NONE\" ");
+				}
+				buf.append(" JOBLINK=\"NONE\" ");
+				buf.append(" RECLINK=\"NONE\" ");
+				buf.append(" ADLINK=\"NONE\" ");
+				buf.append(" ADTITLE=\"NONE\" ");
+				buf.append(" JOBCOMP=\"NONE\" ");
+				buf.append(" ADSTATUS=\"NONE\" ");
+			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		buf.append("/>");
+
+		return buf.toString();
+
+	}
 
 	public AdRequestBean getAdRequest() {
+
 		return adRequest;
 	}
 
 	public void setAdRequest(AdRequestBean adRequest) {
+
 		this.adRequest = adRequest;
 	}
 
 	public String getSchoolYear() {
+
 		return schoolYear;
 	}
 
 	public void setSchoolYear(String schoolYear) {
+
 		this.schoolYear = schoolYear;
 	}
 
