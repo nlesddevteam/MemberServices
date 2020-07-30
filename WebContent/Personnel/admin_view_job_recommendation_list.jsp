@@ -97,7 +97,7 @@
 											}
 										}
 										
-										if(job.isReopened() && rec[i].getCurrentStatus().equal(RecommendationStatus.PROCESSED) && job.getReopenedDate().after(rec[i].getRecommendedDate()) && !reopened_displayed) {
+										if(job.isReopened() && rec[i].getCurrentStatus().equal(RecommendationStatus.PROCESSED) && job.getReopenedDate().after(rec[i].getProcessedDate()) && !reopened_displayed) {
 											out.println("<tr><td colspan='4' class='alert-info' style='text-align:center;'><b>Position reopened on " + job.getFormattedReopenedDate() 
 												+ " by " + org.apache.commons.lang.StringUtils.capitaliseAllWords(job.getReopenedBy().getFullNameReverse()) + "</b></td></tr>");
 											reopened_displayed = true;
