@@ -582,8 +582,29 @@ input {
 								%>
 							</tr>
 							<%
-								}
+								}else{
 							%>
+								<tr>
+									<td class="tableQuestion">5.) End Date (dd/mm/yyyy):</td>
+							<%
+									if (usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION") && rec.isApproved() && !rec.isAccepted()
+												&& !rec.isRejected()) {
+							%>
+								<td class="tableAnswer"><input id='end-date'
+									name='end_date' type='text' class='datefield requiredInputBox'
+									value='<%=(rth.getEndDate() != null ? rth.getEndDateFormattedRec() : "")%>' /></td>
+								<%
+									}
+										else {
+								%>
+								<td class="tableAnswer"><%=(rth.getEndDate() != null ? rth.getEndDateFormattedRec() : "Not Specified")%></td>
+								<%
+									}
+								%>
+							</tr>
+									
+							
+							<%} %>
 						</tbody>
 					</table>
 
