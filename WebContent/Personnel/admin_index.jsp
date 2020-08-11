@@ -272,17 +272,17 @@
 								</table>
 							<div style="clear:both;"></div>	
 								
-							<canvas id="avalonDataChart" style="width:20%;float:left;height:200px;"></canvas>
-							<canvas id="centralDataChart" style="width:20%;float:left;height:200px;"></canvas>
-							<canvas id="westernDataChart" style="width:20%;float:left;height:200px;"></canvas>
-							<canvas id="labradorDataChart" style="width:20%;float:left;height:200px;"></canvas>
-							<canvas id="provincialDataChart" style="width:20%;float:left;height:200px;"></canvas>
+							<canvas id="avalonDataChart" style="width:20%;float:left;height:200px;min-width:200px;"></canvas>
+							<canvas id="centralDataChart" style="width:20%;float:left;height:200px;min-width:200px;"></canvas>
+							<canvas id="westernDataChart" style="width:20%;float:left;height:200px;min-width:200px;"></canvas>
+							<canvas id="labradorDataChart" style="width:20%;float:left;height:200px;min-width:200px;"></canvas>
+							<canvas id="provincialDataChart" style="width:20%;float:left;height:200px;min-width:200px;"></canvas>
 							
 						<div style="clear:both;"></div>	
 							<br/>&nbsp;<br/>	
-							<canvas id="totalVacanciesChart" style="width:33%;float:left;max-width:400px;"></canvas>
-							<canvas id="totalFilledChart" style="width:33%;float:left;max-width:400px;"></canvas>							
-							<canvas id="totalRemainChart" style="width:33%;float:right;max-width:400px;"></canvas>
+							<canvas id="totalVacanciesChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
+							<canvas id="totalFilledChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>							
+							<canvas id="totalRemainChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
 				
 						<div style="clear:both;"></div>	
 						<br/>&nbsp;<br/>	

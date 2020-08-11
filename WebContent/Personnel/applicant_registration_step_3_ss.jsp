@@ -31,7 +31,7 @@
 	.tableResultR {font-weight:normal;width:30%;}
 	input { border:1px solid silver;}
 </style>
-<script src="js/applicant_validations.js"></script>
+
 <script>
 			$('document').ready(function(){
 				var pickerOpts={dateFormat:"mm/dd/yy",changeMonth:true,changeYear:true,yearRange: "-75:+0"};
