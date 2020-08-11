@@ -85,6 +85,8 @@ Collection<JobOpportunityBean> vacancies = (Collection<JobOpportunityBean>) requ
 		</table>
 		
 	</div>
-
+	<br/>
+  <div align="center"><a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back to Table</a></div>
+  <br/>&nbsp;<br/>         
 </body>
 </html>
