@@ -510,7 +510,7 @@
   var westernDataChart = new Chart(ctx, {
 	  	type: 'bar',
 	  	  data: {
-	  		  labels: [ "Vacancies","Filled","Remain",],
+	  		  labels: [ "Total","Filled","Remain",],
 	  	    datasets: [{
 	  	    	label: "",
 	  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
