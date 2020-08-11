@@ -30,7 +30,6 @@
 <html>
 <head>
 <title>MyHRP Applicant Profiling System</title>
-<script src="js/applicant_validations.js"></script>
 <script>
     $("#loadingSpinner").css("display","none");
 </script>

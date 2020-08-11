@@ -73,7 +73,6 @@
 	    }
 	});
 	</script>
-	<script src="js/applicant_validations.js"></script>
 </head>
 <body>
 <%pageContext.setAttribute("now", new java.util.Date()); %> 

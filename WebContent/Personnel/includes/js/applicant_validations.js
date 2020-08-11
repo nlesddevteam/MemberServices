@@ -166,6 +166,8 @@ function checknlesdexp() {
 	var permposition = $("#perm_position").val();
 	var positionhours = $("#position_hours").val();
 	var selected_value = $("input[name='employed']:checked").val();
+	var unioncode = $("#union_code").val();
+	var positiontype = $("#positiontype").val();
 	if(selected_value == "Y"){
 		if (sdate == "") {
 			$("#spanmsg").html("Senority date is a required field");
@@ -182,8 +184,18 @@ function checknlesdexp() {
 			$("#divmsg").show();
 			return false;
 		}
-		if (permposition == "") {
+		if (unioncode == "-1") {
+			$("#spanmsg").html("Position union is a required field");
+			$("#divmsg").show();
+			return false;
+		}
+		if (perm_position == "" || perm_position=="0") {
 			$("#spanmsg").html("Position Held is a required field");
+			$("#divmsg").show();
+			return false;
+		}
+		if (positiontype == "") {
+			$("#spanmsg").html("Position Type is a required field");
 			$("#divmsg").show();
 			return false;
 		}
@@ -193,16 +205,14 @@ function checknlesdexp() {
 			return false;
 		}
 		$("#hidadd").val("ADDNEW");
-	}
-	
+	}	
 	$("#divmsg").hide();
 	return true;
 }
 /*******************************************************************************
  * check fields for Step 3 Profile Add Employment
  *  ******************************************************************************/
-function checknewemployment() {
-	 
+function checknewemployment() {	 
 	$("#divmsg").hide();
 	var company = $("#company").val();
 	var address = $("#address").val();
@@ -417,4 +427,54 @@ function checknewadrequest() {
 	}
 	document.forms[0].op.value='ADD_REQUEST'; 
 	document.forms[0].submit()
+}
+//get list of positions for union
+function getPositionsApp()
+{
+	var uc = $("#union_code").val();
+
+		$.ajax(
+     			{
+     				type: "POST",  
+     				url: "getRTHUnionPositionsApp.html",
+     				data: {
+     					unioncode: uc
+     				}, 
+     				success: function(xml){
+     					var option="<option value='-1' selected>SELECT POSITION</option>";
+     					$("#perm_position").empty();
+     					$("#perm_position").append($(option));
+     					$(xml).find('UPOSITION').each(function(){
+         					//now add the items if any
+           					//var option = new Option($(this).find("SCHOOLNAME").text(), $(this).find("SCHOOLID").text());
+           					option =option + "<option value='" + $(this).find("ID").text() + "'>" + $(this).find("PDESCRIPTION").text() + "</option>";
+           				});
+     					$("#perm_position").append(option);
+     					 
+ 					
+     				},
+     				  error: function(xhr, textStatus, error){
+     				      alert(xhr.statusText);
+     				      alert(textStatus);
+     				      alert(error);
+     				  },
+     				dataType: "text",
+     				async: false
+     			}
+     		);   			
+		
+
+	return true;
+	
+}
+//function used to post form without validations being triggered
+function submitNlesdExp(stype){
+	if(stype =="C"){
+		if(checknlesdexp()){
+			document.forms[0].submit();
+		}
+	}else{
+		//updating 
+		document.forms[0].submit();
+	}
 }
