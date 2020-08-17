@@ -102,45 +102,45 @@ public class JobOpportunityAssignmentBean implements Serializable {
 
 		switch (this.location) {
 		//need entries for support staff depots
-		case 832: 
-			txt="Western Baie Verte Bus Depot";
+		case 832:
+			txt = "Western Baie Verte Bus Depot";
 			break;
-		case 833: 
-			txt="Central Fogo Bus Depot";
+		case 833:
+			txt = "Central Fogo Bus Depot";
 			break;
-		case 834: 
-			txt="Central Gander Bus Depot";
+		case 834:
+			txt = "Central Gander Bus Depot";
 			break;
-		case 835: 
-			txt="Central GFW Bus Depot";
+		case 835:
+			txt = "Central GFW Bus Depot";
 			break;
-		case 836: 
-			txt="Central Lewisporte Bus Depot";
-			break;				
-		case 837: 
-			txt="Central Summerford Bus Depot";
+		case 836:
+			txt = "Central Lewisporte Bus Depot";
 			break;
-		case 838: 
-			txt="Western Corner Brook Bus Depot";
+		case 837:
+			txt = "Central Summerford Bus Depot";
 			break;
-		case 839: 
-			txt="Labrador HVGB Bus Depot";
+		case 838:
+			txt = "Western Corner Brook Bus Depot";
 			break;
-		case 840: 
-			txt="Labrador Wabush Bus Depot";
+		case 839:
+			txt = "Labrador HVGB Bus Depot";
 			break;
-		case 841: 
-			txt="Labrador City/Wabush Area";
+		case 840:
+			txt = "Labrador Wabush Bus Depot";
 			break;
-		case 842: 
-			txt="Vista Depot Satellite Office";
+		case 841:
+			txt = "Labrador City/Wabush Area";
 			break;
-		case 843: 
-			txt="Central Botwood Bus Depot";
-			break;	
-		case 285: 
-			txt="Burin Bus Depot";
-			break;			
+		case 842:
+			txt = "Vista Depot Satellite Office";
+			break;
+		case 843:
+			txt = "Central Botwood Bus Depot";
+			break;
+		case 285:
+			txt = "Burin Bus Depot";
+			break;
 		case -3000:
 			txt = "Central Regional Office";
 			break;
@@ -248,29 +248,54 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		}
 		else {
 			//new locatons added for support staff hiring depots
-			if(this.location == 832 || this.location == 838 ) {
+			if (this.location == 832 || this.location == 838) {
 				try {
 					zone = SchoolZoneService.getSchoolZoneBean(3);
-				} catch (SchoolException e) {
+				}
+				catch (SchoolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else if(this.location == 833 || this.location == 834 || this.location == 835 || this.location == 836 || this.location == 837 || this.location == 285 ||this.location == 842 ||this.location == 843 ) {
+			}
+			else if (this.location == 833 || this.location == 834 || this.location == 835 || this.location == 836
+					|| this.location == 837 || this.location == 285 || this.location == 842 || this.location == 843) {
 				try {
 					zone = SchoolZoneService.getSchoolZoneBean(2);
-				} catch (SchoolException e) {
+				}
+				catch (SchoolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else if(this.location == 839 || this.location == 840 || this.location == 841) {
+			}
+			else if (this.location == 839 || this.location == 840 || this.location == 841) {
 				try {
 					zone = SchoolZoneService.getSchoolZoneBean(4);
-				} catch (SchoolException e) {
+				}
+				catch (SchoolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else {
+			}
+			else {
 				School s = ((School) school_names.get(new Integer(this.location)));
+
+				if (s == null) {
+					try {
+						s = SchoolDB.getSchool(this.location);
+
+						if (s != null) {
+							school_names.put(s.getSchoolID(), s);
+						}
+					}
+					catch (SchoolException e) {
+						try {
+							(new AlertBean(e)).send();
+						}
+						catch (EmailException e1) {}
+
+						zone = null;
+					}
+				}
 
 				if (s != null) {
 					try {
@@ -285,7 +310,7 @@ public class JobOpportunityAssignmentBean implements Serializable {
 					}
 				}
 			}
-			
+
 		}
 
 		if (zone == null) {
