@@ -1504,71 +1504,36 @@ function checkemployee(usert,validatedates,bypass) {
 						}
 						return false;
 			}
-			//now we check to see if it falls in the date range
-			if(!($("#continuousservice").val() == "") && !(isNaN($("#continuousservice").val()))){
-				if($("#continuousservice").val() < 2 ){
-					if(cmonth > 5 && cmonth < 12){
-						//check current year
-						var checkdate= new Date(cyear, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#body_error_message_top").html(
-									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									"block");
-									$('#documents').tab('show');
-									$("#prcvsqdate").focus();
-									if(bypass){
-										showBypassDialog();	
-									}
-									return false;
-							
-						}
-					}else{
-						//now we check back to the previous year
-						var checkdate= new Date(cyear-1, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#body_error_message_top").html(
-									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									"block");
-									$('#documents').tab('show');
-									$("#prcvsqdate").focus();
-									if(bypass){
-										showBypassDialog();	
-									}
-									return false;
-						}
+			//var targetDate = new Date();
+			//targetDate.setDate(selectedDate.getDate()+ 1825);
+			//alert(targetDate);
+			//if(Date.parse(targetDate) > Date.parse(today)){
+				//alert("here");
+			//	$("#spanprcvsqdate").html("PRC/VSQ Date expired.");
+				//$("#divprcvsqdate").show();
+				//$("#body_error_message_top").html(
+					//	"PRC/VSQ Date expired").css("display",
+						//"block");
+					//	$('#documents').tab('show');
+						//$("#prvvsqdate").focus();
+						//if(bypass){
+							//showBypassDialog();	
+						//}
+					//	return false;
+			//}
+
+		}else{
+			$("#spanprcvsqdate").html("Please select PRC/VSQ Date.");
+			$("#divprcvsqdate").show();
+			$("#body_error_message_top").html(
+					"Please select PRC/VSQ Date").css("display",
+					"block");
+					$('#documents').tab('show');
+					$("#prvvsqdate").focus();
+					if(bypass){
+						showBypassDialog();	
 					}
-				}else{
-					if(cmonth > 5 && cmonth < 12){
-						//check current year
-						var checkdate= new Date(cyear-1, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#body_error_message_top").html(
-									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									"block");
-									$('#documents').tab('show');
-									$("#prcvsqdate").focus();
-									if(bypass){
-										showBypassDialog();	
-									}
-									return false;
-						}
-					}else{
-						//now we check back to the previous year
-						var checkdate= new Date(cyear-2, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#body_error_message_top").html(
-									"PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString()).css("display",
-									"block");
-									$('#documents').tab('show');
-									$("#prcvsqdate").focus();
-									if(bypass){
-										showBypassDialog();	
-									}
-									return false;
-						}
-					}
-				}
-			}
+					return false;
 		}
 			
 	//now check valid date ranges
