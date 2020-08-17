@@ -35,7 +35,7 @@
 	}else if(request.getParameter("status").equals("Cancelled")){
 		statuslong="Cancelled";
 	}else if(request.getParameter("status").equals("Awarded")){
-		statuslong="Awardeed";
+		statuslong="Awarded";
 	}
 	
 %>
