@@ -225,6 +225,9 @@
     				<span class="input-group-addon">A. Position:</span>
 	                     <select id='posPrimary' name='posPrimary' class="form-control">
 	                    <option value="N/A">---- Please Select (Required) ----</option>
+	                     <option value="Accountant">Accountant</option>
+	                    <option value="Accountant I">Accountant I</option>
+	                    <option value="Accountant II">Accountant II</option>	                    
 	                   	<option value="Accounts Payable Clerk">Accounts Payable Clerk</option>
 	                   	<option value="Accounts Payable Clerk I">Accounts Payable Clerk I</option>
 	                   	<option value="Accounts Payable Clerk II">Accounts Payable Clerk II</option>
