@@ -2,6 +2,9 @@
          import="java.util.*,
          				 java.util.stream.*,
                  java.text.*,
+                 java.text.SimpleDateFormat,  
+				 java.util.Date,
+				 java.util.concurrent.TimeUnit,
                  com.awsd.school.*,
                  com.awsd.school.bean.*,
                  com.esdnl.util.*,
@@ -12,8 +15,6 @@
                  com.esdnl.personnel.v2.database.sds.*,
                  org.apache.commons.lang.StringUtils"  
          isThreadSafe="false"%>
-
-
 
 		<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 		<%@ taglib uri='http://java.sun.com/jsp/jstl/functions' prefix='fn'%>
@@ -50,10 +51,11 @@
   
   Map<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   Collection<InterviewSummaryBean> interviewSummaries = InterviewSummaryManager.getInterviewSummaryBeans(profile);
-  interviewSummaries = interviewSummaries.stream().filter(isb -> (isb.getCompetition().getJobAwardedDate() != null || isb.getCompetition().getJobType().equal(JobTypeConstant.POOL)) && !isb.getCompetition().isUnadvertise()).collect(Collectors.toList());
+  interviewSummaries = interviewSummaries.stream().filter(isb -> isb.getCompetition().getJobAwardedDate() != null && !isb.getCompetition().isUnadvertise()).collect(Collectors.toList());
   
   EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(profile);
   
+  SimpleDateFormat sdf_refcheck = new SimpleDateFormat("dd/MM/yyyy");
   SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
   SimpleDateFormat sdf_medium = new SimpleDateFormat("MMM d, yyyy");
   SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
@@ -103,19 +105,14 @@ input {
 
 	<div style="font-size: 30px; padding-top: 10px; color: rgb(0, 128, 0, 0.3); font-weight: bold; text-align: left;"><%=profile.getFullNameReverse()%></div>
 	
-	<p>
-	Your current Teaching/Educational profile information can be found
-	below. If any changes are required, please select the proper menu item
-	above and/or edit link found in each section below. There are no
-	registration steps, and instead you can just edit any section of your
-	profile in any order. Please complete your profile as much as possible
-	and ALWAYS keep it updated.
-	<b>Never create a second profile</b> if you forget your login to your
-	previous profile. Having more than one profile may result in missed
-	communications regarding any employment positions and/or applications.
-	Sections with no information will display a red header. Those completed
-	and/or with entries will display green.
-	</p>
+	<p>Your current Teaching/Educational profile information can be found	below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. There are no
+	registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated.
+	
+	<p><b>Never create a second Teaching/Educational  profile</b> if you forget your login to your previous profile. Having more than one profile may result in missed
+	communications regarding any employment positions and/or applications. You can, however, register for a Support Staff/Management profile account if need be to apply for jobs in those areas. You will need a different email address to register for another account type.
+	
+	<p>Sections with no information will display a red header. Those completed and/or with entries will display green.
+	
 	
 	<!-- CURRENT OFFERS(S) ----------------------------------------------------------------------------------------->
 	<div class="panel-group" style="padding-top: 5px;">
@@ -125,22 +122,29 @@ input {
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<% if (current_offers != null && current_offers.length > 0) { %>
+					<%
+						if (current_offers != null && current_offers.length > 0) {
+					%>
 					<ul>
 						<%
 							for (int i = 0; i < current_offers.length; i++) {
 							JobOpportunityAssignmentBean[] ass = JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(current_offers[i].getJob());
 						%>
 						<li><a class="menu" href="/MemberServices/Personnel/applicantPositionOfferController.html?id=<%=current_offers[i].getRecommendation().getRecommendationId()%>"><%=ass[0].getLocationText() + " (" + current_offers[i].getJob().getPositionTitle() + ")"%></a></li>
-						<% } %>
+						<%}%>
 					</ul>
-					<% } else { %>
+					<%
+						} else {
+					%>
 					No current offer(s) currently posted.
 					<script>
 						$("#section14").removeClass("panel-success").addClass(
 								"panel-danger");
 					</script>
-					<% } %>
+					<%
+						}
+					%>
+
 				</div>
 			</div>
 		</div>
@@ -319,7 +323,7 @@ input {
 					<div class="table-responsive">  
    								
    						  	
-                               <% if((esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)){ %>
+                               <%if((esd_exp != null)&&(esd_exp.getPermanentContractSchool() != 0)&&(esd_exp.getPermanentContractSchool() != -1)){%>
                                <table class="table table-striped table-condensed" style="font-size:11px;">
    						  		<tbody>	
                                 <tr>
@@ -845,16 +849,15 @@ input {
 						if ((refs != null) && (refs.length > 0)) {
 					%>
 
-					<table class="table table-striped table-condensed"
-						style="font-size: 11px;">
+					<table class="table table-striped table-condensed"	style="font-size: 11px;">
 						<thead>
 							<tr>
-								<th width="15%">NAME</th>
+								<th width="20%">NAME</th>
 								<th width="25%">TITLE</th>
-								<th width="25%">PRESENT ADDRESS</th>
+								<th width="30%">PRESENT ADDRESS</th>
 								<th width="15%">TELEPHONE</th>
 								<th width="10%">STATUS</th>
-								<th width="10%">OPTIONS</th>
+								
 							</tr>
 						</thead>
 						<tbody>
@@ -867,48 +870,49 @@ input {
 								<td><%=refs[i].getAddress()%></td>
 								<td><%=refs[i].getTelephone()%></td>
 								<td>
-									<%
-										if (refs[i].getApplicantRefRequestBean() == null) {
-									%> <span
-									style='color: DimGrey;'>NOT SENT</span> <%
-									 	} else {
-									 %> <%
-									 	if (refs[i].getApplicantRefRequestBean().getRequestStatus() == null) {
-									 %>
-																		<span style='color: DimGrey;'>NOT SENT</span> <%
-									 	} else {
-									 %> <%
-									 	if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")) {
-									 %>
-																		<span style='color: Navy;'>PENDING</span> <%
-									 	} else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REFERENCE COMPLETED")) {
-									 %>
-																		<span style='color: Green;'>COMPLETED</span> <%
-									 	} else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST DECLINED")) {
-									 %>
-																		<span style='color: Red;'>DECLINED</span> <%
-									 	} else {
-									 %> <span
-																		style='color: DimGrey;'>NOT SENT</span> <%
-									 	}
-									 %> <%
-									 	}
-									 %> <%
-									 	}
-									 %>
-								</td>
-								<td>
-									<%
-										if ((!(refs[i].getApplicantRefRequestBean() == null))
-											&& (!(refs[i].getApplicantRefRequestBean().getRequestStatus() == null))
-											&& (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REFERENCE COMPLETED"))) {
-									%>
-									<a class='btn btn-xs btn-success'
-									href='viewNLESDReferenceApp.html?id=<%=refs[i].getApplicantRefRequestBean().getFkReference()%>&reftype=<%=refs[i].getApplicantRefRequestBean().getReferenceType()%>'>VIEW</a>
-								</td>
+								<!-- Get current date and time to see if expired. -->
 								<%
-									}
-								%>
+								//I hate Long variables
+								Date date = new Date();		//Get today			
+			int refResendTimeLeft=0;	
+			int refDiff,refDiffResend,refDateRequested,refCurrentDate,refTimeLeft;; //declare ints 			
+			int refExpiredTimeY = 8760; //# hours in a year exact. References expire after a year.
+		
+			
+			if  (refs[i].getApplicantRefRequestBean()!=null && refs[i].getApplicantRefRequestBean().getDateStatus()!=null) {								
+			 
+				refDateRequested = (int) TimeUnit.MILLISECONDS.toHours(refs[i].getApplicantRefRequestBean().getDateStatus().getTime());
+			 	refCurrentDate = (int) TimeUnit.MILLISECONDS.toHours(date.getTime());			 
+			 	refDiff = (refCurrentDate - refDateRequested)-12;	//do the math hours
+			 	
+			} else {
+				refDateRequested = 0; //if null 0 all variables
+			 	refCurrentDate = 0;									
+			 	refDiff = 0;				 
+			}									
+								%>						
+								    								
+								<%if(refDiff >refExpiredTimeY) {  %>
+										<span style='color: Red;'>EXPIRED</span>								
+								<%	} else { 									
+										if (refs[i].getApplicantRefRequestBean() == null) {	%> 
+									<span style='color: DimGrey;'>NOT SENT</span>
+								<%	} else {
+									 	if (refs[i].getApplicantRefRequestBean().getRequestStatus() == null) {%>
+													<span style='color: DimGrey;'>NOT SENT</span>
+								 <%} else {									 
+									 	if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")) { %>
+													<span style='color: Navy;'>PENDING</span> 
+								<%	} else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REFERENCE COMPLETED")) {%>
+													<span style='color: Green;'>COMPLETED</span> 
+								<%   } else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST DECLINED")) { %>
+													<span style='color: Red;'>DECLINED</span> 
+								 <%	} else { %> 			
+								 					<span style='color: DimGrey;'>NOT SENT</span> 
+								 <% } %> 
+								 <% } %> 
+								 <% }} %>
+								</td>								
 							</tr>
 							<%
 								}
@@ -1078,7 +1082,7 @@ input {
                 
   <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section10b">   
-	               	<div class="panel-heading"><b>District Letters</b></div>
+	               	<div class="panel-heading"><b>DISTRICT LETTERS</b></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive"> 
  										<% if((docs != null) && (docs.size() > 0)) {

@@ -4,6 +4,9 @@
                  com.awsd.school.*,
                  com.awsd.school.bean.*,
                  com.esdnl.util.*,
+                 java.text.SimpleDateFormat,  
+				 java.util.Date,
+				 java.util.concurrent.TimeUnit,
                  com.esdnl.personnel.jobs.bean.*,
                  com.esdnl.personnel.jobs.dao.*,
                  com.esdnl.personnel.jobs.constants.*,
@@ -77,8 +80,11 @@ input {
 <div style="font-size:30px;padding-top:10px;color:rgb(0, 128, 0,0.3);font-weight:bold;text-align:left;"><%=profile.getFullNameReverse()%></div>
 Your current Support Staff/Management profile information can be found below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. 
 There are no registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated. 
-<b>Never create a second profile</b> if you forget your login to your previous profile. Having more than one profile may result in missed communications regarding any 
-employment positions and/or applications. Sections with no information will display a red header. Those completed and/or with entries will display green.
+
+<br/><br/><b>Never create a second Support Staff/Management profile</b> if you forget your login to your previous profile. Having more than one profile may result in missed communications regarding any 
+employment positions and/or applications. 
+
+<br/><br/>Sections with no information will display a red header. Those completed and/or with entries will display green.
 <div class="panel-group" style="padding-top:10px;">                               
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>1. PROFILE INFORMATION</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_1_ss.jsp">EDIT</a></span></div>
@@ -333,7 +339,7 @@ employment positions and/or applications. Sections with no information will disp
                                 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section7">   
-	               	<div class="panel-heading"><b>6. REFERENCES</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_8_ss.jsp">EDIT</a></span></div>
+	               	<div class="panel-heading"><b>6. REFERENCES</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_8_ss.jsp">EDIT/VIEW</a></span></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive"> 
 
@@ -359,7 +365,36 @@ employment positions and/or applications. Sections with no information will disp
                                       <td><%=refs[i].getAddress()%></td>
                                       <td><%=refs[i].getTelephone()%></td> 
                                       <td>
-                                      <% if(refs[i].getApplicantRefRequestBean() == null){ %>
+                                    
+                                    <!-- Get current date and time to see if expired. -->
+								<%
+								//I hate Long variables
+								Date date = new Date();		//Get today			
+			int refResendTimeLeft=0;	
+			int refDiff,refDiffResend,refDateRequested,refCurrentDate,refTimeLeft;; //declare ints 			
+			int refExpiredTimeY = 8760; //# hours in a year exact. References expire after a year.
+		
+			
+			if  (refs[i].getApplicantRefRequestBean()!=null && refs[i].getApplicantRefRequestBean().getDateStatus()!=null) {								
+			 
+				refDateRequested = (int) TimeUnit.MILLISECONDS.toHours(refs[i].getApplicantRefRequestBean().getDateStatus().getTime());
+			 	refCurrentDate = (int) TimeUnit.MILLISECONDS.toHours(date.getTime());			 
+			 	refDiff = (refCurrentDate - refDateRequested)-12;	//do the math hours
+			 	
+			} else {
+				refDateRequested = 0; //if null 0 all variables
+			 	refCurrentDate = 0;									
+			 	refDiff = 0;				 
+			}									
+								%>					
+                                    
+                                    
+                                      
+                                      <%if(refDiff >refExpiredTimeY) {  %>
+										<span style='color: Red;'>EXPIRED</span>								
+								<%	} else { 		
+                                      
+                                    if(refs[i].getApplicantRefRequestBean() == null){ %>
                                       	<span style='color:DimGrey;'>NOT SENT</span>
                                       <%} else{ %>
                                       	<%if (refs[i].getApplicantRefRequestBean().getRequestStatus() ==  null) { %>
@@ -375,7 +410,7 @@ employment positions and/or applications. Sections with no information will disp
 									   			<span style='color:DimGrey;'>NOT SENT</span>
 									   		<%} %>
 									   	<%} %>
-                                      <% } %>
+                                      <% }} %>
                                       
 										</td>                                     
                                       </tr>
@@ -426,12 +461,42 @@ employment positions and/or applications. Sections with no information will disp
                                 
  </div></div></div></div>
 
-  <!--10.  Letters ----------------------------------------------------------------------------------------->               
+
+   <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section11">   
+	               	<div class="panel-heading"><b>8. CRIMINAL OFFENCE DECLARATIONS</b><span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10_CODF.jsp">EDIT</a></span></div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive">
+									<%if((cods != null) && (cods.size() > 0))  {
+	                                  int i=0; %>	                                  	
+	                                  	<table class="table table-striped table-condensed" style="font-size:11px;">
+      							    	<thead>
+      							    	<tr>
+                                       	<th width="90%">DECLARATION DATE</th>                                                                           
+                                       	<th width="10%">OPTIONS</th>                                                                           
+                                      	</tr>
+                                      	</thead>
+                                      	<tbody>
+	                                  	<%for(ApplicantCriminalOffenceDeclarationBean cod : cods) { %>
+	                                      <tr>
+	                                      <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
+	                                      <td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>' target='_blank'>VIEW</a></td>
+	                                     </tr>
+	                                      <%} %>  
+	                                   	</tbody>
+	                                   	</table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Documents currently on file.</span>
+	                                       <script>$("#section10").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+  </div></div></div></div>                             
+         
+    <!--10.  Letters ----------------------------------------------------------------------------------------->               
                 
                 
   <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section10b">   
-	               	<div class="panel-heading"><b>District Letters</b></div>
+	               	<div class="panel-heading"><b>9. DISTRICT LETTERS</b></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive"> 
  										<% if((docs != null) && (docs.size() > 0)) {
@@ -463,35 +528,7 @@ employment positions and/or applications. Sections with no information will disp
 	                                    <% } %>
                               
 </div></div></div></div> 
-   <div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section11">   
-	               	<div class="panel-heading"><b>8. CRIMINAL OFFENCE DECLARATIONS</b><span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_10_CODF.jsp">EDIT</a></span></div>
-      			 	<div class="panel-body"> 
-					<div class="table-responsive">
-									<%if((cods != null) && (cods.size() > 0))  {
-	                                  int i=0; %>	                                  	
-	                                  	<table class="table table-striped table-condensed" style="font-size:11px;">
-      							    	<thead>
-      							    	<tr>
-                                       	<th width="90%">DECLARATION DATE</th>                                                                           
-                                       	<th width="10%">OPTIONS</th>                                                                           
-                                      	</tr>
-                                      	</thead>
-                                      	<tbody>
-	                                  	<%for(ApplicantCriminalOffenceDeclarationBean cod : cods) { %>
-	                                      <tr>
-	                                      <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
-	                                      <td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>' target='_blank'>VIEW</a></td>
-	                                     </tr>
-	                                      <%} %>  
-	                                   	</tbody>
-	                                   	</table>	                                      
-	                                      <% } else {%>                                  
-	                                       <span style="color:Grey;">No Documents currently on file.</span>
-	                                       <script>$("#section10").removeClass("panel-success").addClass("panel-danger");</script>
-	                                    <% } %>
-  </div></div></div></div>                             
-         
+  
          
          <div align="center" class="no-print" style="padding-top:3px;padding-bottom:10px;"><a href="/employment/index.jsp?finished=true" class="btn btn-sm btn-danger">Back to Employment</a></div>
                                 

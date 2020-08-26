@@ -89,7 +89,7 @@ input {border:1px solid silver;}
   		<label class="radio-inline"><input type='radio' name='perm_contract' id='perm_contract' value='N' onclick='toggleRow("perm_school_yes_row", "none");toggleRow("perm_school_no_row", "block");' checked="checked">No</label>					
 	</div>
     
-   
+   <!-- ADD LOGIC DISABLING FOR JULY and AUGUST -->
     
 				<div id="perm_school_yes_row" style="display:none;">
 								<table class="table table-striped table-condensed" style="font-size:12px;">							   
