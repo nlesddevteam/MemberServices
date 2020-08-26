@@ -34,9 +34,12 @@ The Newfoundland and Labrador English School District is in regular contact with
 Information Shared with Schools and District Staff can be found below:
 <br/><br/>
    <ul>  
-   <li><a href="includes/doc/c19-sa-08192020.pdf" target="_blank">August 19 - Memo to Student Assistants (Change to Recall Date - September 2, 2020)</a>
-   <li><a href="includes/doc/c19-tla-08192020.pdf" target="_blank">August 19 - Memo to Teaching and Learning Assistants (Change to Start Date - September 2, 2020)</a>
-   <li><a href="includes/doc/c19-admin-07202020.pdf" target="_blank">July 20 - Memo to Principals/Teachers (District Update)</a>   
+   
+  		<li><a href="https://sites.google.com/nlesd.ca/ohstraining2021/safety-orientation" target="_blank">OHS training 20 - 21 for all staff</a>
+		<li> <a href="https://sites.google.com/nlesd.ca/ohsorientation/home" target="_blank">General OHS Information</a>   
+   		<li><a href="includes/doc/c19-sa-08192020.pdf" target="_blank">August 19 - Memo to Student Assistants (Change to Recall Date - September 2, 2020)</a>
+   		<li><a href="includes/doc/c19-tla-08192020.pdf" target="_blank">August 19 - Memo to Teaching and Learning Assistants (Change to Start Date - September 2, 2020)</a>
+  		<li><a href="includes/doc/c19-admin-07202020.pdf" target="_blank">July 20 - Memo to Principals/Teachers (District Update)</a>   
 		<li><a href="includes/doc/c19-admin-05292020.pdf" target="_blank">May 29 - Memo to Principals (District Update)</a>
 		<li><a href="includes/doc/c19-teach-05262020.pdf" target="_blank">May 26 - Memo to All Teachers (Changes to Recruitment Process)</a>   
    		<li><a href="includes/doc/c19-teach-05252020.pdf" target="_blank">May 25 - Memo to School Staff (June 1st Building Reopening for School Teaching Staff)</a>
@@ -58,9 +61,9 @@ Information Shared with Schools and District Staff can be found below:
      	<li><a href="includes/doc/c19-parents-03162020.pdf" target="_blank">March 16 - Memo to Families (Suspension of In-Class Instruction/Scheduled School Materials Pick-Up)</a>
 		<li><a href="includes/doc/c19-emp-03162020.pdf" target="_blank">March 16 - Memo to All Employees (Protocols; Return to Work Following Out of Country Travel)</a>
      	<li><a href="includes/doc/c19-all-03132020.pdf" target="_blank">March 13 - Memo to All Staff (Professional Development/Community Use of Schools)</a>
-<li><a href="includes/doc/c19-prec-03132020.pdf" target="_blank">March 13 - Memo to Administrators (Extra-curricular Activities Cancellations)</a>
-<li><a href="includes/doc/c19-aemp-03132020.pdf" target="_blank">March 13 - Memo to All Employees (Update: COVID-19 protocols)</a>
-<li><a href="includes/doc/c19-mfamst-03102020.pdf" target="_blank">March 10 - Memo to Chaperones/ Families of Students Travelling</a>
+		<li><a href="includes/doc/c19-prec-03132020.pdf" target="_blank">March 13 - Memo to Administrators (Extra-curricular Activities Cancellations)</a>
+		<li><a href="includes/doc/c19-aemp-03132020.pdf" target="_blank">March 13 - Memo to All Employees (Update: COVID-19 protocols)</a>
+		<li><a href="includes/doc/c19-mfamst-03102020.pdf" target="_blank">March 10 - Memo to Chaperones/ Families of Students Travelling</a>
 </ul>
    
     
