@@ -82,6 +82,9 @@ input {border:1px solid silver;}
     	var refid = null;
     	var opttype=null;
     	var externalentered=false;
+    	
+    	
+    	
     	//check to see if user just entered email address
     	if($("#popemail").is(":visible")){
     		var email=$('#popemail').val();
@@ -176,8 +179,9 @@ input {border:1px solid silver;}
 SECTION 8: Editing your Teacher/Educator HR Application Profile 
 </div>
 
-<br/>Please add up to 3 references to your online profile.
-
+<br/>Please add up to 3 references to your online profile.<br/>
+<div class="alert alert-warning" style="margin-top:5px;"><b>NOTE:</b> Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference. 
+Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.</div>
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
 	               	<div class="panel-heading"><b>8. REFERENCES</b></div>
@@ -190,7 +194,7 @@ SECTION 8: Editing your Teacher/Educator HR Application Profile
 							    <tbody>
                                 
                                 <tr>
-                                  <td class="tableTitleL">Referencee Name*:</td>
+                                  <td class="tableTitleL">Reference Name*:</td>
                                   <td class="tableResultL"><input type="text" name="full_name" id="full_name" class="form-control"></td>
                                   
                                   <td class="tableTitleR">Position Title*:</td>
