@@ -32,13 +32,21 @@ public ScheduleReportsWorker() {
 			return;
 		}
 		try {
+			int emailcount=0;
 			String esql = BussingContractorWarningsManager.getWarningsSqlByTable(EntryTableConstant.CONTRACTOREMPLOYEE.getDescription());
 			String vsql = BussingContractorWarningsManager.getWarningsSqlByTable(EntryTableConstant.CONTRACTORVEHICLE.getDescription());
 			String cdsql = BussingContractorWarningsManager.getWarningsSqlByTable(EntryTableConstant.CONTRACTORDOC.getDescription());
-			TreeMap<String,ArrayList<BussingContractorEmployeeBean>> elist = BussingContractorWarningsManager.getEmployeeWarningsAutomatedTM(esql);
-			TreeMap<String,ArrayList<BussingContractorVehicleBean>> vlist = BussingContractorWarningsManager.getVehicleWarningsAutomatedTM(vsql);
+			//used to send email to bussing admin
+			ArrayList<String> suspendedliste = new ArrayList<String>();
+			TreeMap<String,ArrayList<BussingContractorEmployeeBean>> elist = BussingContractorWarningsManager.getEmployeeWarningsAutomatedTM(esql,suspendedliste);
+			//now we check the manual warnings that can't just be done through sql
+			BussingContractorWarningsManager.getCODEmployeeWarnings(elist,suspendedliste);
+			BussingContractorWarningsManager.getDriverAbstractEmployeeWarnings(elist,suspendedliste);
+			ArrayList<String> suspendedlistv = new ArrayList<String>();
+			TreeMap<String,ArrayList<BussingContractorVehicleBean>> vlist = BussingContractorWarningsManager.getVehicleWarningsAutomatedTM(vsql,suspendedlistv);
+			//now we check the manual vehicle warnings
+			BussingContractorWarningsManager.getFallWinterVehicleWarningsTM(vlist, suspendedlistv);
 			TreeMap<String,ArrayList<BussingContractorDocumentBean>> cdlist = BussingContractorWarningsManager.getDocumentWarningsAutomatedTM(cdsql);
-			
 			//first we loop through the employees
 			for(Map.Entry<String,ArrayList<BussingContractorEmployeeBean>> entry : elist.entrySet()) {
 					String emaila =null;
@@ -77,6 +85,8 @@ public ScheduleReportsWorker() {
 					model.put("pbody", sb.toString());
 					email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/contractor_warnings.vm", model));
 					email.send();
+					System.out.println("employee email sent to:" + emaila);
+					emailcount ++;
 			}
 			
 			//now we check to see if any of the companies only had vehicle warnings
@@ -106,6 +116,8 @@ public ScheduleReportsWorker() {
 					model.put("pbody", sb.toString());
 					email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/contractor_warnings.vm", model));
 					email.send();
+					System.out.println("vehicle email sent to:" + emaila);
+					emailcount ++;
 				}
 			}
 			//now we check to see if any of the companies only had vehicle warnings
@@ -135,6 +147,8 @@ public ScheduleReportsWorker() {
 					model.put("pbody", sb.toString());
 					email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/contractor_warnings.vm", model));
 					email.send();
+					System.out.println("doc email sent to:" + emaila);
+					emailcount ++;
 				}
 			}
 			//update table to show that it ran
@@ -142,7 +156,7 @@ public ScheduleReportsWorker() {
 			rbean.setReportTitle("Weekly Contractor Expirations");
 			rbean.setRanBy("System");
 			BussingContractorReportingHistoryManager.addReportingHistoyBean(rbean);
-			
+			System.out.println("Total Emails:" + emailcount);
 
 		}
 		catch (Exception e) {
