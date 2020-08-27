@@ -117,7 +117,12 @@
 	      					<td class="field_content">${rule.statusText}</td>
 	      					<td class="field_content" align="center">
       							<button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewEmployee.html?vid=${rule.id}');">View</button>
+      							<c:choose>
+      							<c:when test="${reporttitle ne 'Employees Removed' }">
       							<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialogemp('${rule.lastName},${rule.firstName}','${rule.id}','A');">Del</button>
+      							</c:when>
+      							</c:choose>
+      							
 	      					</td>
 	      				</tr>
 	        		</c:forEach>

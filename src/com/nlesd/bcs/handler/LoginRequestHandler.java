@@ -13,7 +13,7 @@ public class LoginRequestHandler extends PublicAccessRequestHandlerImpl {
 			throws ServletException,
 				IOException {
 		
-		super.handleRequest(request, response);
+		//super.handleRequest(request, response);
 		String path = "login.jsp";
 		
 		return path;

@@ -40,7 +40,7 @@ public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequest
 		super.handleRequest(request, response);
 		BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
 		String message="UPDATED";
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 		try {
 				if(BussingContractorVehicleManager.checkVehicleSerialNumber(form.get("vserialnumber"))) {
 					message="Vehicle record on file with identical Serial Number";
@@ -231,7 +231,12 @@ public class AddNewContractorVehicleRequestHandler extends BCSApplicationRequest
 				message = e.getMessage();
 			}
 		}else {
-			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+			if(this.sessionExpired) {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}else {
+				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+			}
 		}
 
 		String xml = null;

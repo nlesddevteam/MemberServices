@@ -39,7 +39,7 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 		super.handleRequest(request, response);
 		BussingContractorEmployeeBean vbean =  new BussingContractorEmployeeBean();
 		String message="UPDATED";
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 		try {
 				//check to see if it is a driver position and if the dl number not in use
 				if(form.getInt("employeeposition") == 20 && BussingContractorEmployeeManager.checkEmployeeDLNumber(form.get("dlnumber"))) {
@@ -249,7 +249,12 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 
 				
 				}catch(Exception e){
-					message = e.getMessage();
+					if(this.sessionExpired) {
+						path="contractorLogin.html?msg=Session expired, please login again.";
+						return path;
+					}else {
+						message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+					}
 				}
 		}else {
 			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());

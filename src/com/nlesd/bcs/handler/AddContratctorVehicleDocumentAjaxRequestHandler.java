@@ -34,7 +34,7 @@ public class AddContratctorVehicleDocumentAjaxRequestHandler extends BCSApplicat
 			//BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 			BussingContractorVehicleDocumentBean vbean = new BussingContractorVehicleDocumentBean();
 			BussingContractorVehicleBean vehbean = BussingContractorVehicleManager.getBussingContractorVehicleById(form.getInt("vid")); 
-			if(validate_form()) {
+			if (validate_form() && !(this.sessionExpired)) {
 				try {
 					//get fields
 					vbean.setVehicleId(form.getInt("vid"));
@@ -58,11 +58,14 @@ public class AddContratctorVehicleDocumentAjaxRequestHandler extends BCSApplicat
 	            }
 				catch (Exception e) {
 					message=e.getMessage();
-			
-					
 				}
 			}else {
-				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+					if(this.sessionExpired) {
+						path="contractorLogin.html?msg=Session expired, please login again.";
+						return path;
+					}else {
+						message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+					}
 			}
 			
 			String xml = null;

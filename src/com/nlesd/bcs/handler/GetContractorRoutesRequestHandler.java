@@ -16,11 +16,15 @@ public class GetContractorRoutesRequestHandler extends BCSApplicationRequestHand
 			throws ServletException, IOException
 	{
 		super.handleRequest(request, response);
-		BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		ArrayList<BussingContractorRouteListBean> list  = BussingContractorRouteListManager.getContractorsRoutes(bcbean.getId());
-		request.setAttribute("routes", list);
-		path = "view_contractor_routes.jsp";
-
+		if (validate_form() && !(this.sessionExpired)) {
+			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			ArrayList<BussingContractorRouteListBean> list  = BussingContractorRouteListManager.getContractorsRoutes(bcbean.getId());
+			request.setAttribute("routes", list);
+			path = "view_contractor_routes.jsp";
+		}else {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}
 
 		return path;
 	}

@@ -29,7 +29,7 @@ public class ViewRouteInfoRequestHandler extends BCSApplicationRequestHandlerImp
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 	    	  int cid = form.getInt("cid");
 	    	  int rid = form.getInt("rid");
 	    	  BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
@@ -59,8 +59,8 @@ public class ViewRouteInfoRequestHandler extends BCSApplicationRequestHandlerImp
 	    	  request.setAttribute("vehicles", BussingContractorVehicleManager.getApprovedContractorsVehicles(ebean.getId()));
 	    	  path = "view_route_info.jsp";
 		}else {
-			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
-	    	path = "contractorLogin.html";
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
 		}
 		return path;
 	}

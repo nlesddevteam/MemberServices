@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -85,8 +87,9 @@ public class BussingContractorWarningsManager {
 				}
 				
 			}
-			
-				
+			//now we get the manual warnings
+			getEmployeeWarningsManualDA(contractorid,employeelist);
+			getEmployeeWarningsManualCOD(contractorid,employeelist);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -108,6 +111,183 @@ public class BussingContractorWarningsManager {
 			catch (Exception e) {}
 		}
 		return employeelist;
+	}
+	public static void getEmployeeWarningsManualDA(int contractorid,ArrayList<BussingContractorEmployeeBean> employeelist) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_expired_da_con(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+			if(month <6) {
+				//we use the current school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year-1, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				
+			}else {
+				//we use the next school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+			}
+			stat.setInt(3, contractorid);
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorEmployeeManager.createBussingContractorEmployeeBeanFull(rs);
+				employeelist.add(ebean);
+			}
+			
+			
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("void getEmployeeWarningsManualDA(int contractorid,ArrayList<BussingContractorEmployeeBean> employeelist): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void getEmployeeWarningsManualCOD(int contractorid,ArrayList<BussingContractorEmployeeBean> employeelist) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_expired_cod_con(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+			if(month <6) {
+				//we use the current school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year-1, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				
+			}else {
+				//we use the next school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+			}
+			stat.setInt(3, contractorid);
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorEmployeeManager.createBussingContractorEmployeeBeanFull(rs);
+				employeelist.add(ebean);
+			}
+			
+			
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static void getEmployeeWarningsManualCOD(int contractorid,ArrayList<BussingContractorEmployeeBean> employeelist): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void getVehicleWarningsManualFallIns(int contractorid,ArrayList<BussingContractorVehicleBean> vlist) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorVehicleBean ebean = new BussingContractorVehicleBean();
+		try {
+			con = DAOUtils.getConnection();
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+			if(month <6) {
+				//checking the winter inspection
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year-1, 10, 1);
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_winins_c(?,?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				stat.setInt(3, contractorid);
+			}else {
+				//checking the fall inspection
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year, 5, 1);
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_fallins_c(?,?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				stat.setInt(3, contractorid);
+			}
+			stat.setInt(3, contractorid);
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorVehicleManager.createBussingContractorVehicleBeanFull(rs);
+				vlist.add(ebean);
+			}
+			
+			
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("void getEmployeeWarningsManualDA(int contractorid,ArrayList<BussingContractorEmployeeBean> employeelist): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}
 	public static ArrayList<BussingContractorVehicleBean> getVehicleWarnings(int contractorid) {
 		Connection con = null;
@@ -132,7 +312,7 @@ public class BussingContractorWarningsManager {
 				}
 				
 			}
-			
+			getVehicleWarningsManualFallIns(contractorid,employeelist);
 				
 		}
 		catch (SQLException e) {
@@ -306,13 +486,13 @@ public class BussingContractorWarningsManager {
 		}
 		return employeelist;
 	}
-	public static TreeMap<String,ArrayList<BussingContractorEmployeeBean>> getEmployeeWarningsAutomatedTM(String sql) {
+	public static TreeMap<String,ArrayList<BussingContractorEmployeeBean>> getEmployeeWarningsAutomatedTM(String sql,ArrayList<String> suspendedliste) {
 		Connection con = null;
 		Statement stat = null;
 		ResultSet rs = null;
 		TreeMap<String,ArrayList<BussingContractorEmployeeBean>> employeelist = new TreeMap<String,ArrayList<BussingContractorEmployeeBean>>();
 		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
-		ArrayList<String> suspendedliste = new ArrayList<String>();
+		
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
@@ -334,9 +514,9 @@ public class BussingContractorWarningsManager {
 						if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
 							if(ebean.getDlExpiryDate().before(new Date())) {
 								//update status to suspended
-								//BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.SUSPENDED.getValue());
+								BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
 								suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
-								+ "): Status set to suspended for Driver Licence Expired </p>");
+								+ "): Status set to Not Approved for Driver Licence Expired </p>");
 							}
 						}
 					}
@@ -347,32 +527,28 @@ public class BussingContractorWarningsManager {
 						if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
 							if(ebean.getFaExpiryDate().before(new Date())) {
 								//update status to suspended
-								//BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.SUSPENDED.getValue());
+								BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
 								suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
-								+ "): Status set to suspended for First Aid/Epipen Expired </p>");
+								+ "): Status set to NOt Approved for First Aid/Epipen Expired </p>");
+							}
+						}
+					}
+				}
+				if(ebean.getWarningNotes().equals("Police Records / Vunerable Sector Checks Expired (Expiring)")) {
+					//now we check the correct date is less than today
+					if(ebean.getPrcvsqDate() != null) {
+						if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
+							if(ebean.getPrcvsqDate().before(new Date())) {
+								//update status to suspended
+								BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+								suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
+								+ "): Status set to Not Approved for Police Records / Vunerable Sector Checks Expired </p>");
 							}
 						}
 					}
 				}
 			}
-			//now we send the message
-			if(!suspendedliste.isEmpty()) {
-				EmailBean email = new EmailBean();
-				email.setTo("transportation@nlesd.ca");
-				email.setBCC("rodneybatten@nlesd.ca");
-				email.setFrom("bussingcontractorsystem@nlesd.ca");
-				email.setSubject("NLESD Bussing Contractor System Suspended Employees");
-				HashMap<String, Object> model = new HashMap<String, Object>();
-				// set values to be used in template
-				StringBuilder sb = new StringBuilder();
-				for(String s: suspendedliste) {
-					sb.append(s);
-				}
-				model.put("elist", sb.toString());
-				model.put("etype","Employee(s)");
-				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
-				email.send();
-			}
+			
 			
 		}
 		catch (SQLException e) {
@@ -383,13 +559,7 @@ public class BussingContractorWarningsManager {
 			catch (Exception ex) {}
 			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeeWarningsAutomated(String sql): "
 					+ e);
-		//} catch (EmailException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (EmailException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		finally {
 			try {
 				stat.close();
@@ -402,13 +572,12 @@ public class BussingContractorWarningsManager {
 		}
 		return employeelist;
 	}
-	public static TreeMap<String,ArrayList<BussingContractorVehicleBean>> getVehicleWarningsAutomatedTM(String sql) {
+	public static TreeMap<String,ArrayList<BussingContractorVehicleBean>> getVehicleWarningsAutomatedTM(String sql,ArrayList<String> suspendedliste) {
 		Connection con = null;
 		Statement stat = null;
 		ResultSet rs = null;
 		TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist = new TreeMap<String,ArrayList<BussingContractorVehicleBean>>();
 		BussingContractorVehicleBean ebean = new BussingContractorVehicleBean();
-		ArrayList<String> suspendedliste = new ArrayList<String>();
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
@@ -430,9 +599,9 @@ public class BussingContractorWarningsManager {
 						if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
 							if(ebean.getRegExpiryDate().before(new Date())) {
 								//update status to suspended
-									//BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUSPENDED.getValue());
+									BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
 									suspendedliste.add("<p>SN:" + ebean.getvSerialNumber() + " PN:" + ebean.getvPlateNumber() + "(" + ebean.getCompanyName()
-								+ "): Status set to suspended for Registration Expired </p>");
+								+ "): Status set to Not Approved for Registration Expired </p>");
 							}
 						}
 					}
@@ -443,13 +612,89 @@ public class BussingContractorWarningsManager {
 						if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
 							if(ebean.getInsExpiryDate().before(new Date())) {
 								//update status to suspended
-								//BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUSPENDED.getValue());
+								BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
 								suspendedliste.add("<p>SN:" + ebean.getvSerialNumber() + " PN:" + ebean.getvPlateNumber() + "(" + ebean.getCompanyName()
-								+ "): Status set to suspended for Insurance Expired </p>");
+								+ "): Status set to Not Approved for Insurance Expired </p>");
 							}
 						}
 					}
 				}
+			}
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("TreeMap<String,ArrayList<BussingContractorVehicleBean>> getVehicleWarningsAutomatedTM(String sql): "
+					+ e);
+		} 
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return vehiclelist;
+	}
+	public static void getFallWinterVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorVehicleBean ebean = new BussingContractorVehicleBean();
+		try {
+			con = DAOUtils.getConnection();
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+			String wtype="";
+			if(month <6) {
+				//checking the winter inspection
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year-1, 10, 1);
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_winins(?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				wtype="Winter Inspection Date expired or missing";
+			}else {
+				//checking the fall inspection
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year, 5, 1);
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_fallins(?); end;");
+				stat.registerOutParameter(1, OracleTypes.CURSOR);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				wtype="Fall Inspection Date expired or missing";
+			}
+			
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorVehicleManager.createBussingContractorVehicleBeanFull(rs);
+				//check to see if already added one for this company
+				if(vehiclelist.containsKey(ebean.getCompanyName())) {
+					vehiclelist.get(ebean.getCompanyName()).add(ebean);
+				}else {
+					ArrayList<BussingContractorVehicleBean> alist = new ArrayList<BussingContractorVehicleBean>();
+					alist.add(ebean);
+					vehiclelist.put(ebean.getCompanyName(), alist);
+				}
+				//finally we check to see if it is expired and make sure status set to suspended
+				if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
+					//update status to suspended
+					BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+					suspendedliste.add("<p>SN:" + ebean.getvSerialNumber() + " PN:" + ebean.getvPlateNumber() + "(" + ebean.getCompanyName()
+					+ "): Status set to Not Approved for " + wtype + " </p>");
+				}
+				
 			}
 			//now we send the message
 			if(!suspendedliste.isEmpty()) {
@@ -457,7 +702,7 @@ public class BussingContractorWarningsManager {
 				email.setTo("transportation@nlesd.ca");
 				email.setBCC("rodneybatten@nlesd.ca");
 				email.setFrom("bussingcontractorsystem@nlesd.ca");
-				email.setSubject("NLESD Bussing Contractor System Suspended Vehicles");
+				email.setSubject("NLESD Bussing Contractor System Vehicles Set To Not Approved");
 				HashMap<String, Object> model = new HashMap<String, Object>();
 				// set values to be used in template
 				StringBuilder sb = new StringBuilder();
@@ -476,7 +721,7 @@ public class BussingContractorWarningsManager {
 				con.rollback();
 			}
 			catch (Exception ex) {}
-			System.err.println("TreeMap<String,ArrayList<BussingContractorVehicleBean>> getVehicleWarningsAutomatedTM(String sql): "
+			System.err.println("void getFallWinterVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste): "
 					+ e);
 		} catch (EmailException e) {
 			// TODO Auto-generated catch block
@@ -492,7 +737,6 @@ public class BussingContractorWarningsManager {
 			}
 			catch (Exception e) {}
 		}
-		return vehiclelist;
 	}
 	public static TreeMap<String,ArrayList<BussingContractorDocumentBean>> getDocumentWarningsAutomatedTM(String sql) {
 		Connection con = null;
@@ -536,7 +780,170 @@ public class BussingContractorWarningsManager {
 			catch (Exception e) {}
 		}
 		return doclist;
-	}		
+	}	
+	public static void getDriverAbstractEmployeeWarnings(TreeMap<String,ArrayList<BussingContractorEmployeeBean>> employeelist,ArrayList<String> suspendedliste) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_expired_da(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+			if(month <6) {
+				//we use the current school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year-1, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				
+			}else {
+				//we use the next school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+			}
+			
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorEmployeeManager.createBussingContractorEmployeeBeanFull(rs);
+				//check to see if already added one for this company
+				if(employeelist.containsKey(ebean.getCompanyName())) {
+						employeelist.get(ebean.getCompanyName()).add(ebean);
+				}else {
+					ArrayList<BussingContractorEmployeeBean> alist = new ArrayList<BussingContractorEmployeeBean>();
+					alist.add(ebean);
+					employeelist.put(ebean.getCompanyName(), alist);
+				}
+				//finally we check to see if it is expired and make sure status set to suspended
+				if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
+					//update status to suspended
+					BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+					suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
+								+ "): Status set to Not Approved for Driver Abstract Expired </p>");
+							
+				}
+				
+			}
+			//now we send the message
+			if(!suspendedliste.isEmpty()) {
+				EmailBean email = new EmailBean();
+				email.setTo("transportation@nlesd.ca");
+				email.setBCC("rodneybatten@nlesd.ca");
+				email.setFrom("bussingcontractorsystem@nlesd.ca");
+				email.setSubject("NLESD Bussing Contractor System Employees Set To Not Approved");
+				HashMap<String, Object> model = new HashMap<String, Object>();
+				// set values to be used in template
+				StringBuilder sb = new StringBuilder();
+				for(String s: suspendedliste) {
+					sb.append(s);
+				}
+				model.put("elist", sb.toString());
+				model.put("etype","Employee(s)");
+				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				email.send();
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeeWarningsAutomated(String sql): "
+					+ e);
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void getCODEmployeeWarnings(TreeMap<String,ArrayList<BussingContractorEmployeeBean>> employeelist,ArrayList<String> suspendedliste) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_expired_cod(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			int year = cal.get(Calendar.YEAR);
+			if(month <6) {
+				//we use the current school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year-1, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+				
+			}else {
+				//we use the next school year
+				Calendar caltestdate = Calendar.getInstance();
+				caltestdate.set(year, 5, 30);
+				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
+			}
+			
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorEmployeeManager.createBussingContractorEmployeeBeanFull(rs);
+				//check to see if already added one for this company
+				if(employeelist.containsKey(ebean.getCompanyName())) {
+						employeelist.get(ebean.getCompanyName()).add(ebean);
+				}else {
+					ArrayList<BussingContractorEmployeeBean> alist = new ArrayList<BussingContractorEmployeeBean>();
+					alist.add(ebean);
+					employeelist.put(ebean.getCompanyName(), alist);
+				}
+				//finally we check to see if it is expired and make sure status set to suspended
+				if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
+					//update status to suspended
+					BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+					suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
+								+ "): Status set to Not Approved for Criminal Offence Declaration Expired </p>");
+							
+				}
+				
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeeWarningsAutomated(String sql): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 	public static BussingContractorWarningsBean createBussingContractorWarningsBean(ResultSet rs) {
 		BussingContractorWarningsBean abean = null;
 		try {

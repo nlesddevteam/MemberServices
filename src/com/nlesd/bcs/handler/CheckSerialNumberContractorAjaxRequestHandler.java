@@ -24,7 +24,7 @@ public class CheckSerialNumberContractorAjaxRequestHandler extends BCSApplicatio
 		String xml = null;
 		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 		String message="";
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 			try {
 				String sn = form.get("sn");
 				boolean checkdl = BussingContractorVehicleManager.checkVehicleSerialNumber(sn);
@@ -52,7 +52,12 @@ public class CheckSerialNumberContractorAjaxRequestHandler extends BCSApplicatio
 				return path;
 			}
 		}else {
-			message =  com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+			if(this.sessionExpired) {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}else {
+				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+			}
 		}
 		sb.append("<CONTRACTOR>");
 		sb.append("<CONTRACTORSTATUS>");

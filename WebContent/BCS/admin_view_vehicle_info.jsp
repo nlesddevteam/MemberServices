@@ -7,7 +7,8 @@
                  java.util.*,
                  java.io.*,
                  java.text.*,
-                 java.sql.*"
+                 java.sql.*,
+                 com.nlesd.bcs.constants.*"
         isThreadSafe="false"%>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -125,6 +126,7 @@ $(document).ready(function() {
 	  			
 	  				<div class="form-group">
 		      			<label class="control-label col-sm-2" for="email">Status:</label>
+		      			<input type='hidden' id="cstatus" value="${VehicleStatusConstant.get(vehicle.vStatus).description }">
 		      			<div class="col-sm-5">
 		      			<c:choose>
          				<c:when test = "${vehicle.vStatus eq 1}">
@@ -670,6 +672,9 @@ $(document).ready(function() {
 		      		<div class="col-sm-offset-2 col-sm-10" id="divbuttons">
       					<br />
       					<button type="button" class="btn btn-xs btn-primary" id="submitupdate" name="submitupdate" onclick="addupdatevehicle('A','Y');">Update Information</button>
+      					<esd:SecurityAccessRequired permissions="BCS-CHANGE-STATUS">
+        						<button type="button" class="btn btn-xs btn-warning" onclick="changestatus();">Change Status</button>
+        					</esd:SecurityAccessRequired>
       					<c:if test = "${vehicle.vStatus == 6 }">
       						<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         					<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;
@@ -683,6 +688,11 @@ $(document).ready(function() {
       					<c:if test = "${vehicle.vStatus eq 2}">
       						<esd:SecurityAccessRequired permissions="BCS-SUSPEND-UNSUSPEND">
         						<button type="button" class="btn btn-xs btn-warning" onclick="openSuspendVeh();">Suspend</button>
+        					</esd:SecurityAccessRequired>
+      					</c:if>
+      					<c:if test = "${vehicle.vStatus eq 5}">
+      						<esd:SecurityAccessRequired permissions="BCS-SUSPEND-UNSUSPEND">
+        						<button type="button" class="btn btn-xs btn-warning" onclick="restorevehicle('${vehicle.id}');">Restore Vehicle</button>
         					</esd:SecurityAccessRequired>
       					</c:if>
       					<br />
@@ -765,5 +775,39 @@ $(document).ready(function() {
                 </div>
             </div>
    		</div>
-   	</div>	 
+   	</div>
+   	<div id="modalStatus" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+		<!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title"><span id="modaltitlest">Update Vehicle Status</span></h4>
+	      </div>
+	      <div class="modal-body">
+	      	<p><span id="modaltextst1">Current Status:</span></p>
+	      	<p><span id="modaltextstcs"></span></p>
+	        <p><span id="modaltextst2">New Status:</span></p>
+	        <p>
+	        	<select id="selectstatus">
+	        		<c:forEach items="${VehicleStatusConstant.ALL}" var="rule">
+	        			<option value='${rule.value }'>${rule.description }</option>
+	        		</c:forEach>
+	        	</select>
+	        </p>
+	      </div>
+	      <div class="modal-body2" style="text-align:center;" id="modalnotesst">
+	      	<p>Notes:</p>
+	      	<p><span id="modaltextsterr"></span></p>
+	      	<br>
+	        <textarea class = "form-control" rows = "5" style="width:75%;display: block;margin-left: auto;margin-right: auto;" id="rnotesst"></textarea>
+	      </div>
+	      <div class="modal-footer">
+	      		<button type="button" class="btn btn-xs btn-success" onclick="updatevehiclestatus();">Ok</button>
+	        <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal">Close</button><input type="hidden" id="trantype">
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>	 
    	

@@ -909,7 +909,7 @@ public class BussingContractorVehicleManager {
 		ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_by_status_f(?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_by_status_fr(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, status);
 			stat.execute();
@@ -1248,6 +1248,33 @@ public class BussingContractorVehicleManager {
 		}
 		return abean;
 	}
+	public static boolean restoreContractorVehicle(Integer vid)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		boolean check=false;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.restore_cont_vehicle(?); end;");
+			stat.setInt(1, vid);
+			stat.execute();
+			check=true;
+		}
+		catch (SQLException e) {
+			System.err.println("static boolean restoreContractorVehicle(Integer vid) " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return check;
+	}	
 	public static BussingContractorVehicleBean createBussingContractorVehicleBeanFull(ResultSet rs) {
 		//creates contractor bean using recordset instead of another db call
 		//old one will be removed once all places that call create bean return contractor information

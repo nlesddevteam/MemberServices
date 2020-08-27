@@ -99,7 +99,7 @@
 					<span style="color:Grey;">Logged in as: <span style="text-transform:capitalize;"><%=profile.getFirstName()%> <%=profile.getLastName() %></span></span>
 					
 					<div style="float:right;padding-right:5px;color:Silver;text-align:right;">					
-					<button type="button" style="margin:3px;" class="btn btn-xs btn-danger" onclick="window.location='contractorLogin.html';">SIGN OUT</button><br/> 					
+					<button type="button" id="butsignout" style="margin:3px;" class="btn btn-xs btn-danger" onclick="window.location='contractorLogin.html';">SIGN OUT</button><br/> 					
 					</div><p>
 					
 					<div class="alert alert-danger" id="display_error_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
@@ -112,7 +112,7 @@
 							Welcome to your Student Transportation Management System. To start, review any messages below and/or navigate options to manage your employees, vehicles, and contracts via the menu above.						 
 							  <br/>
 							   
-							   	<div class="BCSHeaderText">System Messages or Warnings <<span id="sysCount"></span></div>
+							   	<div class="BCSHeaderText">System Messages or Warnings <span id="sysCount"></span></div>
    									<div class="alert alert-success" id="sysmes_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     								<div class="alert alert-danger" id="sysmes_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 	
    									
@@ -183,7 +183,7 @@
 							      					<td class="field_content">${rule.warningNotes}</td>
 							      					<td align="right" class="field_content">
 							      						<button type="button" class="btn btn-xs btn-primary menuBCS" onclick="closeMenu();loadMainDivPage('addNewEmployee.html?vid=${rule.id}');">View</button>
-		      					    				<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialogemp('${rule.lastName},${rule.firstName}','${rule.id}');">Del</button>
+		      					    				
 			      					</td>
 							      				</tr>
 						        			</c:forEach>
@@ -232,8 +232,7 @@
 							      					<td class="field_content">${rule.warningNotes}</td>
 							      					<td align="right" class="field_content">
 							      						<button type="button" class="btn btn-xs btn-primary menuBCS" onclick="closeMenu();loadMainDivPage('addNewVehicle.html?vid=${rule.id}');">View</button>
-		      					    				<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialog('${rule.vPlateNumber}','${rule.id}');">Del</button>
-			      					
+		      					    
 							      					</td>
 							      				</tr>
 						        			</c:forEach>

@@ -76,7 +76,7 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.SUSPENDED.getValue());
 					reporttitle="Employees Suspended";
 				}else if(status.equals("re")){
-					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.REMOVED.getValue());
+					employees=BussingContractorEmployeeManager.getRemovedEmployees(EmployeeStatusConstant.REMOVED.getValue());
 					reporttitle="Employees Removed";
 				}else if(status.equals("ns")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.NOTREVIEWED.getValue());

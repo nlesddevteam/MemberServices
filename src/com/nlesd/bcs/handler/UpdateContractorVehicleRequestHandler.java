@@ -40,7 +40,7 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 		String message="UPDATED";
 		String updatedby="";
 		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 			BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
 			BussingContractorVehicleBean origbean = new BussingContractorVehicleBean();
 			try {
@@ -308,11 +308,16 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 			sb.append("</CONTRACTOR>");
 			sb.append("</CONTRACTORS>");
 		}else {
-			sb.append("<CONTRACTORS>");
-			sb.append("<CONTRACTOR>");
-			sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
-			sb.append("</CONTRACTOR>");
-			sb.append("</CONTRACTORS>");
+			if(this.sessionExpired) {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}else {
+				sb.append("<CONTRACTORS>");
+				sb.append("<CONTRACTOR>");
+				sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
+				sb.append("</CONTRACTOR>");
+				sb.append("</CONTRACTORS>");
+			}
 		}
 
 		xml = sb.toString().replaceAll("&", "&amp;");

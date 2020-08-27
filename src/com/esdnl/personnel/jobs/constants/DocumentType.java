@@ -7,14 +7,16 @@ public class DocumentType {
 
 	public static final DocumentType UNIVERSITY_TRANSSCRIPT = new DocumentType(1, "University Transcript");
 	public static final DocumentType TEACHING_CERTIFICATE = new DocumentType(2, "Teaching Certificate");
-	public static final DocumentType CODE_OF_CONDUCT = new DocumentType(3, "Code of Conduct");	
+	public static final DocumentType CODE_OF_CONDUCT = new DocumentType(3, "Code of Conduct");
 	public static final DocumentType DELF = new DocumentType(4, "French Proficiency (DELF)");
 	public static final DocumentType ECE = new DocumentType(5, "Level 2 Early Childhood Education Certificate");
 	public static final DocumentType VULNERABLE_SECTOR_CHECK = new DocumentType(6, "Vulnerable Sector Check");
+	public static final DocumentType REENTRYPL = new DocumentType(7, "Re-entry PL and Training");
 	public static final DocumentType LETTER = new DocumentType(99, "District Letter");
 
 	public static final DocumentType[] ALL = new DocumentType[] {
-			UNIVERSITY_TRANSSCRIPT, TEACHING_CERTIFICATE, CODE_OF_CONDUCT,DELF, ECE,VULNERABLE_SECTOR_CHECK,LETTER
+			UNIVERSITY_TRANSSCRIPT, TEACHING_CERTIFICATE, CODE_OF_CONDUCT, DELF, ECE, VULNERABLE_SECTOR_CHECK, REENTRYPL,
+			LETTER
 	};
 
 	private DocumentType(int value, String desc) {

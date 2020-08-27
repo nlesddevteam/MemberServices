@@ -21,16 +21,25 @@ public class BCSApplicationRequestHandlerImpl extends BypassLoginRequestHandlerI
 
 		boolean validated = false;
 		form = new Form(request);
-
+		path=null;
 		session = request.getSession(false);
 		if ((session != null) && (session.getAttribute("CONTRACTOR") != null))
 			validated = true;
 
-		if (!validated)
-			request.getRequestDispatcher("/MemberServices/BCS/login.jsp").forward(request, reponse);
-		else {
+		if (!validated) {
+			session.setAttribute("CONTRACTOR", null);
+			//session.setAttribute("scheck", true);
+			//used with ajax requests
+			reponse.setStatus(401);
+			//request.getRequestDispatcher("contractorLogin.html").forward(request, reponse);
+			sessionExpired=true;
+			
+		}else {
 			bcbean = (BussingContractorBean) session.getAttribute("CONTRACTOR");
 		}
-		return null;
+		return path;
 	}
+	public boolean sessionExpired=false;//used to return ajax calls to the login screen
+	
+	
 }

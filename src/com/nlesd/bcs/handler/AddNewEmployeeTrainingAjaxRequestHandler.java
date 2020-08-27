@@ -37,11 +37,12 @@ public class AddNewEmployeeTrainingAjaxRequestHandler extends BCSApplicationRequ
 			String message="ADDED";
 			int cid=-1;
 			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-			cid=bcbean.getId();
+			
 			BussingContractorSystemEmployeeTrainingBean vbean = new BussingContractorSystemEmployeeTrainingBean();
 
-			if (validate_form()) {
+			if (validate_form() && !(this.sessionExpired)) {
 				try {
+					cid=bcbean.getId();
 					//get fields
 					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 					vbean.setTrainingType(form.getInt("trainingtype"));
@@ -87,7 +88,12 @@ public class AddNewEmployeeTrainingAjaxRequestHandler extends BCSApplicationRequ
 					message=e.getMessage();
 				}
 			}else {
-				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+				if(this.sessionExpired) {
+					path="contractorLogin.html?msg=Session expired, please login again.";
+					return path;
+				}else {
+					message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+				}
 			}
 
 			String xml = null;
