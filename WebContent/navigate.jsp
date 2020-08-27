@@ -150,6 +150,20 @@
 							</a>
 						</div>
 				
+				<!-- Professional Learning Resources --> 
+				
+
+						<div class="menuIconImage">
+							<a href="https://sites.google.com/nlesd.ca/plseries-sept2020/home"
+								target="_blank"> <img
+								src="includes/img/menu/pls-off.png"
+								class="img-swap menuImage" border=0
+								title="Professional Learning Series - September 2020">
+							</a>
+						</div>
+			
+				
+				
 					<!-- Admin Planner --> 
 					<esd:SecurityAccessRequired
 						roles="ANNUAL-PLANNER-VIEW,WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS,ADMINISTRATIVE ASSISTANT">
