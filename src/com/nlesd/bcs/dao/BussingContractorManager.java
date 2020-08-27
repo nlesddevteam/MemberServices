@@ -892,6 +892,72 @@ public class BussingContractorManager {
 			catch (Exception e) {}
 		}
 		return list;
+	}
+	public static boolean checkContractorEmail(String email) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		boolean isvalid=true;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.check_contractor_email(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, email.toUpperCase());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			if (rs.next())
+				isvalid=false;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static boolean checkContractorEmail(String email): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return isvalid;
+	}
+	public static void updateContractorEmail(Integer cid, String emaila) {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_contractor_email(?,?); end;");
+			stat.setInt(1, cid);
+			stat.setString(2, emaila);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("void updateContractorEmail(Integer cid, String emaila): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}	
 	public static BussingContractorBean createBussingContractorBean(ResultSet rs) {
 		BussingContractorBean abean = null;

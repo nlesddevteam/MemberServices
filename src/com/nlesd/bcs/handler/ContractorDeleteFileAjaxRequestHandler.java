@@ -29,7 +29,7 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 		String xml = null;
 		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 		String smessage="SUCCESS";
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 		    String deletetype="";
 		    try {
@@ -75,11 +75,17 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 				out.close();
 		    }
 	    }else {
-			sb.append("<FILES>");
-			sb.append("<FILE>");
-			sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
-			sb.append("</FILE>");
-			sb.append("</FILES>");
+			
+			if(this.sessionExpired) {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}else {
+				sb.append("<FILES>");
+				sb.append("<FILE>");
+				sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
+				sb.append("</FILE>");
+				sb.append("</FILES>");
+			}
 		}
 		
 		xml = sb.toString().replaceAll("&", "&amp;");

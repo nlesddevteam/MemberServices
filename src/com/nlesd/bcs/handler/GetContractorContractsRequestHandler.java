@@ -17,10 +17,15 @@ public class GetContractorContractsRequestHandler extends BCSApplicationRequestH
 			throws ServletException, IOException
 	{
 		super.handleRequest(request, response);
-		BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		ArrayList<BussingContractorSystemContractBean> list  = BussingContractorSystemContractManager.getContractsForContractor(bcbean.getId());
-		request.setAttribute("contracts", list);
-		path = "view_contractor_contracts.jsp";
+		if(!(this.sessionExpired)) {
+			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			ArrayList<BussingContractorSystemContractBean> list  = BussingContractorSystemContractManager.getContractsForContractor(bcbean.getId());
+			request.setAttribute("contracts", list);
+			path = "view_contractor_contracts.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+		}
+		
 
 		return path;
 	}

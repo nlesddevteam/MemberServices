@@ -182,6 +182,33 @@ public class BussingContractorEmployeeManager {
 		}
 		return check;
 	}
+	public static boolean restoreContractorEmployee(Integer vid)  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		boolean check=false;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.restore_cont_employee(?); end;");
+			stat.setInt(1, vid);
+			stat.execute();
+			check=true;
+		}
+		catch (SQLException e) {
+			System.err.println("boolean restoreContractorEmployee(Integer vid) " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return check;
+	}
 	public static BussingContractorEmployeeBean getBussingContractorEmployeeById(Integer cid) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -904,6 +931,46 @@ public class BussingContractorEmployeeManager {
 		}
 		return list;
 	}
+	public static ArrayList<BussingContractorEmployeeBean> getRemovedEmployees(int status) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_by_status_fr(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, status);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean abean = new BussingContractorEmployeeBean();
+				abean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("static ArrayList<BussingContractorEmployeeBean> getRemovedEmployees(int status): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}	
 	public static ArrayList<BussingContractorEmployeeBean> getEmployeesRemoved(int status) {
 		Connection con = null;
 		CallableStatement stat = null;

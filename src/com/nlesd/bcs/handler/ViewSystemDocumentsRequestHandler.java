@@ -14,17 +14,22 @@ public class ViewSystemDocumentsRequestHandler extends BCSApplicationRequestHand
 			throws ServletException, IOException
 	{
 		super.handleRequest(request, response);
-		TreeMap<Integer,String> items;
-		//get search by values
-		items = DropdownManager.getDropdownValuesTM(12);
-		request.setAttribute("dtypes", items);
-		request.setAttribute("memos", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(64));
-		request.setAttribute("policies", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(65));
-		request.setAttribute("procedures", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(66));
-		request.setAttribute("forms", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(67));
+		if (validate_form() && !(this.sessionExpired)) {
 
-		path = "view_system_documents.jsp";
+			TreeMap<Integer,String> items;
+			//get search by values
+			items = DropdownManager.getDropdownValuesTM(12);
+			request.setAttribute("dtypes", items);
+			request.setAttribute("memos", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(64));
+			request.setAttribute("policies", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(65));
+			request.setAttribute("procedures", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(66));
+			request.setAttribute("forms", BussingContractorSystemDocumentManager.getBussingContractorSystemDocumentsByTypeCont(67));
 
+			path = "view_system_documents.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
+		}
 		return path;
 	}
 }

@@ -26,7 +26,6 @@
 <script src="includes/js/bcs.js"></script>
 <%
 String tabs = (String)request.getParameter("tab");
-System.out.println(tabs);
 String settab="";
 if(tabs != null){
 	settab="T";
@@ -92,7 +91,7 @@ $(document).ready(function() {
 				})
 				
 				if($("#estatus").val() == 1 || $("#estatus").val() == 3 || $("#estatus").val() == 4){
-					if(checkemployee('U','Y','N')){
+					if(checkemployee('U','Y',false)){
 						$("#submitapp").show();
 					}else{
 						$("#submitapp").hide();
@@ -372,7 +371,7 @@ $(document).ready(function() {
                 	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A front image is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.dlFront}" title="Click to open"  target="_blank">Current Document (${employee.dlFront})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('1','${employee.id}','${employee.dlFront}');">Delete File</button>   
-                	<br/>To Update         	
+                	<br/>To Update<input type="hidden" id="hiddlfront" value='Y'>         	
                 	</c:when>
                 	
                 <c:otherwise>
@@ -393,7 +392,7 @@ $(document).ready(function() {
                 	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A back image is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.dlBack}" title="Click to open"  target="_blank">Current Document (${employee.dlBack})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('2','${employee.id}','${employee.dlBack}');">Delete File</button>    
-                	<br/>To Update            	
+                	<br/>To Update<input type="hidden" id="hiddlback" value='Y'>        	
                 	</c:when>
                 <c:otherwise>
                 	<span style="background-color:Red;color:white;padding:3px;text-transform:uppercase;">NO BACK IMAGE CURRENTLY ON FILE</span>
@@ -421,7 +420,7 @@ $(document).ready(function() {
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span> 
 		                	<br/><br/><a href="${spath}${dpath}${employee.daDocument}" title="Click to open" target="_blank">Current Document (${employee.daDocument})</a>
 		                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('3','${employee.id}','${employee.daDocument}');">Delete File</button>
-	                	<br/><br/>To Update	                		               	
+	                	<br/><br/>To Update<input type="hidden" id="hiddadocument" value='Y'>	                		               	
 	                	</c:when>
 	                	<c:otherwise>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add	                		
@@ -483,7 +482,7 @@ $(document).ready(function() {
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A certificate is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.faDocument}" title="Click to open"  target="_blank">Current Document (${employee.faDocument})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('4','${employee.id}','${employee.faDocument}');">Delete File</button>
-	                	<br/><br/>To Update	 
+	                	<br/><br/>To Update<input type="hidden" id="hidfadocument" value='Y'>	 
 	                	</c:when>
 	                	<c:otherwise>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span><br/><br/>To Add	 
@@ -522,7 +521,7 @@ $(document).ready(function() {
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; PRC/VSQ currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.prcvsqDocument}" title="Click to open" target="_blank">Current Document (${employee.prcvsqDocument})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('5','${employee.id}','${employee.prcvsqDocument}');">Delete File</button>
-	                	<br/><br/>To Update	               	
+	                	<br/><br/>To Update<input type="hidden" id="hidprcvsqdocument" value='Y'>	               	
 	                	</c:when>
 	                	<c:otherwise>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
@@ -540,9 +539,9 @@ $(document).ready(function() {
 	       </div>
       	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Findings of Guilt:</label>
-                <div class="col-sm-5"> 
-                <label class="radio-inline"><input type="radio" name="findingsofguilt" value='Y' ${employee.findingsOfGuilt == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
-				<label class="radio-inline"><input type="radio" name="findingsofguilt" value='N' ${employee.findingsOfGuilt== 'N' ? 'checked=\'checked\'' : ''}>No</label>
+                <div class="col-sm-5"> 								  
+                <label class="radio-inline"><input type="radio" name="findingsofguilt"  value='Y' ${employee.findingsOfGuilt == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="findingsofguilt"  value='N' ${employee.findingsOfGuilt== 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
 	       </div>
        	   <div class="form-group">
@@ -560,7 +559,7 @@ $(document).ready(function() {
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.pccDocument}" title="Click to open" target="_blank">Current Document (${employee.pccDocument})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('6','${employee.id}','${employee.pccDocument}');">Delete File</button>
-	                	<br/><br/>To Update		               	
+	                	<br/><br/>To Update<input type="hidden" id="hidpccdocument" value='Y'>		               	
 	                	</c:when>
 	                	<c:otherwise>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add
@@ -600,7 +599,7 @@ $(document).ready(function() {
 	                	<br/><br/><a href="${spath}${dpath}${employee.codDocument}" title="Click to open" target="_blank">Current Document (${employee.codDocument})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFile('15','${employee.id}','${employee.codDocument}');">Delete File</button>
 	                	&nbsp;&nbsp;&nbsp;
-	                	<br/><br/>To Update		               	
+	                	<br/><br/>To Update<input type="hidden" id="hidcoddocument" value='Y'>		               	
 	                	</c:when>
 	                	<c:otherwise>
 	                	<button type='button' class='btn btn-xs btn-warning' onclick="getFileHistoryAjax('${employee.id}','15');">View History</button>
@@ -638,7 +637,7 @@ $(document).ready(function() {
 	                	<span style="color:White;background-color:Green;padding:2px;text-transform:uppercase;">&nbsp; A document is currently on file &nbsp;</span>
 	                	<br/><br/><a href="${spath}${dpath}${employee.scaDocument}" title="Click to open" target="_blank">Current Document (${employee.scaDocument})</a>
 	                	&nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-danger' onclick="deleteFileC('7','${employee.id}','${employee.scaDocument}');">Delete File</button>
-	                	<br/><br/>To Update		               	
+	                	<br/><br/>To Update<input type="hidden" id="hidscadocument" value='Y'>		               	
 	                	</c:when>
 	                	<c:otherwise>
 	                		<span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">No file currently available</span> <br/><br/>To Add

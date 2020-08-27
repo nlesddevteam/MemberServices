@@ -15,13 +15,18 @@ public class ViewContractorDocumentsRequestHandler extends BCSApplicationRequest
 			throws ServletException,
 			IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		request.setAttribute("dtypes", DropdownManager.getDropdownValues(11));
-		request.setAttribute("documents",BussingContractorDocumentManager.getBussingContractorDocumentsById(ebean.getId()));
-		//now we set the rel path
-		request.setAttribute("spath",request.getContextPath());
-		path = "view_contractor_documents.jsp";
+		if (validate_form() && !(this.sessionExpired)) {
 
+			BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			request.setAttribute("dtypes", DropdownManager.getDropdownValues(11));
+			request.setAttribute("documents",BussingContractorDocumentManager.getBussingContractorDocumentsById(ebean.getId()));
+			//now we set the rel path
+			request.setAttribute("spath",request.getContextPath());
+			path = "view_contractor_documents.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
+		}
 		return path;
 	}
 }

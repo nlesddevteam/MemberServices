@@ -14,9 +14,14 @@ public class ViewContactInformationRequestHandler extends BCSApplicationRequestH
 			throws ServletException,
 			IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		request.setAttribute("contractor",BussingContractorManager.getBussingContractorById(ebean.getId()));
-		path = "view_contact_info.jsp";
+		if (validate_form() && !(this.sessionExpired)) {
+			BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			request.setAttribute("contractor",BussingContractorManager.getBussingContractorById(ebean.getId()));
+			path = "view_contact_info.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
+		}
 
 		return path;
 	}

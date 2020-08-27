@@ -14,10 +14,14 @@ public class ViewSecurityInformationRequestHandler extends BCSApplicationRequest
 			throws ServletException,
 			IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		request.setAttribute("sec",BussingContractorSecurityManager.getBussingContractorSecurityById(ebean.getId()));
-		path = "view_security_info.jsp";
-
+		if (validate_form() && !(this.sessionExpired)) {
+			BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			request.setAttribute("sec",BussingContractorSecurityManager.getBussingContractorSecurityById(ebean.getId()));
+			path = "view_security_info.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
+		}
 		return path;
 	}
 }

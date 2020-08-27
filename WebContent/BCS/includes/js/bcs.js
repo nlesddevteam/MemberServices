@@ -1504,23 +1504,21 @@ function checkemployee(usert,validatedates,bypass) {
 						}
 						return false;
 			}
-			//var targetDate = new Date();
-			//targetDate.setDate(selectedDate.getDate()+ 1825);
-			//alert(targetDate);
-			//if(Date.parse(targetDate) > Date.parse(today)){
-				//alert("here");
-			//	$("#spanprcvsqdate").html("PRC/VSQ Date expired.");
-				//$("#divprcvsqdate").show();
-				//$("#body_error_message_top").html(
-					//	"PRC/VSQ Date expired").css("display",
-						//"block");
-					//	$('#documents').tab('show');
-						//$("#prvvsqdate").focus();
-						//if(bypass){
-							//showBypassDialog();	
-						//}
-					//	return false;
-			//}
+			var targetDate = new Date(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate());
+			var testdate = targetDate.setDate(targetDate.getDate()+ 1825);
+			if(testdate < today){
+				$("#spanprcvsqdate").html("PRC/VSQ Date expired.");
+				$("#divprcvsqdate").show();
+				$("#body_error_message_top").html(
+						"PRC/VSQ Date expired").css("display",
+						"block");
+						$('#documents').tab('show');
+						$("#prvvsqdate").focus();
+						if(bypass){
+							showBypassDialog();	
+						}
+						return false;
+			}
 
 		}else{
 			$("#spanprcvsqdate").html("Please select PRC/VSQ Date.");
@@ -6263,45 +6261,46 @@ function checkdate(datetype){
 			if(Date.parse(selectedDate) > Date.parse(today)){
 				$("#spanprcvsqdate").html("PRC/VSQ Date must be in past");
 				$("#divprcvsqdate").show();
+				$("#body_error_message_top").html(
+						"PRC/VSQ Date must be in past").css("display",
+						"block");
+						$('#documents').tab('show');
+						$("#prvvsqdate").focus();
+						if(bypass){
+							showBypassDialog();	
+						}
+						return false;
 			}
-			//now we check to see if it falls in the date range
-			if(!($("#continuousservice").val() == "") && !(isNaN($("#continuousservice").val()))){
-				if($("#continuousservice").val() < 2 ){
-					if(cmonth > 5 && cmonth < 12){
-						//check current year
-						var checkdate= new Date(cyear, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#spanprcvsqdate").html("PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString());
-							$("#divprcvsqdate").show();
+			var targetDate = new Date(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate());
+			var testdate = targetDate.setDate(targetDate.getDate()+ 1825);
+			if(testdate < today){
+				$("#spanprcvsqdate").html("PRC/VSQ Date expired.");
+				$("#divprcvsqdate").show();
+				$("#body_error_message_top").html(
+						"PRC/VSQ Date expired").css("display",
+						"block");
+						$('#documents').tab('show');
+						$("#prvvsqdate").focus();
+						if(bypass){
+							showBypassDialog();	
 						}
-					}else{
-						//now we check back to the previous year
-						var checkdate= new Date(cyear-1, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#spanprcvsqdate").html("PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString());
-							$("#divprcvsqdate").show();
-						}
-					}
-				}else{
-					if(cmonth > 5 && cmonth < 12){
-						//check current year
-						var checkdate= new Date(cyear-1, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#spanprcvsqdate").html("PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString());
-							$("#divprcvsqdate").show();
-						}
-					}else{
-						//now we check back to the previous year
-						var checkdate= new Date(cyear-2, 4, 1);
-						if(Date.parse(selectedDate) < checkdate){
-							$("#spanprcvsqdate").html("PRC/VSQ Date must be greater than " + checkdate.toLocaleDateString());
-							$("#divprcvsqdate").show();
-						}
-					}
-				}
+						return false;
 			}
-			
+
+		}else{
+			$("#spanprcvsqdate").html("Please select PRC/VSQ Date.");
+			$("#divprcvsqdate").show();
+			$("#body_error_message_top").html(
+					"Please select PRC/VSQ Date").css("display",
+					"block");
+					$('#documents').tab('show');
+					$("#prvvsqdate").focus();
+					if(bypass){
+						showBypassDialog();	
+					}
+					return false;
 		}
+
 	}
 }
 function checkdatefields(bypass){
@@ -6954,3 +6953,323 @@ function updateweeklystatus(statusvalue){
 	$("#pageContentBody").load(surl);
 	
 }
+/*******************************************************************************
+ * Opens dialog for changing contractor email
+ ******************************************************************************/
+function changeemail(emaila) {
+	var options = {
+		"backdrop" : "static",
+		"show" : true
+	};
+	$('#buttonlefteml').text("YES");
+	$('#buttonrighteml').text("NO");
+	// now we add the onclick event
+	$("#buttonlefteml").click(function(event) {
+		event.preventDefault();
+		submitchangeemail(emaila);
+		
+	});
+	$("#currentemail").html(emaila);
+	
+	$('#myModaleml').modal(options);
+	$('#myModaleml').modal('show');
+	
+
+}
+/*******************************************************************************
+ * Submit change email request
+ ******************************************************************************/
+function submitchangeemail(oldemail){
+	$('#emlmessage1').html("");
+	$('#emlalerts').hide();
+	var newemail = $('#newemail').val();
+	var conid = $("#cid").val();
+	if(newemail == ""){
+		$('#emlmessage1').html("Please enter new email address");
+		$('#emlalerts').show();
+		return false;
+	}
+	if(oldemail.toUpperCase() == newemail.toUpperCase()){
+		$('#emlmessage1').html("Email address must not be the same as the old one");
+		$('#emlalerts').show();
+		return false;
+	}
+	if(!(isEmail(oldemail))){
+		$('#emlmessage1').html("Please enter valid email address");
+		$('#emlalerts').show();
+		return false;
+	}
+	
+	
+	var requestd = new FormData();
+	requestd.append('cid',conid );
+	requestd.append('emaila', newemail);
+	$.ajax({
+		url : 'updateContractorEmail.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTOR').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#display_success_message_top").html(
+							"Email Address Updated").css("display", "block")
+							.delay(6000).fadeOut();
+
+							var surl = "adminViewContractor.html?cid="+ conid;
+							$("#pageContentBody").load(surl);
+							$('#myModaleml').modal('hide');
+
+						} else {
+							$("#display_error_message_top").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+							$('#myModaleml').modal('hide');
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Restored deleted employee
+ ******************************************************************************/
+function restoreemployee(eid){
+	var requestd = new FormData();
+	requestd.append('eid',eid );
+	$.ajax({
+		url : 'restoreContractorEmployee.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTOR').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#display_success_message_bottom").html(
+							"Employee has been restored").css("display", "block")
+							.delay(6000).fadeOut();
+
+							var surl = "adminViewEmployee.html?vid="+ eid;
+							$("#pageContentBody").load(surl);
+
+						} else {
+							$("#display_error_message_bottom").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Restored deleted vehicle
+ ******************************************************************************/
+function restorevehicle(eid){
+	var requestd = new FormData();
+	requestd.append('eid',eid );
+	$.ajax({
+		url : 'restoreContractorVehicle.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTOR').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$("#display_success_message_bottom").html(
+							"Vehicle has been restored").css("display", "block")
+							.delay(6000).fadeOut();
+
+							var surl = "adminViewVehicle.html?cid="+ eid;
+							$("#pageContentBody").load(surl);
+
+						} else {
+							$("#display_error_message_bottom").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Opens dialog for changing vehicle status
+ ******************************************************************************/
+function changestatus() {
+	var options = {
+		"backdrop" : "static",
+		"show" : true
+	};
+	$('#modaltextstcs').text($('#cstatus').val());
+	$('#modalStatus').modal(options);
+	$('#modalStatus').modal('show');
+	
+
+}
+/*******************************************************************************
+ * update vehicle status manually
+ ******************************************************************************/
+function updatevehiclestatus(){
+	$('#modaltextster').text("");
+	//check make sure notes is filled in since being manually done
+	if($('#rnotesst').val() ==  ""){
+		$('#modaltextsterr').text("Please enter notes");
+		return;
+	}
+	var requestd = new FormData();
+	requestd.append('newstatus',$('#selectstatus').val());
+	requestd.append('oldstatus',$('#cstatus').val());
+	requestd.append('vid',$('#vid').val());
+	requestd.append('rnotes',$('#rnotesst').val());
+	$.ajax({
+		url : 'updateVehicleStatus.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTORSTATUS').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "STATUSUPDATED") {
+							$('#modalStatus').modal('hide');
+							$("#display_success_message_bottom").html(
+							"Vehicle status has been updated").css("display", "block")
+							.delay(6000).fadeOut();
+
+							var surl = "adminViewVehicle.html?cid="+ $('#vid').val();
+							$("#pageContentBody").load(surl);
+
+						} else {
+							$('#modalStatus').modal('hide');
+							$("#display_error_message_bottom").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$('#modalStatus').modal('hide');
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+/*******************************************************************************
+ * Opens dialog for changing vehicle status
+ ******************************************************************************/
+function changeempstatus() {
+	var options = {
+		"backdrop" : "static",
+		"show" : true
+	};
+	$('#modaltextstcs').text($('#cstatus').val());
+	$('#modalEmpStatus').modal(options);
+	$('#modalEmpStatus').modal('show');
+	
+
+}
+/*******************************************************************************
+ * update employee status manually
+ ******************************************************************************/
+function updateemployeestatus(){
+	$('#modaltextster').text("");
+	//check make sure notes is filled in since being manually done
+	if($('#rnotesst').val() ==  ""){
+		$('#modaltextsterr').text("Please enter notes");
+		return;
+	}
+	var requestd = new FormData();
+	requestd.append('newstatus',$('#selectstatus').val());
+	requestd.append('oldstatus',$('#cstatus').val());
+	requestd.append('vid',$('#cid').val());
+	requestd.append('rnotes',$('#rnotesst').val());
+	$.ajax({
+		url : 'updateEmployeeStatus.html',
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$(xml).find('CONTRACTORSTATUS').each(
+					function() {
+						// now add the items if any
+						if ($(this).find("MESSAGE").text() == "STATUSUPDATED") {
+							$('#modalEmpStatus').modal('hide');
+							$("#display_success_message_bottom").html(
+							"Employee status has been updated").css("display", "block")
+							.delay(6000).fadeOut();
+
+							var surl = "adminViewEmployee.html?vid="+ $('#cid').val();
+							$("#pageContentBody").load(surl);
+
+						} else {
+							$('#modalEmpStatus').modal('hide');
+							$("#display_error_message_bottom").html(
+									$(this).find("MESSAGE").text()).css(
+									"display", "block").delay(6000).fadeOut();
+						}
+
+					});
+		},
+		error : function(xhr, textStatus, error) {
+			$('#modalEmpStatus').modal('hide');
+			$("#display_error_message_top").html(error).css("display",
+			"block").delay(6000).fadeOut();
+		},
+		dataType : "text",
+		async : false
+
+	});
+
+}
+$(document).ajaxComplete(function (event, request, settings) {
+    if (request.status === 401) {
+    	window.location.replace("contractorLogin.html?msg=Session expired, please login again.");
+    	
+    }
+});

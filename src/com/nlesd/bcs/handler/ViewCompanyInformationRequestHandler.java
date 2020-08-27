@@ -15,11 +15,15 @@ public class ViewCompanyInformationRequestHandler extends BCSApplicationRequestH
 			throws ServletException,
 			IOException {
 		super.handleRequest(request, response);
-		BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
-		request.setAttribute("company",bccbean);
-		path = "view_company_info.jsp";
-
+		if (validate_form() && !(this.sessionExpired)) {
+			BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			BussingContractorCompanyBean bccbean = BussingContractorCompanyManager.getBussingContractorCompanyById(ebean.getId());
+			request.setAttribute("company",bccbean);
+			path = "view_company_info.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
+		}
 
 		return path;
 	}

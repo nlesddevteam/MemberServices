@@ -36,7 +36,7 @@ public class SubmitVehicleApprovalRequestHandler extends BCSApplicationRequestHa
 		super.handleRequest(request, response);
 		BussingContractorVehicleBean vbean =  new BussingContractorVehicleBean();
 		String message="SUBMITTED";
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 			try {
 					Integer vid = form.getInt("vid");
 					BussingContractorVehicleManager.updateContractorVehicleStatus(vid, EmployeeStatusConstant.SUBMITTEDFORREVIEW.getValue());
@@ -69,7 +69,12 @@ public class SubmitVehicleApprovalRequestHandler extends BCSApplicationRequestHa
 					message = e.getMessage();
 			}
 		}else {
-			message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+			if(this.sessionExpired) {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}else {
+				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+			}
 		}
 
 		String xml = null;

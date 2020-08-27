@@ -32,7 +32,7 @@ public class DeleteEmployeeTrainingRequestHandler extends BCSApplicationRequestH
 		super.handleRequest(request, response);
 		String xml = null;
 		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 	        Integer did = form.getInt("vid");
 	        Integer eid = form.getInt("eid");
 	        String documentname =form.get("document");
@@ -65,11 +65,17 @@ public class DeleteEmployeeTrainingRequestHandler extends BCSApplicationRequestH
 				sb.append("</DOCUMENTS>");
 			}  
 		}else {
-			sb.append("<DOCUMENTS>");
-			sb.append("<DOCUMENT>");
-			sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
-			sb.append("</DOCUMENT>");
-			sb.append("</DOCUMENTS>");
+			
+			if(this.sessionExpired) {
+				path="contractorLogin.html?msg=Session expired, please login again.";
+				return path;
+			}else {
+				sb.append("<DOCUMENTS>");
+				sb.append("<DOCUMENT>");
+				sb.append("<MESSAGE>" + com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()) + "</MESSAGE>");
+				sb.append("</DOCUMENT>");
+				sb.append("</DOCUMENTS>");
+			}
 		}
 		xml = sb.toString().replaceAll("&", "&amp;");
 		PrintWriter out = response.getWriter();

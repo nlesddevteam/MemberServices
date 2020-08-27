@@ -16,21 +16,25 @@ public class ViewContractorVehiclesRequestHandler extends BCSApplicationRequestH
 			throws ServletException, IOException
 	{
 		super.handleRequest(request, response);
-		BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		ArrayList<BussingContractorVehicleBean> vehicles = new ArrayList<BussingContractorVehicleBean>();
-		int status=0;
-		if(!(request.getParameter("status")== null)){
-			status = Integer.parseInt(request.getParameter("status"));
-		}
+		if (validate_form() && !(this.sessionExpired)) {
+			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			ArrayList<BussingContractorVehicleBean> vehicles = new ArrayList<BussingContractorVehicleBean>();
+			int status=0;
+			if(!(request.getParameter("status")== null)){
+				status = Integer.parseInt(request.getParameter("status"));
+			}
 
-		if(status > 0){
-			vehicles = BussingContractorVehicleManager.getContractorsVehiclesByStatus(bcbean.getId(),status);
-		}else{
-			vehicles = BussingContractorVehicleManager.getContractorsVehicles(bcbean.getId());
+			if(status > 0){
+				vehicles = BussingContractorVehicleManager.getContractorsVehiclesByStatus(bcbean.getId(),status);
+			}else{
+				vehicles = BussingContractorVehicleManager.getContractorsVehicles(bcbean.getId());
+			}
+			request.setAttribute("vehicles", vehicles);
+			path = "view_contractor_vehicles.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
 		}
-		request.setAttribute("vehicles", vehicles);
-		path = "view_contractor_vehicles.jsp";
-
 
 		return path;
 	}

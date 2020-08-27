@@ -80,7 +80,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=a');"><i class="fa fa-fw fa-check"></i> Approved <% if (cbean.getApprovedContractorsEmployees()!=0) {out.print("("+cbean.getApprovedContractorsEmployees()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=s');"><i class="fa fa-fw fa-ban"></i> Suspended <% if (cbean.getSuspendedContractorsEmployees()!=0) {out.print("("+cbean.getSuspendedContractorsEmployees()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=r');"><i class="fa fa-fw fa-close"></i> Rejected <% if (cbean.getRejectedContractorsEmployees()!=0) {out.print("("+cbean.getRejectedContractorsEmployees()+")");}; %></a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=re');"><i class="fa fa-fw fa-close"></i> Removed <% if (cbean.getRemovedContractorsEmployees()!=0) {out.print("("+cbean.getRemovedContractorsEmployees()+")");}; %></a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=re');"><i class="fa fa-fw fa-close"></i> Removed</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('searchEmployees.html');"><i class="fa fa-fw fa-search"></i> Search Employees</a></li>
         </ul>
      </li>

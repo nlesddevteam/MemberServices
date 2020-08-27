@@ -317,7 +317,11 @@ $(document).ready(function() {
 				    <div class="form-group">
 				      <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Email:</label>
 				      <div class="col-sm-5">
-				        <p class="form-control-static">${contractor.email}</p>
+				      	<div class="input-group">
+				      	${contractor.email}&nbsp;&nbsp;&nbsp;<label>
+				      		<button type="button" class="btn btn-xs btn-info" onclick="changeemail('${contractor.email}');">Change Email Address</button>
+				    	</label>
+				      	</div>
 				      </div>
 				    </div>
 				   	<img src="includes/img/bar.png" height=1 width=100%><br/>
@@ -471,7 +475,7 @@ $(document).ready(function() {
 		    			<label class="checkbox-inline">
 		      				<input type="checkbox"  id="talternate" name="talternate" <c:out value="${company.tAlternate eq 'Y' ? 'CHECKED' : ''}"/>>Alternate
 		    			</label>
-		    			<input type="hidden" id="cid" name="cid" value="${company.id}">
+		    			<input type="hidden" id="comid" name="cid" value="${company.id}">
 		                <input type="hidden" id="scid" name="scid" value="${company.contractorId}">
 		            </div>
 		            <div class="form-group">
@@ -865,5 +869,33 @@ $(document).ready(function() {
                     <button type="button" class="btn btn-xs btn-primary" data-dismiss="modal" id="buttonrightd"></button>
                 </div>
             </div>
+   		</div>
+   	</div>
+   	   	<div id="myModaleml" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="maintitle">Update Contractor Email</h4>
+                    	<div class="alert alert-danger" style="display:none;" id="emlalert" align="center">
+  							<span id="emlmessage"></span>
+						</div>
+						<div class="alert alert-success" style="display:none;" id="emlalerts" align="center">
+  							<span id="emlmessage1"></span>
+						</div>
+                </div>
+                <div class="modal-body">
+                    <p class="text-warning" id="title1">Current Email:</p>
+                    <p class="text-warning" id="title2"><span id="currentemail"></span></p>
+                    <p class="text-warning" id="title1">New Email:</p>
+                    <p>
+                    <input class="form-control" id="newemail" name="newemail" placeholder="new email" type="text">
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-xs btn-success"  id="buttonlefteml"></button>
+                    <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal" id="buttonrighteml"></button>
+                </div>
+             </div>
    		</div>
    	</div>

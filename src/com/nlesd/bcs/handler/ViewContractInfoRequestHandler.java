@@ -26,7 +26,7 @@ public class ViewContractInfoRequestHandler extends BCSApplicationRequestHandler
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 			BussingContractorBean ebean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 			int cid = form.getInt("cid");
 	    	  BussingContractorSystemContractBean bcbean = BussingContractorSystemContractManager.getBussingContractorSystemContractById(cid);
@@ -39,8 +39,8 @@ public class ViewContractInfoRequestHandler extends BCSApplicationRequestHandler
 		  
 	  		path = "view_contract_info.jsp";
 		}else {
-			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
-	    	path = "contractorLogin.html";	
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;	
 		}
 		return path;
 	}

@@ -22,7 +22,7 @@ public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequest
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 			//check to see if this is an edit or add
 			System.out.println(request.getParameter("vid"));
 	    	  BussingContractorEmployeeBean vbean = new BussingContractorEmployeeBean();
@@ -49,8 +49,8 @@ public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequest
 	    	  
 	  		path = "view_employee_info.jsp";
 		}else {
-			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
-	    	path = "contractorLogin.html";	
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
 		}
 		return path;
 	}

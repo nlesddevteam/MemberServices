@@ -25,8 +25,11 @@
 			$(document).ready(function(){    
 				$('.menuBCS').click(function () {
 		    		$("#loadingSpinner").css("display","inline");
-		    		});    		   
-        	});</script>
+		    	});
+				$("#loadingSpinner").css("display","none");
+				
+        	});
+			</script>
     		
     		
 				<script>
@@ -37,18 +40,20 @@
 					          function(){this.src = this.src.replace("-on","-off");});
 					 });
 				
-				
-				
+
+
 				
 				
 				</script>
+				
 	</head>
 
   <body>
+
  <div class="mainContainer">
   	   	<div class="section group">	   		
 	   		<div class="col full_block topper" align="center">
-	   			<script src="includes/js/date.js"></script>	   		
+	   			   		
 			</div>			
 			<div class="full_block center">
 				<img src="includes/img/header-operator.png" alt="Student Transportation Management System for Operators" width="100%" border="0"><br/>	
@@ -58,9 +63,12 @@
 					<div class="bodyText">
 					<div id="loadingSpinner" style="display:none;"><div id="spinner"><img src="includes/img/animated-bus.gif" width="200" border=0><br/>Transporting data, please wait...</div></div>
 					
-					        
-    				<div class="alert alert-success" id="body_success_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
-					<div class="alert alert-warning" id="body_approval_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
+					 <%if((String)request.getParameter("msg") != null) {%>
+						<div class="alert alert-success" id="body_success_message_top" style="margin-top:10px;margin-bottom:10px;padding:5px;"><%=(String)request.getParameter("msg")%></div> 
+					 <%}else{ %>
+					 	<div class="alert alert-success" id="body_success_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
+					<%} %>       
+    				<div class="alert alert-warning" id="body_approval_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 					<div class="alert alert-danger" id="body_error_message_top" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 										
 						<div id="printJob">
@@ -187,6 +195,21 @@ $('#form-signin').submit(function() {
 
 </script>
 
+<script> 
+function iniFrame() { 
+	var elementExists = document.getElementById("butsignout");
+    if ( typeof(elementExists) != 'undefined' && elementExists != null) 
+    { 
+    	// The page is in an iFrames 
+    	window.location = "https://localhost/MemberServices/BCS/contractorLogin.html";
+        //alert(window.location.pathname);
+    }  
+    
+} 
+  
+// Calling iniFrame function 
+iniFrame(); 
+</script> 
 
 
   </body>

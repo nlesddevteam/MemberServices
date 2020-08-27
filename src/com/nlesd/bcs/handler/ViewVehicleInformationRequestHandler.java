@@ -22,7 +22,7 @@ public class ViewVehicleInformationRequestHandler extends BCSApplicationRequestH
 			throws ServletException,
 				IOException {
 		super.handleRequest(request, response);
-		if (validate_form()) {
+		if (validate_form() && !(this.sessionExpired)) {
 	    	  BussingContractorVehicleBean vbean = new BussingContractorVehicleBean();
 	    	  if(request.getParameter("vid") == null){
 	    		  //add
@@ -49,8 +49,8 @@ public class ViewVehicleInformationRequestHandler extends BCSApplicationRequestH
 	    	  request.setAttribute("dpath","/BCS/documents/vehicledocs/");
 	  		path = "view_vehicle_info.jsp";
 		}else {
-			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
-	    	path = "contractorLogin.html";		
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;		
 		}
 		return path;
 	}

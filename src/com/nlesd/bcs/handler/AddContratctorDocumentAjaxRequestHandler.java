@@ -31,7 +31,7 @@ public class AddContratctorDocumentAjaxRequestHandler extends BCSApplicationRequ
 			String message="UPDATED";
 			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 			BussingContractorDocumentBean vbean = new BussingContractorDocumentBean();
-			if (validate_form()) {
+			if (validate_form() && !(this.sessionExpired)) {
 				try {
 					//get fields
 					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -63,7 +63,12 @@ public class AddContratctorDocumentAjaxRequestHandler extends BCSApplicationRequ
 					message=e.getMessage();
 				}
 			}else {
-				message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+				if(this.sessionExpired) {
+					path="contractorLogin.html?msg=Session expired, please login again.";
+					return path;
+				}else {
+					message=com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString());
+				}
 			}
 
 			String xml = null;

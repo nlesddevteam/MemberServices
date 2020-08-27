@@ -16,21 +16,25 @@ public class ViewContractorEmployeesRequestHandler extends BCSApplicationRequest
 			throws ServletException, IOException
 	{
 		super.handleRequest(request, response);
-		BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
-		ArrayList<BussingContractorEmployeeBean> employees = new ArrayList<BussingContractorEmployeeBean>();
-		int status=0;
-		if(!(request.getParameter("status") == null)){
-			status = Integer.parseInt(request.getParameter("status"));
-		}
+		if (validate_form() && !(this.sessionExpired)) {
+			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
+			ArrayList<BussingContractorEmployeeBean> employees = new ArrayList<BussingContractorEmployeeBean>();
+			int status=0;
+			if(!(request.getParameter("status") == null)){
+				status = Integer.parseInt(request.getParameter("status"));
+			}
 
-		if(status > 0){
-			employees = BussingContractorEmployeeManager.getContractorsEmployeesByStatus(bcbean.getId(),status);
-		}else{
-			employees = BussingContractorEmployeeManager.getContractorsEmployees(bcbean.getId());
+			if(status > 0){
+				employees = BussingContractorEmployeeManager.getContractorsEmployeesByStatus(bcbean.getId(),status);
+			}else{
+				employees = BussingContractorEmployeeManager.getContractorsEmployees(bcbean.getId());
+			}
+			request.setAttribute("employees", employees);
+			path = "view_contractor_employees.jsp";
+		}else {
+			path="contractorLogin.html?msg=Session expired, please login again.";
+			return path;
 		}
-		request.setAttribute("employees", employees);
-		path = "view_contractor_employees.jsp";
-
 
 		return path;
 	}
