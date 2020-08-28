@@ -1238,18 +1238,26 @@ input {
 						<thead>
 							<tr>
 								<th width="20%">COMP #</th>
-								<th width="50%">TITLE</th>
+								<th width="45%">TITLE</th>
 								<th width="20%">LOCATION</th>
-								<th width="10%">OPTIONS</th>
+								<th class="no-print" width="15%">VIEW</th>
 							</tr>
 						</thead>
 						<tbody>
 							<% for (JobOpportunityBean j : highlyRecommendedPools.values()) { %>
+							<% InterviewSummaryBean ibean = InterviewSummaryManager.getInterviewSummaryBean(profile,j);%>
 								<tr>
 									<td><%= j.getCompetitionNumber() %></td>
 									<td><%= j.getPositionTitle( )%></td>
 									<td><%= j.getJobLocation() %></td>
-									<td><a href="/employment/view_job_post.jsp?comp_num=<%=j.getCompetitionNumber()%>" class="btn btn-xs btn-primary ">VIEW</a></td>
+									<td class="no-print"><a href="/employment/view_job_post.jsp?comp_num=<%=j.getCompetitionNumber()%>" class="btn btn-xs btn-primary ">JOB</a> &nbsp; 
+									<a class="btn btn-xs btn-primary"
+href="/MemberServices/Personnel/applicantViewCompetitionInterviewSummary.html?id=<%= ibean.getInterviewSummaryId() %>">SUMMARY</a>
+									
+									
+									</td>
+								
+								
 								</tr>
 							<% } %>
 						</tbody>

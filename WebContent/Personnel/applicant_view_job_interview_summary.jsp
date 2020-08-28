@@ -28,6 +28,11 @@
 <script>
 	$("#loadingSpinner").css("display","none");
 </script>
+ <script>
+function goBack() {
+  window.history.back();
+}
+</script>
 <style>
 .tableTitle {font-weight:bold;width:20%;}
 .tableResult {font-weight:normal;width:80%;}
@@ -167,7 +172,10 @@
 	                                    		<br/>
 					                              
 					                              
-	     <br/>                    
+	     <br/>                  
+	     <div align="center"><a href="#" class="btn btn-sm btn-danger" onclick="goBack()">Go Back</a></div>
+	    
+	       
 	    </div></div></div>                   
 	</body>
 </html>
