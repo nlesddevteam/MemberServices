@@ -406,10 +406,10 @@
 	  	type: 'pie',
 	  	  data: {
 	  	    labels: [ "Avalon: "+ totalRemainAvalon +" ("+totalRemainAvalonPCT+"%)",
-	  	    	"Central: "+totalRemainCentral +" ("+totalRemainAvalonPCT+"%)",
-	  	    	"Western: "+totalRemainWestern +" ("+totalRemainAvalonPCT+"%)",
-	  	    	"Labrador: "+totalRemainLabrador +" ("+totalRemainAvalonPCT+"%)",
-	  	    	"Provincial: "+totalRemainProvincial +" ("+totalRemainAvalonPCT+"%)",],
+	  	    	"Central: "+totalRemainCentral +" ("+totalRemainCentralPCT+"%)",
+	  	    	"Western: "+totalRemainWestern +" ("+totalRemainWesternPCT+"%)",
+	  	    	"Labrador: "+totalRemainLabrador +" ("+totalRemainLabradorPCT+"%)",
+	  	    	"Provincial: "+totalRemainProvincial +" ("+totalRemainProvincialPCT+"%)",],
 	  	    datasets: [{
 	  	      backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
 	  	      data: [ totalRemainAvalonPCT, totalRemainCentralPCT, totalRemainWesternPCT, totalRemainLabradorPCT,totalRemainProvincialPCT]
