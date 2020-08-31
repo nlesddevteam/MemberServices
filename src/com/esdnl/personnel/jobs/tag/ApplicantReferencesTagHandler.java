@@ -117,15 +117,31 @@ public int doStartTag() throws JspException
             				}else{
             					out.println("<a class='btn btn-xs btn-primary' href='#' onclick=\"sendexternalemail('" + beans[i].getApplicantRefRequestBean().getId() 
                 						+ "','" + beans[i].getApplicantRefRequestBean().getEmailAddress() +"');\">SEND REQ</a>");
-            				}
+            				}       					
+        					out.println("<a class='btn-xs btn btn-danger' href='applicantRegistration.html?step=8&del=" + beans[i].getId() +"'>DEL</a>");  
+        					
         				}else{
         					out.println("<a href='#' class='btn btn-xs btn-primary' onclick=\"opensend('" + beans[i].getApplicantRefRequestBean().getId() 
             						+ "','" + beans[i].getApplicantRefRequestBean().getEmailAddress() +"');\">SEND REQ</a>");
+        					out.println("<a class='btn-xs btn btn-danger' href='applicantRegistrationSS.html?step=7&del=" + beans[i].getId() +"'>DEL</a>");
         				}			
         			}else{
-        				out.println("<a class='btn btn-xs btn-primary' href='#' onclick=\"opensendemail('" + beans[i].getId() + "');\">SEND REQ</a>");
-        			}
-        			out.println("</td></tr><tr><td colspan=8><div class='alert alert-danger' style='text-align:center;padding:0px;'> <span class='glyphicon glyphicon-chevron-up'></span> NOTE: The above Reference Request has <b>NOT</b> been sent. Please SEND REQUEST. <span class='glyphicon glyphicon-chevron-up'></span> </div>");
+        				//No email, cant send.
+        				
+        				//out.println("<a class='btn btn-xs btn-primary' href='#' onclick=\"opensendemail('" + beans[i].getId() + "');\">SEND REQ</a>");
+        			
+        				if(profile.getProfileType().equals("S")){
+        		    		out.println("<a class='btn-xs btn btn-danger' href='applicantRegistrationSS.html?step=7&del=" + beans[i].getId() +"'>DEL</a>");
+        		    	}else{        		
+        		    		out.println("<a class='btn-xs btn btn-danger' href='applicantRegistration.html?step=8&del=" + beans[i].getId() +"'>DEL</a>");        		
+        		    	}
+        				
+        				
+        			}        			
+        			
+        			
+        			
+        			out.println("</td></tr><tr><td colspan=8><div class='alert alert-danger' style='text-align:center;padding:0px;'> <span class='glyphicon glyphicon-chevron-up'></span> NOTE: The above Reference Request has <b>NOT</b> been sent. Please SEND REQUEST or DEL. <span class='glyphicon glyphicon-chevron-up'></span> </div>");
         			
         			
         			
@@ -195,9 +211,14 @@ public int doStartTag() throws JspException
 				
 			} else {
 			
-			out.println("<a class='btn btn-xs btn-primary' href='#' data-toggle=\"modal\" data-target=\"#refRequest\" onclick=\"opensendemail('" + beans[i].getId() + "');\">SEND REQ</a>");
-			
-			out.println("</td></tr><tr><td colspan=8><div class='alert alert-danger' style='text-align:center;padding:0px;'> <span class='glyphicon glyphicon-chevron-up'></span> NOTE: The above Reference Request has <b>NOT</b>  been sent. Please SEND REQUEST.<span class='glyphicon glyphicon-chevron-up'></span> </div>");
+			//out.println("<a class='btn btn-xs btn-primary' href='#' data-toggle=\"modal\" data-target=\"#refRequest\" onclick=\"opensendemail('" + beans[i].getId() + "');\">SEND REQ</a>");
+				if(profile.getProfileType().equals("S")){
+		    		out.println("<a class='btn-xs btn btn-danger' href='applicantRegistrationSS.html?step=7&del=" + beans[i].getId() +"'>DEL</a>");
+		    	}else{        		
+		    		out.println("<a class='btn-xs btn btn-danger' href='applicantRegistration.html?step=8&del=" + beans[i].getId() +"'>DEL</a>");        		
+		    	}
+				
+			out.println("</td></tr><tr><td colspan=8><div class='alert alert-danger' style='text-align:center;padding:0px;'> <span class='glyphicon glyphicon-chevron-up'></span> NOTE: The above Reference Request has <b>NO EMAIL ADDRESS</b>. Please DEL and ADD NEW.<span class='glyphicon glyphicon-chevron-up'></span> </div>");
 			
 			
 			}
