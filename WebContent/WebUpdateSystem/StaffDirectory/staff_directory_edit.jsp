@@ -283,6 +283,7 @@
 						<option value="Foreman">Foreman</option>
 						<option value="GIS Specialist">GIS Specialist</option>
 						<option value="Guidance Counsellor">Guidance Counsellor</option>
+						<option value="Guidance Counsellor/IRT">Guidance Counsellor/IRT</option>
 						<option value="Hospital Teacher">Hospital Teacher</option>
 						<option value="Human Resources Assistant">Human Resources Assistant</option>
 						<option value="Internal Auditor">Internal Auditor</option>
@@ -349,6 +350,7 @@
 						<option value="Solicitor">Solicitor</option>
 						<option value="Speech Language Pathologist">Speech Language Pathologist</option>
 						<option value="Store Keeper">Store Keeper</option>
+						<option value="Student Services">Student Services</option>
 						<option value="Student Transportation Enforcement Officer">Student Transportation Enforcement Officer</option>
 						<option value="Supervisor of Board Owned Bus Services">Supervisor of Board Owned Bus Services</option>
 						<option value="Supervisor of District-Operated Busing">Supervisor of District-Operated Busing</option>
