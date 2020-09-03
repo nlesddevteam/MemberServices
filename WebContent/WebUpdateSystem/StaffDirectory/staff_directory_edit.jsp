@@ -251,7 +251,7 @@
 						<option value="Clerk I">Clerk I</option>
 						<option value="Clerk II">Clerk II</option>
 						<option value="Clerk III">Clerk III</option>
-						<option value="Clerk IV">Clerk IV</option>
+						<option value="Clerk IV">Clerk IV</option>						
 						<option value="Comptroller/Director of Financial Services">Comptroller/Director of Financial Services</option>
 						<option value="Computer Programmer Analyst">Computer Programmer Analyst</option>
 						<option value="Computer Support Specialist">Computer Support Specialist</option>
@@ -289,6 +289,7 @@
 						<option value="Itinerant">Itinerant</option>
 						<option value="Itinerant Services">Itinerant Services</option>
 						<option value="Itinerant Teacher">Itinerant Teacher</option>
+						<option value="Instructional Resource Teacher">Instructional Resource Teacher</option>
 						<option value="LAN Administrator">LAN Administrator</option>
 						<option value="Lead Driver">Lead Driver</option>
 						<option value="Maintenance">Maintenance</option>
@@ -381,10 +382,12 @@
 							<option value="Behavioral/Mental Health/Guidance Counsellor">Behavioral/Mental Health/Guidance Counsellor</option>
 							<option value="Chief Financial Officer">Chief Financial Officer</option>
 							<option value="Coding">Coding</option>
+							<option value="Comprehensive School Health">Comprehensive School Health</option>
 							<option value="Corporate Services">Corporate Services</option>
 							<option value="Deaf and Hard of Hearing">Deaf and Hard of Hearing</option>
 							<option value="Educational Assessment Specialist">Educational Assessment Specialist</option>
 							<option value="English Language Arts">English Language Arts</option>
+							<option value="English Language Arts/Social Studies">English Language Arts/Social Studies</option>
 							<option value="Finance">Finance</option>
 							<option value="Finance and Business Administration">Finance and Business Administration</option>
 							<option value="Finance and Business Administration / Student Transportation">Finance and Business Administration / Student Transportation</option>
@@ -392,6 +395,7 @@
 							<option value="French Programs">French Programs</option>
 							<option value="Guidance">Guidance</option>
 							<option value="Guidance Counsellor">Guidance Counsellor</option>
+							<option value="Guidance Counsellor/IRT">Guidance Counsellor/IRT</option>
 							<option value="Hearing Impaired">Hearing Impaired</option>
 							<option value="Hearing/Visually Impaired">Hearing/Visually Impaired</option>
 							<option value="Human Resources">Human Resources</option>
