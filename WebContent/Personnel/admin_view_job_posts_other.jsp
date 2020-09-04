@@ -64,6 +64,7 @@
 		.tablePosTitle {width:60%;}
 		.tableCompEndDate {width:20%;}
 		.tableOptions {width:5%;}
+		input { border:1px solid silver;}
 		input[type="checkbox"] {margin-top: -1px;margin-left:6px;margin-right:2px;vertical-align: middle;}
 </style>
 </head>
