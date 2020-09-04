@@ -270,6 +270,7 @@
 						<option value="Director of Programs">Director of Programs</option>
 						<option value="Director of Schools">Director of Schools</option>
 						<option value="Director of Strategic Planning, Policy and Communications">Director of Strategic Planning, Policy and Communications</option>
+						<option value="Director of Student Services">Director of Student Services</option>
 						<option value="Director of Student Support Services">Director of Student Support Services</option>
 						<option value="Director of Student Transportation">Director of Student Transportation</option>
 						<option value="Director of Student Transportation and School Financial Support">Director of Student Transportation and School Financial Support</option>
@@ -382,6 +383,7 @@
 							<option value="Autism Consultant">Autism Consultant</option>
 							<option value="Behavioral/Mental Health">Behavioral/Mental Health</option>
 							<option value="Behavioral/Mental Health/Guidance Counsellor">Behavioral/Mental Health/Guidance Counsellor</option>
+							<option value="Blind and Visually Impairment">Blind and Visually Impairment</option>
 							<option value="Chief Financial Officer">Chief Financial Officer</option>
 							<option value="Coding">Coding</option>
 							<option value="Comprehensive School Health">Comprehensive School Health</option>
@@ -516,11 +518,12 @@
 							 <option value="Indian River Academy">Indian River Academy</option>
 							 <option value="SD Cook">SD Cook</option>
 							 <option value="Stephenville Elementary">Stephenville Elementary</option>
+							 <option value="St. James Elementary">St. James Elementary</option>
 							<option value="Avalon Office/HQ">Avalon Office/HQ</option>
 							 <option value="Central Office">Central Office</option>
 							  <option value="Labrador Office">Labrador Office</option>
 							 <option value="Western Office">Western Office</option>
-							 <option value="Norton Building">Norton Building</option>
+							 <option value="Noton Building">Noton Building</option>							 
 							 <option value="Located in School">Located in School</option>
 
 	                     </select>
