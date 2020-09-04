@@ -58,12 +58,12 @@ public class OtherJobPostsTagHandler extends TagSupport {
 			out.println("<script>$('document').ready(function(){");
 			out.println("$('.otherJobsList"+this.type+"').DataTable({'order': [[ 0, 'desc' ]],'bLengthChange': false,'paging': false, 'lengthMenu': [[-1, 20, 50, 100, 200], ['All', 20, 50, 100, 200]] });");
 			out.println("});</script>");	
-			out.println("<table class='table table-striped table-condensed otherJobsList"+this.type+"' style=\"font-size:12px;padding-top:3px;border-top:1px solid silver;\">");		
+			out.println("<table class='table table-striped table-condensed otherJobsList"+this.type+"' style=\"font-size:11px;padding-top:3px;border-top:1px solid silver;\">");		
 			JobCount=0;
-			out.println("<thead><tr><th class='tableCompNum'>Competition Number</th>"
-					+ "<th class='tablePosTitle'>Position Title</th>"
-					+ "<th class='tableCompEndDate'>Competition End Date</th>"
-					+ "<th class='tableOptions'>Options</th></tr></thead>");
+			out.println("<thead><tr><th class='tableCompNum' width='20%'>Competition Number</th>"
+					+ "<th class='tablePosTitle' width='40%'>Position Title</th>"
+					+ "<th class='tableCompEndDate' width='20%'>Competition End Date</th>"
+					+ "<th class='tableOptions' width='20%'>Options</th></tr></thead>");
 
 			if (opps.length > 0) {
 				for (int i = 0; i < opps.length; i++) {					
@@ -100,8 +100,11 @@ public class OtherJobPostsTagHandler extends TagSupport {
 								+ ";'><a class='btn btn-xs btn-warning' href='view_job_post.jsp?comp_num="
 								+ opps[i].getCompetitionNumber() + "'>View</a></td></tr>");
 					}
-					else
-						out.println("<td align='center' colspan='2' style='border-top:solid 1px #FF0000;border-bottom:solid 1px #FF0000;color:#FF0000;font-weight:bold;'>POSITION CANCELLED</td>");
+					else {
+						out.println("<td align='center' style='border-top:solid 1px #FF0000;border-bottom:solid 1px #FF0000;color:#FF0000;font-weight:bold;'>POSITION<br/>CANCELLED</td>");
+						out.println("<td style='border-top:solid 1px #FF0000;border-bottom:solid 1px #FF0000;color:#FF0000;font-weight:bold;'>&nbsp;</td>");
+						out.println("</tr>");
+					}
 				}
 			
 			}
