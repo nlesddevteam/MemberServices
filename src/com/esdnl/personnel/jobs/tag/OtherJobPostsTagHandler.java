@@ -58,12 +58,12 @@ public class OtherJobPostsTagHandler extends TagSupport {
 			out.println("<script>$('document').ready(function(){");
 			out.println("$('.otherJobsList"+this.type+"').DataTable({'order': [[ 0, 'desc' ]],'bLengthChange': false,'paging': false, 'lengthMenu': [[-1, 20, 50, 100, 200], ['All', 20, 50, 100, 200]] });");
 			out.println("});</script>");	
-			out.println("<table class='table table-striped table-condensed otherJobsList"+this.type+"' style=\"font-size:11px;padding-top:3px;border-top:1px solid silver;\">");		
+			out.println("<table width='100%' class='table table-striped table-condensed otherJobsList"+this.type+"' style=\"font-size:11px;padding-top:3px;border-top:1px solid silver;\">");		
 			JobCount=0;
-			out.println("<thead><tr><th class='tableCompNum' width='20%'>Competition Number</th>"
-					+ "<th class='tablePosTitle' width='40%'>Position Title</th>"
+			out.println("<thead><tr><th class='tableCompNum' width='25%'>Competition Number</th>"
+					+ "<th class='tablePosTitle' width='45%'>Position Title</th>"
 					+ "<th class='tableCompEndDate' width='20%'>Competition End Date</th>"
-					+ "<th class='tableOptions' width='20%'>Options</th></tr></thead>");
+					+ "<th class='tableOptions' width='10%'>Options</th></tr></thead><tbody>");
 
 			if (opps.length > 0) {
 				for (int i = 0; i < opps.length; i++) {					
@@ -113,7 +113,7 @@ public class OtherJobPostsTagHandler extends TagSupport {
 			out.println("<tr><td colspan='4'>No positions available at this time. Thank you.</td></tr>");
 			}
 			pageContext.setAttribute("JobCount", JobCount);
-			out.println("</table>");           
+			out.println("</tbody></table>");           
 			// System.err.println("TAG FINISHED");
 		}
 		catch (JobOpportunityException e) {
