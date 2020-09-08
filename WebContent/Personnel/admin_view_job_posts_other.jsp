@@ -60,10 +60,10 @@
   });
 </script>
 <style>
-		.tableCompNum {width:15%;}
-		.tablePosTitle {width:60%;}
+		.tableCompNum {width:25%;}
+		.tablePosTitle {width:45%;}
 		.tableCompEndDate {width:20%;}
-		.tableOptions {width:5%;}
+		.tableOptions {width:10%;}
 		input { border:1px solid silver;}
 		input[type="checkbox"] {margin-top: -1px;margin-left:6px;margin-right:2px;vertical-align: middle;}
 </style>
