@@ -110,7 +110,7 @@ public class OtherJobPostsTagHandler extends TagSupport {
 			}
 			else {
 				JobCount=0;
-			out.println("<tr><td colspan='4'>No positions available at this time. Thank you.</td></tr>");
+			out.println("<tr><td>&nbsp;</td><td >No positions available at this time. Thank you.</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 			}
 			pageContext.setAttribute("JobCount", JobCount);
 			out.println("</tbody></table>");           
