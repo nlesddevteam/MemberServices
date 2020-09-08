@@ -235,6 +235,7 @@
 						<option value="Accounts Supervisor">Accounts Supervisor</option>
 						<option value="Active Schools Coordinator">Active Schools Coordinator</option>
 						<option value="Administrative Assistant">Administrative Assistant</option>
+						<option value="ASL Immersion Program">ASL Immersion Program</option>
 						<option value="Alternate Transportation Clerk">Alternate Transportation Clerk</option>
 						<option value="Assistant Director of Education">Assistant Director of Education</option>
 						<option value="Associate Director of Education">Associate Director of Education</option>
@@ -378,6 +379,7 @@
 	                    <select id="posSector" name="posSector" class="form-control">
 	                        <option value="">---- Please Select (If Necessary) ----</option>
 							<option value="">Not Applicable</option>
+							<option value="ASL Immersion Program">ASL Immersion Program</option>
 	                    	<option value="Auditory Verbal Therapist">Auditory Verbal Therapist</option>
 							<option value="Autism">Autism</option>
 							<option value="Autism Consultant">Autism Consultant</option>
@@ -512,6 +514,7 @@
 	                    	 <option value="">Not Applicable</option>
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
+							 <option value="East Point Elementary">East Point Elementary</option>
 							 <option value="Holy Heart">Holy Heart</option>
 							 <option value="Hospital School">Hospital School</option>
 							 <option value="IMC">IMC</option>
