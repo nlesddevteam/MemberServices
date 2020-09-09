@@ -750,6 +750,14 @@ function CheckRequestToHire(){
 	$("#locationGroup").removeClass("has-error");
 	$("#positionTypeGroup").removeClass("has-error");
 	$("#startGroup").removeClass("has-error");
+	$("#unionGroup").removeClass("has-error");
+	$("#positionNGroup").removeClass("has-error");
+	$("#positionTypeGroup").removeClass("has-error");
+	$("#supervisorGroup").removeClass("has-error");
+	$("#divisionGroup").removeClass("has-error");
+	$("#requestTGroup").removeClass("has-error");
+	
+	
 	
 	var jt = $("#job_title").val();
 	if(jt == ""){
@@ -763,6 +771,18 @@ function CheckRequestToHire(){
 		$("#errorMessage").html("Please enter a valid location. This is a required field.").css("display","block").delay(4000).fadeOut();
 		return false;
 	}
+	jt = $("#union_code").val();
+	if(jt == "-1"){
+		$("#unionGroup").addClass("has-error");
+		$("#errorMessage").html("Please select Union. This is a required field.").css("display","block").delay(4000).fadeOut();
+		return false;
+	}
+	jt = $("#position_name").val();
+	if(jt == "-1"){
+		$("#positionNGroup").addClass("has-error");
+		$("#errorMessage").html("Please select Position. This is a required field.").css("display","block").delay(4000).fadeOut();
+		return false;
+	}
 	jt = $("#position_type").val();
 	if(jt == "-1"){
 		$("#positionTypeGroup").addClass("has-error");
@@ -770,10 +790,38 @@ function CheckRequestToHire(){
 		
 		return false;
 	}
+	jt = $("#position_term").val();
+	if(jt == "-1"){
+		$("#positionTermGroup").addClass("has-error");
+		$("#errorMessage").html("Please select position term. This is a required field.").css("display","block").delay(4000).fadeOut();		
+		
+		return false;
+	}
 	jt = $("#start_date").val();
 	if(jt == ""){
 		$("#startGroup").addClass("has-error");
 		$("#errorMessage").html("Please enter Start Date. This is a required field.").css("display","block").delay(4000).fadeOut();			
+		return false;
+	}
+	jt = $("#supervisor").val();
+	if(jt == "SELECT YEAR"){
+		$("#supervisorGroup").addClass("has-error");
+		$("#errorMessage").html("Please select supervisor. This is a required field.").css("display","block").delay(4000).fadeOut();		
+		
+		return false;
+	}
+	jt = $("#division").val();
+	if(jt == "-1"){
+		$("#divisionGroup").addClass("has-error");
+		$("#errorMessage").html("Please select division. This is a required field.").css("display","block").delay(4000).fadeOut();		
+		
+		return false;
+	}
+	jt = $("#request_type").val();
+	if(jt == ""){
+		$("#requestTGroup").addClass("has-error");
+		$("#errorMessage").html("Please select request type. This is a required field.").css("display","block").delay(4000).fadeOut();		
+		
 		return false;
 	}
 	return true;
@@ -1037,4 +1085,96 @@ function resendrthmessage(vrid)
  				async: false
  			}
  		);
+}
+//open confirm applicant delete box
+function openDeleteApplicant(appid,dtype){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		if(dtype =="D"){
+			$('#spandelete').text("Are you sure you want to delete the profile for " + $("#appname").val());
+			$('#delemptext').text("Delete Applicant");
+			$('#btn_delete_app_ok').text("Delete Applicant");
+		}else{
+			$('#spandelete').text("Are you sure you want to restore the profile for " + $("#appname").val());
+			$('#delemptext').text("Restore Applicant");
+			$('#btn_delete_app_ok').text("Restore Applicant");
+		}
+		// now we add the onclick event
+		$("#btn_delete_app_ok").click(function(event) {
+			event.preventDefault();
+			if(dtype =="D"){
+				deleteApplicantProfileSubmit(appid,1);
+				
+			}else{
+				deleteApplicantProfileSubmit(appid,0);
+			}
+			
+		});
+		
+		$('#delete_app_dialog').modal(options);
+		$('#delete_app_dialog').modal('show');
+}
+//soft delete applicant profile
+function deleteApplicantProfileSubmit(vrid,dval)
+{
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "deleteApplicantProfileAjax.html",
+ 				data: {
+ 					appid: vrid,dvalue:dval
+ 				}, 
+ 				success: function(xml){
+ 					$(xml).find('PROFILE').each(function(){
+ 							
+ 							
+ 							if($(this).find("STATUS").text() == "SUCCESS"){
+									//$("#spanmessageS").html("Profile has been deleted").css("display","block");
+ 									//$("#errorMessageS").show();
+ 									if(dval == "0"){
+ 										window.location="admin_index.jsp?delmess=Profile has been restored";
+ 									}else{
+ 										window.location="admin_index.jsp?delmess=Profile has been deleted";
+ 									}
+ 									
+ 							}else{
+ 									//$("#spanmessage").html("Error sending notification").css("display","block");
+ 									//$("#errorMessage").show();
+ 									if(dval == "0"){
+ 										window.location="admin_index.jsp?delmesserr=Error restoring profile";
+ 									}else{
+ 										window.location="admin_index.jsp?delmesserr=Error deleting profile";
+ 									}
+ 									
+ 							}
+					});
+
+ 					
+ 				},
+ 				  error: function(xhr, textStatus, error){
+ 				      //alert("Status:" + xhr.statusText + "  " + "Text:" +textStatus + "  " + "Error:" + error );
+ 				     window.location="admin_index.jsp?delmesserr=Error deleting profile";
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
+//open confirm applicant delete box
+function openPDeleteApplicant(appid){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		// now we add the onclick event
+		$("#btn_delete_app_ok").click(function(event) {
+			event.preventDefault();
+			window.location="deleteApplicant.html?uid=" + appid;
+			
+		});
+		
+		$('#delete_app_dialog').modal(options);
+		$('#delete_app_dialog').modal('show');
 }

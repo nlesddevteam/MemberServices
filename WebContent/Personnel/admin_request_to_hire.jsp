@@ -223,7 +223,7 @@ var pageWordCountConf = {
                                       	</c:choose>             
 						</td>
 			     		<td class='tableTitleR'>UNION:</td>
-			     		<td class='tableResultR'>
+			     		<td class='tableResultR' id="unionGroup">
 			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="union_code" id="union_code" class="form-control" onchange="getPositions()">
@@ -255,7 +255,7 @@ var pageWordCountConf = {
 			     		</tr>
                         <tr>
 			     		<td class='tableTitleL'>POSITION:</td>
-			     		<td class='tableResultL'>
+			     		<td class='tableResultL' id="positionNGroup">
 			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="position_name" id="position_name" class="form-control">
@@ -358,7 +358,7 @@ var pageWordCountConf = {
 			     		</tr>            	
 						<tr>
 			     		<td class='tableTitleL'>POSITION TERM::</td>
-			     		<td class='tableResultL'>
+			     		<td class='tableResultL' id="positionTermGroup">
 			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="position_term" id="position_term" class="form-control">
@@ -449,7 +449,7 @@ var pageWordCountConf = {
 			     		</tr>
 						<tr>
 			     		<td class='tableTitleL'>SUPERVISOR:</td>
-			     		<td class='tableResultL'>
+			     		<td class='tableResultL'id="supervisorGroup">
 			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<select name="supervisor" id="supervisor" class="form-control">
@@ -489,7 +489,7 @@ var pageWordCountConf = {
                                       	</c:choose>
  						</td>
 			     		<td class='tableTitleR'>DIVISION:</td>
-			     		<td class='tableResultR'>
+			     		<td class='tableResultR' id="divisionGroup">
 			     							<c:choose>
 	                                      	<c:when test="${empty rbean}">
 					                    		<select id='division' name='division' class='form-control'>
@@ -530,7 +530,7 @@ var pageWordCountConf = {
 			     		</tr>
     					 <tr>
 			     		<td class='tableTitleL'>REQUEST TYPE*:</td>
-			     		<td class='tableResultL' id="positionTypeGroup">
+			     		<td class='tableResultL' id="requestTGroup">
 			     						<c:choose>
                                       	<c:when test="${empty rbean}">
                                       		<SELECT name="request_type" id="request_type" class="form-control">

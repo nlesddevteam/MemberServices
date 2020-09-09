@@ -37,15 +37,21 @@ public class DeleteApplicantProfileRequestHandler extends RequestHandlerImpl {
 
 		if (validate_form()) {
 			try {
-				ApplicantProfileManager.deleteApplicantProfile(form.get("uid"));
-
-				request.setAttribute("msgOK", "Applicant profile deleted successfully.");
+				// first we check to see if profile has any related recommendations
+				//if yes then we do not delete
+				if(ApplicantProfileManager.checkApplicantReommendations(form.get("uid"))) {
+					request.setAttribute("msgERR", "Applicant profile has related recommendations, it cannot be deleted.");
+				}else {
+					ApplicantProfileManager.deleteApplicantProfile(form.get("uid"));
+					request.setAttribute("msgOK", "Applicant profile deleted successfully.");
+				}
+				
 			}
 			catch (JobOpportunityException e) {
 				e.printStackTrace(System.err);
 
 				request.setAttribute("FORM", form);
-				request.setAttribute("msgERR", "Could not view reference.");
+				request.setAttribute("msgERR", "Could not delete profile.");
 			}
 		}
 		else {

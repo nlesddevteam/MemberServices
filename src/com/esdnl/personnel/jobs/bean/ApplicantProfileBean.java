@@ -51,6 +51,7 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	private boolean profileVerified;
 	private ApplicantVerificationBean verificationBean;
 	private TeacherRecommendationBean mostRecentAcceptedRecommendation;
+	private boolean isDeleted;
 
 	public ApplicantProfileBean() {
 
@@ -80,6 +81,7 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 		profileVerified = false;
 		verificationBean = null;
 		mostRecentAcceptedRecommendation = null;
+		isDeleted=false;
 	}
 
 	public ApplicantProfileBean(ApplicantProfileBean copy) {
@@ -119,6 +121,7 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 		profileVerified = copy.profileVerified;
 		verificationBean = copy.verificationBean;
 		mostRecentAcceptedRecommendation = copy.mostRecentAcceptedRecommendation;
+		isDeleted=copy.isDeleted;
 	}
 
 	public String getEmail() {
@@ -515,5 +518,13 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	public void setMostRecentAcceptedRecommendation(TeacherRecommendationBean mostRecentAcceptedRecommendation) {
 
 		this.mostRecentAcceptedRecommendation = mostRecentAcceptedRecommendation;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 }

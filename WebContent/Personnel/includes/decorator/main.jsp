@@ -198,6 +198,9 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/addSubjectGroup.html">Add Subject Group</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPTRSettings.html">Post Transfer Round Settings</a></li>
 					          	 	
+					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
+					          	 		<li><a onclick="loadingData()" href="/MemberServices/Personnel/getSoftDeletedApplicants.html">View Deleted Applicants</a></li>
+					          	 	</esd:SecurityAccessRequired>
 					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-SUBSTITUTES-RELOAD-TABLES">
 					          			<li class="divider"></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/startSync.html"><span class="glyphicon glyphicon-refresh"></span> Start Sync</a></li>
