@@ -126,12 +126,7 @@ $("#loadingSpinner").css("display","none");
 					"lengthMenu": [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]]
 				}	  
 	  );
-		$('#btn_delete_applicant').click(function(){
-  		if(confirm('Are you sure you want to delete this applicant profile?'))
-  			return true;
-  		else
-  			return false;
-  	});
+		
   	
   	$('.delete-cod').click(function(){
   		if(confirm('Are you sure you want to delete this Criminal Offence Declaration?')){
@@ -262,6 +257,7 @@ input {
       			 				<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
       			 				<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
       			 				<input type="hidden" id="id" value="<%=profile.getSIN() %>">
+      			 				<input type='hidden' id="appname" value="${fullName}">
       			 	 			<c:if test="${APPLICANT.modifiedDate ne null}">
                        				<span style="color:Silver;text-align:right;">Last Modified: <fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></span>
                      			</c:if>
@@ -1396,15 +1392,15 @@ input {
 							</tr>
 						</thead>
 						<tbody>
-							<% for(JobOpportunityBean j : highlyRecommendedPools.values()) { %>														
-							<tr>
-							<td><%= j.getCompetitionNumber() %></td>
-							<td><%= j.getPositionTitle() %></td>
-							<td><%= j.getJobLocation() %></td>
-							<td class="no-print">
-							<a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>VIEW JOB</a>							
-							</td>
-							</tr>
+							<% for(JobOpportunityBean j : highlyRecommendedPools.values()) { %>
+								<tr>
+									<td><%= j.getCompetitionNumber() %></td>
+									<td><%= j.getPositionTitle() %></td>
+									<td><%= j.getJobLocation() %></td>
+									<td class="no-print">
+									<a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>JOB</a>
+									</td>
+								</tr>
 							<% } %>
 						</tbody>
 					</table>
@@ -1466,15 +1462,21 @@ input {
 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 
 		<div align="center" class="no-print" style="padding-bottom: 10px;">
-			<esd:SecurityAccessRequired
-				permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
-				<a href='#' title='Print this page (pre-formatted)'
+		<a href='#' title='Print this page (pre-formatted)'
 					class='btn btn-xs btn-info'
 					onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span
 					class="glyphicon glyphicon-print"></span> Print Profile</a>
-				<a id='btn_delete_applicant' class="btn btn-xs btn-danger"
-					href='deleteApplicant.html?uid=<%=profile.getUID()%>'><span
-					class="glyphicon glyphicon-remove"></span> Delete Applicant</a>
+			<esd:SecurityAccessRequired
+				permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
+				<%if(!(profile.isDeleted())) { %>
+					<a id='btn_delete_applicant' class="btn btn-xs btn-danger"
+						onclick="openDeleteApplicant('<%=profile.getUID()%>','D')"><span
+						class="glyphicon glyphicon-remove"></span> Delete Applicant</a>
+				<%}else{ %>
+					<a id='btn_delete_applicant' class="btn btn-xs btn-danger"
+						onclick="openDeleteApplicant('<%=profile.getUID()%>','R')"><span
+						class="glyphicon glyphicon-remove"></span> Restore Applicant</a>
+				<%} %>
 			</esd:SecurityAccessRequired>
 			<%
 				if (session.getAttribute("JOB") != null) {
@@ -1679,5 +1681,31 @@ input {
 			</div>
 		</div>
 	</esd:SecurityAccessRequired>
+	<esd:SecurityAccessRequired
+				permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
+			<!-- Modal for deleting app -->
+		<div id="delete_app_dialog" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"><span id="delemptext"></span></h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<h4 class="modal-title"><span id="spandelete"></span></h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id='btn_delete_app_ok'
+								class="btn btn-success btn-xs" style="float: left;"></button>
+							<button type="button" class="btn btn-danger btn-xs"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</esd:SecurityAccessRequired>
 </body>
 </html>

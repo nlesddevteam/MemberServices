@@ -70,7 +70,13 @@
          	</c:if>	
          	<c:if test="${ msgERR ne null }">  
           		<div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msgERR } </div>     
-         	</c:if>			
+         	</c:if>	
+         	<%if(!(request.getParameter("delmess") == null) ){ %>
+         		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b><%=request.getParameter("delmess") %></b></div>
+         	<%} %>
+         	<%if(!(request.getParameter("delmesserr") == null)){ %>
+         		<div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b><%=request.getParameter("delmesserr") %></b></div>
+         	<%} %>			
                   	
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 					

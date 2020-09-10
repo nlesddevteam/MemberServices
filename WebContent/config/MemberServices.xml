@@ -3995,6 +3995,14 @@
       <Request-Handler>
       	<Request-Handler-Class>com.nlesd.bcs.handler.UpdateEmployeeStatusAjaxRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/BCS/updateEmployeeStatus.html</URL-Pattern>
-     </Request-Handler>                                                                                                                                                    
-  </Request-Handlers>
+     </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.DeleteApplicantProfileAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/deleteApplicantProfileAjax.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.GetSoftDeletedApplicantsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/getSoftDeletedApplicants.html</URL-Pattern>
+    </Request-Handler>                                                                                                                                                              
+  </Request-Handlers>G
 </Member-Services-Config>

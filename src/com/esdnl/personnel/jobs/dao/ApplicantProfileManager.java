@@ -1345,7 +1345,7 @@ public class ApplicantProfileManager {
 			con.setAutoCommit(true);
 
 			stat = con.prepareCall(
-					"begin awsd_user.personnel_jobs_pkg.add_applicant_profile(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+					"begin awsd_user.personnel_jobs_pkg.add_applicant_profile(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.setString(1, abean.getEmail().toLowerCase());
 			stat.setString(2, abean.getPassword());
@@ -1367,6 +1367,7 @@ public class ApplicantProfileManager {
 			else
 				stat.setNull(16, OracleTypes.DATE);
 			stat.setString(17, abean.getProfileType());
+			stat.setInt(18, abean.isDeleted() ? 1:0);
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -2452,7 +2453,7 @@ public class ApplicantProfileManager {
 			aBean.setSIN2(rs.getString("SIN2"));
 			aBean.setSurname(rs.getString("SURNAME"));
 			aBean.setWorkphone(rs.getString("WORKPHONE"));
-
+			
 			try {
 				if (rs.getTimestamp("DOB") != null) {
 
@@ -2524,6 +2525,17 @@ public class ApplicantProfileManager {
 				}
 			}
 			catch (SQLException e) {}
+			//added catch until all places this is called are checked
+			try {
+				if (rs.getInt("IS_DELETED") >= 0) {
+					aBean.setDeleted(rs.getInt("IS_DELETED") == 1 ? true:false);
+				}
+				else {
+					aBean.setDeleted(false);
+				}
+			}
+			catch (SQLException e) {}
+			
 		}
 		catch (SQLException e) {
 			aBean = null;
@@ -2537,5 +2549,116 @@ public class ApplicantProfileManager {
 		}
 		return aBean;
 	}
+	public static void setApplicantIsDeleted(String uid,Integer dvalue){
 
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.set_applicant_is_deleted(?,?); end;");
+			stat.setString(1, uid);
+			stat.setInt(2, dvalue);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void setApplicantIsDeleted(String uid,Integer dvalue): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static ApplicantProfileBean[] getSoftDeletedApplicants() {
+
+		Vector<ApplicantProfileBean> v_opps = null;
+		ApplicantProfileBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			v_opps = new Vector<ApplicantProfileBean>(5);
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_soft_deleted_app; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				eBean = createApplicantProfileBean(rs);
+				v_opps.add(eBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static ApplicantProfileBean[] getSoftDeletedApplicants(): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
+	}
+	public static boolean checkApplicantReommendations(String appid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		boolean hasRecs=false;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.check_app_for_recs(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, appid );
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				hasRecs=true;
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static boolean checkApplicantReommendations(String appid): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return  hasRecs;
+	}	
 }
