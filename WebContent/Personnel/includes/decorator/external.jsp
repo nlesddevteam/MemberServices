@@ -120,6 +120,7 @@
 					          	<ul class="dropdown-menu multi-level">
 
 										<li><a href="/contact/stafffinderresults.jsp?pos=Human+Resources&region=" target="_blank">HR Contacts</a></li>
+										<li><a href="https://forms.gle/zudb87zxbJW9QTVg8" target="_blank">Technical Support</a></li>
 										<li><a href="/" onclick="loadingData()">Exit to NLESD</a></li>
 
 					         	</ul>
@@ -154,10 +155,55 @@
 
 
 
-<div class="alert alert-info no-print" id="noPrintThis" style="text-align:center;font-size:11px;">
-Any questions or concerns relating to a profile should be directed to the
-proper contact(s) found under the <a href="viewContactInformation.html">Help</a> menu above or your regional HR staff.<br/>
-If you are experiencing technical difficulties with this system, email Geoff Taylor <a href="mailto:geofftaylor@nlesd.ca?subject=MyHRP System">geofftaylor@nlesd.ca</a> (Avalon Region) or Rodney Batten <a href="mailto:rodneybatten@nlesd.ca?subject=MyHRP System">rodneybatten@nlesd.ca</a> (Central/Western/Labrador).
+<hr>
+
+	Any questions or concerns relating to a profile should be directed to the proper contact(s) found under the Help menu above or your regional HR staff at the offices below:<br/>
+	<br/>
+														<div style="width:100%;text-align:center;">
+														<div class="containerPanel region4">
+																<div class="containerPanelHeader region4solid">LABRADOR REGION</div>
+																<div class="containerPanelBody">
+																<b>Labrador Regional Office</b><br/>
+																Human Resources Division<br/>
+													 			<a href="mailto:hrlabrador@nlesd.ca?subject=Labrador Jobs" title="hrlabrador@nlesd.ca">hrlabrador@nlesd.ca</a><br/>
+													 			Fax: (709) 896-5629 
+																</div>
+														</div>
+														<div class="containerPanel region3">
+																<div class="containerPanelHeader region3solid">WESTERN REGION</div>
+																<div class="containerPanelBody">
+																<b>Western Regional Office</b><br/>
+																Human Resources Division<br/>
+																<a href="mailto:hrwest@nlesd.ca?subject=Western Jobs" title="hrwest@wnlesd.ca">hrwest@nlesd.ca</a><br/>
+																Fax: (709) 637-6674
+																</div>
+														</div>
+														<div class="containerPanel region2">
+																<div class="containerPanelHeader region2solid">CENTRAL REGION</div>
+																<div class="containerPanelBody">
+																<b>Central Regional Office</b><br/>
+																Human Resources Division<br/>
+													 			<a href="mailto:hrcentral@nlesd.ca?subject=Central Jobs" title="hrcentral@nlesd.ca">hrcentral@nlesd.ca</a><br/>
+													 			Fax: (709) 651-3044
+																</div>
+														</div>
+														<div class="containerPanel region1">
+																<div class="containerPanelHeader region1solid">AVALON REGION</div>
+																<div class="containerPanelBody">
+																<b>Avalon Regional Office</b><br/>
+																Human Resources Division<br/>
+																 <a href="mailto:careers@nlesd.ca?subject=Eastern Internal Jobs" title="careers@nlesd.ca">careers@nlesd.ca</a><br/>			 
+																 Fax: (709) 758-1052
+																</div>
+														</div>
+														</div>
+														<div style="clear:both;"></div>
+														<br/><br/>
+	<div class="alert alert-info no-print" id="noPrintThis" style="text-align:center;font-size:11px;">													
+If you are experiencing difficulties with this system, you may also submit a Support Request using the following form:<br/><br/>
+
+<a href="https://forms.gle/zudb87zxbJW9QTVg8" target="_blank" class="btn btn-sm btn-danger">Support Request Form</a>
+
 </div>
 <div align="center" class='no-print'><img src="includes/img/nlesd-colorlogo.png" border=0 style="width:100%;max-width:250px;"/></div>
 <!-- FOOTER AREA -->

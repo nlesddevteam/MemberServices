@@ -136,7 +136,12 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 }
 
 
+/*PANELS*/
+.containerPanel {float:left;width:24%;border:1px solid silver;font-size:11px;margin-left:5px;margin-right:5px;min-height:120px;padding-top:5px;margin-top:2px;}
+.containerPanelHeader {text-align:center;color:White;font-weight:bold;font-size:14px;padding:2px;white-space:nowrap;text-transform: uppercase;}
+.containerPanelBody {padding-top:5px;text-align:center;}
 
+.containerPanelHC {float:left;width:48%;border:1px solid silver;margin-right:5px;min-height:130px;padding-top:5px;margin-top:2px;}
 
 
 
