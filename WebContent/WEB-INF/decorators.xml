@@ -80,6 +80,9 @@
 	<pattern>/Personnel/addNLESDExternalGuideReferenceApp.html</pattern>
 	<pattern>/Personnel/addNLESDExternalReferenceApp.html</pattern>
 </decorator>
+  <decorator name="OHS SYSTEM" page="OHS/includes/decorator/main.jsp">
+	<pattern>/OHS/*</pattern>
+</decorator>
 
   <excludes>
     <pattern>/EECD/eecd_menu*</pattern>
