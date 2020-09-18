@@ -1,0 +1,92 @@
+/* MS REDESIGN PROJECT 2020 */
+/* APP DEFAULTS */
+body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-webkit-text-size-adjust: 100%;background:none;background-color:none;margin-bottom:100px;}
+/*html { background: radial-gradient(#ffffff,#ffffff,#f0f4f0) no-repeat center center fixed;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; }
+*/ 
+.mainContainer {max-width:1250px;min-width:300px;display: block;  margin-left: auto;  margin-right: auto;}
+#content browser { margin-right: -14px !important; overflow-y: scroll; overflow-x: hidden;}
+.pageHeader {font-size:16px;font-weight:bold;color:#1F4279;padding-top:5px;padding-bottom:5px;}
+.pageBody {font-size:11px;color:Black;}
+.topLogoImg {width:100%;max-width:1250px;padding-bottom:5px;padding-top:5px;}
+.formTitleArea {width:10%;max-width:200px;min-width:125px;}
+.input-group {padding-bottom:5px;height:30px;}
+.required {color:red;}
+#loadingSpinner {position: fixed; top: 0; left: 0; width: 100%; height: 100%; text-align:center; background-color: rgba(0, 0, 0,0.5);z-index: 1000;}
+#spinner {position: fixed; text-align: center;  top: 25%;  left: 50%; transform: translate(-50%, 0);background-color:rgba(255, 255, 255, 0);padding:10px;font-size:16px;color:White;}
+.printOnly {display:none;}
+.page-break { display: none; }
+
+
+.selectWidth {width:auto !important;display: inline-block;}
+
+ 	.cke_skin_v2 input.cke_dialog_ui_input_text, .cke_skin_v2 input.cke_dialog_ui_input_password {
+ 	position: relative;
+    z-index: 9999; 
+    }
+    
+/* REGION COLORS */
+.regionDefault {background-color: #1F4279;}
+.region1 {background-color:rgba(191, 0, 0, 0.1);}
+.region1a {border-left:10px solid rgba(191, 0, 0, 0.3);}
+.region1solid {background-color:rgba(191, 0, 0, 1);}
+.region1half {background-color:rgba(191, 0, 0, 0.5);}
+.region2 {background-color:rgba(0, 191, 0, 0.1);}
+.region2a {border-left:10px solid rgba(0, 191, 0, 0.3);}
+.region2solid {background-color:rgba(0, 191, 0, 1);}
+.region2half {background-color:rgba(0, 191, 0, 0.5);}
+.region3 {background-color:rgba(255, 132, 0, 0.1);}
+.region3solid {background-color:rgba(255, 132, 0, 1);}
+.region3half {background-color:rgba(255, 132, 0, 0.5);}
+.region3a {border-left:10px solid rgba(255, 132, 0, 0.3);}
+.region4 {background-color:rgba(127, 130, 255, 0.1);}
+.region4a {border-left:10px solid rgba(127, 130, 255, 0.3);}
+.region4solid {background-color:rgba(127, 130, 255,1);}
+.region4half {background-color:rgba(127, 130, 255, 0.5);}
+.regionEastern {color:rgba(191, 0, 0, 1);}
+.regionCentral {color:rgba(0, 191, 0, 1);}
+.regionWestern {color:rgba(255, 132, 0, 1);}
+.regionLabrador {color:rgba(127, 130, 255, 1);}
+.regionProvincial {color:rgb(153, 51, 51, 1);}
+.regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
+.region5text {color:rgba(128, 0, 128, 1);}
+.region5 {background-color:rgba(128, 0, 128, 0.1);}
+.region5a {border-left:10px solid rgba(128, 0, 128, 0.3);}
+.region5solid {background-color:rgba(128, 0, 128,1);}
+.region5half {background-color:rgba(128, 0, 128, 0.5);}	
+
+
+
+/* FOOTER CONTENT */
+.mainFooter {position: fixed; z-index:9999;left: 0;bottom: 0; width: 100%; padding-top:5px;padding-bottom:5px; 
+background-color: #FFFF00;color: black;text-align: center; font-size:10px;}
+a.footerMenu { color:#FFFFFF;  text-decoration: none;}
+a.footerMenu:visited { color:#FFFFFF;  text-decoration: none;}
+a.footerMenu:hover {	color: #FFFF80;	text-decoration: underline;} 
+a.footerMenu:active { color: #FF0000; text-decoration: none;}
+
+.bottomLogoFloat { position: fixed; bottom: 0;left: 0;padding-left:5px;padding-bottom:20px;}
+
+/* MEDIA SIZES */
+
+@media only screen and (max-width:650px) {
+#searcherImg,#contacteeImg { display: none;}
+}
+
+
+@media print {
+	.pagebreak {page-break-after: always;}
+	.pagebreakb4 {page-break-before: always;}
+	table { page-break-inside:auto; } 
+   		tr    { page-break-inside:avoid; page-break-after:auto; }		
+	 	
+          .panel-success,.panel-default,.panel-info,.panel-danger,.panel-warning {
+          border-color:#FFFFFF;
+          border:0px;
+          }        
+	     
+	
+}
+
+
+
+
