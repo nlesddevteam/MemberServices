@@ -100,7 +100,7 @@
 					applications.<br /> You are currently classified as:<br /><%=usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName()%>
 					(<%=(usr.getPersonnel().getSchool() != null ? usr.getPersonnel().getSchool().getSchoolName() : "NO SCHOOL")%>)<br />
 					For technical assistance with your account, please email <a
-						href="mailto:mssupport@nlesd.ca?subject=Member Services Support Request for <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%>">mssupport@nlesd.ca</a>.
+						href="mailto:geofftaylor@nlesd.ca?subject=Member Services Support Request for <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%>">geofftaylor@nlesd.ca</a>. If support if for a particular application below, see the help contact information in that application.
 				</div>
 
 				<br />
