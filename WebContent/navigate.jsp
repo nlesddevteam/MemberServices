@@ -140,6 +140,18 @@
 						</div>
 						<br />
 					</esd:SecurityAccessRequired>
+			<!-- Teacher Profile System -->
+					<esd:SecurityAccessRequired
+						permissions="PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW">
+						<div class="menuIconImage">
+							<a href="Profile/Teacher/"> <img
+								src="includes/img/menu/userprofile-off.png"
+								class="img-swap menuImage" border=0
+								title="User Profile Manager allows a Teacher/Support Staff employee to modify their current name and school assignment.">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
+
 
 <!-- COVID 19-UPDATES - ALL STAFF -->					
 						<div class="menuIconImage">
@@ -149,22 +161,16 @@
 								title="Covid-19 Information Shared with Schools and District Staff">
 							</a>
 						</div>
-				
-				<!-- Professional Learning Resources --> 
-				
-
+	<!-- OHS-UPDATES - ALL STAFF -->					
 						<div class="menuIconImage">
-							<a href="https://sites.google.com/nlesd.ca/plseries-sept2020/home"
-								target="_blank"> <img
-								src="includes/img/menu/pls-off.png"
+							<a href="OHS/index.jsp"><img
+								src="includes/img/menu/ohs-off.png"
 								class="img-swap menuImage" border=0
-								title="Professional Learning Series - September 2020">
+								title="OHS Information Shared with Schools and District Staff">
 							</a>
-						</div>
-			
-				
-				
-					<!-- Admin Planner --> 
+						</div>			
+
+<!-- Admin Planner --> 
 					<esd:SecurityAccessRequired
 						roles="ANNUAL-PLANNER-VIEW,WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS,ADMINISTRATIVE ASSISTANT">
 
@@ -177,6 +183,46 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
+
+
+<!-- Professional Learning Series --> 				
+
+						<div class="menuIconImage">
+							<a href="https://sites.google.com/nlesd.ca/plseries-sept2020/home"
+								target="_blank"> <img
+								src="includes/img/menu/pls-off.png"
+								class="img-swap menuImage" border=0
+								title="Professional Learning Series - September 2020">
+							</a>
+						</div>
+						
+<!-- Professional Learning PLAN  --> 
+						<esd:SecurityAccessRequired permissions="PPGP-VIEW">
+						<div class="menuIconImage">
+							<a href="PPGP/ppgpPolicy.html"> <img
+								src="includes/img/menu/learningplan-off.png"
+								class="img-swap menuImage" border=0
+								title="Professional Learning Plans">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
+
+<!-- Professional Learning Resources --> 
+					<esd:SecurityAccessRequired
+						permissions="PROFESSIONAL-LEARNING-RESOURCES">
+
+						<div class="menuIconImage">
+							<a href="https://pl.nlesd.ca"
+								target="_blank"> <img
+								src="includes/img/menu/plr-off.png"
+								class="img-swap menuImage" border=0
+								title="Professional Learning Resources">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>		
+				
+				
+	
 
 
 
@@ -411,17 +457,7 @@
 		            		</div>
 			  -->
 
-					<!-- Teacher Profile System -->
-					<esd:SecurityAccessRequired
-						permissions="PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW">
-						<div class="menuIconImage">
-							<a href="Profile/Teacher/"> <img
-								src="includes/img/menu/userprofile-off.png"
-								class="img-swap menuImage" border=0
-								title="User Profile Manager allows a Teacher/Support Staff employee to modify their current name and school assignment.">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
+		
 
 					<!-- Survey Creation  -->
 					<esd:SecurityAccessRequired permissions="SURVEY-ADMIN-VIEW">
@@ -520,29 +556,7 @@
 					</esd:SecurityAccessRequired>
 
 
-					<esd:SecurityAccessRequired permissions="PPGP-VIEW">
-						<div class="menuIconImage">
-							<a href="PPGP/ppgpPolicy.html"> <img
-								src="includes/img/menu/learningplan-off.png"
-								class="img-swap menuImage" border=0
-								title="Professional Learning Plans">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
 
-<!-- Professional Learning Resources --> 
-					<esd:SecurityAccessRequired
-						permissions="PROFESSIONAL-LEARNING-RESOURCES">
-
-						<div class="menuIconImage">
-							<a href="https://pl.nlesd.ca"
-								target="_blank"> <img
-								src="includes/img/menu/plr-off.png"
-								class="img-swap menuImage" border=0
-								title="Professional Learning Resources">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
 
 					<!-- Growth Plan 
 			  	 <esd:SecurityAccessRequired permissions="PPGP-VIEW">
