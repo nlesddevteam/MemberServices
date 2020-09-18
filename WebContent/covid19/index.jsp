@@ -33,11 +33,8 @@ The Newfoundland and Labrador English School District is in regular contact with
 <br/><br/>
 Information Shared with Schools and District Staff can be found below:
 <br/><br/>
-   <ul>  
-   
-  		<li><a href="https://sites.google.com/nlesd.ca/ohstraining2021/safety-orientation" target="_blank">OHS training 20 - 21 for all staff</a>
-		<li> <a href="https://sites.google.com/nlesd.ca/ohsorientation/home" target="_blank">General OHS Information</a>   
-   		<li><a href="includes/doc/c19-sa-08192020.pdf" target="_blank">August 19 - Memo to Student Assistants (Change to Recall Date - September 2, 2020)</a>
+   <ul>     
+  		<li><a href="includes/doc/c19-sa-08192020.pdf" target="_blank">August 19 - Memo to Student Assistants (Change to Recall Date - September 2, 2020)</a>
    		<li><a href="includes/doc/c19-tla-08192020.pdf" target="_blank">August 19 - Memo to Teaching and Learning Assistants (Change to Start Date - September 2, 2020)</a>
   		<li><a href="includes/doc/c19-admin-07202020.pdf" target="_blank">July 20 - Memo to Principals/Teachers (District Update)</a>   
 		<li><a href="includes/doc/c19-admin-05292020.pdf" target="_blank">May 29 - Memo to Principals (District Update)</a>
