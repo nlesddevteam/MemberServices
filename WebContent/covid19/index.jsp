@@ -33,8 +33,7 @@ The Newfoundland and Labrador English School District is in regular contact with
 <br/><br/>
 Information Shared with Schools and District Staff can be found below:
 <br/><br/>
-   <ul>  
-   
+   <ul>     
   		<li><a href="includes/doc/c19-sa-08192020.pdf" target="_blank">August 19 - Memo to Student Assistants (Change to Recall Date - September 2, 2020)</a>
    		<li><a href="includes/doc/c19-tla-08192020.pdf" target="_blank">August 19 - Memo to Teaching and Learning Assistants (Change to Start Date - September 2, 2020)</a>
   		<li><a href="includes/doc/c19-admin-07202020.pdf" target="_blank">July 20 - Memo to Principals/Teachers (District Update)</a>   
