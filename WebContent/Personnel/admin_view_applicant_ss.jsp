@@ -40,7 +40,7 @@
     }
     Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
     User usr = (User)session.getAttribute("usr");
-    if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
+    //if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
       session.setAttribute("APPLICANT", profile); 
      
     if(!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
