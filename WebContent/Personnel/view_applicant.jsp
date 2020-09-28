@@ -1145,8 +1145,7 @@ input {
 							<tr>
 								<td><%=sdf_long.format(cod.getDeclarationDate())%></td>
 								<td><a class='btn btn-xs btn-primary'
-									href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'
-									target='_blank'>VIEW</a></td>
+									href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a></td>
 							</tr>
 							<%
 								}

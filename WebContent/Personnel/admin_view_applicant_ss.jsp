@@ -731,7 +731,7 @@ input {
 							    <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
 							    <td><%=((cod.getOffences() != null)?cod.getOffences().size():0)%></td>							    
 							    <td class="no-print">
-							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>' target='_blank'>VIEW</a>
+							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a>
 							    <a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
 							    </td>
 							    

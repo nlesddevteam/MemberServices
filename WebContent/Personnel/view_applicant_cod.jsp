@@ -131,7 +131,10 @@
          
          </div></div></div>
 	
-
+  <div align="center" class="no-print">
+	    	<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back to Profile</a> 
+	    	</div>
+	    	
 <script>
 document.getElementById("btnPrint").onclick = function () {
     printElement(document.getElementById("printThis"));
