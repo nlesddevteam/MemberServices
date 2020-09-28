@@ -120,7 +120,7 @@ SECTION 10: Editing your Teacher/Educator HR Application Profile
 				    	</div>                        	
 	                   </c:forEach>
 	                                    
-	                    <div class="panel panel-danger" id="coddocs">                   
+	                    <div class="panel panel-success coddocs">                   
 			              <div class="panel-heading">Criminal Offence Declaration(s) <span class="no-print" style="float:right;padding-right:5px"><a id='btn-add-cod' class='btn btn-xs btn-primary' href='applicant_registration_step_10_CODF.jsp'>Add Declaration</a></span></div>  
 			              <div class="panel-body"> 
 			              <div class="table-responsive">                 
@@ -138,7 +138,7 @@ SECTION 10: Editing your Teacher/Educator HR Application Profile
 				                                      		<c:forEach items="${cods}" var="cod">
 					                                      	<tr>	
 					                                      	<td><fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="${cod.declarationDate}" /></td>
-					                                      	<td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=${cod.declarationId}' target='_blank'>View</a></td>
+					                                      	<td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=${cod.declarationId}'>View</a></td>
 					                                      	</tr>	
 				                                      		</c:forEach>
 				                          </tbody>
@@ -147,7 +147,7 @@ SECTION 10: Editing your Teacher/Educator HR Application Profile
 			                                      		</c:when>
 			                                      		<c:otherwise>
 			                                      		<span style="color:Grey;">No criminal offence declarations on record.</span>
-				                                      	<script>$("#coddocs").removeClass("panel-danger").addClass("panel-success");</script>		
+				                                      	<script>$(".coddocs").removeClass("panel-success").addClass("panel-danger");</script>		
 			                                      		</c:otherwise>
 		                                     	</c:choose>
 		                                    		

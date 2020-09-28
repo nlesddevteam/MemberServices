@@ -120,7 +120,7 @@ SECTION 7: Editing your Support Staff/Management HR Application Profile
 				    	</div>                        	
 	                   </c:forEach>
 						<br/>			
-	                    <div class="panel panel-danger" id="coddocs">                   
+	                    <div class="panel panel-success" id="coddocs">                   
 			              <div class="panel-heading">Criminal Offence Declaration(s) <span class="no-print" style="float:right;padding-right:5px"><a id='btn-add-cod' class='btn btn-xs btn-primary' href='applicant_registration_step_10_CODF.jsp'>Add Declaration</a></span></div>  
 			              <div class="panel-body"> 
 			              <div class="table-responsive">                 
@@ -147,7 +147,7 @@ SECTION 7: Editing your Support Staff/Management HR Application Profile
 			                                      		</c:when>
 			                                      		<c:otherwise>
 			                                      		<span style="color:Grey;">No criminal offence declarations on record.</span>
-				                                      	<script>$("#coddocs").removeClass("panel-danger").addClass("panel-success");</script>		
+				                                      	<script>$("#coddocs").removeClass("panel-success").addClass("panel-danger");</script>		
 			                                      		</c:otherwise>
 		                                     	</c:choose>
 		                                    		
