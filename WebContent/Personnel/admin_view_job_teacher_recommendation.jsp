@@ -504,12 +504,12 @@ input {
 								<%
 									if (job.getIsSupport().equals("N")) {
 								%>
-								<td class="tableQuestion">4.) Start Date (mm/dd/yyyy):</td>
+								<td class="tableQuestion">4.) Start Date (dd/mm/yyyy):</td>
 								<%
 									}
 									else {
 								%>
-								<td class="tableQuestion">5.) Start Date (mm/dd/yyyy):</td>
+								<td class="tableQuestion">5.) Start Date (dd/mm/yyyy):</td>
 								<%
 									}
 								%>
