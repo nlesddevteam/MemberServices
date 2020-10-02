@@ -384,12 +384,12 @@ $('#position_other').keypress(function(e) {
 
 							<% if(job.getIsSupport().equals("N")){ %>
 							<tr>
-								<td><b>4. Start Date (mm/dd/yyyy):</b></td>
+								<td><b>4. Start Date (dd/mm/yyyy):</b></td>
 								<td><%=ad.getFormatedStartDate()%></td>
 							</tr>
 							<%}else{ %>
 							<tr>
-								<td><b>5. Start Date (mm/dd/yyyy):</b></td>
+								<td><b>5. Start Date (dd/mm/yyyy):</b></td>
 								<td><%=rth.getStartDateFormatted()%></td>
 							</tr>
 							<%} %>
