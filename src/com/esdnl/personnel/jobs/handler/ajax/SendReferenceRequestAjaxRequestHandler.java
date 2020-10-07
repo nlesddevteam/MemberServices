@@ -7,23 +7,33 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.awsd.mail.bean.EmailBean;
-import com.awsd.servlet.LoginNotRequiredRequestHandler;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.ApplicantRefRequestBean;
 import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.PersonnelApplicationRequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.util.StringUtils;
 import com.esdnl.velocity.VelocityUtils;
 
-public class SendReferenceRequestAjaxRequestHandler implements LoginNotRequiredRequestHandler {
+public class SendReferenceRequestAjaxRequestHandler extends PersonnelApplicationRequestHandlerImpl {
 
 	public SendReferenceRequestAjaxRequestHandler() {
-
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("rid", "Request ID is required"),
+				new RequiredFormElement("em", "Email is required"),
+				new RequiredFormElement("rt", "Request Type is required"),
+				new RequiredFormElement("opt", "Request Option is required")
+		});
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
     {
+		super.handleRequest(request, response);
 		try {
+				if (validate_form()) {
 					//get the parameters
 					String apprefid= request.getParameter("rid");
 					String email= request.getParameter("em");
@@ -90,9 +100,7 @@ public class SendReferenceRequestAjaxRequestHandler implements LoginNotRequiredR
 					sb.append("</RCHECK>");
 					sb.append("</REFCHECK>");
 					xml = StringUtils.encodeXML(sb.toString());
-
-					System.out.println(xml);
-
+	
 					PrintWriter out = response.getWriter();
 	
 					response.setContentType("text/xml");
@@ -100,6 +108,24 @@ public class SendReferenceRequestAjaxRequestHandler implements LoginNotRequiredR
 					out.write(xml);
 					out.flush();
 					out.close();
+				}else {
+					String xml = null;
+					StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+					sb.append("<REFCHECK>");
+					sb.append("<RCHECK>");
+					sb.append("<MESSAGE>" + StringUtils.encodeHTML2(this.validator.getErrorString()) + "</MESSAGE>");
+					sb.append("</RCHECK>");
+					sb.append("</REFCHECK>");
+					xml = StringUtils.encodeXML(sb.toString());
+					System.out.println(xml);
+					PrintWriter out = response.getWriter();
+					response.setContentType("text/xml");
+					response.setHeader("Cache-Control", "no-cache");
+					out.write(xml);
+					out.flush();
+					out.close();
+				}
+
 			}
 			catch (Exception e) {
 				String xml = null;

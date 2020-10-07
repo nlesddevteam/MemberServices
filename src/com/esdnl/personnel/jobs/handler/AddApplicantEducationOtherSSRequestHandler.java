@@ -3,18 +3,20 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.awsd.servlet.LoginNotRequiredRequestHandler;
 import com.esdnl.personnel.jobs.bean.ApplicantEducationOtherSSBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.dao.ApplicantEducationOtherSSManager;
+import com.esdnl.servlet.PersonnelApplicationRequestHandlerImpl;
 import com.esdnl.util.StringUtils;
-public class AddApplicantEducationOtherSSRequestHandler implements LoginNotRequiredRequestHandler {
+public class AddApplicantEducationOtherSSRequestHandler extends PersonnelApplicationRequestHandlerImpl {
+	public AddApplicantEducationOtherSSRequestHandler() {
 
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+	}
+public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
 				IOException {
-
+		super.handleRequest(request, response);
 		String path = null;
 		ApplicantProfileBean profile = null;
 
@@ -28,12 +30,17 @@ public class AddApplicantEducationOtherSSRequestHandler implements LoginNotRequi
 			}
 			else {
 				if (!StringUtils.isEmpty(other_info)) {
-					ApplicantEducationOtherSSBean ibean = new ApplicantEducationOtherSSBean();
+					if (other_info.length() > 4000) {
+						request.setAttribute("errmsg", "A maxium of 4000 characters can be entered.");
+						path = "applicant_registration_step_6_ss.jsp";
+					}else {
+						ApplicantEducationOtherSSBean ibean = new ApplicantEducationOtherSSBean();
 						ibean.setSIN(profile.getSIN());
 						ibean.setOtherInformation(other_info);
 						ApplicantEducationOtherSSManager.addApplicantEducationOtherSSBean(ibean);
 						request.setAttribute("msg", "Other information successfully added.");
 						path = "applicant_registration_step_6_ss.jsp";
+					}
 				}
 				else {
 					ApplicantEducationOtherSSManager.deleteApplicantEducationOtherSSBean(profile);
