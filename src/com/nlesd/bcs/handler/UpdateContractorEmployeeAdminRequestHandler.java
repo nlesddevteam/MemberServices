@@ -286,7 +286,7 @@ public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerI
 						fhb.setParentObjectType(15);
 						FileHistoryManager.addFileHistory(fhb);
 					}else{
-						vbean.setCodDocument(origbean.getScaDocument());
+						vbean.setCodDocument(origbean.getCodDocument());
 					}
 					vbean.setStatus(origbean.getStatus());
 				

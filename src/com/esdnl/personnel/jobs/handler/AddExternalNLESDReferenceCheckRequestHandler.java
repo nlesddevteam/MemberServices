@@ -6,13 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
-import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
-import com.esdnl.personnel.jobs.dao.AdRequestManager;
+import com.esdnl.personnel.jobs.bean.ApplicantRefRequestBean;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
-import com.esdnl.personnel.jobs.dao.JobOpportunityAssignmentManager;
-import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
-import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
+import com.esdnl.personnel.jobs.dao.ApplicantRefRequestManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.PublicAccessRequestHandlerImpl;
@@ -35,47 +31,42 @@ public class AddExternalNLESDReferenceCheckRequestHandler extends PublicAccessRe
 
 		if (validate_form()) {
 			try {
-				ReferenceCheckRequestBean refreq = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("id"));
-				JobOpportunityBean job = JobOpportunityManager.getJobOpportunityBean(refreq.getCompetitionNumber());
-
-				if ((refreq != null) && (job != null)) {
+				
 					String referenceType = form.get("reftype");
-
+					ApplicantRefRequestBean abean = null;
+					abean = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("id"));
 					//now we load the correct page
-					//TODO: ARE ALL THESE PAGES PUBLICALLY ACCESSIBLE?????
+					//admin, guide, and teacher only available to people logged into MS and correct rights
 					if (referenceType.equals("admin")) {
-						path = "nlesd_admin_reference_checklist.jsp";
+						request.setAttribute("hidesearch",true);
+						path = "add_nlesd_admin_reference.jsp";
 					}
 					else if (referenceType.equals("guide")) {
-						path = "nlesd_guide_reference_checklist.jsp";
+						request.setAttribute("hidesearch",true);
+						path = "add_nlesd_guide_reference.jsp";
 					}
 					else if (referenceType.equals("teacher")) {
-						path = "nlesd_teacher_reference_checklist.jsp";
+						request.setAttribute("hidesearch",true);
+						path = "add_nlesd_teacher_reference.jsp";
 					}
 					else if (referenceType.equals("external")) {
-						path = "nlesd_external_reference_checklist.jsp";
+						path = "nlesd_external_reference_checklist_app.jsp";
 					}
 					else if (referenceType.equals("manage")) {
-						path = "nlesd_manage_reference_checklist.jsp";
+						path = "nlesd_manage_reference_checklist_app.jsp";
 					}
 					else if (referenceType.equals("support")) {
-						path = "nlesd_support_reference_checklist.jsp";
+						path = "nlesd_support_reference_checklist_app.jsp";
 					}
 					else {
 						//TODO: WILL BE EVER GET HERE???
 						return "/MemberServices/memberservices.html";
 					}
 
-					request.setAttribute("REFERENCE_CHECK_REQUEST_BEAN", refreq);
-					request.setAttribute("JOB", job);
-					request.setAttribute("AD_REQUEST_BEAN", AdRequestManager.getAdRequestBean(job.getCompetitionNumber()));
-					request.setAttribute("JOB_ASSIGNMENTS",
-							JobOpportunityAssignmentManager.getJobOpportunityAssignmentBeans(job));
-					request.setAttribute("PROFILE", ApplicantProfileManager.getApplicantProfileBean(refreq.getCandidateId()));
-				}
-				else {
-					path = "/MemberServices/memberservices.html";
-				}
+					request.setAttribute("arefreq", abean);
+					
+					request.setAttribute("PROFILE", ApplicantProfileManager.getApplicantProfileBean(abean.getApplicantId()));
+				
 			}
 			catch (Exception e) {
 				e.printStackTrace();

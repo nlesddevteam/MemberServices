@@ -1,57 +1,45 @@
 package com.esdnl.personnel.jobs.handler;
 
-import com.awsd.security.*;import com.awsd.security.SecurityException;
-import com.awsd.security.SecurityException;
-import com.awsd.servlet.*;
-import com.esdnl.util.*;
-
 import com.esdnl.personnel.jobs.bean.*;
 import com.esdnl.personnel.jobs.dao.*;
-import com.esdnl.personnel.jobs.constants.*;
-
+import com.esdnl.servlet.FormElement;
+import com.esdnl.servlet.FormValidator;
+import com.esdnl.servlet.PersonnelApplicationRequestHandlerImpl;
+import com.esdnl.servlet.RequiredFormElement;
 import java.io.*;
-import java.text.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class DeleteApplicantSubExpRequestHandler implements LoginNotRequiredRequestHandler
+public class DeleteApplicantSubExpRequestHandler extends PersonnelApplicationRequestHandlerImpl 
 {
-  public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException
-  {
-    String path;
-    HttpSession session = null;
-    User usr = null;
-    SimpleDateFormat sdf = null;
-    ApplicantProfileBean profile = null;
-    
-    
-    try
-    {
-      
-      String id = request.getParameter("del");
-     
-      if(StringUtils.isEmpty(id))
-      {
-        request.setAttribute("msg", "ID required for deletion.");
-        path = "applicant_registration_step_4.jsp";
-      }
-      else
-      {
-        ApplicantSubExpManager.deleteApplicantSubExpBean(Integer.parseInt(id));
-        
-        request.setAttribute("msg", "Substitute experience successfully deleted.");
-        path = "applicant_registration_step_4.jsp";
-      }
-      
-    }
-    catch(JobOpportunityException e)
-    {
-      e.printStackTrace();
-      request.setAttribute("msg", "Could not delete applicant substitute experience.");
-      path = "applicant_registration_step_4.jsp";
-    }
-    
-    return path;
-  }
+	public DeleteApplicantSubExpRequestHandler() {
+		this.validator = new FormValidator(new FormElement[] {
+				new RequiredFormElement("del", "ID required for deletion")
+		});
+	}
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException
+	{
+		super.handleRequest(request, response);
+		String path;
+		if (validate_form()) {
+			try{
+
+				String id = request.getParameter("del");
+				ApplicantSubExpManager.deleteApplicantSubExpBean(Integer.parseInt(id));
+				request.setAttribute("msg", "Substitute experience successfully deleted.");
+				path = "applicant_registration_step_4.jsp";
+			}
+			catch(JobOpportunityException e)
+			{
+				e.printStackTrace();
+				request.setAttribute("msg", "Could not delete applicant substitute experience.");
+				path = "applicant_registration_step_4.jsp";
+			}
+		}else {
+			request.setAttribute("errmsg", this.validator.getErrorString());
+			path = "applicant_registration_step_4.jsp";
+		}
+		return path;
+	}
 }

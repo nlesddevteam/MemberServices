@@ -5,24 +5,24 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.awsd.servlet.LoginNotRequiredRequestHandler;
 import com.esdnl.personnel.jobs.bean.ApplicantEducationOtherBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.dao.ApplicantEducationOtherManager;
+import com.esdnl.servlet.PersonnelApplicationRequestHandlerImpl;
 import com.esdnl.util.StringUtils;
 
-public class ApplicantCheckEducationAjaxRequestHandler implements LoginNotRequiredRequestHandler {
+public class ApplicantCheckEducationAjaxRequestHandler extends PersonnelApplicationRequestHandlerImpl {
 
 	public ApplicantCheckEducationAjaxRequestHandler() {
 
 	}
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException
-  {
+    throws ServletException, IOException{
 
 		String msg="";
 		String msg2="";
+		super.handleRequest(request, response);
 		try {
 					ApplicantProfileBean profile = (ApplicantProfileBean) request.getSession(false).getAttribute("APPLICANT");
 					ApplicantEducationOtherBean aoe = ApplicantEducationOtherManager.getApplicantEducationOtherBean(profile.getSIN());

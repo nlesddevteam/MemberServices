@@ -66,7 +66,7 @@ public class DeclineAdRequestRequestHandler implements RequestHandler {
 					EmailBean email = new EmailBean();
 					email.setTo(history.getPersonnel().getEmailAddress());
 					email.setSubject("NLESD Personnel Package: Job Ad Request Declined");
-					email.setFrom("ms@esdnl.ca");
+					email.setFrom("ms@nlesd.ca");
 					email.setBody(VelocityUtils.mergeTemplateIntoString("personnel/job_ad_request_decline.vm", model));
 					email.send();
 					request.setAttribute("msg", "Ad Request declined successfully.");
