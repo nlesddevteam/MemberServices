@@ -675,6 +675,11 @@ $(document).ready(function() {
       					<esd:SecurityAccessRequired permissions="BCS-CHANGE-STATUS">
         						<button type="button" class="btn btn-xs btn-warning" onclick="changestatus();">Change Status</button>
         					</esd:SecurityAccessRequired>
+        				<c:if test = "${vehicle.vStatus == 1 || vehicle.vStatus == 3}">
+        					<esd:SecurityAccessRequired permissions="BCS-APPROVE-REGIONAL">
+        						<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;
+        					</esd:SecurityAccessRequired>
+        				</c:if>	
       					<c:if test = "${vehicle.vStatus == 6 }">
       						<esd:SecurityAccessRequired permissions="BCS-APPROVE-REJECT">
         					<button type="button" class="btn btn-xs btn-success" onclick="openApproveVeh();">Approve</button>&nbsp;
