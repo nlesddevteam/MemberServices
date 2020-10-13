@@ -434,6 +434,8 @@
 							<option value="Reading">Reading</option>
 							<option value="Safe and Inclusive Schools">Safe and Inclusive Schools</option>
 							<option value="School Support">School Support</option>
+							<option value="Science">Science</option>
+							<option value="Science and Career Education">Science and Career Education</option>
 							<option value="Science and Technology">Science and Technology</option>
 							<option value="Student Assistants">Student Assistants</option>
 							<option value="Student Assistants/Teachers">Student Assistants/Teachers</option>
