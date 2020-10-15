@@ -1107,7 +1107,7 @@ public class BussingContractorEmployeeManager {
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
-				list.put(rs.getString("FIRSTNAME") + ", " + rs.getString("FIRSTNAME"), rs.getInt("ID"));
+				list.put(rs.getString("LASTNAME") + ", " + rs.getString("FIRSTNAME"), rs.getInt("ID"));
 			}
 				
 		}
