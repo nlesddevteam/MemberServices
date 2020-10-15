@@ -886,7 +886,7 @@ function getPositions()
            				});
      					  $("#position_name").append(option);
      					  $("#jes_pay").append(jesoption);
-     					 $("#position_salary").val('');
+     					 //$("#position_salary").val('');
      					 
  					
      				},
@@ -912,10 +912,10 @@ function getJesPay()
 	//now find the jes pay
 	$("#jes_pay").val(uc);
 	//clear value
-	$("#position_salary").val('');
+	//$("#position_salary").val('');
 	var jespay = $( "#jes_pay option:selected" ).text();
 	
-	$("#position_salary").val(jespay);
+	//$("#position_salary").val(jespay);
 			
 		
 
