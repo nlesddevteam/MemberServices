@@ -354,8 +354,8 @@ input {border:1px solid silver;}
 							  
 <!-- TECHNOLOGY -->
                 <tr>
-				<td class="tableTitle">Techology:</td>
-				<td class="tableResult" colspan=3>How may techology support the successfully attainment of your goal?<br/>
+				<td class="tableTitle">Technology:</td>
+				<td class="tableResult" colspan=3>How may technology support the successfully attainment of your goal?<br/>
 						<textarea id='txt_technology' name="TechSupport"><%=(request.getAttribute("TechSupport") != null) ? (String) request.getAttribute("TechSupport"): ""%></textarea>
 				</td>
 				</tr>
