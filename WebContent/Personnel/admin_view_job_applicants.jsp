@@ -3,9 +3,11 @@
          				 com.esdnl.personnel.jobs.constants.*,
          				 com.esdnl.personnel.jobs.dao.*,
          				 com.esdnl.personnel.jobs.bean.*,                
-         				 com.awsd.security.*,         				 
+         				 com.awsd.security.*,     
+         				 com.esdnl.util.*,    				 
          				 com.awsd.mail.bean.*,         				 
          				 java.util.*,
+         				 java.text.*,
          				 java.util.stream.*"
 	isThreadSafe="false"%>
 
@@ -131,6 +133,12 @@
 			msg = "Could not send email.";
 		}
 	}
+	
+	  Calendar rec_search_cal = Calendar.getInstance();
+	  rec_search_cal.clear();
+	  rec_search_cal.set(2020, Calendar.MAY, 1);
+	  Date rec_search_date = rec_search_cal.getTime();
+	
 %>
 
 <html>
@@ -146,7 +154,7 @@
 	$(function() {
 
 		$("#jobsapp").DataTable({
-			"order" : [ [ 2, "desc" ] ],
+			"order" : [ [ 1, "desc" ] ],
 			"lengthMenu" : [ [ 50, 100, 200, -1 ], [ 50, 100, 200, "All" ] ]
 		});
 	});
@@ -227,7 +235,7 @@ input {
 				<br />
 				
 
-				<div class="table-responsive">
+				<div class="table-responsive" style="font-size:11px;">
 					<c:choose>
 						<c:when test="${sfilterparams ne null }">
 								<div class="panel-group">
@@ -386,57 +394,121 @@ input {
 					</p>
 					
 					<% if(permApplicants != null) { %>
-						<p class='alert-success'># Permanent Status Applicants: <%= permApplicants.size() %></p>
+						<div class='alert alert-info' style="font-size:12px;"><b># Permanent Status Applicants:</b> <%= permApplicants.size() %></div>
 					<% } %>
 					
-					<table id="jobsapp" class="table table-condensed table-striped"
-						style="font-size: 11px; background-color: #FFFFFF;">
+					<table id="jobsapp" class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF;">
 						<thead>
-							<tr>
-						
+							<tr>	
 							
 							<%if (job.getIsSupport().equals("Y")) { %>							
-								<th width='30%'>NAME</th>
-								<th width='30%'>EMAIL</th>
-								<th width='10%'>SENIORITY</th>			
-								<th width='15%'>TYPE</th>
-								<th width='15%'>OPTIONS</th>
-							<%} else {%>
-								<th width='20%'>NAME</th>
-								<th width='20%'>EMAIL</th>
-								<th width='10%'>SENIORITY</th>		
-								<% if(highlyRecommendedMap != null) { %>
-									<th>HIGHLY REC'ED</th>
-								<% } %>			
-								<th width='10%'>OTHER INFO</th>
-								<th width='10%'>CERT./CRS</th>
+								<th width=25%'>NAME/EMAIL</th>								
+								<th width='8%'>SENIORITY</th>			
 								<th width='10%'>TYPE</th>
-								<th width='15%'>OPTIONS</th>
+								<th width='30%'>POSITION/STATUS</th>
+								<th width='*'>OPTIONS</th>
+							<%} else {%>
+								<th width='25%'>NAME/EMAIL</th>								
+								<th width='8%'>SENIORITY</th>		
+								<% if(highlyRecommendedMap != null) { %>
+									<th width='5%'>H R'D</th>
+								<% } %>	
+								
+								<th width='15%'>CERT./CRS</th>
+								<th width='10%'>TYPE</th>
+								<th width='25%'>POSITION/STATUS</th>
+								<th width='*'>OPTIONS</th>
 							<%} %>	
 							</tr>
 						</thead>
 						<tbody>
 
 							<%
+							
+							TeacherRecommendationBean[] recs = null;
+							String cssClass = "NoPosition";
+							String cssText = "No Position";
+							String position = null;
+							DecimalFormat df = new DecimalFormat("0.00");
+							boolean hasJobSpecificInterviewSummary = false;
+						
+							JobTypeConstant jtype = null;
 								boolean isLabWestSchool = false;
 									for (int i = 0; i < applicants.length; i++) {
-										isLabWestSchool = ((!labWestSchools.contains(locationId) && (applicants[i].getEsdExp() != null)
+										
+										
+										
+										position = "";									
+											cssClass = "NoPosition";
+											cssText = "No Position";
+											
+											position = null;
+											recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
+
+											if ((recs != null) && (recs.length > 0)) {
+												if (recs[0].getJob() != null) {
+													jtype = recs[0].getJob().getJobType();
+													String jobtype = "";
+													if (jtype.equal(JobTypeConstant.TLA_REGULAR) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
+														jobtype = " TLA";
+													}
+													else if (jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.REPLACEMENT)) {
+														jobtype = " Teaching";
+													}
+													else if (jtype.equal(JobTypeConstant.ADMINISTRATIVE)) {
+														jobtype = " Administrative";
+													}
+													else if (jtype.equal(JobTypeConstant.LEADERSHIP)) {
+														jobtype = " Leadership";
+													}
+													if (jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.TLA_REGULAR)) {
+														if (recs[0].getTotalUnits() < 1.0) {
+															cssClass = "PermanentPartTimePosition";
+															cssText = "Permanent/ Part Time";
+															position = jobtype + " " + recs[0].getEmploymentStatus() + " Part-time ("
+																	+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+														}
+														else {
+															cssClass = "PermanentFullTimePosition";
+															cssText = "Permanent/ Full Time";
+															position = jobtype + " " + recs[0].getEmploymentStatus() + " Full-time @ "
+																	+ recs[0].getJob().getJobLocation();
+														}
+													}
+													else if (jtype.equal(JobTypeConstant.REPLACEMENT) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
+														cssClass = "ReplacementPosition";
+														cssText = "Replacement";
+														position = "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+ recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Replacement ("
+																+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+													}
+													else if (jtype.equal(JobTypeConstant.TRANSFER)) {
+														cssClass = "TransferPosition";
+														cssText = "Transfer";
+														position =  "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Transfer ("
+																+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+													}
+												}
+				
+												if (position != null) {
+													cssText = "<span style='color:Green;'>Already Accepted a Position</span>";
+													position += "<br/><b>Accepted:</b> " + recs[0].getOfferAcceptedDateFormatted();
+												}
+											}
+
+											isLabWestSchool = ((!labWestSchools.contains(locationId) && (applicants[i].getEsdExp() != null)
 												&& labWestSchools.contains(applicants[i].getEsdExp().getPermanentContractSchool()))
 														? true
 														: false);
 							%>
 							<tr class='applicant-list<%=(isLabWestSchool ? " lab-west-school" : "")%>' uid='<%=applicants[i].getSIN()%>'>
 							
-							<!-- NAME -->	
-							<td valign='top'>
-								<%=applicants[i].getFullName().replace("'", "&#39;")%>
-								<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>
-									<br /><span class='alert-success'>PERM</span> 
-								<% } %>
+							<!-- NAME/EMAIL -->	
+							<td valign='top'>							
+								<%=applicants[i].getFullName().replace("'", "&#39;")%><br/>
+								<a	href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a>
 							</td>
 								
-							<!-- EMAIL -->	
-								<td valign='top'><a	href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
+							
 								
 							<!-- SENIORITY -->	
 								<td>
@@ -448,7 +520,7 @@ input {
 							<% if(highlyRecommendedMap != null) { %>
 								<td class='col-highly-recommended <%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "alert-success" : "alert-danger" %>'><%= highlyRecommendedMap.containsKey(applicants[i].getUID()) ? "YES" : "NO" %></td>
 							<% } %>
-							<!-- OTHER (HIDE FOR NOW WITH SUPPORT JOBS -->
+							<!-- OTHER (HIDE FOR NOW WITH SUPPORT JOBS
 							<%if (job.getIsSupport().equals("N")) { %>	
 								<td><%if (isLabWestSchool) {%> 
 								Labrador West School: <%=applicants[i].getEsdExp().getPermanentContractLocationText()%>.
@@ -456,7 +528,7 @@ input {
 									<span style="color: DimGrey;">N/A</span>
 									<%}%>
 								</td>
-							<%}%>	
+							<%}%>	 -->
 					<%if ((applicants[i].getProfileType().equals("T") && job.getIsSupport().equals("Y")) || (applicants[i].getProfileType().equals("S") && job.getIsSupport().equals("N"))) {%>	
 					<td style="background-color: #000000; color: White; text-align: center;vertical-align:middle;">USER WRONG PROFILE TYPE FOR THIS POSITION</td>
 					<%} %>			
@@ -540,16 +612,36 @@ If they have a Teaching Certificate, and ECE, and/or 20 plus courses they can be
 								<% if (applicants[i].getProfileType().equals("S")) { %>
 								<td style="background-color: #FFEBCD; color: Black; text-align: center;vertical-align:middle;">SUPPORT/MGMNT</td>
 								<%}%>
-								
-								<td style="text-align:right;">
+							
+								<td style="vertical-align: top;">																		
+								<div style="color: DimGrey; padding-bottom: 3px;">
 								<% if(shortlistMap.containsKey(applicants[i].getUID())) { %>
-										<span style='font-weight:bold;' class='alert-success'>SHORTLISTED</span><br/>
-									<% } %>
-									<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
+										<span style="background-color:#1E90FF;color:white;font-weight:bold;">&nbsp; SHORTLISTED &nbsp; </span> &nbsp;							
+								<%} %>
+								<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
+									<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span>
+								<% } %>		
+								<% if((((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID()))) || shortlistMap.containsKey(applicants[i].getUID())) { %>		
+								<br/>
+								<%} %>											
+										<%if(!StringUtils.isEmpty(position)){ %>
+										<b><%=cssText%></b><br/>
+										<%=position %>
+										<%} else {%>
+										<span style="color:Grey;">No current position information available.</span>
+										<%} %>										
+										
+									</div>
+								
+								</td>
+								
+								<td style="text-align:right;">		
+								<a  class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
 									<% if (usr.checkRole("ADMINISTRATOR") || usr.checkRole("MANAGER OF HR - PERSONNEL")) {%> 
 									<a href="#" data-toggle="confirmation" data-title="Are you sure you wish to withdraw <%=applicants[i].getFullNameReverse()%> from this competition?"
 									class="btn btn-danger btn-xs" comp-num='<%=job.getCompetitionNumber()%>' uid='<%=applicants[i].getSIN()%>'>Withdraw</a> 
 									<%	}%>
+									
 								</td>
 							</tr>
 							<%

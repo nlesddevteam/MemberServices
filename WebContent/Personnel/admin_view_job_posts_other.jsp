@@ -60,7 +60,8 @@
   });
 </script>
 <style>
-		.tableCompNum {width:25%;}
+		.tableCB {width:5%;}
+		.tableCompNum {width:20%;}
 		.tablePosTitle {width:45%;}
 		.tableCompEndDate {width:20%;}
 		.tableOptions {width:10%;}

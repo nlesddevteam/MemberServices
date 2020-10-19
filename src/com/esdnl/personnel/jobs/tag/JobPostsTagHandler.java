@@ -60,10 +60,10 @@ public class JobPostsTagHandler extends TagSupport {
 				
 				out.print("By default, the jobs are listed sorted by competition number, however this may not reflect the latest job post.<br/><br/>");
 				out.println("<table class=\"jobapps table table-striped table-condensed\" style=\"font-size:12px;padding-top:3px;border-top:1px solid silver;\">");	
-				out.println("<thead><tr><th class='tableCompNum'>Competition Number</th>"
-						+ "<th class='tablePosTitle'>Position Title</th>"					
-						+ "<th class='tableCompEndDate'>Competition End Date</th>"
-						+ "<th class='tableOptions'>Options</th></tr></thead>");				
+				out.println("<thead><tr><th class='tableCB'>SELECT</th><th class='tableCompNum'>COMPETITION #</th>"
+						+ "<th class='tablePosTitle'>POSITION</th>"					
+						+ "<th class='tableCompEndDate'>COMP END DATE</th>"
+						+ "<th class='tableOptions'>OPTIONS</th></tr></thead>");				
 				
 				for (int i = 0; i < opps.length; i++) {					
 					
@@ -74,10 +74,11 @@ public class JobPostsTagHandler extends TagSupport {
 					ass = (JobOpportunityAssignmentBean[]) opps[i].toArray(new JobOpportunityAssignmentBean[0]);
 
 					out.println("<tr id='" + opps[i].getCompetitionNumber() + "' style='background-color:" + bg_color + ";'>");
-					
-					out.println("<td style='border-top:solid 1px " + bd_color + ";"
+					out.println("<td style='vertical-align:middle;text-align:center;border-top:solid 1px " + bd_color + ";"
 							+ (opps[i].isCancelled() ? "border-bottom:solid 1px #FF0000;" : "") + "'>"							
-							+ "<input type='checkbox' name='comp_num' value ='" + opps[i].getCompetitionNumber() + "'/>"
+							+ "<input type='checkbox' name='comp_num' value ='" + opps[i].getCompetitionNumber() + "'/></td>");
+					out.println("<td style='border-top:solid 1px " + bd_color + ";"
+							+ (opps[i].isCancelled() ? "border-bottom:solid 1px #FF0000;" : "") + "'>"	
 							+ opps[i].getCompetitionNumber() + "</td>");
 					
 					out.println("<td style='border-top:solid 1px " + bd_color + ";"

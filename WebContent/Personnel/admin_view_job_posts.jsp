@@ -70,10 +70,10 @@
   	$("#loadingSpinner").css("display","none");
 </script>
 <style>
-		
+		.tableCB {width:5%;}
 		.tableCompNum {width:15%;}
-		.tablePosTitle {width:59%;}
-		.tableCompEndDate {width:20%;}
+		.tablePosTitle {width:60%;}
+		.tableCompEndDate {width:15%;}
 		.tableOptions {width:5%;}
 		input[type="checkbox"] {margin-top: -1px;margin-left:6px;margin-right:2px;vertical-align: middle;}
 		input { border:1px solid silver;}
@@ -81,7 +81,7 @@
     <script>   
  $('document').ready(function(){
 	  $(".jobapps").DataTable({
-		  "order": [[ 0, "desc" ]],
+		  "order": [[ 1, "desc" ]],
 		  "lengthMenu": [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]]
 	  
 	  
