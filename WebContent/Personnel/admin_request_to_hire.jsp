@@ -326,8 +326,7 @@ var pageWordCountConf = {
                                       	<c:otherwise>
                                       		<c:choose>
                                       			<c:when test="${rbean.status.value eq 1 }">
-                                      				<input type="text" name="position_salary" id="position_salary" class="form-control" value="${empty rbean.positionSalary ? '':rbean.positionSalary}">
-                                      			</c:when>
+                                      			<input type="text" name="position_salary" id="position_salary" class="form-control" value="${empty rbean.positionSalary ? '':rbean.positionSalary}"></c:when>
                                       			<c:otherwise>
                                       			${empty rbean.positionSalary ? '':rbean.positionSalary}                                   			
                                       				
@@ -496,6 +495,7 @@ var pageWordCountConf = {
 					                    			<option value="-1" SELECTED>--- Select Division ---</option>
 					                    			<option value="1">Programs</option>
 					                    			<option value="2">Finance - Information Technology</option>
+					                    			<option value="8">Finance - Financial Services</option>
 					                    			<option value="3">Finance - Procurement and Business Services</option>
 					                    			<option value="4">Finance - Student Transportation</option>
 					                    			<option value="5">Facilities</option>
@@ -511,6 +511,7 @@ var pageWordCountConf = {
 						                    			<option value="-1">--- Select Division ---</option>
 						                    			<option value="1">Programs</option>
 						                    			<option value="2">Finance - Information Technology</option>
+						                    			<option value="8">Finance - Financial Services</option>
 						                    			<option value="3">Finance - Procurement and Business Services</option>
 						                    			<option value="4">Finance - Student Transportation</option>
 						                    			<option value="5">Facilities</option>
