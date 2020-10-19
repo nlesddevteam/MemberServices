@@ -123,7 +123,7 @@
 		$('.btn-action').button();
 		
 		$("#jobsapp").DataTable({
-			"order": [[ 2, "desc" ]],
+			"order": [[ 1, "desc" ]],
 			"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
 		});
 		
@@ -180,18 +180,17 @@
 					<% if (applicants.length > 0) { %>
 					
 					<% if((permApplicants != null) && (permApplicants.size() > 0)) { %>
-						<p class='alert alert-success' style='font-weight:bold;'># Permanemt Status Applicants: <%= permApplicants.size() %>. This competition qualifies for a SENIORITY-BASED HIRE</p>
+					<div class='alert alert-info' style="font-size:12px;"><b># Permanent Status Applicants:</b> <%= permApplicants.size() %></div>
 					<% } %>
 
 					<table id="jobsapp" class="table table-condensed table-striped"
 						style="font-size: 11px; background-color: #FFFFFF;">
 						<thead>
 							<tr>
-								<th width='20%'>NAME</th>
-								<th width='15%'>EMAIL/TELEPHONE</th>
-								<th width='9%'>SENIORITY</th>
-								<th width="10%">STATUS</th>
-								<th width='46%'>POSITION/OPTIONS</th>
+								<th width='20%'>NAME/EMAIL</th>								
+								<th width='8%'>SENIORITY</th>								
+								<th width='30'>POSITION</th>
+								<th width='*'>OPTIONS</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -248,20 +247,20 @@
 											else if (jtype.equal(JobTypeConstant.REPLACEMENT) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
 												cssClass = "ReplacementPosition";
 												cssText = "Replacement";
-												position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype + " Replacement ("
+												position = "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+ recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Replacement ("
 														+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
 											}
 											else if (jtype.equal(JobTypeConstant.TRANSFER)) {
 												cssClass = "TransferPosition";
 												cssText = "Transfer";
-												position = recs[0].getJob().getCompetitionNumber() + ":" + jobtype + " Transfer ("
+												position =  "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Transfer ("
 														+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
 											}
 										}
 		
 										if (position != null) {
-											cssText = "Already Accepted Position";
-											position += " - Accepted: " + recs[0].getOfferAcceptedDateFormatted();
+											cssText = "<span style='color:Green;'>Already Accepted a Position</span>";
+											position += " <br/><b>Accepted:</b> " + recs[0].getOfferAcceptedDateFormatted();
 										}
 									}
 
@@ -285,13 +284,8 @@
 							<tr>
 								<%statusi++; %>
 
-								<td style="vertical-align: middle;">
-									<%=applicants[i].getSurname()%>,<%=applicants[i].getFirstname()%>
-									<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>
-										<br /><span class='alert-success'>PERM</span> 
-									<% } %>
-								</td>
-								<td style="vertical-align: middle;">
+								<td style="vertical-align: top;">
+									<%=applicants[i].getSurname()%>,<%=applicants[i].getFirstname()%><br/>								
 									<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br />Tel: <%=applicants[i].getHomephone()%>
 								</td>
 								<td style="vertical-align: middle;">
@@ -300,12 +294,23 @@
 									<%} else {%>
 										<span style="color: DimGrey;">0</span> 
 									<%}%>
-								</td>
-								<td style="text-align: center; vertical-align: middle;" class="<%=cssClass%>" id="statusBlock<%=statusi%>">
-									<%=cssText%>
-								</td>
-
+								</td>							
 								<td>
+								<div style="color: DimGrey; padding-bottom: 3px;">	
+								<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
+							<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span> <br/>
+								<% } %>							
+										<%if(!StringUtils.isEmpty(position)){ %>
+										<b><%=cssText%></b><br/>
+										<%=position %>
+										<%} else {%>
+										<span style="color:Grey;">No current position information available.</span>
+										<%} %>
+										
+										
+									</div>								
+								</td>
+								<td style="text-align:right;">
 									<div style="padding-top: 5px; text-align: right;">
 										<a class='btn btn-xs btn-primary'
 											href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
@@ -388,24 +393,11 @@
 										</esd:SecurityAccessRequired>
 										<% } %>
 										<% if(!declinedInterview) { %>
-										<a href="#" class="btn btn-xs btn-warning"
-											title="Reference Request"
-											onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference
-											Request</a>
+										<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference	Request</a>
 										<% } %>
 
 									</div>
-
-									<div style="float: left; color: DimGrey; padding-top: 3px;">
-										<%if(!StringUtils.isEmpty(position)){ %>
-										<b><%=cssText%> Position:</b>
-										<%=position %>
-										<%} else {%>
-										No current position information available for
-										<%=applicants[i].getFirstname()%>.
-										<%} %>
-										<br />
-									</div>
+										
 								</td>
 
 							</tr>

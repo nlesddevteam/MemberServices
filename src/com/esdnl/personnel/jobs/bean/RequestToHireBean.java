@@ -309,7 +309,10 @@ public class RequestToHireBean {
 			break;
 		case 7:
 			dString="Human Resources - Casuals/Student Assistant/Teacher Aides";
-			break;				
+			break;
+		case 8:
+			dString="Finance - Financial Services";
+			break;	
 		default:
 			dString="";
 			break;
@@ -341,6 +344,9 @@ public class RequestToHireBean {
 		case 7:
 			dString="HR";
 			break;
+		case 8:
+			dString="PBS";
+			break;	
 		default:
 			dString="";
 			break;

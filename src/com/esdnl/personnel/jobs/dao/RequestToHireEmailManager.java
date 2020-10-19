@@ -221,7 +221,6 @@ public class RequestToHireEmailManager {
 					model.put("requestTitle",rbean.getJobTitle() );
 					emailsubject="Request To Hire for " + rbean.getRequestBy() + " ready to be posted";
 					historyNotes.append("Ready To Post Email Sent To:");
-					
 				}else {
 					emailtemplate="personnel/request_to_hire_submitted.vm";
 					model.put("requesterName", rbean.getRequestBy());

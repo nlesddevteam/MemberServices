@@ -60,10 +60,10 @@ public class OtherJobPostsTagHandler extends TagSupport {
 			out.println("});</script>");	
 			out.println("<table width='100%' class='table table-striped table-condensed otherJobsList"+this.type+"' style=\"font-size:11px;padding-top:3px;border-top:1px solid silver;\">");		
 			JobCount=0;
-			out.println("<thead><tr><th class='tableCompNum' width='25%'>Competition Number</th>"
-					+ "<th class='tablePosTitle' width='45%'>Position Title</th>"
-					+ "<th class='tableCompEndDate' width='20%'>Competition End Date</th>"
-					+ "<th class='tableOptions' width='10%'>Options</th></tr></thead><tbody>");
+			out.println("<thead><tr><th class='tableCB'>SELECT</th><th class='tableCompNum' width='25%'>COMPETITION #</th>"
+					+ "<th class='tablePosTitle' width='45%'>POSITION</th>"
+					+ "<th class='tableCompEndDate' width='20%'>END DATE</th>"
+					+ "<th class='tableOptions' width='10%'>OPTIONS</th></tr></thead><tbody>");
 
 			if (opps.length > 0) {
 				for (int i = 0; i < opps.length; i++) {					
@@ -76,9 +76,12 @@ public class OtherJobPostsTagHandler extends TagSupport {
 
 					out.println("<tr id='" + opps[i].getCompetitionNumber() + "' style='background-color:" + bg_color + ";'>");
 					
+					out.println("<td style='vertical-align:middle;text-align:center;border-top:solid 1px " + bd_color + ";"
+							+ (opps[i].isCancelled() ? "border-bottom:solid 1px #FF0000;" : "") + "'>"							
+							+ "<input type='checkbox' name='comp_num' value ='" + opps[i].getCompetitionNumber() + "'/></td>");
+					
 					out.println("<td style='border-top:solid 1px " + bd_color + ";"
 							+ (opps[i].isCancelled() ? "border-bottom:solid 1px #FF0000;" : "") + "'>"							
-							+ "<input type='checkbox' name='comp_num' value ='" + opps[i].getCompetitionNumber() + "'/>"
 							+ opps[i].getCompetitionNumber() + "</td>");
 					
 					out.println("<td style='border-top:solid 1px " + bd_color + ";"

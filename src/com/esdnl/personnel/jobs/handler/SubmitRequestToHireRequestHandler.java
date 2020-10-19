@@ -78,6 +78,11 @@ public class SubmitRequestToHireRequestHandler extends RequestHandlerImpl {
 			rthb.setVacancyReason(form.get("vacancy_reason"));
 			if(form.getInt("rid") == -1){
 				RequestToHireManager.addRequestToHireBean(rthb);
+				//check to see if it is financial services, level 2 approval skipped, comptroller approval required
+				//update initial status
+				if(rthb.getDivision() == 8){
+					RequestToHireManager.updateRequestToHireStatus(rthb.getId(),RequestToHireStatus.APPROVEDDIVISION.getValue() );
+				}
 				//add the history item
 				RequestToHireHistoryBean rhis = new RequestToHireHistoryBean();
 				rhis.setRequestToHireId(rthb.getId());
