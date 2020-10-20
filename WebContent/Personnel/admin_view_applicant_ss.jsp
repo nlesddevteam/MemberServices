@@ -793,8 +793,8 @@ input {
 											
 					</div>
 					</div>
-</div>                                   
-                                   
+  </div>                  
+                                
 
 <!-- OPTIONS --------------------------------------------------------------->    
 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">                        
@@ -868,7 +868,7 @@ input {
 
   </div>
 </div>
-</div>
+
 	<esd:SecurityAccessRequired
 				permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
 			<!-- Modal for deleting app -->
