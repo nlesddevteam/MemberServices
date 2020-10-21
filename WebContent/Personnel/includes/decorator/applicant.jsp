@@ -369,7 +369,7 @@
 																<div class="containerPanelBody">
 																<b>Avalon Regional Office</b><br/>
 																Human Resources Division<br/>
-																 <a href="mailto:careers@nlesd.ca?subject=Eastern Internal Jobs" title="careers@nlesd.ca">careers@nlesd.ca</a><br/>			 
+																 <a href="mailto:hravalon@nlesd.ca?subject=Avalon Jobs" title="hravalon@nlesd.ca">hravalon@nlesd.ca</a><br/>			 
 																 Fax: (709) 758-1052
 																</div>
 														</div>
