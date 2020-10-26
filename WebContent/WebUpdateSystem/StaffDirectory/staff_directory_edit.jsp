@@ -171,9 +171,10 @@
 	                      		<c:forEach items="${ divisions }" var='division'>
 	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
 	                      			<c:choose>
-											<c:when test="${ (division.name eq 'Finance and Business Administration') or (division.name eq 'Corporate Services')  }">
+											<c:when test="${ (division.name eq 'Finance and Business Administration') or (division.name eq 'Corporate Services') }">
 											Corporate Services
 											</c:when>
+											<c:when test="${ (division.name eq 'Operations') }"></c:when>
 											<c:otherwise>
 											${ division.name }
 											</c:otherwise>
@@ -283,6 +284,7 @@
 						<option value="ESL Teacher">ESL Teacher</option>
 						<option value="Fleet Maintenance Coordinator">Fleet Maintenance Coordinator</option>
 						<option value="Foreman">Foreman</option>
+						<option value="Functional Analyst">Functional Analyst</option>
 						<option value="GIS Specialist">GIS Specialist</option>
 						<option value="Guidance Counsellor">Guidance Counsellor</option>
 						<option value="Guidance Counsellor/IRT">Guidance Counsellor/IRT</option>
@@ -386,6 +388,7 @@
 							<option value="Behavioral/Mental Health">Behavioral/Mental Health</option>
 							<option value="Behavioral/Mental Health/Guidance Counsellor">Behavioral/Mental Health/Guidance Counsellor</option>
 							<option value="Blind and Visually Impairment">Blind and Visually Impairment</option>
+							<option value="Casual">Casual</option>
 							<option value="Chief Financial Officer">Chief Financial Officer</option>
 							<option value="Coding">Coding</option>
 							<option value="Comprehensive School Health">Comprehensive School Health</option>
@@ -477,7 +480,7 @@
 							 <option value="Burin">Burin</option>
 							 <option value="Burin/CUPE 1560">Burin/CUPE 1560</option>
 							 <option value="Burin/Avalon West">Burin/Avalon West</option>
-							 <option value="Central">Central</option>							 
+							 <option value="Central">Central</option>
 							 <option value="Labrador">Labrador</option>
 							 <option value="Labrador/Burin">Labrador/Burin</option>
 							 <option value="Labrador/Central">Labrador/Central</option>
@@ -513,7 +516,7 @@
     				<span class="input-group-addon">E. Position Location</span>
 	                     <select id="posLocation" name="posLocation" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
-	                    	 <option value="">Not Applicable</option>
+	                    	 <option value="">Not Applicable</option> 
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
 							 <option value="East Point Elementary">East Point Elementary</option>
@@ -542,6 +545,11 @@
 	                    	 <option value="">Not Applicable</option>
 	                    	 <option value="Acting">Acting</option>
 	                    	 <option value="Casual">Casual</option>
+	                    	  <option value="Casuals">Casuals</option>
+	                    	 <option value="CUPE 1560">CUPE 1560</option>
+	                    	 <option value="CUPE 1560 (10 Month) Staff">CUPE 1560 (10 Month) Staff</option>
+	                    	 <option value="CUPE 1560 (12 Month) Staff">CUPE 1560 (12 Month) Staff</option>
+	                    	 <option value="CUPE 1560 (10 and 12 Month) Staff">CUPE 1560 (10 and 12 Month) Staff</option>
 	                     	 <option value="Interim">Interim</option>
 	                     	 <option value="On Leave">On Leave</option>
 							 <option value="Provisional">Provisional</option>

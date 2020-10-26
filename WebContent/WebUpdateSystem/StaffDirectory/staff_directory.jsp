@@ -306,7 +306,7 @@
 											<div class="column header StaffOptions region1solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'eastern' or fn:containsIgnoreCase(contact.zone.zoneName, 'avalon')) and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
+  					<c:if test="${ (contact.zone.zoneName eq 'eastern' or fn:containsIgnoreCase(contact.zone.zoneName, 'avalon')) and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate') or fn:containsIgnoreCase(contact.division.name,'Operations'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -331,7 +331,7 @@
   					</c:forEach>
   					
   </div></div></div></div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="display:none;">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapse1e">Operations Division</a> (<span class="avaloneCount"></span>)
@@ -489,7 +489,7 @@
   					
   			<div class="panel panel-default">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2d">Corporate Services</a> (<span class="centraldCount"></span>)</h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2d">Corporate Services Division</a> (<span class="centraldCount"></span>)</h4>
     </div>
     <div id="collapse2d" class="panel-collapse collapse">
       <div class="panel-body">
@@ -506,7 +506,7 @@
 											<div class="column header StaffOptions region2solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'central') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
+  					<c:if test="${ (contact.zone.zoneName eq 'central') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate') or fn:containsIgnoreCase(contact.division.name,'Operations'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -531,7 +531,7 @@
   					</c:forEach>
   					
   </div></div></div></div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="display:none;">
     <div class="panel-heading">
       <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2e">Operations Division</a> (<span class="centraleCount"></span>)</h4>
     </div>
@@ -707,7 +707,7 @@
 											<div class="column header StaffOptions region3solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'western') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
+  					<c:if test="${ (contact.zone.zoneName eq 'western') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate') or fn:containsIgnoreCase(contact.division.name,'Operations'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -733,7 +733,7 @@
   					
   </div></div></div></div>
   
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="display:none;">
     <div class="panel-heading">
       <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3e">Operations Division</a> (<span class="westerneCount"></span>)</h4>
     </div>
@@ -903,7 +903,7 @@
 											<div class="column header StaffOptions region4solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'labrador') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
+  					<c:if test="${ (contact.zone.zoneName eq 'labrador') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate') or fn:containsIgnoreCase(contact.division.name,'Operations'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -928,7 +928,7 @@
   					</c:forEach>
   					
   </div></div></div></div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="display:none;">
     <div class="panel-heading">
       <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4e">Operations Division</a> (<span class="labradoreCount"></span>)</h4>
     </div>
@@ -1148,7 +1148,7 @@
 											<div class="column header StaffOptions region5solid">OPTIONS</div>   
 					</div>
   					<c:forEach items='${ contacts }' var='contact'>
-  					<c:if test="${ (contact.zone.zoneName eq 'provincial') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate'))}">
+  					<c:if test="${ (contact.zone.zoneName eq 'provincial') and (fn:containsIgnoreCase(contact.division.name,'Finance') or fn:containsIgnoreCase(contact.division.name,'Corporate') or fn:containsIgnoreCase(contact.division.name,'Operations'))}">
   											<div class='row contact-row'> 
 	     										<div class="column StaffName">
 	     												<c:choose>
@@ -1175,7 +1175,7 @@
   </div></div></div></div>
   
   
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="display:none;">
     <div class="panel-heading">
       <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse5e">Operations Division</a> (<span class="provincialeCount"></span>)</h4>
     </div>
