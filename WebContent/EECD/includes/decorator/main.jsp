@@ -126,7 +126,7 @@
 
 
 <div class="alert alert-info no-print" style="text-align:center;font-size:11px;">
-If you are experiencing technical difficulties with this system, email <a href="mailto:mssupport@nlesd.ca?subject=EECD System">mssupport@nlesd.ca</a>.
+If you are experiencing technical difficulties with this system, email <a href="mailto:mssupport@nlesd.ca?subject=EDU System">mssupport@nlesd.ca</a>.
 </div>
 
 <!-- FOOTER AREA -->		
@@ -136,7 +136,7 @@ If you are experiencing technical difficulties with this system, email <a href="
 	
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">		
-		  EECD Working Groups/Committees System App 1.0 &middot; &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved 
+		  EDU Working Groups/Committees System App 1.0 &middot; &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved 
 		 </div>
 		  
 		</div> 
