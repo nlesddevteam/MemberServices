@@ -126,7 +126,7 @@ $("#loadingSpinner").css("display","none");
 	               	<div class="panel-heading"><b>Export Shortlist(s)</b></div>
       			 	<div class="panel-body">
       			 	
-      			 	Below is a list of all EECD Working Group Areas with completed shortlist.  To export the shortlist(s), select the export all list checkbox or select the checkboxes next to the list that are to be exported.
+      			 	Below is a list of all EDU Working Group Areas with completed shortlist.  To export the shortlist(s), select the export all list checkbox or select the checkboxes next to the list that are to be exported.
 					Once all selectons have been made please click the Export Shortlist(s) button.
       			 	
   					<form id="formexport" name="formexport" method="post" action="exportShortlistMulti.html">

@@ -36,20 +36,20 @@ $("#loadingSpinner").css("display","none");
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Working Groups</b></div>
       			 	<div class="panel-body"> 
-  							To fulfill its mandate, the Department of Education and Early Childhood Development (EECD) annually establishes working groups of educators. EECD working groups can have a variety of
+  							To fulfill its mandate, the Department of Education, Training, Skills Development  (EDU) annually establishes working groups of educators. EDU working groups can have a variety of
 							purposes. For example, curriculum writing/review, policy development, examination preparation, etc. Typical working groups will have educator representation from a variety of
 							school sizes (small, medium, large) and class configurations (single grade, multiage/grade, combined grades), as well as a range of years of experience. Groups may be comprised of a
 							combination of area specialists as well as generalist educators. There will be English and French language representation, where appropriate.
                  			<br/><br/>
-                 			Depending on the project, the time commitment of an EECD working group membership can vary. Groups could meet for two days, 2-3 times per school year, or they could just meet once
+                 			Depending on the project, the time commitment of an EDU working group membership can vary. Groups could meet for two days, 2-3 times per school year, or they could just meet once
 							for 1-2 days. Administrative details such as travel costs, substitute time and so on are provided in advance of any meeting.
 							<br /><br/>
-							To be considered, please visit member services and click on EECD Teacher Working Groups. Here you will find a list of potential EECD working groups and a brief description of their
-							project. If you are interested in participating in an EECD working group this school year, please take the time to review the list and register for the working group(s) that are of interest to you
-							by Friday, September 20, 2019. By registering, you are agreeing to be considered for an EECD working group. Registration is not a guarantee that you will become a working group member.
+							To be considered, please visit member services and click on EDU Teacher Working Groups. Here you will find a list of potential EDU working groups and a brief description of their
+							project. If you are interested in participating in an EDU working group this school year, please take the time to review the list and register for the working group(s) that are of interest to you
+							by Friday, September 20, 2019. By registering, you are agreeing to be considered for an EDU working group. Registration is not a guarantee that you will become a working group member.
 							You will be notified if you are approved.
 							<br /><br/>
-							Being a member of an EECD working group can provide valuable professional learning and a tremendous opportunity to contribute to the education of students in Newfoundland and
+							Being a member of an EDU working group can provide valuable professional learning and a tremendous opportunity to contribute to the education of students in Newfoundland and
 							Labrador. All educators are encouraged to put their names forward for consideration.
 							
                  	<jsp:include page="eecd_menu.jsp"/>
