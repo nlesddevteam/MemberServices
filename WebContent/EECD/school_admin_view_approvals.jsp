@@ -40,7 +40,7 @@ $("#loadingSpinner").css("display","none");
 	               	<div class="panel-heading"><b>Group(s) Approval</b></div>
       			 	<div class="panel-body"> 
  
-							Below is a list of EECD Area selections for members of your staff.  Please use the Approve and Decline buttons to update the status of your staff selections.  When the Approve or Decline button is pressed
+							Below is a list of EDU Area selections for members of your staff.  Please use the Approve and Decline buttons to update the status of your staff selections.  When the Approve or Decline button is pressed
 							a screen will popup where you can enter notes about your decisions.  Once you have pressed OK on the popup screen, an email will be sent back to the staff member
 							with you decision and the notes that you typed.                  		
 							

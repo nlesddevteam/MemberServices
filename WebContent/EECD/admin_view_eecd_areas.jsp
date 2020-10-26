@@ -42,7 +42,7 @@ $("#loadingSpinner").css("display","none");
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Area Administration </b></div>
       			 	<div class="panel-body">
-      			 	Below is a list of all EECD Areas viewable for teachers to select their choices.  New areas can be added by using the Add New Area button and any areas no longer needed
+      			 	Below is a list of all EDU Areas viewable for teachers to select their choices.  New areas can be added by using the Add New Area button and any areas no longer needed
 					 can be removed using the delete link.  If a change in the name is required then please click the View button and make the required change.
                  
                  	         <jsp:include page="eecd_menu.jsp"/>

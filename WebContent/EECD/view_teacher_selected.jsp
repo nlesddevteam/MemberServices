@@ -33,7 +33,7 @@
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Selected Working Groups</b></div>
       			 	<div class="panel-body"> 
-                     Below is a list of all EECD Working Group Areas which you have been selected.
+                     Below is a list of all EDU Working Group Areas which you have been selected.
 					
 					<%if(request.getAttribute("msg")!=null){%>								
 								<div class="alert alert-danger">${ msg }</div>  									

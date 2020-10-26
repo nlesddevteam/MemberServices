@@ -39,7 +39,7 @@ $("#loadingSpinner").css("display","none");
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b> Area Approved List for ${areadescription}</b></div>
       			 	<div class="panel-body"> 
-							Below is a list all teachers approved for the selected EECD Area.  Please use the Add To Shortlist button to add a teacher to the shortlist for this area.  
+							Below is a list all teachers approved for the selected EDU Area.  Please use the Add To Shortlist button to add a teacher to the shortlist for this area.  
 							To view the full shortlist, remove a teacher from the list and/or close the list then please use the View Short List button.
 							
                             <jsp:include page="eecd_menu.jsp"/>

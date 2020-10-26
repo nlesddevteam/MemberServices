@@ -43,7 +43,7 @@
       			 	<div class="panel-body"> 
   
   
-							Below is a list all teachers shortlisted for the selected EECD Area(s).  Please use the Search box to filter the list further if needed.  Please use
+							Below is a list all teachers shortlisted for the selected EDU Area(s).  Please use the Search box to filter the list further if needed.  Please use
 							the buttons to Copy, Export to CSV, Excel, PDF or Print the list below.
 						
                     <jsp:include page="eecd_menu.jsp"/>

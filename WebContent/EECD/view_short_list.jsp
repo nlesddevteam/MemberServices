@@ -38,7 +38,7 @@
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>Area Approved Shortlist for ${areadescription}</b></div>
       			 	<div class="panel-body"> 
-  							Below is a list of all teachers shortlisted for the selected EECD Area.  Please use the Remove from Shortlist button to remove a teacher from the shortlist for this area.  
+  							Below is a list of all teachers shortlisted for the selected EDU Area.  Please use the Remove from Shortlist button to remove a teacher from the shortlist for this area.  
 							To export shortlist  then please use the Export Shortlist button.
 							
 							<jsp:include page="eecd_menu.jsp"/>
