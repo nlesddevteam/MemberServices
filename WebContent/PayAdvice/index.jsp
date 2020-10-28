@@ -27,12 +27,12 @@
     <meta charset="utf-8">
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		 <link rel="stylesheet" href="/MemberServices/includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="includes/css/ms.css" rel="stylesheet" type="text/css">				
+		<link href="includes/css/ms.css" rel="stylesheet" type="text/css">		
+			
 			<script src="/MemberServices/includes/js/jquery-1.9.1.js"></script>
 			<script src="/MemberServices/includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="includes/js/common.js"></script>
-			<script src="includes/js/nlesd.js"></script>
-			<script src="/MemberServices/includes/js/backgroundchange.js"></script>
+			<script type="text/javascript" src="/MemberServices/includes/js/common.js"></script>		
+		
 		
 		<script>
 		jQuery(function(){
