@@ -306,10 +306,18 @@
 										<%} else {%>
 										<span style="color:Grey;">No current position information available.</span>
 										<%} %>
-										
-										
+										<br/>
+										<span  id="statusBlock<%=statusi%>" style="color:Red;"></span>
 									</div>								
 								</td>
+								
+								
+								
+								
+	<!--  FUNCR -->							
+								
+								
+								
 								<td style="text-align:right;">
 									<div style="padding-top: 5px; text-align: right;">
 										<a class='btn btn-xs btn-primary'
