@@ -35,7 +35,7 @@
 			<script src="../includes/js/jquery-1.9.1.js"></script>
 			<script src="../includes/js/jquery-ui-1.10.3.custom.js"></script>
 			<script type="text/javascript" src="../includes/js/common.js"></script>
-			<script src="../includes/js/nlesd.js"></script>
+			
 			<link rel="stylesheet" href="../includes/css/jquery-ui.css" />
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -520,10 +520,12 @@
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
 							 <option value="East Point Elementary">East Point Elementary</option>
+							 <option value="Gonzaga High School">Gonzaga High School</option>
 							 <option value="Holy Heart">Holy Heart</option>
 							 <option value="Hospital School">Hospital School</option>
 							 <option value="IMC">IMC</option>
 							 <option value="Indian River Academy">Indian River Academy</option>
+							  <option value="Prince of Wales Collegiate ">Prince of Wales Collegiate </option>							 
 							 <option value="SD Cook">SD Cook</option>
 							 <option value="Stephenville Elementary">Stephenville Elementary</option>
 							 <option value="St. James Elementary">St. James Elementary</option>
