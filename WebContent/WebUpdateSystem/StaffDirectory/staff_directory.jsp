@@ -64,7 +64,7 @@
 			<script src="../includes/js/jquery-1.9.1.js"></script>
 			<script src="../includes/js/jquery-ui-1.10.3.custom.js"></script>
 			<script type="text/javascript" src="../includes/js/common.js"></script>
-			<script src="../includes/js/nlesd.js"></script>
+			
 			<link rel="stylesheet" href="../includes/css/jquery-ui.css" />
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
