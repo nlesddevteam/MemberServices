@@ -49,6 +49,9 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 
 	private boolean unadvertise;
 	private String isSupport;
+	private boolean multipleRecommendations;
+	private boolean awardedEmailSent;
+	private String jobRequirements;
 
 	public JobOpportunityBean() {
 
@@ -72,6 +75,9 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 		this.reopenedById = 0;
 		this.reopenedBy = null;
 		this.reopenedDate = null;
+		this.multipleRecommendations=false;
+		this.awardedEmailSent=false;
+		this.jobRequirements=null;
 	}
 
 	public void setCompetitionNumber(String competition_number) {
@@ -504,5 +510,29 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	public boolean isSupport() {
 
 		return StringUtils.equals(this.getIsSupport(), "Y");
+	}
+
+	public boolean isMultipleRecommendations() {
+		return multipleRecommendations;
+	}
+
+	public void setMultipleRecommendations(boolean multipleRecommendations) {
+		this.multipleRecommendations = multipleRecommendations;
+	}
+
+	public boolean isAwardedEmailSent() {
+		return awardedEmailSent;
+	}
+
+	public void setAwardedEmailSent(boolean awardedEmailSent) {
+		this.awardedEmailSent = awardedEmailSent;
+	}
+
+	public String getJobRequirements() {
+		return jobRequirements;
+	}
+
+	public void setJobRequirements(String jobRequirements) {
+		this.jobRequirements = jobRequirements;
 	}
 }

@@ -176,7 +176,7 @@ var pageWordCountConf = {
  						</td>
 			     		</tr>
 			     		 <tr>
-			     		<td class='tableTitle'>Reason for Vacancy:</td>
+			     		<td class='tableTitle'>REASON FOR VACANCY:</td>
 			     		<td colspan=3 class='tableResult'> 
 			     		<!-- Not sure why the options below - should be combined into one statement - why? CKEditor complains. -->
 	                                      <c:choose>
