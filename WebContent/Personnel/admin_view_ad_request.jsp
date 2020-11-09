@@ -31,7 +31,7 @@
 $("#loadingSpinner").css("display","none");
 </script>
 <script>
-var pageWordCountConf = {
+var pageWordCountConfVac = {
 	    showParagraphs: true,
 	    showWordCount: true,
 	    showCharCount: true,
@@ -40,6 +40,15 @@ var pageWordCountConf = {
 	    maxWordCount: -1,
 	    maxCharCount: 3990,
 	}
+var pageWordCountConfAd = {
+	    showParagraphs: true,
+	    showWordCount: true,
+	    showCharCount: true,
+	    countSpacesAsChars: true,
+	    countHTML: true,
+	    maxWordCount: -1,
+	    maxCharCount: 3990,
+	}	
 </script>
 <style>
 		.tableTitle {font-weight:bold;width:15%;}
@@ -356,8 +365,8 @@ var pageWordCountConf = {
 	 	});
 		
 	 
-		  	CKEDITOR.replace('vacancy_reason',{wordcount: pageWordCountConf,height:150});
-		    CKEDITOR.replace('ad_text',{wordcount: pageWordCountConf,height:150});
+		  	CKEDITOR.replace('vacancy_reason',{wordcount: pageWordCountConfVac,height:150});
+		    CKEDITOR.replace('ad_text',{wordcount: pageWordCountConfAd,height:350});
 	    
 		
 		

@@ -1,6 +1,7 @@
 package com.esdnl.personnel.jobs.dao;
 
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
-
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.AssignmentEducationBean;
@@ -843,15 +843,25 @@ public class JobOpportunityManager {
 			}
 
 			// add the opportunity info
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp(?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.add_job_opp(?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, jbean.getPositionTitle());
 			stat.setString(2, jbean.getCompetitionNumber());
-			stat.setString(3, jbean.getJobAdText());
+			//switched to a clob field
+			stat.setString(3, "");
 			stat.setTimestamp(4, new Timestamp(jbean.getCompetitionEndDate().getTime()));
 			stat.setDate(5, new Date(jbean.getListingDate().getTime()));
 			stat.setInt(6, jbean.getJobType().getValue());
 			stat.setBoolean(7, jbean.isCandidateListPrivate());
 			stat.setString(8, jbean.getIsSupport());
+			stat.setInt(9, jbean.isMultipleRecommendations() ? 1:0);
+			stat.setInt(10, jbean.isAwardedEmailSent() ? 1:0);
+			if (jbean.getJobAdText() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, jbean.getJobAdText());
+				((OracleCallableStatement) stat).setClob(11, clobdesc);
+			}else{
+				stat.setNull(11, OracleTypes.CLOB);
+			}
 			stat.execute();
 			stat.close();
 
@@ -944,10 +954,18 @@ public class JobOpportunityManager {
 			con.setAutoCommit(false);
 
 			// add the opportunity info
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_job_opp_2(?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_job_opp_clob(?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, jbean.getPositionTitle());
 			stat.setString(2, jbean.getCompetitionNumber());
-			stat.setString(3, jbean.getJobAdText());
+			//stat.setString(3, jbean.getJobAdText());
+			//switched to clob
+			if (jbean.getJobAdText() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, jbean.getJobAdText());
+				((OracleCallableStatement) stat).setClob(3, clobdesc);
+			}else{
+				stat.setNull(3, OracleTypes.CLOB);
+			}
 			stat.setTimestamp(4, new Timestamp(jbean.getCompetitionEndDate().getTime()));
 			stat.setDate(5, new Date(jbean.getListingDate().getTime()));
 			stat.setInt(6, jbean.getJobType().getValue());
@@ -1446,7 +1464,14 @@ public class JobOpportunityManager {
 				jBean.setJobEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
 			if (rs.getDate("AWARDED_DATE") != null)
 				jBean.setJobAwardedDate(new java.util.Date(rs.getDate("AWARDED_DATE").getTime()));
-			jBean.setJobAdText(rs.getString("JOB_AD"));
+			// check to see if opp was created with new clob field or old varchar field
+			if(rs.getString("JOB_REQS") !=  null){
+				//check the clob field
+				Clob clob = rs.getClob("JOB_REQS");
+			    jBean.setJobAdText(clob.getSubString(1, (int) clob.length()));
+			}else {
+				jBean.setJobAdText(rs.getString("JOB_AD"));
+			}
 			if (rs.getDate("DISPLAY_DATE") != null)
 				jBean.setListingDate(new java.util.Date(rs.getDate("DISPLAY_DATE").getTime()));
 			if (rs.getInt("JOB_TYPE") == 0)

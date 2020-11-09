@@ -99,14 +99,14 @@ $("#loadingSpinner").css("display","none");
     });
  </script>
  <script>
-var pageWordCountConf = {
+var pageWordCountConfAd = {
 	    showParagraphs: true,
 	    showWordCount: true,
 	    showCharCount: true,
 	    countSpacesAsChars: true,
 	    countHTML: true,
 	    maxWordCount: -1,
-	    maxCharCount: 3990,
+	    maxCharCount: 8000,
 	}
 	
 	
@@ -247,7 +247,7 @@ var pageWordCountConf = {
                                     <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     		<div class="input-group"> 
-				                                    <span class="input-group-addon">Ad Text*</span>
+				                                    <span class="input-group-addon">*Ad Text:<br/><br/><span style="color:Grey;font-size:9px;">Limit 8000 characters, including spaces.</span></span>
                                         			<textarea class="form-control" name="ad_text" id="ad_text"><%=(opp!=null)?opp.getJobAdText():""%></textarea>
                                         			
                                     		</div> 
@@ -328,7 +328,7 @@ var pageWordCountConf = {
  </div></div></div>
  
    <script>
-    CKEDITOR.replace( 'ad_text',{wordcount: pageWordCountConf,height:150});
+    CKEDITOR.replace( 'ad_text',{wordcount: pageWordCountConfAd,height:350});
     </script>
     <script language="JavaScript">
   
