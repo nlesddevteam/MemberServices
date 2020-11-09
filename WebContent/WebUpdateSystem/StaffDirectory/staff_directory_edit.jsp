@@ -349,6 +349,7 @@
 						<option value="Senior Accountant">Senior Accountant</option>
 						<option value="Senior Administrative Officer">Senior Administrative Officer</option>
 						<option value="Senior Education Officer">Senior Education Officer</option>
+						<option value="Senior Manager of Student Transportation">Senior Manager of Student Transportation</option>
 						<option value="Senior Programmer Analyst">Senior Programmer Analyst</option>
 						<option value="Senior Systems Analyst">Senior Systems Analyst</option>
 						<option value="Solicitor">Solicitor</option>
