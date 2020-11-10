@@ -87,6 +87,7 @@ int numEmpAttended=0;
 int numEmpRegistered = 0;
 int numberOfRegistrants = 0;
 int numberOfAttenddees = 0;
+int yearOfEvent = 0;
 int yearArchive=0;
 boolean isThereEmptyAttendence = false;
 boolean isThereEmptyAttendenceNoRegistrants = false;
@@ -128,7 +129,8 @@ input {border:1px solid silver;}
      <div align="center" class="no-print"><a href="viewDistrictCalendar.html"><img class="topLogoImg" src="includes/img/pdcalheader.png" border=0 style="padding-bottom:10px;"/></a></div>
  
     The following <span class="evntPCount"></span> events (sorted by latest first) for the last 3 years were scheduled by <span style="text-transform:capitalize;"><%=(evts.getPersonnel()!=null)?evts.getPersonnel().getFullNameReverse():"You "%></span>. 
-   <b>Make sure you complete the attendance of your past events (starting with 2020 events) as this is REQUIRED</b>.
+   <br/><br/>
+   <div class="alert alert-warning" style="text-align:center;"><b>NOTICE:</b> Make sure you complete the attendance of your past events (starting with 2020 events) as this is REQUIRED.</div>
     
      
      <div style="font-size:10px;color:Black;text-align:center;padding-top:10px;padding-bottom:10px;">   
@@ -388,7 +390,7 @@ if((evt.isCloseOutDaySession() || evt.isPDOpportunity()) && evt.isPast()) {
 numberOfRegistrants = evt.getRegistrationCount();
 numberOfAttenddees = evt.getAttendees();
 eventIsPast = evt.isPast();
-
+yearOfEvent = evt.getEventDate().getYear()+1900;
 //If number attendees is greator than 0....
 if (numberOfAttenddees > 0) { 
 								
@@ -411,10 +413,13 @@ if (numberOfAttenddees > 0) {
 								$("#numberAttendedNone<%=i%>").css("display","block"); //No registered participants to attend.
 							 	 </script>
 				
-				<%} else {	
-					isThereEmptyAttendence = true;
+				<%} else {						
+					if (yearOfEvent >2019) {
+					isThereEmptyAttendence = true;	
+					}
 				%>				
-									<script>										
+									<script>	
+								
 										$("#numberAttendedWarning<%=i%>").css("display","block"); //ATTENDENCE NOT COMPLETE!
 									</script>	
 				<%}%>
@@ -457,9 +462,9 @@ $(document).ready(function(){
 	$(".evntPCount").text(<%=eventRCount%>);	
 	attCheck = <%=isThereEmptyAttendence %>;
 	yearCheck = <%=cur.get(Calendar.YEAR)%>;
-	isEventPast = <%=eventIsPast%>;
+	isEventPast = <%=eventIsPast%>;	
 	//Event without attendence? Year 2020? Event is past? Then do attendence warning.
-	if (attCheck == true && isEventPast == true && yearCheck >2019 ) {
+	if (attCheck == true && isEventPast == true && yearCheck > 2019 ) {
 		$("#yearTxt").text(yearCheck);	
 		$('#noAttendance').modal('show');
 	}	
