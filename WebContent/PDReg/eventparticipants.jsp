@@ -382,16 +382,16 @@ if (<%=evt.getEventMaximumParticipants()%> >0) {
 		$('.partMessage').removeClass("alert-info").addClass("alert-warning").text(warnText);
 		
 	} else if (percentParticipants <= 75) {		
-		warnText = "Great! Your event has "+ <%=numEmpRegistered %>+" registered at this time.";
+		warnText = "Great! Your event has "+ <%=numEmpRegistered %>+" registered at this time out of "+<%=evtMaxPart%>+" avaliable spaces.";
 		warnColor = '#1E90FF';
 		$('.partMessage').text(warnText);
 		
-	} else if (percentParticipants <= 90) {		
-		warnText = "GOOD NEWS! Your event is almost full with "+ <%=numEmpRegistered %>+"  registered at this time.";
+	} else if (percentParticipants <= 99) {		
+		warnText = "GOOD NEWS! Your event is almost full with "+ <%=numEmpRegistered %>+"  registered at this time out of "+<%=evtMaxPart%>+" avaliable spaces.";
 		warnColor = '#008000';
 		$('.partMessage').removeClass("alert-info").addClass("alert-success").text(warnText);
 		
-	} else if (percentParticipants <= 100) {
+	} else if (percentParticipants == 100) {
 		warnText = "GOOD NEWS! Your event has max number of spaces full with "+ <%=numEmpRegistered %>+"  registered.";
 		warnColor = '#008000';
 		$('.partMessage').removeClass("alert-info").addClass("alert-success").text(warnText);
