@@ -291,6 +291,7 @@
 						<option value="Hospital Teacher">Hospital Teacher</option>
 						<option value="Human Resources Assistant">Human Resources Assistant</option>
 						<option value="Internal Auditor">Internal Auditor</option>
+						<option value="Inuktitut Curriculum Worker">Inuktitut Curriculum Worker</option>
 						<option value="Itinerant">Itinerant</option>
 						<option value="Itinerant Services">Itinerant Services</option>
 						<option value="Itinerant Teacher">Itinerant Teacher</option>
@@ -518,6 +519,7 @@
 	                     <select id="posLocation" name="posLocation" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option> 
+	                    	 <option value="Curriculum Centre">Curriculum Centre</option>
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
 							 <option value="East Point Elementary">East Point Elementary</option>
@@ -526,6 +528,8 @@
 							 <option value="Hospital School">Hospital School</option>
 							 <option value="IMC">IMC</option>
 							 <option value="Indian River Academy">Indian River Academy</option>
+							 <option value="Makkovik">Makkovik</option>
+							 <option value="Nain">Nain</option>
 							  <option value="Prince of Wales Collegiate ">Prince of Wales Collegiate </option>							 
 							 <option value="SD Cook">SD Cook</option>
 							 <option value="Stephenville Elementary">Stephenville Elementary</option>
