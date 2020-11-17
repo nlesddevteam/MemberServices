@@ -519,7 +519,7 @@
 	                     <select id="posLocation" name="posLocation" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option> 
-	                    	 <option value="Curriculum Centre">Curriculum Centre</option>
+	                    	 <option value="Curriculum Centre (Nain)">Curriculum Centre (Nain)</option>
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
 							 <option value="East Point Elementary">East Point Elementary</option>
