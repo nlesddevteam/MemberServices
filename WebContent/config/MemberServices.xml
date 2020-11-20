@@ -4003,6 +4003,10 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.GetSoftDeletedApplicantsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/getSoftDeletedApplicants.html</URL-Pattern>
-    </Request-Handler>                                                                                                                                                              
-  </Request-Handlers>G
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.GetSublistApplicantHistoryAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/getSublistApplicantHistory.html</URL-Pattern>
+    </Request-Handler>                                                                                                                                                                             
+  </Request-Handlers>
 </Member-Services-Config>

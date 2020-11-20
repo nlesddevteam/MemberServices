@@ -30,6 +30,8 @@
   
   session.setAttribute("JOB", null);
   session.setAttribute("SUBLIST", null);
+  ApplicantSubListAuditBean[] alogs = ApplicantSubListAuditManager.getSublistAuditTrail(list.getId());
+  pageContext.setAttribute("auditlogs", alogs);
 %>
 
 
@@ -53,8 +55,24 @@
   <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
  
  
-                                <job:ViewSubList listId='<%=list.getId()%>' />
-    <div class="panel-group" style="padding-top:5px;">                               
+	<job:ViewSubList listId='<%=list.getId()%>' />
+ 	<div class="panel panel-info">
+  		<div class="panel-heading">Audit Log:</div>
+  				<div class="panel-body" style="font-size:11px;">
+ 					<ol>                    
+						<c:choose>
+                        	<c:when test="${not empty auditlogs}">
+                            	<c:forEach items="${auditlogs}" var="abean">
+                             		<li>${abean.entryNotes} on ${abean.entryDateString}		</li>	                                      				                                      			
+                                </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                	<li>No Audit Log Entries.</li>
+                                </c:otherwise>
+                        </c:choose>
+                    </ol>
+	</div></div>                    
+   <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-danger">   
 	               	<div class="panel-heading"><b>Administrative Options</b></div>
       			 	<div class="panel-body">

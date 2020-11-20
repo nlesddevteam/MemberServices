@@ -115,12 +115,18 @@
 										//$("#dive").hide();
 										//$("#divetext").show();
 										//document.getElementById("etext").innerHTML=$(this).find("MTEXT").text();
-										document.getElementById("started").innerHTML=$(this).find("START").text();
-										document.getElementById("finished2").innerHTML=$(this).find("FINISH").text();
-										document.getElementById("closedby").innerHTML=$(this).find("USER").text();
-										$("#butE").hide();
-										alert("Pay Period Closed");
-										isvalid=true;
+										if($(this).find("MESSAGE").text() == "NO ERROR"){
+											document.getElementById("started").innerHTML=$(this).find("START").text();
+											document.getElementById("finished2").innerHTML=$(this).find("FINISH").text();
+											document.getElementById("closedby").innerHTML=$(this).find("USER").text();
+											$("#butE").hide();
+											alert("Pay Period Closed");
+											isvalid=true;
+										}else{
+											alert($(this).find("MESSAGE").text());
+											isvalid=false;
+										}
+										
 			 						});
 								},
 			 				  error: function(xhr, textStatus, error){

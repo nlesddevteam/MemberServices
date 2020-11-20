@@ -14,11 +14,14 @@ import com.awsd.security.User;
 import com.awsd.servlet.RequestHandler;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParameters;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.ApplicantSubListAuditBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
+import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
 import com.esdnl.personnel.jobs.dao.ApplicantFilterParametersManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
+import com.esdnl.personnel.jobs.dao.ApplicantSubListAuditManager;
 import com.esdnl.personnel.jobs.dao.SubListManager;
 import com.esdnl.servlet.Form;
 
@@ -119,6 +122,14 @@ public class ShortListApplicantRequestHandler implements RequestHandler {
 				else if (list != null) {
 					ApplicantProfileBean profile = ApplicantProfileManager.getApplicantProfileBean(request.getParameter("sin"));
 					ApplicantProfileManager.shortListApplicant(request.getParameter("sin"), list);
+					//add audit trail entry for sub list activation
+					ApplicantSubListAuditBean audbean = new ApplicantSubListAuditBean();
+					audbean.setApplicantId(profile.getSIN());//no applicant sub list entry
+					audbean.setSubListId(list.getId());
+					audbean.setEntryType(SublistAuditTypeCostant.APPLICANTAPPROVED);
+					audbean.setEntryBy(usr.getPersonnel());
+					audbean.setEntryNotes("Applicant Approved By: " + usr.getLotusUserFullName());
+					ApplicantSubListAuditManager.addApplicantSubListAuditBean(audbean);
 
 					if (!f.exists("list_id")) {
 						session.setAttribute("SHORTLISTMAP", ApplicantProfileManager.getApplicantShortlistMap(list));
@@ -133,8 +144,9 @@ public class ShortListApplicantRequestHandler implements RequestHandler {
 						EmailBean email = new EmailBean();
 						email.setSubject("Newfoundland and Labrador English School District - Sublist Approval");
 						email.setTo(profile.getEmail());
-						email.setBody("You application to subsititute list " + list.getRegion().getName() + " - " + list.getTitle()
-								+ " has been <B><U>APPROVED</U></B>.");
+						String sbody="You application to subsititute list " + list.getRegion().getName() + " - " + list.getTitle()
+						+ " has been <B><U>APPROVED</U></B>.";
+						email.setBody(sbody);
 						email.send();
 					}
 					catch (EmailException e) {}

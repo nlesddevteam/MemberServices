@@ -15,7 +15,7 @@ public class ApplicantSubListInfoBean {
 	private Date approvedDate;
 	private Date notApprovedDate;
 	private Date workingDate;
-
+	private ApplicantSubListAuditBean auditBean;
 	public ApplicantSubListInfoBean() {
 		this.profile = null;
 		this.list = null;
@@ -138,4 +138,11 @@ public class ApplicantSubListInfoBean {
 		this.workingDate = workingDate;
 	}
 
+	public ApplicantSubListAuditBean getAuditBean() {
+		return auditBean;
+	}
+
+	public void setAuditBean(ApplicantSubListAuditBean auditBean) {
+		this.auditBean = auditBean;
+	}
 }

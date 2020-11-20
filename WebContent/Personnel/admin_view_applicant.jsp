@@ -146,26 +146,7 @@ $("#loadingSpinner").css("display","none");
   			return false;
   	});
   	
-  	$('.confirm_approve_link').click(function(){
-  		if(confirm('Are you sure this applicant is approved?'))
-  			return true;
-  		else
-  			return false;
-  	});
-  	
-  	$('.confirm_not_approve_link').click(function(){
-  		if(confirm('Are you sure this applicant is not approved?'))
-  			return true;
-  		else
-  			return false;
-  	});
-  	
-  	$('.confirm_reset_link').click(function(){
-  		if(confirm('Are you sure you want to reset?'))
-  			return true;
-  		else
-  			return false;
-  	});
+
 
   	
   	$('#btn_show_add_applicant_dialog').click(function(){
@@ -442,19 +423,22 @@ input {
            			if(entry.length > 0){
            				
            			%>	
-           			<table class="table table-condensed" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
+           			<table class="table table-condensed" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;" id="sublisttable">
 				    <thead>
 				      <tr style="border-top:1px solid black;">
 				        <th width='10%'>YEAR</th>
-				        <th width='20%'>REGION (ZONE)</th>
-				        <th width='40%'>LIST</th>								        
+				        <th width='15%'>REGION (ZONE)</th>
+				        <th width='35%'>LIST</th>								        
 				        <th width='10%'>APPLIED</th>								        
-				        <th width='20%'>STATUS</th>								      
+				        <th width='30%'>STATUS</th>								      
 				      </tr>
 				    </thead>
 				    
 				    <tbody>	
-           				
+           			<tr><td colspan='5'>
+           			<div class="alert alert-danger" role="alert" id="response_msg_sld" style="display:none;">
+  					</div>
+           			</td></tr>	
            			<% 	
             		for(int i=0; i < entry.length; i++){
             		subL = (ApplicantSubListInfoBean) entry[i].getValue();
@@ -547,8 +531,9 @@ input {
 			             if(subL.isNewApplicant()){
 			            	 
 			            	 %>
-			            	 <a class='confirm_approve_link btn btn-xs btn-success no-print' href='shortListApplicant.html?sin=${UUID}&list_id=${subListApp.subList.id}'><span class="glyphicon glyphicon-ok"></span> Approve</a> &nbsp;
-			            	 <a class='confirm_not_approve_link btn btn-xs btn-danger no-print' href='applicantNotApproved.html?sin=${UUID}&list_id=${subListApp.subList.id}'><span class="glyphicon glyphicon-remove"></span> Do Not Approve</a>
+			            	 <a class='confirm_approve_link btn btn-xs btn-success no-print' onclick="openSublistDialog('${UUID}','${subListApp.subList.id}','A')"><span class="glyphicon glyphicon-ok"></span> Approve</a> &nbsp;
+			            	 <a class='confirm_not_approve_link btn btn-xs btn-danger no-print' onclick="openSublistDialog('${UUID}','${subListApp.subList.id}','NA')"><span class="glyphicon glyphicon-remove"></span> Do Not Approve</a>&nbsp;
+			            	 <a class='confirm_not_approve_link btn btn-xs btn-info no-print' onclick="showHistory('${UUID}','${subListApp.subList.id}')"><span class="glyphicon glyphicon-list-alt"></span> History</a>
 			            	 <%
 			                 } else { 						
     							
@@ -559,7 +544,8 @@ input {
    					    <c:when test="${subListApp.status eq 'W'}"><span style="color:#FF0000;">IN A POSITION/REMOVED</span></c:when>
    					    <c:otherwise><span style="color:#0000FF;">NEW!</span></c:otherwise>
    					 </c:choose>
-   					<span style="float:right;text-align:right;" class="no-print"><a class='confirm_reset_link btn btn-xs btn-warning' href='resetApplicantApproval.html?uid=${userID}&list_id=${subListApp.subList.id}'><span class="glyphicon glyphicon-refresh"></span> RESET</a></span>
+   					 &nbsp;<span  class="no-print"><a class='confirm_not_approve_link btn btn-xs btn-info no-print' onclick="showHistory('${UUID}','${subListApp.subList.id}')"><span class="glyphicon glyphicon-list-alt"></span> History</a></span>
+   					 &nbsp;<span class="no-print"><a class='confirm_reset_link btn btn-xs btn-warning' onclick="openSublistDialog('${UUID}','${subListApp.subList.id}','R')"><span class="glyphicon glyphicon-refresh"></span> RESET</a></span>
    							
    					<%	}	               
 			    
@@ -576,8 +562,27 @@ input {
 			    	<% } %>
 			    	
 			    	</td></tr>
+			    	<tr id="sl${subListApp.subList.id}" style="display: none;"><td colspan='5'>
+			    	<table class=".bg-secondary text-dark" style="width:100%;">
+			    	<tr style="outline: thin solid;">
+			    	<td width='25%' style="padding:5px"><span id="sltitle${subListApp.subList.id}"></span></td>
+			    	<td width='55%' style="padding:5px" align="center"><input type="text" id="sltext${subListApp.subList.id}" style="width:100%;"></td>
+			    	<td width='10%' style="padding:5px" align="center"><input type="button" class="btn btn-xs btn-primary" onclick="submitSubListRow('${subListApp.subList.id}',this.value)" id="bs${subListApp.subList.id}" value=""></td>
+			    	<td width='10%' style="padding:5px" align="center"><input type="button" class="btn btn-xs btn-primary" onclick="cancelSubListRow('${subListApp.subList.id}',this.value)" id="bc${subListApp.subList.id}" value=""></td>
+			    	</tr>
+			    	</table>
+			    	</td></tr>
 			    	<% } %>
-            		
+            		<tr id="historyrow" style="display: none;">
+            		<td colspan='5' align="center">
+			    	<table class="table table-striped" style="width:95%;" id="historytable">
+			    	<tr>
+			    	<th style="padding:5px" width="65%">Action </th>
+			    	<th style="padding:5px" width="25%" align="center">Action Date </th>
+			    	<th style="padding:5px" width="10%" align="center"><input type="button" class="btn btn-xs btn-primary" onclick="closeTableHistory()" value="Close"></th>
+			    	</tr>
+			    	</table>
+			    	</td></tr>
            			</tbody></table>
            			
            			

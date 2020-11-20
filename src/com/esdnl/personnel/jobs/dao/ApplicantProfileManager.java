@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +21,14 @@ import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParameters;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParametersSS;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.ApplicantSubListAuditBean;
 import com.esdnl.personnel.jobs.bean.ApplicantVerificationBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
 import com.esdnl.personnel.jobs.constants.DocumentType;
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
+import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
 import com.esdnl.personnel.jobs.dao.comparator.IntegerReverseComparator;
 import com.esdnl.personnel.v2.utils.StringUtils;
 
@@ -1508,6 +1512,17 @@ public class ApplicantProfileManager {
 			stat.setInt(2, list.getId());
 
 			stat.execute();
+			
+			//add audit trail entry for sub list activation
+			ApplicantSubListAuditBean audbean = new ApplicantSubListAuditBean();
+			audbean.setApplicantId(abean.getSIN());//no applicant sub list entry
+			audbean.setSubListId(list.getId());
+			audbean.setEntryType(SublistAuditTypeCostant.APPLICANTAPPLIED);
+			audbean.setEntryBy(null);
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now();  
+			audbean.setEntryNotes("Applicant Applied For List: " + dtf.format(now));
+			ApplicantSubListAuditManager.addApplicantSubListAuditBean(audbean);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

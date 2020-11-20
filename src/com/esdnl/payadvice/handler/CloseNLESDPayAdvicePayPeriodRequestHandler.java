@@ -28,7 +28,10 @@ public class CloseNLESDPayAdvicePayPeriodRequestHandler   extends RequestHandler
 		IOException {
 		super.handleRequest(request, response);
 		String paygroupid = form.get("id");
-		
+		String xml = null;
+		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+		String sresult ="";
+		Date finishtime = null;
 			try {
 					Date starttime = new Date();
 					NLESDPayAdvicePayGroupBean pgbean = NLESDPayAdvicePayGroupManager.getNLESDPayAdvicePayGroupBean(Integer.parseInt(paygroupid));
@@ -57,22 +60,20 @@ public class CloseNLESDPayAdvicePayPeriodRequestHandler   extends RequestHandler
 					  if(doc_dir.exists()){
 					       	doc_dir.delete();
 					  }
-			          
+					  finishtime = new Date();
+					  NLESDPayAdvicePayrollProcessManager.closeNLESDPayAdvicePayPeriod(Integer.parseInt(paygroupid), starttime, finishtime, usr.getPersonnel().getFullNameReverse());
+				      sresult = "NO ERROR";
 			        }
 			        else
 			        {
-			          throw new DocumentException("deleteDocument: " + doc_dir.getAbsolutePath() + " does not exist.");
+			          sresult = "Payroll Directory does not exist.";
+			          finishtime = new Date();
 			        }
-			        Date finishtime = new Date();
-			        NLESDPayAdvicePayrollProcessManager.closeNLESDPayAdvicePayPeriod(Integer.parseInt(paygroupid), starttime, finishtime, usr.getPersonnel().getFullNameReverse());
 			        // generate XML to show confirmation of closing
 					SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-					
-			        String xml = null;
-					StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 					sb.append("<PAYPERIOD>");
 					sb.append("<CLOSEDSTATUS>");
-					sb.append("<MESSAGE>NO ERROR</MESSAGE>");
+					sb.append("<MESSAGE>" + sresult  + "</MESSAGE>");
 					sb.append("<START>" + dt.format(starttime) + "</START>");
 					sb.append("<FINISH>" + dt.format(finishtime) + "</FINISH>");
 					sb.append("<USER>" +  usr.getPersonnel().getFullNameReverse() + "</USER>");
@@ -90,8 +91,21 @@ public class CloseNLESDPayAdvicePayPeriodRequestHandler   extends RequestHandler
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-		
+				sb.append("<PAYPERIOD>");
+				sb.append("<CLOSEDSTATUS>");
+				sb.append("<MESSAGE>" + e.getMessage()  + "</MESSAGE>");
+				sb.append("</CLOSEDSTATUS>");
+				sb.append("</PAYPERIOD>");
+				xml = sb.toString().replaceAll("&", "&amp;");
+				System.out.println(xml);
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/xml");
+				response.setHeader("Cache-Control", "no-cache");
+				out.write(xml);
+				out.flush();
+				out.close();
 				path = null;
+				return path;
 			}
 		return path;
 		}
