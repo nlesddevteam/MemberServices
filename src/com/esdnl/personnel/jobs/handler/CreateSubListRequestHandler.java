@@ -12,9 +12,12 @@ import com.awsd.school.GradeDB;
 import com.awsd.school.SubjectDB;
 import com.awsd.school.bean.RegionException;
 import com.awsd.school.dao.RegionManager;
+import com.esdnl.personnel.jobs.bean.ApplicantSubListAuditBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
+import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
 import com.esdnl.personnel.jobs.constants.SubstituteListConstant;
+import com.esdnl.personnel.jobs.dao.ApplicantSubListAuditManager;
 import com.esdnl.personnel.jobs.dao.SubListManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormElementPattern;
@@ -79,7 +82,15 @@ public class CreateSubListRequestHandler extends RequestHandlerImpl {
 				SubListManager.addSubListBean(list);
 				request.setAttribute("msg", "Substitute list \" " + list.getTitle()
 						+ "\" has been created.");
-
+				
+				//add audit trail entry for sub list creation
+				ApplicantSubListAuditBean audbean = new ApplicantSubListAuditBean();
+				audbean.setApplicantId("0");//no applicant sub list entry
+				audbean.setSubListId(list.getId());
+				audbean.setEntryType(SublistAuditTypeCostant.LISTCREATED);
+				audbean.setEntryBy(usr.getPersonnel());
+				audbean.setEntryNotes("List Created By: " + usr.getLotusUserFullName());
+				ApplicantSubListAuditManager.addApplicantSubListAuditBean(audbean);
 				path = "admin_create_sub_list.jsp";
 			}
 			else {

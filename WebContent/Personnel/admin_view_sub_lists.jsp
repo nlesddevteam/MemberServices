@@ -12,7 +12,17 @@
 		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 
 <%
-  SubstituteListConstant type = SubstituteListConstant.get(Integer.parseInt(request.getParameter("type")));
+SubstituteListConstant type = null;
+
+if(request.getParameter("type") != null){
+	type = SubstituteListConstant.get(Integer.parseInt(request.getParameter("type")));
+}else{
+	if(request.getAttribute("type") != null){
+		type = (SubstituteListConstant) request.getAttribute("type");
+	}else{
+		type = SubstituteListConstant.get(1);
+	}
+}
 %>
 
 <html>

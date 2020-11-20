@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.awsd.mail.bean.AlertBean;
 import com.awsd.mail.bean.EmailException;
+import com.esdnl.personnel.jobs.bean.ApplicantSubListAuditBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
+import com.esdnl.personnel.jobs.dao.ApplicantSubListAuditManager;
 import com.esdnl.personnel.jobs.dao.SubListManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
@@ -43,6 +46,14 @@ public class DeactivateSubListRequestHandler extends RequestHandlerImpl {
 				list.setActive(false);
 
 				SubListManager.updateSubListBean(list);
+				//add audit trail entry for sub list activation
+				ApplicantSubListAuditBean audbean = new ApplicantSubListAuditBean();
+				audbean.setApplicantId("0");//no applicant sub list entry
+				audbean.setSubListId(list.getId());
+				audbean.setEntryType(SublistAuditTypeCostant.LISTDEACTIVATED);
+				audbean.setEntryBy(usr.getPersonnel());
+				audbean.setEntryNotes("List Deactivated By: " + usr.getLotusUserFullName());
+				ApplicantSubListAuditManager.addApplicantSubListAuditBean(audbean);
 
 				request.setAttribute("msg", "Substitute list has been deactivated.");
 				request.setAttribute("SUBLIST", list);

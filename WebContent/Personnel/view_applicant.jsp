@@ -1362,6 +1362,15 @@ input {
 						? "<span style='background-color:Red;color:white;'>&nbsp;NOT APPROVED&nbsp;</span>"
 						: "<span style='background-color:Yellow;color:black;'>&nbsp;IN POSITION / REMOVED&nbsp;</span>")))%></td>
 							</tr>
+							 <%if(info.isNotApproved() && info.getAuditBean() != null){ %>
+			                 	<% if(info.getAuditBean().getEntryNotes() != null){ %>
+			                    	<tr><td colspan='3' align="center">
+			                        	<div class="alert alert-warning" role="alert">
+			                            	<%=info.getAuditBean().getApplicantNotes()%>
+  										</div>
+  										</td></tr>
+									<%} %>
+			                   <%} %>
 							<%
 								}
 							%>

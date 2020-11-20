@@ -1178,3 +1178,131 @@ function openPDeleteApplicant(appid){
 		$('#delete_app_dialog').modal(options);
 		$('#delete_app_dialog').modal('show');
 }
+//open approve, reject, reset sublist
+function openSublistDialog(appid,sublistid,ttype){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		if(ttype =="A"){
+			//notes not mandatory but send along
+			var surl ="shortListApplicant.html";
+			surl=surl + "?sin=" + appid + "&list_id=" + sublistid;
+			window.location=surl;
+		}else if(ttype =="NA"){
+			var cid = "#sl" + sublistid;
+			$('#sltitle'+sublistid).text("Reason For Not Approving");
+			$('#bs'+sublistid).prop("value", "Not Approve");
+			$('#bc'+sublistid).prop("value", "Cancel"); 
+			$(cid).show();
+		}else if(ttype =="R"){
+			var cid = "#sl" + sublistid;
+			$('#sltitle'+sublistid).text("Reason For Resetting");
+			$('#bs'+sublistid).prop("value", "Reset");
+			$('#bc'+sublistid).prop("value", "Cancel"); 
+			$(cid).show();
+		}
+		// now we add the onclick event
+		$("#btn_sublist_ok").click(function(event) {
+			event.preventDefault();
+			submitSubList(appid,sublistid,ttype);
+			
+		});
+		
+		$('#sub_list_dialog').modal(options);
+		$('#sub_list_dialog').modal('show');
+}
+//function used to submit the correct url for approval, nonapproval and reset sublist
+function submitSubListRow(sublistid,btext){
+	var appid = $("#id").val();
+	$('#response_msg_sld').hide();
+	if(btext == "Not Approve"){
+		if($('#sltext' + sublistid).val() == ""){
+			$('#response_msg_sld').text("Please Enter Reason For Not Approving");
+			$('#response_msg_sld').show();
+			return;
+		}
+		//all good we submit
+		var surl ="applicantNotApproved.html";
+		surl=surl + "?sin=" + appid + "&list_id=" + sublistid + "&slnotes=" + $('#sltext' + sublistid).val();
+		window.location=surl;
+	}else if(btext == "Reset"){
+		if($('#sltext' + sublistid).val() == ""){
+			$('#response_msg_sld').text("Please Enter Reason For Resetting");
+			$('#response_msg_sld').show();
+			return;
+		}
+			var surl ="resetApplicantApproval.html";
+			surl=surl + "?uid=" + appid + "&list_id=" + sublistid + "&slnotes=" + $('#sltext' + sublistid).val();
+			window.location=surl;
+		
+	}
+}
+//function used when cancel button selected on not approve and reset
+function cancelSubListRow(sublistid,btext){
+	$('#response_msg_sld').hide();
+	
+	$("#sublisttable tr").each(function () {
+		
+		if(typeof($(this).attr('id'))  != "undefined"){
+			var cid = $(this).attr('id');
+			$(this).hide();
+		}
+	});
+	
+}
+//function used to retrieve the history details for the sublist/app and show table
+function showHistory(appid,sublistid){
+	var requestd = new FormData();
+	requestd.append('appid', appid);
+	requestd.append('sublistid', sublistid);
+	$.ajax({
+		url : "getSublistApplicantHistory.html",
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$("#historytable").find("tr:gt(0)").remove();
+			$(xml).find('SLENTRY').each(
+				function() {
+					if ($(this).find("MESSAGE").text() == "DATA") {
+						var newrow = "<tr>";
+						newrow += "<td>" + $(this).find("ENTRYNOTES").text() + "</td>";
+						newrow += "<td>" + $(this).find("ENTRYDATE").text() + "</td>";
+						newrow += "<td></td>";
+						newrow += "</tr>";
+						$('#historytable tr:last').after(newrow);
+					} 
+					else if ($(this).find("MESSAGE").text() == "NODATA"){
+						var newrow = "<tr>";
+						newrow += "<td colspan='3'>No History Found</td>";
+						newrow += "</tr>";
+						$('#historytable tr:last').after(newrow);
+					}else{
+						var newrow = "<tr>";
+						newrow += "<td colspan='3'>" + $(this).find("MESSAGE").text() + "</td>";
+						newrow += "</tr>";
+						$('#historytable tr:last').after(newrow);
+					}
+				});
+			
+			
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			var newrow = "<tr>";
+			newrow += "<td colspan='3'>" + textStatus + "</td>";
+			newrow += "</tr>";
+			$('#historytable tr:last').after(newrow);
+		},
+		dataType : "text",
+		async : false
+	});
+	$("#historyrow").show();
+}
+//function used to close sublist/app history table
+function closeTableHistory(){
+	$("#historyrow").hide();
+}

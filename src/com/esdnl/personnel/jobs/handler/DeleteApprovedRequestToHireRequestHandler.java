@@ -200,6 +200,7 @@ public class DeleteApprovedRequestToHireRequestHandler extends RequestHandlerImp
 			HashMap<String, Object> model = new HashMap<String, Object>();
 			model.put("requesterName",PersonnelDB.getPersonnel(rbean.getRequestById()).getFullName());
 			model.put("userName",usr.getPersonnel().getFirstName());
+			model.put("requestTitle", rbean.getJobTitle());
 			ebean.setSubject(emailsubject);
 			ebean.setBody(VelocityUtils.mergeTemplateIntoString(emailtemplate, model));
 			ebean.setFrom("ms@nlesd.ca");
