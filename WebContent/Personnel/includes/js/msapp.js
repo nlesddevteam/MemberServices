@@ -1217,7 +1217,7 @@ function submitSubListRow(sublistid,btext){
 	var appid = $("#id").val();
 	$('#response_msg_sld').hide();
 	if(btext == "Not Approve"){
-		if($('#sltext' + sublistid).val() == ""){
+		if($('#sltext' + sublistid).val().trim() == ""){
 			$('#response_msg_sld').text("Please Enter Reason For Not Approving");
 			$('#response_msg_sld').show();
 			return;
@@ -1227,7 +1227,7 @@ function submitSubListRow(sublistid,btext){
 		surl=surl + "?sin=" + appid + "&list_id=" + sublistid + "&slnotes=" + $('#sltext' + sublistid).val();
 		window.location=surl;
 	}else if(btext == "Reset"){
-		if($('#sltext' + sublistid).val() == ""){
+		if($('#sltext' + sublistid).val().trim() == ""){
 			$('#response_msg_sld').text("Please Enter Reason For Resetting");
 			$('#response_msg_sld').show();
 			return;
