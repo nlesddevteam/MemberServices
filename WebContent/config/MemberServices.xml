@@ -3033,6 +3033,10 @@
       <URL-Pattern>/Personnel/viewSubListShortList.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewSubListShortListByTrnlvlRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewSubListShortListByTrnLvl.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewSubListSchoolsListRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewSublistsSchoolsList.html</URL-Pattern>
     </Request-Handler>

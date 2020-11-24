@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -17,6 +18,7 @@ import java.util.Vector;
 import com.awsd.common.Utils;
 import com.awsd.mail.bean.AlertBean;
 import com.awsd.school.School;
+import com.awsd.school.bean.RegionException;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParameters;
 import com.esdnl.personnel.jobs.bean.ApplicantFilterParametersSS;
@@ -29,6 +31,7 @@ import com.esdnl.personnel.jobs.bean.SubListBean;
 import com.esdnl.personnel.jobs.constants.DocumentType;
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
 import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
+import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
 import com.esdnl.personnel.jobs.dao.comparator.IntegerReverseComparator;
 import com.esdnl.personnel.v2.utils.StringUtils;
 
@@ -1119,6 +1122,55 @@ public class ApplicantProfileManager {
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
 
+	public static List<ApplicantProfileBean> getApplicantShortlistByTRNLVL(	School s, String sy,
+																																					TrainingMethodConstant trnlvl)
+			throws JobOpportunityException {
+
+		List<ApplicantProfileBean> v_opps = null;
+		ApplicantProfileBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			v_opps = new ArrayList<ApplicantProfileBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_sublist_sl_trnlvl(?, ?, ?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, s.getRegion().getId());
+			stat.setString(3, sy);
+			stat.setInt(4, trnlvl.getValue());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				eBean = createApplicantProfileBean(rs);
+				v_opps.add(eBean);
+			}
+		}
+		catch (SQLException | RegionException e) {
+			System.err.println("ApplicantProfileBean[] getApplicantShortlist(String comp_num): " + e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return v_opps;
+	}
+
 	public static ApplicantProfileBean[] filterJobApplicantProfileBean(ApplicantFilterParameters params)
 			throws JobOpportunityException {
 
@@ -1371,7 +1423,7 @@ public class ApplicantProfileManager {
 			else
 				stat.setNull(16, OracleTypes.DATE);
 			stat.setString(17, abean.getProfileType());
-			stat.setInt(18, abean.isDeleted() ? 1:0);
+			stat.setInt(18, abean.isDeleted() ? 1 : 0);
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -1512,15 +1564,15 @@ public class ApplicantProfileManager {
 			stat.setInt(2, list.getId());
 
 			stat.execute();
-			
+
 			//add audit trail entry for sub list activation
 			ApplicantSubListAuditBean audbean = new ApplicantSubListAuditBean();
 			audbean.setApplicantId(abean.getSIN());//no applicant sub list entry
 			audbean.setSubListId(list.getId());
 			audbean.setEntryType(SublistAuditTypeCostant.APPLICANTAPPLIED);
 			audbean.setEntryBy(null);
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-			LocalDateTime now = LocalDateTime.now();  
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			audbean.setEntryNotes("Applicant Applied For List: " + dtf.format(now));
 			ApplicantSubListAuditManager.addApplicantSubListAuditBean(audbean);
 		}
@@ -2468,7 +2520,7 @@ public class ApplicantProfileManager {
 			aBean.setSIN2(rs.getString("SIN2"));
 			aBean.setSurname(rs.getString("SURNAME"));
 			aBean.setWorkphone(rs.getString("WORKPHONE"));
-			
+
 			try {
 				if (rs.getTimestamp("DOB") != null) {
 
@@ -2543,14 +2595,14 @@ public class ApplicantProfileManager {
 			//added catch until all places this is called are checked
 			try {
 				if (rs.getInt("IS_DELETED") >= 0) {
-					aBean.setDeleted(rs.getInt("IS_DELETED") == 1 ? true:false);
+					aBean.setDeleted(rs.getInt("IS_DELETED") == 1 ? true : false);
 				}
 				else {
 					aBean.setDeleted(false);
 				}
 			}
 			catch (SQLException e) {}
-			
+
 		}
 		catch (SQLException e) {
 			aBean = null;
@@ -2564,7 +2616,8 @@ public class ApplicantProfileManager {
 		}
 		return aBean;
 	}
-	public static void setApplicantIsDeleted(String uid,Integer dvalue){
+
+	public static void setApplicantIsDeleted(String uid, Integer dvalue) {
 
 		Connection con = null;
 		CallableStatement stat = null;
@@ -2597,6 +2650,7 @@ public class ApplicantProfileManager {
 			catch (Exception e) {}
 		}
 	}
+
 	public static ApplicantProfileBean[] getSoftDeletedApplicants() {
 
 		Vector<ApplicantProfileBean> v_opps = null;
@@ -2639,21 +2693,23 @@ public class ApplicantProfileManager {
 
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
+
 	public static boolean checkApplicantReommendations(String appid) {
+
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
-		boolean hasRecs=false;
+		boolean hasRecs = false;
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.check_app_for_recs(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, appid );
+			stat.setString(2, appid);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			if (rs.next()) {
-				hasRecs=true;
+				hasRecs = true;
 			}
 		}
 		catch (SQLException e) {
@@ -2674,6 +2730,6 @@ public class ApplicantProfileManager {
 			catch (Exception e) {}
 		}
 
-		return  hasRecs;
-	}	
+		return hasRecs;
+	}
 }

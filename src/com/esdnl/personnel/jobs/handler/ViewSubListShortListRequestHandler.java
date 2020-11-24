@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.awsd.school.bean.RegionBean;
+import com.awsd.school.bean.RegionException;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
@@ -15,6 +17,7 @@ import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
+import com.nlesd.school.bean.SchoolZoneBean;
 
 public class ViewSubListShortListRequestHandler extends RequestHandlerImpl {
 
@@ -51,7 +54,20 @@ public class ViewSubListShortListRequestHandler extends RequestHandlerImpl {
 					profiles = ApplicantProfileManager.getApplicantShortlist(list);
 				else if (usr.getUserPermissions().containsKey("PERSONNEL-PRINCIPAL-VIEW")
 						|| usr.getUserPermissions().containsKey("PERSONNEL-VICEPRINCIPAL-VIEW")) {
-					profiles = ApplicantProfileManager.getApplicantShortlist(list, usr.getPersonnel().getSchool());
+					SchoolZoneBean zone = usr.getPersonnel().getSchool().getZone();
+					if ((zone != null) && (zone.getZoneId() == 1)) { // AVALON -- Ignore sub prefs
+						RegionBean region = usr.getPersonnel().getSchool().getRegion();
+
+						if ((region != null) && (region.getId() == 1)) { // AVALON WEST  -- Ignore sub prefs
+							profiles = ApplicantProfileManager.getApplicantShortlist(list);
+						}
+						else {
+							profiles = ApplicantProfileManager.getApplicantShortlist(list, usr.getPersonnel().getSchool());
+						}
+					}
+					else {
+						profiles = ApplicantProfileManager.getApplicantShortlist(list, usr.getPersonnel().getSchool());
+					}
 				}
 				else {
 					throw new SecurityException("Ilegal access attempt sublist shortlist.");
@@ -65,7 +81,7 @@ public class ViewSubListShortListRequestHandler extends RequestHandlerImpl {
 				path = "admin_view_sub_lists.jsp";
 			}
 		}
-		catch (JobOpportunityException e) {
+		catch (JobOpportunityException | RegionException e) {
 			e.printStackTrace();
 			request.setAttribute("msg", "Could not retrieve Job applicants.");
 			path = "admin_view_sub_lists.jsp";
