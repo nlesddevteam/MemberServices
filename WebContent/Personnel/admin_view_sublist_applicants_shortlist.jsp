@@ -3,6 +3,7 @@
                   java.text.*,
                   com.awsd.security.*,
                   com.esdnl.personnel.jobs.bean.*,
+                  com.esdnl.personnel.jobs.constants.*,
                   com.esdnl.util.*" 
          isThreadSafe="false"%>
 
@@ -21,6 +22,12 @@
   SubListBean list = (SubListBean) session.getAttribute("SUBLIST");
   ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("SUBLIST_SHORTLIST");
   User usr = (User)session.getAttribute("usr");
+  
+  TrainingMethodConstant trnlvl = null;
+  
+  if(!StringUtils.isEmpty(request.getParameter("trnlvl_id"))) {
+  	trnlvl = TrainingMethodConstant.get(Integer.parseInt(request.getParameter("trnlvl_id")));
+  }
 %>
 
 
@@ -32,12 +39,12 @@
 <title>MyHRP Applicant Profiling System</title>
 
 
-<script language="Javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
-<script language="Javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-<script language="Javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-<script language="Javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-<script language="Javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.40/pdfmake.min.js"></script>
-<script language="Javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.40/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.40/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.40/vfs_fonts.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
 <script type="text/javascript">
 	$('document').ready(function(){
@@ -82,7 +89,7 @@ input {
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success">   
-	               	<div class="panel-heading"><b><%=list.getTitle()%> - Short List</b> (Total Applicants: <%=applicants.length%>)</div>
+	               	<div class="panel-heading"><b><%=list != null ? list.getTitle() : trnlvl != null ? trnlvl.getDescription() : "Substitue List" %> - Short List</b> (Total Applicants: <%=applicants.length%>)</div>
       			 	<div class="panel-body">
 
       				

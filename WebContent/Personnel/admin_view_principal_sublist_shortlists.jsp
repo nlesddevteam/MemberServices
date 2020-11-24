@@ -98,6 +98,15 @@ input {
 			                                      </tr>
 			                              <c:set var="listItemCnt" value="${listItemCnt+1}"/>        
 			                            </c:forEach>
+			      											<tr><td colspan='3'>&nbsp;</td></tr>
+			                            <tr>
+                                  	<td colspan='2'>Primary/Elementary - Complete List</td>
+                                    <td><a class="btn btn-xs btn-primary" href='viewSubListShortListByTrnLvl.html?trnlvl_id=2'>View List</a></td>
+                                  </tr>
+                                  <tr>
+                                  	<td colspan='2'>Secondary  - Complete List</td>
+                                    <td><a class="btn btn-xs btn-primary" href='viewSubListShortListByTrnLvl.html?trnlvl_id=3'>View List</a></td>
+                                  </tr>
 			                            </tbody>
 			                            </table>
 	                                  	</c:when>
