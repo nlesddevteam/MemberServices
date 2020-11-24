@@ -89,7 +89,7 @@ input {
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success">   
-	               	<div class="panel-heading"><b><%=list != null ? list.getTitle() : trnlvl != null ? trnlvl.getDescription() : "Substitue List" %> - Short List</b> (Total Applicants: <%=applicants.length%>)</div>
+	               	<div class="panel-heading"><b><%=trnlvl != null ? trnlvl.getDescription() : list != null ? list.getTitle() : "Substitute List" %> - Short List</b> (Total Applicants: <%=applicants.length%>)</div>
       			 	<div class="panel-body">
 
       				
