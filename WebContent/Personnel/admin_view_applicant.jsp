@@ -497,7 +497,7 @@ input {
 		             		(Green Bay / White Bay)
 		             	</c:when>
 		             	<c:when test="${subListApp.subList.region.name eq 'northern'}">
-		             		(Northen)
+		             		(Northern)
 		             	</c:when>
 		             	<c:when test="${subListApp.subList.region.name eq 'southern'}">
 		             		(Southern)
@@ -540,12 +540,13 @@ input {
    					%>
    					 <c:choose>
    					 	<c:when test="${subListApp.status eq 'Y'}"><span style="color:Green;">APPROVED</span></c:when>
-   						<c:when test="${subListApp.status eq 'N'}"><span style="color:#FF0000;font-size:12px;">NOT APPROVED</span></c:when>
-   					    <c:when test="${subListApp.status eq 'W'}"><span style="color:#FF0000;">IN A POSITION/REMOVED</span></c:when>
-   					    <c:otherwise><span style="color:#0000FF;">NEW!</span></c:otherwise>
+   						<c:when test="${subListApp.status eq 'N'}"><span style="color:#FF0000;">NOT APPROVED</span></c:when>
+   					    <c:when test="${subListApp.status eq 'W'}"><span style="color:#D2691E;">IN A POSITION/REMOVED</span></c:when>
+   					    <c:otherwise><span style="color:#6495ED;">NEW!</span></c:otherwise>
    					 </c:choose>
+ <!--  MODIFIED -->   					 
    					 &nbsp;<span  class="no-print"><a class='confirm_not_approve_link btn btn-xs btn-info no-print' onclick="showHistory('${UUID}','${subListApp.subList.id}')"><span class="glyphicon glyphicon-list-alt"></span> History</a></span>
-   					 &nbsp;<span class="no-print"><a class='confirm_reset_link btn btn-xs btn-warning' onclick="openSublistDialog('${UUID}','${subListApp.subList.id}','R')"><span class="glyphicon glyphicon-refresh"></span> RESET</a></span>
+   					 &nbsp;<span class="no-print"><a class='confirm_reset_link btn btn-xs btn-warning' onclick="openSublistDialog('${UUID}','${subListApp.subList.id}','R')"><span class="glyphicon glyphicon-refresh"></span> Reset</a></span>
    							
    					<%	}	               
 			    
@@ -555,35 +556,39 @@ input {
 			    		<c:choose>
    					 	<c:when test="${subListApp.status eq 'Y'}"><span style="color:Green;">APPROVED</span></c:when>
    						<c:when test="${subListApp.status eq 'N'}"><span style="color:#FF0000;">NOT APPROVED</span></c:when>
-   					   	<c:when test="${subListApp.status eq 'W'}"><span style="color:#FF0000;">IN A POSITION/REMOVED</span></c:when>
-   					    <c:otherwise><span style="color:#0000FF;">NEW!</span></c:otherwise>
+   					   	<c:when test="${subListApp.status eq 'W'}"><span style="color:#D2691E;">IN A POSITION/REMOVED</span></c:when>
+   					    <c:otherwise><span style="color:##6495ED;">NEW!</span></c:otherwise>
    					 </c:choose>
 			    		
 			    	<% } %>
 			    	
 			    	</td></tr>
-			    	<tr id="sl${subListApp.subList.id}" style="display: none;"><td colspan='5'>
-			    	<table class=".bg-secondary text-dark" style="width:100%;">
-			    	<tr style="outline: thin solid;">
-			    	<td width='25%' style="padding:5px"><span id="sltitle${subListApp.subList.id}"></span></td>
-			    	<td width='55%' style="padding:5px" align="center"><input type="text" id="sltext${subListApp.subList.id}" style="width:100%;"></td>
-			    	<td width='10%' style="padding:5px" align="center"><input type="button" class="btn btn-xs btn-primary" onclick="submitSubListRow('${subListApp.subList.id}',this.value)" id="bs${subListApp.subList.id}" value=""></td>
-			    	<td width='10%' style="padding:5px" align="center"><input type="button" class="btn btn-xs btn-primary" onclick="cancelSubListRow('${subListApp.subList.id}',this.value)" id="bc${subListApp.subList.id}" value=""></td>
-			    	</tr>
-			    	</table>
-			    	</td></tr>
+			    	<tr id="sl${subListApp.subList.id}" style="display: none;">
+			    	<td colspan='5'>
+					    	<span id="sltitle${subListApp.subList.id}" style="font-size:12px;"></span><br/>
+					    	<input type="text" id="sltext${subListApp.subList.id}" style="width:100%;" maxlength="250"><br/>
+					    	<div style="float:right;padding-top:3px;">
+					    	<input type="button" class="btn btn-xs btn-primary" onclick="submitSubListRow('${subListApp.subList.id}',this.value)" id="bs${subListApp.subList.id}" value="">
+					    	<input type="button" class="btn btn-xs btn-primary" onclick="cancelSubListRow('${subListApp.subList.id}',this.value)" id="bc${subListApp.subList.id}" value="">
+					    	</div>
+					 </td></tr>
 			    	<% } %>
-            		<tr id="historyrow" style="display: none;">
-            		<td colspan='5' align="center">
-			    	<table class="table table-striped" style="width:95%;" id="historytable">
-			    	<tr>
-			    	<th style="padding:5px" width="65%">Action </th>
-			    	<th style="padding:5px" width="25%" align="center">Action Date </th>
-			    	<th style="padding:5px" width="10%" align="center"><input type="button" class="btn btn-xs btn-primary" onclick="closeTableHistory()" value="Close"></th>
+            		<tr id="historyrow" style="display: none;" class="info">
+            		<td colspan='5' align="center">	
+            		<span style="color:#6495ED;font-weight:bold;font-size:12px;">AUDIT HISTORY</span><br/>	            		
+  <!-- -END MODIFIED -->          			    	
+						    	<table class="table table-striped table-condensed" style="width:100%;font-size:11px;" id="historytable">						    	
+						    	<tr>
+						    	<th width="80%">ACTION</th>
+						    	<th width="20%" align="center">DATE</th>						    	
+						    	</tr>						    
+						    	</table>
+						    	
+						    	<input type="button" class="btn btn-xs btn-danger" onclick="closeTableHistory()" value="CLOSE">
+			    	</td>
 			    	</tr>
-			    	</table>
-			    	</td></tr>
-           			</tbody></table>
+           			</tbody>
+           			</table>
            			
            			
            			<% }else { %>
