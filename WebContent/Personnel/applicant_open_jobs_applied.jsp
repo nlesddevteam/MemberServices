@@ -89,9 +89,9 @@ input {border:1px solid silver;}
 			                   <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
 									    <thead>
 									      <tr>
-									        <th width='60%'>LIST</th>
-									        <th width='20%'>DATE APPLIED</th>									        															       
-									        <th width='20%'>STATUS</th>
+									        <th width='55%'>LIST</th>
+									        <th width='10%'>DATE APPLIED</th>									        															       
+									        <th width='35%'>STATUS</th>
 									      </tr>
 									    </thead>
 									    <tbody>
@@ -101,18 +101,21 @@ input {border:1px solid silver;}
 			                                    <tr>
 			                                      <td><%=info.getSubList().getTitle()%> (<%=info.getSubList().getSchoolYear()%> - <%=info.getSubList().getRegion().getName()%>)</td>
 			                                      <td><%=info.getAppliedDateFormatted()%></td>
-			                                      <td><%=(info.isNewApplicant()?"<span style='background-color:Blue;color:white;'>&nbsp;NEW&nbsp;</span>":(info.isShortlisted()?"<span style='background-color:Green;color:white;'>&nbsp;APPROVED&nbsp;</span>":(info.isNotApproved()?"<span style='background-color:Red;color:white;'>&nbsp;NOT APPROVED&nbsp;</span>":"<span style='background-color:Yellow;color:black;'>&nbsp;IN POSITION / REMOVED&nbsp;</span>")))%></td>
-			                                    </tr>
-			                                    <%if(info.isNotApproved() && info.getAuditBean() != null){ %>
+			                                      <td><%=(info.isNewApplicant()?"<span style='background-color:Blue;color:white;'>&nbsp;NEW&nbsp;</span>":(info.isShortlisted()?"<span style='background-color:Green;color:white;'>&nbsp;APPROVED&nbsp;</span>":(info.isNotApproved()?"<span style='background-color:Red;color:white;'>&nbsp;NOT APPROVED&nbsp;</span>":"<span style='background-color:Yellow;color:black;'>&nbsp;IN POSITION / REMOVED&nbsp;</span>")))%>
+			                                       <%if(info.isNotApproved() && info.getAuditBean() != null){ %>
 			                                    	<% if(info.getAuditBean().getEntryNotes() != null){ %>
-			                                    	<tr><td colspan='3' align="center">
-			                                    	<div class="alert alert-warning" role="alert">
-			                                    	<%=info.getAuditBean().getApplicantNotes()%>
-  													</div>
-  													</td></tr>
+			                                    	<br/>
+			                                    	 <span style="color:Grey;"><%=info.getAuditBean().getApplicantNotes()%></span>
+						                          
+			  										
 			                                    	
 			                                    	<%} %>
 			                                    <%} %>
+			                                      
+			                                      
+			                                      </td>
+			                                    </tr>
+			                                   
 			                                    
 			                                 <% } %>
 			                                 

@@ -1339,9 +1339,9 @@ input {
 						style="font-size: 11px;">
 						<thead>
 							<tr>
-								<th width="60%">LIST (YEAR)/REGION</th>
-								<th width="20%">DATE APPLIED</th>
-								<th width="20%">STATUS</th>
+								<th width="55%">LIST (YEAR)/REGION</th>
+								<th width="10%">DATE APPLIED</th>
+								<th width="35%">STATUS</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -1360,20 +1360,19 @@ input {
 				? "<span style='background-color:Green;color:white;'>&nbsp;APPROVED&nbsp;</span>"
 				: (info.isNotApproved()
 						? "<span style='background-color:Red;color:white;'>&nbsp;NOT APPROVED&nbsp;</span>"
-						: "<span style='background-color:Yellow;color:black;'>&nbsp;IN POSITION / REMOVED&nbsp;</span>")))%></td>
-							</tr>
-							 <%if(info.isNotApproved() && info.getAuditBean() != null){ %>
+						: "<span style='background-color:Yellow;color:black;'>&nbsp;IN POSITION / REMOVED&nbsp;</span>")))%>
+						
+						 <%if(info.isNotApproved() && info.getAuditBean() != null){ %>
 			                 	<% if(info.getAuditBean().getEntryNotes() != null){ %>
-			                    	<tr><td colspan='3' align="center">
-			                        	<div class="alert alert-warning" role="alert">
-			                            	<%=info.getAuditBean().getApplicantNotes()%>
-  										</div>
-  										</td></tr>
+			                    <br/>
+			                    <span style="color:Grey;"><%=info.getAuditBean().getApplicantNotes()%></span>
+  										
 									<%} %>
 			                   <%} %>
-							<%
-								}
-							%>
+						</td>
+							</tr>
+							
+							<%	}%>
 						</tbody>
 					</table>
 
