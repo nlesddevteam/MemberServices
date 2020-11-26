@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.awsd.common.Utils;
 import com.awsd.mail.bean.AlertBean;
@@ -2599,6 +2601,16 @@ public class ApplicantProfileManager {
 				}
 				else {
 					aBean.setDeleted(false);
+				}
+			}
+			catch (SQLException e) {}
+
+			//check sub prefs
+			try {
+				if (org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("sub_prefs"))) {
+					aBean.setSubstititeSchoolIDPrefs(
+							Stream.of(rs.getString("sub_prefs").split(",")).map(String::trim).map(Integer::parseInt).collect(
+									Collectors.toList()));
 				}
 			}
 			catch (SQLException e) {}

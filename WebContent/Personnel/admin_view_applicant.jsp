@@ -365,10 +365,10 @@ input {
 							    	<td colspan='3'>
 							    		<%
 							    			if(empbean != null) { 
-							    				List<EmployeePositionBean> positions = empbean.getCurrentPositions();
+							    				List<EmployeePositionBean> positions = empbean.getCurrentPositions().stream().filter(p -> p.getEndDate().after(new Date())).collect(Collectors.toList());
+							    				System.out.println(positions);
 							    				if(positions != null && positions.size() > 0) {
-								    				out.println(
-								    					empbean.getCurrentPositions().stream()
+							    					String pp = positions.stream()
 								    						.filter(p -> p.getFteHours() > 0)
 								    						.sorted((EmployeePositionBean p1, EmployeePositionBean p2) -> {
 								    							if((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
@@ -382,8 +382,8 @@ input {
 								    							}
 								    						})
 								    						.map(p -> p.toString())
-								    						.collect(Collectors.joining("<br />"))
-								    				);
+								    						.collect(Collectors.joining("<br />"));
+								    				out.println(!StringUtils.isEmpty(pp) ? pp : "N/A");
 							    				}
 							    				else {
 							    					out.println("N/A");

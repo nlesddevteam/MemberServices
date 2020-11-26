@@ -2,6 +2,7 @@
          import="java.util.*,
                   java.text.*,
                   com.awsd.security.*,
+                  com.awsd.school.*,
                   com.esdnl.personnel.jobs.bean.*,
                   com.esdnl.personnel.jobs.constants.*,
                   com.esdnl.util.*" 
@@ -28,6 +29,8 @@
   if(!StringUtils.isEmpty(request.getParameter("trnlvl_id"))) {
   	trnlvl = TrainingMethodConstant.get(Integer.parseInt(request.getParameter("trnlvl_id")));
   }
+  
+  School school = usr.getPersonnel().getSchool();
 %>
 
 
@@ -101,9 +104,13 @@ input {
                                   <tr>
                                     <th width="10%">First Name</th>
                                     <th width="10%">Last Name</th>                                     
-                                    <th width="35%">Major(s)/Minor(s)</th>                                    
-                                    <th width="20%">Email</th>
+                                    <th width="25%">Major(s)/Minor(s)</th>                                    
+                                    <th width="15%">Email</th>
+                                    <th width="10%">Community</th>
                                     <th width="15%">Telephone</th>
+                                    <% if(school != null) { %>
+                                    	<th width="5%">Pref.</th>
+                                    <% } %>
                                     <th width="10%" class="no-print">Options</th>
                                   </tr>
                                   </thead>
@@ -134,6 +141,7 @@ input {
                                       
                                       </td>
                                       <td><a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
+                                      <td><%= !StringUtils.isEmpty(applicants[i].getAddress2()) ? applicants[i].getAddress2() : "UNKNOWN" %></td>
                                       <td>
                                       	<%
                                       		String nc = "";
@@ -148,6 +156,9 @@ input {
                                       		out.println(nc);
                                       	%>
                                       </td>
+                                      <% if(school != null) { %>
+                                    		<td class='sub-prefs' style='text-align:center;'><%= applicants[i].hasSubstititePrefs(school) ? "Yes" : "No" %></td>
+                                   		<% } %>
                                       <td class="no-print" style="vertical-align:middle;"><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">View Profile</a></td>
                                     </tr>
                                  <% } %>
@@ -173,10 +184,7 @@ input {
 	                <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
   			
   	</div>                           
-                              
-                              
-                                
-                              
+           
     </div></div></div>                          
 </body>
 </html>
