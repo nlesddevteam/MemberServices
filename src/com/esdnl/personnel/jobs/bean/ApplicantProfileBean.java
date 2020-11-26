@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import com.awsd.school.School;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.util.StringUtils;
@@ -53,6 +55,8 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	private TeacherRecommendationBean mostRecentAcceptedRecommendation;
 	private boolean isDeleted;
 
+	private List<Integer> substituteSchoolIdPrefs;
+
 	public ApplicantProfileBean() {
 
 		email = null;
@@ -81,7 +85,9 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 		profileVerified = false;
 		verificationBean = null;
 		mostRecentAcceptedRecommendation = null;
-		isDeleted=false;
+		isDeleted = false;
+
+		substituteSchoolIdPrefs = null;
 	}
 
 	public ApplicantProfileBean(ApplicantProfileBean copy) {
@@ -121,7 +127,9 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 		profileVerified = copy.profileVerified;
 		verificationBean = copy.verificationBean;
 		mostRecentAcceptedRecommendation = copy.mostRecentAcceptedRecommendation;
-		isDeleted=copy.isDeleted;
+		isDeleted = copy.isDeleted;
+
+		substituteSchoolIdPrefs = null;
 	}
 
 	public String getEmail() {
@@ -521,10 +529,32 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	}
 
 	public boolean isDeleted() {
+
 		return isDeleted;
 	}
 
 	public void setDeleted(boolean isDeleted) {
+
 		this.isDeleted = isDeleted;
+	}
+
+	public List<Integer> getSubstititeSchoolIDPrefs() {
+
+		return this.substituteSchoolIdPrefs;
+	}
+
+	public boolean hasSubstititePrefs(int schoolId) {
+
+		return this.substituteSchoolIdPrefs != null && this.substituteSchoolIdPrefs.contains(schoolId);
+	}
+
+	public boolean hasSubstititePrefs(School s) {
+
+		return s != null && hasSubstititePrefs(s.getSchoolID());
+	}
+
+	public void setSubstititeSchoolIDPrefs(List<Integer> substituteSchoolIdPrefs) {
+
+		this.substituteSchoolIdPrefs = substituteSchoolIdPrefs;
 	}
 }
