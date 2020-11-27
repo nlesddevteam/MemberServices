@@ -308,7 +308,7 @@ input {
    <div class="panel-group" id="accordion">
   	<div class="panel panel-info">
     <div class="panel-heading">
-      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">New Applicants <span class="displayText" style="font-weight:none;">(<%=applicants.length%>)</span></a></h4>
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">New Applicants <span class="displayText" style="font-weight:none;">(<span id="newAppNum"></span>)</span></a></h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
       <div class="panel-body">
@@ -344,9 +344,11 @@ input {
                                               <td><%=((applicants[i].getAppliedDate() != null)?applicants[i].getAppliedDateFormatted():"&nbsp")%></td>
                                               <td><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">View Profile</a></td>
                                          </tr>
+                                         <%cnt++; %>
                                         <%} %>
                                         </tbody>
                                         </table>  
+                                        <script>$("#newAppNum").html(<%=cnt%>);</script>
                                         <%} else {%>                                        
                                           No new applicants currently.
                                         <%}%>
@@ -481,6 +483,7 @@ input {
                                                 <td><%=((working[i].getAppliedDate() != null)?working[i].getAppliedDateFormatted():"&nbsp;")%></td>
                                                 <td><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=working[i].getSIN()%>">View Profile</a></td>
                                               </tr>
+                                              
                                         <%  } %>
                                          </tbody>  
                                       	</table>
