@@ -73,7 +73,7 @@ var pageWordCountConf = {
 	    countSpacesAsChars: true,
 	    countHTML: true,
 	    maxWordCount: -1,
-	    maxCharCount: 3990,
+	    maxCharCount: 8000,
 	}
 </script>
 <style>

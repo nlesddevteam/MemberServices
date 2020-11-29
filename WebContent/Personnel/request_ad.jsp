@@ -52,7 +52,7 @@ var pageWordCountConfAd = {
 	    countSpacesAsChars: true,
 	    countHTML: true,
 	    maxWordCount: -1,
-	    maxCharCount: 3990,
+	    maxCharCount: 8000,
 	}	
 </script>
 
@@ -195,7 +195,7 @@ var pageWordCountConfAd = {
       			 				<div class="row">
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">	                        
 		                             	<div class="input-group">
-		    								<span class="input-group-addon">Ad Text:<br/><br/><span style="color:Grey;font-size:9px;">Limit 3990 characters, including spaces.</span></span>
+		    								<span class="input-group-addon">Ad Text:<br/><br/><span style="color:Grey;font-size:9px;">Limit 8000 characters, including spaces.</span></span>
 		    								<textarea name="ad_text" id="ad_text" class="form-control"><%=((req != null)&&!StringUtils.isEmpty(req.getAdText()))?req.getAdText():""%></textarea>
                                       
 		    							</div>

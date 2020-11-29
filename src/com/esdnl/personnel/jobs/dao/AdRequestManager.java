@@ -1,6 +1,7 @@
 package com.esdnl.personnel.jobs.dao;
 
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -196,7 +197,7 @@ public class AdRequestManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.add_request(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.add_request(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 
 			stat.setInt(2, p.getPersonnelID());
@@ -215,8 +216,17 @@ public class AdRequestManager {
 			stat.setString(9, abean.getVacancyReason());
 			stat.setString(10, abean.getTitle());
 			stat.setInt(11, abean.getJobType().getValue());
-			stat.setString(12, abean.getAdText());
+			//add new clob field, not used any longer
+			stat.setString(12, "");
 			stat.setBoolean(13, abean.isUnadvertised());
+			stat.setString(14, "N");
+			if (abean.getAdText() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, abean.getAdText());
+				((OracleCallableStatement) stat).setClob(15, clobdesc);
+			}else{
+				stat.setNull(15, OracleTypes.CLOB);
+			}
 
 			stat.execute();
 
@@ -277,7 +287,7 @@ public class AdRequestManager {
 		CallableStatement stat = null;
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin awsd_user.personnel_ad_request.update_ad_request(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_ad_request.update_ad_request_clob(?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, abean.getLocation().getLocationDescription());
 			stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
 			if (abean.getEndDate() != null) {
@@ -304,7 +314,15 @@ public class AdRequestManager {
 			stat.setString(8, abean.getTitle());
 			
 			stat.setInt(9, abean.getJobType().getValue());
-			stat.setString(10, abean.getAdText());
+			//stat.setString(10, abean.getAdText());
+			//switched to clob
+			if (abean.getAdText() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, abean.getAdText());
+				((OracleCallableStatement) stat).setClob(10, clobdesc);
+			}else{
+				stat.setNull(10, OracleTypes.CLOB);
+			}
 			stat.setBoolean(11, abean.isUnadvertised());
 			stat.setInt(12, abean.getId());
 			stat.execute();
@@ -356,7 +374,7 @@ public class AdRequestManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin awsd_user.personnel_ad_request.approve_ad_request(?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_ad_request.approve_ad_request_clob(?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(1, abean.getId());
 			stat.setString(2, abean.getTitle());
@@ -365,7 +383,15 @@ public class AdRequestManager {
 				stat.setDate(4, new java.sql.Date(abean.getEndDate().getTime()));
 			else
 				stat.setDate(4, null);
-			stat.setString(5, abean.getAdText());
+			//stat.setString(5, abean.getAdText());
+			//switched to clob
+			if (abean.getAdText() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, abean.getAdText());
+				((OracleCallableStatement) stat).setClob(5, clobdesc);
+			}else{
+				stat.setNull(5, OracleTypes.CLOB);
+			}
 			stat.setInt(6, p.getPersonnelID());
 
 			stat.execute();
@@ -644,7 +670,15 @@ public class AdRequestManager {
 			abean.setCurrentStatus(RequestStatus.get(rs.getInt("CUR_STATUS")));
 			abean.setTitle(rs.getString("TITLE"));
 			abean.setJobType(JobTypeConstant.get(rs.getInt("JOB_TYPE")));
-			abean.setAdText(rs.getString("AD_TEXT"));
+			//abean.setAdText(rs.getString("AD_TEXT"));
+			// check to see if opp was created with new clob field or old varchar field
+			if(rs.getString("JOB_REQS") !=  null){
+				//check the clob field
+				Clob clob = rs.getClob("JOB_REQS");
+				abean.setAdText(clob.getSubString(1, (int) clob.length()));
+			}else {
+				abean.setAdText(rs.getString("AD_TEXT"));
+			}
 			abean.setCompetitionNumber(rs.getString("COMP_NUM"));
 
 			abean.setUnadvertised(rs.getBoolean("UNADVERTISED"));

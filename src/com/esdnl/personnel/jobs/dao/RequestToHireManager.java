@@ -1,5 +1,6 @@
 package com.esdnl.personnel.jobs.dao;
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -29,7 +30,7 @@ public class RequestToHireManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setString(2, abean.getJobTitle());
@@ -48,7 +49,8 @@ public class RequestToHireManager {
 			}
 			stat.setInt(8, abean.getSupervisor());
 			stat.setInt(9, abean.getDivision());
-			stat.setString(10,abean.getComments());
+			//add new clob field, not used any longer
+			stat.setString(10,"");
 			stat.setString(11, abean.getRequestBy());
 			stat.setString(12, abean.getPositionSalary());
 			stat.setInt(13, abean.getPositionName());
@@ -63,6 +65,13 @@ public class RequestToHireManager {
 			}
 			stat.setInt(19, abean.getPrivateList());
 			stat.setString(20, abean.getVacancyReason());
+			if (abean.getComments() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, abean.getComments());
+				((OracleCallableStatement) stat).setClob(21, clobdesc);
+			}else{
+				stat.setNull(21, OracleTypes.CLOB);
+			}
 			stat.execute();
 			abean.setId(((OracleCallableStatement) stat).getInt(1));
 
@@ -102,7 +111,7 @@ public class RequestToHireManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_request_to_hire(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_request_to_hire_clob(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 
 			stat.setString(1, abean.getJobTitle());
 			stat.setString(2, abean.getPreviousIncumbent());
@@ -120,7 +129,7 @@ public class RequestToHireManager {
 			}
 			stat.setInt(7, abean.getSupervisor());
 			stat.setInt(8, abean.getDivision());
-			stat.setString(9,abean.getComments());
+			stat.setString(9,null);
 			stat.setString(10, abean.getPositionSalary());
 			stat.setInt(11, abean.getId());
 			stat.setInt(12, abean.getPositionName());
@@ -135,6 +144,13 @@ public class RequestToHireManager {
 			}
 			stat.setInt(18, abean.getPrivateList());
 			stat.setString(19, abean.getVacancyReason());
+			if (abean.getComments() != null) {
+				Clob clobdesc = con.createClob();
+				clobdesc.setString(1, abean.getComments());
+				((OracleCallableStatement) stat).setClob(20, clobdesc);
+			}else{
+				stat.setNull(20, OracleTypes.CLOB);
+			}
 			stat.execute();
 
 			stat.close();
@@ -351,7 +367,15 @@ public class RequestToHireManager {
 				abean.setAdhrApprovedById(Integer.parseInt(rs.getString("ADHR_APPROVED_BY")));
 			}
 			
-			abean.setComments(rs.getString("COMMENTS"));
+			//abean.setComments(rs.getString("COMMENTS"));
+			// check to see if opp was created with new clob field or old varchar field
+			if(rs.getString("JOB_REQS") !=  null){
+				//check the clob field
+				Clob clob = rs.getClob("JOB_REQS");
+				abean.setComments(clob.getSubString(1, (int) clob.length()));
+			}else {
+				abean.setComments(rs.getString("COMMENTS"));
+			}
 			if(!(rs.getString("rby").equals(","))){
 				abean.setRequestBy(rs.getString("rby"));
 				abean.setRequestById(Integer.parseInt(rs.getString("REQUESTED_BY")));
