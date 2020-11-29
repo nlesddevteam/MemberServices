@@ -54,6 +54,7 @@ public class RequestToHireBean {
 	private Date EndDate;
 	private int privateList;
 	private String vacancyReason;
+	private String jobRequirements;
 	public int getId() {
 		return id;
 	}
@@ -526,5 +527,12 @@ public class RequestToHireBean {
 	}
 	public void setVacancyReason(String vacancyReason) {
 		this.vacancyReason = vacancyReason;
+	}
+	public String getJobRequirements() {
+		return jobRequirements;
+	}
+
+	public void setJobRequirements(String jobRequirements) {
+		this.jobRequirements = jobRequirements;
 	}
 }

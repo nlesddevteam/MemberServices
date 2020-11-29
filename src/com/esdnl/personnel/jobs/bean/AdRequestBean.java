@@ -41,7 +41,8 @@ public class AdRequestBean {
 	private HashMap<RequestStatus, AdRequestHistoryBean> history;
 	private String comp_num;
 	private boolean unadvertised;
-
+	private String jobRequirements;
+	
 	public AdRequestBean() {
 
 		this.id = 0;
@@ -63,6 +64,7 @@ public class AdRequestBean {
 		this.unadvertised = false;
 
 		this.history = null;
+		this.jobRequirements=null;
 	}
 
 	public int getId() {
@@ -349,5 +351,12 @@ public class AdRequestBean {
 		}
 
 		return history.get(status);
+	}
+	public String getJobRequirements() {
+		return jobRequirements;
+	}
+
+	public void setJobRequirements(String jobRequirements) {
+		this.jobRequirements = jobRequirements;
 	}
 }
