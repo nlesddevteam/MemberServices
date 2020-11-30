@@ -688,10 +688,16 @@ $(document).ready(function() {
 		      					<td class="field_content">${rule.expiryDateFormatted}</td>
 		      					<td class="field_content">${rule.notes}</td>
 		      					<td align="right" class="field_content">
-		      					<button type="button" class="btn btn-xs btn-primary" onclick="window.open('${spath}${rule.viewPath}','_blank');">View</button>
-		      					<button type="button" class="btn btn-xs btn-danger" onclick="opendeletetradialog('${rule.trainingTypeString}','${rule.pk}');">Del</button>
-		      						
-								</td>
+		      					<c:choose>
+		      						<c:when test="${rule.tDocument eq null }">
+		      							<button type="button" class="btn btn-xs btn-info" disabled>Doc</button>
+		      						</c:when>
+		      						<c:otherwise>
+		      							<button type="button" class="btn btn-xs btn-info" onclick="window.open('${spath}${rule.viewPath}','_blank');">Doc</button>
+		      						</c:otherwise>
+		      					</c:choose>
+		      						<button type="button" class="btn btn-xs btn-danger" onclick="opendeletetradialog('${rule.trainingTypeString}','${rule.pk}');">Del</button>
+		      					</td>
 		      				</tr>
 		        		</c:forEach>
 		        		</c:when>
