@@ -364,7 +364,7 @@ input {
 							    	<td class='tableTitle'>SDS Current Contract:</td>
 							    	<td colspan='3'>
 							    		<%
-							    			if(empbean != null) { 
+							    			if(empbean != null && empbean.getCurrentPositions() != null) { 
 							    				List<EmployeePositionBean> positions = empbean.getCurrentPositions().stream().filter(p -> p.getEndDate().after(new Date())).collect(Collectors.toList());
 							    				System.out.println(positions);
 							    				if(positions != null && positions.size() > 0) {
