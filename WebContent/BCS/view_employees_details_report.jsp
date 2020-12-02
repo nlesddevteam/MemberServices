@@ -143,7 +143,7 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.dlNumber}</td>
 	      					<td class="field_content">${rule.dlClassText}</td>
 	      					<td class="field_content">${rule.dlExpiryDateFormatted}</td>
-	      					<td class="field_content">${rule.daRunDate}</td>
+	      					<td class="field_content">${rule.daRunDateFormatted}</td>
 	      					<td class="field_content">${rule.daConvictions}</td>
 	      					<td class="field_content">${rule.daSuspensions}</td>
 	      					<td class="field_content">${rule.daAccidents}</td>
