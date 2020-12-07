@@ -1,19 +1,22 @@
 <%@ page language="java"
          import="java.util.*,
          				 java.util.stream.*,
-                 java.text.*,
-                 java.text.SimpleDateFormat,  
-				 java.util.Date,
-				 java.util.concurrent.TimeUnit,
-                 com.awsd.school.*,
-                 com.awsd.school.bean.*,
-                 com.esdnl.util.*,
-                 com.esdnl.personnel.jobs.bean.*,
-                 com.esdnl.personnel.jobs.dao.*,
-                 com.esdnl.personnel.jobs.constants.*,
-                 com.esdnl.personnel.v2.model.sds.bean.*,
-                 com.esdnl.personnel.v2.database.sds.*,
-                 org.apache.commons.lang.StringUtils"  
+		                 java.text.*,
+		                 java.text.SimpleDateFormat,  
+						 java.util.Date,
+						 java.util.concurrent.TimeUnit,
+		                 com.awsd.school.*,
+		                 com.awsd.school.bean.*,
+		                 com.awsd.school.dao.*,
+		                 com.esdnl.util.*,
+		                 com.esdnl.personnel.jobs.bean.*,
+		                 com.esdnl.personnel.jobs.dao.*,
+		                 com.esdnl.personnel.jobs.constants.*,
+		                 com.esdnl.personnel.v2.model.sds.bean.*,
+		                 com.esdnl.personnel.v2.database.sds.*,
+		                 org.apache.commons.lang.StringUtils,
+		                 com.nlesd.school.bean.*,
+		                 com.nlesd.school.service.*"  
          isThreadSafe="false"%>
 
 		<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -59,6 +62,11 @@
   SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
   SimpleDateFormat sdf_medium = new SimpleDateFormat("MMM d, yyyy");
   SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+  //used to populate sub prefs
+  Collection<SchoolZoneBean> zones = SchoolZoneService.getSchoolZoneBeans();
+  School[] schools = null;
+  HashMap<Integer, School> sel = ApplicantSubPrefManager.getApplicantSubPrefsMap(profile);  
+  HashMap<Integer, ApplicantSubListInfoBean> sublists2  = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
 %>
 
 <html>
@@ -89,8 +97,15 @@ input {
 			"lengthMenu": [[-1], ["All"]],
 			"lengthChange": false,
 			"searching": false
-		}	  
-	  );
+		});
+	  $("#subPrefs").DataTable(
+				{
+					"order": [[ 0, "asc" ]],
+					"lengthMenu": [[-1], ["All"]],
+					"lengthChange": false,
+					"searching": false,
+					"paging": false
+				});
  });
     </script>
 
@@ -1179,7 +1194,60 @@ input {
 					href="applicant_substitute_preferences.jsp">EDIT</a></span>
 			</div>
 			<div class="panel-body">
-				<div class="table-responsive"></div>
+				<div class="table-responsive">
+				<table id="subPrefs" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
+					<thead>
+						<tr>
+							<th width=45%'>SCHOOL</th>
+							<th width='20%'>CITY/TOWN</th>	
+							<th width='20%'>REGION</th>
+							<th width='15%'>REGIONAL ZONE</th>							
+														        															       
+						</tr>
+					</thead>
+					<tbody>
+					    <%Collection<RegionBean> regions = null;
+                        	for(SchoolZoneBean zone : zones) {
+                             	regions = RegionManager.getRegionBeans(zone);
+                             	
+						%>
+							<% for(RegionBean region : regions) { %>
+								<%if(regions == null || regions.size() <= 1) { %>
+									<%schools = SchoolDB.getSchools(zone).toArray(new School[0]);                                      		
+                                	int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
+	                                for(int j=0; j < middle; j++){%>
+	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
+	                                		<tr>
+	                                		<td><%=schools[j].getSchoolName()%></td>
+	                                		<td>schools[j].getTownCity()</td>
+	                                		<td style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
+	                                		<td  style="color:Silver;">N/A</td>
+	                                		</tr>
+	                                	<% }%>
+	                                <%} %>
+									
+                        		<%}else{
+                        			if(region.getName().contains("all")) continue;%>
+                        			<%schools = SchoolDB.getSchools(region).toArray(new School[0]);
+                        			int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
+                        			%>
+                        			<%for(int j=0; j < middle; j++){%>
+	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
+	                                		<tr>
+	                                		<td><%=schools[j].getSchoolName()%></td>
+	                                		<td><%=schools[j].getTownCity()%></td>
+	                                		<td  style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
+	                                		<td style="text-transform:Capitalize;"><%=region.getName() %></td>
+	                                		</tr>
+	                                	<% }%>
+	                                <%} %>
+                        		<%}%>
+                        	<%}%> 
+                        <%}%> 
+					</tbody>
+					</table> 
+				
+				</div>
 			</div>
 		</div>
 	</div>
