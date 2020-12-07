@@ -3,8 +3,11 @@
          					java.util.stream.*,
                   java.text.*,
                   com.awsd.security.*,
-                  com.awsd.school.*,
+                  com.awsd.school.*,		           
+		          com.awsd.school.dao.*,
                   com.awsd.school.bean.*,
+                  com.nlesd.school.bean.*,
+		          com.nlesd.school.service.*,  
                   com.awsd.mail.bean.AlertBean,
                   com.esdnl.util.*,
                   com.esdnl.personnel.jobs.bean.*,
@@ -83,7 +86,11 @@
   cal.clear(Calendar.MILLISECOND);
   cal.add(Calendar.MONTH, -6);
   Date six_months = cal.getTime();
-  
+  //used to populate sub prefs
+  Collection<SchoolZoneBean> zones = SchoolZoneService.getSchoolZoneBeans();
+  School[] schools = null;
+  HashMap<Integer, School> sel = ApplicantSubPrefManager.getApplicantSubPrefsMap(profile);  
+  HashMap<Integer, ApplicantSubListInfoBean> sublists2  = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
 %>
 <!-- Clean up the code and use jstl vars. this should be moved after. -->
 <c:set var="nameDisplay" value="<%=profile.getSurname() + \", \" + profile.getFirstname()%>"/>
@@ -126,7 +133,15 @@ $("#loadingSpinner").css("display","none");
 					"lengthMenu": [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]]
 				}	  
 	  );
-		
+	  $("#subPrefs").DataTable(
+				{
+					"order": [[ 0, "asc" ]],
+					"lengthMenu": [[-1], ["All"]],
+					"lengthChange": false,
+					"searching": false,
+					"paging": false,
+					"bInfo" : false
+				});
   	
   	$('.delete-cod').click(function(){
   		if(confirm('Are you sure you want to delete this Criminal Offence Declaration?')){
@@ -602,6 +617,74 @@ input {
 					</div>
 </div>					
  </esd:SecurityAccessRequired>	
+
+
+<!--SUBSTITUTE PREFERENCES ----------------------------------------------------------------------------------------->
+
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<b>SUBSTITUTE PREFERENCES</b>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+				<table id="subPrefs" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
+					<thead>
+						<tr>
+							<th width=45%'>SCHOOL</th>
+							<th width='20%'>CITY/TOWN</th>	
+							<th width='20%'>REGION</th>
+							<th width='15%'>REGIONAL ZONE</th>							
+														        															       
+						</tr>
+					</thead>
+					<tbody>
+					    <%Collection<RegionBean> regions = null;
+                        	for(SchoolZoneBean zone : zones) {
+                             	regions = RegionManager.getRegionBeans(zone);
+                             	
+						%>
+							<% for(RegionBean region : regions) { %>
+								<%if(regions == null || regions.size() <= 1) { %>
+									<%schools = SchoolDB.getSchools(zone).toArray(new School[0]);                                      		
+                                	int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
+	                                for(int j=0; j < middle; j++){%>
+	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
+	                                		<tr>
+	                                		<td><%=schools[j].getSchoolName()%></td>
+	                                		<td>schools[j].getTownCity()</td>
+	                                		<td style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
+	                                		<td  style="color:Silver;">N/A</td>
+	                                		</tr>
+	                                	<% }%>
+	                                <%} %>
+									
+                        		<%}else{
+                        			if(region.getName().contains("all")) continue;%>
+                        			<%schools = SchoolDB.getSchools(region).toArray(new School[0]);
+                        			int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
+                        			%>
+                        			<%for(int j=0; j < middle; j++){%>
+	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
+	                                		<tr>
+	                                		<td><%=schools[j].getSchoolName()%></td>
+	                                		<td><%=schools[j].getTownCity()%></td>
+	                                		<td  style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
+	                                		<td style="text-transform:Capitalize;"><%=region.getName() %></td>
+	                                		</tr>
+	                                	<% }%>
+	                                <%} %>
+                        		<%}%>
+                        	<%}%> 
+                        <%}%> 
+					</tbody>
+					</table> 
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
 	
 
 

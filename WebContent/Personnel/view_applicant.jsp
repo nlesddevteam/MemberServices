@@ -104,7 +104,8 @@ input {
 					"lengthMenu": [[-1], ["All"]],
 					"lengthChange": false,
 					"searching": false,
-					"paging": false
+					"paging": false,
+					"bInfo" : false
 				});
  });
     </script>
