@@ -130,17 +130,13 @@ $("#loadingSpinner").css("display","none");
 	  $("#jobsapp").dataTable(
 			  {
 					"order": [[ 0, "desc" ]],
-					"lengthMenu": [[25, 50, 100, 200, -1], [25, 50, 100, 200, "All"]]
+					"lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]]
 				}	  
 	  );
 	  $("#subPrefs").DataTable(
 				{
 					"order": [[ 0, "asc" ]],
-					"lengthMenu": [[-1], ["All"]],
-					"lengthChange": false,
-					"searching": false,
-					"paging": false,
-					"bInfo" : false
+					"lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]]	
 				});
   	
   	$('.delete-cod').click(function(){
