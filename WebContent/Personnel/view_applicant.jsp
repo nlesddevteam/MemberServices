@@ -93,19 +93,14 @@ input {
  $('document').ready(function(){
 	  $("#regPrefs").DataTable(
 		{
-			"order": [[ 0, "asc" ]],
-			"lengthMenu": [[-1], ["All"]],
-			"lengthChange": false,
-			"searching": false
+			
+			"order": [[ 0, "desc" ]],
+			"lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]]	
 		});
 	  $("#subPrefs").DataTable(
 				{
 					"order": [[ 0, "asc" ]],
-					"lengthMenu": [[-1], ["All"]],
-					"lengthChange": false,
-					"searching": false,
-					"paging": false,
-					"bInfo" : false
+					"lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]]	
 				});
  });
     </script>
@@ -1184,74 +1179,7 @@ input {
 		</div>
 	</div>
 
-	<!--10.  SUBSTITUTE PREFERENCES ----------------------------------------------------------------------------------------->
-
-	<div class="panel-group" style="padding-top: 5px;">
-		<div class="panel panel-success" id="section16">
-			<div class="panel-heading">
-				<b>SUBSTITUTE PREFERENCES</b> <span class="no-print"
-					style="float: right; padding-right: 5px"><a
-					class="btn btn-xs btn-primary"
-					href="applicant_substitute_preferences.jsp">EDIT</a></span>
-			</div>
-			<div class="panel-body">
-				<div class="table-responsive">
-				<table id="subPrefs" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
-					<thead>
-						<tr>
-							<th width=45%'>SCHOOL</th>
-							<th width='20%'>CITY/TOWN</th>	
-							<th width='20%'>REGION</th>
-							<th width='15%'>REGIONAL ZONE</th>							
-														        															       
-						</tr>
-					</thead>
-					<tbody>
-					    <%Collection<RegionBean> regions = null;
-                        	for(SchoolZoneBean zone : zones) {
-                             	regions = RegionManager.getRegionBeans(zone);
-                             	
-						%>
-							<% for(RegionBean region : regions) { %>
-								<%if(regions == null || regions.size() <= 1) { %>
-									<%schools = SchoolDB.getSchools(zone).toArray(new School[0]);                                      		
-                                	int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
-	                                for(int j=0; j < middle; j++){%>
-	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
-	                                		<tr>
-	                                		<td><%=schools[j].getSchoolName()%></td>
-	                                		<td>schools[j].getTownCity()</td>
-	                                		<td style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
-	                                		<td  style="color:Silver;">N/A</td>
-	                                		</tr>
-	                                	<% }%>
-	                                <%} %>
-									
-                        		<%}else{
-                        			if(region.getName().contains("all")) continue;%>
-                        			<%schools = SchoolDB.getSchools(region).toArray(new School[0]);
-                        			int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
-                        			%>
-                        			<%for(int j=0; j < middle; j++){%>
-	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
-	                                		<tr>
-	                                		<td><%=schools[j].getSchoolName()%></td>
-	                                		<td><%=schools[j].getTownCity()%></td>
-	                                		<td  style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
-	                                		<td style="text-transform:Capitalize;"><%=region.getName() %></td>
-	                                		</tr>
-	                                	<% }%>
-	                                <%} %>
-                        		<%}%>
-                        	<%}%> 
-                        <%}%> 
-					</tbody>
-					</table> 
-				
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
 	<!-- INTERVIEW SUMMARIES ----------------------------------------------------------------------------------------->
 <%
@@ -1463,6 +1391,76 @@ input {
 			</div>
 		</div>
 	</div>
+
+<!--10.  SUBSTITUTE PREFERENCES ----------------------------------------------------------------------------------------->
+
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-success" id="section16">
+			<div class="panel-heading">
+				<b>SUBSTITUTE PREFERENCES</b> <span class="no-print"
+					style="float: right; padding-right: 5px"><a
+					class="btn btn-xs btn-primary"
+					href="applicant_substitute_preferences.jsp">EDIT</a></span>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+				<table id="subPrefs" class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;">
+					<thead>
+						<tr>
+							<th width=45%'>SCHOOL</th>
+							<th width='20%'>CITY/TOWN</th>	
+							<th width='20%'>REGION</th>
+							<th width='15%'>REGIONAL ZONE</th>							
+														        															       
+						</tr>
+					</thead>
+					<tbody>
+					    <%Collection<RegionBean> regions = null;
+                        	for(SchoolZoneBean zone : zones) {
+                             	regions = RegionManager.getRegionBeans(zone);
+                             	
+						%>
+							<% for(RegionBean region : regions) { %>
+								<%if(regions == null || regions.size() <= 1) { %>
+									<%schools = SchoolDB.getSchools(zone).toArray(new School[0]);                                      		
+                                	int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
+	                                for(int j=0; j < middle; j++){%>
+	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
+	                                		<tr>
+	                                		<td><%=schools[j].getSchoolName()%></td>
+	                                		<td><%=schools[j].getTownCity()%></td>
+	                                		<td style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
+	                                		<td  style="color:Silver;">N/A</td>
+	                                		</tr>
+	                                	<% }%>
+	                                <%} %>
+									
+                        		<%}else{
+                        			if(region.getName().contains("all")) continue;%>
+                        			<%schools = SchoolDB.getSchools(region).toArray(new School[0]);
+                        			int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
+                        			%>
+                        			<%for(int j=0; j < middle; j++){%>
+	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
+	                                		<tr>
+	                                		<td><%=schools[j].getSchoolName()%></td>
+	                                		<td><%=schools[j].getTownCity()%></td>
+	                                		<td  style="text-transform:Capitalize;"><%=zone.getZoneName()%></td>
+	                                		<td style="text-transform:Capitalize;"><%=region.getName() %></td>
+	                                		</tr>
+	                                	<% }%>
+	                                <%} %>
+                        		<%}%>
+                        	<%}%> 
+                        <%}%> 
+					</tbody>
+					</table> 
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<div align="center" class="no-print"><a href="/employment/index.jsp?finished=true" class="btn btn-sm btn-danger">Back to Employment</a></div>
 <br/><br/>
