@@ -580,11 +580,13 @@ input {
 			    	</td></tr>
 			    	<tr id="sl${subListApp.subList.id}" style="display: none;">
 			    	<td colspan='5'>
-					    	<span id="sltitle${subListApp.subList.id}" style="font-size:12px;"></span><br/>
-					    	<input type="text" id="sltext${subListApp.subList.id}" style="width:100%;" maxlength="250"><br/>
-					    	<div style="float:right;padding-top:3px;">
-					    	<input type="button" class="btn btn-xs btn-primary" onclick="submitSubListRow('${subListApp.subList.id}',this.value)" id="bs${subListApp.subList.id}" value="">
+			    	<div class="alert alert-info">
+					    	<span id="sltitle${subListApp.subList.id}" style="font-size:12px;font-weight:bold;"></span><br/>
+					    	<input class="form-control"  type="text" id="sltext${subListApp.subList.id}" style="width:100%;" maxlength="250"><br/>
+					    	<div style="text-align:right;padding-top:3px;">
+					    	<input type="button" class="btn btn-xs btn-danger" onclick="submitSubListRow('${subListApp.subList.id}',this.value)" id="bs${subListApp.subList.id}" value="">
 					    	<input type="button" class="btn btn-xs btn-primary" onclick="cancelSubListRow('${subListApp.subList.id}',this.value)" id="bc${subListApp.subList.id}" value="">
+					    	</div>
 					    	</div>
 					 </td></tr>
 			    	<% } %>
