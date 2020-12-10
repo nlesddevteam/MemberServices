@@ -33,8 +33,8 @@ Occupational Health and Safety Information Shared with Schools and District Staf
 <br/><br/>
    <ul>  
    
-  		<li><a href="https://sites.google.com/nlesd.ca/ohstraining2021/safety-orientation" target="_blank">OHS training 20 - 21 for all staff</a>
-		<li> <a href="https://sites.google.com/nlesd.ca/ohsorientation/home" target="_blank">General OHS Information</a>   
+  		<li><a href="https://sites.google.com/nlesd.ca/ohstraining2021/safety-orientation" target="_blank">Orientation Training 2020-2021</a>
+		<li> <a href="https://sites.google.com/nlesd.ca/ohsorientation/home" target="_blank">NLESD OHS Website</a>   
    		
    </ul>
     
