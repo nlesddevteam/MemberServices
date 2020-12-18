@@ -2100,5 +2100,108 @@ public class TravelClaimDB {
 			catch (Exception e) {}
 		}
 		return claims;
+	}
+	public static Vector<TravelClaim> getClaimsSupervisorStatus(Personnel who, int code) throws TravelClaimException {
+
+		Vector<TravelClaim> claims = null;
+		TravelClaim claim = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			claims = new Vector<TravelClaim>(5);
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.travel_claim_sys.get_claims_super_status(?, ?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, who.getPersonnelID());
+			stat.setInt(3, code);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				if (rs.getInt("PD_ID") <= 0) {
+					claim = new TravelClaim(rs.getInt("CLAIM_ID"), rs.getInt("PERSONNEL_ID"), rs.getInt("CUR_STATUS"), rs.getDate("CREATED_DATE"), rs.getDate("SUBMIT_DATE"), rs.getString("FISCAL_YEAR"), rs.getInt("FISCAL_MONTH"), rs.getInt("SUPERVISOR_ID"), rs.getString("GL_ACCOUNT_CODE"), ((rs.getString("PAID_TCHR_PAYROLL") != null) && rs.getString(
+							"PAID_TCHR_PAYROLL").equalsIgnoreCase("Y")), rs.getDate("APPROVED_DATE"), rs.getDate("PAID_DATE"), rs.getDate("EXPORT_DATE"));
+				}
+				else {
+					claim = new PDTravelClaim(rs.getInt("CLAIM_ID"), rs.getInt("PERSONNEL_ID"), rs.getInt("CUR_STATUS"), rs.getDate("CREATED_DATE"), rs.getDate("SUBMIT_DATE"), rs.getString("FISCAL_YEAR"), rs.getInt("FISCAL_MONTH"), rs.getInt("SUPERVISOR_ID"), rs.getString("GL_ACCOUNT_CODE"), ((rs.getString("PAID_TCHR_PAYROLL") != null) && rs.getString(
+							"PAID_TCHR_PAYROLL").equalsIgnoreCase("Y")), rs.getDate("APPROVED_DATE"), rs.getDate("PAID_DATE"), rs.getDate("EXPORT_DATE"), rs.getInt("PD_ID"));
+				}
+
+				claims.add(claim);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("TravelClaimDB.getClaims(Personnel, TravelClaimStatus): " + e);
+			throw new TravelClaimException("Can not extract travel claims from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return claims;
+	}
+	public static Vector<TravelClaim> getClaimsSupervisorPrevious(Personnel who) throws TravelClaimException {
+
+		Vector<TravelClaim> claims = null;
+		TravelClaim claim = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			claims = new Vector<TravelClaim>(5);
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.travel_claim_sys.get_claims_super_previous(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, who.getPersonnelID());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				if (rs.getInt("PD_ID") <= 0) {
+					claim = new TravelClaim(rs.getInt("CLAIM_ID"), rs.getInt("PERSONNEL_ID"), rs.getInt("CUR_STATUS"), rs.getDate("CREATED_DATE"), rs.getDate("SUBMIT_DATE"), rs.getString("FISCAL_YEAR"), rs.getInt("FISCAL_MONTH"), rs.getInt("SUPERVISOR_ID"), rs.getString("GL_ACCOUNT_CODE"), ((rs.getString("PAID_TCHR_PAYROLL") != null) && rs.getString(
+							"PAID_TCHR_PAYROLL").equalsIgnoreCase("Y")), rs.getDate("APPROVED_DATE"), rs.getDate("PAID_DATE"), rs.getDate("EXPORT_DATE"));
+				}
+				else {
+					claim = new PDTravelClaim(rs.getInt("CLAIM_ID"), rs.getInt("PERSONNEL_ID"), rs.getInt("CUR_STATUS"), rs.getDate("CREATED_DATE"), rs.getDate("SUBMIT_DATE"), rs.getString("FISCAL_YEAR"), rs.getInt("FISCAL_MONTH"), rs.getInt("SUPERVISOR_ID"), rs.getString("GL_ACCOUNT_CODE"), ((rs.getString("PAID_TCHR_PAYROLL") != null) && rs.getString(
+							"PAID_TCHR_PAYROLL").equalsIgnoreCase("Y")), rs.getDate("APPROVED_DATE"), rs.getDate("PAID_DATE"), rs.getDate("EXPORT_DATE"), rs.getInt("PD_ID"));
+				}
+
+				claims.add(claim);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("TravelClaimDB.getClaims(Personnel, TravelClaimStatus): " + e);
+			throw new TravelClaimException("Can not extract travel claims from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return claims;
 	}	
 }

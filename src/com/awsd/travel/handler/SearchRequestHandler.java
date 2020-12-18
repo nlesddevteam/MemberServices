@@ -57,7 +57,7 @@ public class SearchRequestHandler extends RequestHandlerImpl {
 					}
 					else
 						path = "claim_error.jsp?msg=Only FIRSTNAME, LASTNAME, or FIRST and LASTNAME can be entered in the search text.";
-
+					
 					if (map != null)
 						request.setAttribute("SEARCH_RESULTS", map);
 				}
@@ -76,7 +76,7 @@ public class SearchRequestHandler extends RequestHandlerImpl {
 					path = "claim_error.jsp?msg=Invalid search type.";
 			}
 			else {
-				path = "claim_error.jsp?msg=Search type must be selected.";
+				path = "claim_error.jsp?msg=Search type must be selected."; 
 			}
 		}
 		else {

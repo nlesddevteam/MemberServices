@@ -4011,6 +4011,16 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.GetSublistApplicantHistoryAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/getSublistApplicantHistory.html</URL-Pattern>
-    </Request-Handler>                                                                                                                                                                             
+    </Request-Handler>   
+  <!-- NEW -->  
+    <Request-Handler>
+		<Request-Handler-Class>com.awsd.travel.handler.AddApprovedRateMemberAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Travel/addApprovedRateMember.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+		<Request-Handler-Class>com.awsd.travel.handler.RemoveApprovedRateMemberAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Travel/removeApprovedRateMember.html</URL-Pattern>
+    </Request-Handler>  
+                                                                                                                                                                              
   </Request-Handlers>
 </Member-Services-Config>

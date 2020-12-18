@@ -68,72 +68,86 @@
             });
     	});
     </script> 
-    
+     <script>
+
+			
+			$(document).ready(function(){           
+    		        		      		
+    			 $.cookie('backurl', 'yearly_claims_detail.jsp', {expires: 1 });
+			   	 
+		   		  $("#claims-table").DataTable({
+		   		  "order": [[ 0, "asc" ]],
+		   		"responsive": true,
+		   		  //dom: 'Blfrtip',		  
+		   		  "lengthMenu": [[100,250, 500, -1], [100, 250, 500, "All"]]
+		   	  
+		   	  
+		   	  });	
+		   	 
+		    });
+		       </script>
+
    	<script src="includes/js/Chart.min.js"></script>
-    
-        
-	
-	
-    <div class="claimHeaderText">Claim Details Report for ${schoolYear}</div>
-	
-	<br/><div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-    <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
-	
+   	 <div id="printDATA">
+	<div class="siteHeaderBlue">Claim Details Report for ${schoolYear}</div>
 	<br/>
-	<div id="printJob">
+	Below is a list of users with their total claims for ${schoolYear} sorted by name. 
+	You can easily search using the search box at right below and/or print the data.
+	Select a year from the drop down to view data from 2004 to present.
 	
- <form name="add_claim_item_form">
-      
-      
+	<br/><br/>
+	
+ <form name="add_claim_item_form">      
+      <div class="no-print">
        				<b>Select Year: </b>
-                        <select name="year" id="year">
+                        <select name="year" id="year" class="form-control">
                           <%
                             Calendar cal = Calendar.getInstance();
-                            for(int i=0; i < 5; i++,cal.add(Calendar.YEAR, -1))
+                          //Get all years from 2003 and up. No records before 2003.
+                          int yearTest =  Calendar.getInstance().get(Calendar.YEAR)-2003;
+                          %>
+                          <script>$("#numYearsNote").text(<%=yearTest%>)</script>
+                          <%
+                          
+                          for(int i=0; i < yearTest; i++,cal.add(Calendar.YEAR, -1))
                             {
                                 out.println("<option value='" + cal.get(Calendar.YEAR) +"'" 
                                   +  ((cal.get(Calendar.YEAR) == year)?" SELECTED":"") + ">"+cal.get(Calendar.YEAR)+"</option>");
                             }
                           %>
-                        </select>        
-      
-      		<br/><br/>
-             <table id="claims-table" width="100%" class="claimsTable">
-              
-              <tr>
-                    <td colspan=6 align="center">                    
-                    <canvas id="myChart" height="300" width="400"></canvas>                      
-                                     
-                    </td>
+                        </select>             
+      		  <br/>
+      		</div> 
+      		 <div align="center">         
+         				 <a href='#' class="btn btn-sm btn-primary no-print" title='Print this page (pre-formatted)' onclick="jQuery('#printDATA').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print This Page</a><br>
+            </div>                            
+                   <%   int tableClaimsNum = 0;  %> 
+  <br/>
+             		<table id="claims-table" class="table table-condensed table-striped table-bordered claimsTable" style="font-size:11px;background-color:White;" width="100%">	
+                    <thead>
+                     <tr>
+                      <th width="20%">NAME</td>
+                      <th width="20%">ADDRESS</td>
+                      <th width="60%">DETAILS</td>
                     </tr>
-              
-              
-              
-              
-                   <tr class="listHeader">
-                      <td class="listdata" width="18%">Month</td>
-                      <td class="listdata" width="15%">KMs</td>
-                      <td class="listdata" width="20%">KMs Amount</td>
-                      <td class="listdata" width="20%">Meals Amount</td>
-                      <td class="listdata" width="15%">Lodging Amount</td>
-                      <td class="listdata" width="12%">Other Amount</td>
-                    </tr>
-                    
-                    <%for(YearlyClaimsDetailReportItem item : report){%>
+                    </thead>
+                  <tbody>   
+                                                
+                    <%for(YearlyClaimsDetailReportItem item : report){
+                       	tableClaimsNum++;
+                    %>
                       <%if(item.getPersonnelId() != cur_id){
                         if(cur_id > 0){%>
-                        <tr style="padding-bottom:15px; border-bottom: solid 2px #007F01;border-top:1px solid #007F01;"> 
-                          <td style="font-weight:bold;background-color: #E3F1E6;" width="18%">TOTALS:</td>
-                          <td style="font-weight:bold;" width="15%"><%=kms_df.format(cur_km_total)%> kms</td>
-                          <td style="font-weight:bold;" width="20%"><%=curr_df.format(cur_km_total_amount)%></td>                           
-                          <td style="font-weight:bold;" width="20%"><%=curr_df.format(cur_meals_total)%></td>
-                          <td style="font-weight:bold;" width="15%"><%=curr_df.format(cur_lodging_total)%></td>
-                          <td style="font-weight:bold;" width="12%"><%=curr_df.format(cur_other_total)%></td>
-                        </tr>
+                       <div style="border-top:1px solid silver;float:left;width:20%;font-weight:bold;text-align:right;">TOTALS: &nbsp;</div>
+                       <div style="border-top:1px solid silver;float:left;width:25%;"><%=curr_df.format(cur_km_total_amount)%> (<%=kms_df.format(cur_km_total)%> km)</div>                  
+                       <div style="border-top:1px solid silver;float:left;width:20%;"><%=curr_df.format(cur_meals_total)%></div>
+                       <div style="border-top:1px solid silver;float:left;width:20%;"> <%=curr_df.format(cur_lodging_total)%></div>
+                       <div style="border-top:1px solid silver;float:left;width:15%;"><%=curr_df.format(cur_other_total)%></div>
+                       <div style="clear:both;"></div>
+                       
                       <%}
                         cur_id = item.getPersonnelId();
-                        zebra = 0;
-                        
+                        zebra = 0;                        
                         cur_km_total = item.getTotalKms();
                         cur_km_total_amount = item.getTotalKmsAmount();
                         cur_meals_total = item.getTotalMeals();
@@ -145,21 +159,25 @@
                         overall_lodging_total += item.getTotalLodging();
                         overall_other_total += item.getTotalOther();
                       %>
-                        <tr>
-                          <td style="background-color: #E3F1E6;border-bottom: solid 1px #007F01;padding-top:10px;" colspan="6">
-                          
-                          	<%=
-                          			"<span style='font-weight:bold;font-size:12px;'>" + item.getPersonnelLastname() 
-                          			+ ", " + item.getPersonnelFirstname() + "</span>"                           			
-                          			+ "<br>" + item.getPersonnelStreetAddress() 
-                          			+ ", " + item.getPersonnelCommunity() 
-                          			+ ", " + item.getPersonnelProvince()
-                          			+ " &middot; " + item.getPersonnelPostalcode()
-                          			+ " &middot; Tel: " + item.getPersonnelPhone1() 
-                          	%>
+                      
+                      <tr>
+			               <td style="vertical-align: top;"><b><%= item.getPersonnelLastname() %>, <%= item.getPersonnelFirstname() %> </b></td>              			
+                           <td style="vertical-align: top;"><%= item.getPersonnelStreetAddress() %><br/>
+                          	<%= item.getPersonnelCommunity() %>, 	<%= item.getPersonnelProvince() %><br/><%= item.getPersonnelPostalcode() %><br/>
+                          	Tel: <%= item.getPersonnelPhone1() %>
+                          	</td>
+                          			 
                           	<c:set var="countClaimants" value="${countClaimants + 1}" />
-                          </td>
-                        </tr>
+                          
+                           <td style="vertical-align: top;">	                        
+			                      
+			                      <div style="float:left;width:20%;font-weight:bold;"> MONTH(s)</div>
+			                      <div style="float:left;width:25%;font-weight:bold;">KM(s)</div>
+			                      <div style="float:left;width:20%;font-weight:bold;">MEALS</div>
+			                      <div style="float:left;width:20%;font-weight:bold;">LODGING</div>
+			                      <div style="float:left;width:15%;font-weight:bold;">OTHER</div>			                      
+			                      <div style="clear:both;"></div>
+                      
                       <%}else{
                       	cur_km_total += item.getTotalKms();
                         cur_km_total_amount += item.getTotalKmsAmount();
@@ -173,54 +191,78 @@
                         overall_other_total += item.getTotalOther();
                       }%>
                       
-                      <tr style='background-color:<%=(zebra++%2!=0)?"#F0F0F0":"#FFFFFF"%>;'> 
-                        <td width="18%"><%=item.getMonth()%></td>
-                        <td width="15%"><%=kms_df.format(item.getTotalKms())%></td>
-                        <td width="20%"><%=curr_df.format(item.getTotalKmsAmount())%></td>
-                        <td width="20%"><%=curr_df.format(item.getTotalMeals())%></td>
-                        <td width="15%"><%=curr_df.format(item.getTotalLodging())%></td>
-                        <td width="12%"><%=curr_df.format(item.getTotalOther())%></td>
-                      </tr>
+                     
+                    <div style="float:left;width:20%;"><%=item.getMonth()%></div>
+                    <div style="float:left;width:25%;"><%=curr_df.format(item.getTotalKmsAmount())%> (<%=kms_df.format(item.getTotalKms())%> km)</div>
+                    <div style="float:left;width:20%;"><%=curr_df.format(item.getTotalMeals())%></div>
+                    <div style="float:left;width:20%;"><%=curr_df.format(item.getTotalLodging())%></div>
+                    <div style="float:left;width:15%;"><%=curr_df.format(item.getTotalOther())%></div>
+                    <div style="clear:both;"></div>
                       <c:set var="countClaims" value="${countClaims + 1}" />	
-                    <%}
-                    %>
-                    <%if(cur_id > 0){%>
-                       <tr style="padding-bottom:15px; border-bottom: solid 2px #007F01;border-top:1px solid #007F01;"> 
-                         <td style="font-weight:bold;background-color: #E3F1E6;" width="18%">TOTALS:</td>
-                        <td style="font-weight:bold;" width="15%"><%=kms_df.format(cur_km_total)%> kms</td>
-                        <td style="font-weight:bold;" width="20%"><%=curr_df.format(cur_km_total_amount)%></td>                        
-                        <td style="font-weight:bold;" width="20%"><%=curr_df.format(cur_meals_total)%></td>
-                        <td style="font-weight:bold;" width="15%"><%=curr_df.format(cur_lodging_total)%></td>
-                        <td style="font-weight:bold;" width="12%"><%=curr_df.format(cur_other_total)%></td>
-                      </tr>
+                   
                     <%}%>
-                    <tr style="padding-bottom:10px;">
-                      <td style="font-weight:bold;color:#FF0000;" width="18%">Overall Totals:</td>
-                      <td style="font-weight:bold;color:#FF0000;" width="15%"><%=kms_df.format(overall_km_total)%> kms</td>
-                      <td style="font-weight:bold;color:#FF0000;" width="20%"><%=curr_df.format(overall_km_total_amount)%></td>
-                      <td style="font-weight:bold;color:#FF0000;" width="20%"><%=curr_df.format(overall_meals_total)%></td>
-                      <td style="font-weight:bold;color:#FF0000;" width="15%"><%=curr_df.format(overall_lodging_total)%></td>
-                      <td style="font-weight:bold;color:#FF0000;" width="12%"><%=curr_df.format(overall_other_total)%></td>
-                    </tr>
-                    <tr style="padding-bottom:10px;border:solid 1px #e0e0e0; background-color:#f0f0f0;">
-                    	<td style="font-weight:bold;color:#FF0000;">Overall Expendure:</td>
-                    	<td colspan='5' style="font-weight:bold;color:#FF0000; ">
-                    		<%=curr_df.format(overall_km_total_amount + overall_meals_total + overall_lodging_total + overall_other_total)%>
-                    	</td>
-                    </tr>
+                   
+                    <%if(cur_id > 0){%>
+                      <div style="border-top:1px solid silver;float:left;width:20%;font-weight:bold;text-align:right;">TOTALS:&nbsp;</div>
+                      <div style="border-top:1px solid silver;float:left;width:25%;"><%=curr_df.format(cur_km_total_amount)%> (<%=kms_df.format(cur_km_total)%> km)</div>
+                      <div style="border-top:1px solid silver;float:left;width:20%;"><%=curr_df.format(cur_meals_total)%></div>
+                      <div style="border-top:1px solid silver;float:left;width:20%;"><%=curr_df.format(cur_lodging_total)%></div>
+                      <div style="border-top:1px solid silver;float:left;width:15%;"><%=curr_df.format(cur_other_total)%></div>
+                     <div style="clear:both;"></div> 
+                    <%}%>
+                    </td></tr>
+                  
                     
-                    
+                    </tbody>
                  
             </table>
-            <b>Total Claimants:</b> ${countClaimants}<br/>  
-   <b>Total Claims:</b> ${countClaims}     
+            
+            <br/><br/>
+            
+            <table class="table table-condensed table-striped table-bordered" style="font-size:11px;background-color:White;" width="100%">	
+            <thead>
+            <tr>
+            <th width="30%" style="font-weight:bold;">${schoolYear} TOTALS:</th>
+           <th width="25%" style="font-weight:bold;">KM(s)</th>
+           <th width="15%" style="font-weight:bold;">MEALS</th>
+           <th width="15%" style="font-weight:bold;">LODGING</th>
+           <th width="15%" style="font-weight:bold;">OTHER</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>&nbsp;</td>
+            <td><%=curr_df.format(overall_km_total_amount)%> (<%=kms_df.format(overall_km_total)%> kms)</td>
+            <td><%=curr_df.format(overall_meals_total)%></td>
+            <td><%=curr_df.format(overall_lodging_total)%></td>
+            <td> <%=curr_df.format(overall_other_total)%></td>            
+            </tr>
+            <tr>
+            <td style="font-weight:bold;text-align:right;">OVERALL EXPENDITURE:</td>
+            <td colspan=4><%=curr_df.format(overall_km_total_amount + overall_meals_total + overall_lodging_total + overall_other_total)%></td>
+            </tr>
+             <tr>
+            <td style="font-weight:bold;text-align:right;">TOTAL CLAIMANTS:</td>
+            <td colspan=4>${countClaimants}</td>
+            </tr>
+             <tr>
+            <td style="font-weight:bold;text-align:right;">TOTAL CLAIMS:</td>
+            <td colspan=4> ${countClaims} </td>
+            </tr>
+            </tbody>
+            </table>
+            
+
     </form>
  
- 
+ <br/>
+                     <div align="center"> 
+                    		<canvas id="myChart" height="300" width="400"></canvas>    
+					</div>   
+					<div align="center">         
+         				 <a href='#' class="btn btn-sm btn-primary no-print" title='Print this page (pre-formatted)' onclick="jQuery('#printDATA').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print This Page</a><br>
+            		</div>  
  </div>
-
-
- 
  
  <script>
  

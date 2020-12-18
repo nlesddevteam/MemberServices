@@ -21,21 +21,15 @@
         		//clear spinner on load
     			$('#loadingSpinner').css("display","none");  
 			});
-			
-			
-			
-			
-			
 			</script>
 		  <!-- Using my own API code key for now (Geoff). System MUST have a valid Google Maps API key to work-->
 		   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjNgMkM-j0ZxEWk0RQVnvSrrJg8V7vapU&callback=initMap" type="text/javascript"></script>
   		   <script src="includes/js/geocode.js" type="text/javascript"></script>
   			
  
- <img src="includes/img/gmaps.png" title="Powered by Google Maps" style="width:100%;max-width:150px;float:right;" border=0>
-		<div class="claimHeaderText">		
-			Travel Claim Distance Calculator 
-		</div>
+ <img src="includes/img/gmaps.png" title="Powered by Google Maps" style="width:100%;max-width:100px;float:right;" border=0>
+		<div class="siteHeaderBlue">Travel Claim Distance Calculator </div>
+		
 		Welcome to our travel claim distance calculator. 
 		This system calculates the shortest and quickest valid distance9s) between two known locations for travel claim use. 
 		<b>Your results may include more than one valid route to your destination.</b>
@@ -43,20 +37,20 @@
 		 Select below what type of calculation you wish to use. 
 		 The first selection assumes you know the full street address and location. 
 		 The second selection will calculate based on the information you enter if you do not know the full address.
-		 
-		<br/><br/><span style="color:Red;">When calculating and given multiple route options, you must use the lowest distance of the options listed. 
+		<br/><br/>
+		<div class="alert alert-danger">
+		When calculating and given multiple route options, you must use the lowest distance of the options listed. 
 		The lowest distance may NOT be the fastest route. 
-		You can however take the faster or any route to your destination, but in calculating travel, we will only accept the lowest distance value.</span>
-	
+		You can however take the faster or any route to your destination, but in calculating travel, we will only accept the lowest distance value.
+		</div>
 		 
-		 
-		 <br/><br/><b>NOTE:</b><i> This system is for assisting in calculating the distance of your travel based on the valid quickest/shortest driving distance between two places. You may have other special travel associated with your distance for your current claim(s).
+		 <div class="alert alert-info">
+		 <b>NOTE:</b><i> This system is for assisting in calculating the distance of your travel based on the valid quickest/shortest driving distance between two places. You may have other special travel associated with your distance for your current claim(s).
 		 The <b>lowest value kms</b> on the map results below (or any confirmed written distance reference documentation) should be used. <b>Round to nearest whole number</b>.
 		 Final correct distance may be edited if neccessary in your claim for final approved payment.
 		 </i>
-		 
-		  
-	 <br/><br/>
+		 </div>		  
+	 
 	 
 	 	A. <input type="radio" name="calculate-type" id="useForm1" onclick="show('form1');hide('form2');"> Calculate using full street addresses (i.e. 95 Elizabeth Avenue, St. John's, NL) - <span style="color:Green;">RECOMMENDED</span><br/>	
 		B. <input type="radio" name="calculate-type" id="useForm2" onclick="show('form2');hide('form1');"> 
@@ -111,9 +105,13 @@
 	<div style="width:100%;text-align:center;" id="distance_road"></div>
 	<div id="map_directions" style="display:none;width:100%;padding-bottom:10px;">Below is a map of directions based on your data entry above. Select a Suggested Route as listed in the table at the right to display that route and driving directions.</div>
 	<div style="clear:both;"></div>
+	<div id="map_block"  style="width:100%;height:100%;display:none;">
 	<div id="map_canvas" style="float:left;display:none;width:70%; height:100%;"></div>
-	<div id="directionsPanel" style="display:none;font-size:11px;float:left;width:30%;height:auto;"></div>
-	
+	<div id="directionsPanel" style="float:left;display:none;font-size:11px;width:30%;height:auto;"></div>
+	<div align="center" style="padding-top:10px;">
+	<a href='#' class="btn btn-sm btn-primary" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print this Claim</a><br>
+	</div>
+	</div>
 	
 
 
@@ -126,8 +124,9 @@
 			<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 			<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
 			<h5 class="modal-title">TRAVEL DISTANCE FORM CHECK</h5>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			
 			</div>
 			<div class="modal-body">
 			<div id="errDisplay"></div>

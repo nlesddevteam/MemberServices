@@ -60,8 +60,16 @@ public class GetTravelClaimsPreSubmissionByLetterAjaxRequestHandler extends Requ
 							sb.append("<TITLE>" + Utils.getMonthString(claim.getFiscalMonth()) + " "
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</TITLE>");
 							sb.append("<TYPE>Monthly</TYPE>");
+							sb.append("<ZONE>" + ((p.getSchool() !=null)?p.getSchool().getZone():"UNKNOWN") + "</ZONE>");				
+							if (claim.getSupervisor() == null) {
+								sb.append("<SUPERVISOR>N/A</SUPERVISOR>");
+							}
+							else {
+								sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
+							}
 							sb.append("<CLAIMDATE>" + Utils.getMonthString(claim.getFiscalMonth()) + ","
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</CLAIMDATE>");
+							sb.append("<TOTAL>" + claim.getSummaryTotals().getSummaryTotal()+ "</TOTAL>");	
 							sb.append("<ID>" + claim.getClaimID() + "</ID>");
 							sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 							sb.append("</CLAIM>");
@@ -72,9 +80,17 @@ public class GetTravelClaimsPreSubmissionByLetterAjaxRequestHandler extends Requ
 							sb.append("<TITLE>" + "PD - "
 									+ ((PDTravelClaim) claim).getPD().getTitle().replaceAll("&", "&amp;").replaceAll("\"", "&quot;")
 									+ "</TITLE>");
+							sb.append("<ZONE>" + ((p.getSchool() !=null)?p.getSchool().getZone():"UNKNOWN") + "</ZONE>");				
+							if (claim.getSupervisor() == null) {
+								sb.append("<SUPERVISOR>N/A</SUPERVISOR>");
+							}
+							else {
+								sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
+							}
 							sb.append("<CLAIMDATE>" + Utils.getMonthString(claim.getFiscalMonth()) + ","
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</CLAIMDATE>");
 							sb.append("<TYPE>PD</TYPE>");
+							sb.append("<TOTAL>" + claim.getSummaryTotals().getSummaryTotal()+ "</TOTAL>");	
 							sb.append("<ID>" + claim.getClaimID() + "</ID>");
 							sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 							sb.append("</CLAIM>");

@@ -146,30 +146,30 @@ public class SDSExportRequestHandler extends RequestHandlerImpl {
 							tchr_writer.flush();
 							tchr_writer.close();
 
-							request.setAttribute("msg", "Export successfull.");
+							request.setAttribute("msgok", "SUCCESS: Export successfull.");
 							request.setAttribute("RESULT", "SUCCESS");
 							request.setAttribute("TRAVELCLAIMS", claims);
 							path = "sds_export_report.jsp";
 						}
 						catch (Exception e) {
 							e.printStackTrace(System.err);
-							request.setAttribute("msg", "Could NOT export paid claims.");
+							request.setAttribute("msgerr", "ERROR: Could NOT export paid claims.");
 							request.setAttribute("RESULT", "FAILED");
 							path = "export_claims.jsp";
 						}
 					}
 					else {
-						request.setAttribute("msg", "Could NOT export paid claims (START DATE IS NULL).");
+						request.setAttribute("msgerr", "ERROR: Could NOT export paid claims (START DATE IS NULL).");
 						request.setAttribute("RESULT", "FAILED");
 					}
 				}
 				else {
-					request.setAttribute("msg", "Starting date is required.");
+					request.setAttribute("msgerr", "ERROR: Starting date is required.");
 					path = "export_claims.jsp";
 				}
 			}
 			else {
-				request.setAttribute("msg", "Invalid option.");
+				request.setAttribute("msgerr", "ERROR: Invalid option.");
 				path = "export_claims.jsp";
 			}
 		}

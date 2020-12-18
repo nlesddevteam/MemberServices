@@ -7,9 +7,6 @@
 <%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 <%@ taglib uri="/WEB-INF/personnel.tld" prefix="per" %>
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN" />
-
-    	
-    	<script type="text/javascript" src="includes/js/travel_ajax_v1.js"></script>
     	<script type="text/javascript">
     	$('document').ready(function(){
         	
@@ -57,11 +54,13 @@
     </script>
 	
 		
-	<div id="printJob"> 	
+	
+	<img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/supervisorrules.png" style="max-width:200px;" border=0/> 	
+	
+	<div class="siteHeaderBlue">Add/Edit Supervisor Rule</div>	
 		
-	<div class="claimHeaderText">Add/Edit Supervisor Rule</div>	
-		
-	<br/>Below you cabn add/edit a supervisor rule which would be default for a claiment<br/><br/>
+	<br/>Below you can add/edit a supervisor rule which would be default for a claiment.
+	<br/><br/>
 	
 	<br/><div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
            <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
@@ -72,64 +71,54 @@
       <c:if test="${SRULE ne null}">
       	<input type="hidden" name="rule_id" id="rule_id" value="${SRULE.ruleId}" />
       </c:if>
-      <table width="100%" cellpadding="0" cellspacing="0" align="center">
-        
-        <tr>
-          <td id="form_body" width="100%">
-           
-            
-                  <table width="300" cellpadding="4" cellspacing="0" border="0" >
-                    <tr>
-                      <td align="left"><b>Select Supervisor Key Type:</b><br/>
-                        <tra:KeyTypes id="supervisor_keytype" cls="requiredinput" />
-                        <span id='supervisor_loading' style='font-weight:bold;font-size:12px;color:#FF0000;display:none;'>Loading Supervisor List, please wait...</span>
-                      </td>
-                    </tr>
-                    <tr id='supervisor_row' style="display:none;">
-                    	<td id='supervisor_row_content' align="left">
-                    		&nbsp;
-                    	</td>
-                    </tr>
-                     <tr>
-                     <td>&nbsp;</td>
-                     </tr>
-                    <tr>
-                      <td align="left"><b>Select User Key Type:</b><br/>
-                        <tra:KeyTypes id="user_keytype" cls="requiredinput" />
-                        <span id='user_loading' style='font-weight:bold;font-size:12px;color:#FF0000;display:none;'>Loading User list, please wait...</span>
-                      </td>
-                    </tr>
-                    <tr id='user_row' style="display:none;">
-                    	<td id='user_row_content' align="left">
-                    		&nbsp;
-                    	</td>
-                    </tr>
-                     <tr>
-                     <td>&nbsp;</td>
-                     </tr>
-                    <tr id='division_row'>
-                    	<td align="left"><b>Select Division:</b><br/>
-                    		<select id='division_id' name='division_id' class='requiredinput'>
+  
+ 
+  
+  <div class="alert alert-info">
+  	<div class="form-group">
+    		<label><b>1. Select Supervisor Key Type:</b></label>
+    		 <tra:KeyTypes id="supervisor_keytype" cls="form-control" />                         
+     </div>
+       <div align="center"><div id='dataLoading1'  class="spinner-border text-danger" role="status" style="display:none;text-align:center;"></div></div>             
+      <div id='supervisor_row' style="display:none;">
+      		<div class="form-group">
+    			<label><b>Select Supervisor or Role:</b></label>
+       			<span id='supervisor_row_content'></span>
+      		</div>
+      </div>              
+        </div>
+       <div class="alert alert-warning"> 
+       <div class="form-group">
+    			<label><b>2. Select User Key Type:</b></label>       
+      			<tra:KeyTypes id="user_keytype" cls="form-control" />        
+        </div>    
+         <div align="center"><div id='dataLoading2'  class="spinner-border text-danger" role="status" style="display:none;text-align:center;"></div></div>       
+        <div id='user_row' style="display:none;">     
+        <div class="form-group">
+    			<label><b>Select User or Role:</b></label>           
+               <span id='user_row_content' align="left"></span>
+         </div>       
+         </div>                                  
+      	</div>
+      	<div class="alert alert-secondary"> 
+        <div id='division_row' class="rowToAdd">
+        <div class="form-group">
+    			<label><b>3. Select Division:</b></label>   
+                    	
+                    		<select id='division_id' name='division_id' class='form-control'>
                     			<option value="">--- Select Division ---</option>
                     			<c:forEach items="${DIVISIONS}" var='division'>
                     				<option value="${division.id}" ${SRULE ne null ? SRULE.division.id eq division.id ? 'SELECTED' : '' : ''}>${division.name}</option>
                     			</c:forEach>
-                    		</select>
-                    	</td>
-                    </tr>
-                   <tr>
-                     <td>&nbsp;</td>
-                   </tr>
-                    <tr>
-                     
-                     <td>
-                        <img id='btnAdd' src="includes/img/save-off.png" class="img-swap" title="Save Rule" border=0> &nbsp; <a href="index.jsp"><img src="includes/img/cancel-off.png" title="Cancel" class="img-swap" border=0></a>
-                     </td>
-                     </tr>
-              	 </table>
-          </td>
-        </tr>
-      </table>
+                    		</select>                    	
+            </div>
+            </div>
+            </div>      
+            
+            <div align="center">
+          				<a href="#" id="btnAdd"  title="Save Rule" class="btn btn-sm btn-success"><i class="fas fa-save"></i> Save Rule</a> 
+                      <a href="#" class="btn btn-danger btn-sm" title="Back" onclick="loadingData();loadMainDivPage('back');return false;"><i class="fas fa-step-backward"></i> Back</a>
+            </div>        
     </form>
-    </div>
+
 	

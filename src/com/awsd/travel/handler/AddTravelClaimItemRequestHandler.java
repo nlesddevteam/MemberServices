@@ -65,7 +65,7 @@ public class AddTravelClaimItemRequestHandler extends RequestHandlerImpl {
 				op = request.getParameter("op");
 				if (op != null) {
 					if (op.equalsIgnoreCase("CONFIRM")) {
-						sdf = new SimpleDateFormat("dd/MM/yyyy");
+						sdf = new SimpleDateFormat("MM/dd/yyyy");
 						try {
 							System.out.println(request.getParameter("item_lodging"));
 							System.out.println(Double.parseDouble(request.getParameter("item_lodging")));

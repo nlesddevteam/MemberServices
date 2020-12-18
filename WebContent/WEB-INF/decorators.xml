@@ -44,7 +44,11 @@
 <decorator name="PDReg" page="PDReg/includes/decorator/main.jsp">
   	<pattern>/PDReg/*</pattern>
   </decorator>
-
+  
+<!-- For Travel Claim System   -->
+  <decorator name="TRAVEL CLAIM SYSTEM" page="Travel/includes/decorator/main.jsp">
+  		<pattern>/Travel/*</pattern>
+  </decorator> 
 
 <!-- For Student Travel System  -->
   <decorator name="STUDENTTRAVEL" page="student/travel/includes/decorator/main.jsp">
@@ -56,6 +60,11 @@
   		<pattern>/covid19/*</pattern>
   </decorator> 
  
+  <!-- For OHS System   -->
+  <decorator name="OHS SYSTEM" page="OHS/includes/decorator/main.jsp">
+  		<pattern>/OHS/*</pattern>
+  </decorator> 
+ 
 <!-- For Learning Plans / Growth Plans -->
    <decorator name="PPGP" page="PPGP/includes/decorator/main.jsp">
 		<pattern>/PPGP/*</pattern>
@@ -65,7 +74,12 @@
   <decorator name="tProfile" page="Profile/Teacher/includes/decorator/main.jsp">
 	<pattern>/Profile/Teacher/*</pattern>
   </decorator> 
- 	
+ 
+ <!-- For Website CMS 
+   <decorator name="CMS" page="WebUpdateSystem/includes/decorator/main.jsp">
+	<pattern>/WebUpdateSystem/*</pattern>
+  </decorator>
+ 	-->
   <decorator name="personnelExternal" page="Personnel/includes/decorator/external.jsp">
   	<pattern>/Personnel/add_nlesd_external*</pattern>
   	<pattern>/Personnel/addNLESDExternalReference.html</pattern>
@@ -80,13 +94,35 @@
 	<pattern>/Personnel/addNLESDExternalGuideReferenceApp.html</pattern>
 	<pattern>/Personnel/addNLESDExternalReferenceApp.html</pattern>
 </decorator>
-  <decorator name="OHS SYSTEM" page="OHS/includes/decorator/main.jsp">
-	<pattern>/OHS/*</pattern>
-</decorator>
 
-  <excludes>
+
+<excludes>
+<!-- EECD -->
     <pattern>/EECD/eecd_menu*</pattern>
+<!-- MyHR -->    
     <pattern>/Personnel/apply*</pattern>
-    <pattern>/Personnel/unapply*</pattern>
+    <pattern>/Personnel/unapply*</pattern>  
+ 
+
+<!-- Travel Claim App -->       
+    <pattern>/Travel/add*</pattern>   
+    <pattern>/Travel/list*</pattern>  
+    <pattern>/Travel/del*</pattern>           
+    <pattern>/Travel/my*</pattern>   
+    <pattern>/Travel/expo*</pattern>   
+    <pattern>/Travel/sav*</pattern>   
+    <pattern>/Travel/pay*</pattern>   
+    <pattern>/Travel/getPD*</pattern> 
+    <pattern>/Travel/viewSearch*</pattern>  
+    <pattern>/Travel/viewTravelClaimDetails*</pattern>  
+    <pattern>/Travel/viewPrevious*</pattern>  
+    <pattern>/Travel/editTravel*</pattern>  
+    <pattern>/Travel/travel_r*</pattern>  
+    <pattern>/Travel/supervisor_approval*</pattern>
+    <pattern>/Travel/claims*</pattern>
+    <pattern>/Travel/yearly_*</pattern>
+    <pattern>/Travel/cal*</pattern>
+       
+     
 </excludes> 
 </decorators>

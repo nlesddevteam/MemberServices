@@ -127,6 +127,7 @@
 					hide('map_canvas');
 					hide('directionsPanel');
 					hide('map_directions');
+					hide('map_block');
 					alert("Geocode search was not successful for the following reason: " + status);
 					
 				}
@@ -144,6 +145,7 @@
 					hide('map_canvas');
 					hide('directionsPanel');
 					hide('map_directions');
+					hide('map_block');
 					alert("Geocode search was not successful for the following reason: " + status);
 					
 				}
@@ -157,6 +159,7 @@
 		// center of the map (compute the mean value between the two locations)
 		latlng = new google.maps.LatLng((location1.lat()+location2.lat())/2,(location1.lng()+location2.lng())/2);
 		show('map_canvas');
+		show('map_block');
 		show('directionsPanel');
 		show('map_directions');
 		// set map options

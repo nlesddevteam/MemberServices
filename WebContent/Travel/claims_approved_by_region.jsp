@@ -15,67 +15,43 @@
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
 
-  		<script>
-        $( document ).ready(function() {
-        	$('#loadingSpinner').css("display","none");
-        	$("#rightMsg").html("Please Select Region");	
-        	
-      		$("#regions").on("change", function(event) {       			
-      			getapprovedtravelclaimsbyregion();
-      			
-      			var c = $("#regions option:selected").text();      	
-      	      	$("#rightMsg").html(c);	
-      			
-    		} );
+<script>
+    		$( document ).ready(function() {
+    			getapprovedtravelclaimsbyregion("0");	
+    			$.cookie('backurl', 'claimsApprovedByRegion.html', {expires: 1 });
+    		});    		
+</script>
+<style>
+input { border:1px solid silver;}
+</style>  	
+	
 
-        });
-        
-        
-        
-  		</script>
-	
-	
-		
-			<div id="printJob">
-	
-	
-	
-		<div class="claimHeaderText">Travel Claims Approved For Payment By Region <div id="rightMsg" style="float:right;padding-right:5px;"></div></div>
-		
-				
-		<br/><br/>
-		
-		Please Select Region: 
-		<select id="regions">
-							<option value='-1'>*** Please Select ***</option>
-							<option value='0'>View All Travel Claims</option>
-							<option value='2'>Central</option>
-							<option value='1'>Eastern</option>
-							<option value='4'>Labrador</option>
-							<option value='6'>Other</option>
-							<option value='5'>Provincial</option>
-							<option value='3'>Western</option>
-							</select>
-		<p>
-		<div id="claims">
-			<table id="claims-table" class="claimsTable">
-				<thead>					
-					<tr class="listHeader">
-						<th width="20%" class="listdata" style="padding:2px;">Employee</th>
-						<th width="10%" class="listdata" style="padding:2px;">Type</th>
-						<th width="40%" class="listdata" style="padding:2px;">Title/Month</th>
-						<th width="20%" class="listdata" style="padding:2px;">Supervisor</th>						
-						<th width="10%" class="listdata" style="padding:2px;">Options</th>
+	<img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/approved_stamp.png" style="max-width:200px;" border=0/> 
+		<div class="siteHeaderBlue">Travel Claims Approved For Payment</div>
+		Below are a list of claims approved for payment sorted by approved date. 
+		<br/>To sort by another column, simply click on the column header or use the search.
+			<br/><br/>	
+
+			<table id="claims-table" class="table table-condensed table-striped table-bordered claimsTable" style="font-size:11px;background-color:White;" width="100%">	
+				<thead>
+					<tr style="text-transform:uppercase;font-weight:bold;">  	
+						<th width="10%">Approved</th>						
+						<th width="15%">Employee</th>
+						<th width="10%">Type</th>
+						<th width="30%">Title/Month</th>
+						<th width="5%">Amount</th>	
+						<th width="15%">Supervisor</th>							
+						<th width="10%">Region</th>					
+						<th width="5%">Options</th>
 					</tr>
 				</thead>
 				<tbody>
 			</tbody>
 			</table>
-		</div>
+		
+		 
 		
 		
-		
-		</div>
-		<!-- ENABLE PRINT FORMATTING -->
-	<script src="includes/js/jQuery.print.js"></script>
+
+
    

@@ -1,3 +1,21 @@
+$( '.dropdown-menu .dropdown-toggle' ).on('click', function() {    
+    var $el = $(this);
+    var $parent = $el.offsetParent(".dropdown-menu");    
+    if (!$el.next().hasClass("show")) {
+        $el.parents('.dropdown-menu').first().find(".show").removeClass("show");
+    }
+    $el.next(".dropdown-menu").toggleClass("show").parent("li").toggleClass("show");
+    
+    $el.parents("li.nav-item.dropdown.show").on("hidden.bs.dropdown", function () {
+        $(".dropdown-menu .show").removeClass("show");
+    });    
+    if (!$parent.parent().hasClass("navbar-nav")) {
+        $el.next().css({"top":$el[0].offsetTop,"left":$parent.outerWidth()});
+    }    
+    return false;
+});
+
+
 /************************************************
 call ajax post to populate claims months based
 on what year is selected
@@ -56,26 +74,27 @@ function submitnewtravelclaim()
 	var claimtype = $('input:radio[name=claim_type]:checked').val();
 	var datastring="";
 	var selectedvalue="";
-	$("#details_error_message").css("display","none");
+	$(".details_error_message").css("display","none");
 	//monthly claim
 	if(claimtype == "0"){
 		if($("#supervisor_id option:selected").text() == "SELECT SUPERVISOR"){
-			$("#details_error_message").html("<b>SUPERVISOR ERROR:</b> Please select your supervisor. If your supervisor is not listed, pelase contact your supervsior or admin.").css("display","block").delay(5000).fadeOut();
+			$("#tc_step1_error").html("<b><i class='fas fa-exclamation-triangle'></i> SUPERVISOR ERROR:</b> Please select your supervisor. If your supervisor is not listed, please contact your supervsior or admin.").css("display","block").delay(5000).fadeOut();
 			$( "#supervisor_id").focus();
 			return false;
 		}
 		
-		if($("#claim_month option:selected").text() == "SELECT MONTH"){
-			$("#details_error_message").html("<b>INVALID MONTH ERROR:</b> Please select the month of this claim. If the month you wish to select is not listed, it means you already have a claim started or submitted for that month. Check My Claims menu above.").css("display","block").delay(6000).fadeOut();
+	if($("#claim_year option:selected").text() == "SELECT YEAR"){
+			$("#tc_step2_error").html("<b><i class='fas fa-exclamation-triangle'></i> INVALID YEAR ERROR:</b> Please select the Year of this claim.").css("display","block").delay(5000).fadeOut();
 			$( "#claim_year option").focus();
 			return false;
 		}
 		
-		if($("#claim_year option:selected").text() == "SELECT YEAR"){
-			$("#details_error_message").html("<b>INVALID YEAR ERROR:</b> Please select the Year of this claim.").css("display","block").delay(6000).fadeOut();
+		if($("#claim_month option:selected").text() == "SELECT MONTH"){
+			$("#tc_step3_error").html("<b><i class='fas fa-exclamation-triangle'></i> INVALID MONTH ERROR:</b> Please select the month of this claim. If the month you wish to select is not listed, it means you already have a claim started or submitted for that month. Check My Claims menu above.").css("display","block").delay(5000).fadeOut();
 			$( "#claim_year option").focus();
 			return false;
 		}
+		
 
 		//dropdown might not exisit so we will take value from hidden field
 		var selectedvalue="";
@@ -89,35 +108,46 @@ function submitnewtravelclaim()
 		
 	
 	}else{
+	
+//*********************** PD CLAIM ENTRY *****************************************	
 			
-			
+		$('#loadingSpinner').css("display","none");           		
 		//pd claim
-		if($("#title").val() == ""){
-			$("#details_error_message").html("<b>TITLE ERROR:</b> Please enter a title for this PD.").css("display","block").delay(6000).fadeOut();
+		
+			if(!$("#title").val()) {		
+			$("#pd_step3_error").html("<b><i class='fas fa-exclamation-triangle'></i> TITLE ERROR:</b> Please enter a title for this PD.").css("display","block").delay(5000).fadeOut();
 			$( "#title").focus();
 			return false;
 		}
-		if($("#desc").val() == ""){			
-			$("#details_error_message").html("<b>DESCRIPTION ERROR:</b> Please enter a description for this PD.").css("display","block").delay(6000).fadeOut();
-			$( "#desc").focus();
-			return false;
-		}
+		
 		if($("#start_date").val() == ""){			
-			$("#details_error_message").html("<b>START DATE ERROR:</b> Please enter a start date for this PD.").css("display","block").delay(6000).fadeOut();
+			$("#pd_step1_error").html("<b><i class='fas fa-exclamation-triangle'></i> START DATE ERROR:</b> Please enter a start date for this PD.").css("display","block").delay(5000).fadeOut();
 			$( "#start_date").focus();
 			return false;
 		}
 		if($("#finish_date").val() == ""){			
-			$("#details_error_message").html("<b>FINISH DATE ERROR:</b> Please enter a finish date for this PD.").css("display","block").delay(6000).fadeOut();
+			$("#pd_step2_error").html("<b><i class='fas fa-exclamation-triangle'></i> FINISH DATE ERROR:</b> Please enter a finish date for this PD.").css("display","block").delay(5000).fadeOut();
 			$( "#finish_date").focus();
 			return false;
+		}		
+	
+		//Check to see if data is entered.
+			textbox_data = CKEDITOR.instances.desc.getData();
+   			 if (textbox_data==='')
+    			{        
+			$("#pd_step4_error").html("<b><i class='fas fa-exclamation-triangle'></i> DESCRIPTION ERROR:</b> Please enter a description for this PD.").css("display","block").delay(5000).fadeOut();
+			$('.cke_wysiwyg_frame').contents().find('.cke_editable').focus();	     	
+			return false;
 		}
+		
 		if($("#pd_supervisor_id option:selected").text() == "SELECT SUPERVISOR"){			
-			$("#details_error_message").html("<b>SUPERVISOR ERROR:</b> Please select the supervisor for this PD.").css("display","block").delay(6000).fadeOut();
+			$("#pd_step5_error").html("<b><i class='fas fa-exclamation-triangle'></i> SUPERVISOR ERROR:</b> Please select the supervisor for this PD.").css("display","block").delay(5000).fadeOut();
 			$( "#pd_supervisor_id").focus();
 			return false;
 		}
 		//dropdown might not exisit so we will take value from hidden field
+		
+		
 		var selectedvalue="";
 		if ($('#pd_supervisor_id').length > 1) {
 			selectedvalue = $("#pd_supervisor_id option:selected").val();
@@ -125,12 +155,13 @@ function submitnewtravelclaim()
 			selectedvalue = $("#pd_supervisor_id").val();
 			
 		}
-		datastring = "supervisior=" + selectedvalue + "&title=" + $("#title").val() + "&desc=" + $("#desc").val();
+		//datastring = "supervisior=" + selectedvalue + "&title=" + $("#title").val() + "&desc=" + $("#desc").val();
+		datastring = "supervisior=" + selectedvalue + "&title=" + $("#title").val() + "&desc=" + textbox_data;
 		datastring += "&sdate=" + $("#start_date").val() + "&fdate=" + $("#finish_date").val() + "&ctype=p";
 		
-		
-		
 	}
+	
+//***********ADD NEW CLAIM ****************************************************	
 	//all fields are valid, now we post form with ajax
 	var claimid=-1;
 	$.ajax({
@@ -138,7 +169,7 @@ function submitnewtravelclaim()
         type: 'POST',
         data: datastring,
         beforeSend: function(){
-        	$("#details_success_message").html("New Claim Has Been Started.").css("display","block").delay(3000).fadeOut();	
+        	$(".details_success_message").html("<b>SUCCESS:</b>  New Claim Has Been Started.").css("display","block").delay(3000).fadeOut();	
 			$("#loadingSpinner").css("display","inline");
 
 		   },
@@ -156,7 +187,7 @@ function submitnewtravelclaim()
 			    			$("#pageContentBody").load(surl);
 						}else{
 							
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							
 						}
 
@@ -170,7 +201,7 @@ function submitnewtravelclaim()
 				},
 				  error: function(xhr, textStatus, error){
 					  
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();					  
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();					  
 				      
 				  },
 				dataType: "text",
@@ -189,7 +220,7 @@ function deletetravelclaim(cid)
 {
 	var optext = "CONFIRM";
 	var timeDelay = 3000;           // MILLISECONDS (5 SECONDS).
-	$("#details_success_message").html("Travel Claim Has Been Deleted.").css("display","block").delay(6000).fadeOut();		
+	$(".details_success_message").html("<b>SUCCESS:</b>  Travel Claim Has Been Deleted.").css("display","block").delay(5000).fadeOut();		
 	setTimeout(loadXML1, timeDelay);  
 	
 	function loadXML1() {
@@ -214,7 +245,7 @@ function deletetravelclaim(cid)
 						if($(this).find("STATUS").text() == "SUCCESS")
 						{
 																					
-							$("#details_success_message").html("Travel Claim Has Been Deleted.").css("display","block").delay(6000).fadeOut();		
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim Has Been Deleted.").css("display","block").delay(5000).fadeOut();		
 																		            				            	
 			    			//var surl="viewTravelClaimDetails.html";
 			            	//var surl="addTravelClaim.html";
@@ -223,9 +254,9 @@ function deletetravelclaim(cid)
 			            	window.location.href = surl;
 			            	
 			            	
-			            	$('#myModal').modal('hide');
+			            	$('#travelModal').modal('hide');
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 						}
 
 					});   
@@ -236,7 +267,7 @@ function deletetravelclaim(cid)
         		
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				//async: true
@@ -257,11 +288,11 @@ function checksupervisor()
 	var newsupervisortext=$("#supervisor_id option:selected").text();
 	var osupervisor= $("#osupervisor_id").val();
 	if(newsupervisortext == "SELECT SUPERVISOR"){
-		$("#details_error_message").html("Please Select New Supervisor").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b> Please Select New Supervisor").css("display","block").delay(5000).fadeOut();
 		return false;
 	}
 	if(newsupervisor == osupervisor){		
-		$("#details_error_message").html("Please Select Different Supervisor").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b> Please Select Different Supervisor").css("display","block").delay(5000).fadeOut();
 		return false;
 	}
 	return true;
@@ -286,11 +317,11 @@ function updatetravelclaimsupervisor(cid)
 						//now add the items if any
 						if($(this).find("STATUS").text() == "SUCCESS")
 						{							
-							$("#details_success_message").html("Travel Claim Supervisor Has Been Updated").css("display","block").delay(6000).fadeOut();			    			
+							$(".details_success_message").html("<b>SUCCESS:</b>  Travel Claim Supervisor Has Been Updated").css("display","block").delay(5000).fadeOut();			    			
 							//var test = $("#pageContentBody").contents().find("#td1");
 							//test.html(supervisoridt);
 							
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 							$('.modal-backdrop').remove();
 							// $('body').css('overflow', 'auto');
 							 $('body').removeClass('modal-open');
@@ -305,13 +336,13 @@ function updatetravelclaimsupervisor(cid)
 							
 						}else{
 							
-							 $("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							 $(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				async: false
@@ -352,23 +383,28 @@ function findTheProfileInvalids() {
 };
 	
 
+
+
+
 function addnewtravelclaimitem(claimid,op,itemid){
-	$('#details_error_message').html("").css("display","none");
+
+
+		$("#loadingSpinner").css("display","none");
 	//check mandatory fields first
 	if($("#item_date").val() == ""){
-		$('#details_error_message').html("<b>DATE ERROR:</b> Please enter Date of claim.").css("display","block").delay(4000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>DATE ERROR:</b> Please enter Date of claim.").css("display","block").delay(4000).fadeOut();
 		$("#item_date").focus();
 		return false;
 	}
 	if($("#item_departure_time").val() == ""){
-		$("#details_info_message").html("<b>DEPARTURE TIME NOTICE:</b> If no departure time we will assume you were <b>overnight</b>.<br/>If this is correct, please continue to Add item, or select a valid departure time (i.e. 8:30am).").css("display","block").delay(10000).fadeOut();
+		$(".details_info_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>DEPARTURE TIME NOTICE:</b> If no departure time we will assume you were <b>overnight</b>.<br/>If this is correct, please continue to Add item, or select a valid departure time (i.e. 8:30am).").css("display","block").delay(10000).fadeOut();
 		$( "#item_departure_time").val("Overnight");
 		//$( "#item_departure_time").focus();
 		
 		return false;
 	}
 	if($("#item_return_time").val() == ""){
-		$("#details_info_message").html("<b>RETURN TIME NOTICE:</b> If no return time we will assume you stayed <b>overnight</b>.<br/>If this is correct, please contine to Add item, or please select a valid return time (i.e. 8:30pm).").css("display","block").delay(10000).fadeOut();
+		$(".details_info_message").html("<b>RETURN TIME NOTICE:</b> If no return time we will assume you stayed <b>overnight</b>.<br/>If this is correct, please contine to Add item, or please select a valid return time (i.e. 8:30pm).").css("display","block").delay(10000).fadeOut();
 		$( "#item_return_time").val("Overnight");
 		//$( "#item_return_time").focus();
 		
@@ -377,23 +413,32 @@ function addnewtravelclaimitem(claimid,op,itemid){
 	
 	
 	if($("#item_kms").val() == "" || $("#item_meals").val() == "" || $("#item_lodging").val() == "" || $("#item_other").val() == ""){
-		$('#details_error_message').html("<b>EMPTY FIELD ERROR(S): </b>Please enter a value greater than 0 for at least one of the following: KMS,MEALS,LODGING,OTHER.").css("display","block").delay(6000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>EMPTY FIELD ERROR(S): </b>Please enter a value greater than 0 for at least one of the following: KMS,MEALS,LODGING,OTHER.").css("display","block").delay(5000).fadeOut();
 		$("#item_kms").focus();
 		return false;
 	}
 	
-	if($("#item_desc").val() == ""){
-		$('#details_error_message').html("<b>DESCRIPTION ERROR:</b> Please enter a Description of this claim item.").css("display","block").delay(4000).fadeOut();
-		$("#item_desc").focus();
-		return false;
-	}
+	//If CK Editor has text or not...
+	   
+	 textbox_data = CKEDITOR.instances.item_desc.getData();
+	    if( textbox_data === '' ) {
+	     $("#item_kms").focus();     
+	    	$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>DESCRIPTION ERROR:</b> Please enter a Description of this claim item.").css("display","block").delay(4000).fadeOut();
+	        $('.cke_wysiwyg_frame').contents().find('.cke_editable').focus();
+	          
+	       
+	        return false; 
+	    }        
+	
+		
+	
 	
 	
    
 	
 	
 	//all good submit ajax post
-	$('#details_error_message').html("");
+	$('.details_error_message').html("").css("display","none");
 	if(op == "ADD"){
 		ajaxAddNewTravelClaimItem(claimid);
 	}else{
@@ -416,29 +461,30 @@ function ajaxAddNewTravelClaimItem(claimid)
 	var cm = $("#cm").val();
 	var cy = $("#cy").val();
 	var ldm = $("#ldm").val();
+	var descR= CKEDITOR.instances['item_desc'].getData();
 	$.ajax({
         url: 'addNewTravelClaimItemAjax.html',
         type: 'POST',
-        data: {op:optext,id: claimid,item_date:$("#item_date").val(),item_desc:$("#item_desc").val(),item_kms: kms,item_meals: meals,
+        data: {op:optext,id: claimid,item_date:$("#item_date").val(),item_desc:descR,item_kms: kms,item_meals: meals,
         	item_lodging: lodging,item_other: otheritem, item_departure_time:$("#item_departure_time").val(),item_return_time: $("#item_return_time").val()},
         success: function(xml) {
         		$(xml).find('TRAVELCLAIM').each(function(){
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
-							$("#details_success_message").html("Travel Claim Item Has Been Added.").css("display","block").delay(6000).fadeOut();			    			
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim Item Has Been Added.").css("display","block").delay(5000).fadeOut();			    			
 							var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 							
 							
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				async: false
@@ -517,6 +563,7 @@ function ajaxUpdateTravelClaimItem(claimid,vitemid)
 	var meals = removeCurrencyTravel($("#item_meals").val());
 	var lodging = removeCurrencyTravel($("#item_lodging").val());
 	var otheritem =removeCurrencyTravel($("#item_other").val());
+	var descR= CKEDITOR.instances['item_desc'].getData();
 	//get values to reset datepickter after ajax
 	var cm = $("#cm").val();
 	var cy = $("#cy").val();
@@ -524,24 +571,24 @@ function ajaxUpdateTravelClaimItem(claimid,vitemid)
 	$.ajax({
         url: 'updateTravelClaimItemAjax.html',
         type: 'POST',
-        data: {op:optext,id: claimid,item_date:$("#item_date").val(),item_desc:$("#item_desc").val(),item_kms:$("#item_kms").val(),item_meals: meals,
+        data: {op:optext,id: claimid,item_date:$("#item_date").val(),item_desc:descR,item_kms:$("#item_kms").val(),item_meals: meals,
         	item_lodging: lodging,item_other: otheritem, item_departure_time:$("#item_departure_time").val(),item_return_time: $("#item_return_time").val(),itemid:vitemid},
         success: function(xml) {
         		$(xml).find('TRAVELCLAIM').each(function(){
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
-							$("#details_success_message").html("Travel Claim Item Has Been Updated").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim Item Has Been Updated").css("display","block").delay(5000).fadeOut();
 			    				var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
         
 				  },
 				dataType: "text",
@@ -571,20 +618,20 @@ function deletetravelclaimitem(cid,ciid)
 						//now add the items if any
 						if($(this).find("STATUS").text() == "SUCCESS")
 						{
-							$("#details_success_message").html("Travel Claim Item Has Been Deleted").css("display","block").delay(6000).fadeOut();			    			
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim Item Has Been Deleted").css("display","block").delay(5000).fadeOut();			    			
 							
 														
 							var surl="viewTravelClaimDetails.html?id=" + cid;
 			            	$("#pageContentBody").load(surl);
 							
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();							
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				async: false
@@ -598,26 +645,26 @@ function deletetravelclaimitem(cid,ciid)
 User level validation for update my proifle
 *************************************************/
 function updatemyprofile(op){
-	$('#details_error_message').html("");
+	$('.details_error_message').html("");
 	//check mandatory fields first
 	if($("#cur_street_addr").val() == ""){
-		$('#details_error_message').html("Please enter a value for Full Mailing Address ").css("display","block").delay(6000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b> Please enter a value for Full Mailing Address ").css("display","block").delay(5000).fadeOut();
 		return false;
 	}
 	if($("#cur_community").val() == ""){
-		$('#details_error_message').html("Please enter a value for City/Town").css("display","block").delay(6000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b> Please enter a value for City/Town").css("display","block").delay(5000).fadeOut();
 		return false;
 	}
 	if($("#cur_postal_code").val() == ""){
-		$('#details_error_message').html("Please enter a value for Postal Code").css("display","block").delay(6000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b> Please enter a value for Postal Code").css("display","block").delay(5000).fadeOut();
 		return false;
 	}
 	if($("#home_phone").val() == ""){
-		$('#details_error_message').html("Please enter a value for Home Phone").css("display","block").delay(6000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b> Please enter a value for Home Phone").css("display","block").delay(5000).fadeOut();
 		return false;
 	}
 	//all good submit ajax post
-	$('#details_error_message').html("").css("display","none");
+	$('.details_error_message').html("").css("display","none");
 	ajaxUpdateMyProfile(op);
 	
 	
@@ -638,18 +685,18 @@ function ajaxUpdateMyProfile(vop)
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
 							
-							$('#details_success_message').html("SUCCESS: Profile has been " + vop).css("display","block").delay(6000).fadeOut();
+							$('.details_success_message').html("<b>SUCCESS</b>: Profile has been " + vop).css("display","block").delay(5000).fadeOut();
 							
 			            	//var surl="viewTravelClaimSystem.html";
 			    			//$("#pageContentBody").load(surl);
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();							
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 						
 				  },
 				dataType: "text",
@@ -676,23 +723,23 @@ function submittravelclaim(claimid)
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{							
 							
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 							$('.modal-backdrop').remove();
 							// $('body').css('overflow', 'auto');
 							 $('body').removeClass('modal-open');
 							
-							$('#details_success_message').html("SUCCESS: Travel Claim Has Been Submitted.").css("display","block").delay(6000).fadeOut();
+							$('.details_success_message').html("<b>SUCCESS:</b> Travel Claim Has Been Submitted.").css("display","block").delay(5000).fadeOut();
 							var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 							
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				async: false
@@ -728,10 +775,10 @@ function approvedeclinetravelclaim(claimid,optext)
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "APPROVED")
 						{
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 							$('.modal-backdrop').remove();							
 							$('body').removeClass('modal-open');							
-							$('#details_success_message').html("SUCCESS: Travel Claim Has Been Approved!").css("display","block").delay(6000).fadeOut();
+							$('.details_success_message').html("<b>SUCCESS:</b> Travel Claim Has Been Approved!").css("display","block").delay(5000).fadeOut();
 					
 							var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
@@ -739,23 +786,23 @@ function approvedeclinetravelclaim(claimid,optext)
 							
 						}else if($(this).find("MESSAGE").text() == "DECLINED"){		
 							
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 							$('.modal-backdrop').remove();							
 							$('body').removeClass('modal-open');
-			    			$('#details_error_message').html("DECLINED: Travel claim has been declined.").css("display","block").delay(6000).fadeOut();
+			    			$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>DECLINED:</b> Travel claim has been declined.").css("display","block").delay(5000).fadeOut();
 							var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 			            	
 						}
 						else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				async: false
@@ -797,10 +844,10 @@ function paytravelclaim(claimid)
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 							$('.modal-backdrop').remove();
 							$('body').removeClass('modal-open');
-							$("#details_success_message").html("Travel Claim Has Been Set To Paid").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("Travel Claim Has Been Set To Paid").css("display","block").delay(5000).fadeOut();
 							//var surl="viewTravelClaimDetails.html?id=" + claimid;	
 							var surl="claimsApprovedByRegion.html";
 							
@@ -808,14 +855,14 @@ function paytravelclaim(claimid)
 			            
 			            	
 						}else{							
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();;
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();;
 				  },
 				dataType: "text",
 				async: false
@@ -835,26 +882,26 @@ function paymentpendingtravelclaim(claimid)
         data: {id: claimid,note: claimnote},
         success: function(xml) {
         		$(xml).find('TRAVELCLAIM').each(function(){
-						//now add the items if any
+						//now add the .delay(5000)s if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
 							
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 							$('.modal-backdrop').remove();
 							$('body').removeClass('modal-open');
 							
-							$("#details_success_message").html("Travel Claim Status Set To Pending").css("display","block").delay(6000).fadeOut();							
+							$(".details_success_message").html("Travel Claim Status Set To Pending").css("display","block").delay(5000).fadeOut();							
 			    			var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 			            	
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();							
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
         
 				  },
 				dataType: "text",
@@ -878,21 +925,21 @@ function savetravelclaimchanges(claimid){
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
-							$("#details_success_message").html("Travel Claim Changes Saved").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("Travel Claim Changes Saved").css("display","block").delay(5000).fadeOut();
 							
-							//$('#myModal').modal('close');
+							//$('#travelModal').modal('close');
 			    			var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 			            	
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 				  },
 				dataType: "text",
 				async: false
@@ -919,21 +966,21 @@ function addnewtravelclaimnote(claimid)
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
-							$("#details_success_message").html("SUCCESS: Travel Claim note added. Check the Notes tab above.").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim note added. Check the Notes tab above.").css("display","block").delay(5000).fadeOut();
 			    			
-			    			$('#myModal').modal('close');
+			    			$('#travelModal').modal('close');
 			    			var surl="viewTravelClaimDetails.html?id=" + claimid;
 			            	$("#pageContentBody").load(surl);
 							
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 						
 				  },
 				dataType: "text",
@@ -957,17 +1004,17 @@ function addeditsupervisorrule()
 		ruleid=$("#rule_id").val();
 	}
 	if(supervisorkeytype == "-1"){
-		$("#details_error_message").html("Please select Supervisor Key Type").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b>  Please select Supervisor Key Type").css("display","block").delay(5000).fadeOut();
 		
 		return false;
 	}
 	if(userkeytype == "-1"){
-		$("#details_error_message").html("Please select User Key Type").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b>  Please select User Key Type").css("display","block").delay(5000).fadeOut();
 		
 		return false;
 	}
 	if(divisionid == ""){
-		$("#details_error_message").html("Please select Division").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b>  Please select Division").css("display","block").delay(5000).fadeOut();
 		
 		return false;
 	}
@@ -983,25 +1030,25 @@ function addeditsupervisorrule()
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "ADDED")
 						{
-							$("#details_success_message").html("Supervisor Rule added").css("display","block").delay(6000).fadeOut();							
+							$(".details_success_message").html("<b>SUCCESS:</b> Supervisor Rule added").css("display","block").delay(5000).fadeOut();							
 							var surl="listSupervisorRules.html";
 							$("#pageContentBody").load(surl);
 							
 							
 						}else if($(this).find("MESSAGE").text() == "UPDATED"){
-							$("#details_success_message").html("Supervisor Rule updated").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("<b>SUCCESS:</b> Supervisor Rule updated").css("display","block").delay(5000).fadeOut();
 							
 							var surl="listSupervisorRules.html";
 							$("#pageContentBody").load(surl);
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 						
 				  },
 				dataType: "text",
@@ -1025,12 +1072,12 @@ function addedittravelbudget()
 		budgetid=$("#budget_id").val();
 	}
 	if(personnelid == "-1"){
-		$("#details_error_message").html("Please select Employee").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b>  Please select Employee").css("display","block").delay(5000).fadeOut();
 		
 		return false;
 	}
 	if(budgetedamount == ""){
-		$("#details_error_message").html("Please enter Budgeted Amount").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b>  Please enter Budgeted Amount").css("display","block").delay(5000).fadeOut();
 		
 		return false;
 	}
@@ -1046,25 +1093,25 @@ function addedittravelbudget()
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "ADDED")
 						{
-							$("#details_success_message").html("Travel Budget added").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Budget added").css("display","block").delay(5000).fadeOut();
 							
 							var surl="listTravelBudgets.html";
 							$("#pageContentBody").load(surl);
 							
 						}else if($(this).find("MESSAGE").text() == "UPDATED"){
-							$("#details_success_message").html("Travel Budget updated").css("display","block").delay(6000).fadeOut();							
+							$(".details_success_message").html("<b>SUCCESS:</b> Travel Budget updated").css("display","block").delay(5000).fadeOut();							
 							
 							var surl="listTravelBudgets.html";
 							$("#pageContentBody").load(surl);
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
         
 				  },
 				dataType: "text",
@@ -1082,8 +1129,7 @@ paid by that letter.
 function gettravelclaimsbyletter(letter)
 {	
 	cleartable();
-	ajaxRequestInfo(letter);	
-	window.parent.$('#claim_details').css('height', $('#claims-table').height()+100);
+	ajaxRequestInfo(letter);		
 	
 }
 /************************************************
@@ -1119,47 +1165,88 @@ function ajaxRequestInfo(sletter)
  				
  				success: function(xml){
  					
- 					
+ 					$("#loadingSpinner").css("display","none");
+ 					var newrow="";
+ 					var amount="";
+ 					 					
  					$(xml).find('CLAIM').each(function(){
  						
  							if($(this).find("MESSAGE").text() == "LISTFOUND")
  								{
  								
- 								if($(this).find("TYPE").text() == "PD")
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#ff8400;font-size:11px;color:white;font-weight:bold;'>&nbsp;PD CLAIM&nbsp;</div>";
-									}
-								else
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
-									}
  								
- 									var newrow="<tr>";
-                                    newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() + "</td>";                                    
-                                    newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";                                      
-                                    newrow += "<td class='listdata'>";										
-                                    newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
-									newrow += "</tr>";
-									$('table#claims-table tr:last').after(newrow);
-									isvalid=true;
-	                   				
- 								}else{
- 									//alert($(this).find("MESSAGE").text());
- 									var newrow="<tr>";
-                                    newrow += "<td align='center' colspan='4'>No Travel Claims Found Starting with the Letter " + sletter + "</td>";
-                                    $('table#claims-table tr:last').after(newrow);
-                                    
+ 								
+ 									newrow+="<tr>";
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("EMPLOYEE").text() + "</td>";                                     
+                                    if($(this).find("TYPE").text() == "PD")	{								
+                                    	newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#ff8400;font-weight:bold;'>PD CLAIM </td>";
+									} else {
+										newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#1c90ec;font-weight:bold;'>MONTHLY CLAIM</td>";								
+									}                                    
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("TITLE").text() + "</td>";  
+                                    amount=+($(this).find('AMOUNT').text());                                  
+                                    newrow += "<td  style='vertical-align:middle;'> $" + amount.toFixed(2) + "</td>";
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
+                                    if($(this).find("ZONE").text() == "avalon")	{		
+										 newrow += "<td class='region1solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>AVALON</td>";								
+									  } else if($(this).find("ZONE").text() == "central")	{
+										 newrow += "<td class='region2solid' style='text-align:center;vertical-align:middle;color:rgba(255,255,255, 1);font-weight:bold;'>CENTRAL</td>";	
+									 } else if($(this).find("ZONE").text() == "western")	{
+										 newrow += "<td class='region3solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>WESTERN</td>";	
+									 } else if($(this).find("ZONE").text() == "labrador")	{
+										 newrow += "<td class='region4solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>LABRADOR</td>";	
+									 } else if($(this).find("ZONE").text() == "provincial")	{
+										 newrow += "<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>";	
+									 } else {
+										 newrow += "<td style='background-color:Black;text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>N/A</td>";	 									
+									}
+                                    newrow += "<td style='vertical-align:middle;'><a href='#' class='btn btn-xs btn-primary' onclick='loadingData();loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
+									newrow += "</tr>";						
+									
+									isvalid=true;	                   				
  								}
+ 							
 						});
  					
+ 					$(".claimsTable tbody").append(newrow);
  					
- 						$("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-					    $("#claims-table tr:odd").css("background-color", "#E3F1E6");
-					    $("#loadingSpinner").css("display","none");
+ 					$("#claims-table").DataTable({ 					
+						  "order": [[ 0, "asc" ]],
+						   "responsive": true,
+						  dom: 'Blfrtip',
+					        buttons: [			        	
+					        	//'colvis',
+					        	//'copy', 
+					        	//'csv', 
+					        	'excel', 
+					        	{
+					                extend: 'pdfHtml5',
+					                footer:true,
+					                //orientation: 'landscape',
+					                messageTop: 'Travel/PD Claims ',
+					                messageBottom: null,
+					                exportOptions: {
+					                    columns: [ 0, 1, 2, 3 ]
+					                }
+					            },
+					        	{
+					                extend: 'print',
+					                //orientation: 'landscape',
+					                footer:true,
+					                messageTop: 'Travel/PD Claims',
+					                messageBottom: null,
+					                exportOptions: {
+					                    columns: [ 0, 1, 2, 3]
+					                }
+					            }
+					        ],
+						  "lengthMenu": [[25, 50, 100, 250, -1], [25, 50, 100, 250, "All"]]							
+					}); 					
+ 					
+ 					
 					},
  				  error: function(xhr, textStatus, error){
- 					 $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+ 					 $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
        
  				  },
  				dataType: "text",
@@ -1207,67 +1294,97 @@ function ajaxRequestInfoPending(sletter,sdate)
  				}, 
  				
  				beforeSend: function(){
-
+						
  					$("#loadingSpinner").css("display","inline");
 
  				   },
  				
  				success: function(xml){
  					
+ 					var newrow="";
+ 					$("#loadingSpinner").css("display","none");
  					
- 										
  					$(xml).find('CLAIM').each(function(){
  							
- 							if($(this).find("MESSAGE").text() == "LISTFOUND")
- 								{
- 							 if($(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4)  == sdate)	{
- 								if($(this).find("TYPE").text() == "PD")
-									{
- 									ClaimTypeText = "<div style='text-align:center;background-color:#ff8400;font-size:11px;color:white;font-weight:bold;'>&nbsp;PD CLAIM&nbsp;</div>";
-									}
-								else
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
-									}	
- 								
- 									cnt = cnt+1;
- 								
- 									var newrow="<tr>";
-                                    newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() + "</td>";
-                                    newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4) + "</td>";
-                                    newrow += "<td class='listdata'>";										
-									newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
+ 							if($(this).find("MESSAGE").text() == "LISTFOUND") {														
+ 								if((sletter == "All") ||  ($(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4)  == sdate)) {								
+ 									newrow +="<tr style='vertical-align:middle;'>";
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("EMPLOYEE").text() + "</td>";
+                                    if($(this).find("TYPE").text() == "PD")	{								
+                                    	newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#ff8400;font-weight:bold;'>PD CLAIM</td>";
+									} else {
+										newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#1c90ec;font-weight:bold;'>MONTHLY</td>";								
+									} 
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("TITLE").text() + "</td>";
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4) + "</td>";
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("SUPERVISOR").text() + "</td>";
+                                	if($(this).find("ZONE").text() == "avalon")	{		
+										 newrow += "<td class='region1solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>AVALON</td>";								
+									  } else if($(this).find("ZONE").text() == "central")	{
+										 newrow += "<td class='region2solid' style='text-align:center;vertical-align:middle;color:rgba(255,255,255, 1);font-weight:bold;'>CENTRAL</td>";	
+									 } else if($(this).find("ZONE").text() == "western")	{
+										 newrow += "<td class='region3solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>WESTERN</td>";	
+									 } else if($(this).find("ZONE").text() == "labrador")	{
+										 newrow += "<td class='region4solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>LABRADOR</td>";	
+									 } else if($(this).find("ZONE").text() == "provincial")	{
+										 newrow += "<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>";	
+									 } else {
+										 newrow += "<td style='background-color:Black;text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>N/A</td>";	 									
+									}                                  
+                                    
+                                    newrow += "<td style='vertical-align:middle;'>";										
+									newrow += "<a href='#' class='btn btn-xs btn-primary' onclick='loadingData();loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
 									newrow += "</tr>";
-									$('table#claims-table tr:last').after(newrow);
+							
 									isvalid=true;
 	                   				
- 								}
- 							 
+ 								}							 
  															
- 								
- 								}else{
- 									//alert($(this).find("MESSAGE").text());
- 									var newrow="<tr>";
- 									 newrow += "<td align='center' colspan='5'>No Travel Claims Found Starting with the Letter " + sletter + "</td>";
-                                    $('table#claims-table tr:last').after(newrow);
  								}
-						});
- 					//$('#secondMessage').css("display","inline").html("<br/>Done!!!!");
- 					$("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-					$("#claims-table tr:odd").css("background-color", "#E3F1E6");
-					$('#numberPendingDate').html(sdate);
-					$('#numberPendingSelection').html(sletter);
-					$('#numberPending').html(cnt);
-					$('#claimMessage').css("display","inline");
-					setTimeout(function() {
-					$("#loadingSpinner").css("display","none");
-					}, 1000);
-					},
+ 								});
+ 							
+ 							
+ 							
+ 							$(".claimsTable tbody").append(newrow);
+ 		 					
+ 		 					$("#claims-table").DataTable({	  		 				
+ 								  "order": [[ 3, "desc" ],[0,"asc"]],
+ 								   "responsive": true,
+ 								  dom: 'Blfrtip',
+ 							        buttons: [			        	
+ 							        	//'colvis',
+ 							        	'copy', 
+ 							        	'csv', 
+ 							        	'excel', 
+ 							        	{
+ 							                extend: 'pdfHtml5',
+ 							                footer:true,
+ 							                //orientation: 'landscape',
+ 							                messageTop: 'Travel/PD Claims ',
+ 							                messageBottom: null,
+ 							                exportOptions: {
+ 							                    columns: [ 0, 1, 2, 3, 4, 5]
+ 							                }
+ 							            },
+ 							        	{
+ 							                extend: 'print',
+ 							                //orientation: 'landscape',
+ 							                footer:true,
+ 							                messageTop: 'Travel/PD Claims',
+ 							                messageBottom: null,
+ 							                exportOptions: {
+ 							                    columns: [ 0, 1, 2, 3, 4, 5]
+ 							                }
+ 							            }
+ 							        ],
+ 								  "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "All"]]							
+ 							}); 		
+ 							
+ 		 				
+ 				},
 					
  				  error: function(xhr, textStatus, error){
- 					 $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+ 					 $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
        
  				  },
  				dataType: "text",
@@ -1287,7 +1404,7 @@ function getapprovedtravelclaimsbydate()
 	//check to make sure value set
 	var selectedvalue = $('#approveddates').val();
 	if(selectedvalue == "-1"){		
-		$("#details_error_message").html("Please select date").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>ERROR:</b>  Please select date").css("display","block").delay(5000).fadeOut();
 	}
 	cleartable();	
 
@@ -1329,22 +1446,20 @@ function ajaxRequestInfoApprovedDate(sapproveddate)
  							
  							if($(this).find("MESSAGE").text() == "LISTFOUND")
  								{
- 								if($(this).find("TYPE").text() == "PD")
- 									{
- 									ClaimTypeText = "<div style='text-align:center;background-color:#ff8400;font-size:11px;color:white;font-weight:bold;'>&nbsp;PD CLAIM&nbsp;</div>";
-									}
-								else
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
-									}
- 													
+ 							 													
  									var newrow="<tr>";
+ 									newrow += "<td class='listdata'>" + $(this).find("APPROVED").text() +"</a></td>";
                                     newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() +"</a></td>";
-                                    newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
+                                    if($(this).find("TYPE").text() == "PD")	{								
+                                    	newrow += "<td style='color:white;text-align:center;background-color:#ff8400;font-weight:bold;'>PD CLAIM</td>";
+									} else {
+										newrow += "<td style='color:white;text-align:center;background-color:#1c90ec;font-weight:bold;'>MONTHLY</td>";								
+									} 
                                     newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>"; 
                                     newrow += "<td class='listdata'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
+                                    newrow += "<td class='listdata'>" + $(this).find("AMOUNT").text() + "</td>"; 
                                     newrow += "<td class='listdata' align='center'>";										
-                                    newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
+                                    newrow += "<a href='#' onclick='loadingData();loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
 									newrow += "</tr>";
 									$('table#claims-table tr:last').after(newrow);
 									isvalid=true;
@@ -1367,7 +1482,7 @@ function ajaxRequestInfoApprovedDate(sapproveddate)
 
 					
  				  error: function(xhr, textStatus, error){
- 					 $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+ 					 $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
        
  				  },
  				   				  
@@ -1389,16 +1504,9 @@ function getapprovedtravelclaimsbyregion()
 {
 	//check to make sure value set
 	
-	var selectedvalue = $('#regions').val();
-	if(selectedvalue == "-1"){
-		
-		$("#details_error_message").html("Please select region").css("display","block").delay(6000).fadeOut();
-		return false;
-	}
-	cleartable();
-	
-	ajaxRequestInfoApprovedRegion(selectedvalue);
-	window.parent.$('#claim_details').css('height', $('#claims-table').height()+100);
+	var selectedvalue = "0";	
+	cleartable();	
+	ajaxRequestInfoApprovedRegion("0");	
 }
 /************************************************
 Calls ajax post for getting claims approved by
@@ -1424,47 +1532,88 @@ function ajaxRequestInfoApprovedRegion(region)
  				   },
  				
  				success: function(xml){
- 					
+ 					var amount="";
+ 					var newrow="";
+ 					amt = 0;
+ 					$("#loadingSpinner").css("display","none");
  					
  					$(xml).find('CLAIM').each(function(){
  						
  							if($(this).find("MESSAGE").text() == "LISTFOUND")
- 								{
- 															
- 							    if($(this).find("TYPE").text() == "PD")
-									{
- 							    	ClaimTypeText = "<div style='text-align:center;background-color:#ff8400;font-size:11px;color:white;font-weight:bold;'>&nbsp;PD CLAIM&nbsp;</div>";
-									}
-								else
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
-									}
+ 								{										
+ 							   
  								
- 									var newrow="<tr>";
-                                    newrow += "<td class='listdata'> " + $(this).find("EMPLOYEE").text() + "</td>";                                    
-                                    newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
-                                    newrow += "<td class='listdata'>";										
-                                    newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
-									newrow += "</tr>";
-									$('table#claims-table tr:last').after(newrow);
-									isvalid=true;
-	                   				
- 								}else{
- 									//alert($(this).find("MESSAGE").text());
- 									var newrow="<tr>";
-                                    newrow += "<td align='center' colspan='5'>No Travel Claims Found</td>";
-                                    $('table#claims-table tr:last').after(newrow);
+ 									newrow +="<tr style='vertical-align:middle;'>";
+ 									newrow += "<td style='vertical-align:middle;'>" + $(this).find("APPROVED").text() +"</td>";					
+ 									newrow += "<td style='vertical-align:middle;'> " + $(this).find("EMPLOYEE").text() + "</td>";                                    
+                                    if($(this).find("TYPE").text() == "PD")	{								
+                                    	newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#ff8400;font-weight:bold;'>PD CLAIM</td>";
+									} else {
+										newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#1c90ec;font-weight:bold;'>MONTHLY</td>";								
+									} 
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("TITLE").text() + "</td>";          
+                                    amount=+($(this).find('AMOUNT').text());                                  
+                                    newrow += "<td  style='vertical-align:middle;'> $" + amount.toFixed(2) + "</td>";                                  
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
+                              	  	if($(this).find("ZONE").text() == "avalon")	{		
+										 newrow += "<td class='region1solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>AVALON</td>";								
+									  } else if($(this).find("ZONE").text() == "central")	{
+										 newrow += "<td class='region2solid' style='text-align:center;vertical-align:middle;color:rgba(255,255,255, 1);font-weight:bold;'>CENTRAL</td>";	
+									 } else if($(this).find("ZONE").text() == "western")	{
+										 newrow += "<td class='region3solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>WESTERN</td>";	
+									 } else if($(this).find("ZONE").text() == "labrador")	{
+										 newrow += "<td class='region4solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>LABRADOR</td>";	
+									 } else if($(this).find("ZONE").text() == "provincial")	{
+										 newrow += "<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>";	
+									 } else {
+										 newrow += "<td style='background-color:Black;text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>N/A</td>";	 									
+									}
+                                    newrow += "<td style='vertical-align:middle;'>";										
+                                    newrow += "<a href='#' class='btn btn-xs btn-primary' onclick='loadingData();loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
+									newrow += "</tr>";								
+									isvalid=true;	                   				
  								}
 						});
  					
- 					$("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-				    $("#claims-table tr:odd").css("background-color", "#E3F1E6");
-				    $("#loadingSpinner").css("display","none");
+ 					$("#claims-table tbody").append(newrow);
+	 					
+	 					$("#claims-table").DataTable({	 
+							  "order": [[ 0, "desc" ]],
+							   "responsive": true,
+							  dom: 'Blfrtip',
+						        buttons: [			        	
+						        	//'colvis',
+						        	'copy', 
+						        	'csv', 
+						        	'excel', 
+						        	{
+						                extend: 'pdfHtml5',
+						                footer:true,
+						                //orientation: 'landscape',
+						                messageTop: 'Travel/PD Claims ',
+						                messageBottom: null,
+						                exportOptions: {
+						                    columns: [ 0, 1, 2, 3,4,5 ]
+						                }
+						            },
+						        	{
+						                extend: 'print',
+						                //orientation: 'landscape',
+						                footer:true,
+						                messageTop: 'Travel/PD Claims',
+						                messageBottom: null,
+						                exportOptions: {
+						                    columns: [ 0, 1, 2, 3,4,5]
+						                }
+						            }
+						        ],
+							  "lengthMenu": [[25, 50, 100, 250, -1], [25, 50, 100, 250, "All"]]							
+						}); 		
+ 					
+	 				 					
 					},
  				  error: function(xhr, textStatus, error){
- 					 $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+ 					 $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
        
  				  },
  				dataType: "text",
@@ -1474,10 +1623,20 @@ function ajaxRequestInfoApprovedRegion(region)
 	
 	return isvalid;
 }
-function loadMainDivPage(urltoload){
-		$("#pageContentBody").load(urltoload);
+function loadMainDivPage(urltoload){	
+	
+		if (urltoload==null || urltoload=="" || urltoload=="back") {
+			//If back page is detected, load cookie address.
+			urltoload = $.cookie('backurl');				
+		} 
+		
+		$("#pageContentBody").load(urltoload);		
+		 $("#loadingSpinner").css("display","inline");		 
+	
+				 
 		//$('#printJob').css('height', 600);
 		//$('#printJob').css('width', 600);
+		
 }
 /************************************************
 function used to load model dialog on main screen
@@ -1486,15 +1645,17 @@ and information used to poplulate labels on dialog
 *************************************************/
 function openModalDialog(claimid,dialogtype,otherinfo){
 	var options = {
-            "backdrop" : "true",
-            "show":true
+           backdrop : true,
+            show:true
       	};
-$('#buttonleft').off('click');
-		if(dialogtype == "submitclaim"){
-			$('#maintitle').text("Submit Claim");
-			$('#title1').text("CLAIM:  " + otherinfo);
-			$('#title2').text("Are you sure you want to submit this claim for procressing?");
-$('#title4').text("");
+		$('#buttonleft').off('click');
+		
+if(dialogtype == "submitclaim"){
+			$('#maintitle').html("<span style='color:Green;'>Submit this Claim?</span>");
+			$('#title1').html("<b>CLAIM:</b> " + otherinfo +"<br/>");
+			$('#title2').html("Are you sure you want to submit this claim for procressing?");
+			$('#title3').html("");
+			$('#title4').html("");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1507,11 +1668,12 @@ $('#title4').text("");
 				submittravelclaim(claimid);
 			});
 			
-		}else if(dialogtype == "deleteclaim"){
-			$('#maintitle').text("Delete Claim");
-			$('#title1').text("CLAIM:  " + otherinfo);
-			$('#title2').text("Are you sure you want to delete this claim?");
-$('#title4').text("");
+}else if(dialogtype == "deleteclaim"){
+			$('#maintitle').html("<span style='color:Red;'>Delete This Claim?</span>");
+			$('#title1').html("<b>CLAIM:</b> " + otherinfo +"<br/>");
+			$('#title2').html("Are you sure you want to delete this claim?");
+			$('#title3').html("");
+			$('#title4').html("");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1523,14 +1685,15 @@ $('#title4').text("");
 			$("#buttonleft").click(function(){
 				deletetravelclaim(claimid)
 			});
-		}else if(dialogtype == "changesupervisor"){
-			$('#maintitle').text("Change Supervisor");
-			$('#title1').text("Claim Supervisor Information");
-			$('#title2').text("Select Your Supervisor");
-			$('#title3').text("");
-			$('#title4').text("");
-			$('#buttonleft').text("Submit");
-			$('#buttonright').text("Close");
+			
+}else if(dialogtype == "changesupervisor"){
+			$('#maintitle').html("<span style='color:#004178;'>Change Your Supervisor</span>");
+			$('#title1').html("");
+			$('#title2').html("Select your supervisor from the list below. If not listed, please contact your supervisor or support.");
+			$('#title3').html("");
+			$('#title4').html("");
+			$('#buttonleft').text("OK");
+			$('#buttonright').text("Cancel");
 			$('#selectbox').show();
 			$('#glaccountbox').hide();
 			$('#declinenotes').hide();
@@ -1540,13 +1703,14 @@ $('#title4').text("");
 			$("#buttonleft").click(function(){
 				updatetravelclaimsupervisor(claimid)
 			});
-		}else if (dialogtype == "supervisorapprove"){
-			$('#maintitle').text("Approve Claim");
+			
+}else if (dialogtype == "supervisorapprove"){
+			$('#maintitle').html("<span style='color:Green;'>Approve this Claim?</span>");
 			var res = otherinfo.split(",");
-			$('#title1').text(res[1]);
-			$('#title2').text("CLAIM:  " + res[0]);
-			$('#title3').text("Are you sure you want to APPROVE this claim?");
-$('#title4').text("");
+			$('#title1').html("<b>CLAIMANT:</b><span style='text-transform: capitalize;'> "+ res[1] +"</span>");
+			$('#title2').html("<br/><b>CLAIM:</b>" + res[0]);
+			$('#title3').html("<br/>Are you sure you want to <b>APPROVE</b> this claim?");
+			$('#title4').html("");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1561,13 +1725,14 @@ $('#title4').text("");
 					return false;
 				}
 			});
-		}else if (dialogtype == "supervisordecline"){
-				$('#maintitle').text("Decline Claim");
+
+}else if (dialogtype == "supervisordecline"){
+				$('#maintitle').html("<span style='color:Red;'>Decline Claim?</span>");
 				var res = otherinfo.split(",");
-				$('#title1').text(res[1]);
-				$('#title2').text("CLAIM:  " + res[0]);
-				$('#title3').text("Are you sure you want to DECLINE this claim?");
-$('#title4').text("");
+				$('#title1').html("<b>CLAIMANT:</b><span style='text-transform: capitalize;'> "+ res[1] +"</span>");
+				$('#title2').html("<br/><b>CLAIM:</b>  " + res[0]);
+				$('#title3').html("<br/>Are you sure you want to <b>DECLINE</b> this claim?");
+				$('#title4').text("");
 				$('#buttonleft').text("YES");
 				$('#buttonright').text("NO");
 				$('#selectbox').hide();
@@ -1578,13 +1743,14 @@ $('#title4').text("");
 				$("#buttonleft").click(function(){
 					approvedeclinetravelclaim(claimid,"DECLINED");
 				});
-		}else if (dialogtype == "paytravelclaim"){
-			$('#maintitle').text("Pay Travel Claim");
+				
+}else if (dialogtype == "paytravelclaim"){
+			$('#maintitle').html("<span style='color:Green;'>Pay This Claim?</span>");
 			var res = otherinfo.split(",");
-			$('#title1').text(res[1]);
-			$('#title2').text("CLAIM:  " + res[0]);
-			$('#title3').text("Are you sure you want to PAY this claim?");
-$('#title4').text("");
+			$('#title1').html("<b>CLAIMANT:</b><span style='text-transform: capitalize;'> "+ res[1] +"</span>");
+			$('#title2').html("<br/><b>CLAIM:</b>  " + res[0]);
+			$('#title3').html("Are you sure you want to <b>PAY</b> this claim?");
+			$('#title4').html("");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1600,13 +1766,14 @@ $('#title4').text("");
 					return false;
 				}
 			});
-		}else if (dialogtype == "paypendingtravelclaim"){
-			$('#maintitle').text("Payment Pending Travel Claim");
+			
+}else if (dialogtype == "paypendingtravelclaim"){
+			$('#maintitle').html("<span style='color:#004178;'>Payment Pending Travel Claim</span>");			
 			var res = otherinfo.split(",");
-			$('#title1').text(res[1]);
-			$('#title2').text("CLAIM:  " + res[0]);
-			$('#title3').text("Are you sure you want to make claim PENDING?");
-$('#title4').text("");
+			$('#title1').html("<b>CLAIMANT:</b><span style='text-transform: capitalize;'> "+ res[1] +"</span>");
+			$('#title2').html("<br/><b>CLAIM:</b>  " + res[0]);
+			$('#title3').html("Are you sure you want to make claim <b>PENDING</b>?");
+			$('#title4').html("");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1618,13 +1785,14 @@ $('#title4').text("");
 			$("#buttonleft").click(function(){
 				paymentpendingtravelclaim(claimid);
 			});
-		}else if (dialogtype == "travelclaimnote"){
-			$('#maintitle').text("Travel Claim Note");
+			
+}else if (dialogtype == "travelclaimnote"){		
+			$('#maintitle').html("<span style='color:#004178;'>Travel Claim Note</span>");	
 			var res = otherinfo.split(",");
-			$('#title1').text(res[1]);
-			$('#title2').text("CLAIM:  " + res[0]);
-			$('#title3').text("");
-$('#title4').text("");
+			$('#title1').html("<b>CLAIMANT:</b> <span style='text-transform: capitalize;'> "+ res[1] +"</span><br/>");
+			$('#title2').html("<b>CLAIM:</b>  " + res[0]);
+			$('#title3').html("");
+			$('#title4').html("");			
 			$('#buttonleft').text("Add");
 			$('#buttonright').text("Close");
 			$('#selectbox').hide();
@@ -1636,13 +1804,14 @@ $('#title4').text("");
 			$("#buttonleft").click(function(){
 				addnewtravelclaimnote(claimid);
 			});
-		}else if (dialogtype == "savetravelclaim"){
-			$('#maintitle').text("Save Claim Changes");
+			
+}else if (dialogtype == "savetravelclaim"){
+			$('#maintitle').html("<span style='color:Green;'>Save Claim Changes?</span>");
 			var res = otherinfo.split(",");
-			$('#title1').text(res[1]);
-			$('#title2').text("CLAIM:  " + res[0]);
-			$('#title3').text("Are you sure you want to SAVE CHANGES to this claim?");
-			$('#title4').text("");
+			$('#title1').html("<b>ITEM DATE:</b> "  + res[1]+ "<br/>");
+			$('#title2').html("<b>CLAIM: </b>" + res[0] + "<br/>");
+			$('#title3').html("<br/>Are you sure you want to <b>SAVE CHANGES</b> to this claim?");
+			$('#title4').html("");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1653,17 +1822,14 @@ $('#title4').text("");
 			$("#buttonleft").click(function(){
 				savetravelclaimchanges(claimid);
 			});
-		//$("#buttonright").click(function(){
-			//$('#myModal').modal().hide();
-		//});
-    	
-		}else if (dialogtype == "deletetravelclaimitem"){
-			$('#maintitle').text("Delete Travel Claim Item");
+
+}else if (dialogtype == "deletetravelclaimitem"){
+			$('#maintitle').html("<span style='color:Red;'>Delete Travel Claim Item?</span>");			
 			var res = otherinfo.split(",");
-			$('#title2').text("ITEM DATE: "  + res[1]);
-			$('#title3').text("DESCRIPTION: "  + res[2]);
-			$('#title1').text("CLAIM:  " + res[0]);
-			$('#title4').text("Are you sure you want to DELETE to this claim item?");
+			$('#title2').html("<b>ITEM DATE:</b> "  + res[1]+ "<br/>");
+			$('#title3').html("<b>DESCRIPTION:</b> "  + res[2]+ "<br/>");
+			$('#title1').html("<b>CLAIM:</b>  " + res[0] + "<br/>");
+			$('#title4').html("<br/>Are you sure you want to DELETE to this claim item?");
 			$('#buttonleft').text("YES");
 			$('#buttonright').text("NO");
 			$('#selectbox').hide();
@@ -1674,12 +1840,9 @@ $('#title4').text("");
 			$("#buttonleft").click(function(){
 				deletetravelclaimitem($('#id').val(),claimid);
 			});
-		//$("#buttonright").click(function(){
-			//$('#myModal').modal().hide();
-		//});
     	
 		}
-	$('#myModal').modal(options);
+	$('#travelModal').modal(options);
 }
 /************************************************
 used to populate edit item
@@ -1687,6 +1850,7 @@ used to populate edit item
 function loadEditItem(claimid,itemid){
 	var surl="editTravelClaimItem.html?id=" + claimid + "&iid=" + itemid;
 	$("#pageContentBody").load(surl);
+	$('.cke_wysiwyg_frame').contents().find('.cke_editable').focus();
 	//get values to reset datepickter after ajax
 	var cm = $("#cm").val();
 	var cy = $("#cy").val();
@@ -1698,7 +1862,7 @@ call used to clear info from the new add item controls
 *************************************************/
 function unloadEditItem(claimid){
 	var surl="viewTravelClaimDetails.html?id=" + claimid;
-	$("#pageContentBody").load(surl);
+	$("#pageContentBody").load(surl);	
 	//get values to reset datepickter after ajax
 	var cm = $("#cm").val();
 	var cy = $("#cy").val();
@@ -1708,18 +1872,27 @@ function unloadEditItem(claimid){
 /************************************************
 call used to load search items returned
 *************************************************/
-function searchclaims(){
-	var searchtext= $('#srch_txt').val();
-	if(searchtext == ""){
-		
-		$("#details_error_message").html("Please enter search text").css("display","block").delay(6000).fadeOut();
+function searchclaims(){	
+	backurl="";	
+	var searchtextnav= $('#search-text-nav').val();	
+	var searchtexttop= $('#search-text-top').val();
+	var searchtype= $('input[name=searchtype]:checked').val();	
+	if(searchtype == ""){		
+		$(".details_error_message").html("<i class='fas fa-exclamation-circle'></i> <b>ERROR:</b> Please select name or vendor option before searching. Please try again. <i class='fas fa-exclamation-circle'></i> ").css("display","block").delay(5000).fadeOut();
+		$(".search-text").focus();
+		return false;
+	}	
+	if(searchtextnav == "" && searchtexttop == ""){		
+		$(".details_error_message").html("<i class='fas fa-exclamation-circle'></i> <b>ERROR:</b> Please enter search text before searching. Please try again. <i class='fas fa-exclamation-circle'></i> ").css("display","block").delay(5000).fadeOut();
+		$(".search-text").focus();
 		return false;
 	}
-	$("#loadingSpinner").css("display","inline");
-	var searchtype= $('input[name=searchtype]:checked').val();
+	$("#loadingSpinner").css("display","inline");	
 	var surl="viewSearchResults.html?";
+	var searchtext = searchtextnav+searchtexttop;
+	$.cookie('backurl', surl+"txt="+searchtext+"&type="+searchtype, {expires: 1 });	
 	$("#pageContentBody").load(surl,{txt:searchtext,type:searchtype});
-	
+
 }
 /************************************************
 call used to refresh jquery objects after ajax post
@@ -1743,7 +1916,7 @@ function refreshJquery(cm,cy,ldm){
 call used to load delete supervisor screen
 *************************************************/
 function deleteSupervisorRule(ruleid){
-	$("#details_success_message").html("Supervisor Rule deleted").delay(6000).fadeOut();
+	$(".details_success_message").html("<b>SUCCESS:</b> Supervisor Rule deleted").delay(5000).fadeOut();
 	var surl="deleteSupervisorRule.html?rule_id=" + ruleid;
 	$("#pageContentBody").load(surl);
 }
@@ -1832,7 +2005,7 @@ RETURNS:
   else if (!objRegExp.test(temp_value)) 
   { 
     check = false;
-    $("#details_error_message").html("<b>INVALID CURRENCY AMOUNT:</b> Please enter correct format of $0.00.").css("display","block").delay(6000).fadeOut();
+    $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID CURRENCY AMOUNT:</b> Please enter correct format of $0.00.").css("display","block").delay(5000).fadeOut();
     fld.focus(); 
     fld.select(); 
   }
@@ -1898,7 +2071,7 @@ RETURNS:
   else if (!objRegExp.test(temp_value)) 
   { 
     check = false;
-    $("#details_error_message").html("<b>KM ENTRY ERROR:</b> Please round to nearest number. (i.e. 2.8km will be 3km, 2.4km will be 2km.)").css("display","block").delay(6000).fadeOut();
+    $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>KM ENTRY ERROR:</b> Please round to nearest number. (i.e. 2.8km will be 3km, 2.4km will be 2km.)").css("display","block").delay(5000).fadeOut();
     fld.focus(); 
     fld.select(); 
   } 
@@ -1916,7 +2089,7 @@ function validateTime(fld) {
   if (!objRegExp.test(temp_value)) 
   { 
     check = false;
-    $("#details_error_message").html("<b>INVALID TIME FORMAT:</b> Please enter standard time format(i.e. 12:00am).").css("display","block").delay(6000).fadeOut();
+    $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID TIME FORMAT:</b> Please enter standard time format(i.e. 12:00am).").css("display","block").delay(5000).fadeOut();
     fld.focus(); 
     fld.select(); 
   } 
@@ -2143,42 +2316,45 @@ USAGE:  strNoSpaces = removeCharacters( ' sfdf  dfd',
 function validateAddClaimItem(frm)
 {
   var check = true;
-
   if(!validateNotEmpty(frm.item_date.value))
   {
-    
-	  $("#details_error_message").html("<b>DATE ERROR:</b> Date is a required field.").css("display","block").delay(6000).fadeOut();
+    $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>DATE ERROR:</b> Date is a required field.").css("display","block").delay(5000).fadeOut();
     check = false;
   }
   else if(!validateNotEmpty(frm.item_desc.value))
   {
-	  $("#details_error_message").html("<b>DESCRIPTION IS EMPTY:</b> Description is a required field.").css("display","block").delay(6000).fadeOut();
-	  
-    check = false;
+	  $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>DESCRIPTION IS EMPTY:</b> Description is a required field.").css("display","block").delay(5000).fadeOut();
+	 check = false;
   }
   else if(!validateInteger(frm.item_kms))
   {
-    check = false;
+   $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID ENTRY:</b> Please enter a integer only.").css("display","block").delay(5000).fadeOut();
+	check = false;
   }
   else if(!validateDollar(frm.item_meals))
   {
-    check = false;
+  $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID ENTRY:</b> Please enter a integer only.").css("display","block").delay(5000).fadeOut();
+	check = false;
   }
   else if(!validateDollar(frm.item_lodging))
   {
-    check = false;
+  $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID ENTRY:</b> Please enter a integer only.").css("display","block").delay(5000).fadeOut();
+	check = false;
   }
   else if(!validateDollar(frm.item_other))
   {
-    check = false;
+  $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID ENTRY:</b> Please enter a integer only.").css("display","block").delay(5000).fadeOut();
+	check = false;
   }
   else if(validateNotEmpty(frm.item_departure_time) && !validateTime(frm.item_departure_time))
   {
-  	check = false;
+  $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID ENTRY:</b> Please enter a time only.").css("display","block").delay(5000).fadeOut();
+	check = false;
   }
   else if(validateNotEmpty(frm.item_return_time) && !validateTime(frm.item_return_time))
   {
-  	check = false;
+  $(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>INVALID ENTRY:</b> Please enter a time only.").css("display","block").delay(5000).fadeOut();
+	check = false;
   }
 
   if(check)
@@ -2196,30 +2372,30 @@ User level validation for add new travel claim
 km rate
 *************************************************/
 function addnewtravelclaimkmrate(){
-	$('#details_error_message').html("").css("display","none");
+	$('.details_error_message').html("").css("display","none");
 	//check mandatory fields first
 	if($("#effstartdate").val() == ""){
-		$('#details_error_message').html("<b>START DATE ERROR:</b> Please enter Effective Start Date.").css("display","block").delay(6000).fadeOut();
+		$('.details_error_message').html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>START DATE ERROR:</b> Please enter Effective Start Date.").css("display","block").delay(5000).fadeOut();
 		$("#effstartdate").focus();
 		return false;
 	}
 	if($("#effenddate").val() == ""){
-		$("#details_error_message").html("<b>END DATE ERROR:</b> Please enter Effective End Date").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>END DATE ERROR:</b> Please enter Effective End Date").css("display","block").delay(5000).fadeOut();
 		$( "#effenddate").focus();
 		return false;
 	}
 	if($("#basekmrate").val() == ""){
-		$("#details_error_message").html("<b>BASE RATE ERROR:</b> Please Enter value for Base Rate").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>BASE RATE ERROR:</b> Please Enter value for Base Rate").css("display","block").delay(5000).fadeOut();
 		$( "#basekmrate").focus();
 		return false;
 	}
 	if($("#approvedkmrate").val() == ""){
-		$("#details_error_message").html("<b>APPROVED RATE ERROR:</b> Please Enter value for Approved Rate").css("display","block").delay(6000).fadeOut();
+		$(".details_error_message").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>APPROVED RATE ERROR:</b> Please Enter value for Approved Rate").css("display","block").delay(5000).fadeOut();
 		$( "#approvedkmrate").focus();
 		return false;
 	}
 	//all good submit ajax post
-	$('#details_error_message').html("").css("display","none");
+	$('.details_error_message').html("").css("display","none");
 	ajaxAddNewTravelClaimKMRate();
 	
 	
@@ -2244,9 +2420,9 @@ function ajaxAddNewTravelClaimKMRate()
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
 							if(optype == "ADD"){
-								$("#details_success_message").html("Travel Claim KM Rate Has Been Added").css("display","block").delay(6000).fadeOut();
+								$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim KM Rate Has Been Added").css("display","block").delay(5000).fadeOut();
 							}else{
-								$("#details_success_message").html("Travel Claim KM Rate Has Been Updated").css("display","block").delay(6000).fadeOut();
+								$(".details_success_message").html("<b>SUCCESS:</b>  Travel Claim KM Rate Has Been Updated").css("display","block").delay(5000).fadeOut();
 							}
 							
 			    			//$('#mainalert').show();
@@ -2255,14 +2431,14 @@ function ajaxAddNewTravelClaimKMRate()
 							
 							
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							//$("#mainalert").show();
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 						//$("#mainalert").show();
 				  },
 				dataType: "text",
@@ -2280,17 +2456,17 @@ function opendeletedialog(sdate,edate,brate,arate){
             "backdrop" : "static",
             "show":true
     };
-	$('#maintitle').text("Delete KM Rate");
-	$('#title1').text("KM Rate For " + sdate + " to " + edate);
-	$('#title2').text("Base Rate: " + brate + "    Approved Rate: " + arate);
-	$('#title3').text("Are you sure you want to delete this KM Rate?");
+	$('#maintitle').html("Delete this KM Rate?");
+	$('#title1').html("KM Rate For " + sdate + " to " + edate);
+	$('#title2').html("<br/><b>Base Rate:</b> " + brate + "    <b>Approved Rate:</b> " + arate);
+	$('#title3').html("<br/>Are you sure you want to delete this KM Rate?");
 	$('#buttonleft').text("YES");
 	$('#buttonright').text("NO");
 	//now we add the onclick event
 	$("#buttonleft").click(function(){
 		deletekmrate(sdate,edate);
 	});
-	$('#myModal').modal(options);
+	$('#travelModal').modal(options);
 
 }
 
@@ -2307,23 +2483,23 @@ function deletekmrate(sdate,edate){
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "SUCCESS")
 						{
-							$("#details_success_message").html("Travel Claim Item Has Been Deleted").css("display","block").delay(6000).fadeOut();
+							$(".details_success_message").html("<b>SUCCESS:</b>  Travel Claim Rate Has Been Deleted.").css("display","block").delay(5000).fadeOut();
 			    			//$('#mainalert').show();
 			    			
 							var surl="listKmRates.html";
 			            	$("#pageContentBody").load(surl);
-			            	$('#myModal').modal('hide');
+			            	$('#travelModal').modal('hide');
 							
 						}else{
-							$("#details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
 							//$("#mainalert").show();
-							$('#myModal').modal('hide');
+							$('#travelModal').modal('hide');
 						}
 
 					});     					
 				},
 				  error: function(xhr, textStatus, error){
-					  $("#details_error_message").html(error).css("display","block").delay(6000).fadeOut();
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
 						//$("#mainalert").show();
 				  },
 				dataType: "text",
@@ -2377,81 +2553,104 @@ function ajaxRequestInfoPreSubmission(sletter,sdate)
  				
  				success: function(xml){
  					
+ 					var newrow="";
+ 					var amount ="";
+ 					$("#loadingSpinner").css("display","none");
  					
- 										
  					$(xml).find('CLAIM').each(function(){
  							
  							if($(this).find("MESSAGE").text() == "LISTFOUND")
  								{
- 							 if($(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4)  == sdate)	{
- 								if($(this).find("TYPE").text() == "PD")
-									{
- 									ClaimTypeText = "<div style='text-align:center;background-color:#ff8400;font-size:11px;color:white;font-weight:bold;'>&nbsp;PD CLAIM&nbsp;</div>";
-									}
-								else
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
-									}	
- 								
- 									cnt = cnt+1;
- 								
- 									var newrow="<tr>";
-                                    newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() + "</td>";
-                                    newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";                                    
-                                    newrow += "<td class='listdata'>" + $(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4) + "</td>";
-                                    newrow += "<td class='listdata'>";										
-									newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
-									newrow += "</tr>";
-									$('table#claims-table tr:last').after(newrow);
-									isvalid=true;
-	                   				
+ 								newrow+="<tr>";
+                                newrow += "<td  style='vertical-align:middle;'>" + $(this).find("EMPLOYEE").text() + "</td>";
+                                newrow += "<td  style='vertical-align:middle;'>" + $(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4) + "</td>";
+                                if($(this).find("TYPE").text() == "PD")	{								
+                                	newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#ff8400;font-weight:bold;'>PD CLAIM </td>";
+								} else {
+									newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#1c90ec;font-weight:bold;'>MONTHLY CLAIM</td>";								
+								}            
+                                newrow += "<td  style='vertical-align:middle;'>" + $(this).find("TITLE").text() + "</td>";             
+                                amount=+($(this).find('TOTAL').text());                                  
+                                newrow += "<td  style='vertical-align:middle;'> $" + amount.toFixed(2) + "</td>";                            
+                                newrow += "<td style='vertical-align:middle;'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
+                          	  	if($(this).find("ZONE").text() == "avalon")	{		
+									 newrow += "<td class='region1solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>AVALON</td>";								
+								  } else if($(this).find("ZONE").text() == "central")	{
+									 newrow += "<td class='region2solid' style='text-align:center;vertical-align:middle;color:rgba(255,255,255, 1);font-weight:bold;'>CENTRAL</td>";	
+								 } else if($(this).find("ZONE").text() == "western")	{
+									 newrow += "<td class='region3solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>WESTERN</td>";	
+								 } else if($(this).find("ZONE").text() == "labrador")	{
+									 newrow += "<td class='region4solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>LABRADOR</td>";	
+								 } else if($(this).find("ZONE").text() == "provincial")	{
+									 newrow += "<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>";	
+								 } else {
+									 newrow += "<td style='background-color:Black;text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>UNKNOWN</td>";	 									
+								}                              	  
+                                newrow += "<td  style='vertical-align:middle;'>";										
+								newrow += "<a href='#' class='btn btn-xs btn-primary'  onclick='loadingData();loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
+								newrow += "</tr>";								
+								isvalid=true;	                   				
  								}
- 							 
- 															
- 								
- 								}else{
- 									//alert($(this).find("MESSAGE").text());
- 									var newrow="<tr>";
- 									 newrow += "<td align='center' colspan='5'>No Travel Claims Found Starting with the Letter " + sletter + "</td>";
-                                    $('table#claims-table tr:last').after(newrow);
- 								}
-						});
- 					//$('#secondMessage').css("display","inline").html("<br/>Done!!!!");
- 					$("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-					$("#claims-table tr:odd").css("background-color", "#E3F1E6");
-					$('#numberPendingDate').html(sdate);
-					$('#numberPendingSelection').html(sletter);
-					$('#numberPending').html(cnt);
-					$('#claimMessage').css("display","inline");
-					setTimeout(function() {
-					$("#loadingSpinner").css("display","none");
-					}, 1000);
-					},
-					
- 				  error: function(xhr, textStatus, error){
- 					 $("#details_error_message").html(error).css("display","block");
-       
- 				  },
- 				dataType: "text",
- 				//async: false
- 			}
- 		);
-	
-	return isvalid;
-}
+						}); 					
+					$("#presub-table tbody").append(newrow);
+					$("#presub-table").DataTable({	 
+						  "order": [[ 1, "desc" ],[0,"asc"]],
+						   "responsive": true,
+						  dom: 'Blfrtip',						  
+					        buttons: [			        	
+					        	//'colvis',
+					        	'copy', 
+					        	'csv', 
+					        	'excel', 
+					        	{
+					                extend: 'pdfHtml5',
+					                footer:true,
+					                //orientation: 'landscape',
+					                messageTop: 'Pre-Submission Travel/PD Claims ',
+					                messageBottom: null,
+					                exportOptions: {
+					                    columns: [ 0, 1, 2, 3,4,5,6 ]
+					                }
+					            },
+					        	{
+					                extend: 'print',
+					                //orientation: 'landscape',
+					                footer:true,
+					                messageTop: 'Pre-Submission Travel/PD Claims',
+					                messageBottom: null,
+					                exportOptions: {
+					                    columns: [ 0, 1, 2, 3,4,5,6]
+					                }
+					            }
+					        ],
+						  "lengthMenu": [[100, 250, 500,  -1], [100, 250, 500, "All"]]							
+					}); 				
+		
+			},
+			
+		  error: function(xhr, textStatus, error){
+			 $(".details_error_message").html(error).css("display","block");
+
+		  },
+		dataType: "text",
+		//async: false
+	}
+);
+
+return isvalid;
+
+}	
 /************************************************
 Function called when user clicks letter button on
 Travel Claims Rejected Screen.  Clears table,
 passes Letter to ajax function and returns claims
 paid by that letter.
 *************************************************/
-function getrejectedtravelclaimsbyletter(letter,date1)
+function getrejectedtravelclaimsbyletter(letter,year)
 {	
 	cleartable();
-	ajaxRequestInfoRejected(letter,date1);
-	//window.parent.$('#claim_details').css('height', $('#claims-table').height()+100);
-	//$("#claim_details").style.height = $("#claims-table").offsetHeight + 'px';   
+	ajaxRequestInfoRejected(letter,year);
+	
 }
 /************************************************
 Calls ajax post for getting Claim Pending 
@@ -2472,7 +2671,7 @@ function ajaxRequestInfoRejected(sletter,sdate)
  			
  				data: {
  					letter: sletter,
- 					date1: sdate
+ 					year: sdate
  				}, 
  				
  				beforeSend: function(){
@@ -2483,60 +2682,88 @@ function ajaxRequestInfoRejected(sletter,sdate)
  				
  				success: function(xml){
  					
- 					
+ 					var newrow="";
+ 					var amount ="";
+ 					$("#loadingSpinner").css("display","none");
  										
  					$(xml).find('CLAIM').each(function(){
  							
  							if($(this).find("MESSAGE").text() == "LISTFOUND")
  								{
- 							 if($(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4)  == sdate)	{
- 								if($(this).find("TYPE").text() == "PD")
-									{
- 									ClaimTypeText = "<div style='text-align:center;background-color:#ff8400;font-size:11px;color:white;font-weight:bold;'>&nbsp;PD CLAIM&nbsp;</div>";
-									}
-								else
-									{
-									ClaimTypeText = "<div style='text-align:center;background-color:#1c90ec;font-size:11px;color:white;font-weight:bold;'>&nbsp;MONTHLY&nbsp;</div>";
-									}	
- 								
- 									cnt = cnt+1;
- 								
- 									var newrow="<tr>";
-                                    newrow += "<td class='listdata'>" + $(this).find("EMPLOYEE").text() + "</td>";
-                                    newrow += "<td class='listdata'>" + ClaimTypeText + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("TITLE").text() + "</td>";
-                                    newrow += "<td class='listdata'>" + $(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4) + "</td>";
-                                    newrow += "<td class='listdata'>";										
-									newrow += "<a href='#' onclick='loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
-									newrow += "</tr>";
-									$('table#claims-table tr:last').after(newrow);
-									isvalid=true;
-	                   				
+ 																			
+ 									
+ 								 	newrow+="<tr>";
+                                    newrow += "<td  style='vertical-align:middle;'>" + $(this).find("EMPLOYEE").text() + "</td>";
+                                    newrow += "<td  style='vertical-align:middle;'>" + $(this).find("CLAIMDATE").text().substr($(this).find("CLAIMDATE").text().length - 4) + "</td>";
+                                    if($(this).find("TYPE").text() == "PD")	{								
+                                    	newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#ff8400;font-weight:bold;'>PD CLAIM </td>";
+									} else {
+										newrow += "<td style='vertical-align:middle;color:white;text-align:center;background-color:#1c90ec;font-weight:bold;'>MONTHLY CLAIM</td>";								
+									}            
+                                    newrow += "<td  style='vertical-align:middle;'>" + $(this).find("TITLE").text() + "</td>";             
+                                    amount=+($(this).find('TOTAL').text());                                  
+                                    newrow += "<td  style='vertical-align:middle;'> $" + amount.toFixed(2) + "</td>";                            
+                                    newrow += "<td style='vertical-align:middle;'>" + $(this).find("SUPERVISOR").text() + "</td>"; 
+                              	  	if($(this).find("ZONE").text() == "avalon")	{		
+										 newrow += "<td class='region1solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>AVALON</td>";								
+									  } else if($(this).find("ZONE").text() == "central")	{
+										 newrow += "<td class='region2solid' style='text-align:center;vertical-align:middle;color:rgba(255,255,255, 1);font-weight:bold;'>CENTRAL</td>";	
+									 } else if($(this).find("ZONE").text() == "western")	{
+										 newrow += "<td class='region3solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>WESTERN</td>";	
+									 } else if($(this).find("ZONE").text() == "labrador")	{
+										 newrow += "<td class='region4solid' style='text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>LABRADOR</td>";	
+									 } else if($(this).find("ZONE").text() == "provincial")	{
+										 newrow += "<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>";	
+									 } else {
+										 newrow += "<td style='background-color:Black;text-align:center;color:rgba(255,255,255, 1);vertical-align:middle;font-weight:bold;'>UNKNOWN</td>";	 									
+									}                              	  
+                                    newrow += "<td  style='vertical-align:middle;'>";										
+									newrow += "<a href='#' class='btn btn-xs btn-primary'  onclick='loadingData();loadMainDivPage(&quot;viewTravelClaimDetails.html?id=" + $(this).find("ID").text() + "&quot;);'>VIEW</a></td>";
+									newrow += "</tr>";								
+									isvalid=true;	                   				
  								}
- 							 
- 															
- 								
- 								}else{
- 									//alert($(this).find("MESSAGE").text());
- 									var newrow="<tr>";
- 									 newrow += "<td align='center' colspan='5'>No Travel Claims Found Starting with the Letter " + sletter + "</td>";
-                                    $('table#claims-table tr:last').after(newrow);
- 								}
-						});
- 					//$('#secondMessage').css("display","inline").html("<br/>Done!!!!");
- 					$("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-					$("#claims-table tr:odd").css("background-color", "#E3F1E6");
-					$('#numberPendingDate').html(sdate);
-					$('#numberPendingSelection').html(sletter);
-					$('#numberPending').html(cnt);
-					$('#claimMessage').css("display","inline");
-					setTimeout(function() {
-					$("#loadingSpinner").css("display","none");
-					}, 1000);
+ 								}); 					
+ 							$("#rejected-table tbody").append(newrow);
+ 							
+ 							$("#rejected-table").DataTable({	 
+ 								  "order": [[ 1, "desc" ],[0,"asc"]],
+ 								   "responsive": true,
+ 								  dom: 'Blfrtip',
+ 							        buttons: [			        	
+ 							        	//'colvis',
+ 							        	'copy', 
+ 							        	'csv', 
+ 							        	'excel', 
+ 							        	{
+ 							                extend: 'pdfHtml5',
+ 							                footer:true,
+ 							                //orientation: 'landscape',
+ 							                messageTop: 'Rejected Travel/PD Claims ',
+ 							                messageBottom: null,
+ 							                exportOptions: {
+ 							                    columns: [ 0, 1, 2, 3,4,5,6 ]
+ 							                }
+ 							            },
+ 							        	{
+ 							                extend: 'print',
+ 							                //orientation: 'landscape',
+ 							                footer:true,
+ 							                messageTop: 'Rejected Travel/PD Claims',
+ 							                messageBottom: null,
+ 							                exportOptions: {
+ 							                    columns: [ 0, 1, 2, 3,4,5,6]
+ 							                }
+ 							            }
+ 							        ],
+ 								  "lengthMenu": [[100, 250, 500,  -1], [100, 250, 500, "All"]]							
+ 							}); 		
+ 				
+ 		
+ 							
 					},
 					
  				  error: function(xhr, textStatus, error){
- 					 $("#details_error_message").html(error).css("display","block");
+ 					 $(".details_error_message").html(error).css("display","block");
        
  				  },
  				dataType: "text",
@@ -2547,3 +2774,359 @@ function ajaxRequestInfoRejected(sletter,sdate)
 	return isvalid;
 	
 }	
+
+/************************************************
+Calls ajax post to get pdclaim event details
+*************************************************/
+function getpdclaimeventdetails(){
+	var eventid= $("#pdtitle").val();
+	$.ajax({
+        url: 'getPDClaimEventDetails.html',
+        type: 'POST',
+        data: {pid:eventid},
+        success: function(xml) {
+        		$(xml).find('PDEVENT').each(function(){
+						//now add the items if any
+						if($(this).find("MESSAGE").text() == "SUCCESS")
+						{
+							//$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim Item Has Been Deleted").css("display","block").delay(5000).fadeOut();
+			    		
+							$('#desc').val('');
+							//==== SET TEXT IN CKEDITOR ========
+							CKEDITOR.instances['desc'].setData($(this).find("EVENTDESCRIPTION").text());	
+							$("#title").val($(this).find("EVENTNAME").text());
+							$("#start_date").val($(this).find("EVENTSTARTDATE").text());
+							$("#finish_date").val($(this).find("EVENTENDDATE").text());						
+							
+						}else{
+							$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();
+							
+							$('#myModal').modal('hide');
+						}
+
+					});     					
+				},
+				  error: function(xhr, textStatus, error){
+					  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
+						//$("#mainalert").show();
+				  },
+				dataType: "text",
+				async: false
+	
+        
+    });	
+	
+}
+
+
+//Supervisor Rules----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+function initRequest() 
+{
+  var xmlHttp = null;
+  
+  try
+  {    
+    // Firefox, Opera 8.0+, Safari    
+    xmlHttp=new XMLHttpRequest();    
+  }
+  catch (e)
+  {    
+    // Internet Explorer    
+    try
+    {      
+      xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");      
+    }
+    catch (e)
+    {      
+      try
+      {        
+        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");        
+      }
+      catch (e)
+      {        
+        alert("Your browser does not support AJAX!");
+      }      
+    }    
+  }
+  
+  return xmlHttp;
+}
+
+
+function onKeyTypeSelected(keytype, kid)
+{
+  if(keytype.value == -1)
+  {
+    return;
+  }
+  
+  if(keytype.name == 'supervisor_keytype')
+  {
+	  $("#dataLoading1").css("display","block");
+	  $("#supervisor_row").css("display","none");	  
+  }
+  else if(keytype.name == 'user_keytype')
+  {	  
+	  $("#dataLoading2").css("display","block");
+	  $("#user_row").css("display","none");
+
+  }
+  
+  var xmlHttp = initRequest();
+  
+  if(xmlHttp)
+  {
+    xmlHttp.onreadystatechange = function()
+    {
+      parseKeyTypeSelection(xmlHttp, keytype, kid);
+    }
+    xmlHttp.open("GET","addSupervisorRule.html?op=KEYTYPE_SELECTED&kt="+keytype.value,true);
+    xmlHttp.send(null);
+  }
+  else
+  	alert('xmlHttp not initialized.');
+}
+
+function parseKeyTypeSelection(xmlHttp, keytype, kid)
+{
+  if(xmlHttp.readyState==4)
+  {
+    var xmlDoc=xmlHttp.responseXML.documentElement;
+    
+    var r = null;
+    var r_c = null;
+    var r_str = null;
+    var loading = null;  
+    r_str = "";
+    if(keytype.name == 'supervisor_keytype')
+    {    	
+    	
+	    if(keytype.value == 1)
+	    {	  	
+	    	r_str = generateSelectElement(xmlDoc.getElementsByTagName("ROLE"), "supervisor_key", kid);
+	    	$("#supervisor_row").css("display","block");
+	    }
+	    else if(keytype.value == 2)
+	    {
+	    	r_str = generateSelectElement(xmlDoc.getElementsByTagName("PERSONNEL"), "supervisor_key", kid);
+	    	$("#supervisor_row").css("display","block");
+	    }
+	    $("#supervisor_row_content").html(r_str); 	 
+	    $("#dataLoading1").css("display","none");			  
+	  }
+	  else if(keytype.name == 'user_keytype')
+	  {
+    	 if(keytype.value == 1)
+	    {
+	    	r_str = generateSelectElement(xmlDoc.getElementsByTagName("ROLE"), "user_key", kid);
+	    	$("#user_row").css("display","block");
+	    }
+	    else if(keytype.value == 2)
+	    {   	
+	    	r_str = generateSelectElement(xmlDoc.getElementsByTagName("PERSONNEL"), "user_key", kid);
+	    	$("#user_row").css("display","block");
+	    }
+	    $("#user_row_content").html(r_str); 	  
+	    $("#dataLoading2").css("display","none");
+	  }
+	  
+  }
+}
+
+
+
+function generateSelectElement(beans, ele_name, kid)
+{
+	var ele = "<SELECT name='" + ele_name + "' class='form-control' " + " id='" + ele_name + "'>";
+	  
+  if(beans.length > 0)
+    for(var i = 0; i < beans.length; i++)
+    	ele = ele + "<OPTION value='" +beans[i].childNodes[0].childNodes[0].nodeValue+ "'" 
+    	+ ((beans[i].childNodes[0].childNodes[0].nodeValue == kid) ? ' SELECTED' : '') + ">" +beans[i].childNodes[1].childNodes[0].nodeValue+ "</OPTION>";
+ 
+  ele = ele + "</SELECT>";
+  
+  return ele;
+}
+
+function addnewmembers(){
+	var ids="";
+	$.each($("#available option:selected"), function(){
+		//alert($(this).val() + "-" + $(this).text());
+		// add them to the other listbox
+		var sadd="<option value='" + $(this).val() + "'>" + $(this).text() + "</option>";
+		var sremove="#available option[value=" + $(this).val() + "]";
+		if(ids == ""){
+			ids=$(this).val()
+		}else{
+			ids=ids + "," + $(this).val()
+		}
+		 response = $(this).text().substring($(this).text().indexOf("["));
+		 response = response.substring(1);
+		response = response.slice(0, -1); 
+		thename =  $(this).text().indexOf(" [");
+		thename = $(this).text().slice(0, thename);
+		$('#assigned')
+        .append(sadd);
+        //now we remove the selected ones
+		$(sremove).remove();
+    });
+        
+    updateVal1 = parseInt($("#rrCount").text()) -1;
+    updateVal2 = parseInt($("#aprCount").text()) +1;
+   $("#aprCount").text(updateVal);
+   $("#rrCount").text(updateVal);
+   
+    $("#claims-table").DataTable().row.add([
+    thename,
+    ids,
+    response,
+   '<a href="#" onclick="removememberfromtable('+"'"+ ids +"'"+ ',this);" class="btn btn-xs btn-danger">REMOVE</a>'
+    ]).draw(false);
+    
+	//send ajax request with the ids to add
+	addmemberstoapprovedrated(ids);
+	
+	//now resort the listbox
+	  var select = $('#assigned');
+	  select.html(select.find('option').sort(function(x, y) {
+	    // to change to descending order switch "<" for ">"
+	    return $(x).text() > $(y).text() ? 1 : -1;
+	}));
+}
+/************************************************
+Calls ajax post to add members to approved rates
+*************************************************/
+function addmemberstoapprovedrated(sids){
+	$.ajax({
+        url: 'addApprovedRateMember.html',
+        type: 'POST',
+        data: {ids:sids},
+        success: function(xml) {
+        		$(xml).find('TRAVELCLAIM').each(function(){
+						//now add the items if any
+						if($(this).find("MESSAGE").text() == "ADDED")
+						{
+							//show success message
+							$(".details_success_message").html("SUCCESS: Member successfully added to higher rate.").css("display","block").delay(5000).fadeOut();
+						
+						}else{
+							//show error
+							$(".details_error_message").html("ERROR: Member cannot be removed at this time. Please try again later or contact support.").css("display","block").delay(5000).fadeOut();
+						}
+
+					});     					
+				},
+				  error: function(xhr, textStatus, error){
+					  //show error
+					 $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
+					},
+				dataType: "text",
+				async: false
+	
+        
+    });	
+	
+}
+function removenewmembers(){
+	var ids="";
+	$.each($("#assigned option:selected"), function(){
+		//alert($(this).val() + "-" + $(this).text());
+		// add them to the other listbox
+		var sadd="<option value='" + $(this).val() + "'>" + $(this).text() + "</option>";
+		var sremove="#assigned option[value=" + $(this).val() + "]";
+		if(ids == ""){
+			ids=$(this).val()
+		}else{
+			ids=ids + "," + $(this).val()
+		}
+		
+	updateVal1 = parseInt($("#rrCount").text()) +1;
+    updateVal2 = parseInt($("#aprCount").text()) -1;
+   $("#aprCount").text(updateVal);
+   $("#rrCount").text(updateVal);		
+		
+		$('#available')
+        .append(sadd);
+        //now we remove the selected ones
+		$(sremove).remove();
+    });
+	//send ajax request with the ids to add
+	removememberstoapprovedrated(ids);
+	
+	//now resort the listbox
+	  var select = $('#assigned');
+	  select.html(select.find('option').sort(function(x, y) {
+	    // to change to descending order switch "<" for ">"
+	    return $(x).text() > $(y).text() ? 1 : -1;
+	}));
+	select = $('#available');
+	  select.html(select.find('option').sort(function(x, y) {
+	    // to change to descending order switch "<" for ">"
+	    return $(x).text() > $(y).text() ? 1 : -1;
+	}));
+}
+/************************************************
+Calls ajax post to add members to approved rates
+*************************************************/
+function removememberstoapprovedrated(sids){
+	$.ajax({
+        url: 'removeApprovedRateMember.html',
+        type: 'POST',
+        data: {ids:sids},
+        success: function(xml) {
+        		$(xml).find('TRAVELCLAIM').each(function(){
+						//now add the items if any
+						if($(this).find("MESSAGE").text() == "REMOVED")
+						{
+							//show success message
+							$(".details_success_message").html("SUCCESS: Member successfully removed from higher rate.").css("display","block").delay(5000).fadeOut();
+						 	
+						}else{
+							//show error
+							$(".details_error_message").html("ERROR: Member cannot be removed at this time. Please try again later or contact support.").css("display","block").delay(5000).fadeOut();
+						}
+
+					});     					
+				},
+				  error: function(xhr, textStatus, error){
+					  //show error
+					$(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
+					},
+				dataType: "text",
+				async: false
+	
+        
+    });	
+	
+}
+function removememberfromtable(id,but){
+	//but.closest("tr").remove();
+	
+	$("#claims-table").DataTable().closest("tr").remove();
+	
+	removememberstoapprovedrated(id);
+	//now we find the entry in the assigned
+	var sremove="#assigned option[value=" + id + "]";
+	var sadd="<option value='" + id + "'>" + $(sremove).text() + "</option>";
+	$('#available')
+    .append(sadd);
+	$(sremove).remove();
+	//now resort the listbox
+	  var select = $('#assigned');
+	  select.html(select.find('option').sort(function(x, y) {
+	    // to change to descending order switch "<" for ">"
+	    return $(x).text() > $(y).text() ? 1 : -1;
+	}));
+	select = $('#available');
+	  select.html(select.find('option').sort(function(x, y) {
+	    // to change to descending order switch "<" for ">"
+	    return $(x).text() > $(y).text() ? 1 : -1;
+	}));
+	
+}
+
+
+	

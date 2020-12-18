@@ -43,7 +43,7 @@ public class GetTravelClaimsApprovedByRegionAjaxRequestHandler extends RequestHa
 				travelclaims = TravelClaimDB.getClaimsApprovedByZoneTreeMap(zoneid);
 			}
 			// generate XML for candidate details.
-			String xml = null;
+			String xml = null;			 
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<TRAVELCLAIMS>");
 			if ((travelclaims != null) && (travelclaims.size() > 0)) {
@@ -52,10 +52,13 @@ public class GetTravelClaimsApprovedByRegionAjaxRequestHandler extends RequestHa
 					Map.Entry item = (Map.Entry) iter.next();
 					Personnel p = new Personnel(((Integer) item.getKey()).intValue());
 					Iterator p_iter = ((Vector) item.getValue()).iterator();
-					while (p_iter.hasNext()) {
+					while (p_iter.hasNext()) {  
 						TravelClaim claim = (TravelClaim) p_iter.next();
 						if (!(claim.getClass().getName().toString().equals("com.awsd.travel.PDTravelClaim"))) {
 							sb.append("<CLAIM>");
+							sb.append("<APPROVED>" + claim.getApprovedDate()+ "</APPROVED>");
+							sb.append("<ZONE>" + ((p.getSchool() !=null)?p.getSchool().getZone():"UNKNOWN") + "</ZONE>");						
+							sb.append("<AMOUNT>" +  claim.getSummaryTotals().getSummaryTotal() + "</AMOUNT>");	
 							sb.append("<EMPLOYEE>" + p.getFullName() + "</EMPLOYEE>");
 							sb.append("<TITLE>" + Utils.getMonthString(claim.getFiscalMonth()) + " "
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</TITLE>");
@@ -72,6 +75,9 @@ public class GetTravelClaimsApprovedByRegionAjaxRequestHandler extends RequestHa
 						}
 						else {
 							sb.append("<CLAIM>");
+							sb.append("<APPROVED>" + claim.getApprovedDate()+ "</APPROVED>");	
+							sb.append("<ZONE>" + ((p.getSchool() !=null)?p.getSchool().getZone():"UNKNOWN") + "</ZONE>");	
+							sb.append("<AMOUNT>" + claim.getSummaryTotals().getSummaryTotal() + "</AMOUNT>");	
 							sb.append("<EMPLOYEE>" + p.getFullName() + "</EMPLOYEE>");
 							sb.append("<TITLE>" + "PD - "
 									+ ((PDTravelClaim) claim).getPD().getTitle().replaceAll("&", "&amp;").replaceAll("\"", "&quot;")

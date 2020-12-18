@@ -78,7 +78,7 @@ public class EditTravelClaimItemRequestHandler extends RequestHandlerImpl {
 						op = request.getParameter("op");
 						if (op != null) {
 							if (op.equalsIgnoreCase("CONFIRM")) {
-								sdf = new SimpleDateFormat("dd/MM/yyyy");
+								sdf = new SimpleDateFormat("MM/dd/yyyy");
 								try {
 									item = new TravelClaimItem(sdf.parse(request.getParameter("item_date")), request.getParameter(
 											"item_desc"), Integer.parseInt(request.getParameter("item_kms")), Double.parseDouble(

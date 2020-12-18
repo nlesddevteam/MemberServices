@@ -18,71 +18,112 @@
 <%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN" />
 
+<script>
+		var baseRatesList = new Array();
+		var approvedRatesList = new Array();
+		var dateStart = new Array();  
 
-
-
-		<script>
-			
-			
-			$(document).ready(function(){    
+		$(document).ready(function(){    
         		//clear spinner on load
-    			$('#loadingSpinner').css("display","none");
+    			$('#loadingSpinner').css("display","none");        		
+    			$(".kmRatesTable").DataTable({
+    				  "order": [[ 0, "desc" ]],
+    				  "responsive": true,
+    				  columnDefs: [{
+    				        "targets": [0,1],
+    				        "type": 'date',
+    				     }],
+    				  dom: 'Blfrtip',
+    			        buttons: [			        	
+    			        	//'colvis',
+    			        	'copy', 
+    			        	'csv', 
+    			        	'excel', 
+    			        	{
+    			                extend: 'pdfHtml5',
+    			                footer:true,
+    			                //orientation: 'landscape',
+    			                messageTop: 'Travel/PD Claims ',
+    			                messageBottom: null,
+    			                exportOptions: {
+    			                    columns: [ 0, 1, 2, 3]
+    			                }
+    			            },
+    			        	{
+    			                extend: 'print',
+    			                //orientation: 'landscape',
+    			                footer:true,
+    			                messageTop: 'Travel/PD Claims',
+    			                messageBottom: null,
+    			                exportOptions: {
+    			                    columns: [ 0, 1, 2, 3]
+    			                }
+    			            }
+    			        ],		  
+    				  "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]    			  
+    			  
+    			  });	
+    			 
         		
-    			 $('.mclaims').click(function () {
- 			    	$("#loadingSpinner").css("display","inline");
- 			    });
         		
         		
-			});
+        	});			
 			
-			var baseRatesList = new Array();
-			var approvedRatesList = new Array();
-			var dateStart = new Array();  
-			   </script>
+			
+			
+			
+			
+ </script>
+ 
 	<script src="includes/js/Chart.min.js"></script>	
-	<div id="printJob">	
-      
-	<div class="claimHeaderText">Travel Claim KM Rates</div>
+	
+	  <img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/rates.png" style="max-width:200px;" border=0/> 
+ 
+ <div class="pageHeader">Travel Claim KM Rates</div>
+<div class="pageBodyText">  
+	
 	<div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-           <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
+      <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
 	
 	<br/>
-	Below are the current and past rates for base and approved travel.<p>
-	
-	<br/><canvas id="rateChart" height="300"></canvas><br>	       
+	Below are the current and past rates for base and approved travel.	
+	<br/><br/>
+   <a class="btn btn-sm btn-success" href="#" onclick="loadingData();loadMainDivPage('addKmRate.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Set New Rate</a>
+	<a class="btn btn-sm btn-dark" href="https://www.gov.nl.ca/exec/hrs/working-with-us/auto-reimbursement/" target="_blank"><i class="fa fa-fw fa-file-text-o"></i> Check Gov NL Rates</a>
+
+	<br/><canvas id="rateChart" height="200"></canvas><br>	       
     <form name="add_claim_item_form">
-      <table id="claims-table" width="100%" class="claimsTable">
-     		<tr style="border-bottom:1px solid grey;" class="listHeader">
-      		<td width="20%" class="listdata">Effective Start Date</td>
-      		<td width="20%" class="listdata">Effective End Date</td>
-      		<td width="20%" class="listdata">Base Rate</td>
-      		<td align="right" width="15%" class="listdata">Approved Rate</td>
-      		<td></td>
-      		</tr>
+     
+     <table class="kmRatesTable table table-condensed table-striped table-bordered" style="font-size:11px;background-color:white;" width="100%">						
+								<thead>
+								<tr style="text-transform:uppercase;">    
+					      		<th width="25%">Effective Start Date</th>
+					      		<th width="25%">Effective End Date </th>
+					      		<th width="20%">Base Rate</th>
+					      		<th width="20%">Approved Rate</th>
+					      		<th width="10%">OPTIONS</th>
+					      		</tr>
+					      		</thead>
+      		<tbody>
       	<c:choose>
-      		<c:when test="${fn:length(RATES) > 0}">
+      		<c:when test="${fn:length(RATES) > 0}">     		
       		
-      		
-      		<c:forEach items="${RATES}" var="rule">
+      		<c:forEach items="${RATES}" var="rule">      			
       			
-      			
-      			<script>
-      			
+      			<script>      			
    				baseRatesList.push(<c:out value="${rule.baseRate}" />);
       			approvedRatesList.push(<c:out value="${rule.approvedRate}" />);
 				</script> 
       			
-      			
-      			
-      				<tr style="border-bottom:1px dashed silver;">
-      				      				
-      					<td class="field_content dateTest"><fmt:formatDate pattern="MMMM d, yyyy" value="${rule.effectiveStartDate}"/></td>      					
-      					<td class="field_content"><fmt:formatDate pattern="MMMM d, yyyy" value="${rule.effectiveEndDate}"/></td>
-      					<td class="field_content"><span class="baseRateData">${rule.baseRate}</span></td>      					
-      					<td class="field_content approvedRateDate">${rule.approvedRate}</td>
-      					<td align="right" class="field_content">
-      						<a href='#' class="mclaims" onclick="loadMainDivPage('addKmRate.html?sdate=${rule.effectiveStartDateFormatted}&edate=${rule.effectiveEndDateFormatted}');")><img src="includes/img/viewsm-off.png" class="img-swap" title="View Rate" border=0 style="padding-top:3px;padding-bottom:3px;"></a> &nbsp; 
-							<a class='edit' href="#" onclick="opendeletedialog('${rule.effectiveStartDateFormatted}','${rule.effectiveEndDateFormatted}','${rule.baseRate}','${rule.approvedRate}');")><img src="includes/img/deletesm-off.png" class="img-swap" border=0 title="Delete Rate" style="padding-top:3px;padding-bottom:3px;"></a>
+      			<tr valign="middle">
+      				      	
+      					<td class="dateTest"><fmt:formatDate pattern="MMMM d, yyyy" value="${rule.effectiveStartDate}"/></td>      					
+      					<td><fmt:formatDate pattern="MMMM d, yyyy" value="${rule.effectiveEndDate}"/></td>
+      					<td><span class="baseRateData">${rule.baseRate}</span></td>      					
+      					<td class="approvedRateDate">${rule.approvedRate}</td>
+      					<td>
+      						<a href='#' class="btn btn-xs btn-primary" onclick="loadingData();loadMainDivPage('addKmRate.html?sdate=${rule.effectiveStartDateFormatted}&edate=${rule.effectiveEndDateFormatted}');")>VIEW</a>
+							<a class='btn btn-xs btn-danger' href="#" onclick="opendeletedialog('${rule.effectiveStartDateFormatted}','${rule.effectiveEndDateFormatted}','${rule.baseRate}','${rule.approvedRate}');")>DEL</a>
       					</td>
       				</tr>
         		</c:forEach>
@@ -90,62 +131,49 @@
         		
         	
       		</c:when>
-        	<c:otherwise>
-        		<tr><td colspan='5' style="color:Red;">No rates found.</td></tr>
-        	</c:otherwise>
+        	
         </c:choose>
-       
+       </tbody>
       </table>
-      
-      
-      
-    </form>
-    
-  
-      
-    
-    
+   </form>
+   <div align="center">
+   <a class="btn btn-sm btn-success" href="#" onclick="loadingData();loadMainDivPage('addKmRate.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Set New Rate</a>
+	<a class="btn btn-sm btn-dark" href="https://www.gov.nl.ca/exec/hrs/working-with-us/auto-reimbursement/" target="_blank"><i class="fa fa-fw fa-file-text-o"></i> Check Gov NL Rates</a>
+   </div>
     </div>
-    <div id="myModal" class="modal">
+  
+    <div id="travelModal" class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-header">                    
                     <h4 class="modal-title" id="maintitle"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-warning" id="title1"></p>
-                    <p class="text-warning" id="title2"></p>
- 		    		<p class="text-warning" id="title3"></p>
-		</div>
+                    <p id="title1"></p>
+                    <p id="title2"></p>
+ 		    		<p id="title3"></p>
+				</div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="buttonleft"></button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="buttonright"></button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" id="buttonleft"></button>
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" id="buttonright"></button>
                 </div>
             </div>
         </div>
     </div>
     
-    <script>
-    $('document').ready(function(){
-    $("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-    $("#claims-table tr:odd").css("background-color", "#E3F1E6");
-     
-    $('td.dateTest').each(function() { 
-        var dateFormat = $(this).text();           
-        dateStart.push(dateFormat);     			
-		 
-    });
-    
-    });  
-   
-    </script>
-	
-  
-    
+      
   <script>
+  $('document').ready(function(){    	
      
-     
+	  $('td.dateTest').each(function() { 
+	        var dateFormat = $(this).text();           
+	        dateStart.push(dateFormat);    		
+			 
+	    });    	  
+	  
+	  
+	  
      var ctx = document.getElementById('rateChart').getContext('2d');
      ctx.canvas.height = 100;
      var rateChart = new Chart(ctx, {
@@ -184,7 +212,7 @@
        },
     	   
      });
-     
+  });
      </script>
   
  

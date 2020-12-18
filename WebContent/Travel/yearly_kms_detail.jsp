@@ -54,11 +54,7 @@
 %>
 <c:set var="schoolYear" value="<%=year%>" />
 
-
-
-
-
-			<script type="text/javascript">
+<script type="text/javascript">
     		$('document').ready(function() {
     		$('#loadingSpinner').css("display","none");
             $('#year').change(function(){
@@ -67,138 +63,136 @@
             	loadMainDivPage("yearly_kms_detail.jsp?year=" + schoolyear);
             });
     		});
-    		</script>  
-    		
-    <script src="includes/js/Chart.min.js"></script>		 
-	
-	
-	<div class="claimHeaderText">Kilometer Usage Report for ${schoolYear}</div>
-	
-	<br/><div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-    <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
-	
+</script>  
+ <script>
+				$(document).ready(function(){                   		      		
+    			 $.cookie('backurl', 'yearly_kms_detail.jsp', {expires: 1 });			   	 
+		   		  $("#claims-table").DataTable({
+		   		  "order": [[ 0, "asc" ]],		
+		   		"responsive": true,
+		   		  "lengthMenu": [[100,250, 500, -1], [100, 250, 500, "All"]]	  	  
+		   	  
+		   	  });			   	 
+		    });
+  </script>
+  <script src="includes/js/Chart.min.js"></script>		 
+	<div id="printDATA">
+	<div class="siteHeaderBlue">Kilometer Usage Report for ${schoolYear}</div>
 	<br/>
-	<div id="printJob">  
-	
-	
+	Below is a list of users with Kilometer use for ${schoolYear} sorted by name. 
+	You can easily search using the search box at right below and/or export/print the data using options at left.
+	Select a year from the dropdown to view data from 2004 to present.	
+	<br/><br/>
     <form name="add_claim_item_form">
-      
+       <div class="no-print">
       <b>Select Year: </b>
-       <select name="year" id="year">
+       <select name="year" id="year" class="form-control">
                           <%
-                            Calendar cal = Calendar.getInstance();
-                            for(int i=0; i < 5; i++,cal.add(Calendar.YEAR, -1))
-                            {
+                            Calendar cal = Calendar.getInstance();                          
+                          	int yearTest =  Calendar.getInstance().get(Calendar.YEAR)-2003;
+                          %>
+                          <script>$("#numYearsNote").text(<%=yearTest%>)</script>
+                          <%
+                           for(int i=0; i < yearTest; i++,cal.add(Calendar.YEAR, -1))  {
                                 out.println("<option value='" + cal.get(Calendar.YEAR) +"'" 
                                   +  ((cal.get(Calendar.YEAR) == year)?" SELECTED":"") + ">"+cal.get(Calendar.YEAR)+"</option>");
-                            }
-                          %>
+                            } %>
                         </select>
+             <br/>
+             		<div align="center">         
+         				 <a href='#' class="btn btn-sm btn-primary no-print" title='Print this page (pre-formatted)' onclick="jQuery('#printDATA').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print This Page</a><br>
+            		</div>   
                        
+      	</div>
       
-      
-                  <br/><br/>
-             		<table id="claims-table" width="100%" class="claimsTable">
-                    
-                     <tr class="listHeader">
-                      <td class="listdata" width="18%">Month</td>
-                      <td class="listdata" width="18%">KMs</td>
-                      <td class="listdata" width="18%">Total</td>
+                  <br/>
+             		<table id="claims-table" class="table table-condensed table-striped table-bordered claimsTable" style="font-size:11px;background-color:White;" width="100%">	
+                    <thead>
+                     <tr>
+                      <th width="25%">NAME</th>
+                      <th width="35%">ADDRESS</th>
+                      <th width="40%">DETAILS</th>
                     </tr>
+                    </thead>
+                  <tbody>                
+                
                     
-                  
+                    <%for(YearlyKmDetailReportItem item : report){%>                    
                     
-                    <%for(YearlyKmDetailReportItem item : report){%>
-                    
-                    
-			                    <%if(item.getPersonnelId() != cur_id){
+			                    <%if(item.getPersonnelId() != cur_id){ %>			                    	
 			                    	
-			                        if(cur_id > 0){%>
+			                    	 <% if(cur_id > 0){ %>		                        
 			                         
-			                        <tr style="padding-bottom:15px; border-bottom: solid 2px #007F01;border-top:1px solid #007F01;">
-			                           	<td style="font-weight:bold;background-color: #E3F1E6;" width="18%">TOTALS:</td>
-			                          	<td style="font-weight:bold;" width="15%"><%=kms_df.format(cur_km_total)%> kms </td>
-			                          	<td style="font-weight:bold;" width="10%"><%=curr_df.format(cur_total)%></td>
-			                        </tr>
-			                      <%}
+			            <div style="border-top:1px solid silver;float:left;width:33%;font-weight:bold;text-align:right;">TOTALS: &nbsp;</div>
+                    	<div style="border-top:1px solid silver;float:left;width:33%;"><%=kms_df.format(cur_km_total)%> kms</div>
+                    	<div style="border-top:1px solid silver;float:left;width:33%;"><%=curr_df.format(cur_total)%></div>
+                    	<div style="clear:both;"></div>                 
+			                      
+			                     <%} %>
+			                    	
+			                     <%
 			                        cur_id = item.getPersonnelId();
-			                        zebra = 0;
-			                        
+			                        zebra = 0;			                        
 			                        cur_km_total = item.getTotalKms();
 			                        cur_total = item.getTotalAmount();
 			                        overall_km_total += item.getTotalKms();
 			                        overall_total += item.getTotalAmount();
 			                      %>
 			                      
-			                       
-			                      
-			                        <tr>
-			                          <td style="background-color: #E3F1E6;border-bottom: solid 1px #007F01;padding-top:10px;" colspan="3">
-			                          	<%=
-			                          			"<span style='font-weight:bold;font-size:12px;'>" + item.getPersonnelLastname() 
-			                          			+ ", " + item.getPersonnelFirstname() + "</span>" 
-			                          			+ "<br>" + item.getPersonnelStreetAddress() 
-			                          			+ ", " + item.getPersonnelCommunity() 
-			                          			+ ", " + item.getPersonnelProvince()
-			                          			+ " &middot; " + item.getPersonnelPostalcode()
-			                          			+ " &middot; Tel: " + item.getPersonnelPhone1() 
-			                          	%>
+			                       <tr>
+			                          <td style="vertical-align: top;"><b><%=item.getPersonnelLastname() %>, 	<%=item.getPersonnelFirstname() %></b></td>
+			                           <td style="vertical-align: top;"><%=item.getPersonnelStreetAddress() %><br/>
+			                             <%=item.getPersonnelCommunity() %>, 	<%=item.getPersonnelProvince() %> &nbsp;  	<%=item.getPersonnelPostalcode() %><br/>
+			                          	Tel: <%=item.getPersonnelPhone1() %>		
+			                          </td>		                          
 			                          	<c:set var="countClaimants" value="${countClaimants + 1}" />
-			                          </td>
-			                        </tr>
-                      <%}else{
+			                         
+			                        <td style="vertical-align: top;">
+			                        
+			                      
+			                      <div style="float:left;width:33%;font-weight:bold;"> MONTH(s)</div>
+			                       <div style="float:left;width:33%;font-weight:bold;">KM(s)</div>
+			                        <div style="float:left;width:33%;font-weight:bold;">SUBTOTAL</div>
+			                      <div style="clear:both;"></div>
+			                        
+			                         
+			                        
+                      <% }else{
                         cur_km_total += item.getTotalKms();
-                        cur_total += item.getTotalAmount();
-                        
+                        cur_total += item.getTotalAmount();                        
                         overall_km_total += item.getTotalKms();
                         overall_total += item.getTotalAmount();
                       }%>
                       
-                      <tr style='background-color:<%=(zebra++%2!=0)?"#F0F0F0":"#FFFFFF"%>;'> 
-                        <td width="15%"><%=item.getMonth()%></td>
-                        <td width="15%"><%=kms_df.format(item.getTotalKms())%></td>
-                        <td width="10%"><%=curr_df.format(item.getTotalAmount())%></td>
-                      
-                      </tr>
+                     <div style="float:left;width:33%;"><%=item.getMonth()%></div>
+                      <div style="float:left;width:33%;"><%=kms_df.format(item.getTotalKms())%></div>
+                      <div style="float:left;width:33%;"><%=curr_df.format(item.getTotalAmount())%></div>
+                    <div style="clear:both;"></div>
                        
                      <c:set var="countClaims" value="${countClaims + 1}" />	
+                   
                     <%}%>
-                    
-                                     
-                    
-                    <%if(cur_id > 0){%>
-                    
-                    
-                   
-                    
-                    
-                      <tr style="padding-bottom:15px; border-bottom: solid 2px #007F01;border-top:1px solid #007F01;"> 
-                        <td style="font-weight:bold;background-color: #E3F1E6;" width="18%">TOTALS:</td>
-                        <td class="travelTotal" style="font-weight:bold;" width="15%"><%=kms_df.format(cur_km_total)%> kms</td>
-                        <td style="font-weight:bold;" width="10%"><%=curr_df.format(cur_total)%></td>
-                      </tr>
-                    <%}%>
-                   
-                    
-              
-                   
-                    
-                    <tr style="padding-bottom:10px;">
-                      <td style="font-weight:bold;color:#FF0000;" width="15%">Overall Totals:</td>
-                      <td style="font-weight:bold;color:#FF0000;" width="15%"><%=kms_df.format(overall_km_total)%> kms</td>
-                      <td style="font-weight:bold;color:#FF0000;" width="10%"><%=curr_df.format(overall_total)%></td>
-                    </tr>
-					
+                  <%if(cur_id > 0){%>
+                    	<div style="border-top:1px solid silver;float:left;width:33%;font-weight:bold;text-align:right;">TOTALS: &nbsp;</div>
+                    	<div style="border-top:1px solid silver;float:left;width:33%;"><%=kms_df.format(cur_km_total)%> kms</div>
+                    	<div style="border-top:1px solid silver;float:left;width:33%;"><%=curr_df.format(cur_total)%></div>
+                    	<div style="clear:both;"></div>                    	
+                   <%}%>   
+                    </td></tr>
+                                   
+               			
 								
-					
+					</tbody>
                   </table>
+                  
+            <div align="center">         
+         				 <a href='#' class="btn btn-sm btn-primary no-print" title='Print this page (pre-formatted)' onclick="jQuery('#printDATA').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print This Page</a><br>
+            		</div>  
+            
+            <b>Total Kilometers: </b> <%=kms_df.format(overall_km_total)%> kms<br/>      
+            <b>Total Claimed: </b>  <%=curr_df.format(overall_total)%><br/>  
            <b>Total Claimants:</b> ${countClaimants}<br/>  
    <b>Total Claims:</b> ${countClaims}       
     </form>
 
-
-   </div> 
-
-   
-   
-  
+</div>

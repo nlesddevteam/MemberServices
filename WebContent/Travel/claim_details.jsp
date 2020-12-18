@@ -16,15 +16,13 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
+
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
 
-
-
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
 
-
-<%
+<%	
   User usr = null;
   TravelClaim claim = null;
   TravelClaimItem item = null;
@@ -34,37 +32,46 @@
   Iterator rate_summaries = null;
   Iterator items = null;
   SimpleDateFormat sdf = null;
+  
+  SimpleDateFormat sdf_year = null;
+  SimpleDateFormat sdf_month = null;
+  SimpleDateFormat sdf_day = null;
+  
   SimpleDateFormat sdf_title = null;
   SimpleDateFormat cal_sdf = null;
+  SimpleDateFormat histF = null;
+  DecimalFormat val_df = null;
   DecimalFormat curr_df = null;
   DecimalFormat kms_df = null;
   DecimalFormat kms_rate_df = null;
   String color_on;
   String color_off;
-  TravelBudget budget = null; 
-     
-  usr = (User) session.getAttribute("usr");
-  
+  TravelBudget budget = null;      
+  usr = (User) session.getAttribute("usr");  
   claim = (TravelClaim) request.getAttribute("TRAVELCLAIM");
   failed_item = (TravelClaimItem) request.getAttribute("FAILED_ITEM");
   items = claim.getItems().iterator();
   sdf = new SimpleDateFormat("MM/dd/yyyy");
-  cal_sdf = new SimpleDateFormat("dd/MM/yyyy");
+  histF = new SimpleDateFormat("yyyy-MM-dd @ HH:mm:ss");
+  cal_sdf = new SimpleDateFormat("MM/dd/yyyy");
   sdf_title = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+  
+  sdf_year = new SimpleDateFormat("yyyy");
+  sdf_month = new SimpleDateFormat("MM");
+  sdf_day = new SimpleDateFormat("dd");
+  val_df = new DecimalFormat("###0.00");
   curr_df = new DecimalFormat("$#,##0.00");
   kms_df = new DecimalFormat("#,##0");
   kms_rate_df = new DecimalFormat("$#,##0.000");
-
   color_off = "#FFFFFF";
-  color_on = "#FEF153";
-  
+  color_on = "#FEF153";  
   TravelClaimNote note = null;  
+  HistoryItem history = null;
   Iterator n_items = null;  
   n_items = claim.getNotes().iterator();
- 
   
   budget = (TravelBudget) request.getAttribute("BUDGET");
-  
+  String claimDescription = "N/A";
   double total_claimed = ((Double)request.getAttribute("TOTAL_CLAIMED")).doubleValue();
   String acct_code = null;
   SDSInfo sds = null;
@@ -88,110 +95,273 @@
   Iterator iter = null;
   Supervisors supervisorslist = new Supervisors();
   iter = supervisorslist.iterator();
+  boolean isAdmin = false;
+  int id = -1;
+  int cur_status; 
+  claim = (TravelClaim) request.getAttribute("TRAVELCLAIM");
+  String RealName = "";	
+  String FullName = "";  
   String claimtitle="";             
   if(claim instanceof PDTravelClaim){
 	  claimtitle="PD - " + ((PDTravelClaim)claim).getPD().getTitle();
   }else{
 	  claimtitle=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear());
   }
-  
-  
 
+  id = claim.getClaimID();
+  cur_status = claim.getCurrentStatus().getID();
+  
   	Integer claimid=(Integer)request.getAttribute("claimid");
 	Integer claimmonth=(Integer)request.getAttribute("fiscalmonth");
 	Integer claimyear=(Integer)request.getAttribute("fiscalyear");
 	Integer lastdaymonth=(Integer)request.getAttribute("lastdaymonth");
- 
-	
-	 String FullName = "";
-	 
-	 FullName = claim.getPersonnel().getFullNameReverse();
-	
-  
+	isAdmin = usr.getUserRoles().containsKey("ADMINISTRATOR");	 	 
+	FullName = claim.getPersonnel().getFullNameReverse().replace("'", "&#8217;").toUpperCase();	  
+	RealName = claim.getPersonnel().getFullNameReverse().replace("'", "&#8217;"); 
+	n_items = claim.getNotes().iterator();
+	Iterator h_items = null;  
+	h_items = claim.getHistory().iterator();  	
 %>
-
-<link href="includes/css/travel.css" rel="stylesheet" type="text/css">
-<script src="includes/js/travel.js"></script>
-<script type="text/javascript" src="includes/js/jquery.timepicker.js"></script>	
 			
-			<script>
+<script>
 			$(document).ready(function(){    
         		//clear spinner on load
-    			$('#loadingSpinner').css("display","none"); 
-    			$('#item_departure_time').timepicker();
-    			$('#item_return_time').timepicker();      
+    			$('#loadingSpinner').css("display","none");     
+    			$('[data-toggle="popover"]').popover();
     			
-			});
+    			
+    		});	
 			
-			function showit(target){
-				document.getElementById(target).style.display = 'block';
-				
-				}
+				function showit(target){
+					document.getElementById(target).style.display = 'block';
+					}
+			
 				function hideit(target){
-				document.getElementById(target).style.display = 'none';
+					document.getElementById(target).style.display = 'none';
+					}
 				
-				}
-			
-			
-			</script>
-	
-	<script type="text/JavaScript">
-function valid(f) {
-f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
-f.value = f.value.replace('\n',' ');
-} 
+				function valid(f) {
+					f.value = f.value.replace(/[^\w\s,\/.$+=-]/gi,'');
+					f.value = f.value.replace('\n',' ');
+					} 
 </script>
-	
-	
-	<div id="printJob"> 
-	<div class="no-print">
-	<div class="claimHeaderText"><div class="claimHeaderText"><span style="text-transform:capitalize;"><%=claim.getPersonnel().getFullNameReverse()%></span>'s Claim for <%if(claim instanceof PDTravelClaim){%>              
-		              PD <%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
-		              <%}else if(claim instanceof TravelClaim){%>
-		              <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
-		              <%}%></div></div>
-	<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION)){%>
-	 This is your claim entry form page. You will see three tabs below. 
-	 The <b>DETAILS</b> tab for your claim entry and status, the <b>HISTORY</b> tab for a history of work completed on this claim, and a <b>NOTES</b> tab which will show any messages left by Travel Admins or supervisor for you 
-	 regarding your claim such as more information or receipts required. <i>(The claim in such cases will be set as Payment Pending until required information is provided and validated.)</i>. 
-	 <br/><br/>
-	 	
-	Simply fill out the form below and click <b>ADD ITEM</b> to add an item to your opened claim <i>(You can add multiple items to a claim)</i>. 
+
+ <script>
+
+ $('document').ready(function(){
+		 
+	 $("#claimNotesTable").DataTable({
+		  "order": [[ 0, "asc" ]],
+		  "lengthChange": false,
+		  "paging":   false,
+		  "responsive": true
+	 });	
 	 
-	To remove or edit a claim item you already entered, use the <b>EDIT</b> or <b>DELETE</b> Tools at the far right of each listed claim item. <i>(When you click on edit, please wait as the data is loaded back into the form)</i>. To print a copy of the claim properly formatted, simply click on <b>PRINT</b>. If the listed supervisor is not correct, use the <b>CHANGE SUPERVISOR</b> option to select. <i>(If your supervisor is not listed for selection, please contact your supervisor directly as they may need to be added as a supervisor).</i>
-	  <br/><br/>Once you have completed entry of all items and are ready to submit for processing, click on <b>SUBMIT</b> at right.
-	<%} %>
+	 $("#claimHistoryTable").DataTable({
+		  "order": [[ 0, "asc" ]],
+		  "lengthChange": false,
+		  "paging":   false,
+		  "responsive": true
+	 });	 
+	 
+dtable=$("#claimItemsTable").DataTable({
+				  "order": [[ 0, "desc" ]],				
+				  "lengthChange": false,
+				  "paging":   false,
+				  "responsive": true,
+			        "columnDefs": [
+			            { responsivePriority: 1, targets: 0 },
+			            { responsivePriority: 10001, targets: 4 },
+			            { orderable: false, targets: 7}
+			        ],
+				  dom: 'Bfrtip',
+			        buttons: [			        	
+			        	//'colvis',
+			        	'copy', 
+			        	'csv', 
+			        	'excel'      	
+			        ],
+				  "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],				  
+				  "footerCallback": function ( row, data, start, end, display ) {
+			            var api = this.api(), data;			 
+			            // Remove the formatting to get integer data for summation
+			            var intVal = function ( i ) {
+			                return typeof i === 'string' ?
+			                    i.replace(/[\$,]/g, '')*1 :
+			                    typeof i === 'number' ?
+			                        i : 0;
+			            };
+			 
+			            // Total over all pages			             
+			            totalKM = api.column(4).data().reduce( function (a, b) { return Math.round(intVal(a) + intVal(b)); }, 0 );
+			            totalMeals = api.column(5).data().reduce( function (a, b) { return (intVal(a) + intVal(b)).toFixed(2); }, 0 );
+			            totalLodging = api.column(6).data().reduce( function (a, b) { return (intVal(a) + intVal(b)).toFixed(2); }, 0 );			           
+			           	<%if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") && claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)){%>
+			           		totalOther = String(totalOther1.toFixed(2));
+			        	<%}else{%>
+                     		totalOther = api.column(7).data().reduce( function (a, b) { return (intVal(a) + intVal(b)).toFixed(2); }, 0 );
+                     	<%}%>			            
+                    //Update fields.
+                     $( "#updateDTable" ).click(function(e) {	    
+                    	  e.preventDefault();
+                         var totalOther1="";        
+                        previousTotal = $("#totalDUE").text();                        
+                        previousTotal = ((+previousTotal) - (+totalOther)).toFixed(2);                         
+                    	 $('#claimItemsTable').find('input[type=text]').each(function() {                    		 
+                    		 totalOther1= (+totalOther1) +(+(this.value));                    		
+                    	    });                    	 
+                    	 totalOther = String(totalOther1.toFixed(2));
+                    	 $( api.column( 7 ).footer() ).html(totalOther);                    	                  	 
+                    	 newTotal =(+previousTotal)+(+totalOther);              	 
+                    	 $("#totalDUE").text(newTotal);
+                     }); 
+			          
+			                   
+			            
+			            // Total over this page NOT NEEDED YET ONE PAGE FOR ITEMS
+			            //pageTotalKM = api.column( 4, { page: 'current'} ).data().reduce( function (a, b) {return (intVal(a) + intVal(b)).toFixed(2) ;}, 0 );
+			 			
+			            
+			            // Update footer
+			            $( api.column( 4 ).footer() ).html(totalKM);
+			            $( api.column( 5 ).footer() ).html(totalMeals);
+			            $( api.column( 6 ).footer() ).html(totalLodging);
+			            $( api.column( 7 ).footer() ).html(totalOther);
+				  
+				  
+				  }
+				  
+				  
+			  });	
+
+//dtable.cell({row:2, column:7}).data('0.00');
+//dtable.draw();
+//dtable.draw();
+
+ });
+ 
+ 
+
+ 
+ 
+</script>
+
+
+	 <img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/singlefile.png" style="max-width:100px;" border=0/>    
+	<div class="siteHeaderBlack"><span  style="text-transform:capitalize;"><%=claim.getPersonnel().getFullNameReverse()%></span>'s Claim for 
+				<%if(claim instanceof PDTravelClaim){%>              
+		              PD <%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
+		        <%}else if(claim instanceof TravelClaim){%>
+		              <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
+		        <%}%>
+	</div>		       
 	
-	<%if(claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
-	
-	<div class="alert alert-danger">Claim has been <b>rejected</b> by supervisor. Please check your claim for errors <i>(amounts, wrong supervisor, or invalid claimed item)</i> or check <b>NOTES</b> tab below for possible reason. Correct any issue(s) and re-submit this claim, or delete.</div>
-	<%} %>
-	
-	<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING)){%>
-	
-	<div class="alert alert-info">Claim has been set to <b>Pending Information</b>. Travel Admins have set your claim as Pending. Please check NOTICES or <b>NOTES</b> tab below left for reason.</div>
-	
-	 				
-                   
-    <%} %>
-	<!-- DISPLAY NOTES (If any) IF REJECTED OR PENDING, Once processed hide. -->	
-	<%if(n_items.hasNext() && (claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED))){%>
-	                  <div class="alert alert-danger"><b>NOTICE(S) RE THIS CLAIM:</b><br/>
-	                  <ul>  
-                      <%while(n_items.hasNext()){
-                        note = (TravelClaimNote) n_items.next();%>
-                        <li><%=note.getNote()%><br/>
-                        <i>(Request Posted: <%=note.getNoteDate().toString()%> by <span style="text-transform:Capitalize;"><%=note.getPersonnel().getFullNameReverse()%>)</span>.</i>                        
-                      <%}%>                      
-                      </ul></div>
-    <%}%>
-	
-	
-	
-	
-	
-	</div>	
-    <form name="add_claim_item_form" id="add_claim_item_form" method="post" action="<%=(request.getAttribute("EDIT")!=null)?"editTravelClaimItem.html":"addTravelClaimItem.html"%>">
+	<div class="no-print">
+						<% if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION)) { %>
+									 This is your claim entry form page. You will see three tabs below. 
+									 The <b>DETAILS</b> tab for your claim entry and status, the <b>HISTORY</b> tab for a history of work completed on this claim, and a <b>NOTES</b> tab which will show any messages left by Travel Admins or supervisor for you 
+									 regarding your claim such as more information or receipts required. <i>(The claim in such cases will be set as Payment Pending until required information is provided and validated.)</i>. 
+									 <br/><br/>	 	
+									Simply fill out the form below and click <b>ADD ITEM</b> to add an item to your opened claim <i>(You can add multiple items to a claim)</i>. 	 
+									To remove or edit a claim item you already entered, use the <b>EDIT</b> or <b>DELETE</b> Tools at the far right of each listed claim item. <i>(When you click on edit, please wait as the data is loaded back into the form)</i>. To print a copy of the claim properly formatted, simply click on <b>PRINT</b>. If the listed supervisor is not correct, use the <b>CHANGE SUPERVISOR</b> option to select. <i>(If your supervisor is not listed for selection, please contact your supervisor directly as they may need to be added as a supervisor).</i>
+									<br/><br/>Once you have completed entry of all items and are ready to submit for processing, click on <b>SUBMIT CLAIM FOR PROCESSING</b> link below.
+						<%} %>
+						
+						<%if(claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>	
+									<div class="alert alert-danger" style="max-width:85%;">
+									<b>NOTICE:</b> Claim has been <b>rejected</b> by your supervisor. 
+									Please check your claim for errors <i>(amounts, wrong supervisor, or invalid claimed item)</i> or check <b>NOTES</b> tab below for possible reason. 
+									Correct any issue(s) and re-submit this claim, or delete.
+									</div>
+						<%} %>	
+						
+						<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING)){%>	
+									<div class="alert alert-info" style="max-width:85%;">
+									<b>NOTICE:</b> Claim has been set to <b>Pending Information</b>. 
+									Travel Admins have set your claim as Pending. Please check NOTICES or <b>NOTES</b> tab below left for reason.
+									</div>
+						 <%} %>
+						
+						<!-- DISPLAY NOTES (If any) IF REJECTED OR PENDING, Once processed hide. -->	
+						
+						<%if(n_items.hasNext() && (claim.getCurrentStatus().equals(TravelClaimStatus.PAYMENT_PENDING) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED))){%>
+						                  <div class="alert alert-danger" style="max-width:85%;"><b>NOTICE(S) RE THIS CLAIM:</b><br/>
+						                  <ul>  
+					                      <%while(n_items.hasNext()){
+					                        note = (TravelClaimNote) n_items.next();%>
+					                        <li><%=note.getNote()%><br/>
+					                        <i>(Request Posted: <%=note.getNoteDate().toString()%> by <span style="text-transform:Capitalize;"><%=note.getPersonnel().getFullNameReverse()%>)</span>.</i>                        
+					                      <%}%>                      
+					                      </ul></div>
+					    <%}%>
+	</div>
+	<div class="no-print" style="padding-top:10px;padding-bottom:15px;text-align:center;">
+	<a href="#" class="noJump btn btn-danger btn-xs" title="Back" onclick="loadingData();loadMainDivPage('back');return false;"><i class="fas fa-step-backward"></i> Back</a>
+						<%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID())||(cur_status == TravelClaimStatus.REJECTED.getID())){%>
+					            <%if(!claim.getItems().isEmpty()){%>
+					            		<a href="#" class="noJump btn btn-xs btn-primary" title="Submit this claim for processing." onclick="openModalDialog('<%=id%>','submitclaim','<%=claimtitle%>');"><i class="fas fa-sign-in-alt"></i> Submit Claim for Processing</a>
+					             <%}%>
+					              		<a href="#" class="noJump btn btn-xs btn-warning" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');"><i class="fas fa-user-check"></i> Change Your Supervisor</a>
+					             		<a href="#" class="noJump btn btn-danger btn-xs"  title="Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> Delete Claim</a>
+					                   
+					          <%}else if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
+					           						 	&& (claim.getSupervisor().getPersonnelID() == usr.getPersonnel().getPersonnelID())
+					            						&&((cur_status == TravelClaimStatus.SUBMITTED.getID()) 
+					            							|| (cur_status == TravelClaimStatus.REVIEWED.getID()))){%>
+					           			<a href="#" class="noJump btn btn-xs btn-success" title="Approve this claim." onclick="openModalDialog('<%=id%>','supervisorapprove','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-clipboard-check"></i> Approve this Claim</a>
+					          			<a href="#" class="noJump btn btn-xs btn-danger" title="Decline this claim." onclick="openModalDialog('<%=id%>','supervisordecline','<%=claimtitle%>,<%=RealName%>');"><i class="far fa-times-circle"></i> Decline this Claim</a>
+					            
+					            <%}else if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")
+					            						&&((cur_status == TravelClaimStatus.APPROVED.getID()) 
+					            						|| (cur_status == TravelClaimStatus.PAYMENT_PENDING.getID()))){%>
+					            		<a href="#" class="noJump btn btn-xs btn-primary" title="Pay this claim." onclick="openModalDialog('<%=id%>','paytravelclaim','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-cogs"></i> Process this Claim</a>
+					            		<a href="#" class="noJump btn btn-xs btn-info" title="Payment pending." onclick="openModalDialog('<%=id%>','paypendingtravelclaim','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-file-invoice-dollar"></i> Set Payment Pending</a>				
+					          
+					          <%}else{%>
+					           <!-- Do nothing for now -->
+					          <%}%>
+					           <esd:SecurityAccessRequired roles="TRAVEL-CLAIM-DELETE">
+					           <!-- Allow AP to delete invalid claims or twice submitted claims. Cannot delete Approved or paid claims. -->
+					           	<%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID()) 
+					           			|| (cur_status == TravelClaimStatus.REVIEWED.getID()) 
+					           			|| (cur_status == TravelClaimStatus.SUBMITTED.getID()) 
+					           			|| (cur_status == TravelClaimStatus.PAYMENT_PENDING.getID()) 
+					           			|| (cur_status == TravelClaimStatus.REJECTED.getID())){%>
+					          		 	 <a href="#" class="noJump btn btn-danger btn-xs" title="Accounts Payable - Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> AP Delete Claim</a>
+					          		 	 <%} %>
+					          	</esd:SecurityAccessRequired>	
+					          		 	
+					          		<%if(isAdmin && claim.getPersonnel().getPersonnelID() != usr.getPersonnel().getPersonnelID()){%>
+					          		<a href="#" class="noJump btn btn-danger btn-xs" title="Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> Admin Delete Claim</a>
+					          		 <%}%>   
+					          		
+			<br/>   		
+  </div>
+  
+  <div style="clear:both;"></div>  
+      
+  <!-- Nav tabs -->
+<ul class="nav nav-tabs no-print" >
+  <li class="nav-item">
+    <a class="nav-link active" id="detailTAB" data-toggle="tab" href="#details" style="background-color:#FAFAD2;font-weight:bold;"><i class="fas fa-info-circle"></i> Details</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link"  id="historyTAB" data-toggle="tab" href="#history" style="background-color:#FFF0F5;font-weight:bold;"><i class="fas fa-history"></i> History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link"  id="noteTAB" data-toggle="tab" href="#notes" style="background-color:#F5FFFA;font-weight:bold;"><i class="far fa-clipboard"></i> Notes</a>
+  </li>
+</ul>
+
+
+
+<!-- Tab panes -->
+<div class="tab-content" id="theTABS" style="padding:0px;border:1px solid silver;border-top:0px;">
+
+ <!-- CLAIM DETAILS ENTRY ----------------------------------------------------------------------------------------->
+  <div class="tab-pane active" id="details" style="background-color:#FAFAD2;padding:5px;">
+
+  <form name="add_claim_item_form" id="add_claim_item_form" class="was-validated" method="post" action="<%=(request.getAttribute("EDIT")!=null)?"editTravelClaimItem.html":"addTravelClaimItem.html"%>">
 
       <input type="hidden" name="id"  id="id" value=<%=claim.getClaimID()%>>
       <input type="hidden" name="cm"  id="cm" value=<%=claimmonth%>> 
@@ -201,52 +371,21 @@ f.value = f.value.replace('\n',' ');
       <%if(request.getAttribute("EDIT")!=null){%>
         <input type="hidden" name="iid" value=<%=failed_item.getItemID()%>>
       <%}%>
-      <input type="hidden" name="op" value="CONFIRM">
-      <table width="100%">
-        
-        <tr class="no-print">
-          <td width="100%" height="30">
-            <jsp:include page="tab_bar.jsp" flush="true">
-              <jsp:param name="tab" value="details" />
-              <jsp:param name="id" value="<%=claim.getClaimID()%>" />
-              <jsp:param name="status" value="<%=claim.getCurrentStatus().getID()%>" />
-              <jsp:param name="hasItems" value="<%=items.hasNext()%>" />
-            </jsp:include>
-          </td>
-        </tr>
-        
-       
-        
-        
-        
-        <tr>
-          <td width="100%" height="300" class="claimTabContent" valign="top">
-            			<table id="tab_content" width="100%" cellpadding="0" cellspacing="0">
-              				<tr>
-                				<td width="100%" valign="top" valign="top">
-                				
-                        
-          <table width="100%">
-          <tr>
-            <td>
-            
+      <input type="hidden" name="op" value="CONFIRM"> 
+
+         <div  style="float:left;padding-top:10px;text-transform:Capitalize;font-size:18px;width:50%;"><b>Claimant:</b> <%=FullName%></div>         
          
-          
-            
-              
-              		<div class="claimHeaderText">Claimant: <span style="text-transform:capitalize;"><%=FullName%> </span>
-             			
-		              <div style="float:right;">
-		               <%if(claim instanceof PDTravelClaim){%>              
-		              <%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
-		              <%}else if(claim instanceof TravelClaim){%>
-		              <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
-		              <%}%>
-		              </div>
-		              
-              		
-              		</div>    
-              			<div id="statPreSub" style="display:none;float:right;"><img src="includes/img/presub_stamp.png" class="statusLogo"></div>
+         <div style="float:right;font-size:26px;color:Silver;width:50%;text-align:right;">
+					               <%if(claim instanceof PDTravelClaim){%>              
+					              			<%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
+					              <%}else if(claim instanceof TravelClaim){%>
+					              			<%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
+					              <%}%>
+		    </div>
+		   <div style="clear:both;"></div>       
+		   	
+                      <!-- Load image for claim file. -->
+		            	<div id="statPreSub" style="display:none;float:right;"><img src="includes/img/presub_stamp.png" class="statusLogo"></div>
                     	<div id="statPaid" style="display:none;float:right;"><img src="includes/img/paid-stamp.png" class="statusLogo"></div>
                     	<div id="statError" style="display:none;float:right;"><img src="includes/img/error-stamp.png" class="statusLogo"></div>
                     	<div id="statProcessed" style="display:none;float:right;"><img src="includes/img/processed.png" class="statusLogo"></div>
@@ -256,112 +395,74 @@ f.value = f.value.replace('\n',' ');
               			<div id="statSubmitted" style="display:none;float:right;"><img src="includes/img/submitted_stamp.png" class="statusLogo"></div>
                     	<div id="statReviewed" style="display:none;float:right;"><img src="includes/img/reviewed_stamp.png" class="statusLogo"></div>
                      	<div id="statPending" style="display:none;float:right;"><img src="includes/img/pending-info.png" class="statusLogo"></div>
+                     	
+                     		
                       <b>Address:</b>  <%=claim.getPersonnel().getProfile().getStreetAddress() != null ? claim.getPersonnel().getProfile().getStreetAddress(): "N/A" %>, <%=claim.getPersonnel().getProfile().getCommunity() %>, <%=claim.getPersonnel().getProfile().getProvince() %> &middot; <%=claim.getPersonnel().getProfile().getPostalCode() %><br/>
 		              <b>Tel:</b> <%=(claim.getPersonnel().getProfile().getPhoneNumber() != null ? claim.getPersonnel().getProfile().getPhoneNumber() : "N/A") %> &nbsp;&middot;&nbsp; <b>Cell:</b> <%=claim.getPersonnel().getProfile().getCellPhoneNumber() != null ? claim.getPersonnel().getProfile().getCellPhoneNumber(): "N/A" %>&nbsp;&middot;&nbsp;
 		              <b>Fax:</b> <%=claim.getPersonnel().getProfile().getFaxNumber() != null ? claim.getPersonnel().getProfile().getFaxNumber() : "N/A" %><br/>
 		              <b>Email:</b> <a href="mailto:<%=claim.getPersonnel().getEmailAddress()%>"><%=claim.getPersonnel().getEmailAddress()%></a><br/>
-		            	
 		            
-		              <br>
-		                  
-		              
-		              
-		              <b>Position:</b> <%=claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() != null ? claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() : "N/A" %><br/> 
+		            <br>  
+		                
+		           	  <b>Position:</b> <%=claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() != null ? claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() : "N/A" %><br/> 
 		              <b>School:</b> <%=(claim.getPersonnel().getSchool() != null ? claim.getPersonnel().getSchool().getSchoolName(): "NO SCHOOL")%><br/>                                         
-		              <b>Supervisor: </b><span style="text-transform:capitalize;"><a href="mailto:<%=claim.getSupervisor().getEmailAddress()%>"><%=claim.getSupervisor().getFullNameReverse()%></a></span><br/>
-		             
-		              <b>Your KM Rate:</b> <span id="kmRates" style="color:Green;">Add item to display your rate.</span><br/>
-						
-						<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
-						
-							<br/><img src="includes/img/changesup-off.png" class="img-swap no-print" align="right" title="Change Supervisor" style="margin-top:5px;" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');">
-							 <span style="color:Black;" class="no-print"><b>NOTE:</b> Check your listed supervisor above. You may have defaulted to a previous supervisor depending on your school or job position. If your supervisor listed is incorrect, please use the change supervisor link at right.</span>
+		              <b>Supervisor: </b><span style="text-transform:capitalize;"><a href="mailto:<%=claim.getSupervisor().getEmailAddress()%>"><%=claim.getSupervisor().getFullNameReverse()%></a></span> 
+		              <%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID())||(cur_status == TravelClaimStatus.REJECTED.getID())){%>
+		              &nbsp; ( <a href="#" class="noJump" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');">Change</a> )
+					  <%} %>
+		              <br/><b>Your KM Rate:</b> <span id="kmRates" style="color:Green;">Add item to display your rate.</span><br/>
+					
+					<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
+						<br/>
+							 <span style="color:Red;" class="no-print">
+							 <b>NOTE:</b>  If your supervisor listed is above is incorrect, please use the change supervisor link above.</span>
 		       <br/>
-						<%}%>              
+					<%}%>              
               <br/>              
             
-          
-          	
-          	</td>
-          </tr>
         
-        <%if(claim instanceof PDTravelClaim){%>
-          <tr>
-            <td>
-             <div class="claimHeaderText">PD Title: <%=((PDTravelClaim)claim).getPD().getTitle().replace("\"", "")%></div>
-             
-             <b>PD Date:</b> <%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
-             
-            </td>
-          </tr>
-        <%}else if(claim instanceof TravelClaim){%>
-          <tr>
-            <td>
-            <b>Claim Date:</b> <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %></td>
-          </tr>
-          </table>
+        <%if(claim instanceof PDTravelClaim){%>        
+				        <b>PD Title:</b> <%=((PDTravelClaim)claim).getPD().getTitle().replace("\"", "")%>	<br/>			             
+				        <b>PD Date:</b> <%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>   <br/>          
+       
+        <% } else if(claim instanceof TravelClaim) { %>         				
+         				<b>Claim Date:</b> <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %><br/>          
         <%}%>
                   
-                  
-                  
-                 						 <table align="center" style="width:100%;">
-                    							<% if(claim instanceof PDTravelClaim){ %>
-							                      <tr>
-							                        <td colspan="7">
-							                        <div class="claimStatusBlock">
-							                         <div class="claimHeaderText">PD Description</div>
-							                        <%=((PDTravelClaim)claim).getPD().getDescription().replace("\"", "")%>
-							                        </div>							                        
-							                       
-							                          
-							                        </td>
-							                      </tr>
-                    								<%}%>
-                    							  <tr>
-								                     <td colspan='7'>
-								                     
-								                     
-								               		                     
-								                     
-								                     
-								                     
-								                     
-								                     
-								                     								                       							              
-								                   
-								                     
-								                     <div class="claimStatusSuperBlock">
-						                            	
-						                            </div>
-								                     
-								                     
-									                      <div class="claimStatusBlock">
-									                      <div class="claimHeaderText">Claim Status</div>
-									                                <c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />                                
+       <% if(claim instanceof PDTravelClaim){ %>							                  
+						 <b>PD Description:</b><br/>
+						 <%=((PDTravelClaim)claim).getPD().getDescription().replace("\"", "")%>							                      
+        <%}%>
+                    							
+           <br/>         							
+                    							
+             <b>Claim Status:</b><br/>
+             
+						<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />                                
 									                                <c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">
-									                                		<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PRE-SUBMISSION:</b> Claim is in Pre-Submission mode and is ready to complete. Please fill in your claim details and submit when ready for processing.</div>
-									                                	<script>$('#statPreSub').css('display', 'inline-block');</script>
+									                                			<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PRE-SUBMISSION:</b> Claim is in Pre-Submission mode and is ready to complete. Please fill in your claim details and submit when ready for processing.</div>
+									                                			<script>$('#statPreSub').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 2 }">
-									                                		<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>SUBMITTED:</b> Claim has been submitted to supervisor.</div>
-									                                	<script>$('#statSubmitted').css('display', 'inline-block');</script>
+									                                			<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>SUBMITTED:</b> Claim has been submitted to supervisor.</div>
+									                                			<script>$('#statSubmitted').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 3 }">
-									                                		<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>REVIEWED:</b> Claim has been reviewed by  supervisor.</div>
-									                                	<script>$('#statReviewed').css('display', 'inline-block');</script>
+									                                			<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>REVIEWED:</b> Claim has been reviewed by  supervisor.</div>
+									                                			<script>$('#statReviewed').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 4 }">
-									                                		<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>APPROVED:</b> Claim has been approved by  supervisor.</div>
-									                                	<script>$('#statApproved').css('display', 'inline-block');</script>
+									                                			<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>APPROVED:</b> Claim has been approved by  supervisor.</div>
+									                                			<script>$('#statApproved').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 5 }">
-									                                		<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>REJECTED:</b> Claim has been rejected by supervisor. Please check your claim for errors (amounts, wrong supervisor, or invalid claimed item) or check Notes tab above for possible reason. Correct any issue(s) and re-submit this claim, or delete.</div>
-									                                		<script>$('#statRejected').css('display', 'inline-block');</script>
+									                                			<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>REJECTED:</b> Claim has been rejected by supervisor. Please check your claim for errors (amounts, wrong supervisor, or invalid claimed item) or check Notes tab above for possible reason. Correct any issue(s) and re-submit this claim, or delete.</div>
+									                                			<script>$('#statRejected').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                		<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PENDING MORE INFORMATION:</b> Claim is pending further action. Please check NOTES tab above and/or any emails from Travel Claims staff re your claim.</div>
-									                                	    <script>$('#statPending').css('display', 'inline-block');</script>
+									                                			<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PENDING MORE INFORMATION:</b> Claim is pending further action. Please check NOTES tab above and/or any emails from Travel Claims staff re your claim.</div>
+									                                	    	<script>$('#statPending').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 7 }">						                                	
 									                                	
@@ -379,67 +480,41 @@ f.value = f.value.replace('\n',' ');
 																            <c:set var="claimCheckDate" value='<%=(claim.getExportDate() != null) ? claim.getExportDate().getTime() : "0"%>'/>															               							                
 																            <c:set var="claimCheckDateStamp" value="${(60*60*24*30*1000) + claimCheckDate}" /> 
 																                 
-																               									                                  				
-								                                  			
-                        				
-                        												<c:choose>
-                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">
-                        												
-                        												<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>PAID</b> Claim has been processed and marked as paid. 
-                        												Please allow anywhere from 2-10 business days for deposit to show in your account. 
-                        												If you have NOT been paid, please contact support below.</div>									                                		
-									                                		<script>$('#statPaid').css('display', 'inline-block');</script>
-                        												
-                        												</c:when>
-                        												
-                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">
-                        												
-                        												
-                        												   <div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSED:</b> Claim has been processed and is pending payment. 
-                        												   Please allow time for processing of your payment and final deposit anywhere from <b>2-10 business days</b>. 
-                        												   Claim may show as PROCESSED for up to 30 days after any payment has been made.  
-                        												   If there is an issue with final payment, you will be notified before any deposit is made.</div>									                                		
-									                                		<script>$('#statProcessed').css('display', 'inline-block');</script>
-                        												
-                        												</c:when>
-                        												
-                        												
+																      <c:choose>
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">                        												
+				                        												<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>PAID</b> Claim has been processed and marked as paid. 
+				                        												Please allow anywhere from 2-10 business days for deposit to show in your account. 
+				                        												If you have NOT been paid, please contact support below.</div>									                                		
+									                                					<script>$('#statPaid').css('display', 'inline-block');</script>                        												
+                        												</c:when>                        												
+                        												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">                    												
+                        															 <div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSED:</b> Claim has been processed and is pending payment. 
+			                        												   Please allow time for processing of your payment and final deposit anywhere from <b>2-10 business days</b>. 
+			                        												   Claim may show as PROCESSED for up to 30 days after any payment has been made.  
+			                        												   If there is an issue with final payment, you will be notified before any deposit is made.</div>									                                		
+									                                				<script>$('#statProcessed').css('display', 'inline-block');</script>                        												
+                        												</c:when>              												
                         												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
-                        												<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSING:</b> Claim is being processed. 
-                        												Please allow 2-10 business days for your claim to be processed. If there is an issue with your claim, you will be notified before it is submitted for payment.</div>									                                		
-									                                		<script>$('#statProcessing').css('display', 'inline-block');</script>
-                        												
+                        															<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSING:</b> Claim is being processed. 
+                        															Please allow 2-10 business days for your claim to be processed. If there is an issue with your claim, you will be notified before it is submitted for payment.</div>									                                		
+									                                				<script>$('#statProcessing').css('display', 'inline-block');</script>
                         												</c:when>
-                        												                                                                                     
-                        												
-                        												
-                        												<c:otherwise>
-                        												
-                        												<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
-                        												<script>$('#statError').css('display', 'inline-block');</script>
-                        												
+                        												<c:otherwise>                        												
+                        															<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
+                        															<script>$('#statError').css('display', 'inline-block');</script>                        												
                         												</c:otherwise>
-                        												</c:choose>
-                        				
-                        				
-                        				
-									                                		
+                        												</c:choose>                        												
 									                                	</c:when>
 									                                	<c:otherwise>
-									                                	 	<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
+									                                	 				<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
 									                                	</c:otherwise>                             
 									                                </c:choose>
-									                            </div>    
+							                              
+                                                                         
                             
-                             <div class="alert alert-danger" id="details_error_message" style="display:none;font-size:12px;margin-top:10px;margin-bottom:10px;padding:5px;text-align:center;"></div>         
-         					<div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;font-size:12px;text-align:center;"></div>   
-							<div class="alert alert-info" id="details_info_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;font-size:12px;text-align:center;"></div>   
-								                     
-                            
-                            <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PAID)
-                            && usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")){%>
+                            <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PAID) && usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")){%>
                             <div style="clear:both;"></div>   
-                            <div class="claimStatusInfoBlock">
+                            
                             <b>Teacher Payroll:</b> <%=claim.isPaidThroughTeacherPayroll()?"YES":"NO"%><br/>
                             <b>GL Account:</b>
                                     	<%=(claim.getSDSGLAccountCode()!=null)?
@@ -451,208 +526,270 @@ f.value = f.value.replace('\n',' ');
                                       + claim.getSDSGLAccountCode().substring(12, 14) + "-"
                                       + claim.getSDSGLAccountCode().substring(14):""%>
                             
-                            </div>
-                            <%}%>
-                            
-                           </td>
-                           </tr>                              
                            
-                    <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION)
-                        || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
-                      <tr style="padding-top:10px;" class="no-print">
-                        <td colspan='7' class='title'><%=(request.getAttribute("EDIT") != null)?"Edit":"Add"%> Claim Item</td>
-                      </tr>
-                       <tr  class="no-print">
-                        <td colspan='7' style="padding-top:10px;padding-bottom:10px;font-size:10px;">Please enter valid data for all items you add to this claim. If you leave the Return or Departure times blank, system will recognize as Overnight automatically.</td>
-                      </tr>
-                      <tr class="no-print">
-                        <td width="15%" valign='bottom'>Date<br/><input class="requiredinput_date" type="text" name="item_date" id="item_date" style="width:98%;" value="<%=(failed_item != null)?cal_sdf.format(new Date(failed_item.getItemDate().getTime())):""%>"></td>
-                        <td width="15%" valign='bottom'>Departure<br/><input class="requiredInputBox time ui-timepicker-input" type="text" style="width:98%;" name="item_departure_time" id="item_departure_time" value="<%=(failed_item != null)?failed_item.getDepartureTime():""%>" onfocus="this.select();"></td>
-                        <td width="15%" valign='bottom'>Return<br/><input class="requiredInputBox time ui-timepicker-input" type="text" style="width:98%;" name="item_return_time" id="item_return_time"   value="<%=(failed_item != null)?failed_item.getReturnTime():""%>" onfocus="this.select();"></td>
-                        <td width="15%" valign='bottom'>KMs<br/><input class="requiredInputBox" type="text" name="item_kms"  id="item_kms" style="width:98%;" value="<%=(failed_item != null)?""+failed_item.getItemKMS():""%>" onfocus="this.select();" onblur="return validateInteger(this);"></td>
-                        <td width="15%" valign='bottom'>Meals<br/><input class="requiredInputBox" type="text" name="item_meals"  id="item_meals" style="width:98%;" value="<%=(failed_item != null)?curr_df.format(failed_item.getItemMeals()):""%>" onfocus="removeCurrency(this); this.select();" onblur="validateDollar(this);"></td>
-                        <td width="15%" valign='bottom'>Lodging<br/><input class="requiredInputBox" type="text" name="item_lodging" id="item_lodging" style="width:98%;" value="<%=(failed_item != null)?curr_df.format(failed_item.getItemLodging()):""%>" onfocus="removeCurrency(this); this.select();" onblur="validateDollar(this);"></td>
-                        <td width="10%" valign='bottom'>Other<br/><input class="requiredInputBox" type="text" name="item_other"  id="item_other" style="width:98%;" value="<%=(failed_item != null)?curr_df.format(failed_item.getItemOther()):""%>" onfocus="removeCurrency(this); this.select();" onblur="validateDollar(this);"></td>
-                      </tr>          
-                      <tr><td colpsan=7>&nbsp;</td></tr>           
-                      <tr class="no-print">
-                      	<td colspan='7'>
-                      		Description (Max 500 Characters. Remaining: <span id="remainder">500</span>)<br/>
-	                      				<textarea class="requiredInputBox" name="item_desc" id="item_desc" style="width:100%;height:60px;" onfocus="this.select();" onkeyup="valid(this)" onblur="valid(this)"><%=(failed_item != null)?failed_item.getItemDescription():""%></textarea><br/>
-	                      				<span style="font-size:10px;">Description should include all nesessary information to review the claim (eg. departure and return points, and items included in other category). You are limited to 500 characters. 
-	                      				Any ' or &quot; characters and other invalid characters will be automatically removed from any text you enter on submission. This is not an error. ($+-=,./ are accepted characters.)<br/>
-	                      				<i style="color:Red;">*Red outlined fields are required.</i><br/></span>
-	                    </td>
-                      </tr>
-                      <tr class="no-print">
-                        <td colspan='5' align="left" style="padding-top:5px;">
-                        <div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:5px;margin-bottom:10px;padding:5px;"></div>
-                        <%if(request.getAttribute("msg") != null){%>
-                            <%=request.getAttribute("msg")%>
-                          <%}else{%>
-                            &nbsp;
-                          <%}%>
-                        </td>
-                        <td colspan='2' class="no-print" align="right" style="padding-top:5px;padding-right:10px;">
-                          <%if(request.getAttribute("EDIT") != null){%>
-                           <img src="includes/img/save-off.png" class="img-swap" title="<%=(request.getAttribute("EDIT")!=null)?"Submit edited":"Add"%> claim item." onclick="findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','UPDATE','<%=failed_item.getItemID()%>');">
-                           <img style="padding-right:5px;" src="includes/img/cancel-off.png" class="img-swap" title="Cancel edit claim item." onclick="unloadEditItem('<%=claim.getClaimID()%>');"><br/>
-                             
-                          <%} else {%>
-                          <img src="includes/img/additem-off.png" class="img-swap" title="<%=(request.getAttribute("EDIT")!=null)?"Submit edited":"Add"%> claim item." onclick="findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','ADD','0');"><br>
-                          <%}%>     
-                        </td>
-                      </tr>
+                            <%}%>
+               
+<%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)) {%>
 
-                      <tr class="no-print">
-                        <td colspan='7'>&nbsp;<br/><img src="includes/img/bar.png" width="100%" height=1><br/>&nbsp;</td>
-                      </tr>
-                    <%}else{%>
-                      <tr class="no-print">
-                        <td colspan='7'>&nbsp;</td>
-                      </tr>
-                    <%}%>
-                    <tr>
-                    	<td colspan='7' style='padding:0px;'>
-           <table width="100%">
-                    <tr>
-                      <td colspan="8" class="title">Current Claim Items</td>
+<% if((request.getAttribute("EDIT") != null) ) {%>
+			<script>$('.collapse').collapse();</script>
+			
+
+			
+<%}else { %>
+			<div align="center" class="no-print" style="padding-bottom:10px;">
+					<a href="#" class="noJump btn btn-xs btn-success" data-toggle="collapse" data-target="#addClaimItemArea"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>
+			
+			
+ <%if(claim instanceof PDTravelClaim){%>
+ <script>
+       //Set date
+	$('.datepicker').datetimepicker({
+	    defaultDate: moment({
+	    	 year: <%=sdf_year.format(((PDTravelClaim)claim).getPD().getStartDate()) %>,
+		    	month:<%=sdf_month.format(((PDTravelClaim)claim).getPD().getStartDate()) %>-1,
+		    	day:<%=sdf_day.format(((PDTravelClaim)claim).getPD().getStartDate()) %>	    	
+	    }),
+	    format: 'L'
+	  });	
+	</script>	
+       
+<% } else if(claim instanceof TravelClaim) { %>         				
+         			
+        <script>
+       //Set date 
+		$('.datepicker').datetimepicker({
+	    defaultDate: moment({
+	    	year: <%=Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())%>,
+	    	month:<%=claim.getFiscalMonth()%>,
+	    	day:01
+	    }),
+	    format: 'L'
+	  });
+	</script>					
+         				
+<%}%>
+					
+			</div>
+<%} %>
+
+<div class="alert alert-success collapse" id="addClaimItemArea">
+
+<div class="siteHeaderGreen"><%=(request.getAttribute("EDIT") != null)?"Edit":"Add"%> Claim Item</div>
+ Please enter valid data for all items you add to this claim.  Some entries have been pre-filled for you. To change, simply click on the field and edit as necessary.       
+<br/><br/>
+ 
+ <div class="row">
+    <div  class="col-xs-12 col-sm-12 col-md-4" style="padding-bottom:5px;">           
+   			<label for="item-date" class="mr-sm-2"><b>Claim Date:</b></label>
+   			<input  required class="form-control datetimepicker-input datepicker mb-2 mr-sm-2" type="text" placeholder="Date of Claim" data-toggle="datetimepicker" data-target="#item_date" name="item_date" id="item_date" onfocus="this.select();">
+   		 	<div class="valid-feedback" style="display:none;">A valid date is entered.</div>
+    		<div class="invalid-feedback">ERROR: Please fill out this field.</div>
+   		</div>  	
+   		<div  class="col-xs-6 col-sm-6 col-md-4" style="padding-bottom:5px;">       	
+   			<label for="item_departure_time"><b>Departure Time:</b></label>
+    		<input required class="form-control datetimepicker-input departureTimePicker mb-2 mr-sm-2" type="text" placeholder="Departure Date" data-toggle="datetimepicker" data-target="#item_departure_time" name="item_departure_time" id="item_departure_time" onfocus="this.select();">
+   			 <div class="form-check"> <label class="form-check-label"><input type="checkbox" class="form-check-input" id="timeDepartureON" value="" /> Is this Overnight? </label></div>
+   			<div class="invalid-feedback">TIME ERROR: Please fill out this field as a valid time (i.e. 12:00 AM), unless Overnight, check below.</div>    		
+   		</div>
+    	<div  class="col-xs-6 col-sm-6 col-md-4" style="padding-bottom:5px;">         
+    		<label for="item_return_time"><b>Return Time:</b></label>    				
+    		<input required class="form-control datetimepicker-input returnTimePicker mb-2 mr-sm-2" type="text" placeholder="Return Date" data-toggle="datetimepicker" data-target="#item_return_time"  name="item_return_time" id="item_return_time" onfocus="this.select();">
+   			 <div class="form-check"> <label class="form-check-label"><input type="checkbox" class="form-check-input" id="timeReturnON" value="" /> Is this Overnight? </label></div>
+   			<div class="invalid-feedback">DATE ERROR: Please fill out this field as a valid time (i.e. 12:00 AM), unless Overnight, check below.</div>    		
+   		</div>			
+   		<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">   
+   			<label for="item_kms" class="mr-sm-2"><b>KMs Traveled:</b></label>
+    		<input required class="form-control mb-2 mr-sm-2" type="text" name="item_kms"  id="item_kms" placeholder="# Kilometers" value="<%=(failed_item != null)?""+failed_item.getItemKMS():"0"%>" onkeypress="return isNumber(event)" onfocus="this.select();" maxlength="4" onpaste="return false;">
+ 			<div class="invalid-feedback">ERROR: Please fill out this field.</div>
+ 		</div> 
+    	<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">  
+ 			<label for="item_meals" class="mr-sm-2"><b>Meals ($):</b></label>
+  			<input class="form-control" type="text" name="item_meals"  id="item_meals"  placeholder="Meals $" value="<%=(failed_item != null)?failed_item.getItemMeals():"0.00"%>" onkeypress="return isNumberDec(event)" onfocus="removeCurrency(this);this.select();" onblur="validateDollar(this);">
+		</div>
+		<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">    
+ 			<label for="item_lodging" class="mr-sm-2"><b>Lodging ($):</b></label>
+			<input class="form-control" type="text" name="item_lodging" id="item_lodging" placeholder="Lodging $" value="<%=(failed_item != null)?failed_item.getItemLodging():"0.00"%>" onfocus="removeCurrency(this);this.select();" onblur="validateDollar(this);">
+ 		</div>
+ 		<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">    
+ 			<label for="item_other" class="mr-sm-2"><b>Other ($):</b></label>
+ 			<input class="form-control"  type="text" name="item_other"  id="item_other" placeholder="Other $" value="<%=(failed_item != null)?failed_item.getItemOther():"0.00"%>" onfocus="removeCurrency(this);this.select();" onblur="validateDollar(this);">
+       </div>               
+ 
+ 
+ 
+ 	<div  class="col-xs-12 col-sm-12 col-md-12">
+ 		<label for="item_kms" class="mr-sm-2"><b>Description (Max 500 Characters.):</b></label>            
+ 	                   <textarea class="form-control" name="item_desc" id="item_desc"  onfocus="this.select();" onkeyup="valid(this)" onblur="valid(this)"><%=(failed_item != null)?failed_item.getItemDescription():""%></textarea> 					
+ 		</div>  
+		 <span style="font-size:10px;">Description should include all necessary information to review the claim 
+		 (eg. departure and return points, and items included in other category). 
+		 You are limited to 500 characters. Any ' or &quot; characters and other invalid characters will be automatically removed from any text you enter on submission. 
+		 This is not an error. ($+-=,./ are accepted characters.)<br/>
+		 </span>
+	
+	</div>                   
+                     
+                        <br/>
+                        <div align="center" class="no-print">
+                          <%if(request.getAttribute("EDIT") != null){%>
+                           			<a href="#" class="noJump btn-xs btn-success btn" title="<%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item." onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','UPDATE','<%=failed_item.getItemID()%>');"><%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item</a>
+                          		 	<a href="#" class="noJump btn btn-danger btn-xs"  title="Cancel edit claim item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                           
+                          <%} else {%>                          
+                          			<a href="#" class="noJump btn btn-xs btn-success" onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','ADD','0');"><%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Item</a>      
+                          			<a href="#" class="noJump btn btn-danger btn-xs"  title="Cancel Add  item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                              
+                          <%}%>     
+                       </div>
+       
+       </div>
+                       
+      <%}%>    
+      
+      
+    <hr>  
+    
+    <div class="alert alert-primary">
+         
+  <div class="siteHeaderBlue">Current Claim Items</div>
+                     <%if(!items.hasNext()){%>                    
+                    <div class="alert alert-secondary">This claim currently has no items. To add an item, use the link above.</div>
+                     
+                    <%}else{ %>
+                    Below are your current claim items for this claim. You will also see a variety of options to search, export, and edit/delete items.
+                         
+        <table id="claimItemsTable" class="table table-condensed table-striped table-bordered" style="font-size:10px;background-color:White;" width="100%">
+  		<thead>
+  			<tr style="text-transform:uppercase;font-weight:bold;">  				
+             
+                      <td width="10%">Date</td>
+                      <td width="20%">Description</td>
+                      <td width="15%">Depart - Return</td> 
+                      <td width="10%" >Rate($)</td>            
+                      <td width="5%" >KMs</td>                      
+                      <td width="10%">Meals</td>
+                      <td width="10%">Lodging</td>                      
+                      <td width="10%">Other</td>
+                      <td width="*" class="no-print">Tools</td>
                     </tr>
-                    <tr>
-                      <td width="15%" class="itemsHeader">Date</td>
-                      <td width="15%" class="itemsHeader">Depart</td>     
-                      <td width="15%" class="itemsHeader">Return</td>                
-                      <td width="10%" class="itemsHeader">KMs</td>
-                      <td width="10%" class="itemsHeader">Meals</td>
-                      <td width="15%" class="itemsHeader">Lodging</td>
-                      <td width="10%" class="itemsHeader">Other</td>
-                      <td width="*" class="itemsHeader no-print">Tools</td>
-                    </tr>
-                    <tr><td colspan="8" style="padding-bottom:2px;border-top: solid 1px #c4c4c4;color:Grey;height:5px;text-transform:none;"></td></tr>
-                    <tr><td colspan=8><div id="loadMes" style="display:none;color:white;background-color:Green;padding:3px;text-align:center;font-weight:bold;"> &nbsp; LOADING ITEM DATA FOR EDITING... &nbsp; </div></td></tr>            
-                    <%if(!items.hasNext()){%>
-                      <tr><td colspan="8" style="padding-bottom:2px;border-bottom: dashed 1px #c4c4c4;color:Red;height:5px;text-transform:none;">This claim has no items.</td></tr>
-                    <%}else{
+           </thead>
+          <tbody>
+          
+                 
+                              
+                  <%
                         summary = claim.getSummaryTotals();
                         rate_summaries = claim.getRateSummaryTotals().iterator();
+                        
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        
+                      	int  itemCounter = 0;%>
+                      	 <script>
+                         var totalOther1="";
+                        </script>
+                        <%
                         while(items.hasNext()){
-                          item = (TravelClaimItem) items.next();%>
+                         			 item = (TravelClaimItem) items.next();%>
                           
                                                   
                            <script>
                           $("#kmRates").html("<%=kms_rate_df.format(item.getPerKilometerRate())%>");
                           </script>                          
                           
-                          <tr id="item_row_<%=item.getItemID()%>">
-                            <td width="15%" class="field_content"><%=sdf.format(item.getItemDate())%></td>
-                            <td width="15%" class="field_content"><%=(((item.getDepartureTime() == null) && (item.getReturnTime() == null))?"OVERNIGHT":(((item.getDepartureTime()!=null)?item.getDepartureTime():"")))%></td>
-                            <td width="15%" class="field_content"><%=(((item.getDepartureTime() == null) && (item.getReturnTime() == null))?"OVERNIGHT":(((item.getReturnTime()!=null)? item.getReturnTime():"-OVERNIGHT")))%></td>
-                            <td width="10%" class="field_content"><%=item.getItemKMS()%> ($<%=item.getPerKilometerRate() %>)</td>
-                            <td width="10%" class="field_content"><%=curr_df.format(item.getItemMeals())%></td>
-                            <td width="15%" class="field_content"><%=curr_df.format(item.getItemLodging())%></td>
-                            <td width="10%" class="field_content">
-                             
-                                    <%if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")
-                                      && claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)){%>
-                                      <input class="requiredinput" type="text" name="item_<%=item.getItemID()%>"  style="width:54px;" value="<%=curr_df.format(item.getItemOther())%>">
-                                    <%}else{%>
-                                      <%=curr_df.format(item.getItemOther())%>
-                                    <%}%>
-                              </td>
-                              <td width="*" class="field_content no-print">   
-                                    <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION)
-                                      || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
-                                       
-                                              <img src="includes/img/editsm-off.png" title="Edit claim item." class="img-swap" onclick="showit('loadMes');loadEditItem('<%=claim.getClaimID()%>','<%=item.getItemID()%>');">&nbsp;
-                                           
-                                              <img src="includes/img/deletesm-off.png" title="Delete claim item." class="img-swap" onclick="openModalDialog('<%=item.getItemID()%>','deletetravelclaimitem','<%=claimtitle%>,<%=sdf.format(item.getItemDate())%>,<%=item.getItemDescription()%>');">
-                                            
-                                    <%}else{%>
-                                      <img src="../images/spacer.gif" width="1" height="1"><br>
-                                    <%}%>
-                                  
+                          <tr>
+                          <% itemCounter++; %>
+                            <td><%=sdf.format(item.getItemDate())%></td>
+                            <td><%=item.getItemDescription()%></td>
+                            <td><%=(((item.getDepartureTime() == null) && (item.getReturnTime() == null))?"OVERNIGHT":(((item.getDepartureTime()!=null)?item.getDepartureTime():"")))%> - <%=(((item.getDepartureTime() == null) && (item.getReturnTime() == null))?"OVERNIGHT":(((item.getReturnTime()!=null)? item.getReturnTime():"OVERNIGHT")))%></td>
+                           <td><%=df.format(item.getPerKilometerRate()) %></td>
+                            <td><%=item.getItemKMS()%></td>                            
+                            <td><%=df.format(item.getItemMeals())%></td>
+                            <td><%=df.format(item.getItemLodging())%></td>
+                            <td>
+                            <%if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") && claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)){%>
+                                      <input class="itemOTHER" type="text" id="item_<%=item.getItemID()%>" name="item_<%=item.getItemID()%>"  value="<%=item.getItemOther()%>">
+                                		 <script>                               
+		                               				 totalOther1= (+totalOther1) +(+$("#item_<%=item.getItemID()%>").val());
+		                                </script>
+                              <%}else{%>
+                                      <%=df.format(item.getItemOther())%>
+                              <%}%>
                             </td>
-                           
-                          </tr>
-                          <tr id="item_row_<%=item.getItemID()%>_desc"><td colspan='8' class="field_content" style='padding-bottom:2px;border-bottom: dashed 1px #c4c4c4;color:Grey;text-transform:none;'><%=item.getItemDescription()%></td></tr>
+                              <td class="no-print">             
+                                                            
+                               
+                                <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){
+                                    
+                                    	//claimDescription =item.getItemDescription().replaceAll("\\<[^>]*>", "");
+                                    claimDescription =item.getItemDescription().replaceAll("\\<.*?\\>","").trim();
+                                          
+                                    %>
+                                     	<a href="#" class="noJump  btn btn-xs btn-warning" title="Edit claim item." onclick="loadingData();loadEditItem('<%=claim.getClaimID()%>','<%=item.getItemID()%>');"><i class="fas fa-edit"></i></a>                                        
+                                    	 <a href="#" class="noJump btn btn-xs btn-danger" title="Delete claim item." onclick="openModalDialog('<%=item.getItemID()%>','deletetravelclaimitem','<%=claimtitle%>,<%=sdf.format(item.getItemDate())%>,<%=claimDescription%>');"><i class="fas fa-trash-alt"></i></a>                                     	 
+                                    	
+                                      <%}%>
+                                  
+                            </td>                           
+                          </tr>                         
+                          
                       <%}%>  
-                              
-                        <tr>
-                          <td class="total" colspan="3" align="right" valign="middle">Totals:&nbsp;</td>
-                          <td class="total" width="15%" valign="middle"><%=kms_df.format(summary.getKMSSummary())%> kms</td>
-                          <td class="total" width="10%" valign="middle"><%=curr_df.format(summary.getMealSummary())%></td>
-                          <td class="total" width="15%" valign="middle"><%=curr_df.format(summary.getLodgingSummary())%></td>
-                          <td class="total" width="10%" valign="middle"><%=curr_df.format(summary.getOtherSummary())%></td>
-                          <td class="total no-print" width="*" valign="middle"></td>
-                        </tr>  
-                        <tr><td colspan=8>&nbsp;</td></tr>                       
-                        <tr>
-                          <td class="total_label" colspan="2" align="right" valign="middle"></td>
-                                                    
+                                       
+                   
+                  </tbody>
+                  <tfoot>
+			            <tr style="font-weight:bold;">
+			                <td style="text-align:right">TOTAL:</th>
+			                <td></td>
+			               <td></td>
+			               <td></td>
+			               <td></td>
+			               <td></td>
+			               <td></td>
+			               <td></td>
+			               <td class="no-print"></td>
+			            </tr>
+        		</tfoot>
+                  
+                  </table>
+                                                                  
                               <%while(rate_summaries.hasNext()){
                                 rate_summary = (TravelClaimRateSummary) rate_summaries.next();
-                               if(rate_summary.getKMSSummary() > 0){%>
-                                
-                                <td valign="middle" colspan=4><b>YOUR KM RATE:</b> <span style="color:green;"><%=kms_rate_df.format(rate_summary.getPerKilometerRate())%></span>
-								<br/><%=kms_df.format(rate_summary.getKMSSummary()) + "kms x " + kms_rate_df.format(rate_summary.getPerKilometerRate()) + " = "%></td>
-                                <td><b><%=curr_df.format(rate_summary.getKMSTotal())%></b></td> 
+                               if(rate_summary.getKMSSummary() > 0){%>        
+                               <br/>                        
+                               		<b>YOUR KM RATE:</b> <span style="color:green;"><%=kms_rate_df.format(rate_summary.getPerKilometerRate())%></span>
+									<br/><%=kms_df.format(rate_summary.getKMSSummary()) + "kms x " + kms_rate_df.format(rate_summary.getPerKilometerRate()) + " = "%>
+                               		<b><%=curr_df.format(rate_summary.getKMSTotal())%></b>
                                 <%}%>
                               <%}%>
-                            <td class="no-print"></td>
-                          
-                        </tr> 
-                        <tr><td colspan=8>&nbsp;</td></tr>                                                  
-                        <tr>
-                          <td class="total_label" colspan="6" align="right" valign="middle">Total Due:</td>                         
-                          <td class="summary_total" valign="middle"><%=curr_df.format(summary.getSummaryTotal())%></td>
-                          <td class="no-print"></td>
-                        </tr>
-                       <tr><td colspan=8>&nbsp;</td></tr> 
-                        <tr>
-                          <td colspan="8" height="10">&nbsp;</td>
-                        </tr>
+                              
+                              
+                              
+                        	<div style="font-weight:bold;font-size:16px;float:right;padding-right:10px;">TOTAL DUE: $<span id="totalDUE"><%=summary.getSummaryTotal()%></span></div>
                         
-                        <%if(
-                        		(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") && claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED))
-                        		
-                        		|| 		
-                        		
+                      <div style="clear:both;"></div>
+                        
+                        <div align="center" class="no-print">
+                        	
+                        
+                        <%if((usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") && claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)) || 		                        		
                         		(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW") && (claim.getCurrentStatus().equals(TravelClaimStatus.SUBMITTED) || claim.getCurrentStatus().equals(TravelClaimStatus.REVIEWED))  )
-                        		
-                        		)
-                        		
-                        		
-                        		
-                        		
-                        		{%>
-                          <tr class="no-print">
-                           
-                            <td colspan="8" align="right" valign="bottom">
-                              <img style="padding-right:5px;padding-bottom:2px;" src="includes/img/addnote-off.png" class="img-swap" title="Add note." onclick="openModalDialog('<%=claim.getClaimID()%>','travelclaimnote','<%=claimtitle%>,<%=FullName%>');">
-                              <!-- <img style="padding-right:5px;padding-bottom:2px;" src="includes/img/save-off.png" class="img-swap" title="Save changes to claim." onclick="openModalDialog('<%=claim.getClaimID()%>','savetravelclaim','<%=claimtitle%>,<%=FullName%>');">-->
-                               <a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><img style="padding-right:10px;padding-bottom:2px;" src="includes/img/print-off.png" class="img-swap" title="Print claim."></a><br>
-                            </td>
-                          </tr>
-                        <%}else{%>
-                          <tr class="no-print">
-                            <td colspan="8" align="right" valign="bottom">
-                              <a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});">
-                              <img style="padding-right:10px;padding-bottom:2px;" src="includes/img/print-off.png" class="img-swap" title="Print claim."></a><br>
-                            </td>
-                          </tr>
+                        		){%>
+                         <a href="#" class="noJump btn btn-xs btn-info"  title="Add note." onclick="openModalDialog('<%=claim.getClaimID()%>','travelclaimnote','<%=claimtitle%>,<%=FullName%>');"><i class="far fa-clipboard"></i> Add Claim Note</a>
+                              <!-- <img style="padding-right:5px;padding-bottom:2px;" src="includes/img/save-off.png"  title="Save changes to claim." onclick="openModalDialog('<%=claim.getClaimID()%>','savetravelclaim','<%=claimtitle%>,<%=FullName%>');">-->
+                          <a href='#' class="noJump btn btn-xs btn-primary" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print this Claim</a>
+                            
+                        <%}else{%>                         
+                              <a href='#' class="noJump btn btn-xs btn-primary" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print this Claim</a>
                         <%}%>
+                        <%if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW") && claim.getCurrentStatus().equals(TravelClaimStatus.APPROVED)){%>
+			           		<a href="#" id="updateDTable" class="noJump btn btn-xs btn-danger" style="color:White;"><i class="far fa-sync-alt" style="color:white;"></i> Re-Calculate Other</a>
+                        <%}%>
+                        </div>
+                        
                     <%}%>
                    
-        </table>
-                    </td>
-                    </tr>
-                    
-                  </table>
-                  
-                  <br/><br/>
-                  <table width="100%">
-                  <tr>
-                      <td>                      
+    </div>
+    
+    <br/>                      
                       	<%=claim.getFiscalYear()%> Total Amount Claimed To Date: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(total_claimed)%></span>
                       	     <%if(budget != null){ %>
                       			<br/><%=claim.getFiscalYear()%> Amount Claimed Against Budget:<span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmountClaimed())%></span>
@@ -660,34 +797,185 @@ f.value = f.value.replace('\n',' ');
                       			<br/><%=claim.getFiscalYear()%> Approved Budget: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmount())%></span>
                       			<br/><%=claim.getFiscalYear()%> Remaining Available Funds: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmount() - budget.getAmountClaimed() - budget.getAmountPreclaimed())%></span>
                       		<%}%>	
-                     </td>
-                    </tr>                  
-                  </table>
-                  
-                  
+                    
                  
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+                    
     </form>
    </div>
+ <!-- END CLAIM DETAILS ENTRY -->
+ 
+  
+  <!-- CLAIM HISTORY----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+  <div class="tab-pane" id="history" style="background-color:#FFF0F5;padding:5px;">
+  
+ 
+    <div  style="float:left;padding-top:10px;text-transform:Capitalize;font-size:18px;width:50%;"><b>Claim History for:</b> <%=FullName%></div>         
+         
+         <div style="float:right;font-size:26px;color:Silver;width:50%;text-align:right;">
+					               <%if(claim instanceof PDTravelClaim){%>              
+					              			<%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
+					              <%}else if(claim instanceof TravelClaim){%>
+					              			<%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
+					              <%}%>
+		    </div>
+		    
+		   <div style="clear:both;"></div>    
+		   
+  			<%if(!h_items.hasNext()){%>
+                  <div class="alert alert-secondary">This claim currently has no history.</div>
+                    <%}else{%>           
+           	<table id="claimHistoryTable" class="table table-condensed table-striped table-bordered" style="font-size:11px;background-color:White;" width="100%">
+           <thead>                  
+                   <tr style="text-transform:uppercase;font-weight:bold;"> 
+                      <th width="15%">Date</th>
+                      <th width="35%">Action</th>
+                      <th width="35%">Performed By</th>
+                      <th width="15%">Email Address</th>
+                    </tr>
+            </thead>
+            		<tbody>         	
+            		
+                    <%while(h_items.hasNext()){                    	
+                     history = (HistoryItem) h_items.next();%>
+                      <tr>
+                        <td><%=history.getDatePerformed().toString()%></td>
+                        <td><%=history.getActionPerformed()%></td>
+                        <td><%=history.getPerformedBy().getFullName()%></td>
+                        <td><a href="mailto:<%=history.getPerformedBy().getEmailAddress()%>?subject=Travel Claim"><%=history.getPerformedBy().getEmailAddress()%></a></td>
+                      
+                      </tr>
+                    <%}%>
+                   </tbody>  
+              </table>       
+                    <br/>
+                    <div align="center">
+                    <a href='#' class="btn btn-xs btn-primary no-print" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img border=0 width=300 src=includes/img/nlesd-colorlogo.png></div><br/><br/>',append:'<div align=center style=font-size:9px;margin-top:20px;>95 Elizabeth Avenue, St. John&acute;s, NL &middot; A1B 1R6 &middot; Tel: (709) 758-2372 &middot; Fax: (709) 758-2706</div>'});">
+                     <i class="fas fa-print"></i> Print History</a> 
+                     </div>
+                     <br/>
+  <%} %>
+  
+  
+  </div>
+  <!-- END CLAIM HISTORY -->
+
+<!-- CLAIM NOTES- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+  <div class="tab-pane" id="notes" style="background-color:#F5FFFA;padding:5px;">
+  
     
-       <div id="myModal" class="modal fade">
+  <div  style="float:left;padding-top:10px;text-transform:Capitalize;font-size:18px;width:50%;"><b>Notes for Claimant:</b> <%=FullName%></div>         
+         
+         <div style="float:right;font-size:26px;color:Silver;width:50%;text-align:right;">
+					               <%if(claim instanceof PDTravelClaim){%>              
+					              			<%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>
+					              <%}else if(claim instanceof TravelClaim){%>
+					              			<%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %>
+					              <%}%>
+		    </div>
+		   <div style="clear:both;"></div>   
+  
+    
+  
+		     <%if(!n_items.hasNext()){%>
+                  <div class="alert alert-secondary">This claim currently has no notes.</div>
+                    <%}else{%>           
+		              
+		   	<table id="claimNotesTable" class="table table-condensed table-striped table-bordered" style="font-size:11px;background-color:White;" width="100%">
+  			<thead>
+  			<tr style="text-transform:uppercase;font-weight:bold;"> 
+                      <th width="20%">Date</th>
+                      <th width="30%">Submitted By</th>
+                      <th width="50%">Note</th>
+                    </tr>
+           	</thead>
+           	<tbody>                  
+                      <%while(n_items.hasNext()){
+                        note = (TravelClaimNote) n_items.next();%>
+		                        <tr>
+		                          <td style="padding-left:15px;" width="20%" valign="top" class="field_content"><%=note.getNoteDate().toString()%></td>
+		                          <td width="30%" valign="top" class="field_content"><%=note.getPersonnel().getFullNameReverse()%></td>
+		                          <td width="50%" valign="top" class="field_content"><%=note.getNote()%></td>
+		                        </tr>
+                      <%}%>
+              </tbody>  
+              </table>       
+                    <br/>
+                     <div align="center">
+                    <a href='#' class="btn btn-xs btn-primary no-print" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=300 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print Claim Notes</a> 
+                	</div>
+                	<br/>
+				<%}%>
+  
+  
+  
+  </div> 
+   <!-- END CLAIM NOTES -->       
+</div> 
+ 
+ 
+ 	<div class="no-print" style="text-align:center;padding-top:10px;padding-bottom:15px;">
+ 	<a href="#" class="noJump btn btn-danger btn-xs" title="Back" onclick="loadingData();loadMainDivPage('back');return false;"><i class="fas fa-step-backward"></i> Back</a>
+						<%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID())||(cur_status == TravelClaimStatus.REJECTED.getID())){%>
+					            <%if(!claim.getItems().isEmpty()){%>
+					            		<a href="#" class="noJump btn btn-xs btn-primary" title="Submit this claim for processing." onclick="openModalDialog('<%=id%>','submitclaim','<%=claimtitle%>');"><i class="fas fa-sign-in-alt"></i> Submit Claim for Processing</a>
+					             <%}%>
+					              		<a href="#" class="noJump btn btn-xs btn-warning" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');"><i class="fas fa-user-check"></i> Change Your Supervisor</a>
+					             		<a href="#" class="noJump btn btn-danger btn-xs"  title="Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> Delete Claim</a>
+					                   
+					          <%}else if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
+					           						 	&& (claim.getSupervisor().getPersonnelID() == usr.getPersonnel().getPersonnelID())
+					            						&&((cur_status == TravelClaimStatus.SUBMITTED.getID()) 
+					            							|| (cur_status == TravelClaimStatus.REVIEWED.getID()))){%>
+					           			<a href="#" class="noJump btn btn-xs btn-success" title="Approve this claim." onclick="openModalDialog('<%=id%>','supervisorapprove','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-clipboard-check"></i> Approve this Claim</a>
+					          			<a href="#" class="noJump btn btn-xs btn-danger" title="Decline this claim." onclick="openModalDialog('<%=id%>','supervisordecline','<%=claimtitle%>,<%=RealName%>');"><i class="far fa-times-circle"></i> Decline this Claim</a>
+					            
+					            <%}else if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")
+					            						&&((cur_status == TravelClaimStatus.APPROVED.getID()) 
+					            						|| (cur_status == TravelClaimStatus.PAYMENT_PENDING.getID()))){%>
+					            		<a href="#" class="noJump btn btn-xs btn-primary" title="Pay this claim." onclick="openModalDialog('<%=id%>','paytravelclaim','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-cogs"></i> Process this Claim</a>
+					            		<a href="#" class="noJump btn btn-xs btn-info" title="Payment pending." onclick="openModalDialog('<%=id%>','paypendingtravelclaim','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-file-invoice-dollar"></i> Set Payment Pending</a>				
+					          
+					          <%}else{%>
+					           <!-- Do nothing for now -->
+					          <%}%>
+					           <esd:SecurityAccessRequired roles="TRAVEL-CLAIM-DELETE">
+					           <!-- Allow AP to delete invalid claims or twice submitted claims. Cannot delete Approved or paid claims. -->
+					           	<%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID()) 
+					           			|| (cur_status == TravelClaimStatus.REVIEWED.getID()) 
+					           			|| (cur_status == TravelClaimStatus.SUBMITTED.getID()) 
+					           			|| (cur_status == TravelClaimStatus.PAYMENT_PENDING.getID()) 
+					           			|| (cur_status == TravelClaimStatus.REJECTED.getID())){%>
+					          		 	 <a href="#" class="noJump btn btn-danger btn-xs" title="Accounts Payable - Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> AP Delete Claim</a>
+					          		 	 <%} %>
+					          	</esd:SecurityAccessRequired>	
+					          		 	
+					          		<%if(isAdmin && claim.getPersonnel().getPersonnelID() != usr.getPersonnel().getPersonnelID()){%>
+					          		<a href="#" class="noJump btn btn-danger btn-xs" title="Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> Admin Delete Claim</a>
+					          		 <%}%>   
+					          		
+					          		
+  </div>
+ 
+ 
+ 
+ 
+<!-- CLAIM MODAL -->    
+       <div id="travelModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="maintitle"></h4>
+                 <h4 class="modal-title" id="maintitle"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                   
                 </div>
                 <div class="modal-body">
-                    <p id="title1"></p>
-                    <p class="text-warning" id="title2"></p>
+                                
+                    <span id="title1"></span>
+                    <span id="title2"></span>
+                    
                     <div id="selectbox" style="display:none;">
-                    	<select id="supervisor_id">
-                    		<option value="SELECT YEAR">SELECT SUPERVISOR</option>
+                    	<select id="supervisor_id" class="form-control">
+                    		<option value="-1">SELECT SUPERVISOR</option>
                           		<%while(iter.hasNext()){
                               		p = (Personnel) iter.next();
                               		if((p.getPersonnelID() != usr.getPersonnel().getPersonnelID()) 
@@ -699,64 +987,80 @@ f.value = f.value.replace('\n',' ');
                     	
                     	</select>
                     </div>
-                    <p class="text-warning" id="title3"></p>
-                    <p class="text-warning" id="title4"></p>
+                    <span id="title3"></span>
+                    <span id="title4"></span>
+                    
                     <div id="sdsvendorbox" style="display:none;">
-                    	
-                    	<table>
-                    	<tr>
-                    	<td><b>SDS VENDOR NUMBER:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><input type="text" name="sds_ven_num" id="sds_ven_num" style="font-size:11px;width:250px;" value='<%=sds != null ? sds.getVendorNumber() : "" %>'/></td>
-                    	</tr>
-                    	</table>
-						 
+                    SDS VENDOR NUMBER: <input type="text"  class="form-control" name="sds_ven_num" id="sds_ven_num" value='<%=sds != null ? sds.getVendorNumber() : "" %>'/>                     	
                     </div>
+                    
                     <div id="glaccountbox" style="display:none;">
-                    	<table>
-                    	<tr>
-                    	<td colspan='2' align="center"><b><span id="optionaltitle">Mandatory Information</span></b><br /><br /></td></tr>
-                    	<tr>
-                    	<td><b>GL ACCOUNT CODE:</b>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><input type="text" name="glaccount" id="glaccount" style="font-size:11px;width:250px;" value='<%=acct_code != null ? acct_code : "" %>'/></td>
-                    	</tr>
-                    	</table>
-						 
+                    	<b><span id="optionaltitle">Mandatory Information</span></b>
+                    	<b>GL ACCOUNT CODE:</b> <input type="text"  class="form-control" name="glaccount" id="glaccount"  value='<%=acct_code != null ? acct_code : "" %>'/>						 
                     </div>
+                    
                     <div id="teacherpaybox" style="display:none;">
-                    	<table>
-                    	<tr>
-                            <td width="*" valign="middle" align="right" style="padding-right:5px;"><input type="checkbox" id="sds_tchr_par" name="sds_tchr_par"></td>
-                            <td width="70%" valign="middle" align="left"><span valign="middle">Process through teacher payroll?</span></td>
-                        </tr>
-                    	</table>
-						 
+                    	<input type="checkbox" id="sds_tchr_par" name="sds_tchr_par"> <span valign="middle">Process through teacher payroll?</span>
                     </div>
+                    
                     <div id="declinenotes" style="display:none;">
-                    	<table width="95%" align="center">
-                    	<tr>
-                    	<td colspan='2' align="center"><b>Note: (Optional)</b><br /><br /></td></tr>
-                    	<tr>
-                    	<td colspan='2' align='center'><textarea id="note" name="note" style="width:90%;height:100px;"></textarea></td>
-                    	</tr>
-                    	</table>
+                    	
+                    	<b>Note: (Optional)</b><br/>
+                    	<textarea id="note" class="form-control" rows="5" name="note"></textarea>
 						 
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="buttonleft"></button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="buttonright"></button>
+                    <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" id="buttonleft"></button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" id="buttonright"></button>
                 </div>
             </div>
         </div>
     </div>  	
 
         	<script>
-		$('document').ready(function(){
-    			$( ".requiredinput_date" ).datepicker({
-      		      	changeMonth: false,//this option for allowing user to select month
-      		      	changeYear: false, //this option for allowing user to select from year range
-      		      	dateFormat: "dd/mm/yy"
-      		      
-      		 	});
+        	
+        	
+        	
+        	
+		$('document').ready(function(){  			
+			
+			
+			$('input#item_meals').blur(function(){
+			    var num = parseFloat($(this).val());
+			    var cleanNum = num.toFixed(2);
+			    $(this).val(cleanNum);
+			    if(num == "" || num == null) {
+			    	$("#item_meals").val("0.00");			    	
+			    }
+			    if(num/cleanNum < 1){			    	
+			    	$(".details_error_message").html("<b>INVALID CURRENCY AMOUNT:</b> Please enter correct format of $0.00.").css("display","block").delay(6000).fadeOut();
+			        }
+			    });
+			$('input#item_lodging').blur(function(){
+			    var num = parseFloat($(this).val());
+			    var cleanNum = num.toFixed(2);
+			    $(this).val(cleanNum);
+			    if(num == "" || num == null) {
+			    	$("#item_lodging").val("0.00");		    	
+			    }
+			    if(num/cleanNum < 1){			    	
+			    	$(".details_error_message").html("<b>INVALID CURRENCY AMOUNT:</b> Please enter correct format of $0.00.").css("display","block").delay(6000).fadeOut();
+			        }
+			    });
+			$('input#item_other').blur(function(){
+			    var num = parseFloat($(this).val());
+			    var cleanNum = num.toFixed(2);
+			    $(this).val(cleanNum);
+			    if(num == "" || num == null) {
+			    	$("#item_other").val("0.00");			    	
+			    }
+			    if(num/cleanNum < 1){			    	
+			    	$(".details_error_message").html("<b>INVALID CURRENCY AMOUNT:</b> Please enter correct format of $0.00.").css("display","block").delay(6000).fadeOut();
+			        }
+			    });
+			
     			$( "#item_meals" ).blur();
     			$( "#item_lodging" ).blur();
     			$( "#item_other" ).blur();
@@ -766,20 +1070,100 @@ f.value = f.value.replace('\n',' ');
 		});
 		</script>
 
+<!-- ENABLE DATE/TIME PICKERS -->	
+<script> 
+$('document').ready(function(){  		
 
-<script>
-$('#item_desc').keypress(function(e) {
-    var tval = $('#item_desc').val(),
-        tlength = tval.length,
-        set = 500,
-        remain = parseInt(set - tlength);
-    $('#remainder').text(remain);
-    if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {
-        $('#item_desc').val((tval).substring(0, tlength - 1))
+      $('.datepicker').datetimepicker({
+    	 	   format: 'L',
+    		  date: moment('<%=(failed_item != null)?cal_sdf.format(new Date(failed_item.getItemDate().getTime())):cal_sdf.format(Calendar.getInstance().getTime())%>','L')
+ 				});
+      
+      
+	 $('.departureTimePicker').datetimepicker({		 
+		 		format: 'LT',
+	 			date: moment('<%=(failed_item != null)?failed_item.getDepartureTime():"8:30 AM"%>','LT')
+		 		
+	 			});
+	
+	    $('.returnTimePicker').datetimepicker({
+	    	format: 'LT',	
+	    	date: moment('<%=(failed_item != null)?failed_item.getReturnTime():"4:30 PM"%>','LT')	    		
+	    });
+	    
+
+function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
     }
-})
+function isNumberDec(evt)
+{
+   var charCode = (evt.which) ? evt.which : evt.keyCode;
+   if (charCode != 46 && charCode > 31 
+     && (charCode < 48 || charCode > 57))
+      return false;
+
+   return true;
+}  
+//CKEditor Configuration
+var pageWordCountConf = {
+	    showParagraphs: true,
+	    showWordCount: true,
+	    showCharCount: true,
+	    countSpacesAsChars: true,
+	    countHTML: true,
+	    maxWordCount: -1,
+	    maxCharCount: 500,
+}
+
+CKEDITOR.replace('item_desc',{wordcount: pageWordCountConf,height:150});
+
+$('#timeDepartureON').change(function(){
+	if (this.checked) {
+        $('#item_departure_time').val("Overnight");
+        $( "#item_departure_time" ).prop( "disabled", true );
+    } else {
+    	$('#item_departure_time').val("Overnight");
+    	 $( "#item_departure_time" ).prop( "disabled",false );
+    }
+});
+
+$('#timeReturnON').change(function(){
+	if (this.checked) {
+        $('#item_return_time').val("Overnight");
+        $( "#item_return_time" ).prop( "disabled", true );
+    } else {
+    	 $('#item_return_time').val("4:30 PM");
+    	$( "#item_return_time" ).prop( "disabled", false );
+    }
+});
+
+    
+$( "#detailTAB" ).click(function() {
+	$("#theTABS").css("background-color","#FAFAD2");
+	});
+$( "#historyTAB" ).click(function() {
+	$("#theTABS").css("background-color","#FFF0F5");
+});
+$( "#noteTAB" ).click(function() {
+	$("#theTABS").css("background-color","#F5FFFA");
+});
+
+});
+
+$("a.noJump").click(function(e) {
+    e.preventDefault();  
+});
 
 </script>
 
+
+
   <!-- ENABLE PRINT FORMATTING -->
 	<script src="includes/js/jQuery.print.js"></script>	
+	
+
