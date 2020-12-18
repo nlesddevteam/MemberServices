@@ -58,8 +58,11 @@ public class GetTravelClaimsByLetterAjaxRequestHandler extends RequestHandlerImp
 							sb.append("<EMPLOYEE>" + p.getFullName() + "</EMPLOYEE>");
 							sb.append("<TITLE>" + Utils.getMonthString(claim.getFiscalMonth()) + " "
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</TITLE>");
+							sb.append("<ZONE>" + ((p.getSchool() !=null)?p.getSchool().getZone():"UNKNOWN") + "</ZONE>");						
+							sb.append("<AMOUNT>" +  claim.getSummaryTotals().getSummaryTotal() + "</AMOUNT>");	
 							sb.append("<TYPE>Monthly</TYPE>");
 							sb.append("<ID>" + claim.getClaimID() + "</ID>");
+							sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
 							sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 							sb.append("</CLAIM>");
 						}
@@ -69,8 +72,11 @@ public class GetTravelClaimsByLetterAjaxRequestHandler extends RequestHandlerImp
 							sb.append("<TITLE>" + "PD - "
 									+ ((PDTravelClaim) claim).getPD().getTitle().replaceAll("&", "&amp;").replaceAll("\"", "&quot;")
 									+ "</TITLE>");
+							sb.append("<ZONE>" + ((p.getSchool() !=null)?p.getSchool().getZone():"UNKNOWN") + "</ZONE>");						
+							sb.append("<AMOUNT>" +  claim.getSummaryTotals().getSummaryTotal() + "</AMOUNT>");	
 							sb.append("<TYPE>PD</TYPE>");
 							sb.append("<ID>" + claim.getClaimID() + "</ID>");
+							sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
 							sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 							sb.append("</CLAIM>");
 						}

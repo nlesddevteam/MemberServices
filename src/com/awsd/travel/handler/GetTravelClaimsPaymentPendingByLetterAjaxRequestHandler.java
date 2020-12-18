@@ -36,11 +36,12 @@ public class GetTravelClaimsPaymentPendingByLetterAjaxRequestHandler extends Req
 		String searchletter = request.getParameter("letter");
 		LinkedHashMap<Integer, Vector<TravelClaim>> travelclaims = null;
 		try {
+						
 			if (searchletter.equals("All")) {
 				travelclaims = TravelClaimDB.getClaimsPaymentPendingTreeMap();
 			}
 			else {
-				travelclaims = TravelClaimDB.getClaimsPaymentPendingLetterTreeMap(searchletter);
+				travelclaims = TravelClaimDB.getClaimsPaymentPendingLetterTreeMap(searchletter);			
 			}
 			// generate XML for candidate details.
 			String xml = null;
@@ -57,9 +58,30 @@ public class GetTravelClaimsPaymentPendingByLetterAjaxRequestHandler extends Req
 						if (!(claim.getClass().getName().toString().equals("com.awsd.travel.PDTravelClaim"))) {
 							sb.append("<CLAIM>");
 							sb.append("<EMPLOYEE>" + p.getFullName() + "</EMPLOYEE>");
+							sb.append("<ZONE></ZONE>");
+							
+							if(p.getSchool() != null) {
+                                if(p.getSchool().getZone() != null) {
+                                    sb.append("<ZONE>" + p.getSchool().getZone().getZoneName() + "</ZONE>");
+                                }else {
+                                    sb.append("<ZONE>N/A</ZONE>");
+                                }
+                            }else {
+                                sb.append("<ZONE>N/A</ZONE>");
+                            }
+							
+							
+							
+							//sb.append("<ZONE>" + ((p.getSchool()!=null)?p.getSchool().getZone().getZoneName():"UNKNOWN") + "</ZONE>");
 							sb.append("<TITLE>" + Utils.getMonthString(claim.getFiscalMonth()) + " "
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</TITLE>");
 							sb.append("<TYPE>Monthly</TYPE>");
+							if (claim.getSupervisor() == null) {
+								sb.append("<SUPERVISOR></SUPERVISOR>");
+							}
+							else {
+								sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
+							}
 							sb.append("<CLAIMDATE>" + Utils.getMonthString(claim.getFiscalMonth()) + ","
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</CLAIMDATE>");
 							sb.append("<ID>" + claim.getClaimID() + "</ID>");
@@ -69,12 +91,31 @@ public class GetTravelClaimsPaymentPendingByLetterAjaxRequestHandler extends Req
 						else {
 							sb.append("<CLAIM>");
 							sb.append("<EMPLOYEE>" + p.getFullName() + "</EMPLOYEE>");
+							sb.append("<ZONE></ZONE>");
+							//sb.append("<ZONE>" + ((p.getSchool()!=null)?p.getSchool().getZone().getZoneName():"UNKNOWN") + "</ZONE>");
+							
+							if(p.getSchool() != null) {
+                                if(p.getSchool().getZone() != null) {
+                                    sb.append("<ZONE>" + p.getSchool().getZone().getZoneName() + "</ZONE>");
+                                }else {
+                                    sb.append("<ZONE>N/A</ZONE>");
+                                }
+                            }else {
+                                sb.append("<ZONE>N/A</ZONE>");
+                            }
+							
 							sb.append("<TITLE>" + "PD - "
 									+ ((PDTravelClaim) claim).getPD().getTitle().replaceAll("&", "&amp;").replaceAll("\"", "&quot;")
 									+ "</TITLE>");
 							sb.append("<CLAIMDATE>" + Utils.getMonthString(claim.getFiscalMonth()) + ","
 									+ Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) + "</CLAIMDATE>");
 							sb.append("<TYPE>PD</TYPE>");
+							if (claim.getSupervisor() == null) {
+								sb.append("<SUPERVISOR></SUPERVISOR>");
+							}
+							else {
+								sb.append("<SUPERVISOR>" + claim.getSupervisor().getFullName() + "</SUPERVISOR>");
+							}
 							sb.append("<ID>" + claim.getClaimID() + "</ID>");
 							sb.append("<MESSAGE>LISTFOUND</MESSAGE>");
 							sb.append("</CLAIM>");

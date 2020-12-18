@@ -1,0 +1,172 @@
+/* SET BODY AND MAX MIN SIZE */
+body {font-family: Verdana, Arial, Geneva, Helvetica;color: Black;-webkit-text-size-adjust: 100%;background:none;background-color:none;margin-bottom:100px;}
+html {  background: url('/MemberServices/Travel/includes/img/imgback2.png') no-repeat center center fixed;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; } 
+
+.blink-me { animation: blinker 1s linear infinite;}
+@keyframes blinker {50% { opacity: 0; }}
+
+/* DEFAULT SETTINGS */
+.mainContainer {font-size:12px;max-width:1600px;min-width:300px;display: block;  margin-left: auto;  margin-right: auto; }
+#content browser { margin-right: -14px !important; overflow-y: scroll; overflow-x: hidden;}
+#pageContentBody {font-size:12px;color:Black;background-color: rgba(255, 255, 255, 1);width:100%;margin-top:5px;padding:10px;border:1px solid rgb(0, 64, 124);height:auto;border-radius: 10px;box-shadow: 5px 5px 3px rgba(0, 26, 51,0.5);}
+.pageHeader {font-size:18px;color:#2a8b23;font-weight:bold;padding-top:5px;padding-bottom:5px;text-transform:capitalize;}
+.pageSubHeader{font-size:16px;color:00407c;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+.pageSubSubHeader{font-size:13px;color:#FF0000;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+.pageBodyText {font-size:12px;color:#000000;padding-bottom:10px;}
+.pageHeaderGraphic{float:right;width:100%;max-width:250px;min-width:100px;}
+#claimNoticeMessage {text-align:center;font-size:14px;border-radius: 10px;border:1px solid rgb(255, 0, 0);}
+.alert {border-radius: 10px;}
+#details_error_message {text-align:center;font-size:14px;border-radius: 10px;border:1px solid rgb(255, 0, 0);}
+#details_success_message {text-align:center;font-size:14px;border-radius: 10px;border:1px solid rgb(0, 255, 0);}
+#loadingSpinner {position: fixed; top: 0; left: 0; width: 100%; height: 100%; text-align:center; background-color: rgba(0, 0, 0,0.5);z-index: 1000;}
+#spinner {position: fixed; text-align: center;  top: 25%;  left: 50%; transform: translate(-50%, 0);background-color:rgba(255, 255, 255, 0);padding:10px;font-size:16px;color:White;}
+
+.claimFundsInfoBox {float:right;font-size:12px;width:25%;min-width:300px;padding:5px;border:1px dotted #007F01;margin-bottom:5px;}
+.claimFundsInfoBoxHTitle1 {font-weight:bold;color:#1F4279;text-transform:uppercase;}
+.claimFundsInfoBoxHTitle2 {color:#007F01;}
+.claimFundsInfoBoxHTitle3 {color:#4D4C4E;}
+.claimFundsInfoBoxText {color:#000000;}
+.claimFundsInfoBoxInfo {color:Red;}
+.claimFundsInfoBoxTable {font-size:12px;}
+
+.claimsTable {font-size:11px;}
+/*Fix Bootsrap 4 missing stuff! */
+.btn-group-xs > .btn, .btn-xs {  padding: .20rem .20rem;  font-size: .675rem;  line-height: 1.1;  border-radius: .2rem;}
+.searchResultsLarge {float:right;font-size:24;color:Red;}
+
+input { border:1px solid silver;}
+
+/*REGIONAL COLOR SETTINGS */
+.regionDefault {background-color: #1F4279;}
+.region1 {background-color:rgba(191, 0, 0, 0.1);}
+.region1a {border-left:10px solid rgba(191, 0, 0, 0.3);}
+.region1solid {background-color:rgba(191, 0, 0, 1);}
+.region1half {background-color:rgba(191, 0, 0, 0.5);}
+.region2 {background-color:rgba(0, 191, 0, 0.1);}
+.region2a {border-left:10px solid rgba(0, 191, 0, 0.3);}
+.region2solid {background-color:rgba(0, 191, 0, 1);}
+.region2half {background-color:rgba(0, 191, 0, 0.5);}
+.region3 {background-color:rgba(255, 132, 0, 0.1);}
+.region3solid {background-color:rgba(255, 132, 0, 1);}
+.region3half {background-color:rgba(255, 132, 0, 0.5);}
+.region3a {border-left:10px solid rgba(255, 132, 0, 0.3);}
+.region4 {background-color:rgba(127, 130, 255, 0.1);}
+.region4a {border-left:10px solid rgba(127, 130, 255, 0.3);}
+.region4solid {background-color:rgba(127, 130, 255,1);}
+.region4half {background-color:rgba(127, 130, 255, 0.5);}
+.region5 {background-color:rgb(153, 51, 51, 0.1);}
+.region5a {border-left:10px solid rgba(153, 51, 51, 0.3);}
+.regionEastern {}
+.regionCentral {}
+.regionWestern {}
+.regionLabrador {}
+.regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
+
+
+/* NAVIGATION BAR */
+a.dropdown-item {font-size:12px;}
+.topLogoImg {width:100%;max-width:800px;}
+.nav-link {font-size:12px;}
+.navbar {background-color: rgba(0, 64, 124,1);color: white; z-index:999;}
+.navbar-img {width:100%;max-width:37px;min-width:30px;padding:0px;margin:0px;}
+.sticky-offset {top: 16px;}
+.dropdown-item:hover {background-color:rgb(42, 139, 35,0.8);color:White;}
+.dropdown-menu {background-color:rgb(255,255,255,0.9)}
+
+
+.dropdown-toggle.active-dropdown::after { transform: rotate(-90deg);}
+.search-form-top {margin-block-end:0px;font-size:11px;}
+.fa-caret-right,.fa-caret-down {float:right;padding-top:2px;}
+
+/* BOTTOM FLOATING NAVIGATION BAR */
+.navBottom {position: fixed; bottom: 40px; right:10px;z-index:999999; }
+.infoBottom {position: fixed; bottom: 40px; left:10px;font-size:11px;background-color:#FFFFFF;padding:3px;border-radius: 10px; }
+
+/* FOOTER CONTENT */
+.mainFooter {position: fixed; left: 0;bottom: 0px; width: 100%; padding-top:5px;padding-bottom:5px; border-top:1px solid white; background-color: rgba(0, 64, 124,1);color: white;text-align: center; font-size:10px;}
+a.footerMenu { color:#FFFFFF;  text-decoration: none;}
+a.footerMenu:visited { color:#FFFFFF;  text-decoration: none;}
+a.footerMenu:hover {	color: #FFFF80;	text-decoration: underline;} 
+a.footerMenu:active { color: #FF0000; text-decoration: none;}
+.gTranslate {text-align:left;margin-left:10px;float:left;width:45%;}
+.bottomLogoFloat { position: fixed; bottom: 0;left: 0;padding-left:5px;padding-bottom:20px;}
+.copyright {font-size:11px;text-align:right;padding-top:5px;margin-right:5px;color:white;float:right;width:45%;}
+.searchBoxFooter{display:none;}
+
+/* YouTube Resize Fluid */
+.youTubeOuter {max-width:853px;margin:0 auto; padding:5px;}
+.youTubeInner {position: relative;padding-bottom: 56.25%; height: 0; overflow: hidden;}
+.youTubeClip {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; max-width: 853px; max-height: 480px;}
+
+/* DEFAULT HEADERS & FONT SIZES */
+.siteHeaderBlack {font-size:18px;color:#000000;font-weight:bold;padding-top:10px;padding-bottom:5px;}
+.siteHeaderGreen {font-size:18px;color:#008001;font-weight:bold;padding-top:10px;padding-bottom:5px;}
+.siteHeaderBlue {font-size:18px;color:#004178;font-weight:bold;padding-top:10px;padding-bottom:5px;}
+.siteHeaderRed {font-size:18px;color:#FF0000;font-weight:bold;padding-top:10px;padding-bottom:5px;}
+
+.siteSubHeaderBlack {font-size:14px;color:#000000;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+.siteSubHeaderGreen {font-size:14px;color:#008001;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+.siteSubHeaderBlue {font-size:14px;color:#004178;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+.siteSubHeaderRed {font-size:14px;color:#FF0000;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+
+.siteBodyTextBlack {font-size:12px;color:Black;}
+.siteBodyTextDimGrey {font-size:12px;color:DimGrey;}
+
+.ui-accordion-header {font-size:16px;}
+.ui-accordian-content {font-size:12px;}
+.siteFootnotes,.siteFootNotes {font-size:11px;}
+.siteFont {font-size:11px;color:Black;}
+.bootstrap-datetimepicker-widget table {font-size:11px;}
+.quickAlert {color:Red;font-size:11px;}
+.statusLogo {width:100%;max-width:300px;}
+
+/* Fix Bootstrap 4 to include xs size */
+.btn-group-xs > .btn, .btn-xs {  margin: 3px;padding: 4px;  font-size: 11px;  line-height: 1;  border-radius: .2rem;}
+
+
+@media only screen and (max-width: 2596px) {
+    	
+    	#menuMobile {display:none;}
+    	#menuNormal {display:block;}
+    	#searchFormTop {display:block;} 
+    	.navbar-brand {display:none;}
+    	
+}
+
+
+
+@media only screen and (max-width: 1000px) {
+    	
+	    	
+}
+@media only screen and (max-width: 920px) {
+    	
+	   	    	    	
+}
+
+@media only screen and (max-width: 768px) {	
+	  .searchBoxNavBar {display:none;}
+	  .searchBoxFooter {display:block; width:100%;padding-left:5px;padding-right:5px;text-align:center;}
+	  .navBottom {position:static;}	 
+	 .gTranslate {text-align:center;margin-left:0px;float:none;width:100%;}
+		.copyright {font-size:11px;text-align:center;padding-top:5px;margin-right:0px;color:white;float:none;width:100%;}
+	 
+}
+
+
+/* hover dropdown menus */
+@media only screen and (max-width: 991px) {
+    .navbar-hover .show > .dropdown-toggle::after{
+        transform: rotate(-90deg);
+    }
+}
+@media only screen and (min-width: 992px) {
+    .navbar-hover .collapse ul li{position:relative;}
+    .navbar-hover .collapse ul li:hover> ul{display:block}
+    .navbar-hover .collapse ul ul{position:absolute;top:100%;left:0;min-width:250px;display:none}
+    .navbar-hover .collapse ul ul ul{position:absolute;top:0;left:100%;min-width:250px;display:none}
+    /*.navbar-hover .collapse ul ul ul ul{position:absolute;top:0;left:-100%;min-width:250px;display:none;z-index:1}*/
+}
+
+
+	

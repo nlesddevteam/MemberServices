@@ -35,7 +35,7 @@ if (day==2 || day==22) end="nd";
 if (day==3 || day==23) end="rd";
 day+=end;
 
-document.write("<span class='date'>&nbsp;Today is ");
+document.write("<span class='date'>");
 document.write(d[today.getDay()]+", "+m[today.getMonth()]+" ");
 document.write(day+", " + year);
 document.write("&nbsp;</span>");

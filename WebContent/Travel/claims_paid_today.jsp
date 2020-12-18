@@ -53,114 +53,37 @@ Iterator p_iter = null;
 
 %>
 
-			<script>
-    		$( document ).ready(function() {
-    			var _alphabets = $('.alphabet > a');
-			    _alphabets.click(function () {			    	
-			        var _letter = $(this);
-			        _text = $(this).text();
-			        _count = 0;
-			        gettravelclaimsbyletter(_text);
-			        _alphabets.removeClass("active");
-			        _letter.addClass("active");		        
-			        
-			    });			    
-			    	    
-			    
-			    gettravelclaimsbyletter("All");
-			    
-    		});
-    		
-    	
-    		
-    		
-    		
-    		
-			</script>
-  		
+<script>
+    		$( document ).ready(function() { 				    	    
+			  gettravelclaimsbyletter("All");
+			  $.cookie('backurl', 'claimsPaidTodayLetter.html', {expires: 1 });
+			});
+</script>
+<style>
+input { border:1px solid silver;}
+</style>  		
 	
+		<img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/processed.png" style="max-width:200px;" border=0/> 
+	<div class="siteHeaderBlue">Travel Claims Processed Today</div>
+	Below is a list of travel claims that have been paid today. To filter listing simply use the search or sort by clicking on the column header.<br/><br/>
+<br/><br/>
 		
-	<div class="claimHeaderText">Travel Claims Paid Today</div>
-	<br/>Below is a list of travel claims that have been paid today. To filter listing by a lastname, please click on a letter.<br/><br/>
-	
-	
-	
-	<% 
-							int counter=0;
-							c_cnt=0;							
-							if((paid_today != null)&& (paid_today.size() > 0)) {
-								//get count of payment pending claims
-								iter = paid_today.entrySet().iterator();
-						        while(iter.hasNext()){
-						          c_cnt += ((Vector)((Map.Entry)iter.next()).getValue()).size();
-						        }
-								
-								out.println("<b>Total Number of Claims Paid Today: <span style='color:Green;'>" + c_cnt +" </span></b>");
-								
-							}
-	%>  
-	
-	
-	<br/><br/>
-	
-	
-	
-				
-		<div class="alphabet">
-		 		<a class="first" href="#" style="width:20px;">All</a>
-	            <a href="#">A</a>
-	            <a href="#">B</a>
-	            <a href="#">C</a>
-	            <a href="#">D</a>
-	            <a href="#">E</a>
-	            <a href="#">F</a>
-	            <a href="#">G</a>
-	            <a href="#">H</a>
-	            <a href="#">I</a>
-	            <a href="#">J</a>
-	            <a href="#">K</a>
-	            <a href="#">L</a>
-	            <a href="#">M</a>
-	            <a href="#">N</a>
-	            <a href="#">O</a>
-	            <a href="#">P</a>
-	            <a href="#">Q</a>
-	            <a href="#">R</a>
-	            <a href="#">S</a>
-	            <a href="#">T</a>
-	            <a href="#">U</a>
-	            <a href="#">V</a>
-	            <a href="#">W</a>
-	            <a href="#">X</a>
-	            <a href="#">Y</a>
-	            <a class="last" href="#">Z</a>
-	           
-		</div>
-		
-		
-		
-		
-		
-				
-		
-		
-		
-		
-		
-		<div id="claims">
-			<table id="claims-table" class="claimsTable">
+			<table id="claims-table" class="table table-condensed table-striped table-bordered claimsTable" style="font-size:11px;background-color:White;" width="100%">	
 				<thead>
-					<tr class="listHeader">
-						<th width="25%" class="listdata" style="padding:2px;">Employee</th>
-						<th width="10%" class="listdata" style="padding:2px;">Type</th>
-						<th width="55%" class="listdata" style="padding:2px;">Title/Month</th>						
-						<th width="10%" class="listdata" style="padding:2px;">Function</th>
+					<tr style="text-transform:uppercase;font-weight:bold;">  		
+						<th width="15%">Employee</th>
+						<th width="10%">Type</th>
+						<th width="30%">Title/Month</th>		
+						<th width="10%">Amount</th>
+						<th width="15%">Supervisor</th>		
+						<th width="10%">Region</th>				
+						<th width="10%">Function</th>
 					</tr>
 				</thead>
 				<tbody>
-
+				
 				</tbody>
 			</table>
-		</div>
+        
 		
 		

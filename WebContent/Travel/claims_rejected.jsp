@@ -16,180 +16,104 @@
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
 
 
-<%
-User usr = null;
-TravelClaims claims = null;
-TreeMap year_map = null;
-TreeMap pending_approval = null;
-TreeMap approved = null;
-LinkedHashMap payment_pending = null;
-LinkedHashMap rejected=null;
-TravelClaim claim = null;
-Iterator iter = null;
-Iterator y_iter = null;
-Map.Entry item = null;
-DecimalFormat df = null;
-DecimalFormat dollar_f =  null;
-Iterator p_iter = null;
-
-  int c_cnt = 0;
-  
-  usr = (User) session.getAttribute("usr");
-    claims = usr.getPersonnel().getTravelClaims();
- 
-	//populate initial objects from database
-  if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")){
-    pending_approval = usr.getPersonnel().getTravelClaimsPendingApproval();
-  }
-  else
-  {
-    pending_approval = null;
-  }
-  if(usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW"))
-  {
-	
-	   
-	   rejected = usr.getPersonnel().getTravelClaimsRejected();
-  }
-  else
-  {
-   
-   
-    rejected = null;
-  }
-
-
-
-%>
-
-
 
     	<script>
     		$( document ).ready(function() {
-    			$('#claimMessage').css("display","none");
-    			var d = new Date();
-    			var n = parseInt(d.getFullYear());   			
-    			 $("#secondMessage").html("").css("display","none");
+    			$("#spinnerWarning").html("");		
+    			var lastletter="A";
+    			$(".letterPage").text(lastletter);
+    			$.cookie("lastletter", lastletter, {expires: 1 }); //Rest on page load
     			var _alphabets = $('.alphabet > a');
 			    _alphabets.click(function () {
+			    	 lastletter=$.cookie('lastletter');			    	
+			    	var table = $('#rejected-table').DataTable();
+			    	table.clear();
+			    	table.destroy();
+			    	
 			        var _letter = $(this);
+			        
+			        $(this).removeClass("btn-primary").addClass("btn-danger");
+			        $(this).removeClass("btn-primary").addClass("btn-danger");
+			        var _ll  = "#"+$.cookie('lastletter');	
+			        $(_ll).removeClass("btn-danger").addClass("btn-primary");
+			        
 			        _text = $(this).text();
 			        _count = 0;
 			        
-			        var n = $('input[name="yearSelect"]:checked').val();
+			        if(_text=="All") {
+			        	$("#spinnerWarning").html("<br/>BE PATIENT - YOU SELECTED <b>ALL</b>.<br/>THIS WILL TAKE A FEW MINUTES!<br/><br/><a class='btn btn-sm btn-danger' href='index.jsp'>CANCEL</a><br/>");
+					} else {
+			        	$("#spinnerWarning").html("");			        	
+			        }
 			        
-			        getrejectedtravelclaimsbyletter(_text,n);
-			        _alphabets.removeClass("active");
-			        _letter.addClass("active");
-					
+			        getrejectedtravelclaimsbyletter(_text);
+			        $(".letterPage").text(_text);
+			        $.cookie("lastletter", _text, {expires: 1 });    	
 			    });
 			    
-			    $("input[name='yearSelect']").change(function(){
-			    	
-				var n = $('input[name="yearSelect"]:checked').val();
-			        
-				getrejectedtravelclaimsbyletter("A",n);	
-			        
-			        $("#secondMessage").html("<br/>(May take a few minutes)").css("display","inline");
-			        _alphabets.removeClass("active");
-			       
-			        
-			        
-			    });
-			    $("#secondMessage").html("<br/>(May take a few minutes)").css("display","inline");
-			    getrejectedtravelclaimsbyletter("A",n);
+    			$('#claimMessage').css("display","none");
+    			$.cookie('backurl', 'claimsRejectedLetter.html', {expires: 1 }); 
+    			//$.cookie('lettertoload', _text, {expires: 1 });     		
+    			getrejectedtravelclaimsbyletter("A");    			
     		});
     		
 		</script>
-  		
-<c:set var="now" value="<%=new java.util.Date()%>" />
- <fmt:formatDate pattern="yyyy" value="${now}" var="thisYear" /> 		
+		
+  	<img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/rejected_stamp.png" style="max-width:200px;" border=0/> 
+		<div class="siteHeaderRed">Travel Claims Rejected</div>
+			
+
+	<br/>Below is a list of travel claims that are currently rejected sorted by name (ascending), year (descending).  To sort data by a particular column, click the column header or use the search tool at right to look for the person in question.
+	<br/><br/><div style="float:right;font-size:72px;color:rgba(65, 105, 225,0.3);" class="letterPage"></div>
+	<b>Select Letter of Claiment Lastname: </b><br/>	You can select All to load the entire list of ALL claiments in the system with rejected claims and do a search, or just limit to the last name.<br/><br/>
 	
-	<div class="claimHeaderText">Travel Claims Rejected</div>
-	<br/>Below is a list of travel claims that are currently rejected for the last 10 years. To filter listing by a lastname, please click on a letter. By default, the current years rejected claims will display starting with lastnames beginning with A. Select another year to display past rejected claims.<br/><br/>
-	
-	
-	<% 
-							int counter=0;
-							c_cnt=0;							
-							if((rejected != null)&& (rejected.size() > 0)) {
-								//get count of payment pending claims
-								iter = rejected.entrySet().iterator();
-						        while(iter.hasNext()){
-						          c_cnt += ((Vector)((Map.Entry)iter.next()).getValue()).size();
-						        }
-								
-								out.println("Total Number of Claims Rejected: <span style='color:Red;''>" + c_cnt +" </span>");
-								
-							}
-	%>
+	<div class="alphabet">
+	            
+	            <a id="A" class="first btn btn-sm btn-danger" href="#">A</a>
+	            <a id="B" class="btn btn-sm btn-primary" href="#">B</a>
+	            <a id="C" class="btn btn-sm btn-primary" href="#">C</a>
+	            <a id="D" class="btn btn-sm btn-primary" href="#">D</a>
+	            <a id="E" class="btn btn-sm btn-primary" href="#">E</a>
+	            <a id="F" class="btn btn-sm btn-primary" href="#">F</a>
+	            <a id="G" class="btn btn-sm btn-primary" href="#">G</a>
+	            <a id="H" class="btn btn-sm btn-primary" href="#">H</a>
+	            <a id="I" class="btn btn-sm btn-primary" href="#">I</a>
+	            <a id="J" class="btn btn-sm btn-primary" href="#">J</a>
+	            <a id="K" class="btn btn-sm btn-primary" href="#">K</a>
+	            <a id="L" class="btn btn-sm btn-primary" href="#">L</a>
+	            <a id="M" class="btn btn-sm btn-primary" href="#">M</a>
+	            <a id="N" class="btn btn-sm btn-primary" href="#">N</a>
+	            <a id="O" class="btn btn-sm btn-primary" href="#">O</a>
+	            <a id="P" class="btn btn-sm btn-primary" href="#">P</a>
+	            <a id="Q" class="btn btn-sm btn-primary" href="#">Q</a>
+	            <a id="R" class="btn btn-sm btn-primary" href="#">R</a>
+	            <a id="S" class="btn btn-sm btn-primary" href="#">S</a>
+	            <a id="T" class="btn btn-sm btn-primary" href="#">T</a>
+	            <a id="U" class="btn btn-sm btn-primary" href="#">U</a>
+	            <a id="V" class="btn btn-sm btn-primary" href="#">V</a>
+	            <a id="W" class="btn btn-sm btn-primary" href="#">W</a>
+	            <a id="X" class="btn btn-sm btn-primary" href="#">X</a>
+	            <a id="Y" class="btn btn-sm btn-primary" href="#">Y</a>
+	            <a id="Z" class="last btn btn-sm btn-primary" href="#">Z</a>
+				<a id="All" class="btn btn-sm btn-primary" href="#" >All</a>           
+		</div>
 	<br/><br/>
 	
-	<form>
-	<b>Select Year:</b><br/>
-  	<input type="radio" name="yearSelect" id="yearSelect1" value="${thisYear}" checked> ${thisYear} &nbsp; 
-   	<input type="radio" name="yearSelect" id="yearSelect2" value="${thisYear-1}"> ${thisYear-1} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect3" value="${thisYear-2}"> ${thisYear-2} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect4" value="${thisYear-3}"> ${thisYear-3} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect5" value="${thisYear-4}"> ${thisYear-4} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect4" value="${thisYear-5}"> ${thisYear-5} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect4" value="${thisYear-6}"> ${thisYear-6} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect4" value="${thisYear-7}"> ${thisYear-7} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect4" value="${thisYear-8}"> ${thisYear-8} &nbsp;
-  	<input type="radio" name="yearSelect" id="yearSelect4" value="${thisYear-9}"> ${thisYear-9}	<br/>
-	</form> 
-	
-	<div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-    <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
-	<br/><span id="claimMessage" style="display:none;"><span id="numberPending" style="color:Red;font-weight:bold;"></span> Claims Rejected for <span id="numberPendingDate" style="color:Red;font-weight:bold;"></span> based on lastname(s) starting with letter <span id="numberPendingSelection" style="color:Red;font-weight:bold;"></span>.</span><p>
-	<br/>
-	<b>Select Letter: </b><br/>	
-		<div class="alphabet">
-	            <a href="#" style="width:20px;">All</a>
-	            <a class="first" href="#">A</a>
-	            <a href="#">B</a>
-	            <a href="#">C</a>
-	            <a href="#">D</a>
-	            <a href="#">E</a>
-	            <a href="#">F</a>
-	            <a href="#">G</a>
-	            <a href="#">H</a>
-	            <a href="#">I</a>
-	            <a href="#">J</a>
-	            <a href="#">K</a>
-	            <a href="#">L</a>
-	            <a href="#">M</a>
-	            <a href="#">N</a>
-	            <a href="#">O</a>
-	            <a href="#">P</a>
-	            <a href="#">Q</a>
-	            <a href="#">R</a>
-	            <a href="#">S</a>
-	            <a href="#">T</a>
-	            <a href="#">U</a>
-	            <a href="#">V</a>
-	            <a href="#">W</a>
-	            <a href="#">X</a>
-	            <a href="#">Y</a>
-	            <a class="last" href="#">Z</a>	           
-		</div>
-		<div id="claims">
-			<table id="claims-table" class="claimsTable">
+			
+				<table id="rejected-table" class="table table-condensed table-striped table-bordered rejectedClaimsTable" style="font-size:11px;background-color:White;" width="100%">	
 				<thead>
-					<tr class="listHeader">
-						<th width="20%" class="listdata" style="padding:2px;">Employee</th>
-						<th width="10%" class="listdata" style="padding:2px;">Type</th>
-						<th width="60%" class="listdata" style="padding:2px;">Title/Month</th>
-						<th width="10%" class="listdata" style="padding:2px;">Year</th>
-						<th width="10%" class="listdata" style="padding:2px;">Function</th>
+					<tr style="text-transform:uppercase;font-weight:bold;">  
+						<th width="15%">Employee</th>
+						<th width="5%">Year</th>
+						<th width="10%">Type</th>
+						<th width="35%">Title/Month</th>
+						<th width="10%">Total $</th>
+						<th width="10%">Supervisor</th>
+						<th width="10%">Region</th>						
+						<th width="5%">Function</th>
 					</tr>
 				</thead>
 				<tbody>
-
-				</tbody>
+				</tbody>				
 			</table>
-
-		</div>
-		
-		
-	
+			

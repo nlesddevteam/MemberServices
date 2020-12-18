@@ -12,19 +12,33 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-<%@ taglib uri="/WEB-INF/travel.tld" prefix="tra" %>
+<%@ taglib uri="/WEB-INF/personnel.tld" prefix="per" %>
 
 <esd:SecurityCheck permissions="TRAVEL-CLAIM-ADMIN,TRAVEL-CLAIM-SUPERVISOR-VIEW" />
 
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	
+	<head>
+		<title>Travel Claim details</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+		    <meta charset="utf-8">
+		    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">    		
+    		<link href="includes/css/jquery-ui.css" rel="stylesheet" type="text/css"> 
+    		<link href="includes/css/bootstrap.min.css" rel="stylesheet" type="text/css">  	
+   			<link href="includes/css/travel.css" rel="stylesheet" type="text/css">
+   			<!-- For mini-icons in menu -->
+   			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">			
+    		<script src="includes/js/jquery.min.js"></script>		
+    		<script src="includes/js/jquery-ui.js"></script>
+    		<script src="includes/js/bootstrap.min.js"></script>
+    		<script src="includes/js/travel.js"></script>
+			<script src="includes/js/jquery.maskedinput.min.js"></script>
+			
     <script type="text/javascript">
     	$('document').ready(function() {
-    		
-    	$('#loadingSpinner').css("display","none");
     	
-    	$('.mclaims').click(function () {
-		    	$("#loadingSpinner").css("display","inline");
-		    });
+    		$('#loadingSpinner').css("display","none");
     		
         $('#tab_content tr:not(tr.division_title):odd').css({
             'background-color': '#f0f0f0'
@@ -40,8 +54,8 @@
         });
         
         $('#school-year').change(function(){
-        	var schoolyear = $("#school-year").val();
-        	loadMainDivPage("listTravelBudgets.html?school_year=" + schoolyear);
+        	        	
+        	$('#add_claim_item_form').submit();
         });
         
         $('.auto-adjust').click(function(){
@@ -65,9 +79,7 @@
         		return false;
         });
         
-    		if(top != self) {
-        	resizeIFrame('claim_details', 360);
-        }
+    	
         
     	});
     </script>
@@ -78,36 +90,33 @@
     <c:set var='subtotal_budget' value="0"/>
 	  <c:set var='subtotal_ytd' value="0"/>
 	  <c:set var='subtotal_deficit' value="0"/>
+	</head>
 	
-	
-	<div class="claimHeaderText">Travel Budgets ${sy}</div>
-	
-	
+	<body style="margin:0px;">
+		<h1 class='title'>Travel Budgets ${sy}</h1>
     <form id='add_claim_item_form' name="add_claim_item_form" action='listTravelBudgets.html' method='post'>
-    	School Year:<br/>
-    	
-    	
+    	<table cellspacing="2" cellpadding="2" class='options'>
+    		<tr>
+    			<td>School Year</td>
+    			<td>
     				<select id='school-year' name='school_year'>
     					<c:forEach items='${FISCALYEARS}' var='year'>
     						<option value='${year}' ${(sy eq year) ? 'SELECTED' :''}>${year}</option>
     					</c:forEach>
     				</select>
-    		<br/>	
-    		<div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
-           	<div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 		
-    <br/>
-	<div id="printJob"> 			
-    			
-      <table id="claims-table" width="100%" class="claimsTable">
-     		<tr class="listHeader">
-      		<td width="20%" class="listdata">Employee</td>
-      		<td width="15%" class="listdata">Fiscal Year</td>
-      		<td width="20%" class="listdata">Budgeted</td>
-      		<td width="15%" class="listdata">Fiscal YTD</td>
-      		<td width="20%" class="listdata">Available</td>
+    			</td>
+    		</tr>
+    	</table>
+      <table id="tab_content" width="100%" cellspacing="2" cellpadding="2">
+     		<tr>
+      		<td class="label">Employee</td>
+      		<td class="label">Fiscal Year</td>
+      		<td class="label">Budgeted<br/>Amount</td>
+      		<td class="label">Fiscal YTD</td>
+      		<td class="label">Available<br/>Funds</td>
       		<esd:SecurityAccessRequired permissions="TRAVEL-EXPENSE-EDIT-BUDGET,TRAVEL-EXPENSE-DELETE-BUDGET">
       			<c:set var='colspan' value="6" />
-      			<td width="10%" class="listdata">Options</td>
+      			<td class="label options" align='center'>Options</td>
       		</esd:SecurityAccessRequired>
      		</tr>
       	<c:choose>
@@ -229,17 +238,7 @@
         	</c:otherwise>
         </c:choose>
       </table>
-      </div>
     </form>
-    
-    <script>
-    $('document').ready(function(){
-    $("#claims-table tr:even").not(':first').css("background-color", "#FFFFFF");
-    $("#claims-table tr:odd").css("background-color", "#E3F1E6");
-    })
-    
-    
-    
-    </script>
-    
+	</body>
 	
+</html>

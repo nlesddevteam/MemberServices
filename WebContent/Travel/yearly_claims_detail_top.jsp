@@ -71,7 +71,7 @@
   else
   {
     year = Calendar.getInstance().get(Calendar.YEAR);
-    report = TravelClaimDB.yearlyClaimsDetailsTopReport("2018",20);
+    report = TravelClaimDB.yearlyClaimsDetailsTopReport(""+year+"",20);
   }
 
   curr_df = new DecimalFormat("$#,##0.00");
@@ -102,17 +102,52 @@
             	loadMainDivPage("yearly_claims_detail_top.jsp?year=" + schoolyear + "&numrows=" + numofrows);
             	
             });
+            
+            
+            $("#topusage-table").DataTable({	 
+				  "order": [ 6, "desc" ],
+				  "responsive": true,
+					  "lengthChange": false,
+					  "pageLength": 20,
+				  dom: 'Blfrtip',				
+			        buttons: [			        	
+			        	//'colvis',
+			        	'copy', 
+			        	'csv', 
+			        	'excel', 
+			        	{
+			                extend: 'pdfHtml5',
+			                footer:true,
+			                //orientation: 'landscape',
+			                messageTop: 'Top Expenditure Report ',
+			                messageBottom: null,
+			                exportOptions: {
+			                    columns: [ 0, 1, 2, 3,4,5,6 ]
+			                }
+			            },
+			        	{
+			                extend: 'print',
+			                //orientation: 'landscape',
+			                footer:true,
+			                messageTop: 'Top Expenditure Report',
+			                messageBottom: null,
+			                exportOptions: {
+			                    columns: [ 0, 1, 2, 3,4,5,6]
+			                }
+			            }]			           
+            
+        	});        
+            
     	});
     </script> 
     
    
 	<script src="includes/js/Chart.min.js"></script>
-    
-    
 	
-		<div id="printJob">
-	<div class="claimHeaderText">Yearly Claim Details Top Usage Users and Amounts</div>
-	Below are the top 20 user travel claims (including kms, meals, lodging, and other expenses) for the selected year (default being current). You can review up to 15 years ago.
+		<div class="siteHeaderBlue">Yearly Claim Details Top Usage Users and Amounts</div>
+		
+	Below are the top 20 user travel claims (including kms, meals, lodging, and other expenses) for the selected year (default being current). You can review up to <span id="numYearsNote"></span> years ago.
+
 	<div class="alert alert-danger" id="details_error_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>         
     <div class="alert alert-success" id="details_success_message" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div> 
 	
@@ -121,31 +156,23 @@
     <form name="add_claim_item_form">
     
       				<b>Select Year: </b>&nbsp;
-      					 <select name="year" id="year">
+      					 <select name="year" id="year" class="form-control">
                           <%
-                            Calendar cal = Calendar.getInstance();
-                            for(int i=0; i < 15; i++,cal.add(Calendar.YEAR, -1))
+                         Calendar cal = Calendar.getInstance();
+                          //Get all years from 2003 and up. No records before 2003.
+                          int yearTest =  Calendar.getInstance().get(Calendar.YEAR)-2003;
+                          %>
+                          <script>$("#numYearsNote").text(<%=yearTest%>)</script>
+                          <%
+                          
+                          for(int i=0; i < yearTest; i++,cal.add(Calendar.YEAR, -1))
                             {
-                            	
-                            	
-                                out.println("<option value='" + cal.get(Calendar.YEAR) +"'" 
+                              out.println("<option value='" + cal.get(Calendar.YEAR) +"'" 
                                   +  ((cal.get(Calendar.YEAR) == year)?" SELECTED":"") + ">"+cal.get(Calendar.YEAR)+"</option>");
-                            }
-                            
+                             }
                           %>
-                        </select>  
-      					
-      					<!-- &nbsp;<b>Number of Users:</b> &nbsp; 
+                        </select>        					
       				
-      				      <select name="numrows" id="numrows">
-                         <%
-                            //for(int i=1; i < 21; i++)
-                           // {
-                            	
-                           //     out.println("<option value='" + i*5 +"'"  + ">"+ i*5 +"</option>");
-                           // }
-                          %>
-                        </select> -->
       				
    </form>
    
@@ -153,19 +180,19 @@
    
   <br/><br/>
       <canvas id="myChart" height="200"></canvas>
-             <table id="claims-table" width="100%" class="claimsTable">             
-              
-              
-                   <tr class="listHeader">
-                   <td class="listdata" width="20%">Name</td>
-                      <td class="listdata" width="10%">KMs</td>
-                      <td class="listdata" width="13%">KMs Amount</td>
-                      <td class="listdata" width="15%">Meals</td>
-                      <td class="listdata" width="15%">Lodging</td>
-                      <td class="listdata" width="12%">Other</td>
-                      <td class="listdata" width="15%">Totals</td>
+       	<table id="topusage-table" class="table table-condensed table-striped table-bordered topusageTable" style="font-size:11px;background-color:White;" width="100%">	
+				<thead>
+					<tr style="text-transform:uppercase;font-weight:bold;">  
+                  	  <th width="20%">Name</th>
+                      <th width="10%">KMs</th>
+                      <th width="13%">KMs Amount</th>
+                      <th width="15%">Meals</th>
+                      <th width="15%">Lodging</th>
+                      <th width="12%">Other</th>
+                      <th width="15%">Totals</th>
                     </tr>
-                    
+               </thead>   
+               <tbody>
                     <%
                     int i = 0;
                     for(YearlyClaimsDetailReportItem item : report){
@@ -179,7 +206,7 @@
                           <td width="12%"><%=curr_df.format(item.getTotalOther())%></td>
                           <td width="15%"><%=curr_df.format(item.getTotalClaim())%></td>
                         </tr>                       
-                      
+                   
                         
                       <% 
                       overall_km_totals += item.getTotalKms();
@@ -187,11 +214,9 @@
                       overall_meals_total += item.getTotalMeals();
                       overall_lodging_total += item.getTotalLodging();
                       overall_other_total += item.getTotalOther();
-                      overall_total_claims += item.getTotalClaim();
+                      overall_total_claims += item.getTotalClaim();            
                       
-                      
-                      
-                      claimName.add("&quot;" + item.getPersonnelFirstname() + " " + item.getPersonnelLastname() + "&quot;");
+                      claimName.add("&quot;" + item.getPersonnelFirstname() + " " + item.getPersonnelLastname().replace("'","") + "&quot;");
                       claimAmount.add((int)item.getTotalClaim());				
  		             //
                       
@@ -202,24 +227,20 @@
                       	i++;
                       	
 					  }%>
-                      
+                       </tbody>    
+                      <tfoot>
                    <tr style="border-top:1px solid grey;border-bottom:1px solid grey;font-weight:bold;padding:2px;">
-                   <td width="20%" style="text-align:right;">TOTALS:&nbsp;</td>
-                          <td width="10%"><%=kms_df.format(overall_km_totals)%></td>
-                          <td width="13%"><%=curr_df.format(overall_km_total_amount)%></td>
-                          <td width="15%"><%=curr_df.format(overall_meals_total)%></td>
-                          <td width="15%"><%=curr_df.format(overall_lodging_total)%></td>
-                          <td width="12%"><%=curr_df.format(overall_other_total)%></td>
-                          <td width="15%"><%=curr_df.format(overall_total_claims)%></td>
-                   
-                   </tr>                        
+                   			<td style="text-align:right;">TOTALS:&nbsp;</td>
+                          <td><%=kms_df.format(overall_km_totals)%></td>
+                          <td><%=curr_df.format(overall_km_total_amount)%></td>
+                          <td><%=curr_df.format(overall_meals_total)%></td>
+                          <td><%=curr_df.format(overall_lodging_total)%></td>
+                          <td><%=curr_df.format(overall_other_total)%></td>
+                          <td ><%=curr_df.format(overall_total_claims)%></td>
+                    </tr>   
+                    </tfoot>                     
                       
-                      
-                      
-                      
- 						
-                 
-            </table>
+                 </table>
             
             
             <%
@@ -241,7 +262,7 @@
             
             <div class="claimHeaderText">Expenditure Breakdown of Top 20 Users (Totals)</div> <br/>
 	
-	  <canvas id="myBreakdownChart" height="330"></canvas>
+	  <canvas id="myBreakdownChart" height="300"></canvas>
             
             
         			

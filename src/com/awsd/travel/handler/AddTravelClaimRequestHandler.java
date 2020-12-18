@@ -18,6 +18,7 @@ import com.awsd.personnel.pd.PersonnelPD;
 import com.awsd.personnel.pd.PersonnelPDDB;
 import com.awsd.personnel.profile.ProfileDB;
 import com.awsd.school.School;
+import com.awsd.travel.PDTravelClaimEventManager;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimSupervisorRuleDB;
 import com.esdnl.sds.SDSSchoolInfo;
@@ -332,7 +333,7 @@ public class AddTravelClaimRequestHandler extends RequestHandlerImpl {
 
 			request.setAttribute("YEAR-CLAIMS", claims);
 			request.setAttribute("YEAR-SELECT", Utils.getCurrentSchoolYear());
-
+			request.setAttribute("PDEVENTS", PDTravelClaimEventManager.getAllPDEventsByUserTM(usr.getPersonnel().getPersonnelID()));
 			path = "add_claim.jsp";
 		}
 
