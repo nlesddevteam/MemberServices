@@ -621,6 +621,24 @@ dtable=$("#claimItemsTable").DataTable({
  	<div  class="col-xs-12 col-sm-12 col-md-12">
  		<label for="item_kms" class="mr-sm-2"><b>Description (Max 500 Characters.):</b></label>            
  	                   <textarea class="form-control" name="item_desc" id="item_desc"  onfocus="this.select();" onkeyup="valid(this)" onblur="valid(this)"><%=(failed_item != null)?failed_item.getItemDescription():""%></textarea> 					
+ 		
+ 		<script>
+ 		$('document').ready(function(){  	
+ 			//CKEditor Configuration
+ 			var pageWordCountConf = {
+ 				    showParagraphs: true,
+ 				    showWordCount: true,
+ 				    showCharCount: true,
+ 				    countSpacesAsChars: true,
+ 				    countHTML: true,
+ 				    maxWordCount: -1,
+ 				    maxCharCount: 500,
+ 			} 			
+ 		CKEDITOR.replace('item_desc',{wordcount: pageWordCountConf,height:150});
+ 		});
+ 		
+ 		
+ 		</script>
  		</div>  
 		 <span style="font-size:10px;">Description should include all necessary information to review the claim 
 		 (eg. departure and return points, and items included in other category). 
@@ -1109,18 +1127,9 @@ function isNumberDec(evt)
 
    return true;
 }  
-//CKEditor Configuration
-var pageWordCountConf = {
-	    showParagraphs: true,
-	    showWordCount: true,
-	    showCharCount: true,
-	    countSpacesAsChars: true,
-	    countHTML: true,
-	    maxWordCount: -1,
-	    maxCharCount: 500,
-}
 
-CKEDITOR.replace('item_desc',{wordcount: pageWordCountConf,height:150});
+
+//CKEDITOR.replace('item_desc',{wordcount: pageWordCountConf,height:150});
 
 $('#timeDepartureON').change(function(){
 	if (this.checked) {
