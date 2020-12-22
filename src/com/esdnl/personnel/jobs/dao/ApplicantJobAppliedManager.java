@@ -5,13 +5,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
+
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantJobAppliedBean;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
 public class ApplicantJobAppliedManager {
+
 	public static ArrayList<ApplicantJobAppliedBean> getApplicantJobsApplied(String applicantid) {
+
 		ArrayList<ApplicantJobAppliedBean> list = new ArrayList<ApplicantJobAppliedBean>();
 		Connection con = null;
 		CallableStatement stat = null;
@@ -50,15 +54,17 @@ public class ApplicantJobAppliedManager {
 
 		return list;
 	}
+
 	public static ApplicantJobAppliedBean createApplicantJobAppliedBean(ResultSet rs) {
 
 		ApplicantJobAppliedBean aBean = new ApplicantJobAppliedBean();
+
 		try {
 			aBean.setAppliedDate(rs.getDate("APPLIED_DATE"));
 			aBean.setCompNum(rs.getString("COMP_NUM"));
 			aBean.setPosTitle(rs.getString("POS_TITLE"));
 			aBean.setSchoolName(rs.getString("SCHOOL_NAME"));
-			return aBean;
+			aBean.setShortlisted(rs.getBoolean("SHORTLISTED"));
 		}
 		catch (SQLException e) {
 			aBean = null;

@@ -12,35 +12,63 @@ public class ApplicantJobAppliedBean implements Serializable {
 	private String posTitle;
 	private Date appliedDate;
 	private String schoolName;
+	private boolean shortlisted;
+
 	public String getCompNum() {
+
 		return compNum;
 	}
+
 	public void setCompNum(String compNum) {
+
 		this.compNum = compNum;
 	}
+
 	public String getPosTitle() {
+
 		return posTitle;
 	}
+
 	public void setPosTitle(String posTitle) {
+
 		this.posTitle = posTitle;
 	}
+
 	public Date getAppliedDate() {
+
 		return appliedDate;
 	}
+
 	public void setAppliedDate(Date appliedDate) {
+
 		this.appliedDate = appliedDate;
 	}
+
 	public String getSchoolName() {
+
 		return schoolName;
 	}
+
 	public void setSchoolName(String schoolName) {
+
 		this.schoolName = schoolName;
 	}
+
 	public String getFormattedAppliedDate() {
 
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
 		return sdf.format(this.appliedDate);
+	}
+
+	public boolean isShortlisted() {
+
+		return shortlisted;
+	}
+
+	public void setShortlisted(boolean shortlisted) {
+
+		this.shortlisted = shortlisted;
 	}
 
 }
