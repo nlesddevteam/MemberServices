@@ -67,8 +67,9 @@
   Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
   Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
   
-  if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
+  if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD")) {
     session.setAttribute("APPLICANT", profile); 
+  }
    
   HashMap<Integer, ApplicantSubListInfoBean> sublists = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
   
@@ -1427,6 +1428,7 @@ input {
 	</esd:SecurityAccessRequired>              
  
  <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+ 
  	<!-- INTERVIEW SUMMARIES ----------------------------------------------------------------------------------------->
 	<% if (interviewSummaries.size() > 0) { %>
 		<div class="panel-group" style="padding-top: 5px;">
@@ -1464,8 +1466,8 @@ input {
 		</div>
 	<% } %>
 
+	<!-- HIGHLY RECOMMENDED POOLS --------------------------------------------------------------->
 	<% if(highlyRecommendedPools.size() > 0) { %>
-		<!-- HIGHLY RECOMMENDED POOLS --------------------------------------------------------------->
 		<div class="panel-group no-print" style="padding-top: 5px;">
 			<div class="panel panel-success" id="section15">
 				<div class="panel-heading">
@@ -1506,7 +1508,6 @@ input {
 				<b>Positions Applied</b>
 			</div>
 			<div class="panel-body">
-
 				<c:choose>
 					<c:when test='${fn:length(jobs) gt 0}'>
 						<table class="table table-condensed table-striped" id="jobsapp"
@@ -1517,6 +1518,7 @@ input {
 									<th>TITLE</th>
 									<th>DATE APPLIED</th>
 									<th>LOCATION</th>
+									<th>SHORTLISTED</th>
 									<th class="no-print">OPTIONS</th>
 								</tr>
 							</thead>
@@ -1527,20 +1529,24 @@ input {
 										<td>${g.posTitle}</td>
 										<td>${g.formattedAppliedDate}</td>
 										<td>${g.schoolName}</td>
+										<td>
+											<c:choose>
+												<c:when test="${g.shortlisted }">YES</c:when>
+												<c:otherwise>NO</c:otherwise>
+											</c:choose>
+										</td>
 										<td class="no-print"><a class='btn btn-xs btn-info'
 											href='view_job_post.jsp?comp_num=${g.compNum}'>View</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-
 					</c:when>
 					<c:otherwise>
 						<span style="color: Grey;">No Applications on file.</span>
 						<script>$("#section14").removeClass("panel-success").addClass("panel-danger");</script>
 					</c:otherwise>
 				</c:choose>
-
 			</div>
 		</div>
 	</div>
