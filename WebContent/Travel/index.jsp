@@ -21,7 +21,7 @@
 	User usr = null;
 	usr = (User) session.getAttribute("usr");
 	TreeMap pending_approval = null;
-	Iterator iter = null;
+	Iterator iter = null;	
 	int c_cnt = 0;
 	if (usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")) {
 		pending_approval = usr.getPersonnel().getTravelClaimsPendingApproval();
@@ -33,6 +33,7 @@
 			}
 		}
 	}
+	
 	TravelClaims claims = null;
 	TreeMap year_map = null;
 	TreeMap approved = null;
@@ -50,7 +51,17 @@
 	dollar_f = new DecimalFormat("$#,##0");
 	
 	ArrayList<TravelClaimKMRate> rates = TravelClaimKMRateDB. getTravelClaimKMRates(); 
+	
+
+	
 %>
+
+
+<c:set var="now" value="<%=new java.util.Date() %>" /> 	
+<c:set var="theExpiredDate" value="<%=rates.get(0).getEffectiveEndDate() %>" /> 						
+<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="todayDate" />
+<fmt:formatDate value="${theExpiredDate}" pattern="yyyyMMdd" var="expiredDate" />
+
 <html>
 <head>
 <title>Travel Claim System</title>
@@ -87,9 +98,20 @@
 	<br/><br/>
 		Always make sure your	information in your profile is up-to-date with your correct mailing address and contact information. 
 	<br/><br/>
+	
+	
+	
 	<div class="siteSubHeaderBlue">RATES PER KILOMETER:</div>
-	<b>Base Rate:</b> $<%=rates.get(0).getBaseRate() %><br/>		 
-	<b>Approved Rate:</b>$<%=rates.get(0).getApprovedRate() %>
+	
+	<c:if test="${todayDate gt expiredDate}">
+	<script>
+	$("#claimRateMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>PLEASE NOTE TRAVEL RATES HAVE EXPIRED</b><br/>Please wait until the official government rates have been approved before updating/editing a claim. You will NOT be able to add or edit a claim until new rates are assigned.");
+	$("#claimRateMessage").css("display","block");
+	</script>
+	</c:if>
+	
+	<b>Base Rate:</b> $<%=rates.get(0).getBaseRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if><br/>		 
+	<b>Approved Rate:</b>$<%=rates.get(0).getApprovedRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if>
 	<br/><br/>
 	Above  Government Rates are effective <b><%=rates.get(0).getEffectiveStartDateFormatted() %></b> thru to <b><%=rates.get(0).getEffectiveEndDateFormatted() %></b>
 	<br/><br/>
@@ -110,6 +132,9 @@
 				$("#claimNoticeMessage").css("display","none");				
 			}
 		});
+		
+		
+		
 </script>	
 </body>
 </html>
