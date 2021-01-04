@@ -81,6 +81,9 @@ Iterator p_iter = null;
 
   df = new DecimalFormat("#,##0");
   dollar_f = new DecimalFormat("$#,##0");
+  
+  ArrayList<TravelClaimKMRate> rates = TravelClaimKMRateDB. getTravelClaimKMRates(); 
+  
 %>
 
 <html lang="en">
@@ -158,6 +161,12 @@ Iterator p_iter = null;
 		
 		<decorator:head />
 
+<c:set var="now" value="<%=new java.util.Date() %>" /> 	
+<c:set var="theExpiredDate" value="<%=rates.get(0).getEffectiveEndDate() %>" /> 						
+<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="todayDate" />
+<fmt:formatDate value="${theExpiredDate}" pattern="yyyyMMdd" var="expiredDate" />
+
+
 	</head>
 
 	<body>	
@@ -191,7 +200,7 @@ Iterator p_iter = null;
    	 </esd:SecurityAccessRequired>
 </div>
 </div>
-
+	
 <!-- START NLESD MAIN NAVIGATION BAR navbar-fixed-top-->
 <nav class="navbar navbar-expand-md navbar-dark sticky-top" id="main_navbar">
      <a class="navbar-brand" href="#" title="Newfoundland and labrador English School District"><img src="/MemberServices/Travel/includes/img/nltopleftlogo.png" id="logoTag" class="navbar-img" border=0 /></a>
@@ -210,7 +219,9 @@ Iterator p_iter = null;
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-invoice"></i> CLAIMS</a>
                 <ul class="dropdown-menu">        
 					<li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;"><i class="fa fa-fw fa-user"></i> My Previous Claims</a></li>  
-                    <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;"><i class="fa fa-fw fa-plus"></i> Start New Claim</a></li>                                      
+              <c:if test="${todayDate le expiredDate}"> 
+                    <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;"><i class="fa fa-fw fa-plus"></i> Start New Claim</a></li>
+             </c:if>                                      
                 </ul>
             </li>
             
@@ -409,6 +420,8 @@ Iterator p_iter = null;
 				</div>
 				</div>				
 						<div id="printJob">					
+						<div class="alert alert-danger no-print" id="claimRateMessage" style="text-align:center;display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>  	
+						
 						<div class="alert alert-danger no-print" id="claimNoticeMessage" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>  	
 						
 							  
@@ -446,7 +459,10 @@ Iterator p_iter = null;
 
   <div align="center" class="no-print navBottom">
    		<div style="display:inline-block;margin-top:5px;"><a href="index.jsp" class="btn btn-primary btn-sm" role="button" onclick="loadingData();">Home</a></div>
+    	
+  <c:if test="${todayDate le expiredDate}">  	
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-danger btn-sm" role="button" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;">Start Claim</a></div>
+  </c:if>  	
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-success btn-sm" role="button" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;">My Claims</a></div>
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-info btn-sm" role="button" onclick="loadingData();loadMainDivPage('myProfile.html');return false;">My Profile</a></div>
  		<esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	 
