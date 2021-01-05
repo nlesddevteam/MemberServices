@@ -183,7 +183,7 @@ Iterator p_iter = null;
 		        <div class="input-group">
 		        <div class="form-check-inline">
 				  	<label class="form-check-label">
-				    	<input type="radio"  name="searchtype" value="NAME" class="form-check-input mr-sm-2" >NAME
+				    	<input type="radio"  name="searchtype" id="searchTypeHead" value="NAME" class="form-check-input mr-sm-2">NAME
 				  	</label>
 				</div>
 				<div class="form-check-inline">
@@ -391,7 +391,7 @@ Iterator p_iter = null;
 		        <div class="input-group">
 		        <div class="form-check-inline">
 				  	<label class="form-check-label">
-				    	<input type="radio"  name="searchtype" value="NAME" class="form-check-input mr-sm-2" >NAME
+				    	<input type="radio"  name="searchtype" id="searchTypeNav" value="NAME" class="form-check-input mr-sm-2">NAME
 				  	</label>
 				</div>
 				<div class="form-check-inline">
@@ -542,6 +542,9 @@ Iterator p_iter = null;
 					$(".navbar-brand").css("display","none");					
 				}				
 				});
+				
+				$("#searchTypeHead").prop("checked", true);
+				$("#searchTypeNav").prop("checked", true);
 		</script>	
 
 
