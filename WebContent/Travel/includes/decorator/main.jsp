@@ -23,7 +23,11 @@
 		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>		
 		<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-
+		
+<!-- PREVENT CACHE OF LOCAL JS AND CSS FROM AGING TOO LONG -->		
+		<c:set var="cacheBuster" value="<%=new java.util.Date()%>" />				 								
+		<fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyH" var="todayVer" />	
+ 
 <esd:SecurityCheck permissions="TRAVEL-EXPENSE-VIEW" />
 <%
 User usr = null;
@@ -112,7 +116,7 @@ Iterator p_iter = null;
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 		
 	<!--  CSS LOCAL FILES -->
-		<link rel="stylesheet" href="/MemberServices/Travel/includes/css/travel.css">			
+		<link rel="stylesheet" href="/MemberServices/Travel/includes/css/travel.css?ver=${todayVer}">			
 		<link rel="shortcut icon" href="/MemberServices/Travel/includes/img/favicon.ico">	
 		
 	<!-- CDN JAVASCRIPT> -->	
@@ -147,7 +151,7 @@ Iterator p_iter = null;
 
 	 <!-- LOCAL JAVASCRIPT FILES-->		
 	 	<script src="/MemberServices/Travel/includes/ckeditor/ckeditor.js"></script>	 	
-		<script src="/MemberServices/Travel/includes/js/travel.js"></script>	 	  			
+		<script src="/MemberServices/Travel/includes/js/travel.js?ver=${todayVer}"></script>	 	  			
 
 	<!-- GOOGLE ANALYTICS -->
 		<script>
