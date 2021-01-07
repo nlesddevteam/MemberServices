@@ -74,7 +74,7 @@
 	                messageTop: 'Travel/PD Claims ',
 	                messageBottom: null,
 	                exportOptions: {
-	                    columns: [ 0, 1, 2, 3,4,5 ]
+	                    columns: [ 0, 1, 2, 3,4,5,6 ]
 	                }
 	            },
 	        	{
@@ -84,7 +84,7 @@
 	                messageTop: 'Travel/PD Claims',
 	                messageBottom: null,
 	                exportOptions: {
-	                    columns: [ 0, 1, 2, 3,4,5]
+	                    columns: [ 0, 1, 2, 3,4,5,6]
 	                }
 	            }
 	        ],		  
@@ -133,8 +133,8 @@
                             <table class="searchResults table table-condensed table-striped table-bordered" style="font-size:11px;background-color:white;" width="100%">						
 								<thead>
 								<tr style="text-transform:uppercase;">  
-										<th width="10%">CLAIM DATE</th>
-										<th width="10%">TYPE</th>
+										<th width="10%">CREATED</th>										
+										<th width="10%">TYPE/MONTH</th>
 										<th width="45%">TITLE</th>
 										<th width="10%">AMOUNT</th>
 										<th width="10%">SUPERVISOR</th>
@@ -152,11 +152,13 @@
                     %>        <tr valign="middle"  style="vertical-align:middle;">
                     
                     			<%if(claim instanceof PDTravelClaim){%>      
-                    			<td style="vertical-align:middle;"><%=pdsdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%></td>  
+                    			<td style="vertical-align:middle;">
+                    			<%=pdsdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%>                    			
+                    			</td>                     			
 		             			 <%}else if(claim instanceof TravelClaim){%>
-		              			<td style="vertical-align:middle;"><%=claim.getCreatedDate() %></td>  		             
+		              			<td style="vertical-align:middle;"><%=claim.getCreatedDate() %> </td> 		              				             
 		             			 <%} else {%>
-		             			 <td style="vertical-align:middle;">N/A</td>  
+		             			 <td style="vertical-align:middle;color:silver;">N/A</td> 		             			 
 		             			 <%} %>                  			
                     			<%if(claim instanceof PDTravelClaim){%> 
                     			<td style="vertical-align:middle;background-color:#ff8400;text-align:center;font-size:11px;color:white;font-weight:bold;">&nbsp;PD CLAIM&nbsp;</td>                     			
@@ -166,7 +168,51 @@
                     		 <%if(claim instanceof PDTravelClaim){%> 
                     		 <td style="vertical-align:middle;"><b><%= ((PDTravelClaim)claim).getPD().getTitle()  %></b><br/><%=((PDTravelClaim)claim).getPD().getDescription() %></td>
                     		<%} else {%>
-                    		 <td style="vertical-align:middle;">Standard Travel Claim</td>
+                    		 <td style="vertical-align:middle;">
+                    		 <c:set var="travelClaimMonth" value="<%=claim.getFiscalMonth() %>"/>		              			
+				              			<b>
+				              			<c:choose>
+				              			<c:when test="${travelClaimMonth eq 0 }">
+				              			JANUARY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 1 }">
+				              			FEBRUARY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 2 }">
+				              			MARCH
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 3 }">
+				              			APRIL
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 4 }">
+				              			MAY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 5 }">
+				              			JUNE
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 6 }">
+				              			JULY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 7 }">
+				              			AUGUST
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 8 }">
+				              			SEPTEMBER
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 9 }">
+				              			OCTOBER
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 10 }">
+				              			NOVEMBER
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 11 }">
+				              			DECEMBER
+				              			</c:when>
+				              			<c:otherwise><span style="color:silver;">N/A</span></c:otherwise>
+				              			</c:choose>
+				              			CLAIM</b><br/>
+				              			for fiscal year <%=claim.getFiscalYear() %>
+                    		  </td>
                     			<%} %>
                     		<td style="vertical-align:middle;"><%=dollar_f.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
                     		 <td style="vertical-align:middle;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullName():"N/A" %></td>
