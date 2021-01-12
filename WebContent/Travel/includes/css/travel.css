@@ -107,6 +107,7 @@ a.dropdown-item {font-size:12px;}
 
 /* BOTTOM FLOATING NAVIGATION BAR */
 .navBottom {position: fixed; bottom: 40px; right:10px;z-index:999999; }
+.navBottomFontSize { }
 .infoBottom {position: fixed; bottom: 40px; left:10px;font-size:11px;background-color:#FFFFFF;padding:3px;border-radius: 10px; }
 
 /* FOOTER CONTENT */
@@ -150,6 +151,8 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 /* Fix Bootstrap 4 to include xs size */
 .btn-group-xs > .btn, .btn-xs {  margin: 3px;padding: 4px;  font-size: 11px;  line-height: 1;  border-radius: .2rem;}
 
+
+
 @media only screen and (max-width: 2596px) {
     	
     	#menuMobile {display:none;}
@@ -167,7 +170,7 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 }
 
 @media only screen and (max-width: 920px) {
-    	
+    	.navBottomFontSize {display:none;}
 	   	    	    	
 }
 
@@ -194,6 +197,22 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
     .navbar-hover .collapse ul ul ul{position:absolute;top:0;left:100%;min-width:250px;display:none}
     /*.navbar-hover .collapse ul ul ul ul{position:absolute;top:0;left:-100%;min-width:250px;display:none;z-index:1}*/
 }
+
+@media print {
+  body {
+  	font-size:12px !important;
+    margin: 0;
+    color: #000;
+    background-color: #fff;
+  }
+ #pageContentBody {border:0px !important;font-size:12px !important;}
+ .tab-content {border:0px !important;font-size:12px !important;}
+.claimToPrint {font-size:12px !important;}
+#claimItemsAlertArea {border:0px !important;}
+.alert {border:0px !important;}
+.dt-buttons,.dataTables_filter,.msgArea1 {display:none;}
+}
+
 
 
 	

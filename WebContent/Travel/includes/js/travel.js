@@ -16,6 +16,52 @@ $( '.dropdown-menu .dropdown-toggle' ).on('click', function() {
 });
 
 
+$(document).ready(function () {	
+
+//CHANGE FONT SIZE		   	
+				var $affectedElements = $("div,p,span");
+				maxFont = 4;
+				minFont=-2;
+				curFont=0;
+				 
+				$affectedElements.each( function(){
+				  var $this = $(this);
+				  $this.data("orig-size", $this.css("font-size") );
+				});
+				
+				$("#btn-increase").click(function(){				
+				 curFont++;
+				 if(curFont<maxFont) {				 
+				  changeFontSize(1);
+				  } 	 
+				});
+				
+				$("#btn-decrease").click(function(){			
+				 curFont--;				
+				 if(curFont>minFont) {				 
+				  changeFontSize(-1);
+				  }
+				 });
+				
+				$("#btn-orig").click(function(){
+				curFont=0;
+				  $affectedElements.each( function(){
+				        var $this = $(this);
+				        $this.css( "font-size" , $this.data("orig-size") );
+				   });
+				});
+				
+				function changeFontSize(direction){
+				    $affectedElements.each( function(){
+				        var $this = $(this);				        
+				        $this.css( "font-size" , parseInt($this.css("font-size"))+direction );
+				    });
+				};	
+
+});
+
+
+
 /************************************************
 call ajax post to populate claims months based
 on what year is selected
@@ -2976,15 +3022,16 @@ function addnewmembers(){
         
     updateVal1 = parseInt($("#rrCount").text()) -1;
     updateVal2 = parseInt($("#aprCount").text()) +1;
-   $("#aprCount").text(updateVal);
-   $("#rrCount").text(updateVal);
+   $("#aprCount").text(updateVal2);
+   $("#rrCount").text(updateVal1);
+   
+   
    
     $("#claims-table").DataTable().row.add([
-    thename,
-    ids,
-    response,
-   '<a href="#" onclick="removememberfromtable('+"'"+ ids +"'"+ ',this);" class="btn btn-xs btn-danger">REMOVE</a>'
-    ]).draw(false);
+    thename, ids, response, '--','--'
+    ]).draw(false); 
+    
+   
     
 	//send ajax request with the ids to add
 	addmemberstoapprovedrated(ids);
@@ -3009,9 +3056,11 @@ function addmemberstoapprovedrated(sids){
 						//now add the items if any
 						if($(this).find("MESSAGE").text() == "ADDED")
 						{
-							//show success message
+							//show success message and reload the page.							
+							//$("#pageContentBody").load('travel_rates.jsp');
+							
 							$(".details_success_message").html("SUCCESS: Member successfully added to higher rate.").css("display","block").delay(5000).fadeOut();
-						
+							
 						}else{
 							//show error
 							$(".details_error_message").html("ERROR: Member cannot be removed at this time. Please try again later or contact support.").css("display","block").delay(5000).fadeOut();
@@ -3045,8 +3094,23 @@ function removenewmembers(){
 		
 	updateVal1 = parseInt($("#rrCount").text()) +1;
     updateVal2 = parseInt($("#aprCount").text()) -1;
-   $("#aprCount").text(updateVal);
-   $("#rrCount").text(updateVal);		
+    
+    thename =  $(this).text().indexOf(" [");
+		thename = $(this).text().slice(0, thename);
+    
+   $("#aprCount").text(updateVal2);
+   $("#rrCount").text(updateVal1);		
+
+
+		
+		var indexes =$("#claims-table").DataTable().rows().indexes().filter( function ( value, index ) {
+        return thename === $("#claims-table").DataTable().row(value).data()[0];
+      } );
+  
+    $("#claims-table").DataTable().rows(indexes).remove().draw();
+		
+		
+		
 		
 		$('#available')
         .append(sadd);
@@ -3128,5 +3192,7 @@ function removememberfromtable(id,but){
 	
 }
 
-
+function refreshApprovedDataTable() {
+$("#pageContentBody").load('travel_rates.jsp');
+}
 	

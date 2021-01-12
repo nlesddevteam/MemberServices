@@ -2203,5 +2203,137 @@ public class TravelClaimDB {
 			catch (Exception e) {}
 		}
 		return claims;
-	}	
+	}
+	public static int getYearToDateKMSTotalsFiscalYear(Personnel p) throws TravelClaimException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		int total = 0;
+		Date startDate=null;
+		Date endDate=null;
+		Date today = new Date();
+		if(today.getMonth() >6 && today.getMonth() < 9)
+		
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.travel_claim_sys.get_calendar_year_kms_total(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, p.getPersonnelID());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				total = rs.getInt("sum_kms");
+			}
+			else {
+				total = 0;
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("TravelClaimDB.getClaimSummaryTotals(Claim): " + e);
+			throw new TravelClaimException("Can not extract year to date kms usage sumamry from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return total;
+	}
+	public static double getYearToDateTotalKMSFY(Personnel p, String fy) throws TravelClaimException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		double total = 0;
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.travel_claim_sys.get_calendar_year_kms_total_fy(?, ?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, p.getPersonnelID());
+			stat.setString(3, fy);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				total = rs.getDouble("sum_kms");
+			}
+			else {
+				total = 0;
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("double getYearToDateTotalKMSFY(Personnel p, String fy) throws TravelClaimException : " + e);
+			throw new TravelClaimException("Can not extract year to date kms usage sumamry from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return total;
+	}
+	public static double getCurrentYearTotalClaimed(Personnel p) throws TravelClaimException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		double total = 0;
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.travel_claim_sys.get_current_year_claim_total(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, p.getPersonnelID());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			if (rs.next()) {
+				total = rs.getDouble("total_claimed");
+			}
+			else {
+				total = 0;
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static double getCurrentYearTotalClaimed(Personnel p) throws TravelClaimException: " + e);
+			throw new TravelClaimException("Can not extract year to date kms usage sumamry from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return total;
+	}
 }

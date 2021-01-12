@@ -86,7 +86,7 @@ Iterator p_iter = null;
   df = new DecimalFormat("#,##0");
   dollar_f = new DecimalFormat("$#,##0");
   
-  ArrayList<TravelClaimKMRate> rates = TravelClaimKMRateDB. getTravelClaimKMRates(); 
+  ArrayList<TravelClaimKMRate> rates = TravelClaimKMRateDB.getTravelClaimKMRates(); 
   
 %>
 
@@ -320,7 +320,7 @@ Iterator p_iter = null;
                             
                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('listKmRates.html');return false;"><i class="fa fa-fw fa-file-text-o"></i> List Current Rates</a></li>
                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addKmRate.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Set New Rate</a></li>              
-                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('travel_rates.jsp');return false;"><i class="fa fa-fw fa-file-text-o"></i> Set Approved Rates</a></li>
+                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('travel_rates.jsp');return false;"><i class="fa fa-fw fa-file-text-o"></i> View/Set Approved Rates</a></li>
                             <li class="dropdown-divider"></li>              
                             <li><a class="dropdown-item" href="https://www.gov.nl.ca/exec/hrs/working-with-us/auto-reimbursement/" target="_blank"><i class="fa fa-fw fa-file-text-o"></i> Gov NL Rates</a></li>
                         </ul>
@@ -473,11 +473,6 @@ Iterator p_iter = null;
  		<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Claims to Approve</a></div>
  	</esd:SecurityAccessRequired>
 		</div>
-
- <div align="center" class="no-print infoBottom">
-<b>Your Kilometer Usage (<%=(Calendar.getInstance()).get(Calendar.YEAR)%>):</b> <%=df.format(usr.getPersonnel().getYearToDateKilometerUsage())%> kms &nbsp; &middot; &nbsp;
-<b>Total Claimed (<%=Utils.getCurrentSchoolYear()%>):</b> <%=dollar_f.format(usr.getPersonnel().getYearToDateClaimTotal())%> &nbsp;
- </div>		
 		
 <br/>&nbsp;<br/>
 
@@ -488,7 +483,7 @@ Iterator p_iter = null;
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                    
 	 		<div class="gTranslate">
-		  	<div id="google_translate_element"></div>
+		  	<div id="google_translate_element" style="display:inline-block;"></div>
 			    <script type="text/javascript">
 					function googleTranslateElementInit() {new google.translate.TranslateElement({pageLanguage: 'en',
 						includedLanguages: 'en,fr,es', 
@@ -496,9 +491,14 @@ Iterator p_iter = null;
 						autoDisplay: false}, 'google_translate_element');}
 				</script>
 				<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-		  </div>		
-         
-		  <div class="copyright">Travel Claim App 3.1 &copy; 2020 NLESD &middot; All Rights Reserved. &nbsp;&nbsp;</div>		
+		  		
+         <span class="navBottomFontSize">
+         		<div style="display:inline-block;"><a title="Decrease Page Font Size" href="#" class="btn btn-secondary btn-xs" id="btn-decrease">A-</a></div>
+ 				<div style="display:inline-block;"><a title="Reset Page Font Size" href="#" class="btn btn-secondary btn-xs" id="btn-orig">A</a></div>
+ 				<div style="display:inline-block;"><a title="Increase Page Font Size" href="#" class="btn btn-secondary btn-xs" id="btn-increase">A+</a></div>
+         </span>
+         </div>
+		  <div class="copyright">Travel Claim App 3.3 &copy; 2021 NLESD &middot; All Rights Reserved. &nbsp;&nbsp;</div>		
 		 </div>		  
 		</div> 
 	 	

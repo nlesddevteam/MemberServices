@@ -90,7 +90,7 @@
 		<b><%=(usr.getPersonnel().getSchool() != null? usr.getPersonnel().getSchool().getSchoolName(): "NONE")%></b>. 
 	If this is incorrect, please contact your supervisor to have it updated.
 	Please select a previous claim from the MY CLAIMS menu above to review or continue working on or start a NEW CLAIM. 
-	If you have already started a claim for this month, it will be listed under MY PREVIOUS CLAIMS under MY CLAIMS menu above.. 
+	If you have already started a claim for this month, it will be listed under MY PREVIOUS CLAIMS under MY CLAIMS menu above.
 	<br/><br/>
 	<span style="color: Red; font-weight: bold;">
 		NOTE: You cannot start a second Monthly Claim for the same month in the current school year.
@@ -100,6 +100,7 @@
 	<br/><br/>
 	
 	
+
 	
 	<div class="siteSubHeaderBlue">RATES PER KILOMETER:</div>
 	
@@ -113,8 +114,41 @@
 	<b>Base Rate:</b> $<%=rates.get(0).getBaseRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if><br/>		 
 	<b>Approved Rate:</b>$<%=rates.get(0).getApprovedRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if>
 	<br/><br/>
-	Above  Government Rates are effective <b><%=rates.get(0).getEffectiveStartDateFormatted() %></b> thru to <b><%=rates.get(0).getEffectiveEndDateFormatted() %></b>
+	Above  Government Rates are effective <b><%=rates.get(0).getEffectiveStartDateFormatted() %></b> thru to <b><%=rates.get(0).getEffectiveEndDateFormatted() %></b>. 
 	<br/><br/>
+	All employees are set at the Base rate by default. Positions that have been pre-approved will be set at the Approved rate automatically but those who are not in pre-approved positions require approval from Corporate Services.
+	If you need to apply for the Approved rate, please contact Susan Clarke (Email: <a href="mailto:susanclarke@nlesd.ca?subject=Travel Approved Rate Request">susanclarke@nlesd.ca</a> &middot; Tel: 709-758-2382).
+	
+	
+	
+	
+	
+		<br/><br/>
+		<div class="siteSubHeaderBlue">YOUR YEAR TO DATE (YTD) TOTALS:</div>
+<b>YTD Total km (<%=(Calendar.getInstance()).get(Calendar.YEAR)%>):</b> 
+
+  								<%
+                                  if(usr.getPersonnel().getYearToDateKilometerUsage()<9000) { %>
+                                	  <%=df.format(usr.getPersonnel().getYearToDateKilometerUsage())%>  kms
+                                 <%  } else { %>
+                                	  <span style="color:Red;">
+                                	  <%=df.format(usr.getPersonnel().getYearToDateKilometerUsage())%>  kms  (Set to $<%=rates.get(0).getBaseRate() %> base rate for over 9000km)
+                                	  </span>
+                                <%  }  %>
+
+<br/>
+<b>YTD Total Claimed $ (<%=(Calendar.getInstance()).get(Calendar.YEAR)%>):</b> <%=dollar_f.format(usr.getPersonnel().getCurrentYearClaimTotal())%> <br/>
+
+
+<!-- <b>FYTD Total km (<%=Utils.getCurrentSchoolYear()%>):</b> 
+  <%=df.format(usr.getPersonnel().getYearToDateKilometerUsageFiscalYear())%>  kms 
+                              
+<br/>
+<b>FYTD Total Claimed $ (<%=Utils.getCurrentSchoolYear()%>):</b> <%=dollar_f.format(usr.getPersonnel().getYearToDateClaimTotal())%>
+	
+-->
+
+	<br/>
 	<div class="siteSubHeaderBlue">ENTERING KILOMETERS:</div>
 	 When calculating distance and there are multiple route options to and from your destination, you must use the route with the lowest distance when calculating your claim. 
 	 You can, however, take any route to and from your destination. To help in your distance calculation, we have a 
