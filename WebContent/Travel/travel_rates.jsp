@@ -29,6 +29,11 @@
   tcRole= RoleDB.getRole("TRAVELCLAIM APPROVED RATE");
   members = new DistrictPersonnel();
  ArrayList<TravelClaimKMRate> rates = TravelClaimKMRateDB. getTravelClaimKMRates(); 
+	DecimalFormat df = null;
+	DecimalFormat dollar_f = null;
+ df = new DecimalFormat("#,##0");
+ dollar_f = new DecimalFormat("$#,##0");
+ 
 %>
 		<script>
 			
@@ -56,7 +61,7 @@
 		   	                messageTop: 'Travel/PD Claims ',
 		   	                messageBottom: null,
 		   	                exportOptions: {
-		   	                    columns: [ 0, 1, 2 ]
+		   	                    columns: [ 0, 1, 2 ,3,4]
 		   	                }
 		   	            },
 		   	        	{
@@ -66,7 +71,7 @@
 		   	                messageTop: 'Travel/PD Claims',
 		   	                messageBottom: null,
 		   	                exportOptions: {
-		   	                    columns: [ 0, 1, 2]
+		   	                    columns: [ 0, 1, 2,3,4]
 		   	                }
 		   	            }
 		   	        ],		  
@@ -171,13 +176,18 @@ optgroup{ font-size:10px; }
           </form>
 	
 	<div class="siteSubHeaderGreen">Currently Approved Rate Employees</div>
+	
+	When you add new members, the table below may need to be refreshed to display YTD values. 
+	<div style="float:right;"><a href="#" class="btn btn-xs btn-info" onclick="loadingData();refreshApprovedDataTable();return false;"><i class="fas fa-sync-alt"></i> RELOAD</a></div>
+	<br/><br/>
       <table id="claims-table" class="table table-condensed compact table-striped table-bordered claimsTable" style="font-size:11px;background-color:White;" width="100%">	
 				<thead>
 				<tr style="text-transform:uppercase;font-weight:bold;">  	
-      		<td width="30%">EMPLOYEE</td>
-      		<td width="30%">ID</td>
-      		<td width="25%">EMAIL</td>
-      		<td width="15%">OPTIONS</td>
+      		<td width="35%">EMPLOYEE</td>
+      		<td width="10%">ID</td>
+      		<td width="35%">EMAIL</td>
+      		<td width="10%">YTD KM</td>
+      		<td width="10%">YTD $</td>      		
      		</tr>
      		</thead>
      		<tbody>
@@ -188,16 +198,30 @@ optgroup{ font-size:10px; }
                                 per = (Personnel) iter.next();                             
                             %>  
                            <tr>    
-                                  <td><%=per.getFullName()%></td>
-                                  <td><%=per.getPersonnelID()%></td>
-                                  <td><%=per.getUserName()%></td>
-                                  <td><a href="#" onclick="removememberfromtable('<%=per.getPersonnelID()%>',this);" class="btn btn-xs btn-danger">REMOVE</a></td>
-                           </tr>     
+                                  <td width="35%"><%=per.getFullName()%></td>
+                                  <td width="10%"><%=per.getPersonnelID()%></td>
+                                  <td width="35%"><a href="mailto:<%=per.getEmailAddress() %>?subject=Travel Claim Message"><%=per.getEmailAddress() %></a></td> 
+                                   <td width="10%">
+                                   <%
+                                  if(per.getYearToDateKilometerUsage()<9000) { %>
+                                	  <%=df.format(per.getYearToDateKilometerUsage())%>
+                                 <%
+                                 } else {
+                                	  %>
+                                	  <span style="color:Red;">
+                                	  <%=df.format(per.getYearToDateKilometerUsage())%>
+                                	  </span>
+                                	  <%  }
+                                  %>
+                                   </td>
+                                  <td width="10%"><%=dollar_f.format(per.getCurrentYearClaimTotal())%></td>           
+                                                              
+                            </tr>     
                             <%}%>
-     		
-      	
-       </tbody>
+     		 </tbody>
       </table>
+  
+  	
   
   
   

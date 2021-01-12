@@ -450,7 +450,15 @@ public class Personnel implements Serializable {
 
 		return this.getFullNameReverse();
 	}
+	
+	public double getYearToDateKilometerUsageFiscalYear() throws TravelClaimException {
 
+		return TravelClaimDB.getYearToDateTotalKMSFY(this,Utils.getCurrentSchoolYear());
+	}
+	public double getCurrentYearClaimTotal() throws TravelClaimException {
+
+		return TravelClaimDB.getCurrentYearTotalClaimed(this);
+	}
 	public String toXML() {
 
 		StringBuffer xml = new StringBuffer();

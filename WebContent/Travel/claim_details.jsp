@@ -121,6 +121,12 @@
 	n_items = claim.getNotes().iterator();
 	Iterator h_items = null;  
 	h_items = claim.getHistory().iterator();  	
+	
+	
+	DecimalFormat dollar_f = null;	
+	dollar_f = new DecimalFormat("$#,##0");
+	
+	
 %>
 			
 <script>
@@ -245,6 +251,8 @@ dtable=$("#claimItemsTable").DataTable({
  
  
 </script>
+
+
 
 
 	 <img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/singlefile.png" style="max-width:100px;" border=0/>    
@@ -441,27 +449,27 @@ dtable=$("#claimItemsTable").DataTable({
 						<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />                                
 									                                <c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">
-									                                			<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PRE-SUBMISSION:</b> Claim is in Pre-Submission mode and is ready to complete. Please fill in your claim details and submit when ready for processing.</div>
+									                                			<div class="alert alert-warning" style="text-align:center;margin-top:5px;padding:2px;"><b>PRE-SUBMISSION:</b> Claim is in Pre-Submission mode and is ready to complete. Please fill in your claim details and submit when ready for processing.</div>
 									                                			<script>$('#statPreSub').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 2 }">
-									                                			<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>SUBMITTED:</b> Claim has been submitted to supervisor.</div>
+									                                			<div class="alert alert-info" style="text-align:center;margin-top:5px;padding:2px;"><b>SUBMITTED:</b> Claim has been submitted to supervisor.</div>
 									                                			<script>$('#statSubmitted').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 3 }">
-									                                			<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>REVIEWED:</b> Claim has been reviewed by  supervisor.</div>
+									                                			<div class="alert alert-info" style="text-align:center;margin-top:5px;padding:2px;"><b>REVIEWED:</b> Claim has been reviewed by  supervisor.</div>
 									                                			<script>$('#statReviewed').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 4 }">
-									                                			<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>APPROVED:</b> Claim has been approved by  supervisor.</div>
+									                                			<div class="alert alert-success" style="text-align:center;margin-top:5px;padding:2px;"><b>APPROVED:</b> Claim has been approved by  supervisor.</div>
 									                                			<script>$('#statApproved').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 5 }">
-									                                			<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>REJECTED:</b> Claim has been rejected by supervisor. Please check your claim for errors (amounts, wrong supervisor, or invalid claimed item) or check Notes tab above for possible reason. Correct any issue(s) and re-submit this claim, or delete.</div>
+									                                			<div class="alert alert-danger" style="text-align:center;margin-top:5px;padding:2px;"><b>REJECTED:</b> Claim has been rejected by supervisor. <br/>Please check your claim for errors (amounts, wrong supervisor, or invalid claimed item) or check Notes tab above for possible reason. Correct any issue(s) and re-submit this claim, or delete.</div>
 									                                			<script>$('#statRejected').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 6 }">
-									                                			<div class="alert alert-warning" style="margin-top:5px;padding:2px;"><b>PENDING MORE INFORMATION:</b> Claim is pending further action. Please check NOTES tab above and/or any emails from Travel Claims staff re your claim.</div>
+									                                			<div class="alert alert-warning" style="text-align:center;margin-top:5px;padding:2px;"><b>PENDING MORE INFORMATION:</b> Claim is pending further action. <br/>Please check NOTES tab above and/or any emails from Travel Claims staff re your claim.</div>
 									                                	    	<script>$('#statPending').css('display', 'inline-block');</script>
 									                                	</c:when>
 									                                	<c:when test="${claimStatus eq 7 }">						                                	
@@ -482,31 +490,31 @@ dtable=$("#claimItemsTable").DataTable({
 																                 
 																      <c:choose>
                         												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp gt claimCheckDateStamp)}">                        												
-				                        												<div class="alert alert-success" style="margin-top:5px;padding:2px;"><b>PAID</b> Claim has been processed and marked as paid. 
+				                        												<div class="alert alert-success" style="text-align:center;margin-top:5px;padding:2px;"><b>PAID</b> Claim has been processed and marked as paid. 
 				                        												Please allow anywhere from 2-10 business days for deposit to show in your account. 
 				                        												If you have NOT been paid, please contact support below.</div>									                                		
 									                                					<script>$('#statPaid').css('display', 'inline-block');</script>                        												
                         												</c:when>                        												
                         												<c:when test="${((claimPaidDateStamp ne '0') and (claimExportDateStamp ne '0')) and (todayDateStamp le claimCheckDateStamp)}">                    												
-                        															 <div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSED:</b> Claim has been processed and is pending payment. 
+                        															 <div class="alert alert-info" style="text-align:center;margin-top:5px;padding:2px;"><b>PROCESSED:</b> Claim has been processed and is pending payment. 
 			                        												   Please allow time for processing of your payment and final deposit anywhere from <b>2-10 business days</b>. 
 			                        												   Claim may show as PROCESSED for up to 30 days after any payment has been made.  
 			                        												   If there is an issue with final payment, you will be notified before any deposit is made.</div>									                                		
 									                                				<script>$('#statProcessed').css('display', 'inline-block');</script>                        												
                         												</c:when>              												
                         												<c:when test="${claimPaidDateStamp ne '0' and claimExportDateStamp eq '0'}">
-                        															<div class="alert alert-info" style="margin-top:5px;padding:2px;"><b>PROCESSING:</b> Claim is being processed. 
+                        															<div class="alert alert-info" style="text-align:center;margin-top:5px;padding:2px;"><b>PROCESSING:</b> Claim is being processed. 
                         															Please allow 2-10 business days for your claim to be processed. If there is an issue with your claim, you will be notified before it is submitted for payment.</div>									                                		
 									                                				<script>$('#statProcessing').css('display', 'inline-block');</script>
                         												</c:when>
                         												<c:otherwise>                        												
-                        															<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
+                        															<div class="alert alert-danger" style="text-align:center;margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
                         															<script>$('#statError').css('display', 'inline-block');</script>                        												
                         												</c:otherwise>
                         												</c:choose>                        												
 									                                	</c:when>
 									                                	<c:otherwise>
-									                                	 				<div class="alert alert-danger" style="margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
+									                                	 				<div class="alert alert-danger" style="text-align:center;margin-top:5px;padding:2px;"><b>ERROR:</b> There seems to have been a problem. Please contact supervisor or accounts payable.</div>
 									                                	</c:otherwise>                             
 									                                </c:choose>
 							                              
@@ -538,7 +546,7 @@ dtable=$("#claimItemsTable").DataTable({
 			
 <%}else { %>
 			<div align="center" class="no-print" style="padding-bottom:10px;">
-					<a href="#" class="noJump btn btn-xs btn-success" data-toggle="collapse" data-target="#addClaimItemArea"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>
+					<a href="#" class="noJump btn btn-sm btn-success" data-toggle="collapse" data-target="#addClaimItemArea"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>
 			
 			
  <%if(claim instanceof PDTravelClaim){%>
@@ -663,19 +671,17 @@ dtable=$("#claimItemsTable").DataTable({
                        
       <%}%>    
       
-      
-    <hr>  
     
-    <div class="alert alert-primary">
+    <div class="alert alert-primary" id="claimItemsAlertArea">
          
   <div class="siteHeaderBlue">Current Claim Items</div>
                      <%if(!items.hasNext()){%>                    
                     <div class="alert alert-secondary">This claim currently has no items. To add an item, use the link above.</div>
                      
                     <%}else{ %>
-                    Below are your current claim items for this claim. You will also see a variety of options to search, export, and edit/delete items.
+                    <span class="msgArea1">Below are your current claim items for this claim. You will also see a variety of options to search, export, and edit/delete items.</span>
                          
-        <table id="claimItemsTable" class="table table-condensed table-striped table-bordered" style="font-size:10px;background-color:White;" width="100%">
+        <table id="claimItemsTable" class="table table-condensed table-striped table-bordered claimToPrint" style="font-size:11px;background-color:White;" width="100%">
   		<thead>
   			<tr style="text-transform:uppercase;font-weight:bold;">  				
              
@@ -779,7 +785,7 @@ dtable=$("#claimItemsTable").DataTable({
                                 <%}%>
                               <%}%>
                               
-                              
+                          
                               
                         	<div style="font-weight:bold;font-size:16px;float:right;padding-right:10px;">TOTAL DUE: $<span id="totalDUE"><%=summary.getSummaryTotal()%></span></div>
                         
@@ -807,15 +813,16 @@ dtable=$("#claimItemsTable").DataTable({
                    
     </div>
     
-    <br/>                      
-                      	<%=claim.getFiscalYear()%> Total Amount Claimed To Date: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(total_claimed)%></span>
+        		             
+                      <!-- 	    <br/>        <%=claim.getFiscalYear()%> Total Amount Claimed To Date: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(total_claimed)%></span>    <br/>        
+                      
                       	     <%if(budget != null){ %>
                       			<br/><%=claim.getFiscalYear()%> Amount Claimed Against Budget:<span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmountClaimed())%></span>
                       			<br/><%=claim.getFiscalYear()%> Pre-submission Amount: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmountPreclaimed())%></span>
                       			<br/><%=claim.getFiscalYear()%> Approved Budget: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmount())%></span>
                       			<br/><%=claim.getFiscalYear()%> Remaining Available Funds: <span style="color:#FF0000;font-weight:bold;"><%=curr_df.format(budget.getAmount() - budget.getAmountClaimed() - budget.getAmountPreclaimed())%></span>
                       		<%}%>	
-                    
+                    -->
                  
                     
     </form>

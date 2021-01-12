@@ -130,16 +130,41 @@
                            
                           
                           
+                          <div class="siteSubHeaderBlue"><%=emp.getFullName()%> YEAR TO DATE (YTD) TOTALS:</div>
+                          <span style="font-size:11px;">
+												<b>YTD Total kms (<%=(Calendar.getInstance()).get(Calendar.YEAR)%>):</b>												
+				  								<%
+				                                  if(emp.getYearToDateKilometerUsage()<9000) { %>
+				                                	  <%=df.format(emp.getYearToDateKilometerUsage())%>  kms
+				                                 <%  } else { %>
+				                                	  <span style="color:Red;">
+				                                	  <%=df.format(emp.getYearToDateKilometerUsage())%>  kms (Now on Lower Rate)
+				                                	  </span>
+				                                <%  }  %>												
+												<br/>
+												<b>YTD Total Claimed $ (<%=(Calendar.getInstance()).get(Calendar.YEAR)%>):</b> <%=dollar_f.format(emp.getCurrentYearClaimTotal())%> 
+												<br/>
+												<!-- <b>FYTD Total km (<%=Utils.getCurrentSchoolYear()%>):</b> <%=df.format(emp.getYearToDateKilometerUsageFiscalYear())%>  kms                               
+												<br/>
+												<b>FYTD Total Claimed $ (<%=Utils.getCurrentSchoolYear()%>):</b> <%=dollar_f.format(emp.getYearToDateClaimTotal())%>
+												-->
+												
+							</span>
+                          
+                          
+                          <br/><br/>                         
+                          
+                          
                             <table class="searchResults table table-condensed table-striped table-bordered" style="font-size:11px;background-color:white;" width="100%">						
 								<thead>
 								<tr style="text-transform:uppercase;">  
 										<th width="10%">CREATED</th>										
-										<th width="10%">TYPE/MONTH</th>
-										<th width="45%">TITLE</th>
+										<th width="10%">TYPE</th>
+										<th width="45%">TITLE/MONTH</th>
 										<th width="10%">AMOUNT</th>
 										<th width="10%">SUPERVISOR</th>
 										<th width="10%">STATUS</th>
-										<th width="5%">FUNCTION</th>
+										<th width="5%">VIEW</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -211,7 +236,7 @@
 				              			<c:otherwise><span style="color:silver;">N/A</span></c:otherwise>
 				              			</c:choose>
 				              			CLAIM</b><br/>
-				              			for fiscal year <%=claim.getFiscalYear() %>
+				              			for school year <%=claim.getFiscalYear() %>
                     		  </td>
                     			<%} %>
                     		<td style="vertical-align:middle;"><%=dollar_f.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
