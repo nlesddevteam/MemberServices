@@ -4021,6 +4021,72 @@
 		<Request-Handler-Class>com.awsd.travel.handler.RemoveApprovedRateMemberAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Travel/removeApprovedRateMember.html</URL-Pattern>
     </Request-Handler>  
+    
+    <!-- School Reviews  -->
+     <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.ViewSchoolReviewsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/viewSchoolReviews.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.AddNewSchoolReviewRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/addNewSchoolReview.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.ViewSchoolReviewRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/viewSchoolReviewDetails.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.UpdateSchoolReviewRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/updateSchoolReview.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.AddNewFileAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/addNewFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.DeleteFileAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/deleteFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.AddNewSectionAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/addNewSection.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.DeleteSchoolReviewAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/deleteSchoolReview.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.DeleteSchoolReviewSectionAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/deleteSchoolReviewSection.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.ViewSchoolReviewSectionRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/viewSchoolReviewSection.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.UpdateSchoolReviewSectionRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/updateSchoolReviewSection.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.GetFileAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/getFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.UpdateFileAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/updateFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.AddNewSectionOptionAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/addNewSectionOption.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.DeleteSectionOptionAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/deleteLink.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.webupdatesystem.schoolreviews.handler.GetSectionOptionAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolReviews/getSectionOption.html</URL-Pattern>
+    </Request-Handler>
                                                                                                                                                                               
   </Request-Handlers>
 </Member-Services-Config>

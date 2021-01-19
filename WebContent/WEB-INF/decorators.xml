@@ -75,6 +75,12 @@
 	<pattern>/Profile/Teacher/*</pattern>
   </decorator> 
  
+ <!-- For School Review System  -->
+  <decorator name="schoolReviews" page="SchoolReviews/includes/decorator/main.jsp">
+	<pattern>/SchoolReviews/*</pattern>
+  </decorator> 
+ 
+ 
  <!-- For Website CMS 
    <decorator name="CMS" page="WebUpdateSystem/includes/decorator/main.jsp">
 	<pattern>/WebUpdateSystem/*</pattern>

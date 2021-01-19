@@ -170,6 +170,16 @@
 							</a>
 						</div>			
 
+<!-- School Review System--> 
+<esd:SecurityAccessRequired roles="ADMINISTRATOR,SCHOOL-REVIEW-ADMIN">
+						<div class="menuIconImage">                              	
+							<a href="SchoolReviews/viewSchoolReviews.html">
+							<img src="includes/img/menu/schoolreview-off.png" class="img-swap menuImage" border=0 title="SCHOOL REVIEW PROCESS ADMIN">
+							</a>                                                         
+						</div>
+</esd:SecurityAccessRequired>
+
+
 <!-- Admin Planner --> 
 					<esd:SecurityAccessRequired
 						roles="ANNUAL-PLANNER-VIEW,WEB DESIGNER,WEB OPERATOR,PRINCIPAL,VICE PRINCIPAL,DIRECTOR,ASSISTANT DIRECTORS,SENIOR EDUCATION OFFICIER,SENIOR ADMINISTRATIVE OFFICER,PROGRAM SPECIALISTS,ADMINISTRATIVE ASSISTANT">
@@ -185,6 +195,17 @@
 					</esd:SecurityAccessRequired>
 
 
+<!-- PD Calendar -->
+<esd:SecurityAccessRequired permissions="CALENDAR-VIEW">
+						<div class="menuIconImage">
+							<a href="PDReg/viewDistrictCalendar.html"> <img
+								src="includes/img/menu/pdcal-off.png" class="img-swap menuImage"
+								border=0
+								title="The District Calendar allows users to register for upcoming events around the district.">
+							</a>
+						</div>
+</esd:SecurityAccessRequired>
+
 <!-- Professional Learning Series --> 				
 
 						<div class="menuIconImage">
@@ -197,7 +218,7 @@
 						</div>
 						
 <!-- Professional Learning PLAN  --> 
-						<esd:SecurityAccessRequired permissions="PPGP-VIEW">
+<esd:SecurityAccessRequired permissions="PPGP-VIEW">
 						<div class="menuIconImage">
 							<a href="PPGP/ppgpPolicy.html"> <img
 								src="includes/img/menu/learningplan-off.png"
@@ -205,10 +226,10 @@
 								title="Professional Learning Plans">
 							</a>
 						</div>
-					</esd:SecurityAccessRequired>
+</esd:SecurityAccessRequired>
 
 <!-- Professional Learning Resources --> 
-					<esd:SecurityAccessRequired
+<esd:SecurityAccessRequired
 						permissions="PROFESSIONAL-LEARNING-RESOURCES">
 
 						<div class="menuIconImage">
@@ -219,7 +240,7 @@
 								title="Professional Learning Resources">
 							</a>
 						</div>
-					</esd:SecurityAccessRequired>		
+</esd:SecurityAccessRequired>		
 				
 				
 	
@@ -337,22 +358,6 @@
 
 
 
-					<!-- Personnel Package -
-			  	 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
-			  	  			<div class="menuIconImage"> 	                  	
-			            		<a href="Personnel/admin_index.jsp">
-			            			<img src="includes/img/menu/myhrp-off.png" class="img-swap menuImage"  border=0 title="Human Resources Profile System">
-			            		</a>		            						
-		            		</div>
-			  	  </esd:SecurityAccessRequired>
-			 
-			  	 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
-			  	  			<div class="menuIconImage"> 	                  	
-			            		<a href="Personnel/admin_index.jsp">
-			            			<img src="includes/img/menu/pp-off.png" class="img-swap menuImage"  border=0 title="Personnel Package">
-			            		</a>		            						
-		            		</div>
-			  	  </esd:SecurityAccessRequired>-->
 					<!-- Personnel Package 2019-->
 					<esd:SecurityAccessRequired
 						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS">
@@ -365,16 +370,7 @@
 					</esd:SecurityAccessRequired>
 					
 
-					<!-- PD Calendar -->
-					<esd:SecurityAccessRequired permissions="CALENDAR-VIEW">
-						<div class="menuIconImage">
-							<a href="PDReg/viewDistrictCalendar.html"> <img
-								src="includes/img/menu/pdcal-off.png" class="img-swap menuImage"
-								border=0
-								title="The District Calendar allows users to register for upcoming events around the district.">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
+					
 
 					<!-- Kindergarten Registration -->
 					<esd:SecurityAccessRequired
@@ -440,24 +436,7 @@
 					</esd:SecurityAccessRequired>
 
 
-					<!-- Presentation Resource Archive
-
-					<div class="menuIconImage">
-						<a href="SETResource/"> <img
-							src="includes/img/menu/presentation-off.png"
-							class="img-swap menuImage" border=0
-							title="District Presentation Resource Archive.">
-						</a>
-					</div> -->
-					<!--  
-			   <div class="menuIconImage"> 	                  	
-			            		<a href="Profile/">
-			            		<img src="includes/img/menu/teacherprofile-off.png" class="img-swap menuImage" border=0 title="User Profile">
-			            		</a>		            						
-		            		</div>
-			  -->
-
-		
+					
 
 					<!-- Survey Creation  -->
 					<esd:SecurityAccessRequired permissions="SURVEY-ADMIN-VIEW">
@@ -495,17 +474,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- User Administration
-					<esd:SecurityAccessRequired permissions="USER-ADMIN-VIEW">
-						<div class="menuIconImage">
-							<a href="UserAdmin/"> <img
-								src="includes/img/menu/useradmin-off.png"
-								class="img-swap menuImage" border=0
-								title="Change/modify user account options.">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
- -->
+				
 					<!-- Travel Claim System  -->
 					<esd:SecurityAccessRequired permissions="TRAVEL-EXPENSE-VIEW">
 						<div class="menuIconImage">
@@ -555,45 +524,6 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-
-
-
-					<!-- Growth Plan 
-			  	 <esd:SecurityAccessRequired permissions="PPGP-VIEW">
-			  	  			<div class="menuIconImage"> 	                  	
-			            		<a href="PPGP/ppgpPolicy.html">
-			            			<img src="includes/img/menu/learningplan-off.png" class="img-swap menuImage" border=0 title="Professional Development Learning Plans">
-			            		</a>		            						
-		            		</div>
-			  	  </esd:SecurityAccessRequired>	 
-			  	  
-			  	  
-			   
-			  <esd:SecurityAccessRequired permissions="PPGP-VIEW-SUMMARY">
-			  <div class="menuIconImage"> 	                  	
-			            		<a href="PPGP/viewGrowthPlanPrincipalSummary.html">
-			            			<img src="includes/img/menu/learningplan-admin-off.png" class="img-swap menuImage" border=0 title="Professional Development Learning Plan Summary for Principals.">
-			            		</a>		            						
-		            		</div>
-			  
-			  </esd:SecurityAccessRequired>
-			   
-			  <esd:SecurityAccessRequired permissions="PPGP-VIEW-SUMMARY-PROGRAMSPECIALIST">	  
-			 				<div class="menuIconImage"> 	                  	
-			            		<a href="PPGP/viewGrowthPlanProgramSpecialistSummary.html">
-			            			<img src="includes/img/menu/learningplan-ps-off.png" class="img-swap menuImage" border=0 title="Professional Development Learning Plan Summary for Program Specialists.">
-			            		</a>		            						
-		            		</div>
-			  </esd:SecurityAccessRequired>-->
-					<!-- 
-			  	 <esd:SecurityAccessRequired permissions="EFILE-VIEW">
-			  	  			<div class="menuIconImage"> 	                  	
-			            		<a href="EFile/EFileRepositoryChooser.html">
-			            			<img src="includes/img/menu/efile-off.png" class="img-swap menuImage" border=0 title="E-File is a repository for assignments, exams, lesson plans, alternate courses, criteria C domains, and behavior management plans.">
-			            		</a>		            						
-		            		</div>
-			  	  </esd:SecurityAccessRequired>	  	  		  
-			-->
 					<esd:SecurityAccessRequired permissions="BCS-SYSTEM-ACCESS">
 						<div class="menuIconImage">
 							<a href="BCS/index.html"><img
@@ -625,36 +555,12 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- 	   
-			  	   <esd:SecurityAccessRequired permissions="FUND3-SYSTEM-ACCESS">   		
-			  	  <div class="menuIconImage">      
-					<a href="Fund3/index.html"><img src="includes/img/menu/funds3-off.png" class="img-swap menuImage" title="FUND3 System" border=0></a>
-				</div>	
-			  	  </esd:SecurityAccessRequired>
-			  	
-			  	   
-			  	  			<div class="menuIconImage"> 	                  	
-			            		<a href="survey/takeSurvey.html?id=44">
-			            			<img src="includes/img/menu/strategicfeedback-off.png"  border=0 class="img-swap menuImage" title="NLESD Strategic Plan Feedback for School Administrators, Teachers and Staff.">
-			            		</a>		            						
-		            		</div>
-			  	  -->
-
+				
 
 				</div>
 
 
-				<div align="center" style="padding-bottom: 10px; display: none;">
-					<div
-						style="border: 1px solid Red; width: 85%; padding: 5px; font-size: 12px; text-align: center; background-color: #ffe6e6;">
-						<b>PLEASE NOTE RE LEARNING PLANS</b> <br />Learning Plans are
-						currently disabled while Kindergarten registration is in process.
-						Learning Plan access will be disabled from <br />8:30AM Monday,
-						May 14, 2018 to 9:00AM Wednesday, May 16, 2018.<br /> Sorry for
-						any inconvenience this may cause.
-					</div>
 
-				</div>
 
 				<br />
 				<br />
