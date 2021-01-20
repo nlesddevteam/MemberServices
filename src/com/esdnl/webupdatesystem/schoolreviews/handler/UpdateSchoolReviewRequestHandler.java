@@ -11,6 +11,7 @@ import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewBean;
+import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewFileBean;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewSchoolBean;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewManager;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewSchoolManager;
@@ -51,7 +52,7 @@ public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 					if (form.uploadFileExists("reviewphoto")) {
 						//save the file
 						//need to be updated with live location
-						filelocation = "/../ROOT/includes/files/schoolreview/photo/";
+						filelocation = SchoolReviewFileBean.rootbasepath + "photo/";
 						photofilename = save_file("reviewphoto", filelocation);
 						srb.setSrPhoto(photofilename);
 

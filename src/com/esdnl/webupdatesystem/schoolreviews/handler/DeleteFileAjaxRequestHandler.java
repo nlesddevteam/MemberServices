@@ -9,6 +9,7 @@ import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
+import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewFileBean;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewFileManager;
 
 public class DeleteFileAjaxRequestHandler extends RequestHandlerImpl {
@@ -36,7 +37,7 @@ public class DeleteFileAjaxRequestHandler extends RequestHandlerImpl {
 				SchoolReviewFileManager.deleteFileManager(did);
 				//now we delete the file from hard driver
 				if(dtype.equals("S")) {
-					String filelocation = "/../ROOT/includes/files/schoolreview/sections/files/";
+					String filelocation = SchoolReviewFileBean.rootbasepath + "sections/files/";
 					delete_file(filelocation, fileName);
 				}else {
 					
