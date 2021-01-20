@@ -22,7 +22,7 @@ config.extraPlugins = 'wordcount,notification';
 		    // Maximum allowed Word Count, -1 is default for unlimited
 		    maxWordCount: -1,
 		    // Maximum allowed Char Count, -1 is default for unlimited
-		    maxCharCount: 2250,
+		    maxCharCount: 7950,
 	};
 	// The toolbar groups arrangement, optimized for a single toolbar row.
 	config.toolbarGroups = [
