@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewBean;
+import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewFileBean;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewSchoolBean;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewManager;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewSchoolManager;
@@ -39,7 +40,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 				if (!(validate_form())) {
 					path = "add_school_review.jsp";
 					request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(-1));
-					request.setAttribute("msgERR", validator.getErrorString());
+					request.setAttribute("msg", validator.getErrorString());
 				}
 				else {
 
@@ -51,7 +52,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 					if (form.uploadFileExists("reviewphoto")) {
 						//save the file
 						//need to be updated with live location
-						filelocation = "/../ROOT/includes/files/schoolreview/photo/";
+						filelocation = SchoolReviewFileBean.rootbasepath + "photo/";
 						photofilename = save_file("reviewphoto", filelocation);
 						srb.setSrPhoto(photofilename);
 
@@ -73,7 +74,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 						}
 					}
 					
-					request.setAttribute("msgOK", "School Review added");
+					request.setAttribute("msg", "School Review added");
 					//path = "add_school_review.jsp";
 					request.setAttribute("review", srb);
 					request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(id));
@@ -82,7 +83,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 			}
 		}catch (Exception e) {
 			e.printStackTrace(System.err);
-			request.setAttribute("msgERR", e.getMessage());
+			request.setAttribute("msg", e.getMessage());
 			path = "add_school_review.jsp";
 		}
 		return path;

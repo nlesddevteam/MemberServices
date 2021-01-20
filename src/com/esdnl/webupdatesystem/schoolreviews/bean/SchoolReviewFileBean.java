@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.awsd.servlet.ControllerServlet;
+
 public class SchoolReviewFileBean implements Serializable {
 
 	private static final long serialVersionUID = -844016122427000813L;
@@ -16,6 +18,9 @@ public class SchoolReviewFileBean implements Serializable {
 	private Date fileDateAdded;
 	private int isActive;
 	private int fileReviewId;
+	public static String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/includes/files/schoolreview/";
+	
+	
 	public int getId() {
 		return id;
 	}
