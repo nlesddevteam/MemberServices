@@ -381,7 +381,7 @@
     	    countSpacesAsChars: true,
     	    countHTML: true,
     	    maxWordCount: -1,
-    	    maxCharCount: 2250,
+    	    maxCharCount: 7950,
     	}
 
     //CKEDITOR.replace( 'optionembed',{wordcount: pageWordCountConf,toolbar : 'Basic'} );
