@@ -144,7 +144,7 @@
 											<td width="15%" style="vertical-align:middle;">${p.fileDateFormatted}</td>								
 											<td width="15%" style="vertical-align:middle;">${p.fileAddedBy}</td>
 											<td width="25%" style="vertical-align:middle;">
-												<a class="btn btn-sm btn-primary" href="/../ROOT/includes/files/schoolreview/sections/files/${p.filePath }" target="_blank"><i class="far fa-eye"></i> VIEW</a>
+												<a class="btn btn-sm btn-primary" href="/includes/files/schoolreview/sections/files/${p.filePath }" target="_blank"><i class="far fa-eye"></i> VIEW</a>
 												<a href="#" class="btn btn-sm btn-warning" onclick="openmodaleditsectionfile('${p.id}')"><i class="far fa-edit"></i> EDIT</a>
 												<a href="#" class="btn btn-sm btn-danger" onclick="openmodaldelete('${p.id}','${p.filePath }','S')"><i class="far fa-trash-alt"></i> DEL</a>
 		                    				</td>
