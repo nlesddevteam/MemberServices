@@ -15,6 +15,7 @@ import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewFileBean;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewSchoolBean;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewManager;
 import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewSchoolManager;
+import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewSectionManager;
 
 public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 
@@ -52,7 +53,7 @@ public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 					if (form.uploadFileExists("reviewphoto")) {
 						//save the file
 						//need to be updated with live location
-						filelocation = SchoolReviewFileBean.rootbasepath + "photo/";
+						filelocation = SchoolReviewFileBean.rootbasepath + "includes/files/schoolreview/photo/";
 						photofilename = save_file("reviewphoto", filelocation);
 						srb.setSrPhoto(photofilename);
 
@@ -84,6 +85,9 @@ public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 					//path = "add_school_review.jsp";
 					request.setAttribute("review", SchoolReviewManager.getSchoolReviewById(srb.getId()));
 					request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(srb.getId()));
+					request.setAttribute("sectypes", SchoolReviewSectionManager.getSchoolReviewSchoolsById());
+		    		request.setAttribute("reviewsecs", SchoolReviewSectionManager.getSchoolReviewSectionsList(Integer.parseInt(request.getParameter("rid").toString())));
+					
 					path = "view_school_review_details.jsp";
 				}
 			

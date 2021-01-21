@@ -52,7 +52,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 					if (form.uploadFileExists("reviewphoto")) {
 						//save the file
 						//need to be updated with live location
-						filelocation = SchoolReviewFileBean.rootbasepath + "photo/";
+						filelocation = SchoolReviewFileBean.rootbasepath + "includes/files/schoolreview/photo/";
 						photofilename = save_file("reviewphoto", filelocation);
 						srb.setSrPhoto(photofilename);
 

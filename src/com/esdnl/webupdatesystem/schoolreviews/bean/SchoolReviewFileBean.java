@@ -18,7 +18,8 @@ public class SchoolReviewFileBean implements Serializable {
 	private Date fileDateAdded;
 	private int isActive;
 	private int fileReviewId;
-	public static String rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/includes/files/schoolreview/";
+	public static String rootbasepath =  "/../../nlesdweb/WebContent/";
+	
 	
 	
 	public int getId() {

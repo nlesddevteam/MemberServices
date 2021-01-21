@@ -37,7 +37,7 @@ public class DeleteFileAjaxRequestHandler extends RequestHandlerImpl {
 				SchoolReviewFileManager.deleteFileManager(did);
 				//now we delete the file from hard driver
 				if(dtype.equals("S")) {
-					String filelocation = SchoolReviewFileBean.rootbasepath + "sections/files/";
+					String filelocation = SchoolReviewFileBean.rootbasepath + "includes/files/schoolreview/sections/files/";
 					delete_file(filelocation, fileName);
 				}else {
 					

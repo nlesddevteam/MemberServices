@@ -39,7 +39,7 @@ public class AddNewFileAjaxRequestHandler extends RequestHandlerImpl{
 					fb.setFileDate(sdf.parse(form.get("filedate").toString()));
 					fb.setFileType(form.get("filetype"));
 					fb.setFileAddedBy(usr.getLotusUserFullName());
-					String filelocation = SchoolReviewFileBean.rootbasepath + "sections/files/";
+					String filelocation = SchoolReviewFileBean.rootbasepath + "includes/files/schoolreview/sections/files/";
 					String filename = save_file("newfile", filelocation);
 					fb.setFilePath(filename);
 					fb.setFileReviewId(form.getInt("sectionid"));

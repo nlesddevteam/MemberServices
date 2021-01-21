@@ -95,7 +95,7 @@
 					<br/>
 					<span style="padding-top:10px;font-size:14px;font-weight:bold;text-transform:uppercase;">Review Photo:</span><br/>
 			 						<c:if test="${ review.srPhoto ne null }">	
-										<img src="../../../ROOT/includes/files/schoolreview/photo/${review.srPhoto}" border=0 style="width:250px;"><p>
+										<img src="/includes/files/schoolreview/photo/${review.srPhoto}" border=0 style="width:250px;"><p>
 										<input type="hidden" id="hidphoto" name="hidphoto" value="${review.srPhoto}">
 									</c:if>	
                      				<input type="file"  id="reviewphoto" name="reviewphoto"  class="form-control">
