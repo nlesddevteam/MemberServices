@@ -646,8 +646,7 @@ input {
 							<% for(RegionBean region : regions) { %>
 								<%if(regions == null || regions.size() <= 1) { %>
 									<%schools = SchoolDB.getSchools(zone).toArray(new School[0]);                                      		
-                                	int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
-	                                for(int j=0; j < middle; j++){%>
+                                	for(int j=0; j < schools.length; j++){%>
 	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
 	                                		<tr>
 	                                		<td><%=schools[j].getSchoolName()%></td>
@@ -661,9 +660,8 @@ input {
                         		<%}else{
                         			if(region.getName().contains("all")) continue;%>
                         			<%schools = SchoolDB.getSchools(region).toArray(new School[0]);
-                        			int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
                         			%>
-                        			<%for(int j=0; j < middle; j++){%>
+                        			<%for(int j=0; j < schools.length; j++){%>
 	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
 	                                		<tr>
 	                                		<td><%=schools[j].getSchoolName()%></td>
