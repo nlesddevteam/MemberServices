@@ -63,6 +63,7 @@ border-radius: 10px;
 
 input { border:1px solid silver;}
 
+
 /*REGIONAL COLOR SETTINGS */
 .regionDefault {background-color: #1F4279;}
 .region1 {background-color:rgba(191, 0, 0, 0.1);}
@@ -91,12 +92,12 @@ input { border:1px solid silver;}
 .regionLabrador {}
 .regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
 
-
 /* NAVIGATION BAR */
 a.dropdown-item {font-size:12px;}
 .topLogoImg {width:100%;max-width:1250px;}
 .nav-link {font-size:12px;}
 .navbar {background-color: #3e3939;color: white; z-index:999;}
+.navbar {position: -webkit-sticky;position: -moz-sticky;position: -o-sticky;position: -ms-sticky;position: sticky;}
 .navbar-img {width:100%;max-width:37px;min-width:30px;padding:0px;margin:0px;}
 .sticky-offset {top: 16px;}
 .dropdown-item:hover {background-color:rgb(42, 139, 35,0.8);color:White;}

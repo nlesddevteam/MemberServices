@@ -267,8 +267,20 @@ ServletOutputStream sOut;
 			        //Now we get the pay period
 			        NLESDPayAdvicePayGroupBean pgbean = NLESDPayAdvicePayGroupManager.getNLESDPayAdvicePayGroupBean(paygroupid);
 			        //Pay period
-			        objPage.getElements().add(new Label(" (Ending " + pgbean.getPayEndDt() + ")", 445, 495, 120,
-			                        10, Font.getHelvetica(), 10, TextAlign.LEFT));        
+			        if(eibean.getLocnCode().toUpperCase().contains("SUBSTITUTE")) {
+			        	if(pgbean.getCheckDtD() != null) {
+			        		objPage.getElements().add(new Label(" (Ending " + pgbean.getPayEndDtD() + ")", 445, 495, 120,
+			                        10, Font.getHelvetica(), 10, TextAlign.LEFT)); 
+			        	}else {
+			        		objPage.getElements().add(new Label(" (Ending "  + ")", 445, 495, 120,
+			                        10, Font.getHelvetica(), 10, TextAlign.LEFT)); 
+			        	}
+			        	
+			        }else {
+			        	objPage.getElements().add(new Label(" (Ending " + pgbean.getPayEndDt() + ")", 445, 495, 120,
+		                        10, Font.getHelvetica(), 10, TextAlign.LEFT)); 
+			        }
+			            
 			        //Deposited Date
 			        objPage.getElements().add(new Label("DEPOSIT :  " + pgbean.getCheckDt(), 445, 505, 120,
 			                        10, Font.getHelvetica(), 10, TextAlign.LEFT));
