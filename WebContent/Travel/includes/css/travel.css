@@ -63,6 +63,7 @@ border-radius: 10px;
 
 input { border:1px solid silver;}
 
+
 /*REGIONAL COLOR SETTINGS */
 .regionDefault {background-color: #1F4279;}
 .region1 {background-color:rgba(191, 0, 0, 0.1);}
@@ -90,7 +91,6 @@ input { border:1px solid silver;}
 .regionWestern {}
 .regionLabrador {}
 .regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
-
 
 /* NAVIGATION BAR */
 a.dropdown-item {font-size:12px;}
