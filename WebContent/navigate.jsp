@@ -228,7 +228,7 @@
 						</div>
 </esd:SecurityAccessRequired>
 
-<!-- Professional Learning Resources --> 
+<!-- Professional Learning Resources
 <esd:SecurityAccessRequired
 						permissions="PROFESSIONAL-LEARNING-RESOURCES">
 
@@ -242,7 +242,7 @@
 						</div>
 </esd:SecurityAccessRequired>		
 				
-				
+			 --> 	
 	
 
 
