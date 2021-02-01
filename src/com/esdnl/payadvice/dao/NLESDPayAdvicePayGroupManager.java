@@ -17,7 +17,7 @@ public class NLESDPayAdvicePayGroupManager {
 		try {
 				con = DAOUtils.getConnection();
 				con.setAutoCommit(true);
-				stat = con.prepareCall("begin ? := awsd_user.payroll_advice_pkg.add_pay_advice_pay_group(?,?,?,?,?,?); end;");
+				stat = con.prepareCall("begin ? := awsd_user.payroll_advice_pkg.add_pay_advice_pay_group(?,?,?,?,?,?,?,?,?); end;");
 				stat.registerOutParameter(1, OracleTypes.INTEGER);
 				stat.setString(2, bean.getPayGp());
 				stat.setString(3, bean.getPayBgDt());
@@ -25,6 +25,9 @@ public class NLESDPayAdvicePayGroupManager {
 				stat.setString(5, bean.getBusUnit());
 				stat.setString(6, bean.getCheckNum());
 				stat.setString(7, bean.getCheckDt());
+				stat.setString(8, bean.getPayBgDtD());
+				stat.setString(9, bean.getPayEndDtD());
+				stat.setString(10, bean.getCheckDtD());
 				stat.execute();
 				id=((CallableStatement) stat).getInt(1);
 		}
@@ -95,6 +98,9 @@ public class NLESDPayAdvicePayGroupManager {
 				abean.setBusUnit(rs.getString("BUS_UNIT"));
 				abean.setCheckNum(rs.getString("CHECK_NUM"));
 				abean.setCheckDt(rs.getString("CHECK_DT"));
+				abean.setPayBgDtD(rs.getString("PAY_BG_DTD"));
+				abean.setPayEndDtD(rs.getString("PAY_END_DTD"));
+				abean.setCheckDtD(rs.getString("CHECK_DTD"));
 		}
 		catch (SQLException e) {
 				abean = null;

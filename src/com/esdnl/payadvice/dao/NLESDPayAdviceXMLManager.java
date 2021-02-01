@@ -27,6 +27,8 @@ public class NLESDPayAdviceXMLManager {
 	{	
 		NLESDPayAdvicePayGroupBean bean = new NLESDPayAdvicePayGroupBean();
 		try {
+				boolean foundT4C = false;
+				boolean foundT4D = false;
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				factory.setNamespaceAware(false);
 				factory.setValidating(false);
@@ -37,13 +39,38 @@ public class NLESDPayAdviceXMLManager {
 				Document doc = factory.newDocumentBuilder().parse(ControllerServlet.CONTEXT_BASE_PATH + NLESDPayrollDocumentBean.DOCUMENT_BASEPATH + filename);
 				//retrieve the company, payroll start and end dates
 				NodeList nodeslist =  doc.getElementsByTagName("PAYGROUP_INFO");
-				Element e = (Element) nodeslist.item(0);
-				bean.setPayGp(e.getElementsByTagName("pay_gp").item(0).getTextContent());
-				bean.setPayBgDt(e.getElementsByTagName("pay_beg_dt").item(0).getTextContent());
-				bean.setPayEndDt(e.getElementsByTagName("pay_end_dt").item(0).getTextContent());
-				bean.setBusUnit(e.getElementsByTagName("bus_unit").item(0).getTextContent());
-				bean.setCheckNum(e.getElementsByTagName("check_num").item(0).getTextContent());
-				bean.setCheckDt(e.getElementsByTagName("check_dt").item(0).getTextContent());
+				for(int i=0; i<nodeslist.getLength();i++) {
+					Element e = (Element) nodeslist.item(i);
+					System.out.println(e.getElementsByTagName("pay_gp").item(0).getTextContent());
+					if(!foundT4C || !foundT4D) {
+						//need to keep searching not all values found
+						if(e.getElementsByTagName("pay_gp").item(0).getTextContent().contains("T4C") && !foundT4C) {
+							//we need to populate the regular teaching payroll dates
+							bean.setPayGp(e.getElementsByTagName("pay_gp").item(0).getTextContent());
+							bean.setPayBgDt(e.getElementsByTagName("pay_beg_dt").item(0).getTextContent());
+							bean.setPayEndDt(e.getElementsByTagName("pay_end_dt").item(0).getTextContent());
+							bean.setBusUnit(e.getElementsByTagName("bus_unit").item(0).getTextContent());
+							bean.setCheckNum(e.getElementsByTagName("check_num").item(0).getTextContent());
+							bean.setCheckDt(e.getElementsByTagName("check_dt").item(0).getTextContent());
+							foundT4C=true;
+						}else if (e.getElementsByTagName("pay_gp").item(0).getTextContent().contains("T4D") && !foundT4D) {
+							//we need to populate the deferred teacher payroll values
+							bean.setPayBgDtD(e.getElementsByTagName("pay_beg_dt").item(0).getTextContent());
+							bean.setPayEndDtD(e.getElementsByTagName("pay_end_dt").item(0).getTextContent());
+							bean.setCheckDtD(e.getElementsByTagName("check_dt").item(0).getTextContent());
+							foundT4D=true;
+						}else {
+							//we found all values
+							break;
+						}
+					}else {
+						//we found all values
+						break;
+					}
+					
+					
+				}
+				
 			} catch (SAXException e) {
 				e.printStackTrace();
 		} catch (IOException e) {
