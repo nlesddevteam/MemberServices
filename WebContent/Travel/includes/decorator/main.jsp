@@ -498,7 +498,7 @@ Iterator p_iter = null;
  				<div style="display:inline-block;"><a title="Increase Page Font Size" href="#" class="btn btn-secondary btn-xs" id="btn-increase">A+</a></div>
          </span>
          </div>
-		  <div class="copyright">Travel Claim App 3.3 &copy; 2021 NLESD &middot; All Rights Reserved. &nbsp;&nbsp;</div>		
+		  <div class="copyright">Travel Claim App 3.4 &copy; 2021 NLESD &middot; All Rights Reserved. &nbsp;&nbsp;</div>		
 		 </div>		  
 		</div> 
 	 	

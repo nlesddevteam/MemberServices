@@ -608,8 +608,9 @@ dtable=$("#claimItemsTable").DataTable({
    		</div>			
    		<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">   
    			<label for="item_kms" class="mr-sm-2"><b>KMs Traveled:</b></label>
-    		<input required class="form-control mb-2 mr-sm-2" type="text" name="item_kms"  id="item_kms" placeholder="# Kilometers" value="<%=(failed_item != null)?""+failed_item.getItemKMS():"0"%>" onkeypress="return isNumber(event)" onfocus="this.select();" maxlength="4" onpaste="return false;">
+    		<input required class="form-control mb-2 mr-sm-2 integerOnly" type="text" name="item_kms"  id="item_kms" autocomplete="no" placeholder="# Kilometers" value="<%=(failed_item != null)?""+failed_item.getItemKMS():"0"%>" onkeypress="return isNumber(event);" onfocus="this.select();" maxlength="4" onpaste="return false;">
  			<div class="invalid-feedback">ERROR: Please fill out this field.</div>
+ 			<div class="decOnlyMsg" style="display:none;"></div>
  		</div> 
     	<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">  
  			<label for="item_meals" class="mr-sm-2"><b>Meals ($):</b></label>
