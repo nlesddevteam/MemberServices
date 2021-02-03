@@ -17,6 +17,8 @@ public class SchoolReviewSectionBean implements Serializable {
 	private String  secTypeText;
 	private ArrayList<SchoolReviewFileBean> secFiles;
 	private ArrayList<SchoolReviewSectionOptionBean> secOptions;
+	private int secSortId;
+	private int fileCount;
 	public int getSecId() {
 		return secId;
 	}
@@ -82,5 +84,17 @@ public class SchoolReviewSectionBean implements Serializable {
 	}
 	public void setSecOptions(ArrayList<SchoolReviewSectionOptionBean> secOptions) {
 		this.secOptions = secOptions;
+	}
+	public int getSecSortId() {
+		return secSortId;
+	}
+	public void setSecSortId(int secSortId) {
+		this.secSortId = secSortId;
+	}
+	public int getFileCount() {
+		return fileCount;
+	}
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
 	}
 }

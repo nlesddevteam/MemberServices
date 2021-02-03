@@ -21,7 +21,7 @@ public class AddNewSectionOptionAjaxRequestHandler extends RequestHandlerImpl{
 				new RequiredFormElement("optsectype")
 			});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)

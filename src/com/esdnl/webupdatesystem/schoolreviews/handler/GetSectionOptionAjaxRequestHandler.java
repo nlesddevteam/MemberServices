@@ -15,7 +15,7 @@ import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewSectionOptionMana
 public class GetSectionOptionAjaxRequestHandler extends RequestHandlerImpl {
 	public GetSectionOptionAjaxRequestHandler() {
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 		this.validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("did")

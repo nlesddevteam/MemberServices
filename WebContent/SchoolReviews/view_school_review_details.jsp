@@ -21,6 +21,8 @@
   User usr = null;
   usr = (User) session.getAttribute("usr");	
 %>
+
+
 <html>
 	<head>
 		<title>School Review System</title>					
@@ -39,7 +41,7 @@
 				responsive: true,								
 				 "columnDefs": [
 					 {
-			                "targets": [3],			               
+			                "targets": [[5],[6]],			               
 			                "searchable": false,
 			                "orderable": false
 			            }
@@ -74,9 +76,7 @@
 <div class="siteHeaderGreen"> Editing School Review &quot;<span style="color:Red;">${review.srName eq null?'':review.srName}</span>&quot;</div>
   
  
-                      		<c:if test="${ msg ne null }">  
-                  				<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;">${ msg } </div>   
-                  			</c:if>
+                      		
                   		 
 						<p>
 				
@@ -113,7 +113,7 @@
 								    </select>
 							 </div>
 							<div style="clear:both;"></div>				
-								
+<br/>					
 <span style="padding-top:10px;font-size:14px;font-weight:bold;text-transform:uppercase;">School Review School System</span><br/>
 	
 			 <div style="float:left;width:40%;padding:5px;">       	
@@ -132,7 +132,7 @@
 			 <div style="float:left;width:20%;padding:5px;text-align:center;">	<br/>					
 									    <!-- <button class="btn btn-success btn-sm" type="button" id="multiselect_rightAll" class="btn btn-block">Add All <i class="fas fa-angle-double-right"></i></button><br/>-->
 									    <button class="btn btn-success btn-sm" type="button" id="multiselect_rightSelected" > Add School(s)<i class="fas fa-chevron-right"></i></button><br/><br/>
-									    <button class="btn btn-danger btn-sm" type="button" id="multiselect_leftSelected" ><i class="fas fa-chevron-left"></i> Remove</button><br/><br/>
+									    <button class="btn btn-danger btn-sm" type="button" id="multiselect_leftSelected" ><i class="fas fa-chevron-left"></i> Remove School(s)</button><br/><br/>
 									    <button class="btn btn-danger btn-sm" type="button" id="multiselect_leftAll" ><i class="fas fa-angle-double-left"></i> Remove All</button>
 				 </div>
 				 <div style="float:left;width:40%;padding:5px;">
@@ -147,48 +147,60 @@
 											</c:forEach>
 									    </select>
 					</div>				
-				<div style="clear:both;"></div>					
+				<div style="clear:both;"></div>	
+					<br/><br/>
+				<div align="center">	
+						<button type="submit" class="btn btn-success btn-sm">Save Above Change(s)</button>		
+		  		  		 <a href="#" onclick="openmodaladdsection()" class="btn btn-sm btn-primary">Add New Section (Below)</a>	        			
+	        			<a href="viewSchoolReviews.html" class="btn btn-danger btn-sm" title="View School Reviews">Back to Reviews</a>	        			
+				</div> 			
+					
 			<br/><br/>						 
 
 
 <div class="alert alert-info">			
 <div class="siteSubHeaderBlue">School Review Sections</div>
 						
-						
-	            
+			These section addition(s) and/or change(s) are saved automatically when completed. No need to press Save above.			
+	
+	  
 							
 					<table class="schoolReviewSectionsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;" id="showlists">
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">
-					<th width="15%" style="border-right:1px solid white;">SECTION TYPE</th>					
-					<th width="40%" style="border-right:1px solid white;">TITLE</th>																
-					<th width="15%" style="border-right:1px solid white;">ADDED BY</th>	
-					<th width="15%" style="border-right:1px solid white;">STATUS</th>	
-					<th width="15%" style="border-right:1px solid white;">OPTIONS</th>
+					<th width="5%" style="border-right:1px solid white;">SORT #</th>
+					<th width="15%" style="border-right:1px solid white;">TYPE</th>					
+					<th width="40%" style="border-right:1px solid white;">TITLE</th>										
+					<th width="5%" style="border-right:1px solid white;"># FILES</th>													
+					<th width="15%" style="border-right:1px solid white;">ADDED BY</th>							
+					<th width="10%" style="border-right:1px solid white;">STATUS</th>
+					<th width="10%" style="border-right:1px solid white;">OPTIONS</th>
 					</tr>
 					</thead>
 					<tbody>
-									<c:forEach var="p" items="${reviewsecs}" varStatus="counter">
+									<c:forEach var="p" items="${reviewsecs}" varStatus="counter">	
+									
 										<tr id='RS${p.secId}' valign="middle" style="vertical-align:middle;">
+											<td width="5%" style="vertical-align:middle;">${p.secSortId}</td>	
 											<td width="15%" style="vertical-align:middle;">${p.secTypeText}</td>
-											<td width="40%" style="vertical-align:middle;">${p.secTitle}</td>								
-											<td width="15%" style="vertical-align:middle;">${p.secAddedBy}</td>											
-											
+											<td width="40%" style="vertical-align:middle;">${p.secTitle}</td>														
+											<td width="5%" style="vertical-align:middle;text-align:center;">${p.fileCount}</td>																
+											<td width="15%" style="vertical-align:middle;">${p.secAddedBy}</td>										
 											<c:choose>
 											<c:when test="${p.secStatus eq 1}">
-											<td width="15%" style="vertical-align:middle;background-color:Green;color:White;text-align:center;">ENABLED</td>
+											<td width="10%" style="vertical-align:middle;background-color:Green;color:White;text-align:center;">ENABLED</td>
 											</c:when>
 											<c:when test="${p.secStatus eq 0}">
-											<td width="15%" style="vertical-align:middle;background-color:Red;color:White;text-align:center;">DISABLED</td>
+											<td width="10%" style="vertical-align:middle;background-color:Red;color:White;text-align:center;">DISABLED</td>
 											</c:when>
 											<c:otherwise>
-											<td width="15%" style="vertical-align:middle;background-color:Silver;color:White;text-align:center;">HIDDEN</td>
+											<td width="10%" style="vertical-align:middle;background-color:Silver;color:White;text-align:center;">HIDDEN</td>
 											</c:otherwise>
 											</c:choose>
 									
-											<td width="15%" style="vertical-align:middle;">
-												<a class="btn btn-warning btn-sm" href="viewSchoolReviewSection.html?rid=${p.secReviewId}&sid=${p.secId}"><i class="far fa-edit"></i> EDIT</a>&nbsp;
-												<a href="#" class="btn btn-danger btn-sm" onclick="openmodaldeletereviewsection('${p.secId}')"><i class="far fa-trash-alt"></i> DEL</a>
+											<td width="10%" style="vertical-align:middle;text-align:center;">
+												<a title="Edit ${p.secTitle}" class="btn btn-warning btn-xs" href="viewSchoolReviewSection.html?rid=${p.secReviewId}&sid=${p.secId}"><i class="far fa-edit"></i> EDIT</a>&nbsp;
+												<a title="Delete this Section" href="#" class="btn btn-danger btn-xs" onclick="openmodaldeletereviewsection('${p.secId}')"><i class="far fa-trash-alt"></i> DEL</a>
 		                    				</td>
 										</tr>
 									</c:forEach>
@@ -197,11 +209,7 @@
 </div>			
 						
 						
-<div align="center">	
-		  		  		 <a href="#" onclick="openmodaladdsection()" class="btn btn-sm btn-primary">Add New Section</a>
-	        			<button type="submit" class="btn btn-success btn-sm">Save Changes</button>
-	        			<a href="viewSchoolReviews.html" class="btn btn-danger btn-sm" title="View School Reviews">Back to School Reviews</a>	        			
-</div> 						
+			
 						
 						
 																		
@@ -219,7 +227,7 @@
     <br/>
 <!-- Modal -->
 <div class="modal fade" id="modaladd" tabindex="-1" role="dialog" aria-labelledby="modaladd" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modaltitle"></h5>
@@ -249,6 +257,9 @@
 					<option value="0">Disabled</option>
 					<option value="1" SELECTED>Enabled</option>
 				</select>
+			<b>Sort Order: </b><br/>
+  			<Input type="text" id="secsortid" class="form-control">
+  			<br/>  
 			<br/>
 			<b>Description:</b><br/>
 			<textarea id='secdescription'   name='secdescription' class="form-control"></textarea>
@@ -305,10 +316,12 @@ var pageWordCountConf = {
 	    countHTML: true,
 	    maxWordCount: -1,
 	    maxCharCount: 7950,
-	}
+	};
+	
+	
 
-CKEDITOR.replace( 'reviewdescription',{wordcount: pageWordCountConf,toolbar : 'Basic'} );
-CKEDITOR.replace( 'secdescription',{wordcount: pageWordCountConf,toolbar : 'Basic'} );
+CKEDITOR.replace( 'reviewdescription',{wordcount: pageWordCountConf} );	  
+CKEDITOR.replace( 'secdescription',{wordcount: pageWordCountConf} );
 </script>  
 
 

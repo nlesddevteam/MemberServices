@@ -24,7 +24,7 @@ public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 				new RequiredFormElement("reviewname", "Review Name is required.")
 		});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 	}
 
@@ -40,7 +40,7 @@ public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 			
 				if (!(validate_form())) {
 					path = "view_school_review_details.jsp";
-					request.setAttribute("msg", validator.getErrorString());
+					request.setAttribute("msgERR", validator.getErrorString());
 				}
 				else {
 
@@ -81,19 +81,22 @@ public class UpdateSchoolReviewRequestHandler extends RequestHandlerImpl {
 						}
 					}
 					
-					request.setAttribute("msg", "School Review updated");
+					request.setAttribute("msgOK", "SUCCESS: School Review updated");
 					//path = "add_school_review.jsp";
-					request.setAttribute("review", SchoolReviewManager.getSchoolReviewById(srb.getId()));
-					request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(srb.getId()));
-					request.setAttribute("sectypes", SchoolReviewSectionManager.getSchoolReviewSchoolsById());
-		    		request.setAttribute("reviewsecs", SchoolReviewSectionManager.getSchoolReviewSectionsList(Integer.parseInt(request.getParameter("rid").toString())));
+					//request.setAttribute("review", SchoolReviewManager.getSchoolReviewById(srb.getId()));
+					//request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(srb.getId()));
+					//request.setAttribute("sectypes", SchoolReviewSectionManager.getSchoolReviewSchoolsById());
+		    		//request.setAttribute("reviewsecs", SchoolReviewSectionManager.getSchoolReviewSectionsList(Integer.parseInt(request.getParameter("rid").toString())));
+		    		
 					
-					path = "view_school_review_details.jsp";
+					
+					request.setAttribute("reviews",SchoolReviewManager.getSchoolReviewsListFull());
+					path = "view_school_reviews.jsp";
 				}
 			
 		}catch (Exception e) {
 			e.printStackTrace(System.err);
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("msgERR", e.getMessage());
 			path = "view_school_review_details.jsp";
 		}
 		return path;
