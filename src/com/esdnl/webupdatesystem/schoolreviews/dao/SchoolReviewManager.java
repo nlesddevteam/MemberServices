@@ -281,13 +281,13 @@ public class SchoolReviewManager {
 					currentreviewid=srbean.getId();
 					//now check for sub records
 					//sections
-					if(rs.getInt("SEC_ID") > 0) {
+					if(rs.getInt("SEC_ID") > 0 ) {
 						secbean = SchoolReviewSectionManager.createSchoolReviewSectionBean(rs);
 						currentsectionid=secbean.getSecId();
-						mmssec.put(rs.getInt("SORT_ORDER"),secbean);
+						mmssec.put(rs.getInt("SEC_SORT_ID"),secbean);
 					}
 					//files
-					if(rs.getInt("FILE_ID") > 0) {
+					if(rs.getInt("FILE_ID") > 0 && rs.getString("SO_TYPE") == "S") {
 						SchoolReviewFileBean filebean = SchoolReviewFileManager.createSchoolReviewFileBean(rs);
 						currentfileid = filebean.getId();
 						flist.add(filebean);
@@ -320,8 +320,13 @@ public class SchoolReviewManager {
 						}else {
 							//new section
 							//need to add sub objects to section objects and reset them
-							secbean.setSecFiles(flist);
-							secbean.setSecOptions(optionslist);
+							if(!flist.isEmpty()) {
+								secbean.setSecFiles(flist);
+							}
+							if(!optionslist.isEmpty()) {
+								secbean.setSecOptions(optionslist);
+							}
+							
 							//add section to 
 							srbean.setSectionList(mmssec);
 							//reset list
@@ -330,13 +335,13 @@ public class SchoolReviewManager {
 							//create section
 							//now check for sub records
 							//sections
-							if(rs.getInt("SEC_ID") > 0) {
+							if(rs.getInt("SEC_ID") > 0 ) {
 								secbean = SchoolReviewSectionManager.createSchoolReviewSectionBean(rs);
 								currentsectionid=secbean.getSecId();
-								mmssec.put(rs.getInt("SORT_ORDER"),secbean);
+								mmssec.put(rs.getInt("SEC_SORT_ID"),secbean);
 							}
 							//files
-							if(rs.getInt("FILE_ID") > 0) {
+							if(rs.getInt("FILE_ID") > 0 && rs.getString("SO_TYPE") == "S") {
 								SchoolReviewFileBean filebean = SchoolReviewFileManager.createSchoolReviewFileBean(rs);
 								currentfileid = filebean.getId();
 								flist.add(filebean);
@@ -371,10 +376,10 @@ public class SchoolReviewManager {
 							if(rs.getInt("SEC_ID") > 0) {
 								secbean = SchoolReviewSectionManager.createSchoolReviewSectionBean(rs);
 								currentsectionid=secbean.getSecId();
-								mmssec.put(rs.getInt("SORT_ORDER"),secbean);
+								mmssec.put(rs.getInt("SEC_SORT_ID"),secbean);
 							}
 							//files
-							if(rs.getInt("FILE_ID") > 0) {
+							if(rs.getInt("FILE_ID") > 0 && rs.getString("SO_TYPE") == "S") {
 								SchoolReviewFileBean filebean = SchoolReviewFileManager.createSchoolReviewFileBean(rs);
 								currentfileid = filebean.getId();
 								flist.add(filebean);

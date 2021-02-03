@@ -15,7 +15,7 @@ import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewFileManager;
 public class GetFileAjaxRequestHandler extends RequestHandlerImpl {
 	public GetFileAjaxRequestHandler() {
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 		this.validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("did")

@@ -56,7 +56,7 @@ public class SchoolReviewSectionManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.add_review_section(?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.add_review_section(?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.INTEGER);
 			stat.setInt(2, ebean.getSecReviewId());
 			stat.setInt(3, ebean.getSecType());
@@ -72,6 +72,7 @@ public class SchoolReviewSectionManager {
 				stat.setNull(6, OracleTypes.CLOB);
 			}
 			stat.setString(7, ebean.getSecAddedBy());
+			stat.setInt(8, ebean.getSecSortId());
 			stat.execute();
 			id=((CallableStatement) stat).getInt(1);
 			}
@@ -237,7 +238,7 @@ public class SchoolReviewSectionManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.update_review_section(?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.update_review_section(?,?,?,?,?,?); end;");
 			stat.setInt(1, ebean.getSecType());
 			stat.setString(2, ebean.getSecTitle());
 			stat.setInt(3, ebean.getSecStatus());
@@ -251,6 +252,7 @@ public class SchoolReviewSectionManager {
 				stat.setNull(4, OracleTypes.CLOB);
 			}
 			stat.setInt(5, ebean.getSecId());
+			stat.setInt(6, ebean.getSecSortId());
 			stat.execute();
 			
 			}
@@ -287,7 +289,14 @@ public class SchoolReviewSectionManager {
 			abean.setSecTypeText(rs.getString("SECTION_NAME"));
 			abean.setSecAddedBy(rs.getString("SEC_ADDED_BY"));
 			abean.setSecDateAdded(new java.util.Date(rs.getTimestamp("SEC_DATE_ADDED").getTime()));
-			
+			abean.setSecSortId(rs.getInt("SEC_SORT_ID"));
+			try {
+				abean.setFileCount(rs.getInt("FILECOUNT"));
+			}
+			catch (Exception e) {
+				//query does not have value
+				abean.setFileCount(0);
+			}
 		}
 		catch (SQLException e) {
 			abean = null;

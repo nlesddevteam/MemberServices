@@ -20,7 +20,7 @@ public class ViewSchoolReviewSectionRequestHandler extends RequestHandlerImpl {
 				new RequiredFormElement("sid", "Section Id is required.")
 		});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR","WEB DESIGNER"
+				"ADMINISTRATOR","WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 			};
 	}
 	@Override

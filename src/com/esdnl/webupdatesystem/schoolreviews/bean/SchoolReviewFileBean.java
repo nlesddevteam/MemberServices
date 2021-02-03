@@ -18,9 +18,12 @@ public class SchoolReviewFileBean implements Serializable {
 	private Date fileDateAdded;
 	private int isActive;
 	private int fileReviewId;
+	
+	//FOR LIVE SERVER
 	public static String rootbasepath =  "/../../nlesdweb/WebContent/";
 	
-	
+	//FOR LOCALHOST NEW SITE
+	//public static String rootbasepath =  "/../../wtpwebapps/znlesd-2020/";
 	
 	public int getId() {
 		return id;

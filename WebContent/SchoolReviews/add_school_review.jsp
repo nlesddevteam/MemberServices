@@ -33,15 +33,6 @@
   <div class="siteHeaderGreen"> Adding a School Review To NLESD Site</div>
  
  
-                      		<c:if test="${ msgOK ne null }">  
-                  				<div class="alert alert-success" id="memo_error_message" style="margin-top:10px;font-size:14px;margin-bottom:10px;padding:5px;">${ msgOK } </div>   
-                  			</c:if>                  			
-							<c:if test="${ msgERR ne null }">  
-                  				<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;font-size:14px;margin-bottom:10px;padding:5px;">${ msgERR } </div>   
-                  			</c:if>
-                  			<c:if test="${ msg ne null }">  
-                  				<div class="alert alert-info" id="memo_error_message" style="margin-top:10px;font-size:14px;margin-bottom:10px;padding:5px;">${ msg } </div>   
-                  			</c:if>  
 		
 					<form action='addNewSchoolReview.html' method='POST' ENCTYPE="multipart/form-data" onsubmit="return checkreviewfields();"> 
 					<input type="hidden" id="op" name="op" value="CONFIRM">

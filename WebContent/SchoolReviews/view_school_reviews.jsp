@@ -79,16 +79,8 @@
  
 <div class="siteHeaderGreen">View School Reviews</div>
 					The following are current school review entries posted in the system and their current status. Click on the school review title to view/edit. 
-				<p>
-
-			
-
-
-									<%if(request.getAttribute("msg")!=null){%>
-									<div class="messageText" align="center">
-										*** <%=(String)request.getAttribute("msg")%> ***
-									</div>	
-                             		 <%} else { %>   
+	
+		
 									
 									<p>
 					  <table class="schoolReviewTable table table-sm responsive" width="100%" style="font-size:12px;background-color:White;">
@@ -104,7 +96,7 @@
 					<tbody>		
 
 									<c:choose>
-	                                  	<c:when test='${fn:length(reviews) gt 0}'>
+	                                  	<c:when test='${fn:length(reviews) gt 0 && reviews[0] ne null}'>
                                   		<c:forEach items='${reviews}' var='g'>
                                   		
                                   		<c:if test="${ g.srStatus eq 1}">	
@@ -127,8 +119,8 @@
 		                                    <td  width="10%" style="text-align:center;vertical-align:middle;">${g.dateAddedFormatted}</td>
 		                                    <td  width="10%" class="${statusColor}" style="text-align:center;vertical-align:middle;">${statusText}</td>
 		                                    <td  width="20%" style="text-align:center;vertical-align:middle;">
-		                                    <a class="btn btn-warning btn-sm" href="viewSchoolReviewDetails.html?rid=${g.id}"><i class="far fa-edit"></i> EDIT</a>&nbsp;
-		                                    <a class="btn btn-danger btn-sm" href="#" onclick="openmodaldeletereview('${g.id}')"><i class="far fa-trash-alt"></i> DEL</a>		                                      
+		                                    <a title="Edit ${g.srName}" class="btn btn-warning btn-xs" href="viewSchoolReviewDetails.html?rid=${g.id}"><i class="far fa-edit"></i> EDIT</a>&nbsp;
+		                                    <a title="Delete this Review" class="btn btn-danger btn-xs" href="#" onclick="openmodaldeletereview('${g.id}')"><i class="far fa-trash-alt"></i> DEL</a>		                                      
 		                					</td>
 		                				</tr>
                                   		</c:forEach>
@@ -145,12 +137,12 @@
 								</tbody>	
 
 </table>
-		<% } %>	
+		
 			
 
 <div align="center">
-					<a href="addNewSchoolReview.html" class="btn btn-success btn-sm" title="Add School Review">Add School Review</a>
-					<a href="viewSchoolReviews.html" class="btn btn-primary btn-sm" title="View School Reviews">View School Reviews</a>					
+					<a href="addNewSchoolReview.html" class="btn btn-success btn-sm" title="Add School Review">Add Review</a>
+					<a href="viewSchoolReviews.html" class="btn btn-primary btn-sm" title="View School Reviews">View / Refresh Reviews</a>					
 </div>
 
 

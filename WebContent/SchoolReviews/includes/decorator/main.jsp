@@ -92,6 +92,7 @@
 		<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 		<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/fnReloadAjax.js"></script>				
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+		<script src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/date-eu.js"></script>	
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>	
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/jQuery.print@1.5.1/jQuery.print.min.js"></script> 
@@ -105,22 +106,41 @@
 		<script src="includes/js/multiselect.js"></script>		
 		<script src="includes/js/schoolreview.js?ver=${todayVer}"></script>			 	
         <script src="includes/ckeditor/ckeditor.js"></script>
+        
 
 		
 		<decorator:head />
 
 	</head>
 
-	<body>
+	<body>			
+		
 		
 	<!-- Get the loading data animation ready, in front and hidden -->
-	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="/includes/img/loading3.gif" width="200" border=0><br/>Loading selection, please wait...</div></div>
+	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="includes/img/loading4.gif" width="200" border=0><br/>Loading selection, please wait...</div></div>
 	
 
 	<!-- PAGE BODY -->	
 			<div class="mainContainer">
 				<div class="container-fluid">	
-				 <img src="includes/img/header.png" style="width:100%;"/>						
+				 <img src="includes/img/header.png" style="width:100%;"/>
+				 
+				 				<div class="msgerr alert alert-danger no-print details_error_message" style="display:none;"></div>         
+         				    	<div class="msgok alert alert-success no-print details_success_message" style="display:none;"></div>
+         				    	<div class="msginfo alert alert-info details_info_message no-print" style="display:none;"></div>   
+							<c:if test="${ msgOK ne null }">  
+                  				<div class="alert alert-success msgOKd" style="display:none;">${ msgOK } </div>  
+                  				<script>$(".msgOKd").css("display","block").delay(3000).fadeOut();</script> 
+                  			</c:if>                  			
+							<c:if test="${ msgERR ne null }">  
+                  				<div class="alert alert-danger msgERRd" style="display:none;">${ msgERR } </div>   
+                  				<script>$(".msgERRd").css("display","block").delay(3000).fadeOut();</script> 
+                  			</c:if>
+                  			<c:if test="${ msg ne null }">  
+                  				<div class="alert alert-info msgd" style="display:none;">${ msg } </div>   
+                  				<script>$(".msgd").css("display","block").delay(3000).fadeOut();</script> 
+                  			</c:if>  
+				 						
 						<div id="printJob">						
 						<decorator:body />						
 						</div>										
@@ -133,7 +153,7 @@
 		 
 		    <div class="row" >
 		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">   	 		
-		  <div class="copyright">School Review System 1.1 &copy; 2021 NLESD &middot; All Rights Reserved.</div>		
+		  <div class="copyright">School Review System 1.2 &copy; 2021 NLESD &middot; All Rights Reserved.</div>		
 		 	  
 		</div> 
 	 	</div>

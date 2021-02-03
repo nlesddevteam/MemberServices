@@ -20,7 +20,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 				new RequiredFormElement("reviewname", "Review Name is required.")
 		});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 	}
 
@@ -40,7 +40,7 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 				if (!(validate_form())) {
 					path = "add_school_review.jsp";
 					request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(-1));
-					request.setAttribute("msg", validator.getErrorString());
+					request.setAttribute("msgERR", validator.getErrorString());
 				}
 				else {
 
@@ -74,16 +74,17 @@ public class AddNewSchoolReviewRequestHandler extends RequestHandlerImpl {
 						}
 					}
 					
-					request.setAttribute("msg", "School Review added");
+					request.setAttribute("msgOK", "SUCCESS: School Review added");
 					//path = "add_school_review.jsp";
 					request.setAttribute("review", srb);
-					request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(id));
-					path = "view_school_review_details.jsp";
+					//request.setAttribute("schools", SchoolReviewSchoolManager.getSchoolReviewSchoolsById(id));
+					request.setAttribute("reviews",SchoolReviewManager.getSchoolReviewsListFull());
+					path = "view_school_reviews.jsp";
 				}
 			}
 		}catch (Exception e) {
 			e.printStackTrace(System.err);
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("msgERR", e.getMessage());
 			path = "add_school_review.jsp";
 		}
 		return path;

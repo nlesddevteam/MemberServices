@@ -18,7 +18,7 @@ public class ViewSchoolReviewRequestHandler extends RequestHandlerImpl {
 				new RequiredFormElement("rid", "Review Id is required.")
 		});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR","WEB DESIGNER"
+				"ADMINISTRATOR","WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 			};
 	}
 	@Override
@@ -33,7 +33,7 @@ public class ViewSchoolReviewRequestHandler extends RequestHandlerImpl {
 	    		request.setAttribute("sectypes", SchoolReviewSectionManager.getSchoolReviewSchoolsById());
 	    		request.setAttribute("reviewsecs", SchoolReviewSectionManager.getSchoolReviewSectionsList(Integer.parseInt(request.getParameter("rid").toString())));
 	    	}else {
-	    		request.setAttribute("msg", validator.getErrorString());
+	    		request.setAttribute("msgERR", validator.getErrorString());
 	    	}
 	    } catch (Exception e) {
 			// TODO Auto-generated catch block

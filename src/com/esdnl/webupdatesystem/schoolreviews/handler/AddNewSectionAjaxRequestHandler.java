@@ -19,10 +19,11 @@ public class AddNewSectionAjaxRequestHandler extends RequestHandlerImpl{
 				new RequiredFormElement("sectype"),
 				new RequiredFormElement("secdescription"),
 				new RequiredFormElement("secstatus"),
-				new RequiredFormElement("secreviewid")
+				new RequiredFormElement("secreviewid"),
+				new RequiredFormElement("secsortid")
 			});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
@@ -41,6 +42,7 @@ public class AddNewSectionAjaxRequestHandler extends RequestHandlerImpl{
 					srb.setSecDescription(form.get("secdescription"));
 					srb.setSecReviewId(form.getInt("secreviewid"));
 					srb.setSecAddedBy(usr.getLotusUserFullName());
+					srb.setSecSortId(form.getInt("secsortid"));
 					id = SchoolReviewSectionManager.addSchoolReviewSection(srb);
 					message="SUCCESS";
 					
