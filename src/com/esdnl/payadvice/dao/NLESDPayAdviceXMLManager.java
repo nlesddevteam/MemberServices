@@ -41,7 +41,6 @@ public class NLESDPayAdviceXMLManager {
 				NodeList nodeslist =  doc.getElementsByTagName("PAYGROUP_INFO");
 				for(int i=0; i<nodeslist.getLength();i++) {
 					Element e = (Element) nodeslist.item(i);
-					System.out.println(e.getElementsByTagName("pay_gp").item(0).getTextContent());
 					if(!foundT4C || !foundT4D) {
 						//need to keep searching not all values found
 						if(e.getElementsByTagName("pay_gp").item(0).getTextContent().contains("T4C") && !foundT4C) {
@@ -61,7 +60,7 @@ public class NLESDPayAdviceXMLManager {
 							foundT4D=true;
 						}else {
 							//we found all values
-							break;
+							//do nothing look for next paystub type
 						}
 					}else {
 						//we found all values
