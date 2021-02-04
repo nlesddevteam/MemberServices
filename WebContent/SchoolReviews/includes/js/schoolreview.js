@@ -389,7 +389,7 @@ function getSectionFile(fileid){
 	var fid = fileid;
 	var requestd = new FormData();
 	requestd.append('did', fid);
-	//now we send the ajax request
+	//now we send the ajax request 
 	$.ajax({
 		url : "getFile.html",
 		type : 'POST',

@@ -259,7 +259,7 @@
 					<option value="0">Disabled</option>
 					<option value="1" SELECTED>Enabled</option>
 				</select>
-				</div>
+				</div> 
 				<div style="float:left;width:50%;padding:5px;">
 				<b>Sort Order: </b><br/>  				
   				<select id='secsortid' name='secsortid' class="form-control">

@@ -319,7 +319,7 @@
   			<div class="col-sm-10">
   			<div id="divfile"><Input type="file" id="sfile" class="form-control"></div>
   			<div id="divfileedit" style="display:none;"><span id="spanfile"></span></div>
-  			</div>
+  			</div> 
 		</div>
 		</div>
       <div class="modal-footer">
