@@ -163,9 +163,10 @@ function addsection(){
 							//show success message
 							var newrow ="<tr id='RS" + $(this).find("SID").text() + "'>";
 							//now we add each one to the table
+							newrow += "<td width=7%' style='vertical-align:middle;'>" + secsortid + "</td>";
 							newrow += "<td width='15%' style='vertical-align:middle;'>" + statustext + "</td>";
-							newrow += "<td width='45%' style='vertical-align:middle;'>" + sectitle + "</td>";
-							newrow += "<td width='5%' style='vertical-align:middle;text-align:center;'>0</td>";
+							newrow += "<td width='35%' style='vertical-align:middle;'>" + sectitle + "</td>";
+							newrow += "<td width='8%' style='vertical-align:middle;text-align:center;'>0</td>";
 							newrow += "<td width='15%' style='vertical-align:middle;'>" + $(this).find("USER").text() + "</td>"; 
 							newrow += "<td width='10%' style='vertical-align:middle;background-color:#6495ED;color:White;text-align:center;'>NEW!</td>";
 							newrow += "<td width='10%'' style='text-align:center;vertical-align:middle;'>";
@@ -376,7 +377,7 @@ function addsectionfile(){
 function openmodaleditsectionfile(fileid) {
 	getSectionFile(fileid);
 	$("#dtype").val("U");
-	$("#divfile").hide();
+	$("#divfile").show();
 	$("#divfileedit").show();
 	$('#modaltitle').text("Edit Section File");
 	$('#modaladdfile').modal('show');
@@ -388,7 +389,7 @@ function getSectionFile(fileid){
 	var fid = fileid;
 	var requestd = new FormData();
 	requestd.append('did', fid);
-	//now we send the ajax request
+	//now we send the ajax request 
 	$.ajax({
 		url : "getFile.html",
 		type : 'POST',
@@ -401,11 +402,11 @@ function getSectionFile(fileid){
 			$(xml).find('SRFILE').each(
 					function() {
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
-							$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();
+							//$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();
 							$("#fileid").val($(this).find("ID").text());
 							$("#filedate").val($(this).find("FILEDATEFORMATTED").text());
 							$("#filetitle").val($(this).find("FILETITLE").text());
-							var newrow = "<a class='btn btn-primary btn-sm' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
+							var newrow = "<br/><a class='btn btn-primary btn-sm' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
 							newrow += "target='_blank'><i class='far fa-eye'></i> VIEW</a>";
 							$("#spanfile").html(newrow);
 						} else {
@@ -444,11 +445,13 @@ function updatesectionfile(){
 	var fdate = $("#filedate").val();
 	var sectionid = $("#id").val();
 	var fileid = $("#fileid").val();
+	var ffile = $('#sfile')[0].files[0];
 	var requestd = new FormData();
 	requestd.append('filetitle', ftitle);
 	requestd.append('filedate', fdate);
 	requestd.append('fileid', fileid);
 	requestd.append('sectionid', sectionid);
+	requestd.append('newfile', ffile);
 	requestd.append('filetype', "S");
 	//now we send the ajax request
 	$.ajax({

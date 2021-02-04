@@ -168,10 +168,10 @@
 					<table class="schoolReviewSectionsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;" id="showlists">
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">
-					<th width="5%" style="border-right:1px solid white;">SORT #</th>
+					<th width="7%" style="border-right:1px solid white;">SORT #</th>
 					<th width="15%" style="border-right:1px solid white;">TYPE</th>					
-					<th width="40%" style="border-right:1px solid white;">TITLE</th>										
-					<th width="5%" style="border-right:1px solid white;"># FILES</th>													
+					<th width="35%" style="border-right:1px solid white;">TITLE</th>										
+					<th width="8%" style="border-right:1px solid white;"># FILES</th>													
 					<th width="15%" style="border-right:1px solid white;">ADDED BY</th>							
 					<th width="10%" style="border-right:1px solid white;">STATUS</th>
 					<th width="10%" style="border-right:1px solid white;">OPTIONS</th>
@@ -181,10 +181,10 @@
 									<c:forEach var="p" items="${reviewsecs}" varStatus="counter">	
 									
 										<tr id='RS${p.secId}' valign="middle" style="vertical-align:middle;">
-											<td width="5%" style="vertical-align:middle;">${p.secSortId}</td>	
+											<td width=7%" style="vertical-align:middle;">${p.secSortId}</td>	
 											<td width="15%" style="vertical-align:middle;">${p.secTypeText}</td>
-											<td width="40%" style="vertical-align:middle;">${p.secTitle}</td>														
-											<td width="5%" style="vertical-align:middle;text-align:center;">${p.fileCount}</td>																
+											<td width="35%" style="vertical-align:middle;">${p.secTitle}</td>														
+											<td width="8%" style="vertical-align:middle;text-align:center;">${p.fileCount}</td>																
 											<td width="15%" style="vertical-align:middle;">${p.secAddedBy}</td>										
 											<c:choose>
 											<c:when test="${p.secStatus eq 1}">
@@ -240,25 +240,52 @@
   				<div class="alert alert-warning" role="alert" style="display:none;" id="moddivmsg">
   					<span id="modmsg"></span><input type="hidden" id="modfiletype">
 				</div>
-  			
+  			<div style="float:left;width:70%;padding:5px;">
   			<b>Title: </b><br/>
   			<Input type="text" id="sectitle" class="form-control">
-  			<br/>  			
+  			</div>
+  			<div style="float:left;width:30%;padding:5px;">	
   			<b>Type:</b><br/>  			
 				<select id="sectype" class="form-control">
 					<c:forEach var="entry" items="${sectypes}">
 						<option value='${entry.value}'>${entry.key}</option>
 					</c:forEach>
 				</select>
-		<br/>
-		<b>Status:</b><br/>
+		</div>
+		<div style="clear:both;"></div>
+		<div style="float:left;width:50%;padding:5px;"><b>Status:</b><br/>
 		
 				<select id="secstatus" class="form-control">
 					<option value="0">Disabled</option>
 					<option value="1" SELECTED>Enabled</option>
 				</select>
-			<b>Sort Order: </b><br/>
-  			<Input type="text" id="secsortid" class="form-control">
+				</div> 
+				<div style="float:left;width:50%;padding:5px;">
+				<b>Sort Order: </b><br/>  				
+  				<select id='secsortid' name='secsortid' class="form-control">
+				<option value="0">HIDE</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+			</select>	
+  				
+  				
+				</div>
+		<div style="clear:both;"></div>
+		
+			
   			<br/>  
 			<br/>
 			<b>Description:</b><br/>
