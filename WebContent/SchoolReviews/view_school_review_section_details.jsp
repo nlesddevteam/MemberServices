@@ -106,7 +106,7 @@
 <div style="float:left;width:33%;padding:5px;">								
 <span style="font-size:14px;font-weight:bold;text-transform:uppercase;">Sort Order:</span><br/>
 	<!-- <input type='text' id='secsortid' name='secsortid' autocomplete="false" class="form-control" value="${section.secSortId eq null?'':section.secSortId}" />-->
-	<select id='secsortid' name='secsortid' class="form-control" size="5">
+	<select id='secsortid' name='secsortid' class="form-control">
 				<option value="0" ${section.secSortId eq 0 ?'SELECTED':''}>HIDE</option>
 				<option value="1" ${section.secSortId eq 1 ?'SELECTED':''}>1</option>
 				<option value="2" ${section.secSortId eq 2 ?'SELECTED':''}>2</option>
