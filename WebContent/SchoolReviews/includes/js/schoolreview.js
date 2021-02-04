@@ -13,8 +13,8 @@ function deleteconfirmed(){
     		});
 			function checkreviewfields(){
 				if($("#reviewname").val() == ""){
-					$("#memo_error_message").text("Please enter Review Name");
-					$("#memo_error_message").show();
+					$(".msgerr").text("Please enter Review Name");
+					$(".msgerr").show();
 					$("#reviewname").focus();
 					return false;
 				}else{
@@ -56,16 +56,13 @@ function deletefile(){
 						
 							
 						} else {
-							$("#memo_error_message").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 						}
 						
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#memo_error_message").html(textStatus).css("display",
-					"block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display","block").delay(3000).fadeOut();
 			},
 		dataType : "text",
 		async : false
@@ -105,6 +102,9 @@ function openmodaldelete(fid,fname,ftype) {
 function openmodaladdsection() {
 	
 	$('#modaltitle').html("<i class='fas fa-plus'></i> Add New Section");
+	CKEDITOR.instances.secdescription.setData('');
+	//$("#secdescription").text("");
+ 	$("#sectitle").val("");
 	$('#modaladd').modal('show');
 }
 
@@ -119,6 +119,7 @@ function addsection(){
 	var reviewid=$("#id").val();
 	var statustext = $( "#sectype option:selected" ).text();
 	var requestd = new FormData();
+	var secsortid = $("#secsortid").val();
 
 	if(sectitle == ""){
 		$("#modmsg").text("Please enter title");
@@ -130,11 +131,17 @@ function addsection(){
 		$("#moddivmsg").show();
 		return;
 	}
+	if(secsortid == ""){
+		$("#modmsg").text("Please enter sort number");
+		$("#moddivmsg").show();
+		return;
+	}
 	requestd.append('sectitle', sectitle);
 	requestd.append('sectype', sectype);
 	requestd.append('secstatus', secstatus);
 	requestd.append('secdescription', sectest);
 	requestd.append('secreviewid', reviewid);
+	requestd.append('secsortid', secsortid);
 	
 	
 	//now we send the ajax request
@@ -152,18 +159,18 @@ function addsection(){
 						
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
 							$('#modaladd').modal('hide');
-							$("#memo_error_message").html("Section added").css("display",
-							"block").delay(6000);
+							$(".msgok").html("SUCCESS: Section successfully added.").css("display","block").delay(3000).fadeOut();
 							//show success message
 							var newrow ="<tr id='RS" + $(this).find("SID").text() + "'>";
 							//now we add each one to the table
-							newrow += "<td>" + statustext + "</td>";
-							newrow += "<td>" + sectitle + "</td>";
-							newrow += "<td>" + $(this).find("USER").text() + "</td>";	
-							newrow += "<td width='15%' style='vertical-align:middle;background-color:#6495ED;color:White;text-align:center;'>NEW!</td>";
-							newrow += "<td>";
-							newrow += "<a href='#' class='btn btn-warning btn-sm' onclick='openmodaldelete(\'" + $(this).find("SID").text() +  "\')' '>" + "<i class='far fa-edit'></i> EDIT</a>";
-							newrow += "<a href='#' class='btn btn-danger btn-sm' onclick=\"openmodaldeletereviewsection(\'" + $(this).find("SID").text() +  "\')\">" + "<i class='far fa-trash-alt'></i> DEL</a>"
+							newrow += "<td width='15%' style='vertical-align:middle;'>" + statustext + "</td>";
+							newrow += "<td width='45%' style='vertical-align:middle;'>" + sectitle + "</td>";
+							newrow += "<td width='5%' style='vertical-align:middle;text-align:center;'>0</td>";
+							newrow += "<td width='15%' style='vertical-align:middle;'>" + $(this).find("USER").text() + "</td>"; 
+							newrow += "<td width='10%' style='vertical-align:middle;background-color:#6495ED;color:White;text-align:center;'>NEW!</td>";
+							newrow += "<td width='10%'' style='text-align:center;vertical-align:middle;'>";
+							newrow += "<a class='btn btn-warning btn-xs' href='viewSchoolReviewSection.html?rid=" + $("#id").val() + "&sid=" + $(this).find("SID").text() + "'><i class='far fa-edit'></i> EDIT</a>";
+							newrow += "<a href='#' class='btn btn-danger btn-xs' onclick=\"openmodaldeletereviewsection(\'" + $(this).find("SID").text() +  "\')\">" + "<i class='far fa-trash-alt'></i> DEL</a>";
 							newrow += "</td>";
 							newrow +="</tr>";
 							$('table#showlists tr:first').after(newrow);
@@ -171,16 +178,13 @@ function addsection(){
 						
 							
 						} else {
-							$("#memo_error_message").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 						}
 						
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#memo_error_message").html(textStatus).css("display",
-					"block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display","block").delay(3000).fadeOut();
 			},
 		dataType : "text",
 		async : false
@@ -209,23 +213,18 @@ function deleteschoolreview(){
 						
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
 							$('#modaldelete').modal('hide');
-							$("#memo_error_message").html(
-									"Review has been deleted").css(
-									"display", "block").delay(6000);
+							$(".msgok").html("SUCCESS: Review has been deleted.").css("display", "block").delay(3000).fadeOut();
 							$('#R' + rid).remove();
 						
 							
 						} else {
-							$("#memo_error_message").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 						}
 						
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#memo_error_message").html(textStatus).css("display",
-					"block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display","block").delay(3000).fadeOut();
 			},
 		dataType : "text",
 		async : false
@@ -260,23 +259,18 @@ function deleteschoolreviewsection(){
 						
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
 							$('#modaldelete').modal('hide');
-							$("#memo_error_message").html(
-									"Review Section has been deleted").css(
-									"display", "block").delay(6000);
+							$(".msgok").html("SUCCESS: Review Section has been deleted").css($('#RS' + rid).remove()).delay(3000).fadeOut();			
 							$('#RS' + rid).remove();
 						
 							
 						} else {
-							$("#memo_error_message").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 						}
 						
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#memo_error_message").html(textStatus).css("display",
-					"block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display","block").delay(3000).fadeOut();
 			},
 		dataType : "text",
 		async : false
@@ -344,21 +338,18 @@ function addsectionfile(){
 					function() {
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
 							$('#modaladdfile').modal('hide');
-							$("#memo_error_message").html(
-									"File Added").css(
-									"display", "block");
-							
+							$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();								
 							var newrow ="<tr id='RS" + $(this).find("ID").text() +"'>";
 							//now we add each one to the table
-							newrow += "<td>" + $(this).find("FILETITLE").text() + "</td>";
-							newrow += "<td>" + $(this).find("FILEDATE").text() + "</td>";
-							newrow += "<td>" + $(this).find("FILEADDEDBY").text() + "</td>";
-							newrow += "<td>";
-							newrow += "<a class='btn btn-primary btn-sm' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILETITLE").text() + "</td>";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEDATE").text() + "</td>";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEADDEDBY").text() + "</td>";
+							newrow += "<td style='text-align:center;vertical-align:middle;'>";
+							newrow += "<a class='btn btn-primary btn-xs' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
 							newrow += "target='_blank'><i class='far fa-eye'></i> VIEW</a>";
-							newrow += "<a href='#' class='btn btn-warning btn-sm' onclick=\"openmodaleditsectionfile('" + $(this).find("ID").text() + "')\"";
+							newrow += "<a href='#' class='btn btn-warning btn-xs' onclick=\"openmodaleditsectionfile('" + $(this).find("ID").text() + "')\"";
 							newrow += "><i class='far fa-edit'></i> EDIT</a>";
-							newrow += "<a href='#' class='btn btn-danger btn-sm' onclick=\"openmodaldelete('" + $(this).find("ID").text() + "','" + $(this).find("FILEPATH").text() + "','S')\"";
+							newrow += "<a href='#' class='btn btn-danger btn-xs' onclick=\"openmodaldelete('" + $(this).find("ID").text() + "','" + $(this).find("FILEPATH").text() + "','S')\"";
 							newrow += "><i class='far fa-trash-alt'></i> DEL</a>";
 							newrow += "</td>"
 							newrow +="</tr>";
@@ -366,9 +357,7 @@ function addsectionfile(){
 							
 						} else {
 							
-							$("#display_error_message_top").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 							$('#myModal').modal('hide');
 							
 						}
@@ -376,8 +365,7 @@ function addsectionfile(){
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#display_error_message_top").html(textStatus).css(
-					"display", "block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display", "block").delay(3000).fadeOut();
 			$('#myModal').modal('hide');
 		},
 		dataType : "text",
@@ -413,6 +401,7 @@ function getSectionFile(fileid){
 			$(xml).find('SRFILE').each(
 					function() {
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
+							$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();
 							$("#fileid").val($(this).find("ID").text());
 							$("#filedate").val($(this).find("FILEDATEFORMATTED").text());
 							$("#filetitle").val($(this).find("FILETITLE").text());
@@ -421,9 +410,7 @@ function getSectionFile(fileid){
 							$("#spanfile").html(newrow);
 						} else {
 							
-							$("#display_error_message_top").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 							$('#myModal').modal('hide');
 							
 						}
@@ -431,8 +418,7 @@ function getSectionFile(fileid){
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#display_error_message_top").html(textStatus).css(
-					"display", "block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css(	"display", "block").delay(3000).fadeOut();
 			$('#myModal').modal('hide');
 		},
 		dataType : "text",
@@ -479,21 +465,19 @@ function updatesectionfile(){
 					function() {
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
 							$('#modaladdfile').modal('hide');
-							$("#memo_error_message").html(
-									"File Added").css(
-									"display", "block");
+							$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();	
 							
 							var newrow ="<tr id='RS" + $(this).find("ID").text() +"'>";
 							//now we add each one to the table
-							newrow += "<td>" + $(this).find("FILETITLE").text() + "</td>";
-							newrow += "<td>" + $(this).find("FILEDATE").text() + "</td>";
-							newrow += "<td>" + $(this).find("FILEADDEDBY").text() + "</td>";
-							newrow += "<td>";
-							newrow += "<a class='btn btn-primary btn-sm' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILETITLE").text() + "</td>";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEDATE").text() + "</td>";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEADDEDBY").text() + "</td>";
+							newrow += "<td style='text-align:center;vertical-align:middle;'>";
+							newrow += "<a class='btn btn-primary btn-xs' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
 							newrow += "target='_blank'><i class='far fa-eye'></i> VIEW</a>";
-							newrow += "<a href='#' class='btn btn-warning btn-sm' onclick=\"openmodaleditsectionfile('" + $(this).find("ID").text() + "')\"";
+							newrow += "<a href='#' class='btn btn-warning btn-xs' onclick=\"openmodaleditsectionfile('" + $(this).find("ID").text() + "')\"";
 							newrow += "><i class='far fa-edit'></i> EDIT</a>";
-							newrow += "<a href='#' class='btn btn-danger btn-sm' onclick=\"openmodaldelete('" + $(this).find("ID").text() + "','" + $(this).find("FILEPATH").text() + "','S')\"";
+							newrow += "<a href='#' class='btn btn-danger btn-xs' onclick=\"openmodaldelete('" + $(this).find("ID").text() + "','" + $(this).find("FILEPATH").text() + "','S')\"";
 							newrow += "><i class='far fa-trash-alt'></i> DEL</a>";
 							newrow += "</td>"
 							newrow +="</tr>";
@@ -501,9 +485,7 @@ function updatesectionfile(){
 							
 						} else {
 							
-							$("#display_error_message_top").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 							$('#myModal').modal('hide');
 							
 						}
@@ -511,8 +493,7 @@ function updatesectionfile(){
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#display_error_message_top").html(textStatus).css(
-					"display", "block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display", "block").delay(3000).fadeOut();
 			$('#myModal').modal('hide');
 		},
 		dataType : "text",
@@ -587,6 +568,7 @@ function addsectionoption(){
 	var otitle = $("#optiontitle").val();
 	var olink = $("#optionlink").val();
 	var oembed = $("#optionembed").val();
+	oembed = oembed.replace(/"/g, "'");
 	//var oembed =CKEDITOR.instances['optionembed'].getData();
 	var otype = $("#optiontype").val();
 	var sectionid = $("#id").val();
@@ -625,43 +607,41 @@ function addsectionoption(){
 					function() {
 						if ($(this).find("MESSAGE").text() == "SUCCESS") {
 							$('#modaladdoption').modal('hide');
-							$("#memo_error_message").html(
-									"Link Added").css(
-									"display", "block");
+							$(".msgok").html("SUCCESS: Link Added").css(	"display", "block").delay(3000).fadeOut();
 							
 							if($(this).find("SECTIONOPTIONTYPE").text() == "L"){
 								var newrow ="<tr id='SL" + $(this).find("SECTIONOPTIONID").text() +"'>";
 								//now we add each one to the table
-								newrow += "<td>" + $(this).find("SECTIONOPTIONTITLE").text() + "</td>";
-								newrow += "<td>" + $(this).find("SECTIONOPTIONLINK").text() + "</td>";
-								newrow += "<td>" + $(this).find("SECTIONOPTIONADDEDBY").text() + "</td>";
-								newrow += "<td>";
-								newrow += "<a href='#' class='btn btn-sm btn-warning' onclick=\"getSectionOption('" + $(this).find("SECTIONOPTIONID").text() + "','','L')\"><i class='far fa-edit'></i> EDIT</a>";
-								newrow += "<a href='#' class='btn btn-sm btn-danger' onclick=\"openmodaldelete('" + $(this).find("SECTIONOPTIONID").text() + "','','L')\"><i class='far fa-trash-alt'></i> DEL</a>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONTITLE").text() + "</td>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONLINK").text() + "</td>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONADDEDBY").text() + "</td>";
+								newrow += "<td style='text-align:center;vertical-align:middle;'>";
+								newrow += "<a href='#' class='btn btn-xs btn-warning' onclick=\"getSectionOption('" + $(this).find("SECTIONOPTIONID").text() + "','','L')\"><i class='far fa-edit'></i> EDIT</a>";
+								newrow += "<a href='#' class='btn btn-xs btn-danger' onclick=\"openmodaldelete('" + $(this).find("SECTIONOPTIONID").text() + "','','L')\"><i class='far fa-trash-alt'></i> DEL</a>";
 								newrow += "</td>";
 								newrow +="</tr>";
 								$('table#linkslist tr:last').after(newrow);
 							}else if($(this).find("SECTIONOPTIONTYPE").text() == "V"){
 								var newrow ="<tr id='SV" + $(this).find("SECTIONOPTIONID").text() +"'>";
 								//now we add each one to the table
-								newrow += "<td>" + $(this).find("SECTIONOPTIONTITLE").text() + "</td>";
-								newrow += "<td>" + $(this).find("SECTIONOPTIONLINK").text() + "</td>";
-								newrow += "<td>" + $(this).find("SECTIONOPTIONADDEDBY").text() + "</td>";
-								newrow += "<td>";
-								newrow += "<a href='#' class='btn btn-sm btn-warning' onclick=\"getSectionOption('" + $(this).find("SECTIONOPTIONID").text() + "','','V')\"><i class='far fa-edit'></i> EDIT</a>";
-								newrow += "<a href='#' class='btn btn-sm btn-danger' onclick=\"openmodaldelete('" + $(this).find("SECTIONOPTIONID").text() + "','','V')\"><i class='far fa-trash-alt'></i> DEL</a>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONTITLE").text() + "</td>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONLINK").text() + "</td>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONADDEDBY").text() + "</td>";
+								newrow += "<td style='text-align:center;vertical-align:middle;'>";
+								newrow += "<a href='#' class='btn btn-xs btn-warning' onclick=\"getSectionOption('" + $(this).find("SECTIONOPTIONID").text() + "','','V')\"><i class='far fa-edit'></i> EDIT</a>";
+								newrow += "<a href='#' class='btn btn-xs btn-danger' onclick=\"openmodaldelete('" + $(this).find("SECTIONOPTIONID").text() + "','','V')\"><i class='far fa-trash-alt'></i> DEL</a>";
 								newrow += "</td>";
 								newrow +="</tr>";
 								$('table#videoslist tr:last').after(newrow);
 							}if($(this).find("SECTIONOPTIONTYPE").text() == "M"){
 								var newrow ="<tr id='SM" + $(this).find("SECTIONOPTIONID").text() +"'>";
 								//now we add each one to the table
-								newrow += "<td>" + $(this).find("SECTIONOPTIONTITLE").text() + "</td>";
-								newrow += "<td>" + $(this).find("SECTIONOPTIONLINK").text() + "</td>";
-								newrow += "<td>" + $(this).find("SECTIONOPTIONADDEDBY").text() + "</td>";
-								newrow += "<td>";
-								newrow += "<a href='#' class='btn btn-sm btn-warning' onclick=\"getSectionOption('" + $(this).find("SECTIONOPTIONID").text() + "','','M')\"><i class='far fa-edit'></i> EDIT</a>";
-								newrow += "<a href='#' class='btn btn-sm btn-danger' onclick=\"openmodaldelete('" + $(this).find("SECTIONOPTIONID").text() + "','','M')\"><i class='far fa-trash-alt'></i> DEL</a>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONTITLE").text() + "</td>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONLINK").text() + "</td>";
+								newrow += "<td style='vertical-align:middle;'>" + $(this).find("SECTIONOPTIONADDEDBY").text() + "</td>";
+								newrow += "<td style='text-align:center;vertical-align:middle;'>";
+								newrow += "<a href='#' class='btn btn-xs btn-warning' onclick=\"getSectionOption('" + $(this).find("SECTIONOPTIONID").text() + "','','M')\"><i class='far fa-edit'></i> EDIT</a>";
+								newrow += "<a href='#' class='btn btn-xs btn-danger' onclick=\"openmodaldelete('" + $(this).find("SECTIONOPTIONID").text() + "','','M')\"><i class='far fa-trash-alt'></i> DEL</a>";
 								newrow += "</td>";
 								newrow +="</tr>";
 								$('table#mapslist tr:last').after(newrow);
@@ -671,9 +651,7 @@ function addsectionoption(){
 							
 						} else {
 							
-							$("#display_error_message_top").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 							$('#modaladdoption').modal('hide');
 							
 						}
@@ -681,8 +659,7 @@ function addsectionoption(){
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#display_error_message_top").html(textStatus).css(
-					"display", "block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css(	"display", "block").delay(3000).fadeOut();
 			$('#modaladdoption').modal('hide');
 		},
 		dataType : "text",
@@ -725,16 +702,13 @@ function deletelink(){
 						
 							
 						} else {
-							$("#memo_error_message").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 						}
 						
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#memo_error_message").html(textStatus).css("display",
-					"block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css("display","block").delay(3000).fadeOut();
 			},
 		dataType : "text",
 		async : false
@@ -788,16 +762,14 @@ function getSectionOption(fileid){
 							$("#optionid").val($(this).find("SECTIONOPTIONID").text());
 							$("#optiontype").val($(this).find("SECTIONOPTIONTYPE").text());
 							$("#optiontitle").val($(this).find("SECTIONOPTIONTITLE").text());
-							CKEDITOR.instances["optionembed"].setData($(this).find("SECTIONOPTIONEMBED").text());
+							//CKEDITOR.instances["optionembed"].setData($(this).find("SECTIONOPTIONEMBED").text());
 							$("#optionlink").val($(this).find("SECTIONOPTIONLINK").text());
 							$("#optionaction").val("E");
 							$('#modaladdoption').modal('show');
 							
 						} else {
 							
-							$("#display_error_message_top").html(
-									$(this).find("MESSAGE").text()).css(
-									"display", "block").delay(6000).fadeOut();
+							$(".msgerr").html($(this).find("MESSAGE").text()).css("display", "block").delay(3000).fadeOut();
 							$('#myModal').modal('hide');
 							
 						}
@@ -805,8 +777,7 @@ function getSectionOption(fileid){
 					});
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			$("#display_error_message_top").html(textStatus).css(
-					"display", "block").delay(6000).fadeOut();
+			$(".msgerr").html(textStatus).css(	"display", "block").delay(3000).fadeOut();
 			$('#myModal').modal('hide');
 		},
 		dataType : "text",

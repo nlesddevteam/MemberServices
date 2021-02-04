@@ -16,7 +16,27 @@ $( '.dropdown-menu .dropdown-toggle' ).on('click', function() {
 });
 
 
+function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ( (charCode > 31 && charCode < 48) || charCode > 57 || charCode == 46) {
+	   $(".decOnlyMsg").html("<span style='color:Red;'><b>ERROR:</b> Please round to nearest kilometer. No decimals.</span>").css("display","block").delay(4000).fadeOut();
+         return false;
+        }
+        return true;
+    }
+function isNumberDec(evt)
+{
+   var charCode = (evt.which) ? evt.which : evt.keyCode;
+   if (charCode != 46 && charCode > 31 
+     && (charCode < 48 || charCode > 57)) {
+   return false;
+   }
+   return true;
+}  
+
 $(document).ready(function () {	
+
 
 //CHANGE FONT SIZE		   	
 				var $affectedElements = $("div,p,span");
@@ -1691,7 +1711,7 @@ and information used to poplulate labels on dialog
 *************************************************/
 function openModalDialog(claimid,dialogtype,otherinfo){
 	var options = {
-           backdrop : true,
+           backdrop :false,
             show:true
       	};
 		$('#buttonleft').off('click');

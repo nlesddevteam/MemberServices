@@ -12,6 +12,9 @@ public class NLESDPayAdvicePayGroupBean implements Serializable {
 	private String busUnit;
 	private String checkNum;
 	private String checkDt;
+	private String payBgDtD;
+	private String payEndDtD;
+	private String checkDtD;
 	
 	public Integer getId() {
 		return Id;
@@ -54,6 +57,24 @@ public class NLESDPayAdvicePayGroupBean implements Serializable {
 	}
 	public void setCheckDt(String checkDt) {
 		this.checkDt = checkDt;
+	}
+	public String getPayBgDtD() {
+		return payBgDtD;
+	}
+	public void setPayBgDtD(String payBgDtD) {
+		this.payBgDtD = payBgDtD;
+	}
+	public String getPayEndDtD() {
+		return payEndDtD;
+	}
+	public void setPayEndDtD(String payEndDtD) {
+		this.payEndDtD = payEndDtD;
+	}
+	public String getCheckDtD() {
+		return checkDtD;
+	}
+	public void setCheckDtD(String checkDtD) {
+		this.checkDtD = checkDtD;
 	}
 	
 }

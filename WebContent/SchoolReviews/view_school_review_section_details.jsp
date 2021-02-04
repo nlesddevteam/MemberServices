@@ -34,10 +34,27 @@
 	</style>
 	<script>		
 		$('document').ready(function(){
+			mTable = $(".schoolReviewSectionsDocsTable").dataTable({
+				"order" : [[0,"asc"]],		
+				"bPaginate": false,
+				responsive: true,	
+				sDom: 'lrtip',
+				
+				 "columnDefs": [
+					 {
+			                "targets": [3],			               
+			                "searchable": false,
+			                "orderable": false
+			            },
+			            {"targets":0, "type":"date-eu"}
+			        ]
+			});	
+			
 			mTable = $(".schoolReviewSectionsTable").dataTable({
 				"order" : [[0,"asc"]],		
 				"bPaginate": false,
-				responsive: true,				
+				responsive: true,	
+				sDom: 'lrtip',
 				
 				 "columnDefs": [
 					 {
@@ -46,7 +63,8 @@
 			                "orderable": false
 			            }
 			        ]
-			});			
+			});	
+			
 			
 			$("tr").not(':first').hover(
 			  function () {
@@ -72,9 +90,6 @@
 
 <div class="siteHeaderGreen"> Edit School Review Section &quot;<span style="color:Red;">${section.secTitle eq null?'':section.secTitle}</span>&quot; for </div>
     
-<c:if test="${ msg ne null }">  
-		<div class="alert alert-danger" id="memo_error_message" style="margin-top:10px;margin-bottom:10px;padding:5px;">${ msg } </div>   
-</c:if>
                   		 
 <p>
 <form action='updateSchoolReviewSection.html' method='POST' ENCTYPE="multipart/form-data" onsubmit="return checkreviewsectionfields()"> 
@@ -88,26 +103,46 @@
 <input type='text' id='sectitle' name='sectitle' autocomplete="false" class="form-control" value="${section.secTitle eq null?'':section.secTitle}" />
 					
 <br/>
-
- <div style="float:left;width:50%;padding:5px;">  					
+<div style="float:left;width:33%;padding:5px;">								
+<span style="font-size:14px;font-weight:bold;text-transform:uppercase;">Sort Order:</span><br/>
+	<!-- <input type='text' id='secsortid' name='secsortid' autocomplete="false" class="form-control" value="${section.secSortId eq null?'':section.secSortId}" />-->
+	<select id='secsortid' name='secsortid' class="form-control" size="5">
+				<option value="0" ${section.secSortId eq 0 ?'SELECTED':''}>HIDE</option>
+				<option value="1" ${section.secSortId eq 1 ?'SELECTED':''}>1</option>
+				<option value="2" ${section.secSortId eq 2 ?'SELECTED':''}>2</option>
+				<option value="3" ${section.secSortId eq 3 ?'SELECTED':''}>3</option>
+				<option value="4" ${section.secSortId eq 4 ?'SELECTED':''}>4</option>
+				<option value="5" ${section.secSortId eq 5 ?'SELECTED':''}>5</option>
+				<option value="6" ${section.secSortId eq 6 ?'SELECTED':''}>6</option>
+				<option value="7" ${section.secSortId eq 7 ?'SELECTED':''}>7</option>
+				<option value="8" ${section.secSortId eq 8 ?'SELECTED':''}>8</option>
+				<option value="9" ${section.secSortId eq 9 ?'SELECTED':''}>9</option>
+				<option value="10" ${section.secSortId eq 10 ?'SELECTED':''}>10</option>
+				<option value="11" ${section.secSortId eq 11 ?'SELECTED':''}>11</option>
+				<option value="12" ${section.secSortId eq 12 ?'SELECTED':''}>12</option>
+				<option value="13" ${section.secSortId eq 13 ?'SELECTED':''}>13</option>
+				<option value="14" ${section.secSortId eq 14 ?'SELECTED':''}>14</option>
+				<option value="15" ${section.secSortId eq 15 ?'SELECTED':''}>15</option>
+			</select>
+	
+	
+</div>						
+ <div style="float:left;width:33%;padding:5px;">  					
 <span style="font-size:14px;font-weight:bold;text-transform:uppercase;">Section Type:</span><br/>
-
 		<select id="sectype" name="sectype" class="form-control">
 			<c:forEach var="entry" items="${sectypes}">
 				<option value='${entry.value}' ${section.secType eq entry.value ?'SELECTED':''} >${entry.key}</option>
 			</c:forEach>
-		</select>
-		   
+		</select>		   
 </div>
-<div style="float:left;width:50%;padding:5px;"> 
-								
+<div style="float:left;width:33%;padding:5px;"> 								
 <span style="font-size:14px;font-weight:bold;text-transform:uppercase;">Section Status:</span><br/>
-
 			<select id="secstatus" name="secstatus" class="form-control">
 				<option value="0" ${section.secStatus eq 0 ?'SELECTED':''}>Disabled</option>
 				<option value="1" ${section.secStatus eq 1 ?'SELECTED':''}>Enabled</option>
 			</select>
 </div>							
+
 <div style="clear:both;"></div>	
 
 <br/>
@@ -118,21 +153,22 @@
 <br/><br/>	
 							
 <div align="center">	
-			<button type="submit" class="btn btn-success btn-sm">Save Changes</button>
-			<a href="viewSchoolReviewDetails.html?rid=${section.secReviewId}" class="btn btn-sm btn-danger" style="color:white;">Back to School Review</a>			
+			<button type="submit" class="btn btn-success btn-sm">Save Above Change(s)</button>
+			<a href="viewSchoolReviewDetails.html?rid=${section.secReviewId}" class="btn btn-sm btn-danger" style="color:white;">Back to Review</a>			
 </div> 	
 
-<br/><br/>
-						
+<br/>
+<div align="center" style="padding:5px;color:Red;">Section addition(s) and/or change(s) below are saved automatically when completed. No need to press Save above.</div>		
+<br/>					
 <div class="alert alert-primary">		
-<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Section Files</div>
-<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdsectionfile()" class="btn btn-sm btn-primary"><i class="far fa-file-alt"></i> Add New File</a></div>
-<div style="clear:both;"></div>				
-									<table class="schoolReviewSectionsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;"  id="filelist">						
+<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdsectionfile()" class="btn btn-sm btn-primary"><i class="far fa-file-alt"></i> Add Doc (PDF)</a></div>
+<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Documents (PDF)</div><br/>
+
+									<table class="schoolReviewSectionsDocsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;"  id="filelist">						
 										<thead class="thead-dark">
-										<tr style="color:Black;font-size:12px;">
-										<th style="width:45%;">File Title</th>										
-										<th style="width:15%;">File Date</th>									
+										<tr style="color:Black;font-size:12px;text-transform:uppercase;">
+										<th style="width:15%;">Date</th>	
+										<th style="width:45%;">Title</th>		
 										<th style="width:15%;">Added By</th>
 										<th style="width:25%;">Options</th>
 										</tr>
@@ -140,13 +176,13 @@
 										<tbody>
 									<c:forEach var="p" items="${secfiles}" varStatus="counter">
 										<tr id='RS${p.id}' style="vertical-align:middle;">
-											<td width="45%" style="vertical-align:middle;">${p.fileTitle}</td>
-											<td width="15%" style="vertical-align:middle;">${p.fileDateFormatted}</td>								
+										<td width="15%" style="vertical-align:middle;">${p.fileDateFormatted}</td>	
+											<td width="45%" style="vertical-align:middle;">${p.fileTitle}</td>																		
 											<td width="15%" style="vertical-align:middle;">${p.fileAddedBy}</td>
-											<td width="25%" style="vertical-align:middle;">
-												<a class="btn btn-sm btn-primary" href="/includes/files/schoolreview/sections/files/${p.filePath }" target="_blank"><i class="far fa-eye"></i> VIEW</a>
-												<a href="#" class="btn btn-sm btn-warning" onclick="openmodaleditsectionfile('${p.id}')"><i class="far fa-edit"></i> EDIT</a>
-												<a href="#" class="btn btn-sm btn-danger" onclick="openmodaldelete('${p.id}','${p.filePath }','S')"><i class="far fa-trash-alt"></i> DEL</a>
+											<td width="25%" style="vertical-align:middle;text-align:center;">
+												<a class="btn btn-xs btn-primary" href="/includes/files/schoolreview/sections/files/${p.filePath }" target="_blank"><i class="far fa-eye"></i> VIEW</a>
+												<a href="#" class="btn btn-xs btn-warning" onclick="openmodaleditsectionfile('${p.id}')"><i class="far fa-edit"></i> EDIT</a>
+												<a href="#" class="btn btn-xs btn-danger" onclick="openmodaldelete('${p.id}','${p.filePath }','S')"><i class="far fa-trash-alt"></i> DEL</a>
 		                    				</td>
 										</tr>
 									</c:forEach>
@@ -155,8 +191,8 @@
 							
 </div>				
 <div class="alert alert-warning">	
-<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Section Links</div>
-<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdoption('L')" class="btn btn-sm btn-warning"><i class="fas fa-link"></i> Add New Link</a></div>
+<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdoption('L')" class="btn btn-sm btn-warning"><i class="fas fa-link"></i> Add Link/Live Doc</a></div>
+<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Link(s)/Live Doc Link(s)</div>
 <div style="clear:both;"></div>							
 
 								<table class="schoolReviewSectionsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;" id="linkslist">						
@@ -174,9 +210,9 @@
 											<td width="40%" style="vertical-align:middle;">${p.sectionOptionTitle}</td>
 											<td width="20%" style="vertical-align:middle;">${p.sectionOptionLink}</td>								
 											<td width="20%" style="vertical-align:middle;">${p.sectionOptionAddedBy}</td>
-											<td width="20%" style="vertical-align:middle;">
-											<a href="#" class="btn btn-sm btn-warning" onclick="getSectionOption('${p.sectionOptionId}')"><i class="far fa-edit"></i> EDIT</a>
-											<a href="#" class="btn btn-sm btn-danger" onclick="openmodaldelete('${p.sectionOptionId}','','L')"><i class="far fa-trash-alt"></i> DEL</a>
+											<td width="20%" style="vertical-align:middle;text-align:center;">
+											<a href="#" class="btn btn-xs btn-warning" onclick="getSectionOption('${p.sectionOptionId}')"><i class="far fa-edit"></i> EDIT</a>
+											<a href="#" class="btn btn-xs btn-danger" onclick="openmodaldelete('${p.sectionOptionId}','','L')"><i class="far fa-trash-alt"></i> DEL</a>
 											</td>
 										</tr>
 									</c:forEach>
@@ -184,8 +220,8 @@
 								</table>
 </div>
 <div class="alert alert-info">	
-<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Section Videos</div>
-<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdoption('V')" class="btn btn-sm btn-info"><i class="fab fa-youtube"></i> Add New Video</a></div>
+<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdoption('V')" class="btn btn-sm btn-info"><i class="fab fa-youtube"></i> Add Video</a></div>
+<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Video Link(s)/Embed (YouTube)</div>
 <div style="clear:both;"></div>					
 								<table class="schoolReviewSectionsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;" id="videoslist">						
 									<thead class="thead-dark">
@@ -202,9 +238,9 @@
 											<td width="40%" style="vertical-align:middle;">${p.sectionOptionTitle}</td>
 											<td width="20%" style="vertical-align:middle;">${p.sectionOptionLink}</td>								
 											<td width="20%" style="vertical-align:middle;">${p.sectionOptionAddedBy}</td>
-											<td width="20%" style="vertical-align:middle;">
-											<a href="#" class="btn btn-sm btn-warning" onclick="getSectionOption('${p.sectionOptionId}')"><i class="far fa-edit"></i> EDIT</a>
-											<a href="#" class="btn btn-sm btn-danger" onclick="openmodaldelete('${p.sectionOptionId}','','V')"><i class="far fa-trash-alt"></i> DEL</a>
+											<td width="20%" style="vertical-align:middle;text-align:center;">
+											<a href="#" class="btn btn-xs btn-warning" onclick="getSectionOption('${p.sectionOptionId}')"><i class="far fa-edit"></i> EDIT</a>
+											<a href="#" class="btn btn-xs btn-danger" onclick="openmodaldelete('${p.sectionOptionId}','','V')"><i class="far fa-trash-alt"></i> DEL</a>
 											</td>
 										</tr>										
 									</c:forEach>
@@ -213,8 +249,8 @@
 
 </div>							
 <div class="alert alert-secondary">	
-<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Section Maps</div>
-<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdoption('M')" class="btn btn-sm btn-secondary"><i class="far fa-map"></i> Add New Map</a></div>
+<div style="float:right;padding-bottom:5px;"><a onclick="openmodaladdoption('M')" class="btn btn-sm btn-secondary"><i class="far fa-map"></i> Add Map</a></div>
+<div style="font-size:14px;font-weight:bold;text-transform:uppercase;float:left;">Google Map(s) / School Catchment Area Map(s)</div>
 <div style="clear:both;"></div>									
 								<table class="schoolReviewSectionsTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;" id="mapslist">						
 									<thead class="thead-dark">
@@ -231,9 +267,9 @@
 											<td width="40%" style="vertical-align:middle;">${p.sectionOptionTitle}</td>
 											<td width="20%" style="vertical-align:middle;">${p.sectionOptionLink}</td>
 											<td width="20%" style="vertical-align:middle;">${p.sectionOptionAddedBy}</td>
-											<td width="20%" style="vertical-align:middle;">
-											<a  href="#" class="btn btn-sm btn-warning" onclick="getSectionOption('${p.sectionOptionId}')"><i class="far fa-edit"></i> EDIT</a> &nbsp;
-											<a  href="#" class="btn btn-sm btn-danger" onclick="openmodaldelete('${p.sectionOptionId}','','M')"><i class="far fa-trash-alt"></i> DEL</a>
+											<td width="20%" style="vertical-align:middle;text-align:center;">
+											<a  href="#" class="btn btn-xs btn-warning" onclick="getSectionOption('${p.sectionOptionId}')"><i class="far fa-edit"></i> EDIT</a> &nbsp;
+											<a  href="#" class="btn btn-xs btn-danger" onclick="openmodaldelete('${p.sectionOptionId}','','M')"><i class="far fa-trash-alt"></i> DEL</a>
 											</td>
 										</tr>
 									</c:forEach>
@@ -297,7 +333,7 @@
 
 
 	<div class="modal fade" id="modaladdoption" tabindex="-1" role="dialog" aria-labelledby="modaladd" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="modaltitleopt"></h5>

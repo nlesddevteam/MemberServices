@@ -19,10 +19,11 @@ public class UpdateSchoolReviewSectionRequestHandler extends RequestHandlerImpl 
 				new RequiredFormElement("sectitle", "Section Title is required."),
 				new RequiredFormElement("secstatus", "Section Status is required."),
 				new RequiredFormElement("sectype", "Section Type is required."),
-				new RequiredFormElement("secdescription", "Section Description is required.")
+				new RequiredFormElement("secdescription", "Section Description is required."),
+				new RequiredFormElement("secsortid", "Section Sort Order is required.")
 		});
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 	}
 
@@ -48,6 +49,7 @@ public class UpdateSchoolReviewSectionRequestHandler extends RequestHandlerImpl 
 					srb.setSecTitle(form.get("sectitle"));
 					srb.setSecStatus(form.getInt("secstatus"));
 					srb.setSecDescription(form.get("secdescription"));
+					srb.setSecSortId(form.getInt("secsortid"));
 					SchoolReviewSectionManager.updateSchoolReviewSection(srb);
 					request.setAttribute("msg", "School Review Section updated");
 					request.setAttribute("sectypes", SchoolReviewSectionManager.getSchoolReviewSchoolsById());

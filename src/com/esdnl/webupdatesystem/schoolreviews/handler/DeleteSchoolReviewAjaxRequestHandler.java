@@ -14,7 +14,7 @@ import com.esdnl.webupdatesystem.schoolreviews.dao.SchoolReviewManager;
 public class DeleteSchoolReviewAjaxRequestHandler extends RequestHandlerImpl {
 	public DeleteSchoolReviewAjaxRequestHandler() {
 		this.requiredRoles = new String[] {
-				"ADMINISTRATOR", "WEB DESIGNER"
+				"ADMINISTRATOR", "WEB DESIGNER", "SCHOOL-REVIEW-ADMIN"
 		};
 		this.validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("rid")
