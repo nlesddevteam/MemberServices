@@ -38,7 +38,8 @@
 			mTable = $(".schoolReviewSectionsTable").dataTable({
 				"order" : [[0,"asc"]],		
 				"bPaginate": false,
-				responsive: true,								
+				responsive: true,		
+				"bFilter": false,
 				 "columnDefs": [
 					 {
 			                "targets": [[5],[6]],			               
@@ -150,17 +151,16 @@
 				<div style="clear:both;"></div>	
 					<br/><br/>
 				<div align="center">	
-						<button type="submit" class="btn btn-success btn-sm">Save Above Change(s)</button>		
-		  		  		 <a href="#" onclick="openmodaladdsection()" class="btn btn-sm btn-primary">Add New Section (Below)</a>	        			
+						<button type="submit" class="btn btn-success btn-sm">Save Above Change(s)</button>				  		  		     			
 	        			<a href="viewSchoolReviews.html" class="btn btn-danger btn-sm" title="View School Reviews">Back to Reviews</a>	        			
 				</div> 			
 					
 			<br/><br/>						 
 
 
-<div class="alert alert-info">			
+<div class="alert alert-info"><div style="float:right;"><a href="#" onclick="openmodaladdsection()" class="btn btn-sm btn-primary">Add New Section (Below)</a></div>	   	
 <div class="siteSubHeaderBlue">School Review Sections</div>
-						
+					
 			These section addition(s) and/or change(s) are saved automatically when completed. No need to press Save above.			
 	
 	  
