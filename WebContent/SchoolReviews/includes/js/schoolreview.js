@@ -347,7 +347,7 @@ function addsectionfile(){
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEDATE").text() + "</td>";
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEADDEDBY").text() + "</td>";
 							newrow += "<td style='text-align:center;vertical-align:middle;'>";
-							newrow += "<a class='btn btn-primary btn-xs' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
+							newrow += "<a class='btn btn-primary btn-xs' href='/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
 							newrow += "target='_blank'><i class='far fa-eye'></i> VIEW</a>";
 							newrow += "<a href='#' class='btn btn-warning btn-xs' onclick=\"openmodaleditsectionfile('" + $(this).find("ID").text() + "')\"";
 							newrow += "><i class='far fa-edit'></i> EDIT</a>";
@@ -408,7 +408,7 @@ function getSectionFile(fileid){
 							$("#fileid").val($(this).find("ID").text());
 							$("#filedate").val($(this).find("FILEDATEFORMATTED").text());
 							$("#filetitle").val($(this).find("FILETITLE").text());
-							var newrow = "<br/><a class='btn btn-primary btn-sm' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
+							var newrow = "<br/><a class='btn btn-primary btn-sm' href='/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
 							newrow += "target='_blank'><i class='far fa-eye'></i> VIEW</a>";
 							$("#spanfile").html(newrow);
 						} else {
@@ -478,7 +478,7 @@ function updatesectionfile(){
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEDATE").text() + "</td>";
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEADDEDBY").text() + "</td>";
 							newrow += "<td style='text-align:center;vertical-align:middle;'>";
-							newrow += "<a class='btn btn-primary btn-xs' href='/../ROOT/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
+							newrow += "<a class='btn btn-primary btn-xs' href='/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
 							newrow += "target='_blank'><i class='far fa-eye'></i> VIEW</a>";
 							newrow += "<a href='#' class='btn btn-warning btn-xs' onclick=\"openmodaleditsectionfile('" + $(this).find("ID").text() + "')\"";
 							newrow += "><i class='far fa-edit'></i> EDIT</a>";
