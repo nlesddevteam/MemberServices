@@ -162,10 +162,11 @@ public class SchoolReviewFileManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.update_review_file(?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.update_review_file(?,?,?,?); end;");
 			stat.setString(1, ebean.getFileTitle());
 			stat.setTimestamp(2, new Timestamp(ebean.getFileDate().getTime()));
 			stat.setInt(3, ebean.getId());
+			stat.setString(4, ebean.getFilePath());							  
 			stat.execute();
 			}
 		catch (Exception e) {
