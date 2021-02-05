@@ -36,10 +36,17 @@ public class UpdateFileAjaxRequestHandler extends RequestHandlerImpl{
 				try {
 					//get fields
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					SchoolReviewFileBean fb = new SchoolReviewFileBean();
+					//SchoolReviewFileBean fb = new SchoolReviewFileBean();	
+					SchoolReviewFileBean fb = SchoolReviewFileManager.getSchoolReviewFileById(form.getInt("fileid"));
 					fb.setId(form.getInt("fileid"));
 					fb.setFileTitle(form.get("filetitle"));
 					fb.setFileDate(sdf.parse(form.get("filedate").toString()));
+					//now we check to see if a new file has been upload
+					if(form.uploadFileExists("newfile")) {
+						String filelocation = SchoolReviewFileBean.rootbasepath + "includes/files/schoolreview/sections/files/";
+						String filename = save_file("newfile", filelocation);
+						fb.setFilePath(filename);
+					}//else we leave it the value it is now									
 					SchoolReviewFileManager.updateSchoolReviewFile(fb);
 					message="SUCCESS";
 					

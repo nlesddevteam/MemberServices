@@ -289,6 +289,7 @@ function openmodaladdsectionfile() {
 	$("#fileid").val("");
 	$("#filedate").val("");
 	$("#filetitle").val("");
+	$("#sfile").val("");				 
 	$("#divfile").show();
 	$("#divfileedit").hide();
 	$('#modaltitle').text("Add New Section File");
@@ -379,6 +380,7 @@ function openmodaleditsectionfile(fileid) {
 	$("#dtype").val("U");
 	$("#divfile").show();
 	$("#divfileedit").show();
+	$("#sfile").val("");				 
 	$('#modaltitle').text("Edit Section File");
 	$('#modaladdfile').modal('show');
 }
