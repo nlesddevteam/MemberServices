@@ -87,7 +87,7 @@
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">
 					<th width="60%" style="border-right:1px solid white;">TITLE</th>			
-					<th width="10%" style="border-right:1px solid white;">YEAR</th>																		
+					<th width="10%" style="border-right:1px solid white;">YEAR</th>						    												
 					<th width="10%" style="border-right:1px solid white;">STATUS</th>	
 					<th width="20%" style="border-right:1px solid white;">OPTIONS</th>				
 									
