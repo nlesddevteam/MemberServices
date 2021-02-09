@@ -36,7 +36,7 @@
 	<script>		
 		$('document').ready(function(){
 			mTable = $(".schoolReviewTable").dataTable({
-				"order" : [[0,"asc"]],		
+				"order" : [[1,"desc"],[0,"asc"]],		
 				"bPaginate": false,
 				responsive: true,
 								
@@ -86,8 +86,8 @@
 					  <table class="schoolReviewTable table table-sm responsive" width="100%" style="font-size:12px;background-color:White;">
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">
-					<th width="60%" style="border-right:1px solid white;">TITLE</th>					
-					<th width="10%" style="border-right:1px solid white;">DATE</th>																
+					<th width="60%" style="border-right:1px solid white;">TITLE</th>			
+					<th width="10%" style="border-right:1px solid white;">YEAR</th>																		
 					<th width="10%" style="border-right:1px solid white;">STATUS</th>	
 					<th width="20%" style="border-right:1px solid white;">OPTIONS</th>				
 									
@@ -115,8 +115,9 @@
 										<c:set var="statusText" value="<i class='far fa-eye-slash'></i> HIDDEN"/>
 										</c:if>
                                   		<tr class='datalist ${statusrColor}' id="R${g.id}" valign="middle" style="vertical-align:middle;">
-                                  			<td  width="60%" style="vertical-align:middle;">${g.srName}</td>
-		                                    <td  width="10%" style="text-align:center;vertical-align:middle;">${g.dateAddedFormatted}</td>
+                                  			<td  width="50%" style="vertical-align:middle;">${g.srName}</td>
+                                  			<td  width="10%" style="text-align:center;vertical-align:middle;">${g.srSchoolYear}</td>
+		                                    <!-- <td  width="10%" style="text-align:center;vertical-align:middle;">${g.dateAddedFormatted}</td>-->
 		                                    <td  width="10%" class="${statusColor}" style="text-align:center;vertical-align:middle;">${statusText}</td>
 		                                    <td  width="20%" style="text-align:center;vertical-align:middle;">
 		                                    <a title="Edit ${g.srName}" class="btn btn-warning btn-xs" href="viewSchoolReviewDetails.html?rid=${g.id}"><i class="far fa-edit"></i> EDIT</a>&nbsp;
