@@ -165,11 +165,11 @@ function addsection(){
 							//now we add each one to the table
 							newrow += "<td width=7%' style='vertical-align:middle;'>" + secsortid + "</td>";
 							newrow += "<td width='15%' style='vertical-align:middle;'>" + statustext + "</td>";
-							newrow += "<td width='35%' style='vertical-align:middle;'>" + sectitle + "</td>";
+							newrow += "<td width='30%' style='vertical-align:middle;'>" + sectitle + "</td>";
 							newrow += "<td width='8%' style='vertical-align:middle;text-align:center;'>0</td>";
 							newrow += "<td width='15%' style='vertical-align:middle;'>" + $(this).find("USER").text() + "</td>"; 
 							newrow += "<td width='10%' style='vertical-align:middle;background-color:#6495ED;color:White;text-align:center;'>NEW!</td>";
-							newrow += "<td width='10%'' style='text-align:center;vertical-align:middle;'>";
+							newrow += "<td width='15%'' style='text-align:center;vertical-align:middle;'>";
 							newrow += "<a class='btn btn-warning btn-xs' href='viewSchoolReviewSection.html?rid=" + $("#id").val() + "&sid=" + $(this).find("SID").text() + "'><i class='far fa-edit'></i> EDIT</a>";
 							newrow += "<a href='#' class='btn btn-danger btn-xs' onclick=\"openmodaldeletereviewsection(\'" + $(this).find("SID").text() +  "\')\">" + "<i class='far fa-trash-alt'></i> DEL</a>";
 							newrow += "</td>";

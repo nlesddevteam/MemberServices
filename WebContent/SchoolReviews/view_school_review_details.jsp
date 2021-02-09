@@ -170,11 +170,11 @@
 					<tr style="color:Black;font-size:12px;">
 					<th width="7%" style="border-right:1px solid white;">SORT #</th>
 					<th width="15%" style="border-right:1px solid white;">TYPE</th>					
-					<th width="35%" style="border-right:1px solid white;">TITLE</th>										
+					<th width="30%" style="border-right:1px solid white;">TITLE</th>										
 					<th width="8%" style="border-right:1px solid white;"># FILES</th>													
 					<th width="15%" style="border-right:1px solid white;">ADDED BY</th>							
 					<th width="10%" style="border-right:1px solid white;">STATUS</th>
-					<th width="10%" style="border-right:1px solid white;">OPTIONS</th>
+					<th width="15%" style="border-right:1px solid white;">OPTIONS</th>
 					</tr>
 					</thead>
 					<tbody>
