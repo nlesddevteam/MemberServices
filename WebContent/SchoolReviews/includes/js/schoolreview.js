@@ -343,8 +343,9 @@ function addsectionfile(){
 							$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();								
 							var newrow ="<tr id='RS" + $(this).find("ID").text() +"'>";
 							//now we add each one to the table
-							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILETITLE").text() + "</td>";
+							
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEDATE").text() + "</td>";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILETITLE").text() + "</td>";
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEADDEDBY").text() + "</td>";
 							newrow += "<td style='text-align:center;vertical-align:middle;'>";
 							newrow += "<a class='btn btn-primary btn-xs' href='/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
@@ -473,9 +474,9 @@ function updatesectionfile(){
 							$(".msgok").html("SUCCESS: File Added").css("display", "block").delay(3000).fadeOut();	
 							
 							var newrow ="<tr id='RS" + $(this).find("ID").text() +"'>";
-							//now we add each one to the table
-							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILETITLE").text() + "</td>";
+							//now we add each one to the table							
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEDATE").text() + "</td>";
+							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILETITLE").text() + "</td>";
 							newrow += "<td style='vertical-align:middle;'>" + $(this).find("FILEADDEDBY").text() + "</td>";
 							newrow += "<td style='text-align:center;vertical-align:middle;'>";
 							newrow += "<a class='btn btn-primary btn-xs' href='/includes/files/schoolreview/sections/files/" + $(this).find("FILEPATH").text() + "'";
