@@ -6,13 +6,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.TreeMap;
-
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewBean;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewFileBean;
-import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewSchoolBean;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewSectionBean;
 import com.esdnl.webupdatesystem.schoolreviews.bean.SchoolReviewSectionOptionBean;
 
@@ -313,9 +310,15 @@ public class SchoolReviewManager {
 								}
 							}else {
 								//new file
-								SchoolReviewFileBean filebean = SchoolReviewFileManager.createSchoolReviewFileBean(rs);
-								currentfileid = filebean.getId();
-								flist.add(filebean);
+								if(rs.getInt("FILE_ID") > 0) {
+									SchoolReviewFileBean filebean = SchoolReviewFileManager.createSchoolReviewFileBean(rs);
+									currentfileid = filebean.getId();
+									flist.add(filebean);
+								}else {
+									SchoolReviewSectionOptionBean optionbean = SchoolReviewSectionOptionManager.createSchoolReviewSectionOptionBean(rs);
+									optionslist.add(optionbean);
+								}
+								
 							}
 						}else {
 							//new section
