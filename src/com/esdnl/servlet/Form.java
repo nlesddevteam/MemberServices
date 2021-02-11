@@ -10,11 +10,11 @@ import java.util.Hashtable;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.esdnl.util.StringUtils;
+
 import javazoom.upload.MultipartFormDataRequest;
 import javazoom.upload.UploadException;
 import javazoom.upload.UploadFile;
-
-import com.esdnl.util.StringUtils;
 
 public class Form {
 
@@ -110,6 +110,20 @@ public class Form {
 		return check;
 	}
 
+	public boolean hasValueIgnoreCase(String element_name, String element_value) {
+
+		boolean check = false;
+
+		if (name_map.containsKey(element_name)) {
+			String val1 = ((String[]) ((FormElement) name_map.get(element_name)).getValue())[0];
+
+			if (!StringUtils.isEmpty(val1) && val1.equalsIgnoreCase(element_value))
+				check = true;
+		}
+
+		return check;
+	}
+
 	public String get(String element_name) {
 
 		String value = null;
@@ -162,7 +176,8 @@ public class Form {
 
 		if (name_map.containsKey(element_name)) {
 			try {
-				value = new SimpleDateFormat(FormElementFormat.DATE_FORMAT).parse(((String[]) ((FormElement) name_map.get(element_name)).getValue())[0]);
+				value = new SimpleDateFormat(FormElementFormat.DATE_FORMAT).parse(
+						((String[]) ((FormElement) name_map.get(element_name)).getValue())[0]);
 			}
 			catch (ParseException e) {
 				throw new NullPointerException(e.getMessage());
@@ -180,7 +195,8 @@ public class Form {
 
 		if (name_map.containsKey(element_name)) {
 			try {
-				value = new SimpleDateFormat(FormElementFormat.DATE_TIME_FORMAT).parse(((String[]) ((FormElement) name_map.get(element_name)).getValue())[0]);
+				value = new SimpleDateFormat(FormElementFormat.DATE_TIME_FORMAT).parse(
+						((String[]) ((FormElement) name_map.get(element_name)).getValue())[0]);
 			}
 			catch (ParseException e) {
 				throw new NullPointerException(e.getMessage());
@@ -251,7 +267,8 @@ public class Form {
 		UploadFile file = null;
 
 		return (isMultipart() && ((files = this.getUploadFiles()) != null) && (files.entrySet().size() > 0)
-				&& ((file = (UploadFile) files.get(field_name)) != null) && !StringUtils.isEmpty(file.getFileName()) && (file.getFileSize() > 0));
+				&& ((file = (UploadFile) files.get(field_name)) != null) && !StringUtils.isEmpty(file.getFileName())
+				&& (file.getFileSize() > 0));
 	}
 
 	public void set(String element_name, String value) {

@@ -185,6 +185,8 @@
 			              			</c:forEach>
 			              		</select>
 			              		<input id='txt-zone-date-99' name='txt-zone-date-99' type="text" class='datefield requiredinput' style='height:20px;' />
+			              		<label class="boldBlack10pxTitle" for="chk-zone-repeattodate-99">Repeat to Date?</label>
+		           					<input type="checkbox" id="chk-zone-repeattodate-99" name="chk-zone-repeattodate-99" />
 			              		<label class="boldBlack10pxTitle" for="chk-zone-weather-related-99">Is this weather related?</label>
 		           					<input type="checkbox" id="chk-zone-weather-related-99" name="chk-zone-weather-related-99"
 		                  		onclick="this.checked ? $('#zone-weather-related-closure-panel-99').show() : $('#zone-weather-related-closure-panel-99').hide()" />
@@ -235,6 +237,8 @@
 					                			</c:forEach>
 					                		</select>
 					                		<input id='txt-zone-date-${zentry.key.zoneId}' name='txt-zone-date-${zentry.key.zoneId}' type="text" class='datefield requiredinput' style='height:20px;' />
+					                		<label class="boldBlack10pxTitle" for="chk-zone-repeattodate-${zentry.key.zoneId}">Repeat to Date?</label>
+		           								<input type="checkbox" id="chk-zone-repeattodate-${zentry.key.zoneId}" name="chk-zone-repeattodate-${zentry.key.zoneId}" />
 					                		<label class="boldBlack10pxTitle" for="chk-zone-weather-related-${zentry.key.zoneId}">Is this weather related?</label>
 					           					<input type="checkbox" id="chk-zone-weather-related-${zentry.key.zoneId}" name="chk-zone-weather-related-${zentry.key.zoneId}"
 					                  		onclick="this.checked ? $('#zone-weather-related-closure-panel-${zentry.key.zoneId}').show() : $('#zone-weather-related-closure-panel-${zentry.key.zoneId}').hide()" />
@@ -278,6 +282,8 @@
 							                			</c:forEach>
 							                		</select>
 							                		<input id='txt-region-date-${entry.key.id}' name='txt-region-date-${entry.key.id}' type="text" class='datefield requiredinput' style='height:20px;' />
+							                		<label class="boldBlack10pxTitle" for="chk-region-repeattodate-${entry.key.id}">Repeat to Date?</label>
+		           										<input type="checkbox" id="chk-region-repeattodate-${entry.key.id}" name="chk-region-repeattodate-${entry.key.id}" />
 							                		<label class="boldBlack10pxTitle" for="chk-region-weather-related-${entry.key.id}">Is this weather related?</label>
 							           					<input type="checkbox" id="chk-region-weather-related-${entry.key.id}" name="chk-region-weather-related-${zentry.key.zoneId}"
 							                  		onclick="this.checked ? $('#region-weather-related-closure-panel-${entry.key.id}').show() : $('#region-weather-related-closure-panel-${entry.key.id}').hide()" />
@@ -325,6 +331,8 @@
 											                			</c:forEach>
 											                		</select>
 											                		<input id='txt-ss-date-${sys.schoolSystemID}' name='txt-ss-date-${sys.schoolSystemID}' type="text" class='datefield requiredinput' style='height:20px;' />
+											                		<label class="boldBlack10pxTitle" for="chk-ss-repeattodate-${sys.schoolSystemID}">Repeat to Date?</label>
+		           														<input type="checkbox" id="chk-ss-repeattodate-${sys.schoolSystemID}" name="chk-ss-repeattodate-${sys.schoolSystemID}" />
 											                		<label class="boldBlack10pxTitle" for="chk-ss-weather-related-${sys.schoolSystemID}">Is this weather related?</label>
 											           					<input type="checkbox" id="chk-ss-weather-related-${sys.schoolSystemID}" name="chk-ss-weather-related-${sys.schoolSystemID}"
 											                  		onclick="this.checked ? $('#ss-weather-related-closure-panel-${sys.schoolSystemID}').show() : $('#ss-weather-related-closure-panel-${sys.schoolSystemID}').hide()" />
@@ -387,6 +395,8 @@
 												                			</c:forEach>
 												                		</select>
 												                		<input id='txt-school-date-${sch.schoolID}' name='txt-school-date-${sch.schoolID}' type="text" class='datefield requiredinput' style='height:20px;' />
+												                		<label class="boldBlack10pxTitle" for="chk-school-repeattodate-${sch.schoolID}">Repeat to Date?</label>
+		           															<input type="checkbox" id="chk-school-repeattodate-${sch.schoolID}" name="chk-school-repeattodate-${sch.schoolID}}" />
 												                		<label class="boldBlack10pxTitle" for="chk-school-weather-related-${sch.schoolID}">Is this weather related?</label>
 												           					<input type="checkbox" id="chk-school-weather-related-${sch.schoolID}" name="chk-school-weather-related-${sch.schoolID}"
 												                  		onclick="this.checked ? $('#school-weather-related-closure-panel-${sch.schoolID}').show() : $('#school-weather-related-closure-panel-${sch.schoolID}').hide()" 
