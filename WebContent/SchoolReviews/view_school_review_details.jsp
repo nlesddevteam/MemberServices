@@ -103,7 +103,7 @@
                      		<br/>	<br/>
                      		<div style="float:left;width:50%;padding:5px;">             
 							<span style="padding-top:10px;font-size:14px;font-weight:bold;text-transform:uppercase;">Review School Year:</span><br/>
-								    <jobv2:SchoolYearListbox id="reviewschoolyear"  pastYears="3" futureYears="1" cls='form-control' value='${review.srSchoolYear}'/>
+								    <jobv2:SchoolYearListbox id="reviewschoolyear"  pastYears="5" futureYears="1" cls='form-control' value='${review.srSchoolYear}'/>
 							</div>  
                      		<div style="float:left;width:50%;padding:5px;">             
 							<span style="padding-top:10px;font-size:14px;font-weight:bold;text-transform:uppercase;"> Review Status:</span><br/>
