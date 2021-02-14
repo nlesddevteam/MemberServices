@@ -560,7 +560,7 @@ input {
 </div>                                 	
                                   	
 <!-- 9. DOCUMENTATION --------------------------------------------------------------->
- <% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW-DOCS")) { %>
+ <% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW-DOCS") || usr.checkPermission("PERSONNEL-OTHER-MANAGER-VIEW")) { %>
 	 
  
 <div class="panel-group" style="padding-top:5px;">                               
@@ -598,7 +598,7 @@ input {
 		                                    			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"))
 		                                    		continue;
 	                                    	}else{
-	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.LETTER)) {
+	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.LETTER) || doc.getTypeSS().equal(DocumentTypeSS.CODE_OF_CONDUCT)) {
 	                                    			continue;
 	                                    		}
 	                                    	}
@@ -640,7 +640,7 @@ input {
   <%} %>
   
 <!-- Letters --------------------------------------------------------------->
-
+ <% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) { %>
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section12">   
 	               	<div class="panel-heading">
@@ -696,9 +696,9 @@ input {
 					</div>
 					</div>                              
 </div>                              
-
+  <%} %>
 <!-- CRIMINAL OFFENCE DECLARATIONS --------------------------------------------------------------->
-<% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) { %>
+<% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL") || usr.checkPermission("PERSONNEL-OTHER-MANAGER-VIEW")) { %>
 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section13">   
@@ -732,7 +732,9 @@ input {
 							    <td><%=((cod.getOffences() != null)?cod.getOffences().size():0)%></td>							    
 							    <td class="no-print">
 							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a>
-							    <a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
+							    <% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")){ %>
+							    	<a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
+							    <%} %>
 							    </td>
 							    
 							    </tr>
@@ -797,7 +799,7 @@ input {
                                 
 
 <!-- OPTIONS --------------------------------------------------------------->    
-<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">                        
+<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW">                        
 	
 					<div align="center" class="no-print" style="padding-bottom:10px;">
                                     <a href='#' title='Print this page (pre-formatted)' class='btn btn-xs btn-info' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Profile</a>
@@ -815,6 +817,7 @@ input {
 			</esd:SecurityAccessRequired>
                     			<%if(session.getAttribute("JOB") != null){
                                   		JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+                                  		boolean isShortlisted = ApplicantProfileManager.getApplicantShortlistMap(job).containsKey(profile.getUID());
                                   		InterviewGuideBean guide = null;
                                   		
                                   		if(job != null) {
@@ -823,8 +826,16 @@ input {
                                   %>
                                   <a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
                                     	<% if(!job.isShortlistComplete()) { %>
-                                   			<%if(guide != null){ %>
-                                   				<a href='shortListApplicant.html?sin=<%=profile.getSIN() %>'" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+                                    		<%if(guide != null){ %>
+                                    			<% if(!isShortlisted) { %>
+                                   					<a href='shortListApplicant.html?sin=<%=profile.getSIN() %>'" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
+                                   				<% } else { %>
+                                   					<br/>
+													<div>
+														<span class='text-danger'>Already Shortlisted for competition <%= job.getCompetitionNumber() %></span>
+													</div>
+													<br />
+												<% } %>
                                    			<%}else{ %>
                                    					<a href='#' onclick="alert('Interview guide must be set for competition <%=job.getCompetitionNumber() %> before shortlist can be created.'); return false;" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
                                    			<%} %>

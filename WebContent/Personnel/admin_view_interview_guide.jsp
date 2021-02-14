@@ -13,7 +13,7 @@
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 		
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW" />
 
 <html>
 

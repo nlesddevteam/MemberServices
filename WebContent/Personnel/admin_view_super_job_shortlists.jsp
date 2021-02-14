@@ -85,8 +85,8 @@ input {
 											<td><%=jobs[i].getPositionTitle()%></td>
 											<td><%=jobs[i].getFormatedCompetitionEndDate()%></td>
 											<td><a class="btn btn-xs btn-primary"
-												href='viewJobShortList.html?comp_num=<%=jobs[i].getCompetitionNumber()%>'>View
-													List</a></td>
+												href='view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>'>View
+													Job</a></td>
 										</tr>
 								<% } %>
 							<% } %>

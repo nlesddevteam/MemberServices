@@ -354,7 +354,8 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 		                                        		<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_sub_lists.jsp?type=<%=sc.getValue()%>"><%=sc.getDescription()%>s</a></li>
 
 						                             <%}%>
-
+													<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewSubListBySchool.html">View Shortlist By School</a></li>
+						                            
 
 						                            </ul>
 						               </li>
@@ -516,7 +517,7 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
                                   						<li><a onclick="loadingData()" href="/MemberServices/Personnel/addRequestToHire.html">Add New Request</a></li>
                                   						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyRequests.html">View My Requests</a></li>
                                   						<%if(usr.checkRole("RTH-SUBMIT-REQUEST")){%>
-							         						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyShortlists.html">View My Shortlists</a></li>
+							         						<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyShortlists.html">View My Job Posts</a></li>
 							         					<%} %>
 							         				<%if(usr.checkPermission("PERSONNEL-RTH-VIEW-APPROVALS")){%>
 							         					<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyApprovals.html">View My Approvals</a></li>

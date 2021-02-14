@@ -1559,8 +1559,8 @@ public class JobOpportunityManager {
 
 			con = DAOUtils.getConnection();
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_ss_shortlist_man(?,?); end;");
-
+			//stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_ss_shortlist_man(?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_ss_job_ops_man(?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, supervid);
 			stat.setString(3,String.valueOf(supervid));

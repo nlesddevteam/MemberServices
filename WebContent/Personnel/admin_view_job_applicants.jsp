@@ -17,7 +17,7 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd"%>
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job"%>
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW" />
 <esd:SecurityRequiredPageObjectsCheck
 	names='<%=new String[]{"JOB", "JOB_APPLICANTS"}%>'
 	scope="<%=PageContext.SESSION_SCOPE%>"
@@ -225,8 +225,10 @@ input {
 					%>
 					
 					<a onclick="loadingData()" class="btn btn-xs btn-info" href='viewJobShortList.html?comp_num=<%=job.getCompetitionNumber()%>'>View Shortlist</a>
-					<%}%>	
+					<%}%>
+					<% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")){ %>	
 					<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#emailModal">Email Applicants</button>
+					<%} %>
 
 					<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
 

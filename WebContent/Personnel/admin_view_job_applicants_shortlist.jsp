@@ -322,7 +322,7 @@
 									<div style="padding-top: 5px; text-align: right;">
 										<a class='btn btn-xs btn-primary'
 											href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
-										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW">
 											<%
 	                                        		if(!job.isAwarded() && !job.isCancelled() && !job.isShortlistComplete() && !declinedInterview)
 	                                        			out.println("<a class='btn btn-xs btn-danger' href='removeShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Remove</a>");
@@ -361,7 +361,7 @@
 	                                        %>
 										</esd:SecurityAccessRequired>
 										<% if(guide != null && !declinedInterview) { %>
-										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW">
 											<% 
 		                                        	//out.println(applicants[i].getUID() + ":" + interviewSummaryMap.containsKey(applicants[i].getUID()));
 		                                        	

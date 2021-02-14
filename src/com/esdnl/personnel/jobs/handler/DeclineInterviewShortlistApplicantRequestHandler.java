@@ -22,7 +22,7 @@ public class DeclineInterviewShortlistApplicantRequestHandler extends RequestHan
 	public DeclineInterviewShortlistApplicantRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-VIEW","PERSONNEL-PRINCIPAL-VIEW","PERSONNEL-VICEPRINCIPAL-VIEW"
+			"PERSONNEL-ADMIN-VIEW","PERSONNEL-PRINCIPAL-VIEW","PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {

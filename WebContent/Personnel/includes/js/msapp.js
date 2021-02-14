@@ -1306,3 +1306,118 @@ function showHistory(appid,sublistid){
 function closeTableHistory(){
 	$("#historyrow").hide();
 }
+//get list of schools to zone
+function getSubListsSchools()
+{
+	var zi = $("#selregion").val();
+			$.ajax(
+     			{
+     				type: "POST",  
+     				url: "getSubListsSchools.html",
+     				data: {
+     					zoneid: zi
+     				}, 
+     				success: function(xml){
+     					if($(xml).find('MESSAGE').text() ==  "SUCCESS"){
+     							$("#selschool").empty();
+     	     					$("#selsublist").empty();
+     	     					//now populate schools
+     	     					var option="<option value='-1' selected>Select school</option>";
+     	     					$(xml).find('ZSCHOOL').each(function(){
+     	     						option =option + "<option value='" + $(this).find("SID").text() + "'>" + $(this).find("SNAME").text() + "</option>";
+     	     					});
+     	     					$("#selschool").append(option);
+     	     					//now we append the sublist
+     	     					option="<option value='-1' selected>Select list</option>";
+     	     					$(xml).find('ZLIST').each(function(){
+     	     						option =option + "<option value='" + $(this).find("ZID").text() + "'>" + $(this).find("ZNAME").text() + "</option>";
+     	     					});
+     	     					$("#selsublist").append(option);
+     					}
+     				},
+     				  error: function(xhr, textStatus, error){
+     				      alert(xhr.statusText);
+     				      alert(textStatus);
+     				      alert(error);
+     				  },
+     				dataType: "text",
+     				async: false
+     			}
+     		);   			
+		
+
+	return true;
+	
+}
+//get list of schools to zone
+function getSubListShortlistAppsBySchool()
+{
+	var s = $("#selschool").val();
+	var l = $("#selsublist").val();
+			$.ajax(
+     			{
+     				type: "POST",  
+     				url: "getSubListApplicantsBySchool.html",
+     				data: {
+     					sid: s,lid:l
+     				}, 
+     				success: function(xml){
+     					
+     					if($(xml).find('MESSAGE').text() ==  "SUCCESS"){
+     						//$('#reportdata tr:gt(0)').remove()
+     						$('#reportdata').DataTable().clear();
+     						//$("#reportdata tbody").empty();
+     						//refreshdatatable();
+     	     					//now populate schools
+     							$(xml).find('PROFILE').each(function(){
+     								var buttext ="<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" 
+     									+ $(this).find("APPID").text() + "'>View Profile</a>";
+     								$('#reportdata').DataTable().row.add([$(this).find("FIRSTNAME").text(),$(this).find("LASTNAME").text(),
+     									$(this).find("MAJORS").text().replace("\n","<br />"),
+     										$(this).find("EMAIL").text(),$(this).find("COMMUNITY").text(),$(this).find("PHONE").text().replace("\n","<br />")
+     										,buttext]);
+
+
+     							});
+     							$('#reportdata').DataTable().draw();
+     	     					
+     					}
+     				},
+     				  error: function(xhr, textStatus, error){
+     				      alert(xhr.statusText);
+     				      alert(textStatus);
+     				      alert(error);
+     				  },
+     				dataType: "text",
+     				async: false
+     			}
+     		);   			
+		
+
+	return true;
+	
+}
+//reinitialize datatable
+function refreshdatatable(){
+	$('#reportdata').DataTable({
+		
+		"order": [[ 1, 'asc' ]],
+		  dom: 'Bfrtip',			  
+		  buttons: [ 'copyHtml5', 'excelHtml5', 
+			  {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LETTER'
+                
+            }, 'csvHtml5',{
+                extend: 'print',
+                orientation: 'landscape',
+                pageSize: 'LETTER'
+            }
+		  ]
+		 ,"bAutoWidth": false
+		  
+		} );
+	
+	$("#reportdata").css('table-layout', "fixed");
+}

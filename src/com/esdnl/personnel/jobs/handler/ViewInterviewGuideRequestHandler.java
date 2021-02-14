@@ -22,7 +22,7 @@ public class ViewInterviewGuideRequestHandler extends RequestHandlerImpl {
 		});
 
 		this.requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-VIEW"
+			"PERSONNEL-ADMIN-VIEW","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 	}
 

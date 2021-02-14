@@ -14,7 +14,7 @@ public class FilterJobApplicantsSSRequestHandler extends RequestHandlerImpl {
 	public FilterJobApplicantsSSRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-			"PERSONNEL-ADMIN-VIEW"
+			"PERSONNEL-ADMIN-VIEW","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 	}
 

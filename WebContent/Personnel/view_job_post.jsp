@@ -16,7 +16,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 		
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW" />
 
 <%
 User usr = null;

@@ -25,7 +25,7 @@ public class ViewJobApplicantsRequestHandler extends RequestHandlerImpl {
 	public ViewJobApplicantsRequestHandler() {
 
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW"
+				"PERSONNEL-ADMIN-VIEW","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 
 		validator = new FormValidator(new FormElement[] {
