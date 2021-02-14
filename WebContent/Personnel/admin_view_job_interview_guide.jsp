@@ -1,7 +1,8 @@
 <%@ page language="java"
          import="java.util.*,
                   java.text.*,
-                  com.esdnl.personnel.jobs.bean.*" 
+                  com.esdnl.personnel.jobs.bean.*,
+                  com.awsd.security.*" 
          isThreadSafe="false"%>
 
 <!-- LOAD JAVA TAG LIBRARIES -->
@@ -13,12 +14,13 @@
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW" />
 
 <%
 	JobOpportunityBean job = (JobOpportunityBean) request.getAttribute("job");
 	InterviewGuideBean guide = (InterviewGuideBean) request.getAttribute("guide");
 	Collection<InterviewGuideBean> guides = (Collection<InterviewGuideBean>) request.getAttribute("guides");
+	User usr = (User)session.getAttribute("usr");
 %>
 
 
@@ -56,12 +58,23 @@
                     <div class="row">
 						<div class="input-group">
  								<span class="input-group-addon">Interview Guide*:</span>
- 								<select id='lst-guides' name='lst-guides' class="form-control">
-                                    		<option value=''>--- Select Interview Guide ---</option>
-                                    	<% for(InterviewGuideBean g : guides){ %>
-                                    		<option value='<%= g.getGuideId() %>' <%= guide != null && g.getGuideId() == guide.getGuideId() ? " SELECTED" : "" %>><%= g.getTitle() %></option>
-                                    	<% } %>
-                                </select>
+ 								<% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")) { %>
+ 									<select id='lst-guides' name='lst-guides' class="form-control">
+                                    	<option value=''>--- Select Interview Guide ---</option>
+                                    		<% for(InterviewGuideBean g : guides){ %>
+                                    			<option value='<%= g.getGuideId() %>' <%= guide != null && g.getGuideId() == guide.getGuideId() ? " SELECTED" : "" %>><%= g.getTitle() %></option>
+                                    		<% } %>
+                                	</select>
+ 								<%}else{ %>
+ 									<span class="panel-heading"><b>&nbsp;&nbsp;&nbsp;
+ 									<%if(guide == null){%>
+ 										Guide Not Set
+ 									<%}else{%>
+ 										<%=guide.getTitle()%>
+ 									<%} %>
+ 									</b></span>
+ 								<%} %>	
+
                         </div>		  								
 		  			</div>
 	                             
@@ -91,13 +104,15 @@
 		                           </div>
 	                 </c:if>	                
 	                 </div>
-	                 <div class="row" align="center">					              
-                                  	 <input id='btn-set' class="btn btn-xs btn-success" type="button" value="Set Guide">	
-                                  	 <input id='btn-back' type='button' class="btn btn-xs btn-primary" value="View Job Post" onclick="document.location='view_job_post.jsp?comp_num=<%= job.getCompetitionNumber() %>';">
-                                  	<c:if test='${guide ne null}'>
+	                 <div class="row" align="center">
+	                 			<% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")) { %>
+	                 				<input id='btn-set' class="btn btn-xs btn-success" type="button" value="Set Guide">
+	                 				<c:if test='${guide ne null}'>
                                     	<input id='btn-unset' class="btn btn-xs btn-danger" type="button" value="Unset Guide">
                                     </c:if> 
-                                    <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>                   
+	                 			<%} %>					              
+                                <input id='btn-back' type='button' class="btn btn-xs btn-primary" value="View Job Post" onclick="document.location='view_job_post.jsp?comp_num=<%= job.getCompetitionNumber() %>';">
+                                <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>                   
                      </div>             
 	                          </form>
 	    </div></div></div></div>                

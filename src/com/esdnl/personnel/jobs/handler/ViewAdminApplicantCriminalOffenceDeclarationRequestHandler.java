@@ -23,7 +23,7 @@ public class ViewAdminApplicantCriminalOffenceDeclarationRequestHandler extends 
 	public ViewAdminApplicantCriminalOffenceDeclarationRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"
+				"PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {

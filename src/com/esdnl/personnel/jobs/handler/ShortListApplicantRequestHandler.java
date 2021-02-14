@@ -42,7 +42,7 @@ public class ShortListApplicantRequestHandler implements RequestHandler {
 			session = request.getSession(false);
 			if ((session != null) && (session.getAttribute("usr") != null)) {
 				usr = (User) session.getAttribute("usr");
-				if (!(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW"))) {
+				if (!(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW")) && !(usr.getUserPermissions().containsKey("PERSONNEL-OTHER-MANAGER-VIEW"))) {
 					throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
 				}
 			}
@@ -93,6 +93,15 @@ public class ShortListApplicantRequestHandler implements RequestHandler {
 								abean.setApplicantId(request.getParameter("sin"));
 								abean.setShortlistedBy(usr.getPersonnel().getPersonnelID());
 							}
+							//now we save the object
+							ApplicantFilterParametersManager.addApplicantFilterParameters(abean);
+						}else {
+							//now we add the shortlist reasons object, reason not required for ss job
+							abean = new ApplicantFilterParameters();
+							abean.setJob(opp);
+							abean.setApplicantId(request.getParameter("sin"));
+							abean.setShortlistedBy(usr.getPersonnel().getPersonnelID());
+							abean.setShortlistReason("");
 							//now we save the object
 							ApplicantFilterParametersManager.addApplicantFilterParameters(abean);
 						}

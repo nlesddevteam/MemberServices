@@ -27,7 +27,7 @@ public class ViewAdminApplicantDocumentRequestHandler extends RequestHandlerImpl
 	public ViewAdminApplicantDocumentRequestHandler() {
 
 		this.requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW-DOCS"
+				"PERSONNEL-ADMIN-VIEW-DOCS","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 
 		this.validator = new FormValidator(new FormElement[] {

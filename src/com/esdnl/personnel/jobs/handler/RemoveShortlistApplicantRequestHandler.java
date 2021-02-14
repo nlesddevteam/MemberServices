@@ -16,6 +16,7 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 
 public class RemoveShortlistApplicantRequestHandler implements RequestHandler {
 
@@ -34,7 +35,7 @@ public class RemoveShortlistApplicantRequestHandler implements RequestHandler {
 			session = request.getSession(false);
 			if ((session != null) && (session.getAttribute("usr") != null)) {
 				usr = (User) session.getAttribute("usr");
-				if (!(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW"))) {
+				if (!(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW")) && !(usr.getUserPermissions().containsKey("PERSONNEL-OTHER-MANAGER-VIEW"))) {
 					throw new SecurityException("Illegal Access [" + usr.getLotusUserFullName() + "]");
 				}
 			}
@@ -66,7 +67,11 @@ public class RemoveShortlistApplicantRequestHandler implements RequestHandler {
 							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
 					session.setAttribute("SHORTLISTMAP", ApplicantProfileManager.getApplicantShortlistMap(opp));
 					AdRequestBean ad = AdRequestManager.getAdRequestBean(opp.getCompetitionNumber());
-					request.setAttribute("AD_REQUEST", ad);
+					if(opp.isSupport()) {
+						request.setAttribute("AD_REQUEST", RequestToHireManager.getRequestToHireByCompNum(opp.getCompetitionNumber()));
+					}else {
+						request.setAttribute("AD_REQUEST", ad);
+					}
 					path = "admin_view_job_applicants_shortlist.jsp";
 				}
 				else if (list != null) {

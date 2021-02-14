@@ -31,7 +31,7 @@ public class ListJobInterviewSummariesRequestHandler extends RequestHandlerImpl 
 		});
 
 		this.requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-OTHER-MANAGER-VIEW"
 		};
 	}
 

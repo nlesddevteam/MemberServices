@@ -1123,7 +1123,52 @@ public class ApplicantProfileManager {
 
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
+	public static ApplicantProfileBean[] getApplicantShortlistBySchool(int lid, int sid)
+			throws JobOpportunityException {
 
+		Vector<ApplicantProfileBean> v_opps = null;
+		ApplicantProfileBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			v_opps = new Vector<ApplicantProfileBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_sublist_short_list_sc(?, ?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, lid);
+			stat.setInt(3, sid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				eBean = createApplicantProfileBean(rs);
+				v_opps.add(eBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static ApplicantProfileBean[] getApplicantShortlistBySchool(SubListBean list, School s): " + e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
+	}
 	public static List<ApplicantProfileBean> getApplicantShortlistByTRNLVL(	School s, String sy,
 																																					TrainingMethodConstant trnlvl)
 			throws JobOpportunityException {

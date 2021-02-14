@@ -489,7 +489,56 @@ public class SubListManager {
 
 		return listMap;
 	}
+	public static SubListBean[] getSubListBeansZone(int zoneid, String school_year, SubstituteListConstant type)
+			throws JobOpportunityException {
 
+		Vector<SubListBean> v_opps = null;
+		SubListBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			v_opps = new Vector<SubListBean>(5);
+
+			con = DAOUtils.getConnection();
+
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_sub_lists_reg(?, ?, ?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, zoneid);
+			stat.setString(3, school_year);
+			stat.setInt(4, type.getValue());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				eBean = createSubListBean(rs);
+
+				v_opps.add(eBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("getSubListBeansZone(int zoneid, String school_year, SubstituteListConstant type): "
+					+ e);
+			throw new JobOpportunityException("Can not extract SubListBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return (SubListBean[]) v_opps.toArray(new SubListBean[0]);
+	}
 	public static SubListBean createSubListBean(ResultSet rs) {
 
 		SubListBean aBean = null;
