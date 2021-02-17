@@ -15,7 +15,7 @@
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <esd:SecurityCheck
-	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+	permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,PERSONNEL-OTHER-MANAGER-VIEW" />
 <esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{ "REFERENCE_BEAN", "PROFILE" }%>'
 	scope='<%=PageContext.REQUEST_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />		
