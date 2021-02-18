@@ -677,16 +677,20 @@ dtable=$("#claimItemsTable").DataTable({
          
   <div class="siteHeaderBlue">Current Claim Items</div>
                      <%if(!items.hasNext()){%>                    
-                    <div class="alert alert-secondary">This claim currently has no items. To add an item, use the link above.</div>
-                     
+                    		<div class="alert alert-danger" style="text-align:center;padding:2px;"><b>NOTE:</b> This claim currently has no items. To add an item, use the link above.</div>                     
                     <%}else{ %>
-                    <span class="msgArea1">Below are your current claim items for this claim. You will also see a variety of options to search, export, and edit/delete items.</span>
+                   		 	<span class="msgArea1">Below are your current claim items for this claim. You will also see a variety of options to search, export, and edit/delete items(if claim has not been submitted/approved).</span>                    
+                     <%if(claim.getCurrentStatus().equals(TravelClaimStatus.REVIEWED) || claim.getCurrentStatus().equals(TravelClaimStatus.SUBMITTED)){ %>
+                    		<div class="alert alert-danger" style="text-align:center;margin-top:5px;padding:2px;">
+                    		<b>NOTE:</b> This claim has already been submitted. 
+                    		You will not be able to edit or delete any entries below unless your supervisor or an administrator rejects the claim. <br/>
+                    		If you submitted this claim in error, please contact your supervisor to have it rejected back.</div>
+                    <%} %>
                          
         <table id="claimItemsTable" class="table table-condensed table-striped table-bordered claimToPrint" style="font-size:11px;background-color:White;" width="100%">
   		<thead>
-  			<tr style="text-transform:uppercase;font-weight:bold;">  				
-             
-                      <td width="10%">Date</td>
+  			<tr style="text-transform:uppercase;font-weight:bold;">  			
+             		  <td width="10%">Date</td>
                       <td width="20%">Description</td>
                       <td width="15%">Depart - Return</td> 
                       <td width="10%" >Rate($)</td>            
@@ -694,7 +698,9 @@ dtable=$("#claimItemsTable").DataTable({
                       <td width="10%">Meals</td>
                       <td width="10%">Lodging</td>                      
                       <td width="10%">Other</td>
+                      <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){ %>
                       <td width="*" class="no-print">Tools</td>
+                      <%}%>
                     </tr>
            </thead>
           <tbody>
@@ -739,21 +745,16 @@ dtable=$("#claimItemsTable").DataTable({
                                       <%=df.format(item.getItemOther())%>
                               <%}%>
                             </td>
-                              <td class="no-print">             
-                                                            
-                               
-                                <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){
-                                    
-                                    	//claimDescription =item.getItemDescription().replaceAll("\\<[^>]*>", "");
-                                    claimDescription =item.getItemDescription().replaceAll("\\<.*?\\>","").trim();
-                                          
+                            
+                             <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
+                              <td class="no-print"> 
+                                    <%//claimDescription =item.getItemDescription().replaceAll("\\<[^>]*>", "");
+                                    claimDescription =item.getItemDescription().replaceAll("\\<.*?\\>","").trim();                                          
                                     %>
-                                     	<a href="#" class="noJump  btn btn-xs btn-warning" title="Edit claim item." onclick="loadingData();loadEditItem('<%=claim.getClaimID()%>','<%=item.getItemID()%>');"><i class="fas fa-edit"></i></a>                                        
-                                    	 <a href="#" class="noJump btn btn-xs btn-danger" title="Delete claim item." onclick="openModalDialog('<%=item.getItemID()%>','deletetravelclaimitem','<%=claimtitle%>,<%=sdf.format(item.getItemDate())%>,<%=claimDescription%>');"><i class="fas fa-trash-alt"></i></a>                                     	 
-                                    	
-                                      <%}%>
-                                  
-                            </td>                           
+                                     	<a href="#" class="noJump btn btn-xs btn-warning" title="Edit claim item." onclick="loadingData();loadEditItem('<%=claim.getClaimID()%>','<%=item.getItemID()%>');"><i class="fas fa-edit"></i></a>                                        
+                                    	<a href="#" class="noJump btn btn-xs btn-danger" title="Delete claim item." onclick="openModalDialog('<%=item.getItemID()%>','deletetravelclaimitem','<%=claimtitle%>,<%=sdf.format(item.getItemDate())%>,<%=claimDescription%>');"><i class="fas fa-trash-alt"></i></a>                                     	 
+                                 </td>  
+                                  <%}%>                         
                           </tr>                         
                           
                       <%}%>  
@@ -770,7 +771,9 @@ dtable=$("#claimItemsTable").DataTable({
 			               <td></td>
 			               <td></td>
 			               <td></td>
+			               <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){%>
 			               <td class="no-print"></td>
+			               <%}%>
 			            </tr>
         		</tfoot>
                   
