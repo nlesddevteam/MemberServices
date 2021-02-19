@@ -114,7 +114,7 @@ public class ApproveAdRequestRequestHandler implements RequestHandler {
 
 				if (!StringUtils.isEmpty(ad_text))
 					req.setAdText(ad_text);
-
+				req.setUnadvertised(!StringUtils.isEmpty(request.getParameter("is_unadvertised")));
 				String op = request.getParameter("op");
 				if (op.equals("GET_EMPLOYEES")) {
 					if (StringUtils.isEmpty(location)) {
