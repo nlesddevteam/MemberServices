@@ -312,10 +312,10 @@ dtable=$("#claimItemsTable").DataTable({
 					              		<a href="#" class="noJump btn btn-xs btn-warning" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');"><i class="fas fa-user-check"></i> Change Your Supervisor</a>
 					             		<a href="#" class="noJump btn btn-danger btn-xs"  title="Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> Delete Claim</a>
 					                   
-					          <%}else if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
-					           						 	&& (claim.getSupervisor().getPersonnelID() == usr.getPersonnel().getPersonnelID())
-					            						&&((cur_status == TravelClaimStatus.SUBMITTED.getID()) 
-					            							|| (cur_status == TravelClaimStatus.REVIEWED.getID()))){%>
+					         <%}else if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
+                                                        && (claim.getSupervisor() != null && (claim.getSupervisor().getPersonnelID() == usr.getPersonnel().getPersonnelID()))
+                                                        &&((cur_status == TravelClaimStatus.SUBMITTED.getID())
+                                                        || (cur_status == TravelClaimStatus.REVIEWED.getID()))){%>
 					           			<a href="#" class="noJump btn btn-xs btn-success" title="Approve this claim." onclick="openModalDialog('<%=id%>','supervisorapprove','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-clipboard-check"></i> Approve this Claim</a>
 					          			<a href="#" class="noJump btn btn-xs btn-danger" title="Decline this claim." onclick="openModalDialog('<%=id%>','supervisordecline','<%=claimtitle%>,<%=RealName%>');"><i class="far fa-times-circle"></i> Decline this Claim</a>
 					            
@@ -414,7 +414,7 @@ dtable=$("#claimItemsTable").DataTable({
 		                
 		           	  <b>Position:</b> <%=claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() != null ? claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() : "N/A" %><br/> 
 		              <b>School:</b> <%=(claim.getPersonnel().getSchool() != null ? claim.getPersonnel().getSchool().getSchoolName(): "NO SCHOOL")%><br/>                                         
-		              <b>Supervisor: </b><span style="text-transform:capitalize;"><a href="mailto:<%=claim.getSupervisor().getEmailAddress()%>"><%=claim.getSupervisor().getFullNameReverse()%></a></span> 
+		              <b>Supervisor: </b><span style="text-transform:capitalize;"><a href='mailto:<%=(claim.getSupervisor()!=null?claim.getSupervisor().getEmailAddress():"")%>'><%=(claim.getSupervisor()!=null?claim.getSupervisor().getFullNameReverse():"N/A")%></a></span>
 		              <%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID())||(cur_status == TravelClaimStatus.REJECTED.getID())){%>
 		              &nbsp; ( <a href="#" class="noJump" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');">Change</a> )
 					  <%} %>
@@ -952,10 +952,10 @@ dtable=$("#claimItemsTable").DataTable({
 					              		<a href="#" class="noJump btn btn-xs btn-warning" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');"><i class="fas fa-user-check"></i> Change Your Supervisor</a>
 					             		<a href="#" class="noJump btn btn-danger btn-xs"  title="Delete this claim." onclick="openModalDialog('<%=id%>','deleteclaim','<%=claimtitle%>');"><i class="far fa-trash-alt"></i> Delete Claim</a>
 					                   
-					          <%}else if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
-					           						 	&& (claim.getSupervisor().getPersonnelID() == usr.getPersonnel().getPersonnelID())
-					            						&&((cur_status == TravelClaimStatus.SUBMITTED.getID()) 
-					            							|| (cur_status == TravelClaimStatus.REVIEWED.getID()))){%>
+					         <%}else if(usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
+                                                            && (claim.getSupervisor() != null && (claim.getSupervisor().getPersonnelID() == usr.getPersonnel().getPersonnelID()))
+                                                        	&&((cur_status == TravelClaimStatus.SUBMITTED.getID())
+                                                            || (cur_status == TravelClaimStatus.REVIEWED.getID()))){%>
 					           			<a href="#" class="noJump btn btn-xs btn-success" title="Approve this claim." onclick="openModalDialog('<%=id%>','supervisorapprove','<%=claimtitle%>,<%=RealName%>');"><i class="fas fa-clipboard-check"></i> Approve this Claim</a>
 					          			<a href="#" class="noJump btn btn-xs btn-danger" title="Decline this claim." onclick="openModalDialog('<%=id%>','supervisordecline','<%=claimtitle%>,<%=RealName%>');"><i class="far fa-times-circle"></i> Decline this Claim</a>
 					            

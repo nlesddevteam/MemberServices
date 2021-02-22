@@ -108,7 +108,7 @@ input { border:1px solid silver;}
 			                extend: 'pdfHtml5',
 			                footer:true,
 			                //orientation: 'landscape',
-			                messageTop: '<%=usr.getPersonnel().getFirstName().toLowerCase()%> <%=usr.getPersonnel().getLastName().toLowerCase() %>&apos;s Travel/PD Claims ',
+			                messageTop: '<%=usr.getPersonnel().getFirstName().toLowerCase()%> <%=usr.getPersonnel().getLastName().toLowerCase().replace("'","") %>&apos;s Travel/PD Claims ',
 			                messageBottom: null,
 			                exportOptions: {
 			                    columns: [ 0, 1, 2, 3,4,5 ]
@@ -118,7 +118,7 @@ input { border:1px solid silver;}
 			                extend: 'print',
 			                //orientation: 'landscape',
 			                footer:true,
-			                messageTop: '<%=usr.getPersonnel().getFirstName().toLowerCase()%> <%=usr.getPersonnel().getLastName().toLowerCase() %>&apos;s Travel/PD Claims',
+			                messageTop: '<%=usr.getPersonnel().getFirstName().toLowerCase()%> <%=usr.getPersonnel().getLastName().toLowerCase().replace("'","")  %>&apos;s Travel/PD Claims',
 			                messageBottom: null,
 			                exportOptions: {
 			                    columns: [ 0, 1, 2, 3,4,5 ]
@@ -341,7 +341,7 @@ input { border:1px solid silver;}
                     			<td><%=sdf_date.format(((PDTravelClaim)claim).getPD().getStartDate())%></td>                    			
                     			<td>PD CLAIM</td>               			
                     		   <td><b><%= ((PDTravelClaim)claim).getPD().getTitle().replace("\"","").replace("'","")  %></b><br/><%=((PDTravelClaim)claim).getPD().getDescription().replace("\"","").replace("'","") %> </td>
-                    			<td><span style="text-transform:Capitalize;"><%=((PDTravelClaim)claim).getSupervisor().getFullNameReverse() %></span></td>
+                    			<td><span style="text-transform:Capitalize;"><%=(((PDTravelClaim)claim).getSupervisor()!=null)?((PDTravelClaim)claim).getSupervisor().getFullNameReverse():"N/A" %></span></td>
                     			<td><%=curr_df.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
                     			<td><c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />         			
                     			                   	 <c:choose>
