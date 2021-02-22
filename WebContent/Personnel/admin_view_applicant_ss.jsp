@@ -598,7 +598,7 @@ input {
 		                                    			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"))
 		                                    		continue;
 	                                    	}else{
-	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.LETTER) || doc.getTypeSS().equal(DocumentTypeSS.CODE_OF_CONDUCT)) {
+	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.LETTER)) {
 	                                    			continue;
 	                                    		}
 	                                    	}
