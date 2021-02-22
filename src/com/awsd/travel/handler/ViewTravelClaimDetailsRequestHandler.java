@@ -41,7 +41,7 @@ public class ViewTravelClaimDetailsRequestHandler extends RequestHandlerImpl {
 			claim = TravelClaimDB.getClaim(id);
 
 			if (claim != null) {
-				if ((usr.getPersonnel().getPersonnelID() == claim.getSupervisor().getPersonnelID())
+				if (( claim.getSupervisor() != null && (usr.getPersonnel().getPersonnelID() == claim.getSupervisor().getPersonnelID()))
 						|| usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SUPERVISOR-VIEW")
 						|| usr.getUserPermissions().containsKey("TRAVEL-EXPENSE-PROCESS-PAYMENT-VIEW")
 						|| usr.getUserPermissions().containsKey("TRAVEL-CLAIM-SEARCH")) {
