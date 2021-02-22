@@ -414,7 +414,7 @@ dtable=$("#claimItemsTable").DataTable({
 		                
 		           	  <b>Position:</b> <%=claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() != null ? claim.getPersonnel().getPersonnelCategory().getPersonnelCategoryName() : "N/A" %><br/> 
 		              <b>School:</b> <%=(claim.getPersonnel().getSchool() != null ? claim.getPersonnel().getSchool().getSchoolName(): "NO SCHOOL")%><br/>                                         
-		              <b>Supervisor: </b><span style="text-transform:capitalize;"><a href="mailto:<%=claim.getSupervisor().getEmailAddress()%>"><%=claim.getSupervisor().getFullNameReverse()%></a></span> 
+		              <b>Supervisor: </b><span style="text-transform:capitalize;"><a href='mailto:<%=(claim.getSupervisor()!=null?claim.getSupervisor().getEmailAddress():"")%>'><%=(claim.getSupervisor()!=null?claim.getSupervisor().getFullNameReverse():"N/A")%></a></span>
 		              <%if((cur_status == TravelClaimStatus.PRE_SUBMISSION.getID())||(cur_status == TravelClaimStatus.REJECTED.getID())){%>
 		              &nbsp; ( <a href="#" class="noJump" onclick="openModalDialog('<%=claim.getClaimID()%>','changesupervisor','none');">Change</a> )
 					  <%} %>
