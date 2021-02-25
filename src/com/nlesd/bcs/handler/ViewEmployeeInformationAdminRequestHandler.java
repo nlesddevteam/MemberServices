@@ -49,6 +49,7 @@ public class ViewEmployeeInformationAdminRequestHandler extends RequestHandlerIm
 			  request.setAttribute("letters", BussingContractorSystemLetterOnFileManager.getLettersOnFile(vbean.getId(), "E"));
 			  request.setAttribute("dpath","/BCS/documents/employeedocs/");
 			  request.setAttribute("contractors", BussingContractorManager.getAllContractors());
+			  
 	    	  //now we check to see if they are regional admin\
 			  if((usr.getUserPermissions().containsKey("BCS-VIEW-WESTERN"))){
 		        request.setAttribute("contractorid", BoardOwnedContractorsConstant.WESTERN.getValue());

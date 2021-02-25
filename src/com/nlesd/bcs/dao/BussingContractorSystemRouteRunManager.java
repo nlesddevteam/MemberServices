@@ -187,6 +187,46 @@ public class BussingContractorSystemRouteRunManager {
 			catch (Exception e) {}
 		}
 	}
+	public static BussingContractorSystemRouteRunBean getRouteRunByRun(Integer cid,String srun) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorSystemRouteRunBean ebean = new BussingContractorSystemRouteRunBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_route_run_by_run(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, cid);
+			stat.setString(3, srun);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				ebean = createBussingContractorSystemRouteRunBean(rs);
+				
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("BussingContractorSystemRouteRunBean getRouteRunByRun(Integer cid,String srun):"
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return ebean;
+	}	
 	public static BussingContractorSystemRouteRunBean createBussingContractorSystemRouteRunBean(ResultSet rs) {
 		BussingContractorSystemRouteRunBean abean = null;
 		try {

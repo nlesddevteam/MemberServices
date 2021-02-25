@@ -738,6 +738,45 @@ public class BussingContractorSystemContractManager {
 		}
 		return abean;
 	}
+	public static BussingContractorSystemContractBean getBussingContractorSystemContractByName(String cname) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorSystemContractBean ebean = new BussingContractorSystemContractBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_contract_by_name(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, cname.toUpperCase());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				ebean = createBussingContractorSystemContractBean(rs);
+				
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("BussingContractorSystemContractBean getBussingContractorSystemContractByName(String cname):"
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return ebean;
+	}	
 	public static BussingContractorSystemContractBean createBussingContractorSystemContractFullBean(ResultSet rs) {
 		BussingContractorSystemContractBean abean = null;
 		try {

@@ -115,6 +115,8 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewMyReports.html');"><i class="fa fa-fw fa-file-text-o"></i> My Reports</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesReport.html');"><i class="fa fa-fw fa-group"></i> Employee Reports</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesReport.html');"><i class="fa fa-fw fa-car"></i> Vehicle Reports</a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('getEmployeeMissingSPTReport.html');"><i class="fa fa-fw fa-car"></i> Missing Safe Pupil</a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewDocumentAuditReport.html?numdays=1');"><i class="fa fa-fw fa-car"></i> Document Audit</a></li>
            <esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">
            		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewAllContractors.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Reports</a></li>
            		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Audit Report</a></li>

@@ -192,10 +192,10 @@ $(document).ready(function() {
 			  						<c:when test="${rule.company ne null }">
 			  							<c:choose>
 			  								<c:when test="${ rule.id eq vehicle.contractorId}">
-			  									<option value="${rule.id}" SELECTED>${rule.lastName},${rule.firstName}(${rule.company})</option>
+			  									<option value="${rule.id}" SELECTED>${rule.company}(${rule.lastName},${rule.firstName})</option>
 			  								</c:when>
 			  								<c:otherwise>
-			  									<option value="${rule.id}">${rule.lastName},${rule.firstName}(${rule.company})</option>
+			  									<option value="${rule.id}">${rule.company}(${rule.lastName},${rule.firstName})</option>
 			  								</c:otherwise>
 			  							</c:choose>
 			  						</c:when>
@@ -205,7 +205,7 @@ $(document).ready(function() {
 			  									<option value="${rule.id}" SELECTED>${rule.lastName},${rule.firstName}</option>
 			  								</c:when>
 			  								<c:otherwise>
-			  									<option value="${rule.id}">${rule.lastName},${rule.firstName}(${rule.company})</option>
+			  									<option value="${rule.id}">${rule.lastName},${rule.firstName}</option>
 			  								</c:otherwise>
 			  							</c:choose>
 			  						</c:otherwise>
@@ -446,7 +446,7 @@ $(document).ready(function() {
            </div>
             <img src="includes/img/bar.png" height=1 width=100%><br/><br/>	            
 	           <div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Fall Inspection Date:</label>
+	                <label class="control-label col-sm-2" for="email">Primary CMVI Date:</label>
 	                <div class="col-sm-5">
         				<p>
         				<input class="form-control" id="fidate" name="fidate" placeholder="MM/DD/YYY" type="text" 
@@ -459,7 +459,7 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 	           <div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Fall CMVI Certificate #:</label>
+	                <label class="control-label col-sm-2" for="email">Primary CMVI Certificate #:</label>
 	                <div class="col-sm-5">
         				<p>
         				<input class="form-control" id="fallcmvi" name="fallcmvi" type="text" placeholder="Enter cmvi certificate" value="${vehicle.fallCMVI}">
@@ -467,7 +467,7 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 	            <div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Fall Official Inspection Station:</label>
+	                <label class="control-label col-sm-2" for="email">Primary CMVI Official Inspection Station:</label>
 	                <div class="col-sm-5">
         				<p>
         				<input class="form-control" id="fallinsstation" name="fallinsstation" type="text" placeholder="Enter fall official inspection" value="${vehicle.fallInsStation}">
@@ -475,7 +475,7 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 			<div class="form-group">
-                <label class="control-label col-sm-2" for="email">Fall Inspection File:</label> 
+                <label class="control-label col-sm-2" for="email">Primary CMVI File:</label> 
                 <div class="col-sm-5">					
 					<c:choose>
 	                	<c:when test = "${vehicle.fallInsFile != null}">
@@ -499,7 +499,7 @@ $(document).ready(function() {
            </div>
            <img src="includes/img/bar.png" height=1 width=100%><br/><br/>	            
  				<div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Winter Inspection Date:</label>
+	                <label class="control-label col-sm-2" for="email">Secondary CMVI Date:</label>
 	                <div class="col-sm-5">
         				<p>
         				<input class="form-control" id="widate" name="widate" placeholder="MM/DD/YYY" type="text" 
@@ -512,7 +512,7 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 	            <div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Winter CMVI Certificate #:</label>
+	                <label class="control-label col-sm-2" for="email">Secondary CMVI Certificate #:</label>
 	                <div class="col-sm-5">
         				<p>
         				<input class="form-control" id="wintercmvi" name="wintercmvi" type="text" placeholder="Enter cmvi certificate" value="${vehicle.winterCMVI}">
@@ -520,7 +520,7 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 	            <div class="form-group">
-	                <label class="control-label col-sm-2" for="email">Winter Official Inspection Station:</label>
+	                <label class="control-label col-sm-2" for="email">Secondary CMVI Official Inspection Station:</label>
 	                <div class="col-sm-5">
         				<p>
         				<input class="form-control" id="winterinsstation" name="winterinsstation" type="text" placeholder="Enter winter official inspection" value="${vehicle.winterInsStation}">
@@ -528,7 +528,7 @@ $(document).ready(function() {
       		  		</div>
 	            </div>
 			<div class="form-group">
-                <label class="control-label col-sm-2" for="email">Winter Inspection File:</label> 
+                <label class="control-label col-sm-2" for="email">Secondary CMVI File:</label> 
                 <div class="col-sm-5">					
 					<c:choose>
 	                	<c:when test = "${vehicle.winterInsFile != null}">
