@@ -276,5 +276,73 @@ public class DropdownManager {
 			catch (Exception e) {}
 		}
 		return schoollist;
-	}	
+	}
+	public static TreeMap<String,Integer>getVehicleTypes()  {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<String,Integer> schoollist = new TreeMap<String,Integer>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.BCS_PKG.get_vehicles_type_size; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while(rs.next()) {
+				schoollist.put(rs.getString("TTEXT").toUpperCase() + rs.getString("DD_TEXT").toUpperCase(),rs.getInt("ID"));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("TreeMap<Integer,String>getVehicleTypes()  " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return schoollist;
+	}
+	public static TreeMap<String,Integer>getSchoolsUpper()  {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<String,Integer> schoollist = new TreeMap<String,Integer>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.BCS_PKG.get_schools; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while(rs.next()) {
+				schoollist.put(rs.getString("TRIM(SCHOOL_NAME)").toUpperCase(),rs.getInt("SCHOOL_ID"));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static TreeMap<String,Integer>getSchoolsUpper()  " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return schoollist;
+	}
 }

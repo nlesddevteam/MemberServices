@@ -27,11 +27,10 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 	{
 		super.handleRequest(request, response);
 		if (validate_form()) {
-			//now we get the status type
+			//now we get the status type;
 			String status = request.getParameter("status");
 			String reporttitle="";
 			ArrayList<BussingContractorEmployeeBean> employees = new ArrayList<BussingContractorEmployeeBean>();
-
 			if(usr.checkPermission("BCS-VIEW-WESTERN") || usr.checkPermission("BCS-VIEW-CENTRAL") || usr.checkPermission("BCS-VIEW-LABRADOR")){
 				int cid=0;
 				if(usr.checkPermission("BCS-VIEW-WESTERN")){

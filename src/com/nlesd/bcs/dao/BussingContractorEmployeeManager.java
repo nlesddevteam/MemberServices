@@ -1415,6 +1415,46 @@ public class BussingContractorEmployeeManager {
 			}
 			catch (Exception e) {}
 		}
+	}
+	public static ArrayList<BussingContractorEmployeeBean> getEmployeeMissingSPT(String schoolyear){
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_no_safe_pupil(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, schoolyear);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean abean = new BussingContractorEmployeeBean();
+				abean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(abean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeeMissingSPT(String schoolyear): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
 	}	
 	public static BussingContractorEmployeeBean createBussingContractorEmployeeBeanFull(ResultSet rs)  {
 		//new function that will replace old one once all queries have been updated with full data being returned in one query

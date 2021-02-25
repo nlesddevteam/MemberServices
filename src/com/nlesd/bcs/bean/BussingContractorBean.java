@@ -207,10 +207,20 @@ public class BussingContractorBean implements Serializable,Comparable<BussingCon
 		}
 	
 	}
+	public String getContractorNameRev(){
+		if(this.getCompany() != null){
+			return this.getCompany() + "(" + this.getLastName() + "," + this.getFirstName() + ")";
+		}else{
+			return this.getLastName() + "," + this.getFirstName();
+		}
+	
+	}
 	@Override     
 	  public int compareTo(BussingContractorBean contractor) {          
 		//return this.getLastName().compareTo(contractor.getLastName());
-		return this.getContractorName().compareTo(contractor.getContractorName()); 
+		//return this.getContractorName().compareTo(contractor.getContractorName());
+		
+		return this.getContractorNameRev().compareTo(contractor.getContractorNameRev()); 
 	  }
 	public void setBoardOwned(String boardOwned) {
 		this.boardOwned = boardOwned;

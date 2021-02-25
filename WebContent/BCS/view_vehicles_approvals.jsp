@@ -75,8 +75,8 @@
 				<th class="listdata">Plate Number</th>
 				<th class="listdata">Registration Expiry Date</th>
 				<th class="listdata">Insurance Expiry Date</th>
-				<th class="listdata">Fall Inspection Date</th>
-				<th class="listdata">Winter Inspection Date</th>
+				<th class="listdata">Primary CMVI Date</th>
+				<th class="listdata">Secondary CMVI Date</th>
 				<th class="listdata">Status</th>
 				<th class="listdata">Options</th>
 				</thead>

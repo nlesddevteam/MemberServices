@@ -580,7 +580,7 @@ $(document).ready(function() {
 				   	<span style="font-size:14px;color:Grey;margin-bottom:10px;">Criminal Offence Declaration</span>
 	       
 	       <div class="form-group">
-                <label class="control-label col-sm-3" for="email">Expiry Date:</label> 
+                <label class="control-label col-sm-3" for="email">Date Signed:</label> 
                 <div class="col-sm-9">
                     <input class="form-control" id="coddate" name="coddate" placeholder="MM/DD/YYYY" type="text" 
                     value="${employee.codExpiryDate == null ? '' : employee.codExpiryDateFormatted}">

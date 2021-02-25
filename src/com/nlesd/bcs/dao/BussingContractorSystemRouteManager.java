@@ -586,6 +586,77 @@ public class BussingContractorSystemRouteManager {
 		}
 		return abean;
 	}
+	public static BussingContractorSystemRouteBean getBussingContractorSystemRouteByName(String name) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorSystemRouteBean ebean = new BussingContractorSystemRouteBean();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_route_by_name(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, name.toUpperCase());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				ebean = createBussingContractorSystemRouteBean(rs);
+				
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("BussingContractorSystemRouteBean getBussingContractorSystemRouteByName:"
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return ebean;
+	}
+	public static void updateBussingContractorSystemRouteVehicle(Integer rid,Integer vtype, Integer vsize) {
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_route_bus_imp(?,?,?); end;");
+			stat.setInt(1, rid);
+			stat.setInt(2, vtype);
+			stat.setInt(3, vsize);
+			stat.execute();
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("updateBussingContractorSystemRouteVehicle(Integer rid,Integer vtype, Integer vsize):"
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 	public static BussingContractorSystemRouteListBean createBussingContractorSystemRouteListBean(ResultSet rs) {
 		BussingContractorSystemRouteListBean abean = null;
 		try {

@@ -113,7 +113,7 @@ $(document).ready(function() {
 				<th class="listdata">PCC Document</th>
 				<th class="listdata">SCA Document</th>
 				<th class="listdata">CODDocument</th>
-				<th class="listdata">COD Expiry Date</th>
+				<th class="listdata">COD Date Signed</th>
 				<th class="listdata">Status</th>
 				<th class="listdata">Status By</th>
 				<th class="listdata">Status Date</th>

@@ -202,10 +202,10 @@ $(document).ready(function() {
 			  						<c:when test="${rule.company ne null }">
 			  							<c:choose>
 			  								<c:when test="${ rule.id eq employee.contractorId}">
-			  									<option value="${rule.id}" SELECTED>${rule.lastName},${rule.firstName}(${rule.company})</option>
+			  									<option value="${rule.id}" SELECTED>${rule.company}(${rule.lastName},${rule.firstName})</option>
 			  								</c:when>
 			  								<c:otherwise>
-			  									<option value="${rule.id}">${rule.lastName},${rule.firstName}(${rule.company})</option>
+			  									<option value="${rule.id}">${rule.company}(${rule.lastName},${rule.firstName})</option>
 			  								</c:otherwise>
 			  							</c:choose>
 			  						</c:when>
@@ -215,7 +215,7 @@ $(document).ready(function() {
 			  									<option value="${rule.id}" SELECTED>${rule.lastName},${rule.firstName}</option>
 			  								</c:when>
 			  								<c:otherwise>
-			  									<option value="${rule.id}">${rule.lastName},${rule.firstName}(${rule.company})</option>
+			  									<option value="${rule.id}">${rule.lastName},${rule.firstName}</option>
 			  								</c:otherwise>
 			  							</c:choose>
 			  						</c:otherwise>
@@ -246,12 +246,13 @@ $(document).ready(function() {
 		      <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>First Name:</label><input type="hidden" id="cid" name="cid" value="${employee.id}">
 		      <input type="hidden" id="hidrc" value="${pcid}">
 		      <input type="hidden" id="settab1" name="settab1" value="${settab1}">
+		      <input type="hidden" id="hidfullname" value="${employee.firstName} ${employee.lastName}">
 		      <div class="col-sm-5">
 		        <input class="form-control" id="firstname" name="firstname" type="text" placeholder="Enter first name" value="${employee.firstName}">
 		      </div>
 		    </div>    
 		    <div class="form-group">
-		      <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Last Name:</label><input type="hidden" id="hidfullname" name="hidfullname" value="${employee.lastName},${employee.firstName}">
+		    <label class="control-label col-sm-3" for="email">Last Name:</label>
 		      <div class="col-sm-5">
 		        <input class="form-control" id="lastname" name="lastname" type="text" placeholder="Enter last name"  value="${employee.lastName}">
 		      </div>
@@ -376,7 +377,7 @@ $(document).ready(function() {
 	                    value="${employee.dlExpiryDate == null ? '' : employee.dlExpiryDateFormatted}">
 	                    <br />
 	                    <div id="divdlexp" name="divdlexp" style="display:none;">
-	                    <span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">&nbsp; Date must be in future and no more than 5 years &nbsp;</span>
+	                    <span style="color:White;background-color:Red;padding:2px;text-transform:uppercase;">&nbsp; Date must be in future and no more than 10 years &nbsp;</span>
 	                    </div>
 	                </div>
 	       </div>
@@ -622,7 +623,7 @@ $(document).ready(function() {
 				   	<span style="font-size:14px;color:Grey;margin-bottom:10px;">Criminal Offence Declaration</span>
 	       
 	       <div class="form-group">
-                <label class="control-label col-sm-3" for="email">Expiry Date:</label> 
+                <label class="control-label col-sm-3" for="email">Date Signed:</label> 
                 <div class="col-sm-9">
                     <input class="form-control" id="coddate" name="coddate" placeholder="MM/DD/YYYY" type="text" 
                     value="${employee.codExpiryDate == null ? '' : employee.codExpiryDateFormatted}">

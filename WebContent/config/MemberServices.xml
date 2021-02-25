@@ -4098,6 +4098,14 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.GetSubListApplicantsBySchoolAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/getSubListApplicantsBySchool.html</URL-Pattern>
-    </Request-Handler>                                                                                                                                                                                                          
+    </Request-Handler>r 
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.ViewEmployeesMissingSPTReportRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/getEmployeeMissingSPTReport.html</URL-Pattern>
+     </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.bcs.handler.ViewDocumentAuditRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/BCS/viewDocumentAuditReport.html</URL-Pattern>
+     </Request-Handler>
   </Request-Handlers>
 </Member-Services-Config>

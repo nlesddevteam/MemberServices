@@ -53,14 +53,14 @@ public class EntryTypeConstant {
 	public static final EntryTypeConstant EMPLOYEETRAININGDELETED= new EntryTypeConstant(48, "Employee Training Deleted");
 	public static final EntryTypeConstant LETTERONFILEADDED= new EntryTypeConstant(49, "Letter On File Added");
 	public static final EntryTypeConstant LETTERONFILEDELETED= new EntryTypeConstant(50, "Letter On File Deleted");
-	public static final EntryTypeConstant EMPLOYEETRAININGUPDATED= new EntryTypeConstant(47, "Employee Training Updated");
-	public static final EntryTypeConstant CONTRACTUNSUSPENDED= new EntryTypeConstant(48, "Contract Unsuspended");
-	public static final EntryTypeConstant EMPLOYEESUBMITTEDFORREVIEW= new EntryTypeConstant(49, "Employee Submitted For Review");
-	public static final EntryTypeConstant VEHICLESUBMITTEDFORREVIEW= new EntryTypeConstant(49, "Vehicle Submitted For Review");
-	public static final EntryTypeConstant CONTRACTOREMAILADDRESSUPDATED= new EntryTypeConstant(50, "Contractor Email Address Updated");
 	public static final EntryTypeConstant CONTRACTOREMPLOYEERESTORED= new EntryTypeConstant(51, "Contractor Employee Restored");
 	public static final EntryTypeConstant CONTRACTORVEHICLESTATUSUPDATED= new EntryTypeConstant(52, "Contractor Vehicle Status Updated");
 	public static final EntryTypeConstant CONTRACTOREMPLOYEESTATUSUPDATED= new EntryTypeConstant(53, "Contractor Employee Status Updated");
+	public static final EntryTypeConstant EMPLOYEETRAININGUPDATED= new EntryTypeConstant(54, "Employee Training Updated");
+	public static final EntryTypeConstant CONTRACTUNSUSPENDED= new EntryTypeConstant(55, "Contract Unsuspended");
+	public static final EntryTypeConstant EMPLOYEESUBMITTEDFORREVIEW= new EntryTypeConstant(56, "Employee Submitted For Review");
+	public static final EntryTypeConstant VEHICLESUBMITTEDFORREVIEW= new EntryTypeConstant(57, "Vehicle Submitted For Review");
+	public static final EntryTypeConstant CONTRACTOREMAILADDRESSUPDATED= new EntryTypeConstant(58, "Contractor Email Address Updated");
 	public static final EntryTypeConstant[] ALL = new EntryTypeConstant[] {
 		CONTRACTORSUBMITTED, CONTRACTORAPPROVED, CONTRACTORSECURITYADDED,CONTRACTORREJECTED,CONTRACTORCHANGEPASSWORD,
 		CONTRACTORLOGIN,CONTRACTORCONTACTUPDATED,CONTRACTORSECUIRTYUPDATED,CONTRACTORCOMPANYUPDATED,CONTRACTORVEHICLEADDED,CONTRACTORVEHICLEUPDATED,

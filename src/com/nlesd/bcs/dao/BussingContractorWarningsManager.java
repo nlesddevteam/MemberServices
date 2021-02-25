@@ -4,16 +4,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
+import org.apache.velocity.app.Velocity;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import com.awsd.mail.bean.EmailBean;
-import com.awsd.mail.bean.EmailException;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.velocity.VelocityUtils;
 import com.nlesd.bcs.bean.BussingContractorDocumentBean;
@@ -526,7 +525,7 @@ public class BussingContractorWarningsManager {
 					if(ebean.getFaExpiryDate() != null) {
 						if(ebean.getStatus() == EmployeeStatusConstant.APPROVED.getValue()) {
 							if(ebean.getFaExpiryDate().before(new Date())) {
-								//update status to suspended
+								///update status to suspended
 								BussingContractorEmployeeManager.updateContractorEmployeeStatus(ebean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
 								suspendedliste.add("<p>" + ebean.getFirstName() + " " + ebean.getLastName() + "(" + ebean.getCompanyName()
 								+ "): Status set to NOt Approved for First Aid/Epipen Expired </p>");
@@ -643,7 +642,7 @@ public class BussingContractorWarningsManager {
 		}
 		return vehiclelist;
 	}
-	public static void getFallWinterVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste) {
+	public static void getFallVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste) {
 		Connection con = null;
 		CallableStatement stat = null;
 		ResultSet rs = null;
@@ -655,26 +654,40 @@ public class BussingContractorWarningsManager {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(rundate);
 			int month = cal.get(Calendar.MONTH);
-			int year = cal.get(Calendar.YEAR);
 			String wtype="";
-			if(month <6) {
-				//checking the winter inspection
-				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year-1, 10, 1);
-				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_winins(?); end;");
-				stat.registerOutParameter(1, OracleTypes.CURSOR);
-				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
-				wtype="Winter Inspection Date expired or missing";
+			Calendar calf = Calendar.getInstance();
+			//check the date
+			//determine the dates to check
+			if(month > 6) {
+				//new school year check primary inspection for this year
+				//earliest value for primary ins is June 1
+				if(month >10) {
+					calf.set(Calendar.YEAR, 5, 1);
+					stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_fallins_b(?,?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					//now we set the default for secondary inspections
+					Calendar calw = Calendar.getInstance();
+					calw.set(Calendar.YEAR, 10, 1);
+					stat.setDate(2,new java.sql.Date(calf.getTimeInMillis()));
+					stat.setDate(3,new java.sql.Date(calw.getTimeInMillis()));
+				}else {
+					calf.set(Calendar.YEAR-1, 5, 1);
+					stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_fallins(?); end;");
+					stat.registerOutParameter(1, OracleTypes.CURSOR);
+					stat.setDate(2,new java.sql.Date(calf.getTimeInMillis()));
+				}
 			}else {
-				//checking the fall inspection
-				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year, 5, 1);
-				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_fallins(?); end;");
+				calf.set(Calendar.YEAR, 5, 1);
+				stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_fallins_b(?,?); end;");
 				stat.registerOutParameter(1, OracleTypes.CURSOR);
-				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
-				wtype="Fall Inspection Date expired or missing";
+				//now we set the default for secondary inspections
+				Calendar calw = Calendar.getInstance();
+				calw.set(Calendar.YEAR, 10, 1);
+				stat.setDate(2,new java.sql.Date(calf.getTimeInMillis()));
+				stat.setDate(3,new java.sql.Date(calw.getTimeInMillis()));
+				
 			}
-			
+			wtype="Primary CMVI Date expired or missing";
 			stat.executeQuery();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()) {
@@ -700,6 +713,7 @@ public class BussingContractorWarningsManager {
 			if(!suspendedliste.isEmpty()) {
 				EmailBean email = new EmailBean();
 				email.setTo("transportation@nlesd.ca");
+				//email.setTo("rodneybatten@nlesd.ca");
 				email.setBCC("rodneybatten@nlesd.ca");
 				email.setFrom("bussingcontractorsystem@nlesd.ca");
 				email.setSubject("NLESD Bussing Contractor System Vehicles Set To Not Approved");
@@ -711,7 +725,10 @@ public class BussingContractorWarningsManager {
 				}
 				model.put("elist", sb.toString());
 				model.put("etype","Vehicles(s)");
-				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				//email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				Velocity.setProperty("file.resource.loader.path", "");
+				Velocity.init();
+				email.setBody(VelocityUtils.mergeTemplateIntoString("C:\\BCSEmail\\bcs\\suspended_list.vm", model));
 				email.send();
 			}
 		}
@@ -723,7 +740,7 @@ public class BussingContractorWarningsManager {
 			catch (Exception ex) {}
 			System.err.println("void getFallWinterVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste): "
 					+ e);
-		} catch (EmailException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -738,6 +755,100 @@ public class BussingContractorWarningsManager {
 			catch (Exception e) {}
 		}
 	}
+	public static void getWinterVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		BussingContractorVehicleBean ebean = new BussingContractorVehicleBean();
+		try {
+			con = DAOUtils.getConnection();
+			//now we check the date so we know what school year we are in
+			Date rundate = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(rundate);
+			int month = cal.get(Calendar.MONTH);
+			String wtype="";
+			Calendar calf = Calendar.getInstance();
+			//check the date
+			//determine the dates to check
+			if(month > 9) {
+				//new school year check secondary inspection for this year
+				//earliest value for primary ins is Nov1 1
+				calf.set(Calendar.YEAR, 10, 1);
+			}else {
+				calf.set(Calendar.YEAR-1, 10, 1);
+			}
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_expired_winins(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setDate(2,new java.sql.Date(calf.getTimeInMillis()));
+			wtype="Secondary CMVI Date expired or missing";
+			stat.executeQuery();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				ebean = BussingContractorVehicleManager.createBussingContractorVehicleBeanFull(rs);
+				//check to see if already added one for this company
+				if(vehiclelist.containsKey(ebean.getCompanyName())) {
+					vehiclelist.get(ebean.getCompanyName()).add(ebean);
+				}else {
+					ArrayList<BussingContractorVehicleBean> alist = new ArrayList<BussingContractorVehicleBean>();
+					alist.add(ebean);
+					vehiclelist.put(ebean.getCompanyName(), alist);
+				}
+				//finally we check to see if it is expired and make sure status set to suspended
+				if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
+					//update status to suspended
+					BussingContractorVehicleManager.updateContractorVehicleStatus(ebean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+					suspendedliste.add("<p>SN:" + ebean.getvSerialNumber() + " PN:" + ebean.getvPlateNumber() + "(" + ebean.getCompanyName()
+					+ "): Status set to Not Approved for " + wtype + " </p>");
+				}
+				
+			}
+			//now we send the message
+			if(!suspendedliste.isEmpty()) {
+				EmailBean email = new EmailBean();
+				email.setTo("transportation@nlesd.ca");
+				//email.setTo("rodneybatten@nlesd.ca");
+				email.setBCC("rodneybatten@nlesd.ca");
+				email.setFrom("bussingcontractorsystem@nlesd.ca");
+				email.setSubject("NLESD Bussing Contractor System Vehicles Set To Not Approved");
+				HashMap<String, Object> model = new HashMap<String, Object>();
+				// set values to be used in template
+				StringBuilder sb = new StringBuilder();
+				for(String s: suspendedliste) {
+					sb.append(s);
+				}
+				model.put("elist", sb.toString());
+				model.put("etype","Vehicles(s)");
+				//email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				Velocity.setProperty("file.resource.loader.path", "");
+				Velocity.init();
+				email.setBody(VelocityUtils.mergeTemplateIntoString("C:\\BCSEmail\\bcs\\suspended_list.vm", model));
+				email.send();
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("void getFallWinterVehicleWarningsTM(TreeMap<String,ArrayList<BussingContractorVehicleBean>> vehiclelist,ArrayList<String> suspendedliste): "
+					+ e);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 	public static TreeMap<String,ArrayList<BussingContractorDocumentBean>> getDocumentWarningsAutomatedTM(String sql) {
 		Connection con = null;
 		Statement stat = null;
@@ -835,6 +946,7 @@ public class BussingContractorWarningsManager {
 			if(!suspendedliste.isEmpty()) {
 				EmailBean email = new EmailBean();
 				email.setTo("transportation@nlesd.ca");
+				//email.setTo("rodneybatten@nlesd.ca");
 				email.setBCC("rodneybatten@nlesd.ca");
 				email.setFrom("bussingcontractorsystem@nlesd.ca");
 				email.setSubject("NLESD Bussing Contractor System Employees Set To Not Approved");
@@ -846,7 +958,10 @@ public class BussingContractorWarningsManager {
 				}
 				model.put("elist", sb.toString());
 				model.put("etype","Employee(s)");
-				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				//email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/suspended_list.vm", model));
+				Velocity.setProperty("file.resource.loader.path", "");
+				Velocity.init();
+				email.setBody(VelocityUtils.mergeTemplateIntoString("C:\\BCSEmail\\bcs\\suspended_list.vm", model));
 				email.send();
 			}
 		}
@@ -858,7 +973,7 @@ public class BussingContractorWarningsManager {
 			catch (Exception ex) {}
 			System.err.println("ArrayList<BussingContractorEmployeeBean> getEmployeeWarningsAutomated(String sql): "
 					+ e);
-		} catch (EmailException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -943,7 +1058,7 @@ public class BussingContractorWarningsManager {
 			}
 			catch (Exception e) {}
 		}
-	}	
+	}
 	public static BussingContractorWarningsBean createBussingContractorWarningsBean(ResultSet rs) {
 		BussingContractorWarningsBean abean = null;
 		try {

@@ -1814,11 +1814,12 @@ function updateEmployee(usert) {
  ******************************************************************************/
 function openApproveEmp() {
 	if(checkemployee("A","Y",false)){
-		$("#modaltitle").text("Approve Employee");
+		$("#modaltitle").text("Approve Employee " + $("#hidfullname").val());
 		$("#modaltext")
 			.text(
-					"Are you sure you would like to approve "
-							+ $("#hidfullname").val());
+					//"Are you sure you would like to approve "
+						//	+ $("#hidfullname").val());
+					"I acknowledge that I have followed the Student Transportation Divisions step by step Driver approval procedure for this Driver");
 		$("#trantype").val("A");
 		$("#modalnotes").hide();
 		$('#myModal').modal('show');
@@ -1964,10 +1965,11 @@ function rejectemployee() {
  ******************************************************************************/
 function openApproveVeh() {
 	if(confirmVehicleFields("A","Y",false)){
-		$("#modaltitle").text("Approve Vehicle");
+		$("#modaltitle").text("Approve Vehicle " +  $("#hidfullname").val());
 		$("#modaltext").text(
-				"Are you sure you would like to approve vehicle plate number:  "
-						+ $("#hidfullname").val());
+				//"Are you sure you would like to approve vehicle plate number:  "
+						//+ $("#hidfullname").val());
+		"I acknowledge that I have followed the Student Transportation Divisions step by step Vehicle approval procedure for this Vehicle");
 		$("#trantype").val("A");
 		$("#modalnotes").hide();
 		$('#myModal').modal('show');
@@ -6341,7 +6343,7 @@ function checkdatefields(bypass){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#fidate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				$("#display_error_message_bottom").text("Fall Inspection Date must be in past and no more than 1 year ")
+				$("#display_error_message_bottom").text("Primary CMVI Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
@@ -6356,7 +6358,7 @@ function checkdatefields(bypass){
 			targetDate.setDate(today.getDate()- 365);
 			var selectedDate = $('#widate').datepicker('getDate');
 			if ((Date.parse(selectedDate) > Date.parse(today)) || (Date.parse(selectedDate) < Date.parse(targetDate))){
-				$("#display_error_message_bottom").text("Winter Inspection Date must be in past and no more than 1 year ")
+				$("#display_error_message_bottom").text("Secondary CMVI Date must be in past and no more than 1 year ")
 				.css("display", "block").delay(4000);
 				if(bypass){
 					showBypassDialogV();
@@ -7266,6 +7268,22 @@ function updateemployeestatus(){
 
 	});
 
+}
+/*******************************************************************************
+ * Calls contractor warnings report
+ ******************************************************************************/
+function GetContractorWarnings() {
+	var reportid = $.trim($('#selectcon').val());
+	var surl = "getContractorWarnings.html?cid=" + reportid;
+	$("#pageContentBody").load(surl);
+}
+/*******************************************************************************
+ * Calls contractor warnings report
+ ******************************************************************************/
+function populatereport() {
+	var reportid = $.trim($('#numdays').val());
+	var surl = "viewDocumentAuditReport.html?numdays=" + reportid;
+	$("#pageContentBody").load(surl);
 }
 $(document).ajaxComplete(function (event, request, settings) {
     if (request.status === 401) {
