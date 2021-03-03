@@ -253,7 +253,8 @@
 						<option value="Clerk I">Clerk I</option>
 						<option value="Clerk II">Clerk II</option>
 						<option value="Clerk III">Clerk III</option>
-						<option value="Clerk IV">Clerk IV</option>						
+						<option value="Clerk IV">Clerk IV</option>			
+						<option value="Comprehensive School Health Behavioral Specialist">Comprehensive School Health Behavioral Specialist</option>					
 						<option value="Comptroller/Director of Financial Services">Comptroller/Director of Financial Services</option>
 						<option value="Computer Programmer Analyst">Computer Programmer Analyst</option>
 						<option value="Computer Support Specialist">Computer Support Specialist</option>
