@@ -3,6 +3,8 @@ package com.awsd.travel;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.awsd.travel.bean.TravelClaimFileBean;
+
 
 public class TravelClaimItem 
 {
@@ -16,6 +18,7 @@ public class TravelClaimItem
   private double per_km_rate;
   private String departure_time;
   private String return_time;
+  private TreeMap<Integer,TravelClaimFileBean> attachments;
   
   public TravelClaimItem(int item_id, Date item_date, String item_desc, int item_kms, double item_meals, double item_lodging, double item_other, double per_km_rate, String departure_time, String return_time)
   {
@@ -139,5 +142,13 @@ public class TravelClaimItem
 		}else{
 			return "";
 		}
+	}
+
+	public TreeMap<Integer, TravelClaimFileBean> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(TreeMap<Integer, TravelClaimFileBean> attachments) {
+		this.attachments = attachments;
 	}
 }

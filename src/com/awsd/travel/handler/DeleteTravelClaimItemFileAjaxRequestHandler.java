@@ -2,24 +2,18 @@ package com.awsd.travel.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimException;
-import com.awsd.travel.TravelClaimItem;
-import com.awsd.travel.TravelClaimItemsDB;
-import com.awsd.travel.bean.TravelClaimFileBean;
 import com.awsd.travel.dao.TravelClaimFileManager;
 import com.esdnl.servlet.RequestHandlerImpl;
 
-public class DeleteTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl {
+public class DeleteTravelClaimItemFileAjaxRequestHandler extends RequestHandlerImpl {
 
-	public DeleteTravelClaimItemAjaxRequestHandler() {
+	public DeleteTravelClaimItemFileAjaxRequestHandler() {
 
 		this.requiredPermissions = new String[] {
 				"TRAVEL-EXPENSE-VIEW"
@@ -38,10 +32,12 @@ public class DeleteTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 		int id = -1;
 		boolean check = false;
 		int cid = -1;
+		String fileName="";
 
 		try {
-			id = Integer.parseInt(request.getParameter("id"));
-			cid = Integer.parseInt(request.getParameter("clid"));
+			id = form.getInt("id");
+			cid = form.getInt("clid");
+			fileName = form.get("filename");
 		}
 		catch (NumberFormatException e) {
 			id = -1;
@@ -53,7 +49,7 @@ public class DeleteTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 			sb.append("<TRAVELCLAIMS>");
 			sb.append("<TRAVELCLAIM>");
 			sb.append("<STATUS>ERROR</STATUS>");
-			sb.append("<MESSAGE>CLAIM ITEM ID IS REQUIRED FOR DELETE OPERATION</MESSAGE>");
+			sb.append("<MESSAGE>CLAIM ITEM ID IS REQUIRED FOR DELETE FILE OPERATION</MESSAGE>");
 			sb.append("</TRAVELCLAIM>");
 			sb.append("</TRAVELCLAIMS>");
 			xml = sb.toString().replaceAll("&", "&amp;");
@@ -64,7 +60,7 @@ public class DeleteTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 			out.write(xml);
 			out.flush();
 			out.close();
-			throw new TravelClaimException("<<<<< CLAIM ITEM ID IS REQUIRED FOR DELETE OPERATION.  >>>>>");
+			throw new TravelClaimException("<<<<< CLAIM ITEM ID IS REQUIRED FOR DELETE FILE OPERATION.  >>>>>");
 		}
 		else {
 			claim = TravelClaimDB.getClaim(cid);
@@ -78,22 +74,14 @@ public class DeleteTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 				op = request.getParameter("op");
 				if (op != null) {
 					if (op.equalsIgnoreCase("CONFIRM")) {
-						TravelClaimItem tci = TravelClaimItemsDB.getClaimItem(id);
-						check = TravelClaimItemsDB.deleteClaimItem(id);
-						//now we check to see if there is an attachment and delete
-						if(tci.getAttachments().size() > 0 ) {
-							for (Map.Entry<Integer, TravelClaimFileBean> entry : tci.getAttachments().entrySet()) {
-								delete_file("/Travel/Attachments/", entry.getValue().getFilePath());
-								TravelClaimFileManager.deleteTravelClaimFileById(entry.getValue().getId());
-							}
-							
-						}
+						check = TravelClaimFileManager.deleteTravelClaimFile(fileName,id);
+						delete_file("/Travel/Attachments/", fileName);
 						if (check) {
-							msg = "Travel Claim Item Deleted";
+							msg = "Travel Claim Item File Deleted";
 							status = "SUCCESS";
 						}
 						else {
-							msg = "Travel Claim Item Not Deleted";
+							msg = "Travel Claim Item File Not Deleted";
 							status = "ERROR";
 						}
 					}
