@@ -21,13 +21,13 @@ public class ExportSchoolStatusRequestHandler implements LoginNotRequiredRequest
 		SchoolStatusExportSettingsBean ebean = SchoolStatusExportManager.getSchoolStatusExportSettings();
 		if(ebean.getExportStatus()) {
 			ArrayList<SchoolStatusExportBean> list =  SchoolStatusExportManager.getSchoolStatusList();
-			if(stype.contentEquals("ECSV")) {
+			if(stype == null || stype.contentEquals("ECSV")) {
 				data.append(SchoolStatusExportBean.headerString());
 			}else {
 				data.append(SchoolStatusExportBean.headerStringTab());
 			}
 			for (SchoolStatusExportBean bean:list) {
-				if(stype.contentEquals("ECSV")) {
+				if(stype == null || stype.contentEquals("ECSV")) {
 					data.append(bean.toString());
 				}else {
 					data.append(bean.toStringTab());
@@ -36,7 +36,7 @@ public class ExportSchoolStatusRequestHandler implements LoginNotRequiredRequest
 		}else {
 			data.append("Service unavailable \n");
 		}
-		if(stype.contentEquals("ECSV")) {
+		if(stype == null || stype.contentEquals("ECSV")) {
 			response.setContentType("application/csv");
 			response.setHeader("content-disposition","filename=schoolstatus.csv");
 		}else {
