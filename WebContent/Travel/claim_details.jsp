@@ -869,7 +869,7 @@ dtable=$("#claimItemsTable").DataTable({
                               
                           
                               
-                        	<div style="font-weight:bold;font-size:16px;float:right;padding-right:10px;">TOTAL DUE: $<span id="totalDUE"><%=curr_df.format(summary.getSummaryTotal())%></span></div>
+                        	<div style="font-weight:bold;font-size:16px;float:right;padding-right:10px;">TOTAL DUE: <span id="totalDUE"><%=curr_df.format(summary.getSummaryTotal())%></span></div>
                         
                       <div style="clear:both;"></div>
                         
