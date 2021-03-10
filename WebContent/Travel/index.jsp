@@ -74,7 +74,9 @@
 <!-- Bootstrap Grid Variables xs (phones), sm (tablets), md (desktops), and lg (larger desktops). -->
 <!-- class no-print for items not to print -->
 <div id="pageContentBody">
-<div class="alert alert-success">Welcome to our New Travel System upgrade. Please report any issues to technical support below. If you have any comments, please take a quick second to fill out the <a href="https://forms.gle/xCxyaPMgTDcY18Tm6" target="_blank">Feedback Form</a>. </div>
+<div class="alert alert-success">
+<b><i class="fas fa-exclamation-circle"></i> NEW UPDATE!</b><br/>We have added the ability to <b>attach/upload receipt(s)</b> now to a travel claim item for lodging and/or other charges where a receipt maybe required. This will prevent claim processing delays where receipts maybe required.
+ </div>
 
 <img class="pageHeaderGraphic" style="max-width:200px;" src="/MemberServices/Travel/includes/img/tclaim.png" border=0/>
 	Welcome 

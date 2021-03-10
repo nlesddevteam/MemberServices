@@ -528,11 +528,49 @@ function ajaxAddNewTravelClaimItem(claimid)
 	var cy = $("#cy").val();
 	var ldm = $("#ldm").val();
 	var descR= CKEDITOR.instances['item_desc'].getData();
+	var requestd = new FormData();
+	var filecount = 0;
+	$("#add_claim_item_form").find("input[type=file]").each(function(index, field){
+			if(field.files.length > 0){
+				filecount++;
+				var testname = "file" + filecount;
+				requestd.append(testname,field.files[0]);
+			}
+	});
+	requestd.append("filecount",filecount);
+	//now pass the file descriptions
+	if(filecount > 0){
+		var filenames = new Array(filecount);
+		var x =0;
+		//alert(this.value);
+	        //filenames[x]=this.value;
+	       // x++;
+		$("#add_claim_item_form").find("input[name=filetext]").each(function(index, field){
+			if(this.value != ""){
+				filenames[x]=this.value;
+				x++;
+			}
+		});
+		requestd.append("filedesc",filenames);
+	}
+	requestd.append('op',optext);
+	requestd.append('id',claimid);
+	requestd.append('item_date',$("#item_date").val());
+	requestd.append('item_desc',descR);
+	requestd.append('item_kms',kms);
+	requestd.append('item_meals',meals);
+	requestd.append('item_lodging',lodging);
+	requestd.append('item_other',otheritem);
+	requestd.append('item_departure_time',$("#item_departure_time").val());
+	requestd.append('item_return_time',$("#item_return_time").val());
+	
+	
 	$.ajax({
         url: 'addNewTravelClaimItemAjax.html',
         type: 'POST',
-        data: {op:optext,id: claimid,item_date:$("#item_date").val(),item_desc:descR,item_kms: kms,item_meals: meals,
-        	item_lodging: lodging,item_other: otheritem, item_departure_time:$("#item_departure_time").val(),item_return_time: $("#item_return_time").val()},
+        contentType: false,
+        processData: false,
+        data: requestd,
         success: function(xml) {
         		$(xml).find('TRAVELCLAIM').each(function(){
 						//now add the items if any
@@ -630,15 +668,55 @@ function ajaxUpdateTravelClaimItem(claimid,vitemid)
 	var lodging = removeCurrencyTravel($("#item_lodging").val());
 	var otheritem =removeCurrencyTravel($("#item_other").val());
 	var descR= CKEDITOR.instances['item_desc'].getData();
+	var kms = removeCurrencyTravel($("#item_kms").val()) == "" ? "0" : removeCurrencyTravel($("#item_kms").val());
 	//get values to reset datepickter after ajax
 	var cm = $("#cm").val();
 	var cy = $("#cy").val();
 	var ldm = $("#ldm").val();
+	var requestd = new FormData();
+	var filecount = 0;
+	$("#add_claim_item_form").find("input[type=file]").each(function(index, field){
+		if(field.files.length > 0){
+			filecount++;
+			var testname = "file" + filecount;
+			requestd.append(testname,field.files[0]);
+		}
+	});
+	requestd.append("filecount",filecount);
+	//now pass the file descriptions
+	if(filecount > 0){
+		var filenames = new Array(filecount);
+		var x =0;
+		//alert(this.value);
+        //filenames[x]=this.value;
+       // x++;
+		$("#add_claim_item_form").find("input[name=filetext]").each(function(index, field){
+			if(this.value != ""){
+				filenames[x]=this.value;
+				x++;
+			}
+		});
+	requestd.append("filedesc",filenames);
+	}
+	requestd.append('op',optext);
+	requestd.append('id',claimid);
+	requestd.append('item_date',$("#item_date").val());
+	requestd.append('item_desc',descR);
+	requestd.append('item_kms',kms);
+	requestd.append('item_meals',meals);
+	requestd.append('item_lodging',lodging);
+	requestd.append('item_other',otheritem);
+	requestd.append('item_departure_time',$("#item_departure_time").val());
+	requestd.append('item_return_time',$("#item_return_time").val());
+	//requestd.append('item_file',ufile);
+	requestd.append('itemid',vitemid);
+	requestd.append('deletedfiles',$("#hidfiledelete").val());
 	$.ajax({
         url: 'updateTravelClaimItemAjax.html',
         type: 'POST',
-        data: {op:optext,id: claimid,item_date:$("#item_date").val(),item_desc:descR,item_kms:$("#item_kms").val(),item_meals: meals,
-        	item_lodging: lodging,item_other: otheritem, item_departure_time:$("#item_departure_time").val(),item_return_time: $("#item_return_time").val(),itemid:vitemid},
+        contentType: false,
+        processData: false,
+        data: requestd,
         success: function(xml) {
         		$(xml).find('TRAVELCLAIM').each(function(){
 						//now add the items if any
@@ -3211,6 +3289,78 @@ function removememberfromtable(id,but){
 	}));
 	
 }
+/*************************************************
+Calls ajax post for delete travel claim item
+*************************************************/
+function deleteCurrentAttachment(fname,itemid,claimid){
+		var optext = "CONFIRM";
+		loadingData();
+		//get values to reset datepickter after ajax
+		var cm = $("#cm").val();
+		var cy = $("#cy").val();
+		var ldm = $("#ldm").val();
+		$.ajax({
+	        url: 'deleteTravelClaimItemFileAjax.html',
+	        type: 'POST',
+	        data: {id: itemid,op: optext,clid:claimid,filename:fname},
+	        success: function(xml) {
+	        		$(xml).find('TRAVELCLAIM').each(function(){
+							//now add the items if any
+							if($(this).find("STATUS").text() == "SUCCESS")
+							{
+								$(".details_success_message").html("<b>SUCCESS:</b> Travel Claim Item File Has Been Deleted").css("display","block").delay(5000).fadeOut();			    			
+								
+															
+								var surl="viewTravelClaimDetails.html?id=" + claimid;
+				            	$("#pageContentBody").load(surl);
+								
+							}else{
+								$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(5000).fadeOut();							
+							}
+
+						});     					
+					},
+					  error: function(xhr, textStatus, error){
+						  $(".details_error_message").html(error).css("display","block").delay(5000).fadeOut();
+					  },
+					dataType: "text",
+					async: false
+		
+	        
+	    });
+		refreshJquery(cm,cy,ldm);	
+}
+
+function addattach(){	
+	$(".addFileTableBlock").css("display","block");	
+	var newrow ="<tr id='filerow1'><td width='40%'><div class='custom-file'><input class='form-control-file form-control-sm' type='file' id='filerow' name='filerow'></div></td>";
+	newrow = newrow +  "<td width='40%'><input maxlength='30' style='width:100%;' class='form-control-sm' type='text' id='filetext' name='filetext' placeholder='Enter a title for this receipt.'></td>";
+	newrow = newrow + "<td width='20%'><button type='button' class='btn btn-sm btn-danger' onclick='removefile(this);'>REMOVE</button> <button type='button' class='btn btn-sm btn-success' onclick='addattach();'>Add Another</button></td></tr>";
+	
+	$("#addtable tbody").append(newrow);	
+}
+
+function removefile(but){
+	$(but).closest ('tr').remove ();	
+	 if ($('#addtable > tbody > tr').length == 0){
+     $('#addtable > thead > tr').css('display','none');
+ }	
+}
+
+function deletefile(lin,fid){
+	$(lin).closest ('tr').remove ();
+	 $(".details_success_message").html("File staged to be removed from this claim item. File will be removed once you Save this claim item.").css("display","block").delay(5000).fadeOut();	
+	if($("#hidfiledelete").val() == ""){
+		$("#hidfiledelete").val(fid);
+	}else{
+		var test =$("#hidfiledelete").val() + "," + fid;
+		$("#hidfiledelete").val(test);
+	}
+}
+
+
+
+
 
 function refreshApprovedDataTable() {
 $("#pageContentBody").load('travel_rates.jsp');

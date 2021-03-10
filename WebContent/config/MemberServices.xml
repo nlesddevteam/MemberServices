@@ -723,6 +723,10 @@
       <Request-Handler-Class>com.awsd.travel.handler.AutoAdjustTravelBudgetsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Travel/autoAdjustTravelBudgets.html</URL-Pattern>
     </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.awsd.travel.handler.DeleteTravelClaimItemFileAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Travel/deleteTravelClaimItemFileAjax.html</URL-Pattern>
+     </Request-Handler>    
     
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.mrs.handler.ViewMRSRequestHandler</Request-Handler-Class>

@@ -5,18 +5,20 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.awsd.common.Utils;
 import com.awsd.security.User;
 import com.awsd.travel.TravelClaim;
 import com.awsd.travel.TravelClaimDB;
 import com.awsd.travel.TravelClaimItem;
 import com.awsd.travel.TravelClaimItemsDB;
+import com.awsd.travel.bean.TravelClaimFileBean;
+import com.awsd.travel.dao.TravelClaimFileManager;
 import com.esdnl.servlet.RequestHandlerImpl;
+
+import javazoom.upload.UploadFile;
 
 public class AddNewTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl {
 
@@ -43,7 +45,7 @@ public class AddNewTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 		boolean iserror = false;
 		String errormessage = "";
 		try {
-			id = Integer.parseInt(request.getParameter("id"));
+			id = form.getInt("id");
 		}
 		catch (NumberFormatException e) {
 			id = -1;
@@ -65,20 +67,15 @@ public class AddNewTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 			}
 			else {
 				request.setAttribute("TRAVELCLAIM", claim);
-				op = request.getParameter("op");
+				op = form.get("op");
 				if (op != null) {
 					if (op.equalsIgnoreCase("CONFIRM")) {
 						sdf = new SimpleDateFormat("MM/dd/yyyy");
 						try {
-							System.out.println(request.getParameter("item_lodging"));
-							System.out.println(Double.parseDouble(request.getParameter("item_lodging")));
-							item = new TravelClaimItem(sdf.parse(request.getParameter("item_date")), request.getParameter(
-									"item_desc"), Integer.parseInt(request.getParameter("item_kms")), Double.parseDouble(
-											request.getParameter("item_meals")), Double.parseDouble(
-													request.getParameter("item_lodging")), Double.parseDouble(
-															request.getParameter("item_other")), request.getParameter(
-																	"item_departure_time"), request.getParameter("item_return_time"));
-							System.out.println(item.getItemLodging());
+							item = new TravelClaimItem(sdf.parse(form.get("item_date")), form.get(
+									"item_desc"), form.getInt("item_kms"), form.getDouble("item_meals"), 
+													form.getDouble("item_lodging"), form.getDouble("item_other"), form.get(
+																	"item_departure_time"), form.get("item_return_time"));
 						}
 						catch (ParseException e) {
 							System.err.println(e);
@@ -109,9 +106,29 @@ public class AddNewTravelClaimItemAjaxRequestHandler extends RequestHandlerImpl 
 								errormessage = "All claim item values are zero (0).<br> Please enter one or more values greater then zero (0).";
 							}
 							else {
-								check = TravelClaimItemsDB.addClaimItem(claim, item);
+								int itemid = TravelClaimItemsDB.addClaimItemFun(claim, item);
 
-								if (check) {
+								if (itemid > -1) {
+									//now check to see if there is a file and upload
+									if(form.getInt("filecount") > 0) {
+										String[] fdesc = form.get("filedesc").split(",");
+										for(int x=1; x <=form.getInt("filecount");x++) {
+											String filename = "file" + x;
+											UploadFile f = form.getUploadFile(filename);
+											try {
+												TravelClaimFileBean tbean = new TravelClaimFileBean();
+												tbean.setFilePath(save_file(filename, "/Travel/Attachments/"));
+												tbean.setClaimId(claim.getClaimID());
+												tbean.setItemId(itemid);
+												tbean.setFileNotes(fdesc[x-1]);
+												TravelClaimFileManager.addTravelClaimFile(tbean);
+											} catch (Exception e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										
+									}
 									request.setAttribute("RESULT", "SUCCESS");
 									request.setAttribute("msg", "Claim item added successfully.");
 								}

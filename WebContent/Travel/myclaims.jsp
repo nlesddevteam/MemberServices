@@ -226,7 +226,7 @@ input { border:1px solid silver;}
                     		<td><%=Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())+"-"+ monthClaim +"-01" %> </td>
                     		<td>MONTHLY</td>
                     		<td>Standard Travel Claim</td>
-                    		<td><span style="text-transform:Capitalize;"><%=(claim.getSupervisor().getFullNameReverse()!=null)?claim.getSupervisor().getFullNameReverse():"N/A" %></span></td>
+                    		<td><span style="text-transform:Capitalize;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullNameReverse():"N/A" %></span></td>
                     		<td><%=curr_df.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
                     		<td>
                     		<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />        

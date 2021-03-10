@@ -546,7 +546,7 @@ dtable=$("#claimItemsTable").DataTable({
 			
 <%}else { %>
 			<div align="center" class="no-print" style="padding-bottom:10px;">
-					<a href="#" class="noJump btn btn-sm btn-success" data-toggle="collapse" data-target="#addClaimItemArea"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>
+					<a href="#" class="noJump btn btn-sm btn-success" data-toggle="collapse" data-target="#addClaimItemArea" id="addItemLink"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>
 			
 			
  <%if(claim instanceof PDTravelClaim){%>
@@ -648,28 +648,97 @@ dtable=$("#claimItemsTable").DataTable({
  		
  		
  		</script>
- 		</div>  
+ 		
 		 <span style="font-size:10px;">Description should include all necessary information to review the claim 
 		 (eg. departure and return points, and items included in other category). 
 		 You are limited to 500 characters. Any ' or &quot; characters and other invalid characters will be automatically removed from any text you enter on submission. 
 		 This is not an error. ($+-=,./ are accepted characters.)<br/>
 		 </span>
 	
-	</div>                   
-                     
+	</div>
+	
+	<div  class="col-xs-12 col-sm-12 col-md-12" style="display:none;" id="itemAttachmentBlock">
+	<br/>
+ 	<div class="alert alert-danger" style="text-align:center;">
+ 	<b><span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span> NOTICE: Receipt(s) Maybe Required and/or Updated <span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span></b><br/>
+ 	You have specified and/or changed a claimed value for Lodging and/or a value for Other more than $5.00 in this item. 
+ 	<b>Please attach receipt(s) or a delay in your claim processing may occur</b>.
+ 	If you have already submitted receipt(s) (listed below) please update based on any value change you made,  if required.
+ 	If the Other is for a ferry travel expense, no receipt is required. Please upload any document(s) in PDF format using the Add Receipt(s) option below/right.
+  	</div> 	
+	</div>
+	
+	
+	<div  class="col-xs-12 col-sm-12 col-md-12">
+	
+	
+		<hr>
+	<input type="hidden" id="hidfiledelete" name="hidfiledelete">
+	<div style="float:right;"><a href="#" class="noJump btn btn-xs btn-primary" id="butaddb" onclick="addattach();"><i class="fas fa-paperclip"></i> Add Receipt(s)</a></div> 
+		<b>Current Receipts):</b><br/>
+		Below are a list of any receipt(s) for this claim item.<br/>
+		<b>NOTE:</b> If no value entered for lodging and other is less than or equal to $5, (or it is a ferry expense), no receipts are required.
+			<%if(failed_item == null || failed_item.getAttachments() == null || failed_item.getAttachments().isEmpty()){ %>
+			<ul>
+			<li><span style="color:green;">No receipt(s) on file for this item.</span>
+			</ul>
+			<script>			
+			valueLodging = $("#item_lodging").val().replace(/[$,]+/g,"");
+			valueOther = $("#item_other").val().replace(/[$,]+/g,"");				
+			 if(valueLodging > 0 || valueOther >5) {				
+				$("#itemAttachmentBlock").css("display","block");				
+			} 		
+			</script>
+			
+		<%}else{ %>
+		<table class="table table-bordered table-sm" width="100%" style="font-size:11px;background-color:White;">
+		<thead class="thead-light"><tr><th width="75%">Description</th><th width="10%">Date Added</th><th width="15%" class="no-print">Options</th></tr></thead>
+		<tbody>	
+			<% for (Map.Entry<Integer, TravelClaimFileBean> entry : failed_item.getAttachments().entrySet()){%>	
+			<tr valign="middle">			
+					<td class="align-middle"><%=(entry.getValue().getFileNotes()!=null)?entry.getValue().getFileNotes():"Receipt" %></td>
+					<td class="align-middle"><%=entry.getValue().getDateUploadedFormatted()%></td>
+					<td class="no-print align-middle">
+							<a class="btn btn-xs btn-primary" href="Attachments/<%=entry.getValue().getFilePath() %>" target="_blank" title="View Receipt"><i class="far fa-eye"></i> VIEW</a>							
+							<button type="button" class="btn btn-xs btn-danger" onclick="deletefile(this,'<%=entry.getValue().getId()%>');" title="Delete Receipt"><i class="far fa-trash-alt"></i> DEL</button>							
+					</td>		
+					</tr>
+			<%} %>
+			</tbody>
+		</table>
+		<%} %>
+		
+		<div class="addFileTableBlock" style="display:none;">
+	<table class="table table-sm" id="addtable" width="100%" style="font-size:11px;background-color:White;width:100%;">
+		<thead class="thead-light">
+		<tr>
+		<th width="40%">FILE</th>
+		<th width="40%">DESCRIPTION (Max 30 chars)</th>
+		<th width="20%">OPTION</th>
+		</tr>
+		</thead>
+		<tbody>		
+		</tbody>
+	</table>	
+	<b>NOTE:</b> Receipt(s) you are adding will only save when you hit <b><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Item</b> below. You can add as many receipts as you require by pressing <b>Add Another</b> for each new one.
+	</div>
+	
+ 	</div> 					
+ 		                 
+               </div>       
                         <br/>
                         <div align="center" class="no-print">
                           <%if(request.getAttribute("EDIT") != null){%>
-                           			<a href="#" class="noJump btn-xs btn-success btn" title="<%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item." onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','UPDATE','<%=failed_item.getItemID()%>');"><%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item</a>
-                          		 	<a href="#" class="noJump btn btn-danger btn-xs"  title="Cancel edit claim item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                           
+                           			<a href="#" class="noJump btn-sm btn-success btn" title="<%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item." onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','UPDATE','<%=failed_item.getItemID()%>');"><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Claim Item</a>
+                          		 	<a href="#" class="noJump btn btn-danger btn-sm"  title="Cancel edit claim item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                           
                           <%} else {%>                          
-                          			<a href="#" class="noJump btn btn-xs btn-success" onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','ADD','0');"><%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Item</a>      
-                          			<a href="#" class="noJump btn btn-danger btn-xs"  title="Cancel Add  item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                              
+                          			<a href="#" class="noJump btn btn-sm btn-success" onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','ADD','0');"><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Item</a>      
+                          			<a href="#" class="noJump btn btn-danger btn-sm"  title="Cancel Add  item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                              
                           <%}%>     
                        </div>
        
-       </div>
-                       
+      
+            </div>           
       <%}%>    
       
     
@@ -701,7 +770,7 @@ dtable=$("#claimItemsTable").DataTable({
                       <%if(claim.getCurrentStatus().equals(TravelClaimStatus.PRE_SUBMISSION) || claim.getCurrentStatus().equals(TravelClaimStatus.REJECTED)){ %>
                       <td width="*" class="no-print">Tools</td>
                       <%}%>
-                    </tr>
+            </tr>
            </thead>
           <tbody>
           
@@ -719,8 +788,7 @@ dtable=$("#claimItemsTable").DataTable({
                         </script>
                         <%
                         while(items.hasNext()){
-                         			 item = (TravelClaimItem) items.next();%>
-                          
+                         			 item = (TravelClaimItem) items.next();%>                          
                                                   
                            <script>
                           $("#kmRates").html("<%=kms_rate_df.format(item.getPerKilometerRate())%>");
@@ -729,7 +797,17 @@ dtable=$("#claimItemsTable").DataTable({
                           <tr>
                           <% itemCounter++; %>
                             <td><%=sdf.format(item.getItemDate())%></td>
-                            <td><%=item.getItemDescription()%></td>
+                            <td><%=item.getItemDescription()%>
+								<%if(item == null || item.getAttachments() == null || item.getAttachments().isEmpty()){ %>								
+								<%if(item.getItemLodging() > 0 || item.getItemOther() >5) {%>
+									<span style="font-size:9px;color:red;">&middot; No receipt(s) attached.</span>
+								<%}%>
+								<%}else{ %>
+									<%for (Map.Entry<Integer, TravelClaimFileBean> entry : item.getAttachments().entrySet()) {%>			
+									&middot; <a href="Attachments/<%=entry.getValue().getFilePath() %>" target="_blank"><%=(entry.getValue().getFileNotes()!=null)?entry.getValue().getFileNotes():"Receipt" %></a><br />
+									<%}%>
+								<%}%>
+                            </td>
                             <td><%=(((item.getDepartureTime() == null) && (item.getReturnTime() == null))?"OVERNIGHT":(((item.getDepartureTime()!=null)?item.getDepartureTime():"")))%> - <%=(((item.getDepartureTime() == null) && (item.getReturnTime() == null))?"OVERNIGHT":(((item.getReturnTime()!=null)? item.getReturnTime():"OVERNIGHT")))%></td>
                            <td><%=df.format(item.getPerKilometerRate()) %></td>
                             <td><%=item.getItemKMS()%></td>                            
@@ -791,7 +869,7 @@ dtable=$("#claimItemsTable").DataTable({
                               
                           
                               
-                        	<div style="font-weight:bold;font-size:16px;float:right;padding-right:10px;">TOTAL DUE: $<span id="totalDUE"><%=summary.getSummaryTotal()%></span></div>
+                        	<div style="font-weight:bold;font-size:16px;float:right;padding-right:10px;">TOTAL DUE: <span id="totalDUE"><%=curr_df.format(summary.getSummaryTotal())%></span></div>
                         
                       <div style="clear:both;"></div>
                         
@@ -1121,10 +1199,20 @@ $('document').ready(function(){
 	    });
 	    
 
-
-
-
 //CKEDITOR.replace('item_desc',{wordcount: pageWordCountConf,height:150});
+
+$('#item_lodging,#item_other').change(function(){		
+	//Get rid $
+	valueLodging = $("#item_lodging").val().replace(/[$,]+/g,"");
+	valueOther = $("#item_other").val().replace(/[$,]+/g,"");
+		
+	 if(valueLodging > 0 || valueOther >5) {				
+		$("#itemAttachmentBlock").css("display","block");				
+	} 
+	 if( valueLodging ==0 && valueOther <= 5 ) {			
+		$("#itemAttachmentBlock").css("display","none");
+	}
+});
 
 $('#timeDepartureON').change(function(){
 	if (this.checked) {
@@ -1146,6 +1234,9 @@ $('#timeReturnON').change(function(){
     }
 });
 
+$( "#addItemLink" ).click(function() {
+	$("#addItemLink").css("display","none");
+});
     
 $( "#detailTAB" ).click(function() {
 	$("#theTABS").css("background-color","#FAFAD2");
