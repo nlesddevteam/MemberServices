@@ -59,7 +59,7 @@
 								<tr>
 							    <td class="tableTitleL"># Major Courses*:</td>
 				                <td class="tableResultL"><div class="majorTest"><input type="text" name="major_courses" id="major_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc"></div>
-				                <div class="majorErrorNote alert alert-danger" style="display:none;"><b>INVALID ENTRY:</b> Enter a number ONLY (total number minor courses)</div>
+				                <div class="majorErrorNote alert alert-danger" style="display:none;"><b>INVALID ENTRY:</b> Enter a number ONLY (total number major courses)</div>
 				                </td>
 							    <td class="tableTitleR"># Minor Courses*:</td>
 				                <td class="tableResultR"><div class="minorTest"><input type="text" name="minor_courses" id="minor_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc">
