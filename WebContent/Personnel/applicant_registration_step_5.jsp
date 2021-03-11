@@ -58,9 +58,15 @@
 								</tr>
 								<tr>
 							    <td class="tableTitleL"># Major Courses*:</td>
-				                <td class="tableResultL"><input type="text" name="major_courses" id="major_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc"></td>
+				                <td class="tableResultL"><div class="majorTest"><input type="text" name="major_courses" id="major_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc"></div>
+				                <div class="majorErrorNote alert alert-danger" style="display:none;"><b>INVALID ENTRY:</b> Enter a number ONLY (total number minor courses)</div>
+				                </td>
 							    <td class="tableTitleR"># Minor Courses*:</td>
-				                <td class="tableResultR"><input type="text" name="minor_courses" id="minor_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc"></td>
+				                <td class="tableResultR"><div class="minorTest"><input type="text" name="minor_courses" id="minor_courses" class="form-control" placeholder="Enter a # 0,1,2,3 etc">
+				                 <div class="minorErrorNote alert alert-danger" style="display:none;"><b>INVALID ENTRY:</b> Enter a number ONLY (total number minor courses)</div>
+				                </div>
+				                
+				                </td>
 								</tr>
 								<tr>
 								<td colspan=4>
@@ -194,6 +200,34 @@ $(document).ready(function(){
         $('.degree').not(this).prop('checked', false);
     });
 
+    
+    
+    
+    $('#major_courses').change(function(){    
+    	  var inputVal = $("#major_courses").val();     	  
+    	  if(!$.isNumeric(inputVal)) {    		  
+    		  $(".majorTest").addClass("has-error").addClass("has-feedback").removeClass("has-success");  	
+    		  $(".majorErrorNote").css("display","block").delay(5000).fadeOut();
+    	  } else {    		  
+    		  $(".majorTest").addClass("has-success").addClass("has-feedback").removeClass("has-error"); 
+    	  }         
+    	
+    });
+    
+    $('#minor_courses').change(function(){    
+  	  var inputVal = $("#minor_courses").val(); 
+  	  if(!$.isNumeric(inputVal)) {    		  
+		  $(".minorTest").addClass("has-error").addClass("has-feedback").removeClass("has-success");  	
+		  $(".minorErrorNote").css("display","block").delay(5000).fadeOut();
+	  } else {    		  
+		  $(".minorTest").addClass("has-success").addClass("has-feedback").removeClass("has-error"); 
+	  }         
+  	
+  });
+    
+    
+    
+    
 });
 </script>
 
