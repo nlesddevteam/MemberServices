@@ -73,7 +73,10 @@ public class TravelClaimItemsDB {
 			if(!fbeans.isEmpty()) {
 				item.setAttachments(fbeans);
 			}
-			items.add(item);
+			if(item != null) {
+				items.add(item);
+			}
+			
 		}
 		catch (SQLException e) {
 			System.err.println("TravelClaimItemDB.getClaimItems(): " + e);
