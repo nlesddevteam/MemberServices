@@ -17,6 +17,9 @@
 		<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
         <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
+<!-- PREVENT CACHE OF LOCAL JS AND CSS FROM AGING TOO LONG -->	
+		<c:set var="cacheBuster" value="<%=new java.util.Date()%>" />				 								
+		<fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyHms" var="todayVer" />
 
 <html>
 
@@ -41,7 +44,7 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  		<link rel="stylesheet" href="/MemberServices/Personnel/includes/css/msapp.css">
+  		<link rel="stylesheet" href="/MemberServices/Personnel/includes/css/msapp.css?ver=${todayVer}">
 		<link rel="shortcut icon" href="/MemberServices/Personnel/includes/img/favicon.ico">
 		<link href="/MemberServices/Personnel/includes/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">
 		<link href="/MemberServices/Personnel/includes/css/hover_drop_2.css" rel="stylesheet" media="all" type="text/css" />
@@ -119,7 +122,7 @@
 					        <li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Help<span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
-
+										<li><a href="https://sites.google.com/nlesd.ca/myhrphelp/home" target="_blank">MyHRP Help Guide</a></li>
 										<li><a href="/contact/stafffinderresults.jsp?pos=Human+Resources&region=" target="_blank">HR Contacts</a></li>
 										<li><a href="https://forms.gle/zudb87zxbJW9QTVg8" target="_blank">Technical Support</a></li>
 										<li><a href="/" onclick="loadingData()">Exit to NLESD</a></li>
@@ -201,8 +204,9 @@
 														<div style="clear:both;"></div>
 														<br/><br/>
 	<div class="alert alert-info no-print" id="noPrintThis" style="text-align:center;font-size:11px;">													
-If you are experiencing difficulties with this system, you may also submit a Support Request using the following form:<br/><br/>
+If you are experiencing difficulties with this system, check out the Help Guide link below or you may also submit a Support Request:<br/><br/>
 
+<a href="https://sites.google.com/nlesd.ca/myhrphelp/home" target="_blank" class="btn btn-sm btn-primary">MyHRP Help Guide</a>
 <a href="https://forms.gle/zudb87zxbJW9QTVg8" target="_blank" class="btn btn-sm btn-danger">Support Request Form</a>
 
 </div>
@@ -214,7 +218,7 @@ If you are experiencing difficulties with this system, you may also submit a Sup
 
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		  MyHRP Applicant Profiling System App 1.4 &copy; 2019 Newfoundland and Labrador English School District &middot; All Rights Reserved
+		  MyHR Career Application System Portal 1.6 &copy; 2019-2021 Newfoundland and Labrador English School District &middot; All Rights Reserved
 		 </div>
 
 		</div>
@@ -227,7 +231,7 @@ If you are experiencing difficulties with this system, you may also submit a Sup
 
 <!-- ENABLE PRINT FORMATTING -->
 		<script src="/MemberServices/Personnel/includes/js/jQuery.print.js"></script>
-		<script src="/MemberServices/Personnel/includes/js/msapp.js"></script>
+		<script src="/MemberServices/Personnel/includes/js/msapp.js?ver=${todayVer}"></script>
 		<script>
 		function loadingData() {
 			$("#loadingSpinner").css("display","block");

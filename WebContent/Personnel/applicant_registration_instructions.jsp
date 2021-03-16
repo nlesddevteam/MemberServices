@@ -25,6 +25,11 @@
 </head>
 <body>
 <br/>
+
+<div class="alert alert-success" style="text-align:center;">We have a new Help guide created in assisting with creating/updating your profile. Please see the link below once you read the instructions.<br/></br/>
+	<a href="https://sites.google.com/nlesd.ca/myhrphelp/home" class="btn btn-danger btn-sm" target="_blank">MyHRP Help Guide</a>
+	</div>
+
   <div class="panel panel-info">
   <div class="panel-heading"><b>Applicant HR Registration Instructions</b>
   
@@ -40,6 +45,8 @@
   </div>
   	<div class="panel-body" style="font-size:12px;">	
 	<img src="includes/img/register.gif" border=0 style="float:right;width:100%;max-width:300px;"/>
+	
+	
 	
 		<b>To apply online using the electronic application process, you need to first create a profile as follows:</b>
 		<br/><br/>
