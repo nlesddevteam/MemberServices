@@ -410,6 +410,11 @@ public class TeacherAllocationManager {
 
 	public static TeacherAllocationBean createTeacherAllocationBean(ResultSet rs) {
 
+		return createTeacherAllocationBean(rs, true);
+	}
+
+	public static TeacherAllocationBean createTeacherAllocationBean(ResultSet rs, boolean loadAssociatedData) {
+
 		TeacherAllocationBean abean = null;
 		try {
 			abean = new TeacherAllocationBean();
@@ -431,12 +436,14 @@ public class TeacherAllocationManager {
 			abean.setEnabled(rs.getBoolean("ENABLED"));
 			abean.setPublished(rs.getBoolean("PUBLISHED"));
 
-			abean.setExtraAllocations(TeacherAllocationExtraManager.getTeacherAllocationExtraBeans(abean));
-			abean.setPermanentPositions(
-					TeacherAllocationPermanentPositionManager.getTeacherAllocationPermanentPositionBeans(abean));
-			abean.setVacantPositions(TeacherAllocationVacantPositionManager.getTeacherAllocationVacantPositionBeans(abean));
-			abean.setRedundantPositions(
-					TeacherAllocationRedundantPositionManager.getTeacherAllocationRedundantPositionBeans(abean));
+			if (loadAssociatedData) {
+				abean.setExtraAllocations(TeacherAllocationExtraManager.getTeacherAllocationExtraBeans(abean));
+				abean.setPermanentPositions(
+						TeacherAllocationPermanentPositionManager.getTeacherAllocationPermanentPositionBeans(abean));
+				abean.setVacantPositions(TeacherAllocationVacantPositionManager.getTeacherAllocationVacantPositionBeans(abean));
+				abean.setRedundantPositions(
+						TeacherAllocationRedundantPositionManager.getTeacherAllocationRedundantPositionBeans(abean));
+			}
 		}
 		catch (Exception e) {
 			abean = null;

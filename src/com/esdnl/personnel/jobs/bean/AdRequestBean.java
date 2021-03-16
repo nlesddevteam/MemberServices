@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.awsd.school.Subject;
 import com.awsd.school.SubjectDB;
 import com.awsd.school.SubjectException;
@@ -16,7 +18,9 @@ import com.esdnl.personnel.jobs.dao.AdRequestHistoryManager;
 import com.esdnl.personnel.jobs.dao.AdRequestMajorManager;
 import com.esdnl.personnel.jobs.dao.AdRequestMinorManager;
 import com.esdnl.personnel.jobs.dao.DegreeManager;
+import com.esdnl.personnel.v2.database.sds.EmployeeManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
 import com.esdnl.personnel.v2.model.sds.bean.LocationBean;
 
 public class AdRequestBean {
@@ -34,6 +38,7 @@ public class AdRequestBean {
 	private Date startDate;
 	private Date endDate;
 	private RequestStatus currentStatus;
+	private String empId;
 	private EmployeeBean owner;
 	private LocationBean location;
 	private JobTypeConstant job_type;
@@ -42,7 +47,8 @@ public class AdRequestBean {
 	private String comp_num;
 	private boolean unadvertised;
 	private String jobRequirements;
-	
+	private TeacherAllocationBean teacherAllocation;
+
 	public AdRequestBean() {
 
 		this.id = 0;
@@ -56,6 +62,7 @@ public class AdRequestBean {
 		this.startDate = null;
 		this.endDate = null;
 		this.currentStatus = null;
+		this.empId = null;
 		this.owner = null;
 		this.location = null;
 		this.job_type = null;
@@ -64,7 +71,9 @@ public class AdRequestBean {
 		this.unadvertised = false;
 
 		this.history = null;
-		this.jobRequirements=null;
+		this.jobRequirements = null;
+
+		this.teacherAllocation = null;
 	}
 
 	public int getId() {
@@ -255,8 +264,26 @@ public class AdRequestBean {
 		currentStatus = newCurrentStatus;
 	}
 
+	public String getEmpId() {
+
+		return empId;
+	}
+
+	public void setEmpId(String empId) {
+
+		this.empId = empId;
+	}
+
 	public EmployeeBean getOwner() {
 
+		if (owner == null && StringUtils.isNotBlank(this.empId)) {
+			try {
+				setOwner(EmployeeManager.getEmployeeBean(this.empId));
+			}
+			catch (EmployeeException e) {
+				owner = null;
+			}
+		}
 		return owner;
 	}
 
@@ -352,11 +379,24 @@ public class AdRequestBean {
 
 		return history.get(status);
 	}
+
 	public String getJobRequirements() {
+
 		return jobRequirements;
 	}
 
 	public void setJobRequirements(String jobRequirements) {
+
 		this.jobRequirements = jobRequirements;
+	}
+
+	public TeacherAllocationBean getTeacherAllocation() {
+
+		return teacherAllocation;
+	}
+
+	public void setTeacherAllocation(TeacherAllocationBean teacherAllocation) {
+
+		this.teacherAllocation = teacherAllocation;
 	}
 }

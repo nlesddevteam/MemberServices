@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 import com.awsd.personnel.PersonnelDB;
 import com.awsd.personnel.PersonnelException;
 import com.esdnl.dao.DAOUtils;
@@ -16,6 +13,9 @@ import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.bean.AdRequestHistoryBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.constants.RequestStatus;
+
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class AdRequestHistoryManager {
 
@@ -76,7 +76,12 @@ public class AdRequestHistoryManager {
 			abean.setRequestId(rs.getInt("REQUEST_ID"));
 			abean.setRequestStatus(RequestStatus.get(rs.getInt("STATUS_ID")));
 			abean.setHistoryDate(new java.util.Date(rs.getDate("HISTORY_DATE").getTime()));
-			abean.setPersonnel(PersonnelDB.getPersonnel(rs.getInt("PERSONNEL_ID")));
+
+			abean.setPersonnel(PersonnelDB.createPersonnelBean(rs));
+			if (abean.getPersonnel() == null) {
+				abean.setPersonnel(PersonnelDB.getPersonnel(rs.getInt("PERSONNEL_ID")));
+			}
+
 			abean.setComments(rs.getString("COMMENT"));
 
 		}
