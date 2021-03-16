@@ -5,16 +5,17 @@ import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import com.awsd.personnel.Personnel;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.AdRequestBean;
+import com.esdnl.personnel.jobs.bean.AdRequestHistoryBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.RequestStatus;
 import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
-import com.esdnl.personnel.v2.database.sds.EmployeeManager;
 import com.esdnl.personnel.v2.database.sds.LocationManager;
 
 import oracle.jdbc.OracleCallableStatement;
@@ -34,10 +35,11 @@ public class AdRequestManager {
 
 			con = DAOUtils.getConnection();
 			//call new function that will returned declined ad requests over the last 60 days
-			if(status == RequestStatus.REJECTED) {
+			if (status == RequestStatus.REJECTED) {
 				stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.get_declined_ad_requests; end;");
 				stat.registerOutParameter(1, OracleTypes.CURSOR);
-			}else {
+			}
+			else {
 				stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.get_ad_requests_by_status2(?); end;");
 				stat.registerOutParameter(1, OracleTypes.CURSOR);
 				stat.setInt(2, status.getId());
@@ -197,7 +199,8 @@ public class AdRequestManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_ad_request.add_request(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall(
+					"begin ? := awsd_user.personnel_ad_request.add_request(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 
 			stat.setInt(2, p.getPersonnelID());
@@ -224,7 +227,8 @@ public class AdRequestManager {
 				Clob clobdesc = con.createClob();
 				clobdesc.setString(1, abean.getAdText());
 				((OracleCallableStatement) stat).setClob(15, clobdesc);
-			}else{
+			}
+			else {
 				stat.setNull(15, OracleTypes.CLOB);
 			}
 
@@ -281,38 +285,43 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
+
 	public static void updateAdRequestBeanDetails(AdRequestBean abean) throws JobOpportunityException {
 
 		Connection con = null;
 		CallableStatement stat = null;
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin awsd_user.personnel_ad_request.update_ad_request_clob(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall(
+					"begin awsd_user.personnel_ad_request.update_ad_request_clob(?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, abean.getLocation().getLocationDescription());
 			stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
 			if (abean.getEndDate() != null) {
 				stat.setDate(3, new java.sql.Date(abean.getEndDate().getTime()));
-			}else {
+			}
+			else {
 				stat.setDate(3, null);
 			}
-			
+
 			stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
 			if (abean.getEndDate() != null) {
 				stat.setDate(3, new java.sql.Date(abean.getEndDate().getTime()));
-			}else {
+			}
+			else {
 				stat.setDate(3, null);
 			}
-			
+
 			stat.setDouble(4, abean.getUnits());
 			stat.setInt(5, abean.getTrainingMethod().getValue());
 			if (abean.getOwner() != null) {
 				stat.setString(6, abean.getOwner().getEmpId());
-			}else {
+			}
+			else {
 				stat.setString(6, null);
 			}
 			stat.setString(7, abean.getVacancyReason());
 			stat.setString(8, abean.getTitle());
-			
+
 			stat.setInt(9, abean.getJobType().getValue());
 			//stat.setString(10, abean.getAdText());
 			//switched to clob
@@ -320,7 +329,8 @@ public class AdRequestManager {
 				Clob clobdesc = con.createClob();
 				clobdesc.setString(1, abean.getAdText());
 				((OracleCallableStatement) stat).setClob(10, clobdesc);
-			}else{
+			}
+			else {
 				stat.setNull(10, OracleTypes.CLOB);
 			}
 			stat.setBoolean(11, abean.isUnadvertised());
@@ -342,7 +352,7 @@ public class AdRequestManager {
 			if (abean.getMinors() != null && abean.getMinors().length > 0) {
 				AdRequestMinorManager.addAdRequestMinors(abean);
 			}
-			
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -365,6 +375,7 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
+
 	public static void approveAdRequestBean(AdRequestBean abean, Personnel p) throws JobOpportunityException {
 
 		Connection con = null;
@@ -389,7 +400,8 @@ public class AdRequestManager {
 				Clob clobdesc = con.createClob();
 				clobdesc.setString(1, abean.getAdText());
 				((OracleCallableStatement) stat).setClob(5, clobdesc);
-			}else{
+			}
+			else {
 				stat.setNull(5, OracleTypes.CLOB);
 			}
 			stat.setInt(6, p.getPersonnelID());
@@ -495,22 +507,22 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
-	public static void postAdRequestSSBean(int rid, Personnel p, String comp_num)
-	throws JobOpportunityException {
+
+	public static void postAdRequestSSBean(int rid, Personnel p, String comp_num) throws JobOpportunityException {
 
 		Connection con = null;
 		CallableStatement stat = null;
-		
+
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(false);
-		
+
 			stat = con.prepareCall("begin awsd_user.personnel_ad_request.post_ad_request_ss(?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(1, rid);
 			stat.setInt(2, p.getPersonnelID());
 			stat.setString(3, comp_num);
-		
+
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -519,7 +531,7 @@ public class AdRequestManager {
 				con.rollback();
 			}
 			catch (Exception ex) {}
-		
+
 			System.err.println("postAdRequestSSBean(int rid, Personnel p, String comp_num): " + e);
 			throw new JobOpportunityException("Can not add AdRequestBean to DB.", e);
 		}
@@ -533,7 +545,8 @@ public class AdRequestManager {
 			}
 			catch (Exception e) {}
 		}
-}
+	}
+
 	public static void updateAdRequestBean(AdRequestBean abean) throws JobOpportunityException {
 
 		Connection con = null;
@@ -615,6 +628,7 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
+
 	public static void cancelAdRequestBean(int adid, int pid) {
 
 		Connection con = null;
@@ -650,6 +664,7 @@ public class AdRequestManager {
 			catch (Exception e) {}
 		}
 	}
+
 	public static AdRequestBean createAdRequestBean(ResultSet rs) {
 
 		AdRequestBean abean = null;
@@ -664,25 +679,34 @@ public class AdRequestManager {
 				abean.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
 			abean.setUnits(rs.getDouble("UNIT_TIME"));
 			abean.setTrainingMethod(TrainingMethodConstant.get(rs.getInt("TRNLVL")));
-			if (rs.getString("EMP_ID") != null)
-				abean.setOwner(EmployeeManager.getEmployeeBean(rs.getString("EMP_ID")));
+			abean.setEmpId(rs.getString("EMP_ID"));
 			abean.setVacancyReason(rs.getString("VACANCY_REASON"));
 			abean.setCurrentStatus(RequestStatus.get(rs.getInt("CUR_STATUS")));
 			abean.setTitle(rs.getString("TITLE"));
 			abean.setJobType(JobTypeConstant.get(rs.getInt("JOB_TYPE")));
 			//abean.setAdText(rs.getString("AD_TEXT"));
 			// check to see if opp was created with new clob field or old varchar field
-			if(rs.getString("JOB_REQS") !=  null){
+			if (rs.getString("JOB_REQS") != null) {
 				//check the clob field
 				Clob clob = rs.getClob("JOB_REQS");
 				abean.setAdText(clob.getSubString(1, (int) clob.length()));
-			}else {
+			}
+			else {
 				abean.setAdText(rs.getString("AD_TEXT"));
 			}
 			abean.setCompetitionNumber(rs.getString("COMP_NUM"));
 
 			abean.setUnadvertised(rs.getBoolean("UNADVERTISED"));
-			
+
+			try {
+				if (rs.getInt("allocation_id") > 0) {
+					abean.setTeacherAllocation(TeacherAllocationManager.createTeacherAllocationBean(rs, false));
+				}
+			}
+			catch (SQLException e) {
+				// allocation information not available.
+			}
+
 			// get majors
 			// abean.setMajors(AdRequestMajorManager.getAdRequestMajors(abean));
 
@@ -691,12 +715,21 @@ public class AdRequestManager {
 
 			// get degrees
 			// abean.setDegrees(AdRequestDegreeManager.getAdRequestDegrees(abean));
+
 			// get history
-			// abean.setHistory(AdRequestHistoryManager.getAdRequestHistory(abean));
-		}
-		catch (com.esdnl.personnel.v2.model.bean.PersonnelException e) {
-			e.printStackTrace();
-			abean = null;
+			try {
+				if (rs.getInt("HISTORY_ID") > 0) {
+					// ONLY SUBMITTED IS RETURNED FOR CURRENT UI
+					HashMap<RequestStatus, AdRequestHistoryBean> history = new HashMap<>();
+					history.put(RequestStatus.SUBMITTED, AdRequestHistoryManager.createAdRequestHistoryBean(rs));
+
+					abean.setHistory(history);
+				}
+				// abean.setHistory(AdRequestHistoryManager.getAdRequestHistory(abean));
+			}
+			catch (SQLException e) {
+				abean.setHistory(new HashMap<RequestStatus, AdRequestHistoryBean>());
+			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
