@@ -13,17 +13,19 @@
 									org.apache.commons.lang.*" %>
 
 <!-- LOAD JAVA TAG LIBRARIES -->
-		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
-		<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
-		<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-		<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
+<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt'%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+<%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 		
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS" />	
 
 <%
   User usr = (User) session.getAttribute("usr");
 
-	String statsSchoolYear = "2020-21";
+	String statsSchoolYear = StringUtils.isNotBlank(request.getParameter("lst_schoolyear")) ? request.getParameter("lst_schoolyear") 
+			: com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(Calendar.getInstance().getTime());
 	RecommendationStatisticsBean stats = RecommendationStatisticsManager.getRecommendationStatisticsBean();
 	Map<SchoolZoneBean,TeacherAllocationVacancyStatisticsBean> vacancyStatsByRegion = TeacherAllocationVacancyStatisticsManager.getVacancyStatsByRegion(statsSchoolYear);
 %>
@@ -84,7 +86,12 @@
 							<b>IMPORTANT:</b> The <span class='btn-xs btn btn-info' style='font-weight: bold;'>blue</span> numbers in the tables below are CLICKABLE LINKS to a page listing the competitions used to calculate the statistic. 
 						</div>
 						
-						<div style="font-size:14px;font-weight:bold;color:#1F4279;"><%= statsSchoolYear %> Vacancy Processing Statistics</div>
+						<div style="font-size:14px;font-weight:bold;color:#1F4279;">
+							<form method="post" style='margin:0; padding: 0;'>
+								<jobv2:SchoolYearListbox id="lst_schoolyear" value='<%= statsSchoolYear %>' pastYears="3" futureYears="1" style='width:100px;text-transform: uppercase;' />
+								<label for='lst_schoolyear'>Vacancy Processing Statistics</label>
+							</form>
+						</div>
 							
 							<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">								
 								
@@ -237,7 +244,7 @@
 										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalRecOfferExpired %></td>
 										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalFilledByCompetition  %></td>
 										<td style='font-weight: bold;border-top: double #333333;background-color: #fafafa;'><%= totalFilledManually %></td>
-										<td class='text-success' style='font-weight: bold; border-top: double #333333;background-color: #fafafa;'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+										<td class='text-success' style='font-weight: bold; border-top: double #333333;background-color: #fafafa;'><%= totalFilledByCompetition + totalFilledManually %>&nbsp;(<%= totalVacancies > 0 ? (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies : 0  %>%)</td>
 										<td class='text-danger' style='font-weight: bold; border-top: double #333333;background-color: #fafafa;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 									</tr>
 									<tr>
@@ -250,7 +257,7 @@
 									</tr>
 									<tr>
 										<td colspan='17' style='color:Green;text-transform:Uppercase;text-align:right; font-weight: bold;border-top: solid 1px #a0a0a0;'>Total Filled:</td>
-										<td colspan='4' style='color:Green;text-align:center; font-weight: bold;border-top: solid 1px #a0a0a0;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies  %>%)</td>
+										<td colspan='4' style='color:Green;text-align:center; font-weight: bold;border-top: solid 1px #a0a0a0;'><%= totalFilledByCompetition + totalFilledManually  %>&nbsp;(<%= totalVacancies > 0 ? (totalFilledByCompetition + totalFilledManually) * 100 / totalVacancies : 0  %>%)</td>
 									</tr>
 									<tr>
 										<td colspan='17' style='color:Red;text-transform:Uppercase;text-align:right; font-weight: bold;'>Total Outstanding:</td>
@@ -315,16 +322,20 @@
 			</div>			
 		</div>	
   <script>
-    
+  	$(function(){
+  		$('#lst_schoolyear').on('change', function(){
+  			$(this).parent().submit();
+  		});
+  	});  
   
   
   
   totalVacancies = totalVacanciesAvalon+totalVacanciesCentral+totalVacanciesWestern+ totalVacanciesLabrador+ totalVacanciesProvincial;
-  totalVacanciesAvalonPCT = ((totalVacanciesAvalon/totalVacancies)*100).toFixed(2);
-  totalVacanciesCentralPCT = ((totalVacanciesCentral/totalVacancies)*100).toFixed(2);
-  totalVacanciesWesternPCT = ((totalVacanciesWestern/totalVacancies)*100).toFixed(2);
-  totalVacanciesLabradorPCT = ((totalVacanciesLabrador/totalVacancies)*100).toFixed(2);
-  totalVacanciesProvincialPCT = ((totalVacanciesProvincial/totalVacancies)*100).toFixed(2);  
+  totalVacanciesAvalonPCT = (totalVacancies > 0 ? (totalVacanciesAvalon/totalVacancies)*100 : 0).toFixed(2);
+  totalVacanciesCentralPCT = (totalVacancies > 0 ? (totalVacanciesCentral/totalVacancies)*100 : 0).toFixed(2);
+  totalVacanciesWesternPCT = (totalVacancies > 0 ? (totalVacanciesWestern/totalVacancies)*100 : 0).toFixed(2);
+  totalVacanciesLabradorPCT = (totalVacancies > 0 ? (totalVacanciesLabrador/totalVacancies)*100 : 0).toFixed(2);
+  totalVacanciesProvincialPCT = (totalVacancies > 0 ? (totalVacanciesProvincial/totalVacancies)*100 : 0).toFixed(2);  
   var ctx = document.getElementById('totalVacanciesChart').getContext('2d');
   var totalVacanciesChart = new Chart(ctx, {
 	  	type: 'pie',
@@ -361,11 +372,11 @@
 	  	});
   
   totalFilled = totalFilledAvalon+totalFilledCentral+totalFilledWestern+ totalFilledLabrador+ totalFilledProvincial;
-  totalFilledAvalonPCT = ((totalFilledAvalon/totalFilled)*100).toFixed(2);
-  totalFilledCentralPCT = ((totalFilledCentral/totalFilled)*100).toFixed(2);
-  totalFilledWesternPCT = ((totalFilledWestern/totalFilled)*100).toFixed(2);
-  totalFilledLabradorPCT = ((totalFilledLabrador/totalFilled)*100).toFixed(2);
-  totalFilledProvincialPCT = ((totalFilledProvincial/totalFilled)*100).toFixed(2);   
+  totalFilledAvalonPCT = (totalFilled > 0 ? (totalFilledAvalon/totalFilled)*100 : 0).toFixed(2);
+  totalFilledCentralPCT = (totalFilled > 0 ? (totalFilledCentral/totalFilled)*100 : 0).toFixed(2);
+  totalFilledWesternPCT = (totalFilled > 0 ? (totalFilledWestern/totalFilled)*100 : 0).toFixed(2);
+  totalFilledLabradorPCT = (totalFilled > 0 ? (totalFilledLabrador/totalFilled)*100 : 0).toFixed(2);
+  totalFilledProvincialPCT = (totalFilled > 0 ? (totalFilledProvincial/totalFilled)*100 : 0).toFixed(2);   
   var ctx = document.getElementById('totalFilledChart').getContext('2d');  
   var totalFilledChart = new Chart(ctx, {
   	type: 'pie',
@@ -402,11 +413,11 @@
   	});
   
   totalRemain = totalRemainAvalon+totalRemainCentral+totalRemainWestern+ totalRemainLabrador+ totalRemainProvincial;
-  totalRemainAvalonPCT = ((totalRemainAvalon/totalRemain)*100).toFixed(2);
-  totalRemainCentralPCT = ((totalRemainCentral/totalRemain)*100).toFixed(2);
-  totalRemainWesternPCT = ((totalRemainWestern/totalRemain)*100).toFixed(2);
-  totalRemainLabradorPCT = ((totalRemainLabrador/totalRemain)*100).toFixed(2);
-  totalRemainProvincialPCT = ((totalRemainProvincial/totalRemain)*100).toFixed(2);     
+  totalRemainAvalonPCT = (totalRemain > 0 ? (totalRemainAvalon/totalRemain)*100 : 0).toFixed(2);
+  totalRemainCentralPCT = (totalRemain > 0 ? (totalRemainCentral/totalRemain)*100 : 0).toFixed(2);
+  totalRemainWesternPCT = (totalRemain > 0 ? (totalRemainWestern/totalRemain)*100 : 0).toFixed(2);
+  totalRemainLabradorPCT = (totalRemain > 0 ? (totalRemainLabrador/totalRemain)*100 : 0).toFixed(2);
+  totalRemainProvincialPCT = (totalRemain > 0 ? (totalRemainProvincial/totalRemain)*100 : 0).toFixed(2);     
   var ctx = document.getElementById('totalRemainChart').getContext('2d');
   var totalRemainChart = new Chart(ctx, {
 	  	type: 'pie',
