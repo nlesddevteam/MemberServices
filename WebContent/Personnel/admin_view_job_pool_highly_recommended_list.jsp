@@ -51,10 +51,10 @@
   cal.clear(Calendar.MILLISECOND);
   
 
-  if(cal.get(Calendar.MONTH) < Calendar.MAY) {
+  if(cal.get(Calendar.MONTH) < Calendar.MARCH) {
   	cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
   }
-  cal.set(Calendar.MONTH, Calendar.MAY);
+  cal.set(Calendar.MONTH, Calendar.MARCH);
   cal.set(Calendar.DAY_OF_MONTH, 1);
   
   Date positionAcceptanceCutOffDate = cal.getTime();
