@@ -1180,12 +1180,12 @@ input {
 						} else {
 						out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>");					
 						}								
-			}%>																	
+			}%>						
+				<esd:SecurityAccessRequired roles="ADMINISTRATOR">											
 					<td  width='10%' style='text-align:right;'>
-					<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 					<a title='Admin Delete Reference (Will place this reference in Other References Area)' class='btn-xs btn btn-danger' href='#' onclick="deleteref(this,'<%=refs[i].getId()%>')">DEL</a>
-					</esd:SecurityAccessRequired>
-					</td>		  
+					</td>
+				</esd:SecurityAccessRequired>			  
 							    </tr>
 							    <%}%>
 							    </tbody>
