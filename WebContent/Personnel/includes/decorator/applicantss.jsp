@@ -64,6 +64,7 @@
 	   <script src="/MemberServices/Personnel/includes/js/personnel_ajax_v1.js"></script>
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="https://kit.fontawesome.com/053757fa2e.js" crossorigin="anonymous"></script>	
 		<decorator:head />
 
 
@@ -183,7 +184,7 @@
 
 
 
-				<div class="container-fluid">
+				<div class="container-fluid" style="font-size:12px;">
 <!-- MESSAGE AREA-->
 						<div class="msgok alert alert-success" align="center" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
 						<div class="msgerr alert alert-danger" align="center" style="display:none;"><b>ERROR:</b> ${errmsg}</div>	
@@ -200,7 +201,7 @@
 								<decorator:body />
 					</div>
 
-				</div>
+			
 
 
 
@@ -256,13 +257,13 @@ If you are experiencing difficulties with this system, check out the Help Guide 
 </div>
 <div align="center" class='no-print'><img src="includes/img/nlesd-colorlogo.png" border=0 style="width:100%;max-width:250px;"/></div>
 <!-- FOOTER AREA -->
-
+<br/><br/>
 	<div class="mainFooter no-print">
 
 
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		  MyHR Career Application System Portal 1.6 &copy; 2019-2021 Newfoundland and Labrador English School District &middot; All Rights Reserved
+		  MyHR Career Application System Portal 1.7 &copy; 2019-2021 Newfoundland and Labrador English School District &middot; All Rights Reserved
 		 </div>
 
 		</div>
@@ -271,7 +272,7 @@ If you are experiencing difficulties with this system, check out the Help Guide 
 	</div>
 
 
-</div>
+</div></div>
 
 <!-- ENABLE PRINT FORMATTING -->
 		<script src="/MemberServices/Personnel/includes/js/jQuery.print.js"></script>
