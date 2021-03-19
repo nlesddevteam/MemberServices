@@ -482,7 +482,9 @@ input {
 									        <th width='15%'>TELEPHONE</th>
 									        <th width='15%'>EMAIL</th>
 									        <th width='10%'>STATUS</th>
+									       <esd:SecurityAccessRequired roles="ADMINISTRATOR">
 									        <th width='10%'>OPTIONS</th>		
+									        </esd:SecurityAccessRequired>		
 									      </tr>
 									    </thead>
 							    
@@ -548,7 +550,13 @@ input {
 						out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>");						
 						}								
 			}%>																	
-							 <td  width='10%' style='text-align:right;'><a title='Admin Delete Reference (Will place a completed reference in Other References)' class='btn-xs btn btn-danger' href='#' onclick="deleteref(this,'<%=refs[i].getId()%>')">DEL</a></td>
+							 <td  width='10%' style='text-align:right;'>						
+					<esd:SecurityAccessRequired roles="ADMINISTRATOR">		
+				 <a title='Admin Delete Reference (Will place a completed reference in Other References)' class='btn-xs btn btn-danger' href='#' onclick="deleteref(this,'<%=refs[i].getId()%>')">DEL</a>
+					</esd:SecurityAccessRequired>
+					</td>		  
+							 
+							 </td>
 							    </tr>
 							    <%}%>
 							    </tbody>
