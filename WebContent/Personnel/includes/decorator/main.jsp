@@ -198,8 +198,8 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Admin<span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 
-
-					          	 	
+										<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_stats.jsp">Statistics</a></li>
+					          	 	<li class="divider"></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/viewSubjectGroups.html">Subject Groups</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/addSubjectGroup.html">Add Subject Group</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPTRSettings.html">Post Transfer Round Settings</a></li>
