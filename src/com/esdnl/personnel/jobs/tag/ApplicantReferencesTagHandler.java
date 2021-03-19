@@ -99,7 +99,7 @@ public int doStartTag() throws JspException
 				out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> EXPIRED</td>");	
 				} else {					
 													    
-					if(beans[i].getApplicantRefRequestBean().getRequestStatus() == null){
+					if(beans[i].getApplicantRefRequestBean() == null || beans[i].getApplicantRefRequestBean().getRequestStatus() == null){
 						out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>");						
 					} else if(beans[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")){	
 					out.println("<td width='10%' class='info' style='text-align:center;'><i class='far fa-clock'></i>  PENDING</td>");	
@@ -119,7 +119,7 @@ public int doStartTag() throws JspException
 			
 			if(!(beans[i].getApplicantRefRequestBean() == null)){
 			
-				if((beans[i].getApplicantRefRequestBean().getRequestStatus() == null)){        			
+				if((beans[i].getApplicantRefRequestBean() == null || beans[i].getApplicantRefRequestBean().getRequestStatus() == null)){        			
   
 ///// SEND REQUEST //////
 					
