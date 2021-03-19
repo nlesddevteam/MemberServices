@@ -348,23 +348,22 @@ employment positions and/or applications.
                                   <table class="table table-striped table-condensed" style="font-size:11px;">
       							    <thead>
       							    <tr>
-                                       <th width="20%">NAME</th>
-                                       <th width="25%">TITLE</th>                                       
-                                       <th width="25%">PRESENT ADDRESS</th>
+                                       <th width="25%">NAME (TITLE)</th>
+                                                                         
+                                       <th width="30%">ADDRESS</th>
                                        <th width="15%">TELEPHONE</th>
+                                       <th width="15%">EMAIL</th>
                                        <th width="20%">STATUS</th>                                       
                                       </tr>
                                       </thead>
                                       <tbody>
-                                  		<%for(int i=0; i < refs.length; i ++) { %>
-                                  
+                                  		<%for(int i=0; i < refs.length; i ++) { %>                                 
                                   
                                       <tr>
-                                      <td><%=refs[i].getName()%></td>
-                                      <td><%=refs[i].getTitle()%></td>
-                                      <td><%=refs[i].getAddress()%></td>
-                                      <td><%=refs[i].getTelephone()%></td> 
-                                      <td>
+                                      <td width="25%"><%=refs[i].getName()%> (<%=refs[i].getTitle()%>)</td>                                     
+                                      <td width="30%"><%=refs[i].getAddress()%></td>
+                                      <td width="15%"><%=refs[i].getTelephone()%></td>  
+                                         <%out.println("<td width='20%'>" + ((refs[i].getApplicantRefRequestBean()!= null)?refs[i].getApplicantRefRequestBean().getEmailAddress():"N/A" ) +"</td>");%>	                                  
                                     
                                     <!-- Get current date and time to see if expired. -->
 								<%
@@ -386,33 +385,29 @@ employment positions and/or applications.
 			 	refCurrentDate = 0;									
 			 	refDiff = 0;				 
 			}									
-								%>					
-                                    
-                                    
-                                      
-                                      <%if(refDiff >refExpiredTimeY) {  %>
-										<span style='color: Red;'>EXPIRED</span>								
-								<%	} else { 		
-                                      
-                                    if(refs[i].getApplicantRefRequestBean() == null){ %>
-                                      	<span style='color:DimGrey;'>NOT SENT</span>
-                                      <%} else{ %>
-                                      	<%if (refs[i].getApplicantRefRequestBean().getRequestStatus() ==  null) { %>
-                                      		<span style='color:DimGrey;'>NOT SENT</span>
-                                      	<%}else{ %>
-                                      		<%if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")){ %>
-                                      			<span style='color:Navy;'>PENDING</span>
-                                      		<%} else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REFERENCE COMPLETED")) {%>
-                                      			<span style='color:Green;'>COMPLETED</span>
-                                      		<%} else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST DECLINED")) {%>
-												<span style='color:Red;'>DECLINED</span>
-									   		<% } else {%>
-									   			<span style='color:DimGrey;'>NOT SENT</span>
-									   		<%} %>
-									   	<%} %>
-                                      <% }} %>
-                                      
-										</td>                                     
+								
+			
+			if(refDiff >refExpiredTimeY) {  %>
+													<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> EXPIRED</td>								
+								<%	} else { 									
+										if (refs[i].getApplicantRefRequestBean() == null) {	%> 
+													<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>
+								<%	} else {
+									 	if (refs[i].getApplicantRefRequestBean().getRequestStatus() == null) {%>
+													<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>
+								 <%} else {									 
+									 	if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")) { %>
+													<td width='10%' class='info' style='text-align:center;'><i class='far fa-clock'></i> SENT/PENDING</td>
+								<%	} else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REFERENCE COMPLETED")) {%>
+													<td width='10%' class='success' style='text-align:center;'><i class='fas fa-check'></i> COMPLETED</td>
+								<%   } else if (refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST DECLINED")) { %>
+													<td width='10%' class=danger' style='text-align:center;'><i class='fas fa-times'></i> DECLINED</td>
+								 <%	} else { %> 			
+								 					<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>> 
+								 <% } %> 
+								 <% } %> 
+								 <% }} %>
+								                                  
                                       </tr>
                                   	<% } %>
                                       </tbody>

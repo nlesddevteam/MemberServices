@@ -1,6 +1,9 @@
 <%@ page language="java"
          import="java.util.*,
                   java.text.*,
+                   java.util.concurrent.TimeUnit,
+                  java.text.SimpleDateFormat, 
+				  java.util.Date,  
                   com.awsd.security.*,
                   com.awsd.school.*,
                   com.awsd.school.bean.*,
@@ -456,7 +459,116 @@ input {
 </div>		                                		
 		                                	
 
-<!-- 7. REFERENCE CHECKS --------------------------------------------------------------->		
+
+
+ <!-- 8. REFERENCES --------------------------------------------------------------->
+	
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section8">   
+	               	<div class="panel-heading"><b>References</b></div>
+      			 	<div class="panel-body"> 	
+	
+					<div class="table-responsive"> 
+      			 	       
+      			 	       
+							  <% if((refs != null) && (refs.length > 0))
+                              		{ %>
+                                <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
+									    <thead>
+									    
+									      <tr style="border-top:1px solid black;">
+									        <th width='25%'>NAME (TITLE)</th>									       
+									        <th width='25%'>ADDRESS</th>								       								        
+									        <th width='15%'>TELEPHONE</th>
+									        <th width='15%'>EMAIL</th>
+									        <th width='10%'>STATUS</th>
+									        <th width='10%'>OPTIONS</th>		
+									      </tr>
+									    </thead>
+							    
+							    <tbody>
+                              
+                              
+                              <% for(int i=0; i < refs.length; i ++)
+                                  	{
+                               %>
+							    <tr>
+							    <td width='25%'><%=refs[i].getName()%> (<%=refs[i].getTitle()%>)</td>							    					    
+							    <td width='25%'><%=refs[i].getAddress()%></td>
+							    <td width='15%'><%=refs[i].getTelephone()%></td>
+							    <%out.println("<td width='15%'>" + ((refs[i].getApplicantRefRequestBean()!= null)?refs[i].getApplicantRefRequestBean().getEmailAddress():"N/A" ) +"</td>");%>
+							    
+							<%    
+							    Date date = new Date();		//Get today			
+									int refResendTimeLeft=0;	
+									int refDiff,refDiffResend,refDateRequested,refCurrentDate,refTimeLeft;; //declare ints 			
+									int refExpiredTimeY = 8760; //# hours in a year exact. References expire after a year.
+									
+									int refExpiredTimeM = 720; //# hours in a month exact. References expire after a year, can del after a month
+									
+									int refExpiredTimeToResend = 72; //#cant resend a ref request until 72 hours after initial send.		
+									
+									int refExpiredTimeToDel = 720; //#cant delete a ref request until 720 hours (30 days) after completion.
+									
+									if  (refs[i].getApplicantRefRequestBean()!=null && refs[i].getApplicantRefRequestBean().getDateStatus()!=null) {								
+									 
+										refDateRequested = (int) TimeUnit.MILLISECONDS.toHours(refs[i].getApplicantRefRequestBean().getDateStatus().getTime());
+									 	refCurrentDate = (int) TimeUnit.MILLISECONDS.toHours(date.getTime());			 
+									 	refDiff = (refCurrentDate - refDateRequested)-12;	//do the math hours
+									 	refDiffResend = refDateRequested + refExpiredTimeToResend+12; //Add the date time to current date			 
+									 	refResendTimeLeft =refDiffResend - refDateRequested; //get hours			 	
+									 	refTimeLeft =  refExpiredTimeToResend-refDiff;
+									 	//Dont use LONGS use the TimeUnit!!!!
+									 	if(refTimeLeft < 0) {
+									 		refTimeLeft = 0;
+									 	}
+									} else {
+										refDateRequested = 0; //if null 0 all variables
+									 	refCurrentDate = 0;									
+									 	refDiff = 0;		
+									 	refDiffResend = 0;
+									 	refResendTimeLeft = 0;
+									 	refTimeLeft =  0;
+									 	
+									}		
+			
+			
+			if(refDiff >refExpiredTimeY) { 
+				out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> EXPIRED</td>");					
+				} else {    
+						if(refs[i].getApplicantRefRequestBean().getRequestStatus() == null){
+						out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>");						
+						} else if(refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")){	
+						out.println("<td width='10%' class='info' style='text-align:center;'><i class='far fa-clock'></i> SENT/PENDING</td>");						
+						} else if(refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REFERENCE COMPLETED")){
+						out.println("<td width='10%' class='success' style='text-align:center;'><i class='fas fa-check'></i> COMPLETED</td>");						
+						} else if(refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST DECLINED")){
+						out.println("<td width='10%' class=danger' style='text-align:center;'><i class='fas fa-times'></i> DECLINED</td>");						
+						} else {
+						out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>");						
+						}								
+			}%>																	
+							 <td  width='10%' style='text-align:right;'><a title='Admin Delete Reference (Will place a completed reference in Other References)' class='btn-xs btn btn-danger' href='#' onclick="deleteref(this,'<%=refs[i].getId()%>')">DEL</a></td>
+							    </tr>
+							    <%}%>
+							    </tbody>
+							    </table>
+							    <%} else { %>							   
+                                    <span style="color:Grey;">No References currently on file.</span>
+                                    <script>$("#section8").removeClass("panel-success").addClass("panel-danger");</script>
+                                 <% } %> 
+					</div>
+	
+					
+	
+	
+	
+	
+					</div>
+					</div>
+</div>                                 	
+ 
+ <!-- 7. REFERENCE CHECKS --------------------------------------------------------------->		
                                 	
 <%if((!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && session.getAttribute("JOB") != null) || usr.checkPermission("PERSONNEL-ADMIN-VIEW")) {%>
 <div class="panel-group" style="padding-top:5px;">                               
@@ -505,59 +617,7 @@ input {
 					</div>
 </div>
  <%}%>
-
- <!-- 8. REFERENCES --------------------------------------------------------------->
-	
-<div class="panel-group" style="padding-top:5px;">                               
-	               	<div class="panel panel-success" id="section8">   
-	               	<div class="panel-heading"><b>References</b></div>
-      			 	<div class="panel-body"> 	
-	
-					<div class="table-responsive"> 
-      			 	       
-      			 	       
-							  <% if((refs != null) && (refs.length > 0))
-                              		{ %>
-                              <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
-									    <thead>
-									    
-									      <tr style="border-top:1px solid black;">
-									        <th width='20%'>FULL NAME</th>
-									        <th width='20%'>TITLE</th>	
-									        <th width='45%'>PRESENT ADDRESS</th>								       								        
-									        <th width='15%'>TELEPHONE</th>		
-									      </tr>
-									    </thead>
-							    
-							    <tbody>
-                              
-                              
-                              <% for(int i=0; i < refs.length; i ++)
-                                  	{
-                               %>
-							    <tr>
-							    <td><%=refs[i].getName()%></td>
-							    <td><%=refs[i].getTitle()%></td>							    
-							    <td><%=refs[i].getAddress()%></td>
-							    <td><%=refs[i].getTelephone()%></td>
-							    </tr>
-							    <%}%>
-							    </tbody>
-							    </table>
-							    <%} else { %>							   
-                                    <span style="color:Grey;">No References currently on file.</span>
-                                    <script>$("#section8").removeClass("panel-success").addClass("panel-danger");</script>
-                                 <% } %> 
-					</div>
-	
-					
-	
-	
-	
-	
-					</div>
-					</div>
-</div>                                 	
+ 
                                   	
 <!-- 9. DOCUMENTATION --------------------------------------------------------------->
  <% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW-DOCS") || usr.checkPermission("PERSONNEL-OTHER-MANAGER-VIEW")) { %>

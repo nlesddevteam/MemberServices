@@ -57,10 +57,7 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 		<link rel="shortcut icon" href="/MemberServices/Personnel/includes/img/favicon.ico">
 		<link href="/MemberServices/Personnel/includes/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">
 		<link href="/MemberServices/Personnel/includes/css/hover_drop_2.css" rel="stylesheet" media="all" type="text/css" />
-
-
-
-
+		
 	<!-- JAVASCRIPT FILES -->
 
 		<script src="/MemberServices/Personnel/includes/ckeditor/ckeditor.js"></script>
@@ -87,7 +84,7 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>	
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>	
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>	
-		
+		<script src="https://kit.fontawesome.com/053757fa2e.js" crossorigin="anonymous"></script>	
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 		<decorator:head />
 
@@ -124,7 +121,15 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 	<!-- TOP PANEL -->
 		<div class="mainContainer">
 
-		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+			<div class="container-fluid no-print" id="noPrintThis" style="max-height:200px;min-height:100px;padding-top:10px;padding-bottom:10px;height:auto;">
+				<div class="row">
+				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
+				   	<div align="center" class="no-print"><img src="/employment/includes/img/myhrportallogo-small.png" style="max-height:100px;" border=0></div>
+				  </div>
+				</div>
+			</div>
+			
+				<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 			<div class="container-fluid no-print" id="noPrintThis" style="padding-top:10px;">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -149,15 +154,10 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 					</div>
 				</div>
 			</div>
-		</esd:SecurityAccessRequired>
-
-			<div class="container-fluid no-print" id="noPrintThis" style="max-height:200px;min-height:100px;padding-top:10px;padding-bottom:10px;height:auto;">
-				<div class="row">
-				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
-				   	<div align="center" class="no-print"><img src="/employment/includes/img/myhrportallogo-small.png" style="max-height:100px;" border=0></div>
-				  </div>
-				</div>
-			</div>
+		</esd:SecurityAccessRequired>	
+			
+			
+			
 <!-- START NAVIGATION BAR navbar-fixed-top-->
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="transform:translateZ(0);max-width:1250px;">
@@ -579,7 +579,11 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 
 
 
-				<div class="container-fluid">
+				<div class="container-fluid" style="font-size:12px;">
+
+<!-- MESSAGE AREA-->
+						<div class="msgok alert alert-success" align="center" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
+						<div class="msgerr alert alert-danger" align="center" style="display:none;"><b>ERROR:</b> ${errmsg}</div>	
 
 					<div class="alert alert-success" id="divsuccess" style="display:none;">
     						<span id="spansuccess"></span>
@@ -594,7 +598,7 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 								<decorator:body />
 					</div>
 
-				</div>
+			
 
 
 
@@ -651,13 +655,13 @@ If you are experiencing difficulties with this system, check out the Help Guide 
 </div>
 <div align="center" class='no-print'><img src="includes/img/nlesd-colorlogo.png" border=0 style="width:100%;max-width:250px;"/></div>
 <!-- FOOTER AREA -->
-
+<br/><br/>
 	<div class="mainFooter no-print">
 
 
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		 MyHR Career Application System Portal 1.6 &copy; 2019-2021 Newfoundland and Labrador English School District &middot; All Rights Reserved
+		 MyHR Career Application System Portal 1.7 &copy; 2019-2021 Newfoundland and Labrador English School District &middot; All Rights Reserved
 		 </div>
 
 		</div>
@@ -667,7 +671,7 @@ If you are experiencing difficulties with this system, check out the Help Guide 
 
 
 </div>
-
+	</div>
 <!-- ENABLE PRINT FORMATTING -->
 		<script src="/MemberServices/Personnel/includes/js/jQuery.print.js"></script>
 		<script src="/MemberServices/Personnel/includes/js/msapp.js?ver=${todayVer}"></script>

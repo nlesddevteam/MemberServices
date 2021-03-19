@@ -1421,3 +1421,31 @@ function refreshdatatable(){
 	
 	$("#reportdata").css('table-layout', "fixed");
 }
+
+//delete reference ajax call
+function deleteref(but,refid){
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "adminDeleteReference.html",
+ 				data: {
+ 					delid: refid
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('STATUS').text() ==  "SUCCESS"){
+ 						//$('#reportdata tr:gt(0)').remove()
+ 						$(".msgok").html("SUCCESS: Reference removed.").css("display","block").delay(4000).fadeOut();
+ 						$(but).closest('tr').remove(); 
+ 	     					
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}

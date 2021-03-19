@@ -3451,7 +3451,11 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ApplicantViewCompetitionInterviewSummaryRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/applicantViewCompetitionInterviewSummary.html</URL-Pattern>
     </Request-Handler>
-    
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AdminDeleteReferenceAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/adminDeleteReference.html</URL-Pattern>
+     </Request-Handler>
+     
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.v2.site.availability.handler.EmployeeNotAvailableRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/empNotAvailable.html</URL-Pattern>
