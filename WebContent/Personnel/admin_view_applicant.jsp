@@ -1167,7 +1167,7 @@ input {
 			if(refDiff >refExpiredTimeY) { 
 				out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> EXPIRED</td>");					
 				} else {					
-						if(refs[i].getApplicantRefRequestBean() == null || refs[i].getApplicantRefRequestBean().getRequestStatus() == null){
+						if(refs[i].getApplicantRefRequestBean().getRequestStatus() == null){
 						out.println("<td width='10%' class='danger' style='text-align:center;'><i class='fas fa-times'></i> NOT SENT</td>");						
 						} else if(refs[i].getApplicantRefRequestBean().getRequestStatus().toUpperCase().equals("REQUEST SENT")){	
 						out.println("<td width='10%' class='info' style='text-align:center;'><i class='far fa-clock'></i> SENT/PENDING</td>");							
