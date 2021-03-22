@@ -155,14 +155,16 @@
                           <br/><br/>                         
                           
                           
-                            <table class="searchResults table table-condensed table-striped table-bordered" style="font-size:11px;background-color:white;" width="100%">						
+                            <table class="searchResults table table-condensed table-striped" style="font-size:10px;background-color:white;" width="100%">						
 								<thead>
 								<tr style="text-transform:uppercase;">  
 										<th width="10%">CREATED</th>										
 										<th width="10%">TYPE</th>
-										<th width="45%">TITLE/MONTH</th>
+										<th width="25%">TITLE/MONTH</th>
 										<th width="10%">AMOUNT</th>
+										<th width="10%">SUBMITTED</th>
 										<th width="10%">SUPERVISOR</th>
+										<th width="10%">APPROVED</th>
 										<th width="10%">STATUS</th>
 										<th width="5%">VIEW</th>
 									</tr>
@@ -236,11 +238,16 @@
 				              			<c:otherwise><span style="color:silver;">N/A</span></c:otherwise>
 				              			</c:choose>
 				              			CLAIM</b><br/>
-				              			for school year <%=claim.getFiscalYear() %>
+				              			for school year <%=claim.getFiscalYear() %>		              			
+				              			
                     		  </td>
                     			<%} %>
+                    			
+                    			
                     		<td style="vertical-align:middle;"><%=dollar_f.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
-                    		 <td style="vertical-align:middle;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullName():"N/A" %></td>
+                    		<td style="vertical-align:middle;"><%=(claim.getSubmitDate()!=null)?claim.getSubmitDate():"<span style='color:Silver;'>N/A</span>" %></td>
+                    		 <td style="vertical-align:middle;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullName():"<span style='color:Silver;'>N/A</span>" %></td>
+                    		 <td style="vertical-align:middle;"><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"<span style='color:Silver;'>N/A</span>" %></td>
                     			<td style="vertical-align:middle;">
                     			<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />                                
 									                                <c:choose>

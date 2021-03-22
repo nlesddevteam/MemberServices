@@ -111,7 +111,7 @@ input { border:1px solid silver;}
 			                messageTop: '<%=usr.getPersonnel().getFirstName().toLowerCase()%> <%=usr.getPersonnel().getLastName().toLowerCase().replace("'","") %>&apos;s Travel/PD Claims ',
 			                messageBottom: null,
 			                exportOptions: {
-			                    columns: [ 0, 1, 2, 3,4,5 ]
+			                    columns: [ 0, 1, 2, 3,4,5,6,7 ]
 			                }
 			            },
 			        	{
@@ -121,7 +121,7 @@ input { border:1px solid silver;}
 			                messageTop: '<%=usr.getPersonnel().getFirstName().toLowerCase()%> <%=usr.getPersonnel().getLastName().toLowerCase().replace("'","")  %>&apos;s Travel/PD Claims',
 			                messageBottom: null,
 			                exportOptions: {
-			                    columns: [ 0, 1, 2, 3,4,5 ]
+			                    columns: [ 0, 1, 2, 3,4,5,6,7 ]
 			                }
 			            }
 			        ],
@@ -137,15 +137,15 @@ input { border:1px solid silver;}
 			            };
 			 
 			            // Total over all pages
-			            totalAmount = api.column(4).data().reduce( function (a, b) { return (intVal(a) + intVal(b)).toFixed(2); }, 0 );
+			            totalAmount = api.column(6).data().reduce( function (a, b) { return (intVal(a) + intVal(b)).toFixed(2); }, 0 );
 			           
 			            
 			            // Total over this page NOT NEEDED YET ONE PAGE FOR ITEMS
-			            pageTotalAmount = api.column( 4, { page: 'current'} ).data().reduce( function (a, b) {return (intVal(a) + intVal(b)).toFixed(2) ;}, 0 );
+			            pageTotalAmount = api.column( 6, { page: 'current'} ).data().reduce( function (a, b) {return (intVal(a) + intVal(b)).toFixed(2) ;}, 0 );
 			 			
 			            
 			            // Update footer with values
-			            $( api.column( 4 ).footer() ).html('$'+pageTotalAmount+' ($'+totalAmount +')');			            
+			            $( api.column( 6 ).footer() ).html('$'+pageTotalAmount+' ($'+totalAmount +')');			            
 				  
 				  
 				  }
@@ -178,13 +178,15 @@ input { border:1px solid silver;}
    		int counter=0;
    		%>   	
    		<br/><br/>
-   		<table id="claimsTableList" class="table table-condensed table-striped" style="font-size:11px;" width="100%">
+   		<table id="claimsTableList" class="table table-condensed table-striped" style="font-size:10px;" width="100%">
   		<thead>
   			<tr style="text-transform:uppercase;font-weight:bold;">  			
-  				<th width="10%" >Claim Date</th>
+  				<th width="10%" >Created</th>
   				<th width="10%" >Type</th>
-  				<th width="30%">Title</th>
+  				<th width="20%">Title</th>
+  				<th width="10%" >Submitted</th>
   				<th width="10%" >Supervisor</th>
+  				<th width="10%" >Approved</th>
   				<th width="10%" >Amount</th>
   				<th width="15%">Status</th>
   				<th width="5%" >Options</th>
@@ -223,12 +225,14 @@ input { border:1px solid silver;}
                 	
                 	<tr style="vertical-align:middle;">                    
                    			 <%    String monthClaim= String.format("%02d", claim.getFiscalMonth()+1);  %>                    	
-                    		<td><%=Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())+"-"+ monthClaim +"-01" %> </td>
-                    		<td>MONTHLY</td>
-                    		<td>Standard Travel Claim</td>
-                    		<td><span style="text-transform:Capitalize;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullNameReverse():"N/A" %></span></td>
-                    		<td><%=curr_df.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
-                    		<td>
+                		 	<td width="10%" style="vertical-align:middle;"><%=(claim.getCreatedDate()!=null)?claim.getCreatedDate():"<span style='color:Silver;'>N/A</span>" %></td>
+                    		<td width="10%" style="vertical-align:middle;background-color:#1c90ec;text-align:center;font-size:10px;color:white;font-weight:bold;">&nbsp;MONTHLY&nbsp;</td>
+                    		<td width="20%" style="vertical-align:middle;">Standard Travel Claim</td>                    		
+                    		<td width="10%" style="vertical-align:middle;"><%=(claim.getSubmitDate()!=null)?claim.getSubmitDate():"<span style='color:Silver;'>N/A</span>" %></td>
+                    		<td width="10%" style="vertical-align:middle;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullName():"<span style='color:Silver;'>N/A</span>" %></td>
+                    	    <td width="10%" style="vertical-align:middle;"><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"<span style='color:Silver;'>N/A</span>" %></td>                    		
+                    		<td width="10%" style="vertical-align:middle;"><%=curr_df.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
+                    		<td width="15%" style="vertical-align:middle;">
                     		<c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />        
                     		<c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">							                                	
@@ -310,7 +314,7 @@ input { border:1px solid silver;}
                     			
                     			
                     			</td>
-                    			<td><div align="center"><a href="#" class="btm btn-xs btn-primary" onclick="loadingData();loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');">VIEW</a></div></td>
+                    			<td width="5%" style="vertical-align:middle;"><div align="center"><a href="#" class="btm btn-xs btn-primary" onclick="loadingData();loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');">VIEW</a></div></td>
                     			
                     		</tr>	
               	<%	}  %>
@@ -338,12 +342,14 @@ input { border:1px solid silver;}
                     %>
                     
                     <tr valign="top">                  
-                    			<td><%=sdf_date.format(((PDTravelClaim)claim).getPD().getStartDate())%></td>                    			
-                    			<td>PD CLAIM</td>               			
-                    		   <td><b><%= ((PDTravelClaim)claim).getPD().getTitle().replace("\"","").replace("'","")  %></b><br/><%=((PDTravelClaim)claim).getPD().getDescription().replace("\"","").replace("'","") %> </td>
-                    			<td><span style="text-transform:Capitalize;"><%=(((PDTravelClaim)claim).getSupervisor()!=null)?((PDTravelClaim)claim).getSupervisor().getFullNameReverse():"N/A" %></span></td>
-                    			<td><%=curr_df.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
-                    			<td><c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />         			
+                    			<td width="10%" style="vertical-align:middle;"><%=sdf_date.format(((PDTravelClaim)claim).getPD().getStartDate())%></td>                    			
+                    			<td width="10%" style="vertical-align:middle;background-color:#ff8400;text-align:center;font-size:10px;color:white;font-weight:bold;">&nbsp;PD CLAIM&nbsp;</td>                			
+                    		    <td width="20%" style="vertical-align:middle;"><b><%= ((PDTravelClaim)claim).getPD().getTitle().replace("\"","").replace("'","")  %></b><br/><%=((PDTravelClaim)claim).getPD().getDescription().replace("\"","").replace("'","") %> </td>
+                    			<td width="10%" style="vertical-align:middle;"><%=(claim.getSubmitDate()!=null)?claim.getSubmitDate():"<span style='color:Silver;'>N/A</span>" %></td>
+                    		 	<td width="10%" style="vertical-align:middle;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullName():"<span style='color:Silver;'>N/A</span>" %></td>
+                    			<td width="10%" style="vertical-align:middle;"><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"<span style='color:Silver;'>N/A</span>" %></td>
+                    			<td width="10%" style="vertical-align:middle;"><%=curr_df.format(claim.getSummaryTotals().getSummaryTotal()) %></td>
+                    			<td width="15%" style="vertical-align:middle;"><c:set var="claimStatus" value="<%=claim.getCurrentStatus().getID()%>" />         			
                     			                   	 <c:choose>
 									                                	<c:when test="${claimStatus eq 1 }">
 									                                	<span style="color:DarkOrange;"><i class="far fa-file-alt"></i> PRE-SUBMISSION</span>
@@ -436,7 +442,7 @@ input { border:1px solid silver;}
                     			
                     			
                     			</td>
-                    			<td><div align="center"><a href="#" class="btm btn-xs btn-primary" onclick="loadingData();loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');">VIEW</a></div></td>
+                    			<td  width="5%" style="vertical-align:middle;"><div align="center"><a href="#" class="btm btn-xs btn-primary" onclick="loadingData();loadMainDivPage('viewTravelClaimDetails.html?id=<%=claim.getClaimID()%>');">VIEW</a></div></td>
                     			
                     		</tr>	
                     
@@ -447,6 +453,8 @@ input { border:1px solid silver;}
    							<tfoot>
 			            <tr style="font-weight:bold;font-size:10px;">
 			            <td></td>
+			               <td></td>
+			               <td></td>
 			               <td></td>
 			               <td></td>
 			                <td style="text-align:right">TOTAL:</th>
