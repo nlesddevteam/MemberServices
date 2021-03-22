@@ -122,7 +122,14 @@ input { border:1px solid silver;}
 				<thead>					
 					<tr class="listHeader" style="text-transform:uppercase;">  
 						<th width="10%">Submitted</th>
-						<th width="10%">Approved</th>
+						<c:choose>
+						<c:when test="${param.sid ==5}">
+						<th width="10%">Rejected</th>
+						</c:when>
+						  <c:otherwise>
+						  <th width="10%">Approved</th>
+						  </c:otherwise>
+						  </c:choose>
 						<th width="15%">Employee</th>					
 						<th width="10%">Type</th>
 						<th width="25%">Title</th>
@@ -138,7 +145,7 @@ input { border:1px solid silver;}
 					%>							
 							<tr style="vertical-align:middle;">
 							<td><%=sdf_date.format(((PDTravelClaim)claim).getPD().getStartDate())%></td>
-							<td><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"N/A" %></td>	
+							<td><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"<span style='color:Silver;'>N/A</span>" %></td>
 							<td><%= claim.getPersonnel().getLastName() + ", " + claim.getPersonnel().getFirstName() %></td>
 							<td style="background-color:#ff8400;text-align:center;font-size:11px;color:white;font-weight:bold;">&nbsp;PD CLAIM&nbsp;</td>  
 							<td><%= ((PDTravelClaim)claim).getPD().getTitle()  %> - <%=((PDTravelClaim)claim).getPD().getDescription() %></td>
@@ -175,7 +182,7 @@ input { border:1px solid silver;}
 						<tr style="vertical-align:middle;">
 						 	<%    String monthClaim= String.format("%02d", claim.getFiscalMonth()+1);  %>                    	
                     		<td><%=Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear())+"-"+ monthClaim +"-01" %>	</td>
-                    		<td><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"N/A" %></td>					
+                    		<td><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"<span style='color:Silver;'>N/A</span>" %></td>					
 							<td><%= claim.getPersonnel().getLastName() + ", " + claim.getPersonnel().getFirstName() %></td>
 							<td style="background-color:#1c90ec;text-align:center;font-size:11px;color:white;font-weight:bold;">&nbsp;MONTHLY&nbsp;</td>
 							<td>Standard Claim for <%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %></td>
