@@ -83,7 +83,15 @@
          	<%} %>			
                   	
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
-					
+				<hr>	
+				<div class="pageHeader">Latest Hiring Statistics</div>	
+				
+				Please find below the latest Vacancy Processing and Position Offer Statistics.
+				<div style='float:right;'>
+								<a id='lnk-showhide-graphs' href='javascript:void(0);' class="btn btn-xs btn-danger"></a>
+							</div>
+				<br/>&nbsp;<br/>
+				
 						<div class="alert alert-warning">
 							<b>IMPORTANT:</b> The <span class='btn-xs btn btn-info' style='font-weight: bold;'>blue</span> numbers in the tables below are CLICKABLE LINKS to a page listing the competitions used to calculate the statistic. 
 						</div>
@@ -95,9 +103,7 @@
 									<label for='lst_schoolyear'>Vacancy Processing Statistics</label>
 								</form>
 							</div>
-							<div style='float:right;'>
-								<a id='lnk-showhide-graphs' href='javascript:void(0);' class="btn btn-xs btn-info"></a>
-							</div>
+							
 							<div style="clear:both;"></div>	
 						</div>
 							
