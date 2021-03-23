@@ -82,11 +82,17 @@
 							<b>IMPORTANT:</b> The <span class='btn-xs btn btn-info' style='font-weight: bold;'>blue</span> numbers in the tables below are CLICKABLE LINKS to a page listing the competitions used to calculate the statistic. 
 						</div>
 						
-						<div style="font-size:14px;font-weight:bold;color:#1F4279;">
-							<form method="post" style='margin:0; padding: 0;'>
-								<jobv2:SchoolYearListbox id="lst_schoolyear" value='<%= statsSchoolYear %>' pastYears="3" futureYears="1" style='width:100px;text-transform: uppercase;' />
-								<label for='lst_schoolyear'>Vacancy Processing Statistics</label>
-							</form>
+						<div>
+							<div style="font-size:14px;font-weight:bold;color:#1F4279; float:left;">
+								<form method="post" style='margin:0; padding: 0;'>
+									<jobv2:SchoolYearListbox id="lst_schoolyear" value='<%= statsSchoolYear %>' pastYears="3" futureYears="1" style='width:100px;text-transform: uppercase;' />
+									<label for='lst_schoolyear'>Vacancy Processing Statistics</label>
+								</form>
+							</div>
+							<div style='float:right;'>
+								<a id='lnk-showhide-graphs' href='javascript:void(0);'></a>
+							</div>
+							<div style="clear:both;"></div>	
 						</div>
 							
 							<table class="table table-sm table-bordered" style="font-size:11px;width:100%;background-color:White;">								
@@ -281,6 +287,7 @@
 								</table>
 							<div style="clear:both;"></div>	
 							
+						<div id='div-graphs'>
 							<hr>
 							<div style="font-size:14px;font-weight:bold;color:#1F4279;">Vacancies by Region</div>
 								
@@ -290,342 +297,395 @@
 							<canvas id="labradorDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>
 							<canvas id="provincialDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>
 							
-						<div style="clear:both;"></div>	
+							<div style="clear:both;"></div>	
 							<br/>&nbsp;<br/>	
 							<canvas id="totalVacanciesChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
 							<canvas id="totalFilledChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>							
 							<canvas id="totalRemainChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
 				
-						<div style="clear:both;"></div>	
+							<div style="clear:both;"></div>	
+						</div>
+							
 						<br/>&nbsp;<br/>	
 						
 					</esd:SecurityAccessRequired>
 					
-				
-										
-					
-					 <c:if test="${ msg ne null }">  
-                   		<div class="alert alert-warning"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
-                  	</c:if>	
-                  	<c:if test="${ msgOK ne null }">  
-                   		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msgOK } </div>     
-                  	</c:if>	
-                  	<c:if test="${ msgERR ne null }">  
-                   		<div class="alert alert-danger"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msgERR } </div>     
-                  	</c:if>					
+					<c:if test="${ msg ne null }">  
+          		<div class="alert alert-warning"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
+         	</c:if>	
+         	<c:if test="${ msgOK ne null }">  
+          		<div class="alert alert-success" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>SUCCESS:</b> ${ msgOK } </div>     
+         	</c:if>	
+         	<c:if test="${ msgERR ne null }">  
+          		<div class="alert alert-danger"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msgERR } </div>     
+         	</c:if>					
 					
 					</div>	
 			</div>			
 		</div>	
+		
   <script>
   	$(function(){
+  		
   		$('#lst_schoolyear').on('change', function(){
   			$(this).parent().submit();
   		});
+  		
+  		$('#lnk-showhide-graphs').on('click', function() {
+  			if(getCookie('myhrp-index-show-graphs') == '1') {
+  				setCookie('myhrp-index-show-graphs', '0');
+  				$('#div-graphs').hide();
+  				$(this).text('Show Graphs');
+  			}
+  			else {
+  				setCookie('myhrp-index-show-graphs', '1');
+  				createCharts();
+  				$('#div-graphs').show();
+  				$(this).text('Hide Graphs');
+  			}
+  			
+  		});
+  		
+  		if(getCookie('myhrp-index-show-graphs') == '1') {
+  			$('#lnk-showhide-graphs').text('Hide Graphs');
+  			createCharts();
+  			$('#div-graphs').show();
+  		}
+  		else {
+  			$('#div-graphs').hide();
+  			$('#lnk-showhide-graphs').text('Show Graphs');
+  		}
   	});  
   
+  	function createCharts() {
+  		createTotalVacanciesChart();
+  		createTotalFilledChart();
+  		createTotalRemainChart();
+  		createAvalonDataChart();
+  		createCentralDataChart();
+  		createWesternDataChart();
+  		createLabradorDataChart();
+  		createProvincialDataChart();
+  	}
+  	
+	  function createTotalVacanciesChart() {
+		  totalVacancies = totalVacanciesAvalon+totalVacanciesCentral+totalVacanciesWestern+ totalVacanciesLabrador+ totalVacanciesProvincial;
+		  totalVacanciesAvalonPCT = (totalVacancies > 0 ? (totalVacanciesAvalon/totalVacancies)*100 : 0).toFixed(2);
+		  totalVacanciesCentralPCT = (totalVacancies > 0 ? (totalVacanciesCentral/totalVacancies)*100 : 0).toFixed(2);
+		  totalVacanciesWesternPCT = (totalVacancies > 0 ? (totalVacanciesWestern/totalVacancies)*100 : 0).toFixed(2);
+		  totalVacanciesLabradorPCT = (totalVacancies > 0 ? (totalVacanciesLabrador/totalVacancies)*100 : 0).toFixed(2);
+		  totalVacanciesProvincialPCT = (totalVacancies > 0 ? (totalVacanciesProvincial/totalVacancies)*100 : 0).toFixed(2);  
+		  var ctx = document.getElementById('totalVacanciesChart').getContext('2d');
+		  var totalVacanciesChart = new Chart(ctx, {
+			  	type: 'pie',
+			  	  data: {
+			  	    labels: [ "Avalon: "+ totalVacanciesAvalon +" ("+totalVacanciesAvalonPCT+"%)",
+			  	    	"Central: "+totalVacanciesCentral +" ("+totalVacanciesCentralPCT+"%)",
+			  	    	"Western: "+totalVacanciesWestern +" ("+totalVacanciesWesternPCT+"%)",
+			  	    	"Labrador: "+totalVacanciesLabrador +" ("+totalVacanciesLabradorPCT+"%)",
+			  	    	"Provincial: "+totalVacanciesProvincial +" ("+totalVacanciesProvincialPCT+"%)",],
+			  	    datasets: [{
+			  	      backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
+			  	      data: [ totalVacanciesAvalonPCT, totalVacanciesCentralPCT, totalVacanciesWesternPCT, totalVacanciesLabradorPCT, totalVacanciesProvincialPCT]
+			  	    }]
+			  	  },
+			  	  
+			  	  options: {
+			  		  	  
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         fontFamily:"Arial",
+			  	         text: 'Total Vacancies by Region'
+			  	     },
+			  	     legend: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         position: 'bottom',
+		
+			  	     },
+			  	     responsive: false
+			  	 }
+			});
+	  }
+	  
+	  function createTotalFilledChart() {
+		  totalFilled = totalFilledAvalon+totalFilledCentral+totalFilledWestern+ totalFilledLabrador+ totalFilledProvincial;
+		  totalFilledAvalonPCT = (totalFilled > 0 ? (totalFilledAvalon/totalFilled)*100 : 0).toFixed(2);
+		  totalFilledCentralPCT = (totalFilled > 0 ? (totalFilledCentral/totalFilled)*100 : 0).toFixed(2);
+		  totalFilledWesternPCT = (totalFilled > 0 ? (totalFilledWestern/totalFilled)*100 : 0).toFixed(2);
+		  totalFilledLabradorPCT = (totalFilled > 0 ? (totalFilledLabrador/totalFilled)*100 : 0).toFixed(2);
+		  totalFilledProvincialPCT = (totalFilled > 0 ? (totalFilledProvincial/totalFilled)*100 : 0).toFixed(2);   
+		  var ctx = document.getElementById('totalFilledChart').getContext('2d');  
+		  var totalFilledChart = new Chart(ctx, {
+		  	type: 'pie',
+		  	  data: {
+		  	    labels: [ "Avalon: "+ totalFilledAvalon +" ("+totalFilledAvalonPCT+"%)",
+		  	    	"Central: "+totalFilledCentral +" ("+totalFilledCentralPCT+"%)",
+		  	    	"Western: "+totalFilledWestern +" ("+totalFilledWesternPCT+"%)",
+		  	    	"Labrador: "+totalFilledLabrador +" ("+totalFilledLabradorPCT+"%)",
+		  	    	"Provincial: "+totalFilledProvincial +" ("+totalFilledProvincialPCT+"%)",],
+		  	    datasets: [{
+		  	    backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
+		  	    	data: [ 	 totalFilledAvalonPCT, totalFilledCentralPCT, totalFilledWesternPCT, totalFilledLabradorPCT, totalFilledProvincialPCT]
+		  	    }]
+		  	  },
+		  	  
+		  	  options: {
+		  		  	  
+		  	      title: {
+		  	         display: true,
+		  	         fontSize: 14,
+		  	         text: 'Positions Filled by Region'
+		  	     },
+		  	     legend: {
+		  	         display: true,
+		  	         fontSize: 14,
+		  	         position: 'bottom',
+		
+		  	     },
+		  	     responsive: false
+		  	 }
+			});
+	  }
+	  
+	  function createTotalRemainChart() {
+		  totalRemain = totalRemainAvalon+totalRemainCentral+totalRemainWestern+ totalRemainLabrador+ totalRemainProvincial;
+		  totalRemainAvalonPCT = (totalRemain > 0 ? (totalRemainAvalon/totalRemain)*100 : 0).toFixed(2);
+		  totalRemainCentralPCT = (totalRemain > 0 ? (totalRemainCentral/totalRemain)*100 : 0).toFixed(2);
+		  totalRemainWesternPCT = (totalRemain > 0 ? (totalRemainWestern/totalRemain)*100 : 0).toFixed(2);
+		  totalRemainLabradorPCT = (totalRemain > 0 ? (totalRemainLabrador/totalRemain)*100 : 0).toFixed(2);
+		  totalRemainProvincialPCT = (totalRemain > 0 ? (totalRemainProvincial/totalRemain)*100 : 0).toFixed(2);     
+		  var ctx = document.getElementById('totalRemainChart').getContext('2d');
+		  var totalRemainChart = new Chart(ctx, {
+			  	type: 'pie',
+			  	  data: {
+			  	    labels: [ "Avalon: "+ totalRemainAvalon +" ("+totalRemainAvalonPCT+"%)",
+			  	    	"Central: "+totalRemainCentral +" ("+totalRemainCentralPCT+"%)",
+			  	    	"Western: "+totalRemainWestern +" ("+totalRemainWesternPCT+"%)",
+			  	    	"Labrador: "+totalRemainLabrador +" ("+totalRemainLabradorPCT+"%)",
+			  	    	"Provincial: "+totalRemainProvincial +" ("+totalRemainProvincialPCT+"%)",],
+			  	    datasets: [{
+			  	      backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
+			  	      data: [ totalRemainAvalonPCT, totalRemainCentralPCT, totalRemainWesternPCT, totalRemainLabradorPCT,totalRemainProvincialPCT]
+			  	    }]
+			  	  },
+			  	  
+			  	  options: {
+			  		  	  
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         text: 'Positions Remaining by Region'
+			  	     },
+			  	     legend: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         position: 'bottom',
+		
+			  	     },
+			  	     responsive: false
+			  	 }  	    
+			});
+	  }
+	  
+	  function createAvalonDataChart() {
+		  var ctx = document.getElementById('avalonDataChart').getContext('2d');
+		  var avalonDataChart = new Chart(ctx, {
+			  	type: 'bar',
+			  	  data: {
+			  		  fontFamily:"Arial",
+			  	    labels: [ "Total","Filled","Remain",],
+			  	    datasets: [{
+			  	    	label: "",
+			  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
+			  	      data: [ totalVacanciesAvalon,totalFilledAvalon,totalRemainAvalon]
+			  	    }]
+			  	  },	  	  
+			  	  options: {	  	
+			  		  
+			  		scales: {
+			  	         yAxes: [{
+			  	             ticks: {
+			  	                 beginAtZero:true
+			  	             }
+			  	         }]
+			  	     },
+			  		  
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         text: 'Avalon Vacancies'
+			  	     },  	     
+			  	  
+			  	     legend: {
+			  	    	 display: false,
+		
+			  	     },
+			  	     responsive: true
+			  	 }  	  
+			});
+	  }
+	  
+	  function createCentralDataChart() {
+		  var ctx = document.getElementById('centralDataChart').getContext('2d');
+		  var centralDataChart = new Chart(ctx, {
+			  	type: 'bar',
+			  	  data: {
+			  	    labels: [ "Total","Filled","Remain",],
+			  	    datasets: [{
+			  	    	label: "",
+			  	      backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
+			  	      data: [ totalVacanciesCentral,totalFilledCentral,totalRemainCentral]
+			  	    }]
+			  	  },	  	  
+			  	  options: {	  
+			  		scales: {
+			  	         yAxes: [{
+			  	             ticks: {
+			  	                 beginAtZero:true
+			  	             }
+			  	         }]
+			  	     },
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         text: 'Central Vacancies'
+			  	     },
+			  	     legend: {
+			  	    	 display: false,
+		
+			  	     },
+			  	     responsive: true
+			  	 }
+			});
+	  }
+	  
+	  function createWesternDataChart() {
+		  var ctx = document.getElementById('westernDataChart').getContext('2d');
+		  var westernDataChart = new Chart(ctx, {
+			  	type: 'bar',
+			  	  data: {
+			  		  labels: [ "Total","Filled","Remain",],
+			  	    datasets: [{
+			  	    	label: "",
+			  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
+			  	      data: [ totalVacanciesWestern,totalFilledWestern,totalRemainWestern]
+			  	    }]
+			  	  },	  	  
+			  	  options: {	  		  	
+			  		scales: {
+			  	         yAxes: [{
+			  	             ticks: {
+			  	                 beginAtZero:true
+			  	             }
+			  	         }]
+			  	     },
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         text: 'Western Vacancies'
+			  	     },
+			  	     legend: {
+			  	    	 display: false,      
+		
+			  	     },
+			  	     responsive: true
+			  	 }  
+			});
+	  }
+	  
+	  function createLabradorDataChart() {
+		  var ctx = document.getElementById('labradorDataChart').getContext('2d');
+		  var labradorDataChart = new Chart(ctx, {
+			  	type: 'bar',
+			  	  data: {
+			  		 labels: [ "Total","Filled","Remain",],
+			  	    datasets: [{
+			  	    	label: "",
+			  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
+			  	      data: [totalVacanciesLabrador,totalFilledLabrador,totalRemainLabrador]
+			  	    }]
+			  	  },	  	  
+			  	  options: {	  		
+			  		scales: {
+			  	         yAxes: [{
+			  	             ticks: {
+			  	                 beginAtZero:true
+			  	             }
+			  	         }]
+			  	     },
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,	  	      
+			  	         text: 'Labrador Vacancies'
+			  	     },
+			  	     legend: {
+			  	    	 display: false,  
+		
+			  	     },
+			  	     responsive: true
+			  	 }
+			});
+	  }
+	  
+	  function createProvincialDataChart() {
+		  var ctx = document.getElementById('provincialDataChart').getContext('2d');
+		  var provincialDataChart = new Chart(ctx, {
+			  	type: 'bar',
+			  	  data: {
+			  		 labels: [ "Total","Filled","Remain",],
+			  	    datasets: [{
+			  	    	label: "",
+			  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
+			  	      data: [ totalVacanciesProvincial,totalFilledProvincial,totalRemainProvincial]
+			  	    }]
+			  	  },	  	  
+			  	  options: {	  
+			  		scales: {
+			  	         yAxes: [{
+			  	             ticks: {
+			  	                 beginAtZero:true
+			  	             }
+			  	         }]
+			  	     },
+			  	      title: {
+			  	         display: true,
+			  	         fontSize: 14,
+			  	         text: 'Provincial Vacancies'
+			  	     },
+			  	     legend: {
+			  	    	 display: false,
+				  	        	  	      
+		
+			  	     },
+			  	     responsive: true
+			  	 }	  	  
+			  	  
+			});  
+	  }
+	  
+	  function setCookie(cname, cvalue) {
+		  var d = new Date();
+		  d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+		  var expires = "expires="+d.toUTCString();
+		  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
 
-  
-  totalVacancies = totalVacanciesAvalon+totalVacanciesCentral+totalVacanciesWestern+ totalVacanciesLabrador+ totalVacanciesProvincial;
-  totalVacanciesAvalonPCT = (totalVacancies > 0 ? (totalVacanciesAvalon/totalVacancies)*100 : 0).toFixed(2);
-  totalVacanciesCentralPCT = (totalVacancies > 0 ? (totalVacanciesCentral/totalVacancies)*100 : 0).toFixed(2);
-  totalVacanciesWesternPCT = (totalVacancies > 0 ? (totalVacanciesWestern/totalVacancies)*100 : 0).toFixed(2);
-  totalVacanciesLabradorPCT = (totalVacancies > 0 ? (totalVacanciesLabrador/totalVacancies)*100 : 0).toFixed(2);
-  totalVacanciesProvincialPCT = (totalVacancies > 0 ? (totalVacanciesProvincial/totalVacancies)*100 : 0).toFixed(2);  
-  var ctx = document.getElementById('totalVacanciesChart').getContext('2d');
-  var totalVacanciesChart = new Chart(ctx, {
-	  	type: 'pie',
-	  	  data: {
-	  	    labels: [ "Avalon: "+ totalVacanciesAvalon +" ("+totalVacanciesAvalonPCT+"%)",
-	  	    	"Central: "+totalVacanciesCentral +" ("+totalVacanciesCentralPCT+"%)",
-	  	    	"Western: "+totalVacanciesWestern +" ("+totalVacanciesWesternPCT+"%)",
-	  	    	"Labrador: "+totalVacanciesLabrador +" ("+totalVacanciesLabradorPCT+"%)",
-	  	    	"Provincial: "+totalVacanciesProvincial +" ("+totalVacanciesProvincialPCT+"%)",],
-	  	    datasets: [{
-	  	      backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
-	  	      data: [ totalVacanciesAvalonPCT, totalVacanciesCentralPCT, totalVacanciesWesternPCT, totalVacanciesLabradorPCT, totalVacanciesProvincialPCT]
-	  	    }]
-	  	  },
-	  	  
-	  	  options: {
-	  		  	  
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         fontFamily:"Arial",
-	  	         text: 'Total Vacancies by Region'
-	  	     },
-	  	     legend: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         position: 'bottom',
-
-	  	     },
-	  	     responsive: false
-	  	 }
-
-	  	  
-	  	  
-	  	});
-  
-  totalFilled = totalFilledAvalon+totalFilledCentral+totalFilledWestern+ totalFilledLabrador+ totalFilledProvincial;
-  totalFilledAvalonPCT = (totalFilled > 0 ? (totalFilledAvalon/totalFilled)*100 : 0).toFixed(2);
-  totalFilledCentralPCT = (totalFilled > 0 ? (totalFilledCentral/totalFilled)*100 : 0).toFixed(2);
-  totalFilledWesternPCT = (totalFilled > 0 ? (totalFilledWestern/totalFilled)*100 : 0).toFixed(2);
-  totalFilledLabradorPCT = (totalFilled > 0 ? (totalFilledLabrador/totalFilled)*100 : 0).toFixed(2);
-  totalFilledProvincialPCT = (totalFilled > 0 ? (totalFilledProvincial/totalFilled)*100 : 0).toFixed(2);   
-  var ctx = document.getElementById('totalFilledChart').getContext('2d');  
-  var totalFilledChart = new Chart(ctx, {
-  	type: 'pie',
-  	  data: {
-  	    labels: [ "Avalon: "+ totalFilledAvalon +" ("+totalFilledAvalonPCT+"%)",
-  	    	"Central: "+totalFilledCentral +" ("+totalFilledCentralPCT+"%)",
-  	    	"Western: "+totalFilledWestern +" ("+totalFilledWesternPCT+"%)",
-  	    	"Labrador: "+totalFilledLabrador +" ("+totalFilledLabradorPCT+"%)",
-  	    	"Provincial: "+totalFilledProvincial +" ("+totalFilledProvincialPCT+"%)",],
-  	    datasets: [{
-  	    backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
-  	    	data: [ 	 totalFilledAvalonPCT, totalFilledCentralPCT, totalFilledWesternPCT, totalFilledLabradorPCT, totalFilledProvincialPCT]
-  	    }]
-  	  },
-  	  
-  	  options: {
-  		  	  
-  	      title: {
-  	         display: true,
-  	         fontSize: 14,
-  	         text: 'Positions Filled by Region'
-  	     },
-  	     legend: {
-  	         display: true,
-  	         fontSize: 14,
-  	         position: 'bottom',
-
-  	     },
-  	     responsive: false
-  	 }
-
-  	  
-  	  
-  	});
-  
-  totalRemain = totalRemainAvalon+totalRemainCentral+totalRemainWestern+ totalRemainLabrador+ totalRemainProvincial;
-  totalRemainAvalonPCT = (totalRemain > 0 ? (totalRemainAvalon/totalRemain)*100 : 0).toFixed(2);
-  totalRemainCentralPCT = (totalRemain > 0 ? (totalRemainCentral/totalRemain)*100 : 0).toFixed(2);
-  totalRemainWesternPCT = (totalRemain > 0 ? (totalRemainWestern/totalRemain)*100 : 0).toFixed(2);
-  totalRemainLabradorPCT = (totalRemain > 0 ? (totalRemainLabrador/totalRemain)*100 : 0).toFixed(2);
-  totalRemainProvincialPCT = (totalRemain > 0 ? (totalRemainProvincial/totalRemain)*100 : 0).toFixed(2);     
-  var ctx = document.getElementById('totalRemainChart').getContext('2d');
-  var totalRemainChart = new Chart(ctx, {
-	  	type: 'pie',
-	  	  data: {
-	  	    labels: [ "Avalon: "+ totalRemainAvalon +" ("+totalRemainAvalonPCT+"%)",
-	  	    	"Central: "+totalRemainCentral +" ("+totalRemainCentralPCT+"%)",
-	  	    	"Western: "+totalRemainWestern +" ("+totalRemainWesternPCT+"%)",
-	  	    	"Labrador: "+totalRemainLabrador +" ("+totalRemainLabradorPCT+"%)",
-	  	    	"Provincial: "+totalRemainProvincial +" ("+totalRemainProvincialPCT+"%)",],
-	  	    datasets: [{
-	  	      backgroundColor: ["#bf0000","#00bf00","#ff8400","#7f82ff","#800080"],
-	  	      data: [ totalRemainAvalonPCT, totalRemainCentralPCT, totalRemainWesternPCT, totalRemainLabradorPCT,totalRemainProvincialPCT]
-	  	    }]
-	  	  },
-	  	  
-	  	  options: {
-	  		  	  
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         text: 'Positions Remaining by Region'
-	  	     },
-	  	     legend: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         position: 'bottom',
-
-	  	     },
-	  	     responsive: false
-	  	 }  	  
-	  	  
-	  	});
-  
-  var ctx = document.getElementById('avalonDataChart').getContext('2d');
-  var avalonDataChart = new Chart(ctx, {
-	  	type: 'bar',
-	  	  data: {
-	  		  fontFamily:"Arial",
-	  	    labels: [ "Total","Filled","Remain",],
-	  	    datasets: [{
-	  	    	label: "",
-	  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
-	  	      data: [ totalVacanciesAvalon,totalFilledAvalon,totalRemainAvalon]
-	  	    }]
-	  	  },	  	  
-	  	  options: {	  	
-	  		  
-	  		scales: {
-	  	         yAxes: [{
-	  	             ticks: {
-	  	                 beginAtZero:true
-	  	             }
-	  	         }]
-	  	     },
-	  		  
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         text: 'Avalon Vacancies'
-	  	     },  	     
-	  	  
-	  	     legend: {
-	  	    	 display: false,
-
-	  	     },
-	  	     responsive: true
-	  	 }
-
-	  	  
-	  	  
-	  	});
-  
-  var ctx = document.getElementById('centralDataChart').getContext('2d');
-  var centralDataChart = new Chart(ctx, {
-	  	type: 'bar',
-	  	  data: {
-	  	    labels: [ "Total","Filled","Remain",],
-	  	    datasets: [{
-	  	    	label: "",
-	  	      backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
-	  	      data: [ totalVacanciesCentral,totalFilledCentral,totalRemainCentral]
-	  	    }]
-	  	  },	  	  
-	  	  options: {	  
-	  		scales: {
-	  	         yAxes: [{
-	  	             ticks: {
-	  	                 beginAtZero:true
-	  	             }
-	  	         }]
-	  	     },
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         text: 'Central Vacancies'
-	  	     },
-	  	     legend: {
-	  	    	 display: false,
-
-	  	     },
-	  	     responsive: true
-	  	 }
-
-	  	  
-	  	  
-	  	});
-  
-  var ctx = document.getElementById('westernDataChart').getContext('2d');
-  var westernDataChart = new Chart(ctx, {
-	  	type: 'bar',
-	  	  data: {
-	  		  labels: [ "Total","Filled","Remain",],
-	  	    datasets: [{
-	  	    	label: "",
-	  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
-	  	      data: [ totalVacanciesWestern,totalFilledWestern,totalRemainWestern]
-	  	    }]
-	  	  },	  	  
-	  	  options: {	  		  	
-	  		scales: {
-	  	         yAxes: [{
-	  	             ticks: {
-	  	                 beginAtZero:true
-	  	             }
-	  	         }]
-	  	     },
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         text: 'Western Vacancies'
-	  	     },
-	  	     legend: {
-	  	    	 display: false,      
-
-	  	     },
-	  	     responsive: true
-	  	 }
-
-	  	  
-	  	  
-	  	});
-  
-  var ctx = document.getElementById('labradorDataChart').getContext('2d');
-  var labradorDataChart = new Chart(ctx, {
-	  	type: 'bar',
-	  	  data: {
-	  		 labels: [ "Total","Filled","Remain",],
-	  	    datasets: [{
-	  	    	label: "",
-	  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
-	  	      data: [totalVacanciesLabrador,totalFilledLabrador,totalRemainLabrador]
-	  	    }]
-	  	  },	  	  
-	  	  options: {	  		
-	  		scales: {
-	  	         yAxes: [{
-	  	             ticks: {
-	  	                 beginAtZero:true
-	  	             }
-	  	         }]
-	  	     },
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,	  	      
-	  	         text: 'Labrador Vacancies'
-	  	     },
-	  	     legend: {
-	  	    	 display: false,  
-
-	  	     },
-	  	     responsive: true
-	  	 }
-
-	  	  
-	  	  
-	  	});
-  
-  var ctx = document.getElementById('provincialDataChart').getContext('2d');
-  var provincialDataChart = new Chart(ctx, {
-	  	type: 'bar',
-	  	  data: {
-	  		 labels: [ "Total","Filled","Remain",],
-	  	    datasets: [{
-	  	    	label: "",
-	  	    	backgroundColor: ["#6495ED","#8FBC8F","#FFB6C1"],
-	  	      data: [ totalVacanciesProvincial,totalFilledProvincial,totalRemainProvincial]
-	  	    }]
-	  	  },	  	  
-	  	  options: {	  
-	  		scales: {
-	  	         yAxes: [{
-	  	             ticks: {
-	  	                 beginAtZero:true
-	  	             }
-	  	         }]
-	  	     },
-	  	      title: {
-	  	         display: true,
-	  	         fontSize: 14,
-	  	         text: 'Provincial Vacancies'
-	  	     },
-	  	     legend: {
-	  	    	 display: false,
-		  	        	  	      
-
-	  	     },
-	  	     responsive: true
-	  	 }	  	  
-	  	  
-	  	});  
-  
+		function getCookie(cname) {
+		  var name = cname + "=";
+		  var ca = document.cookie.split(';');
+		  for(var i = 0; i < ca.length; i++) {
+		    var c = ca[i];
+		    while (c.charAt(0) == ' ') {
+		      c = c.substring(1);
+		    }
+		    if (c.indexOf(name) == 0) {
+		      return c.substring(name.length, c.length);
+		    }
+		  }
+		  return "";
+		}
   </script>
   </body>
 </html>
