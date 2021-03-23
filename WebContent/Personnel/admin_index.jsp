@@ -292,18 +292,18 @@
 							<hr>
 							<div style="font-size:14px;font-weight:bold;color:#1F4279;">Vacancies by Region</div>
 								
-							<canvas id="avalonDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>
-							<canvas id="centralDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>
-							<canvas id="westernDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>							
-							<canvas id="labradorDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>
-							<canvas id="provincialDataChart" style="width:33%;float:left;height:200px;min-width:400px;"></canvas>
-							
+							<canvas id="avalonDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
+							<canvas id="centralDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
+							<canvas id="westernDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>							
+							<canvas id="labradorDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
+							<canvas id="provincialDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
 							<div style="clear:both;"></div>	
-							<br/>&nbsp;<br/>	
+							
+							<br/>&nbsp;<br/>
+								
 							<canvas id="totalVacanciesChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
 							<canvas id="totalFilledChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>							
 							<canvas id="totalRemainChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
-				
 							<div style="clear:both;"></div>	
 						</div>
 							
@@ -376,7 +376,10 @@
 		  totalVacanciesWesternPCT = (totalVacancies > 0 ? (totalVacanciesWestern/totalVacancies)*100 : 0).toFixed(2);
 		  totalVacanciesLabradorPCT = (totalVacancies > 0 ? (totalVacanciesLabrador/totalVacancies)*100 : 0).toFixed(2);
 		  totalVacanciesProvincialPCT = (totalVacancies > 0 ? (totalVacanciesProvincial/totalVacancies)*100 : 0).toFixed(2);  
-		  var ctx = document.getElementById('totalVacanciesChart').getContext('2d');
+		  var canvas = document.getElementById('totalVacanciesChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var totalVacanciesChart = new Chart(ctx, {
 			  	type: 'pie',
 			  	  data: {
@@ -417,7 +420,10 @@
 		  totalFilledWesternPCT = (totalFilled > 0 ? (totalFilledWestern/totalFilled)*100 : 0).toFixed(2);
 		  totalFilledLabradorPCT = (totalFilled > 0 ? (totalFilledLabrador/totalFilled)*100 : 0).toFixed(2);
 		  totalFilledProvincialPCT = (totalFilled > 0 ? (totalFilledProvincial/totalFilled)*100 : 0).toFixed(2);   
-		  var ctx = document.getElementById('totalFilledChart').getContext('2d');  
+		  var canvas = document.getElementById('totalFilledChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var totalFilledChart = new Chart(ctx, {
 		  	type: 'pie',
 		  	  data: {
@@ -456,8 +462,11 @@
 		  totalRemainCentralPCT = (totalRemain > 0 ? (totalRemainCentral/totalRemain)*100 : 0).toFixed(2);
 		  totalRemainWesternPCT = (totalRemain > 0 ? (totalRemainWestern/totalRemain)*100 : 0).toFixed(2);
 		  totalRemainLabradorPCT = (totalRemain > 0 ? (totalRemainLabrador/totalRemain)*100 : 0).toFixed(2);
-		  totalRemainProvincialPCT = (totalRemain > 0 ? (totalRemainProvincial/totalRemain)*100 : 0).toFixed(2);     
-		  var ctx = document.getElementById('totalRemainChart').getContext('2d');
+		  totalRemainProvincialPCT = (totalRemain > 0 ? (totalRemainProvincial/totalRemain)*100 : 0).toFixed(2); 
+		  var canvas = document.getElementById('totalRemainChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		 
 		  var totalRemainChart = new Chart(ctx, {
 			  	type: 'pie',
 			  	  data: {
@@ -491,7 +500,10 @@
 	  }
 	  
 	  function createAvalonDataChart() {
-		  var ctx = document.getElementById('avalonDataChart').getContext('2d');
+		  var canvas = document.getElementById('avalonDataChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var avalonDataChart = new Chart(ctx, {
 			  	type: 'bar',
 			  	  data: {
@@ -529,7 +541,10 @@
 	  }
 	  
 	  function createCentralDataChart() {
-		  var ctx = document.getElementById('centralDataChart').getContext('2d');
+		  var canvas = document.getElementById('centralDataChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var centralDataChart = new Chart(ctx, {
 			  	type: 'bar',
 			  	  data: {
@@ -563,7 +578,10 @@
 	  }
 	  
 	  function createWesternDataChart() {
-		  var ctx = document.getElementById('westernDataChart').getContext('2d');
+		  var canvas = document.getElementById('westernDataChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var westernDataChart = new Chart(ctx, {
 			  	type: 'bar',
 			  	  data: {
@@ -597,7 +615,10 @@
 	  }
 	  
 	  function createLabradorDataChart() {
-		  var ctx = document.getElementById('labradorDataChart').getContext('2d');
+		  var canvas = document.getElementById('labradorDataChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var labradorDataChart = new Chart(ctx, {
 			  	type: 'bar',
 			  	  data: {
@@ -631,7 +652,10 @@
 	  }
 	  
 	  function createProvincialDataChart() {
-		  var ctx = document.getElementById('provincialDataChart').getContext('2d');
+		  var canvas = document.getElementById('provincialDataChart');
+		  var ctx = canvas.getContext('2d');
+		  ctx.clearRect(0, 0, canvas.width, canvas.height);
+		  
 		  var provincialDataChart = new Chart(ctx, {
 			  	type: 'bar',
 			  	  data: {
