@@ -56,9 +56,14 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					
 					
-					<div class="pageHeader">Latest Hiring Statistics</div>
+					<div class="pageHeader">Human Resources Administration</div>
 					<div class="pageBody">
-				 Please find below the latest Vacancy Processing and Position Offer Statistics.
+					Welcome <span style="text-transform:capitalize;"><%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></span> to your 
+					NLESD Applicant Profiling System Administration Site. Please use the navigation menu above to continue. Not all menu items are available to all users. You will only see options available for your current job position. 
+
+					<br/>&nbsp;<br/>
+					<b>NOTICE: </b>Due to the information and data layout this application provides, we advise using a tablet or laptop/desktop computer to use this system.
+
 									
 					<br/>&nbsp;<br/>
 					<c:if test="${ msg ne null }">  
@@ -78,7 +83,15 @@
          	<%} %>			
                   	
 					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
-					
+				<hr>	
+				<div class="pageHeader">Latest Hiring Statistics</div>	
+				
+				Please find below the latest Vacancy Processing and Position Offer Statistics.
+				<div style='float:right;'>
+								<a id='lnk-showhide-graphs' href='javascript:void(0);' class="btn btn-xs btn-danger"></a>
+							</div>
+				<br/>&nbsp;<br/>
+				
 						<div class="alert alert-warning">
 							<b>IMPORTANT:</b> The <span class='btn-xs btn btn-info' style='font-weight: bold;'>blue</span> numbers in the tables below are CLICKABLE LINKS to a page listing the competitions used to calculate the statistic. 
 						</div>
@@ -90,9 +103,7 @@
 									<label for='lst_schoolyear'>Vacancy Processing Statistics</label>
 								</form>
 							</div>
-							<div style='float:right;'>
-								<a id='lnk-showhide-graphs' href='javascript:void(0);'></a>
-							</div>
+							
 							<div style="clear:both;"></div>	
 						</div>
 							
@@ -291,26 +302,31 @@
 						<div id='div-graphs'>
 							<hr>
 							<div style="font-size:14px;font-weight:bold;color:#1F4279;">Vacancies by Region</div>
-								
-							<canvas id="avalonDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
-							<canvas id="centralDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
-							<canvas id="westernDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>							
-							<canvas id="labradorDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
-							<canvas id="provincialDataChart" style="width:20%;float:left;height:100px;min-width:150px;"></canvas>
-							<div style="clear:both;"></div>	
-							
-							<br/>&nbsp;<br/>
-								
-							<canvas id="totalVacanciesChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
-							<canvas id="totalFilledChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>							
-							<canvas id="totalRemainChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
-							<div style="clear:both;"></div>	
+							<br/>
+							<table width="100%" style="width:100%;">
+							<tr>
+							<td width="20%"><canvas id="avalonDataChart" style="width:100%;height:150px;"></canvas></td>
+							<td width="20%"><canvas id="centralDataChart" style="width:100%;height:150px;"></canvas></td>
+							<td width="20%"><canvas id="westernDataChart" style="width:100%;height:150px;"></canvas>	</td>		
+							<td width="20%"><canvas id="labradorDataChart" style="width:100%;height:150px;"></canvas></td>
+							<td width="20%"><canvas id="provincialDataChart" style="width:100%;height:150px;"></canvas></td>							
+							</tr>
+							</table>
+							<br/>
+							<table width="100%" style="width:100%;">
+							<tr>							
+							<td width="33%"><canvas id="totalVacanciesChart" style="width:100%;"></canvas></td>
+							<td width="33%"><canvas id="totalFilledChart" style="width:100%;"></canvas></td>	
+							<td width="33%"><canvas id="totalRemainChart" style="width:100%;"></canvas></td>
+							</tr>
+							</table>
 						</div>
 							
 						<br/>&nbsp;<br/>	
 						
 					</esd:SecurityAccessRequired>
 					
+						<div style="clear:both;"></div>	
 					<c:if test="${ msg ne null }">  
           		<div class="alert alert-warning"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>WARNING:</b> ${ msg } </div>     
          	</c:if>	
@@ -320,6 +336,14 @@
          	<c:if test="${ msgERR ne null }">  
           		<div class="alert alert-danger"  style="margin-top:10px;margin-bottom:10px;padding:5px;"><b>ERROR:</b> ${ msgERR } </div>     
          	</c:if>					
+					
+					
+					<div class="alert alert-warning" style="text-align:center"><b>****** ACCESS TO INFORMATION PRIVACY NOTICE / WARNING ******</b><br/>
+					The NLESD is committed to the protection of all personal information collected, used and/or disclosed in the operation and management of its activities.  
+					As a  public body, all information collected, used and/or disclosed will be in accordance with Access to Information and Protection of Privacy Act,2015.
+					By continuing to use this site, you agree with the above Act.</div>
+					
+					
 					
 					</div>	
 			</div>			
@@ -527,7 +551,7 @@
 			  		  
 			  	      title: {
 			  	         display: true,
-			  	         fontSize: 14,
+			  	         fontSize: 14,				  	        
 			  	         text: 'Avalon Vacancies'
 			  	     },  	     
 			  	  
@@ -535,7 +559,7 @@
 			  	    	 display: false,
 		
 			  	     },
-			  	     responsive: true
+			  	     responsive: false
 			  	 }  	  
 			});
 	  }
@@ -572,7 +596,7 @@
 			  	    	 display: false,
 		
 			  	     },
-			  	     responsive: true
+			  	     responsive: false
 			  	 }
 			});
 	  }
@@ -609,7 +633,7 @@
 			  	    	 display: false,      
 		
 			  	     },
-			  	     responsive: true
+			  	     responsive:false
 			  	 }  
 			});
 	  }
@@ -646,7 +670,7 @@
 			  	    	 display: false,  
 		
 			  	     },
-			  	     responsive: true
+			  	     responsive: false
 			  	 }
 			});
 	  }
@@ -684,7 +708,7 @@
 				  	        	  	      
 		
 			  	     },
-			  	     responsive: true
+			  	     responsive: false
 			  	 }	  	  
 			  	  
 			});  
