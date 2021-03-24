@@ -300,26 +300,22 @@
 							<div style="clear:both;"></div>	
 							
 						<div id='div-graphs'>
-							<hr>
+						<hr>
 							<div style="font-size:14px;font-weight:bold;color:#1F4279;">Vacancies by Region</div>
 							<br/>
-							<table width="100%" style="width:100%;">
-							<tr>
-							<td width="20%"><canvas id="avalonDataChart" style="width:100%;height:150px;"></canvas></td>
-							<td width="20%"><canvas id="centralDataChart" style="width:100%;height:150px;"></canvas></td>
-							<td width="20%"><canvas id="westernDataChart" style="width:100%;height:150px;"></canvas>	</td>		
-							<td width="20%"><canvas id="labradorDataChart" style="width:100%;height:150px;"></canvas></td>
-							<td width="20%"><canvas id="provincialDataChart" style="width:100%;height:150px;"></canvas></td>							
-							</tr>
-							</table>
-							<br/>
-							<table width="100%" style="width:100%;">
-							<tr>							
-							<td width="33%"><canvas id="totalVacanciesChart" style="width:100%;"></canvas></td>
-							<td width="33%"><canvas id="totalFilledChart" style="width:100%;"></canvas></td>	
-							<td width="33%"><canvas id="totalRemainChart" style="width:100%;"></canvas></td>
-							</tr>
-							</table>
+							<canvas id="avalonDataChart" style="width:20%;float:left;height:250px;min-width:200px;"></canvas>
+							<canvas id="centralDataChart" style="width:20%;float:left;height:250px;min-width:200px;"></canvas>
+							<canvas id="westernDataChart" style="width:20%;float:left;height:250px;min-width:200px;"></canvas>
+							<canvas id="labradorDataChart" style="width:20%;float:left;height:250px;min-width:200px;"></canvas>
+							<canvas id="provincialDataChart" style="width:20%;float:left;height:250px;min-width:200px;"></canvas>
+							
+						<div style="clear:both;"></div>	
+							<br/>&nbsp;<br/>	
+							<canvas id="totalVacanciesChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
+							<canvas id="totalFilledChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>							
+							<canvas id="totalRemainChart" style="width:33%;float:left;max-width:400px;min-width:300px;"></canvas>
+				
+						<div style="clear:both;"></div>	
 						</div>
 							
 						<br/>&nbsp;<br/>	
