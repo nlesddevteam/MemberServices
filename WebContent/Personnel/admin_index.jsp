@@ -29,6 +29,7 @@
 			: com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(Calendar.getInstance().getTime());
 	RecommendationStatisticsBean stats = RecommendationStatisticsManager.getRecommendationStatisticsBean();
 	Map<SchoolZoneBean,TeacherAllocationVacancyStatisticsBean> vacancyStatsByRegion = TeacherAllocationVacancyStatisticsManager.getVacancyStatsByRegion(statsSchoolYear);
+	MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 %>
 
 <html>
@@ -48,22 +49,26 @@
 		}
 	.btn-xs { min-width:30px;}
 		</style>
-		
-		<script src="/MemberServices/Personnel/includes/js/Chart.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2/dist/Chart.min.js"></script>	
 	</head>
     
 	<body>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					
-					
+					<% if(rbean.isPpBlockSchools() !=true ) { %> 					
+					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
+					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED while HR processes Reassignment and Redundancy positions.
+					</div>  
+					<%} %>
 					<div class="pageHeader">Human Resources Administration</div>
 					<div class="pageBody">
 					Welcome <span style="text-transform:capitalize;"><%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></span> to your 
 					NLESD Applicant Profiling System Administration Site. Please use the navigation menu above to continue. Not all menu items are available to all users. You will only see options available for your current job position. 
 
-					<br/>&nbsp;<br/>
+   					<br/>&nbsp;<br/>
 					<b>NOTICE: </b>Due to the information and data layout this application provides, we advise using a tablet or laptop/desktop computer to use this system.
 
+				 				
 									
 					<br/>&nbsp;<br/>
 					<c:if test="${ msg ne null }">  
@@ -732,5 +737,8 @@
 		  return "";
 		}
   </script>
+  
+
+  
   </body>
 </html>

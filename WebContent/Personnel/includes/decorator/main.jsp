@@ -6,6 +6,7 @@
 <%@ page language="java"
          import="com.esdnl.personnel.jobs.constants.*,
         		 java.util.TreeMap,
+        		 com.esdnl.personnel.jobs.bean.*,                 
                  com.esdnl.personnel.jobs.dao.*,
                  com.awsd.security.*, java.util.*"%>
 
@@ -27,6 +28,7 @@
 User usr = (User) session.getAttribute("usr");
 boolean isPrincipal = usr.checkRole("PRINCIPAL") || usr.checkRole("PRINCIPAL REPRESENTATIVE");
 TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
+MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 %>
 
 <html>
@@ -201,7 +203,9 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/viewSubjectGroups.html">Subject Groups</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/addSubjectGroup.html">Add Subject Group</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPTRSettings.html">Post Transfer Round Settings</a></li>
-					          	 	
+					          	 <esd:SecurityAccessRequired roles="ADMINISTRATOR">	
+					          	 	<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMyHrpSettings.html">MyHrp Settings</a></li>
+					          	 	</esd:SecurityAccessRequired>
 					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-DELETE-APPLICANT-PROFILE">
 					          	 		<li><a onclick="loadingData()" href="/MemberServices/Personnel/getSoftDeletedApplicants.html">View Deleted Applicants</a></li>
 					          	 	</esd:SecurityAccessRequired>
@@ -437,8 +441,13 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
  							<li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Positions<span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
-
+   
+     
+   							<% if(rbean.isPpBlockSchools() == true) { %>  
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning</a></li>
+    						<% } else { %>
+								<li><a href="#">Position Planning Disabled</a></li>
+      						<%} %>
 
 					         	</ul>
 					        </li>
@@ -482,9 +491,11 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
 							<li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Positions<span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
-
-										<li><a onclick="loadingData()" onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning</a></li>
-
+							<% if(rbean.isPpBlockSchools() == true) { %>  
+								<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning</a></li>
+    						<% } else { %>
+								<li><a href="#">Position Planning Disabled</a></li>
+      						<%} %>
 					         	</ul>
 					        </li>
 					        <li class="dropdown" id="menuNormal">
@@ -591,8 +602,7 @@ TreeMap<String,Integer> counts = RequestToHireManager.getRequestsToHireCount();
     						<span id="spanerror"></span>
   					</div>
 
-					<div id="printJob">
-
+					<div id="printJob">                                  
 								<decorator:body />
 					</div>
 
@@ -679,6 +689,9 @@ If you are experiencing difficulties with this system, check out the Help Guide 
 		}
 
 		</script>
+
+   
+
 
 </body>
 
