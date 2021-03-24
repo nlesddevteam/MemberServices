@@ -17,12 +17,9 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
  
- <!--
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
--->
+ <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW" />
-
+<%MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings(); %>
 <c:set var="permanentVal" value="0" />
 <html>
 	<head>
@@ -62,7 +59,12 @@
 	</head>
 	
 	<body>	
-	
+					<% if(rbean.isPpBlockSchools() != true) { %> 					
+					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
+					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED while HR processes Reassignment and Redundancy positions.
+					</div>  
+					<%} %>				
+
 	<form id="frm-add-allocation" action="addTeacherAllocation.html" method="post">
 	                                	
 	     <input id='hdn-allocation-id' type='hidden' value='' />
@@ -778,7 +780,7 @@ $('.SchoolYear').text(optionText);
 
   </div>
 </div>
-                              
+                  
 </body>
 
 </html>

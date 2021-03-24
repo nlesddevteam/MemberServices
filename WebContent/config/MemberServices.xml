@@ -3456,6 +3456,15 @@
       <URL-Pattern>/Personnel/adminDeleteReference.html</URL-Pattern>
      </Request-Handler>
      
+      <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewMyHrpSettingsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewMyHrpSettings.html</URL-Pattern>
+    </Request-Handler> 
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.UpdateMyHrpSettingsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/updateMyHrpSettings.html</URL-Pattern>
+    </Request-Handler>   
+     
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.v2.site.availability.handler.EmployeeNotAvailableRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/empNotAvailable.html</URL-Pattern>
