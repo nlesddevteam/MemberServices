@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.awsd.school.School;
+import com.esdnl.personnel.jobs.dao.MyHrpSettingsManager;
 import com.esdnl.personnel.v2.database.sds.LocationManager;
 import com.esdnl.personnel.v2.model.sds.bean.LocationBean;
 import com.esdnl.personnel.v2.model.sds.bean.LocationException;
@@ -29,6 +30,11 @@ public class ViewPositionPlanningRequestHandler extends RequestHandlerImpl {
 		super.handleRequest(request, response);
 
 		if (usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) {
+
+			if (MyHrpSettingsManager.getMyHrpSettings().isPpBlockSchools()) {
+				return "admin_index.jsp";
+			}
+
 			School s = usr.getPersonnel().getSchool();
 
 			try {
@@ -37,7 +43,7 @@ public class ViewPositionPlanningRequestHandler extends RequestHandlerImpl {
 				/*
 				TeacherAllocationBean allocation = TeacherAllocationManager.getTeacherAllocationBean(
 						StringUtils.getSchoolYear(new Date()), loc.getLocationId());
-
+				
 				request.setAttribute("allocation", allocation);
 				*/
 
