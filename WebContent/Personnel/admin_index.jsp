@@ -1,4 +1,4 @@
-<!-- MyHRP (C) 2018  -->	
+q<!-- MyHRP (C) 2018  -->	
 <!-- APPLICATION FOR NLESD STAFF (MEMBER) SERVICES -->
 <!-- HTML 5 BOOTSTRAP 3.3.7 JQUERY 3.3.1 -->
 
@@ -55,7 +55,7 @@
 	<body>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					
-					<% if(rbean.isPpBlockSchools() !=true ) { %> 					
+					<% if(rbean.isPpBlockSchools()) { %> 					
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
 					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED while HR processes Reassignment and Redundancy positions.
 					</div>  

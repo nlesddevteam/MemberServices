@@ -17,7 +17,8 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
  
- <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+<job:MyHRPSettingsSecurityCheck permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" setting="isPpBlockSchools" expectedValue="<%= false %>" />
 
 <%MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings(); %>
 <c:set var="permanentVal" value="0" />
@@ -59,7 +60,7 @@
 	</head>
 	
 	<body>	
-					<% if(rbean.isPpBlockSchools() != true) { %> 					
+					<% if(rbean.isPpBlockSchools()) { %> 					
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
 					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED while HR processes Reassignment and Redundancy positions.
 					</div>  

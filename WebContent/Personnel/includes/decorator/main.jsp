@@ -443,7 +443,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          	<ul class="dropdown-menu multi-level">
    
      
-   							<% if(rbean.isPpBlockSchools() == true) { %>  
+   							<% if(!rbean.isPpBlockSchools()) { %>  
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning</a></li>
     						<% } else { %>
 								<li><a href="#">Position Planning Disabled</a></li>
@@ -491,7 +491,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 							<li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Positions<span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
-							<% if(rbean.isPpBlockSchools() == true) { %>  
+							<% if(!rbean.isPpBlockSchools()) { %>  
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning</a></li>
     						<% } else { %>
 								<li><a href="#">Position Planning Disabled</a></li>
