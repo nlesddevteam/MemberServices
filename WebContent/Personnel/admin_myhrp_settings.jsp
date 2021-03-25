@@ -64,10 +64,10 @@
 
 	<c:choose>
 		<c:when test="${ppBlockSchools eq true}">
-			<script>$("#ppStatus").css("display","block").addClass("alert-success").removeClass("alert-danger").html("Position Planner is ACTIVE for School Administrators.");</script>
+			<script>$("#ppStatus").css("display","block").addClass("alert-success").removeClass("alert-danger").html("Position Planner is DISABLED for School Administrators.");</script>
 		</c:when>
 		<c:when test="${ppBlockSchools eq false}">
-			<script>$("#ppStatus").css("display","block").addClass("alert-warning").removeClass("alert-success").html("<b>WARNING:</b> Position Planner for School Administrators is currently disabled.");</script>
+			<script>$("#ppStatus").css("display","block").addClass("alert-warning").removeClass("alert-success").html("<b>WARNING:</b> Position Planner for School Administrators is currently ACTIVE.");</script>
 		</c:when>
 		<c:otherwise>
 			<script>$("#ppStatus").css("display","block").addClass("alert-danger").removeClass("alert-success").html("<b>ERROR:</b> Position Planner status is unknown. Contact HR..");</script>
