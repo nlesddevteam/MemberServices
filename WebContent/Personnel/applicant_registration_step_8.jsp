@@ -181,7 +181,7 @@ SECTION 8: Editing your Teacher/Educator HR Application Profile
 
 <br/>Please add up to 3 references to your online profile.<br/>
 <div class="alert alert-warning" style="margin-top:5px;"><b>NOTE:</b> Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference. 
-Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.</div>
+Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.  If an intern requires a reference from a teacher, they can select the TLA/External option in the reference type dropdown.</div>
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
 	               	<div class="panel-heading"><b>8. REFERENCES</b></div>
