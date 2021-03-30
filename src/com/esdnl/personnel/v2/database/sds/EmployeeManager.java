@@ -18,6 +18,7 @@ import com.esdnl.personnel.v2.database.availability.EmployeeAvailabilityManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean.PositionCode;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean.PositionType;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
 import com.esdnl.personnel.v2.model.sds.constant.LocationConstant;
@@ -590,6 +591,9 @@ public class EmployeeManager {
 			position.setEmpId(rs.getString("EMP_ID"));
 			position.setPosition(rs.getString("POSITION"));
 			position.setPositionType(PositionType.get(rs.getString("POSITION_TYPE")));
+			position.setPositionCode(
+					StringUtils.isNotBlank(rs.getString("POSITION")) ? PositionCode.get(rs.getString("POSITION").trim())
+							: PositionCode.UNKNOWN);
 
 			if (rs.getDate("START_DATE") != null) {
 				position.setStartDate(new java.util.Date(rs.getDate("START_DATE").getTime()));

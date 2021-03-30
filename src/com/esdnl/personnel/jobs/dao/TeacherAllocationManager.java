@@ -169,6 +169,12 @@ public class TeacherAllocationManager {
 
 	public static TeacherAllocationBean getTeacherAllocationBean(int allocationId) throws JobOpportunityException {
 
+		return getTeacherAllocationBean(allocationId, true);
+	}
+
+	public static TeacherAllocationBean getTeacherAllocationBean(int allocationId, boolean loadAssociatedData)
+			throws JobOpportunityException {
+
 		TeacherAllocationBean allocation = null;
 		Connection con = null;
 		CallableStatement stat = null;
@@ -184,7 +190,7 @@ public class TeacherAllocationManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			if (rs.next())
-				allocation = createTeacherAllocationBean(rs);
+				allocation = createTeacherAllocationBean(rs, loadAssociatedData);
 		}
 		catch (SQLException e) {
 			System.err.println("TeacherAllocationBean getTeacherAllocationBean(int allocationId): " + e);
