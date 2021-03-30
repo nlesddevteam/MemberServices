@@ -397,6 +397,34 @@ public class EmployeeBean implements IEntity {
 		return tmp;
 	}
 
+	public List<EmployeePositionBean> getCurrentPositions(LocationBean location) {
+
+		List<EmployeePositionBean> positions = null;
+
+		if (location == null) {
+			positions = getCurrentPositions();
+		}
+		else {
+			positions = getCurrentPositions().stream().filter(
+					p -> p.getLocation().trim().equalsIgnoreCase(location.getLocationDescription())).sorted(
+							(EmployeePositionBean p1, EmployeePositionBean p2) -> {
+								if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
+										&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
+									return p1.getEndDate().compareTo(p2.getEndDate());
+								}
+								else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
+										&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
+									return p1.getStartDate().compareTo(p2.getStartDate());
+								}
+								else {
+									return p1.getSchoolYear().compareTo(p2.getSchoolYear());
+								}
+							}).collect(Collectors.toList());
+		}
+
+		return positions;
+	}
+
 	public Map<String, List<EmployeePositionBean>> getPositions() {
 
 		return this.positions;

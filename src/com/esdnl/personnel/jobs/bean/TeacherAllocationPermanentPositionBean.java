@@ -1,14 +1,20 @@
 package com.esdnl.personnel.jobs.bean;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.esdnl.personnel.jobs.dao.TeacherAllocationManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
+import com.esdnl.personnel.v2.model.sds.bean.LocationBean;
 
 public class TeacherAllocationPermanentPositionBean {
 
 	private int positionId;
 	private int allocationId;
+	private TeacherAllocationBean allocation;
 	private EmployeeBean employee;
 	private int classSize;
 	private double unit;
@@ -20,12 +26,13 @@ public class TeacherAllocationPermanentPositionBean {
 
 		this.positionId = 0;
 		this.allocationId = 0;
+		this.allocation = null;
 		this.employee = null;
 		this.classSize = 0;
 		this.unit = 0.0;
 		this.assignment = null;
 		this.tenur = null;
-		this.applicantLink=null;
+		this.applicantLink = null;
 	}
 
 	public int getPositionId() {
@@ -46,6 +53,25 @@ public class TeacherAllocationPermanentPositionBean {
 	public void setAllocationId(int allocationId) {
 
 		this.allocationId = allocationId;
+	}
+
+	public TeacherAllocationBean getAllocation() {
+
+		if (this.allocation == null) {
+			try {
+				this.allocation = TeacherAllocationManager.getTeacherAllocationBean(this.allocationId, false);
+			}
+			catch (JobOpportunityException e) {
+				// DO NOTHING
+			}
+		}
+
+		return allocation;
+	}
+
+	public void setAllocation(TeacherAllocationBean allocation) {
+
+		this.allocation = allocation;
 	}
 
 	public EmployeeBean getEmployee() {
@@ -104,23 +130,35 @@ public class TeacherAllocationPermanentPositionBean {
 
 		buf.append("<TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN POSITION-ID=\"" + this.positionId + "\" ALLOCATION-ID=\""
 				+ this.allocationId + "\" EMP-ID=\"" + this.employee.getEmpId().trim() + "\" EMP-NAME=\""
-				+ this.employee.getFullnameReverse() + "\" "
-				+ (this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null ? "SENIORITY-1=\""
-						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue1() + "\" SENIORITY-2=\""
-						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue2() + "\" SENIORITY-3=\""
-						+ this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA).getSeniorityValue3() + "\" " : "")
-				+ "CLASS-SIZE=\"" + this.classSize + "\" ASSIGNMENT=\"" + StringEscapeUtils.escapeHtml(this.assignment)
-				+ "\" UNIT=\"" + this.unit + "\" TENUR=\"" + this.tenur + "\"" 
-				+ " PROFILE-LINK=\"" + this.applicantLink + "\"" + "  />");
+				+ this.employee.getFullnameReverse() + "\" ");
+
+		LocationBean location = this.getAllocation() != null ? this.getAllocation().getLocation() : null;
+		List<EmployeePositionBean> currentPositions = this.employee.getCurrentPositions(location);
+
+		if (currentPositions != null && currentPositions.size() > 0) {
+			EmployeeSeniorityBean seniority = currentPositions.get(0).getPositionCode().isTlaPosition()
+					? this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA_TLA)
+					: this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA);
+			if (seniority != null) {
+				buf.append("SENIORITY-1=\"" + seniority.getSeniorityValue1() + "\" SENIORITY-2=\""
+						+ seniority.getSeniorityValue2() + "\" SENIORITY-3=\"" + seniority.getSeniorityValue3() + "\" ");
+			}
+		}
+
+		buf.append("CLASS-SIZE=\"" + this.classSize + "\" ASSIGNMENT=\"" + StringEscapeUtils.escapeHtml(this.assignment)
+				+ "\" UNIT=\"" + this.unit + "\" TENUR=\"" + this.tenur + "\"" + " PROFILE-LINK=\"" + this.applicantLink + "\""
+				+ "  />");
 
 		return buf.toString();
 	}
 
 	public String getApplicantLink() {
+
 		return applicantLink;
 	}
 
 	public void setApplicantLink(String applicantLink) {
+
 		this.applicantLink = applicantLink;
 	}
 

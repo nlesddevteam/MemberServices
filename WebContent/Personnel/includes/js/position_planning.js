@@ -219,7 +219,7 @@ $('document').ready(function(){
 				sunits : $('#txt_specialist').val(),
 				lrtunits : $('#txt_lrt').val(),
 				irt1units : $('#txt_irt1').val(),
-				irt2units : $('#txt_irt2').val(),
+				irt2units : '0.00',
 				ounits : $('#txt_other').val(),
 				tlaunits: $('#txt_tla').val(),
 				sahours: $('#txt_sa').val(),

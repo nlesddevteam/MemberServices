@@ -83,12 +83,69 @@ public class EmployeePositionBean {
 		}
 	}
 
+	public enum PositionCode {
+
+		UNKNOWN("UNKNOWN", false, false), TLA("Teaching & Learning Assistant", false, true), TLA_5(
+				"Substitute teaching & Learning", false, true), TLAJP("TLA Jordan Principle Third Par", false, true);
+
+		private String value;
+		private boolean tlaPosition;
+		private boolean teacherPosition;
+
+		private PositionCode(String value, boolean teacherPosition, boolean tlaPosition) {
+
+			this.value = value;
+			this.teacherPosition = teacherPosition;
+			this.tlaPosition = tlaPosition;
+		}
+
+		public String getValue() {
+
+			return this.value;
+		}
+
+		public boolean isTlaPosition() {
+
+			return tlaPosition;
+		}
+
+		public boolean isTeacherPosition() {
+
+			return teacherPosition;
+		}
+
+		public static PositionCode get(String value) {
+
+			PositionCode tmp = UNKNOWN;
+
+			for (PositionCode pc : values()) {
+				if (pc.getValue().equalsIgnoreCase(value)) {
+					tmp = pc;
+					break;
+				}
+			}
+
+			return tmp;
+		}
+
+		public static List<PositionCode> getTLAList() {
+
+			return Arrays.stream(PositionCode.values()).filter(c -> c.isTlaPosition()).collect(Collectors.toList());
+		}
+
+		public static boolean isTLA(PositionCode pc) {
+
+			return getTLAList().contains(pc);
+		}
+	}
+
 	private EmployeeBean employee;
 	private String schoolYear;
 	private String name;
 	private String empId;
 	private String position;
 	private PositionType positionType;
+	private PositionCode positionCode;
 	private Date startDate;
 	private Date endDate;
 	private String sin;
@@ -104,6 +161,7 @@ public class EmployeePositionBean {
 		this.empId = "";
 		this.position = "";
 		this.positionType = PositionType.UNKNOWN;
+		this.positionCode = PositionCode.UNKNOWN;
 		this.startDate = null;
 		this.endDate = null;
 		this.sin = "";
@@ -190,6 +248,16 @@ public class EmployeePositionBean {
 	public boolean isRegular() {
 
 		return EmployeePositionBean.PositionType.REPLACEMENT.equals(getPositionType());
+	}
+
+	public PositionCode getPositionCode() {
+
+		return positionCode;
+	}
+
+	public void setPositionCode(PositionCode positionCode) {
+
+		this.positionCode = positionCode;
 	}
 
 	public Date getStartDate() {

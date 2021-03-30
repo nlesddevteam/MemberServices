@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import oracle.jdbc.OracleCallableStatement;
-import oracle.jdbc.OracleTypes;
-
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.TeacherAllocationBean;
@@ -17,9 +14,12 @@ import com.esdnl.personnel.jobs.bean.TeacherAllocationPermanentPositionBean;
 import com.esdnl.personnel.v2.database.sds.EmployeeManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
 public class TeacherAllocationPermanentPositionManager {
 
-	public static TeacherAllocationPermanentPositionBean addTeacherAllocationPermanentPositionBean(	TeacherAllocationPermanentPositionBean abean)
+	public static TeacherAllocationPermanentPositionBean addTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean abean)
 			throws JobOpportunityException {
 
 		Connection con = null;
@@ -52,8 +52,9 @@ public class TeacherAllocationPermanentPositionManager {
 			}
 			catch (Exception ex) {}
 
-			System.err.println("TeacherAllocationPermanentPositionBean addTeacherAllocationPermanentPositionBean(	TeacherAllocationPermanentPositionBean abean): "
-					+ e);
+			System.err.println(
+					"TeacherAllocationPermanentPositionBean addTeacherAllocationPermanentPositionBean(	TeacherAllocationPermanentPositionBean abean): "
+							+ e);
 			throw new JobOpportunityException("Can not add TeacherAllocationPermanentPositionBean to DB.", e);
 		}
 		finally {
@@ -98,8 +99,8 @@ public class TeacherAllocationPermanentPositionManager {
 			}
 			catch (Exception ex) {}
 
-			System.err.println("void updateTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean abean): "
-					+ e);
+			System.err.println(
+					"void updateTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean abean): " + e);
 			throw new JobOpportunityException("Can not update TeacherAllocationPermanentPositionBean in DB.", e);
 		}
 		finally {
@@ -137,8 +138,8 @@ public class TeacherAllocationPermanentPositionManager {
 			}
 			catch (Exception ex) {}
 
-			System.err.println("void deleteTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean abean): "
-					+ e);
+			System.err.println(
+					"void deleteTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean abean): " + e);
 			throw new JobOpportunityException("Can not delete TeacherAllocationPermanentPositionBean to DB.", e);
 		}
 		finally {
@@ -175,8 +176,8 @@ public class TeacherAllocationPermanentPositionManager {
 				position = createTeacherAllocationPermanentPositionBean(rs);
 		}
 		catch (SQLException e) {
-			System.err.println("TeacherAllocationPermanentPositionBean getTeacherAllocationPermanentPositionBean(int id): "
-					+ e);
+			System.err.println(
+					"TeacherAllocationPermanentPositionBean getTeacherAllocationPermanentPositionBean(int id): " + e);
 			throw new JobOpportunityException("Can not extract TeacherAllocationPermanentPositionBean from DB.", e);
 		}
 		finally {
@@ -216,12 +217,18 @@ public class TeacherAllocationPermanentPositionManager {
 
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			while (rs.next())
-				perms.add(createTeacherAllocationPermanentPositionBean(rs));
+			TeacherAllocationPermanentPositionBean bean = null;
+			while (rs.next()) {
+				bean = createTeacherAllocationPermanentPositionBean(rs);
+				bean.setAllocation(allocation);
+
+				perms.add(bean);
+			}
 		}
 		catch (SQLException e) {
-			System.err.println("Collection<TeacherAllocationPermanentPositionBean> getTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean allocation): "
-					+ e);
+			System.err.println(
+					"Collection<TeacherAllocationPermanentPositionBean> getTeacherAllocationPermanentPositionBean(TeacherAllocationPermanentPositionBean allocation): "
+							+ e);
 			throw new JobOpportunityException("Can not extract TeacherAllocationPermanentPositionBean from DB.", e);
 		}
 		finally {
@@ -261,10 +268,11 @@ public class TeacherAllocationPermanentPositionManager {
 			abean.setUnit(rs.getDouble("UNIT"));
 			abean.setTenur(rs.getString("TENUR"));
 			try {
-				if(rs.getString("SIN") != null) {
+				if (rs.getString("SIN") != null) {
 					abean.setApplicantLink("viewApplicantProfile.html?sin=" + rs.getString("SIN"));
-					
-				}else {
+
+				}
+				else {
 					abean.setApplicantLink("NONE");
 				}
 			}
