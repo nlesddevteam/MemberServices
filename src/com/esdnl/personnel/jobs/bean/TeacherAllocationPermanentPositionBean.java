@@ -8,7 +8,6 @@ import com.esdnl.personnel.jobs.dao.TeacherAllocationManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
-import com.esdnl.personnel.v2.model.sds.bean.LocationBean;
 
 public class TeacherAllocationPermanentPositionBean {
 
@@ -132,17 +131,21 @@ public class TeacherAllocationPermanentPositionBean {
 				+ this.allocationId + "\" EMP-ID=\"" + this.employee.getEmpId().trim() + "\" EMP-NAME=\""
 				+ this.employee.getFullnameReverse() + "\" ");
 
-		LocationBean location = this.getAllocation() != null ? this.getAllocation().getLocation() : null;
-		List<EmployeePositionBean> currentPositions = this.employee.getCurrentPositions(location);
+		List<EmployeePositionBean> positions = this.employee.getPositions(this.getAllocation());
 
-		if (currentPositions != null && currentPositions.size() > 0) {
-			EmployeeSeniorityBean seniority = currentPositions.get(0).getPositionCode().isTlaPosition()
+		if (positions != null && positions.size() > 0) {
+			EmployeeSeniorityBean seniority = positions.get(0).getPositionCode().isTlaPosition()
 					? this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA_TLA)
 					: this.employee.getSeniority(EmployeeSeniorityBean.Union.NLTA);
 			if (seniority != null) {
 				buf.append("SENIORITY-1=\"" + seniority.getSeniorityValue1() + "\" SENIORITY-2=\""
 						+ seniority.getSeniorityValue2() + "\" SENIORITY-3=\"" + seniority.getSeniorityValue3() + "\" ");
 			}
+
+			buf.append("POSITION-TYPE=\"" + (positions.get(0).getPositionCode().isTlaPosition() ? "TLA" : "TCH") + "\" ");
+		}
+		else {
+			buf.append("POSITION-TYPE=\"UNKNOWN\" ");
 		}
 
 		buf.append("CLASS-SIZE=\"" + this.classSize + "\" ASSIGNMENT=\"" + StringEscapeUtils.escapeHtml(this.assignment)

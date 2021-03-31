@@ -892,89 +892,214 @@ function parseTeacherAllocationBean(data) {
 			$('#total-permanent-position-units').text('Permanent Position Total Units: ' 
 				+ $(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS').attr('TOTAL-ALLOCATIONS'));
 			$('.total-permanent-position-units-title').text($(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS').attr('TOTAL-ALLOCATIONS'));
-			permanentPositionsGraphVar = parseFloat($(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS').attr('TOTAL-ALLOCATIONS'));			
-			$(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').each(function(){
+			permanentPositionsGraphVar = parseFloat($(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS').attr('TOTAL-ALLOCATIONS'));	
+			// TCH POSITIONS
+			$('#permanent-positions-table')
+				.append($('<tr>')
+					.addClass('permanent-positions-table-row')
+					.addClass('displayText')
+					.append($('<td>')
+						.attr('colspan', '6')
+						.css({'font-weight':'bold', 'background-color':'#FFFFFF', 'border-bottom-style':'hidden', 'padding-top':'8px'})
+						.html('&middot;&middot;&middot;&nbsp;Administration &amp; Teaching Positions&nbsp;&middot;&middot;&middot;')));
+
+			if($(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN[POSITION-TYPE=TCH]').length > 0) {				
+				$(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN[POSITION-TYPE=TCH]').each(function(){
+					$('#permanent-positions-table')
+						.append($('<tr>')
+							.addClass('permanent-positions-table-row')
+							.addClass('displayText' + ((parseFloat($(this).attr('UNIT')) <= 0) ? ' redundant-position' : ''))
+							.append($('<td>').html( $(this).attr('PROFILE-LINK') == 'NONE' ? $(this).attr('EMP-NAME') : '<a href="' + $(this).attr('PROFILE-LINK') + '" target="_blank">' + $(this).attr('EMP-NAME') + '</a>') )
+							.append($('<td>').text(parseFloat($(this).attr('SENIORITY-1')).toFixed(2)))
+							.append($('<td>').text($(this).attr('TENUR')))
+							.append($('<td>').text($(this).attr('ASSIGNMENT')))
+							.append($('<td>').text(parseFloat($(this).attr('UNIT')).toFixed(2)))
+							.append($('<td>')
+								.css({'padding-right':'5px'})							
+								.addClass('permanent-positions-table-row-operations')
+								.append($('<a>')
+									.addClass('edit-perm btn btn-xs btn-info')
+									.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
+									.text('EDIT')
+									.click(
+										function() {										
+											$("#loadingSpinner").css("display","block");
+											$.post("ajax/editTeacherAllocationPermanentPosition.html", 
+												{	
+													id : $(this).attr('position-id'),
+													ajax : true 
+												}, 
+												function(data){
+													if($(data).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').length > 0) {
+														$(data).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').each(function() {
+															$('#hdn_PermPositionID').val($(this).attr('POSITION-ID'));
+															$('#lst_teacher').val($(this).attr('EMP-ID'));
+															$('#txt_tenure').val($(this).attr('TENUR'));
+															$('#txt_assignment').val($(this).attr('ASSIGNMENT'));
+															$('#txt_fte').val(parseFloat($(this).attr('UNIT')).toFixed(2));
+															
+															$('#btn-add-permanent-position').text('Update Position');
+															$('#btn-cancel-permanent-position').show();
+														});
+													}
+													
+													$("#loadingSpinner").css("display","none");
+													$('#add-permanent-position-message').css('display','none').text('');
+												}, 
+												"xml");
+											return false;
+										}
+									))
+								
+								.append($('<a>')
+									.addClass('del-perm btn btn-xs btn-danger')
+									.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
+									.text('DEL')
+									.css({'margin-left':'3px'})
+									.click(
+										function() {
+											$('#add-permanent-position-message').css('display','none').text('');
+											$("#loadingSpinner").css("display","block");										
+											$.post("ajax/deleteTeacherAllocationPermanentPosition.html", 
+												{	
+													id : $(this).attr('position-id'),
+													ajax : true 
+												}, 
+												function(data){
+													$('#add-permanent-position-message').css('display','block').text($(data).find('DEL-TEACHER-ALLOCATION-PERMANENT-POSITION-RESPONSE').attr('msg'));
+													if($(data).find('TEACHER-ALLOCATION-BEAN').length > 0) {
+														parseTeacherAllocationBean(data);
+														
+														$('#hdn_PermPositionID').val('');
+														$('#lst_teacher').val('-1');
+														$('#txt_classSize').val('');
+														$('#txt_assignment').val('');
+														$('#txt_unit').val('');
+													}
+													
+													$("#loadingSpinner").css("display","none");
+												}, 
+												"xml");
+											return false;
+										}
+									))
+							)
+						);
+				});
+			}
+			else {
 				$('#permanent-positions-table')
 					.append($('<tr>')
 						.addClass('permanent-positions-table-row')
-						.addClass('displayText' + ((parseFloat($(this).attr('UNIT')) <= 0) ? ' redundant-position' : ''))
-						.append($('<td>').html( $(this).attr('PROFILE-LINK') == 'NONE' ? $(this).attr('EMP-NAME') : '<a href="' + $(this).attr('PROFILE-LINK') + '" target="_blank">' + $(this).attr('EMP-NAME') + '</a>') )
-						.append($('<td>').text(parseFloat($(this).attr('SENIORITY-1')).toFixed(2)))
-						.append($('<td>').text($(this).attr('TENUR')))
-						.append($('<td>').text($(this).attr('ASSIGNMENT')))
-						.append($('<td>').text(parseFloat($(this).attr('UNIT')).toFixed(2)))
+						.addClass('displayText')
 						.append($('<td>')
-							.css({'padding-right':'5px'})							
-							.addClass('permanent-positions-table-row-operations')
-							.append($('<a>')
-								.addClass('edit-perm btn btn-xs btn-info')
-								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
-								.text('EDIT')
-								.click(
-									function() {										
-										$("#loadingSpinner").css("display","block");
-										$.post("ajax/editTeacherAllocationPermanentPosition.html", 
-											{	
-												id : $(this).attr('position-id'),
-												ajax : true 
-											}, 
-											function(data){
-												if($(data).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').length > 0) {
-													$(data).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').each(function() {
-														$('#hdn_PermPositionID').val($(this).attr('POSITION-ID'));
-														$('#lst_teacher').val($(this).attr('EMP-ID'));
-														$('#txt_tenure').val($(this).attr('TENUR'));
-														$('#txt_assignment').val($(this).attr('ASSIGNMENT'));
-														$('#txt_fte').val(parseFloat($(this).attr('UNIT')).toFixed(2));
-														
-														$('#btn-add-permanent-position').text('Update Position');
-														$('#btn-cancel-permanent-position').show();
-													});
-												}
-												
-												$("#loadingSpinner").css("display","none");
-												$('#add-permanent-position-message').css('display','none').text('');
-											}, 
-											"xml");
-										return false;
-									}
-								))
-							
-							.append($('<a>')
-								.addClass('del-perm btn btn-xs btn-danger')
-								.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
-								.text('DEL')
-								.css({'margin-left':'3px'})
-								.click(
-									function() {
-										$('#add-permanent-position-message').css('display','none').text('');
-										$("#loadingSpinner").css("display","block");										
-										$.post("ajax/deleteTeacherAllocationPermanentPosition.html", 
-											{	
-												id : $(this).attr('position-id'),
-												ajax : true 
-											}, 
-											function(data){
-												$('#add-permanent-position-message').css('display','block').text($(data).find('DEL-TEACHER-ALLOCATION-PERMANENT-POSITION-RESPONSE').attr('msg'));
-												if($(data).find('TEACHER-ALLOCATION-BEAN').length > 0) {
-													parseTeacherAllocationBean(data);
+							.attr('colspan', '6')
+							.text('No permanent TCH positions added.')));
+			}
+			
+			// TLA POSITIONS
+			$('#permanent-positions-table')
+				.append($('<tr>')
+					.addClass('permanent-positions-table-row')
+					.addClass('displayText')
+					.append($('<td>')
+						.attr('colspan', '6')
+						.css({'font-weight':'bold', 'background-color':'#FFFFFF', 'border-style':'hidden', 'padding-top':'3px', 'padding-top':'8px'})
+						.html('&middot;&middot;&middot;&nbsp;Teaching &amp; Learning Assistant (TLA) Positions&nbsp;&middot;&middot;&middot;')));
+			
+			if($(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN[POSITION-TYPE=TLA]').length > 0) {
+				$(this).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN[POSITION-TYPE=TLA]').each(function(){
+					$('#permanent-positions-table')
+						.append($('<tr>')
+							.addClass('permanent-positions-table-row')
+							.addClass('displayText' + ((parseFloat($(this).attr('UNIT')) <= 0) ? ' redundant-position' : ''))
+							.append($('<td>').html( $(this).attr('PROFILE-LINK') == 'NONE' ? $(this).attr('EMP-NAME') : '<a href="' + $(this).attr('PROFILE-LINK') + '" target="_blank">' + $(this).attr('EMP-NAME') + '</a>') )
+							.append($('<td>').text(parseFloat($(this).attr('SENIORITY-1')).toFixed(2)))
+							.append($('<td>').text($(this).attr('TENUR')))
+							.append($('<td>').text($(this).attr('ASSIGNMENT')))
+							.append($('<td>').text(parseFloat($(this).attr('UNIT')).toFixed(2)))
+							.append($('<td>')
+								.css({'padding-right':'5px'})							
+								.addClass('permanent-positions-table-row-operations')
+								.append($('<a>')
+									.addClass('edit-perm btn btn-xs btn-info')
+									.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
+									.text('EDIT')
+									.click(
+										function() {										
+											$("#loadingSpinner").css("display","block");
+											$.post("ajax/editTeacherAllocationPermanentPosition.html", 
+												{	
+													id : $(this).attr('position-id'),
+													ajax : true 
+												}, 
+												function(data){
+													if($(data).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').length > 0) {
+														$(data).find('TEACHER-ALLOCATION-PERMANENT-POSITION-BEAN').each(function() {
+															$('#hdn_PermPositionID').val($(this).attr('POSITION-ID'));
+															$('#lst_teacher').val($(this).attr('EMP-ID'));
+															$('#txt_tenure').val($(this).attr('TENUR'));
+															$('#txt_assignment').val($(this).attr('ASSIGNMENT'));
+															$('#txt_fte').val(parseFloat($(this).attr('UNIT')).toFixed(2));
+															
+															$('#btn-add-permanent-position').text('Update Position');
+															$('#btn-cancel-permanent-position').show();
+														});
+													}
 													
-													$('#hdn_PermPositionID').val('');
-													$('#lst_teacher').val('-1');
-													$('#txt_classSize').val('');
-													$('#txt_assignment').val('');
-													$('#txt_unit').val('');
-												}
-												
-												$("#loadingSpinner").css("display","none");
-											}, 
-											"xml");
-										return false;
-									}
-								))
-						)
-					);
-			});
+													$("#loadingSpinner").css("display","none");
+													$('#add-permanent-position-message').css('display','none').text('');
+												}, 
+												"xml");
+											return false;
+										}
+									))
+								
+								.append($('<a>')
+									.addClass('del-perm btn btn-xs btn-danger')
+									.attr({'href' : '#', 'position-id' : $(this).attr('POSITION-ID')})
+									.text('DEL')
+									.css({'margin-left':'3px'})
+									.click(
+										function() {
+											$('#add-permanent-position-message').css('display','none').text('');
+											$("#loadingSpinner").css("display","block");										
+											$.post("ajax/deleteTeacherAllocationPermanentPosition.html", 
+												{	
+													id : $(this).attr('position-id'),
+													ajax : true 
+												}, 
+												function(data){
+													$('#add-permanent-position-message').css('display','block').text($(data).find('DEL-TEACHER-ALLOCATION-PERMANENT-POSITION-RESPONSE').attr('msg'));
+													if($(data).find('TEACHER-ALLOCATION-BEAN').length > 0) {
+														parseTeacherAllocationBean(data);
+														
+														$('#hdn_PermPositionID').val('');
+														$('#lst_teacher').val('-1');
+														$('#txt_classSize').val('');
+														$('#txt_assignment').val('');
+														$('#txt_unit').val('');
+													}
+													
+													$("#loadingSpinner").css("display","none");
+												}, 
+												"xml");
+											return false;
+										}
+									))
+							)
+						);
+				});
+			}
+			else {
+				$('#permanent-positions-table')
+					.append($('<tr>')
+						.addClass('permanent-positions-table-row')
+						.addClass('displayText')
+						.append($('<td>')
+							.attr('colspan', '6')
+							.text('No permanent TLA positions added.')));
+			}
 			
 			//$('#permanent-positions-table .permanent-positions-table-row:odd').css({'background-color': '#f0f0f0'});
 			//$('#permanent-positions-table .permanent-positions-table-row:not(:last) td').css({'border-bottom' : 'solid 1px #D0D0D0'});

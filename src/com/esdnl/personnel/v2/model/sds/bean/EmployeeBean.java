@@ -2,12 +2,14 @@ package com.esdnl.personnel.v2.model.sds.bean;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.esdnl.personnel.jobs.bean.TeacherAllocationBean;
 import com.esdnl.personnel.v2.model.availability.bean.EmployeeAvailabilityBean;
 import com.esdnl.personnel.v2.model.recognition.bean.IEntity;
 import com.esdnl.personnel.v2.model.sds.constant.PositionConstant;
@@ -45,6 +47,19 @@ public class EmployeeBean implements IEntity {
 
 	private Map<EmployeeSeniorityBean.Union, EmployeeSeniorityBean> seniority;
 	private Map<String, List<EmployeePositionBean>> positions;
+
+	private Comparator<EmployeePositionBean> positionComparator = (EmployeePositionBean p1, EmployeePositionBean p2) -> {
+		if ((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
+			return p1.getEndDate().compareTo(p2.getEndDate());
+		}
+		else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
+				&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
+			return p1.getStartDate().compareTo(p2.getStartDate());
+		}
+		else {
+			return p1.getSchoolYear().compareTo(p2.getSchoolYear());
+		}
+	};
 
 	public EmployeeBean() {
 
@@ -381,9 +396,34 @@ public class EmployeeBean implements IEntity {
 		}
 	}
 
+	public Map<String, List<EmployeePositionBean>> getPositions() {
+
+		return this.positions;
+	}
+
 	public List<EmployeePositionBean> getPositions(String schoolYear) {
 
 		return this.positions.get(schoolYear);
+	}
+
+	public List<EmployeePositionBean> getPositions(LocationBean location) {
+
+		return getPositions().values().stream().flatMap(List::stream).filter(
+				p -> p.getLocation().trim().equalsIgnoreCase(location.getLocationDescription())).sorted(
+						positionComparator).collect(Collectors.toList());
+	}
+
+	public List<EmployeePositionBean> getPositions(String schoolYear, LocationBean location) {
+
+		List<EmployeePositionBean> positions = getPositions(schoolYear);
+
+		if (positions != null && positions.size() > 0) {
+			positions = positions.stream().filter(
+					p -> p.getLocation().trim().equalsIgnoreCase(location.getLocationDescription())).sorted(
+							positionComparator).collect(Collectors.toList());
+		}
+
+		return positions;
 	}
 
 	public List<EmployeePositionBean> getCurrentPositions() {
@@ -407,45 +447,37 @@ public class EmployeeBean implements IEntity {
 		else {
 			positions = getCurrentPositions().stream().filter(
 					p -> p.getLocation().trim().equalsIgnoreCase(location.getLocationDescription())).sorted(
-							(EmployeePositionBean p1, EmployeePositionBean p2) -> {
-								if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
-										&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
-									return p1.getEndDate().compareTo(p2.getEndDate());
-								}
-								else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
-										&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
-									return p1.getStartDate().compareTo(p2.getStartDate());
-								}
-								else {
-									return p1.getSchoolYear().compareTo(p2.getSchoolYear());
-								}
-							}).collect(Collectors.toList());
+							positionComparator).collect(Collectors.toList());
 		}
 
 		return positions;
 	}
 
-	public Map<String, List<EmployeePositionBean>> getPositions() {
+	public List<EmployeePositionBean> getPositions(TeacherAllocationBean allocation) {
 
-		return this.positions;
+		List<EmployeePositionBean> positions = null;
+
+		if (allocation == null) {
+			positions = getCurrentPositions();
+		}
+		else if (this.positions.containsKey(allocation.getSchoolYear())) {
+			positions = getPositions(allocation.getSchoolYear(), allocation.getLocation());
+		}
+		else {
+			positions = getCurrentPositions(allocation.getLocation());
+		}
+
+		if ((positions == null || positions.size() < 1)) {
+			positions = getPositions(allocation.getLocation());
+		}
+
+		return positions;
 	}
 
 	public List<EmployeePositionBean> getReplacementPositions() {
 
 		return getPositions().values().stream().flatMap(List::stream).filter(p -> p.isTerm() && !p.isSubstitute()).sorted(
-				(EmployeePositionBean p1, EmployeePositionBean p2) -> {
-					if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
-							&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
-						return p1.getEndDate().compareTo(p2.getEndDate());
-					}
-					else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
-							&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
-						return p1.getStartDate().compareTo(p2.getStartDate());
-					}
-					else {
-						return p1.getSchoolYear().compareTo(p2.getSchoolYear());
-					}
-				}).collect(Collectors.toList());
+				positionComparator).collect(Collectors.toList());
 	}
 
 	public boolean hasReplacementPositions() {
@@ -456,19 +488,7 @@ public class EmployeeBean implements IEntity {
 	public List<EmployeePositionBean> getPermanentPositions() {
 
 		return getPositions().values().stream().flatMap(List::stream).filter(p -> p.isPerm()).sorted(
-				(EmployeePositionBean p1, EmployeePositionBean p2) -> {
-					if ((p1.getEndDate() != null) && (p2.getEndDate() != null)
-							&& (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
-						return p1.getEndDate().compareTo(p2.getEndDate());
-					}
-					else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
-							&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {
-						return p1.getStartDate().compareTo(p2.getStartDate());
-					}
-					else {
-						return p1.getSchoolYear().compareTo(p2.getSchoolYear());
-					}
-				}).collect(Collectors.toList());
+				positionComparator).collect(Collectors.toList());
 	}
 
 	public boolean hasPermanentPositions() {
