@@ -1,5 +1,7 @@
 package com.esdnl.personnel.jobs.bean;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 
 public class TeacherAllocationRedundantPositionBean {
@@ -75,7 +77,8 @@ public class TeacherAllocationRedundantPositionBean {
 
 		buf.append("<TEACHER-ALLOCATION-REDUNDANT-POSITION-BEAN POSITION-ID=\"" + this.positionId + "\" ALLOCATION-ID=\""
 				+ this.allocationId + "\" EMP-ID=\"" + this.employee.getEmpId().trim() + "\" EMP-NAME=\""
-				+ this.employee.getFullnameReverse() + "\" RATIONALE=\"" + this.rationale + "\" UNIT=\"" + this.unit + "\" />");
+				+ this.employee.getFullnameReverse() + "\" RATIONALE=\"" + StringEscapeUtils.escapeHtml(this.rationale)
+				+ "\" UNIT=\"" + this.unit + "\" />");
 
 		return buf.toString();
 	}

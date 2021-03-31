@@ -3,9 +3,12 @@ package com.esdnl.personnel.jobs.bean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 public class TeacherAllocationExtraBean {
 
 	public enum AllocationType {
+
 		UNKNOWN(0, "UNKNOWN"), TCHR(1, "Teacher/Administrator"), TLA(2, "Teaching and Learning Assistant"), SA(3,
 				"Student Assistant");
 
@@ -137,7 +140,7 @@ public class TeacherAllocationExtraBean {
 				+ "\" EXTRA-UNITS=\"" + this.extraAllocationUnits + "\" ALLOCATION-TYPE-ID=\"" + this.allocationType.value
 				+ "\" ALLOCATION-TYPE-CODE=\"" + this.allocationType.name() + "\" ALLOCATION-TYPE-DESC=\""
 				+ this.allocationType.toString() + "\" CREATED-DATE=\"" + this.getCreatedDateFormated() + "\" RATIONALE=\""
-				+ this.getRationale() + "\" />");
+				+ StringEscapeUtils.escapeHtml(this.getRationale()) + "\" />");
 
 		return buf.toString();
 	}
