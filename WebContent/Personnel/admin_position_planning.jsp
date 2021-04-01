@@ -42,8 +42,8 @@
 				
 				<% if((usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) && loc != null) { %>
 					isPositionPlanningAdmin = false;
-					
-					loadTeacherAllocation("<%= StringUtils.getSchoolYear(new Date()) %>", "<%=loc.getLocationDescription() %>");
+					currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
+					loadTeacherAllocation($.cookie('myhrp-pp-schoolyear') ? $.cookie('myhrp-pp-schoolyear') : currentSchoolYear, "<%=loc.getLocationDescription() %>");
 				<% } else { %>
 					if($.cookie('myhrp-pp-schoolyear') && $.cookie('myhrp-pp-location')) {
 						$('#lst_schoolyear').val($.cookie('myhrp-pp-schoolyear'));
@@ -52,7 +52,7 @@
 					}
 				<% } %>
 				
-				//currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
+				currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
 			});
 			
 			$("#loadingSpinner").css("display","none");
