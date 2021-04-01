@@ -25,8 +25,9 @@ q<!-- MyHRP (C) 2018  -->
 <%
   User usr = (User) session.getAttribute("usr");
 
+	Cookie csy = Arrays.stream(request.getCookies()).filter(c -> c.getName().equalsIgnoreCase("myhrp-index-school-year")).findFirst().orElse(null);
 	String statsSchoolYear = StringUtils.isNotBlank(request.getParameter("lst_schoolyear")) ? request.getParameter("lst_schoolyear") 
-			: com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(Calendar.getInstance().getTime());
+			: csy != null ? csy.getValue() : com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(Calendar.getInstance().getTime());
 	RecommendationStatisticsBean stats = RecommendationStatisticsManager.getRecommendationStatisticsBean();
 	Map<SchoolZoneBean,TeacherAllocationVacancyStatisticsBean> vacancyStatsByRegion = TeacherAllocationVacancyStatisticsManager.getVacancyStatsByRegion(statsSchoolYear);
 	MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
@@ -354,6 +355,7 @@ q<!-- MyHRP (C) 2018  -->
   	$(function(){
   		
   		$('#lst_schoolyear').on('change', function(){
+  			setCookie('myhrp-index-school-year', $('#lst_schoolyear').val());
   			$(this).parent().submit();
   		});
   		
