@@ -50,7 +50,7 @@ public class EmployeeBean implements IEntity {
 
 	private Comparator<EmployeePositionBean> positionComparator = (EmployeePositionBean p1, EmployeePositionBean p2) -> {
 		if ((p1.getEndDate() != null) && (p2.getEndDate() != null) && (p1.getEndDate().compareTo(p2.getEndDate()) != 0)) {
-			return p1.getEndDate().compareTo(p2.getEndDate());
+			return p1.getEndDate().compareTo(p2.getEndDate()) * -1;
 		}
 		else if ((p1.getStartDate() != null) && (p2.getStartDate() != null)
 				&& (p1.getStartDate().compareTo(p2.getStartDate()) != 0)) {

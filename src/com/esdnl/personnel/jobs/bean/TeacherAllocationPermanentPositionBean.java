@@ -123,6 +123,20 @@ public class TeacherAllocationPermanentPositionBean {
 		this.tenur = tenur;
 	}
 
+	public boolean isTCH() {
+
+		List<EmployeePositionBean> positions = this.employee.getPositions(this.getAllocation());
+
+		return (positions != null && positions.size() > 0) ? !positions.get(0).getPositionCode().isTlaPosition() : false;
+	}
+
+	public boolean isTLA() {
+
+		List<EmployeePositionBean> positions = this.employee.getPositions(this.getAllocation());
+
+		return (positions != null && positions.size() > 0) ? positions.get(0).getPositionCode().isTlaPosition() : false;
+	}
+
 	public String toXML() {
 
 		StringBuffer buf = new StringBuffer();

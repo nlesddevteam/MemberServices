@@ -34,18 +34,25 @@
 				<%
 					User usr = (User) session.getAttribute("usr");
 					LocationBean loc = (LocationBean) request.getAttribute("location");
-					if((usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) && loc != null) {							
 				%>
+				
+				<% if(usr.checkRole("ADMINISTRATOR")) { %>
+					isSystemAdministrator = true;
+				<% } %>
+				
+				<% if((usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) && loc != null) { %>
 					isPositionPlanningAdmin = false;
 					
 					loadTeacherAllocation("<%= StringUtils.getSchoolYear(new Date()) %>", "<%=loc.getLocationDescription() %>");
+				<% } else { %>
+					if($.cookie('myhrp-pp-schoolyear') && $.cookie('myhrp-pp-location')) {
+						$('#lst_schoolyear').val($.cookie('myhrp-pp-schoolyear'));
+						$('#lst_school').val($.cookie('myhrp-pp-location'));
+						loadTeacherAllocation($.cookie('myhrp-pp-schoolyear'), $.cookie('myhrp-pp-location'));
+					}
 				<% } %>
 				
-				<%if(usr.checkRole("ADMINISTRATOR")) {%>
-					isSystemAdministrator = true;
-				<%}%>
-				
-				currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
+				//currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
 			});
 			
 			$("#loadingSpinner").css("display","none");
@@ -385,21 +392,10 @@
         please enter <b><i>0.00</i></b> for their teaching unit and list their position in the <b><i>Vacant Position</i></b> section below.
     	
     	<div class="table-responsive"> 
-							   <table id='permanent-positions-table' class="table table-condensed table-striped" style="font-size:12px;background-color:#FFFFFF;">
-								    <thead>
-								      <tr>
-								        <th width='20%'>Name</th>
-								        <th width='10%'>Seniority (Yrs)</th>
-								        <th width='10%'>Tenure</th>
-								        <th width='40%'>Assignment</th>
-								        <th width='10%'>FTE</th>
-								        <th width='10%'>Options</th>
-								      </tr>
-								    </thead>
-								    <tbody>
-								            
-								    </tbody>
-						  		</table>
+					   <table id='permanent-positions-table' class="table table-condensed table-striped" style="font-size:12px;background-color:#FFFFFF;">
+						    <tbody>
+						    </tbody>
+				  		</table>
 				</div> 
     	
     	<input type='hidden' id='hdn_PermPositionID' name='hdn_PermPositionID' value='' />
