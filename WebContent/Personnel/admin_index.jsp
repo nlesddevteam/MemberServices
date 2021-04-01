@@ -284,7 +284,14 @@ q<!-- MyHRP (C) 2018  -->
 										<td colspan='4' style='color:Red;text-align:center; font-weight: bold;'><%= totalVacancies - (totalFilledByCompetition + totalFilledManually) %></td>
 									</tr>
 								</tbody>
-							</table>			
+							</table>
+							
+							<esd:SecurityAccessRequired roles="ADMINISTRATOR,AD HR,SEO - PERSONNEL">
+								<div style='text-align: right;'>
+									<a href="reports/position_planner_redundancies_excel_export.jsp?sy=<%= statsSchoolYear %>" class="btn btn-info pull-right"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download Redundancies Report</a>
+									<div class="clearfix"></div> 
+								</div>
+							</esd:SecurityAccessRequired>			
 										
 						
 							<div style="font-size:14px;font-weight:bold;color:#1F4279;">Position Offer Statistics</div>
