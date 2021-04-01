@@ -20,7 +20,9 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 <job:MyHRPSettingsSecurityCheck permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" setting="isPpBlockSchools" expectedValue="<%= false %>" />
 
-<%MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings(); %>
+<% 
+	MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings(); 
+%>
 <c:set var="permanentVal" value="0" />
 <html>
 	<head>
@@ -42,17 +44,19 @@
 				
 				<% if((usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")) && loc != null) { %>
 					isPositionPlanningAdmin = false;
-					currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
-					loadTeacherAllocation($.cookie('myhrp-pp-schoolyear') ? $.cookie('myhrp-pp-schoolyear') : currentSchoolYear, "<%=loc.getLocationDescription() %>");
+					schoolYear = $.cookie('myhrp-pp-schoolyear') ? $.cookie('myhrp-pp-schoolyear') : '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
+					loadTeacherAllocation(schoolYear, "<%=loc.getLocationDescription() %>");
+					$('.SchoolName').text('<%=loc.getLocationDescription() %>');
+					$('.SchoolYear').text(schoolYear);
 				<% } else { %>
 					if($.cookie('myhrp-pp-schoolyear') && $.cookie('myhrp-pp-location')) {
 						$('#lst_schoolyear').val($.cookie('myhrp-pp-schoolyear'));
 						$('#lst_school').val($.cookie('myhrp-pp-location'));
 						loadTeacherAllocation($.cookie('myhrp-pp-schoolyear'), $.cookie('myhrp-pp-location'));
+						$('.SchoolName').text($.cookie('myhrp-pp-location'));
+						$('.SchoolYear').text($.cookie('myhrp-pp-schoolyear'));
 					}
 				<% } %>
-				
-				currentSchoolYear = '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
 			});
 			
 			$("#loadingSpinner").css("display","none");
@@ -744,14 +748,16 @@
 	                 
 	                
 <script>
-$('#lst_school').on('change',function(){
-var optionText = $("#lst_school option:selected").val();
-$('.SchoolName').text(optionText);
-});
-
-$('#lst_schoolyear').on('change',function(){
-var optionText = $("#lst_schoolyear option:selected").val();
-$('.SchoolYear').text(optionText);
+$(function() {
+	$('#lst_school').on('change',function(){
+		var optionText = $("#lst_school option:selected").val();
+		$('.SchoolName').text(optionText);
+	});
+	
+	$('#lst_schoolyear').on('change',function(){
+		var optionText = $("#lst_schoolyear option:selected").val();
+		$('.SchoolYear').text(optionText);
+	});
 });
 </script>	
 <div id="modalDelete" class="modal fade" role="dialog">
