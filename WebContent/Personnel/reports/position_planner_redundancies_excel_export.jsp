@@ -18,7 +18,7 @@
 		if(wb != null) {
 			System.out.println("GOT THE REPORT!");
 			
-			response.setContentType("application/vnd.openxml"); 
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
 			
 			response.setHeader("Expires:", "0"); // eliminates browser caching
 			response.setHeader("Content-Disposition","attachment; filename=\"" + cdee.getFilename() + "\"");  
