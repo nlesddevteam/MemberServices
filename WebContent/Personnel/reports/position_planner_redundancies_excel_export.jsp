@@ -20,7 +20,7 @@
 			
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
 			
-			response.setHeader("Expires:", "0"); // eliminates browser caching
+			response.setHeader("Expires", "0"); // eliminates browser caching
 			response.setHeader("Content-Disposition","attachment; filename=\"" + cdee.getFilename() + "\"");  
 			wb.write(response.getOutputStream());
 			
