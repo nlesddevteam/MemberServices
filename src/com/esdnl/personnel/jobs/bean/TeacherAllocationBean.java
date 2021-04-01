@@ -310,6 +310,20 @@ public class TeacherAllocationBean {
 		return total;
 	}
 
+	public double getTotalPermanentTCHPositionUnits() {
+
+		return this.permanentPositions != null
+				? this.permanentPositions.stream().filter(p -> p.isTCH()).mapToDouble(p -> p.getUnit()).sum()
+				: 0.0;
+	}
+
+	public double getTotalPermanentTLAPositionUnits() {
+
+		return this.permanentPositions != null
+				? this.permanentPositions.stream().filter(p -> p.isTLA()).mapToDouble(p -> p.getUnit()).sum()
+				: 0.0;
+	}
+
 	public Collection<TeacherAllocationVacantPositionBean> getVacantPositions() {
 
 		return vacantPositions;
@@ -430,6 +444,8 @@ public class TeacherAllocationBean {
 					+ "\" TOTAL-TCHR-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalTCHRAllocationUnits()))
 					+ "\" TOTAL-TLA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalTLAAllocationUnits()))
 					+ "\" TOTAL-SA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalSAAllocationHours()))
+					+ "\" TOTAL-SCHOOL-ALLOCATIONS=\""
+					+ Double.valueOf(twoDForm.format(this.getTotalTCHRAllocationUnits() + this.getTotalTLAAllocationUnits()))
 					+ "\" TOTAL-STAFFING-UNITS=\"" + Double.valueOf(twoDForm.format(this.getTotalStaffingUnits()))
 					+ "\" OUTSTANDING-ASSIGNMENT-UNITS=\""
 					+ Double.valueOf(twoDForm.format(this.getAllocationStaffingDifference())) + "\" PUBLISHED=\"" + this.published
@@ -446,6 +462,8 @@ public class TeacherAllocationBean {
 			if ((this.permanentPositions != null) && (this.permanentPositions.size() > 0)) {
 				buf.append("<TEACHER-ALLOCATION-PERMANENT-POSITION-BEANS COUNT=\"" + this.permanentPositions.size()
 						+ "\" TOTAL-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalPermanentPositionUnits()))
+						+ "\" TOTAL-TCH-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalPermanentTCHPositionUnits()))
+						+ "\" TOTAL-TLA-ALLOCATIONS=\"" + Double.valueOf(twoDForm.format(this.getTotalPermanentTLAPositionUnits()))
 						+ "\">");
 				for (TeacherAllocationPermanentPositionBean position : this.permanentPositions)
 					buf.append(position.toXML());
