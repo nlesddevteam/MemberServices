@@ -11,17 +11,17 @@
 		
 		String sy = request.getParameter("sy");
 	
-		ExcelExporter cdee = new PositionPlannerRedundanciesExcelReport(sy); 
+		ExcelExporter ee = new PositionPlannerStaffingExcelReport(sy); 
 		 
-		XSSFWorkbook wb = cdee.export();
+		XSSFWorkbook wb = ee.export();
 		
 		if(wb != null) {
-			System.out.println("GOT THE REPORT!");
+			System.out.println(usr.getPersonnel().getFullNameReverse() + " downloaded the Staffing Update Report!");
 			
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
 			
 			response.setHeader("Expires", "0"); // eliminates browser caching
-			response.setHeader("Content-Disposition","attachment; filename=\"" + cdee.getFilename() + "\"");  
+			response.setHeader("Content-Disposition","attachment; filename=\"" + ee.getFilename() + "\"");  
 			wb.write(response.getOutputStream());
 			
 			return;
