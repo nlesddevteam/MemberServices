@@ -185,7 +185,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		Collection<VacanciesRecord> recs = null;
 
-		Sheet sheet1 = wb.createSheet("Vacanies - " + this.schoolYear);
+		Sheet sheet1 = wb.createSheet("Vacancies - " + this.schoolYear);
 
 		createReportDateHeader(wb, sheet1, 0);
 		createHeader(wb, sheet1, 1,
