@@ -288,7 +288,7 @@ q<!-- MyHRP (C) 2018  -->
 							
 							<esd:SecurityAccessRequired roles="ADMINISTRATOR,AD HR,SEO - PERSONNEL">
 								<div style='text-align: right;'>
-									<a href="reports/position_planner_redundancies_excel_export.jsp?sy=<%= statsSchoolYear %>" class="btn btn-info pull-right"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download Redundancies Report</a>
+									<a id='btn-download-staffing-report' href="javascript: void(0)" class="btn btn-info pull-right"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download Staffing Update Report</a>
 									<div class="clearfix"></div> 
 								</div>
 							</esd:SecurityAccessRequired>			
@@ -360,6 +360,43 @@ q<!-- MyHRP (C) 2018  -->
 		
   <script>
   	$(function(){
+  		
+  		$('#btn-download-staffing-report').on('click', function () {
+  			report_url = 'reports/position_planner_staffing_excel_export.jsp?sy=<%= statsSchoolYear %>';
+  			
+  			downloadReport($(this), report_url);
+  		});
+  		
+  		function downloadReport(download_btn, download_url) {
+  			download_btn_html = download_btn.html();
+  			download_btn.html('<i class="fa fa-download" aria-hidden="true"></i> &nbsp;Generating Report Please Wait...').removeClass('btn-info').addClass('btn-warning');
+  			download_btn.off("click");
+  			
+  			$.ajax({
+	        url: download_url,
+	        method: 'POST',
+	        xhrFields: {
+	            responseType: 'blob'
+	        },
+	        success: function (data, textStatus, request) {
+	          var a = document.createElement('a');
+	          var url = window.URL.createObjectURL(data);
+	          a.href = url;
+	          a.download = $.trim(request.getResponseHeader('content-disposition').split('filename=')[1]).replaceAll("\"", "");
+	          document.body.append(a);
+	          a.click();
+	          a.remove();
+	          window.URL.revokeObjectURL(url);
+		            
+	          download_btn.html(download_btn_html).removeClass('btn-warning').addClass('btn-info');
+	          
+	          download_btn.on('click', function() {
+	       	  	downloadReport(download_btn, download_url);
+	          });
+ 		  		}
+ 		    });
+  		}
+  		
   		
   		$('#lst_schoolyear').on('change', function(){
   			setCookie('myhrp-index-school-year', $('#lst_schoolyear').val());
