@@ -1,9 +1,11 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.esdnl.personnel.jobs.bean.AdRequestBean;
 import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
@@ -17,7 +19,9 @@ import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.util.StringUtils;
 
 public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
+
 	public UpdateAdRequestRequestHandler() {
+
 		requiredPermissions = new String[] {
 				"PERSONNEL-ADREQUEST-UPDATE"
 		};
@@ -28,10 +32,10 @@ public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,
-			IOException {
+				IOException {
 
 		super.handleRequest(request, response);
-		if (validate_form()){
+		if (validate_form()) {
 			try {
 
 				// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -40,9 +44,8 @@ public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
 				if (!StringUtils.isEmpty(form.get("ad_title")))
 					req.setTitle(form.get("ad_title"));
 
-				if (!StringUtils.isEmpty(form.get("location")) && !form.hasValue("location", "-1")) 
+				if (!StringUtils.isEmpty(form.get("location")) && !form.hasValue("location", "-1"))
 					req.setLocation(LocationManager.getLocationBeanByDescription(form.get("location")));
-				
 
 				if (!StringUtils.isEmpty(form.get("owner")) && !form.hasValue("owner", "-1"))
 					req.setOwner(EmployeeManager.getEmployeeBean(form.get("owner")));
@@ -82,10 +85,14 @@ public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
 					req.setAdText(form.get("ad_text"));
 
 				req.setUnadvertised(!StringUtils.isEmpty(form.get("is_unadvertised")));
+				req.setAdminPool(!StringUtils.isEmpty(form.get("chk-is-admin-pool")));
+				req.setLeadershipPool(!StringUtils.isEmpty(form.get("chk-is-leadership-pool")));
+
 				if (req.getTitle() == null) {
 					request.setAttribute("msg", "Please enter title.");
 					request.setAttribute("AD_REQUEST", req);
-				}else if (req.getLocation() == null) {
+				}
+				else if (req.getLocation() == null) {
 					request.setAttribute("msg", "Please select LOCATION.");
 					request.setAttribute("AD_REQUEST", req);
 				}
@@ -98,8 +105,8 @@ public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
 					request.setAttribute("AD_REQUEST", req);
 				}
 				else if (req.getJobType().equal(JobTypeConstant.REPLACEMENT) && req.getEndDate() == null) {
-					request.setAttribute("msg", "END DATE is required for all " + JobTypeConstant.REPLACEMENT.getDescription()
-					+ " positions");
+					request.setAttribute("msg",
+							"END DATE is required for all " + JobTypeConstant.REPLACEMENT.getDescription() + " positions");
 					request.setAttribute("AD_REQUEST", req);
 				}
 				else {
@@ -109,13 +116,13 @@ public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
 						request.setAttribute("msg", "Ad Request updated successfully.");
 						request.setAttribute("AD_REQUEST", req);
 						path = "admin_view_ad_request.jsp";
-					}catch (Exception e) {
+					}
+					catch (Exception e) {
 						e.printStackTrace(System.err);
 						request.setAttribute("msg", "Ad requested submitted, supervisory email not sent.");
 						request.setAttribute("AD_REQUEST", req);
 					}
 				}
-
 
 			}
 			catch (Exception e) {
@@ -123,11 +130,11 @@ public class UpdateAdRequestRequestHandler extends RequestHandlerImpl {
 				request.setAttribute("msg", e.getMessage());
 				path = "request_ad.jsp";
 			}
-		}else {
+		}
+		else {
 			request.setAttribute("errmsg", this.validator.getErrorString());
 			path = "admin_index.jsp";
 		}
-
 
 		return path;
 	}

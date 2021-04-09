@@ -14,6 +14,7 @@ import com.awsd.school.SubjectDB;
 import com.awsd.school.SubjectException;
 import com.esdnl.personnel.jobs.constants.EmploymentConstant;
 import com.esdnl.personnel.jobs.constants.JobTypeConstant;
+import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.AssignmentEducationManager;
 import com.esdnl.personnel.jobs.dao.AssignmentMajorMinorManager;
 import com.esdnl.personnel.jobs.dao.AssignmentTrainingMethodManager;
@@ -53,6 +54,8 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	private boolean awardedEmailSent;
 	private String jobRequirements;
 
+	private AdRequestBean adRequest;
+
 	public JobOpportunityBean() {
 
 		super();
@@ -75,9 +78,10 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 		this.reopenedById = 0;
 		this.reopenedBy = null;
 		this.reopenedDate = null;
-		this.multipleRecommendations=false;
-		this.awardedEmailSent=false;
-		this.jobRequirements=null;
+		this.multipleRecommendations = false;
+		this.awardedEmailSent = false;
+		this.jobRequirements = null;
+		this.adRequest = null;
 	}
 
 	public void setCompetitionNumber(String competition_number) {
@@ -513,26 +517,41 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	}
 
 	public boolean isMultipleRecommendations() {
+
 		return multipleRecommendations;
 	}
 
 	public void setMultipleRecommendations(boolean multipleRecommendations) {
+
 		this.multipleRecommendations = multipleRecommendations;
 	}
 
 	public boolean isAwardedEmailSent() {
+
 		return awardedEmailSent;
 	}
 
 	public void setAwardedEmailSent(boolean awardedEmailSent) {
+
 		this.awardedEmailSent = awardedEmailSent;
 	}
 
 	public String getJobRequirements() {
+
 		return jobRequirements;
 	}
 
 	public void setJobRequirements(String jobRequirements) {
+
 		this.jobRequirements = jobRequirements;
+	}
+
+	public AdRequestBean getAdRequest() throws JobOpportunityException {
+
+		if (StringUtils.isNotBlank(this.competition_number) && this.adRequest == null) {
+			this.adRequest = AdRequestManager.getAdRequestBean(this.competition_number);
+		}
+
+		return this.adRequest;
 	}
 }
