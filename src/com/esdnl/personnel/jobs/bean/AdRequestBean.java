@@ -48,6 +48,8 @@ public class AdRequestBean {
 	private boolean unadvertised;
 	private String jobRequirements;
 	private TeacherAllocationBean teacherAllocation;
+	private boolean adminPool;
+	private boolean leadershipPool;
 
 	public AdRequestBean() {
 
@@ -69,11 +71,11 @@ public class AdRequestBean {
 		this.degree = null;
 		this.comp_num = null;
 		this.unadvertised = false;
-
 		this.history = null;
 		this.jobRequirements = null;
-
 		this.teacherAllocation = null;
+		this.adminPool = false;
+		this.leadershipPool = false;
 	}
 
 	public int getId() {
@@ -399,4 +401,25 @@ public class AdRequestBean {
 
 		this.teacherAllocation = teacherAllocation;
 	}
+
+	public boolean isAdminPool() {
+
+		return adminPool;
+	}
+
+	public void setAdminPool(boolean adminPool) {
+
+		this.adminPool = adminPool;
+	}
+
+	public boolean isLeadershipPool() {
+
+		return leadershipPool;
+	}
+
+	public void setLeadershipPool(boolean leadershipPool) {
+
+		this.leadershipPool = leadershipPool;
+	}
+
 }

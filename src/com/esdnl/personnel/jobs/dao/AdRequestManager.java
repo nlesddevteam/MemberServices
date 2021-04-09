@@ -200,7 +200,7 @@ public class AdRequestManager {
 			con.setAutoCommit(false);
 
 			stat = con.prepareCall(
-					"begin ? := awsd_user.personnel_ad_request.add_request(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+					"begin ? := awsd_user.personnel_ad_request.add_request(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 
 			stat.setInt(2, p.getPersonnelID());
@@ -231,6 +231,8 @@ public class AdRequestManager {
 			else {
 				stat.setNull(15, OracleTypes.CLOB);
 			}
+			stat.setBoolean(16, abean.isAdminPool());
+			stat.setBoolean(17, abean.isLeadershipPool());
 
 			stat.execute();
 
@@ -293,7 +295,7 @@ public class AdRequestManager {
 		try {
 			con = DAOUtils.getConnection();
 			stat = con.prepareCall(
-					"begin awsd_user.personnel_ad_request.update_ad_request_clob(?,?,?,?,?,?,?,?,?,?,?,?); end;");
+					"begin awsd_user.personnel_ad_request.update_ad_request_clob(?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, abean.getLocation().getLocationDescription());
 			stat.setDate(2, new java.sql.Date(abean.getStartDate().getTime()));
 			if (abean.getEndDate() != null) {
@@ -334,7 +336,9 @@ public class AdRequestManager {
 				stat.setNull(10, OracleTypes.CLOB);
 			}
 			stat.setBoolean(11, abean.isUnadvertised());
-			stat.setInt(12, abean.getId());
+			stat.setBoolean(12, abean.isAdminPool());
+			stat.setBoolean(13, abean.isLeadershipPool());
+			stat.setInt(14, abean.getId());
 			stat.execute();
 			//now we add/remove the child objects
 			// add degrees
@@ -675,8 +679,9 @@ public class AdRequestManager {
 			abean.setId(rs.getInt("REQUEST_ID"));
 			abean.setLocation(LocationManager.createLocationBean(rs));
 			abean.setStartDate(new java.util.Date(rs.getDate("START_DATE").getTime()));
-			if (rs.getDate("END_DATE") != null)
+			if (rs.getDate("END_DATE") != null) {
 				abean.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
+			}
 			abean.setUnits(rs.getDouble("UNIT_TIME"));
 			abean.setTrainingMethod(TrainingMethodConstant.get(rs.getInt("TRNLVL")));
 			abean.setEmpId(rs.getString("EMP_ID"));
@@ -694,8 +699,8 @@ public class AdRequestManager {
 			else {
 				abean.setAdText(rs.getString("AD_TEXT"));
 			}
-			abean.setCompetitionNumber(rs.getString("COMP_NUM"));
 
+			abean.setCompetitionNumber(rs.getString("COMP_NUM"));
 			abean.setUnadvertised(rs.getBoolean("UNADVERTISED"));
 
 			try {
@@ -706,6 +711,9 @@ public class AdRequestManager {
 			catch (SQLException e) {
 				// allocation information not available.
 			}
+
+			abean.setAdminPool(rs.getBoolean("IS_ADMIN_POOL"));
+			abean.setLeadershipPool(rs.getBoolean("IS_LEADERSHIP_POOL"));
 
 			// get majors
 			// abean.setMajors(AdRequestMajorManager.getAdRequestMajors(abean));

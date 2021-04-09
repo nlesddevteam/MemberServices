@@ -114,7 +114,7 @@ var pageWordCountConfAd = {
 		                        <%}%>
 			     		</td>
 			     	</tr>
-                    <tr>
+            <tr>
 			     		<td class='tableTitleL'>UNITS:</td>
 			     		<td class='tableResultL'>
 			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
@@ -125,14 +125,31 @@ var pageWordCountConfAd = {
 			     		</td>
 			     		<td class='tableTitleR'>JOB TYPE:</td>
 			     		<td class='tableResultR'>
-			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
-                                     <job:JobType id="ad_job_type" cls="form-control" value='<%=((req != null)&&(req.getJobType() != null))?Integer.toString(req.getJobType().getValue()) :""%>' />
-                                <%}else{%>
-                                     <%=req.getJobType().getDescription()%>                                                                               
-                                <%}%>
+			     			<% if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
+                	<job:JobType id="ad_job_type" cls="form-control" value='<%=((req != null)&&(req.getJobType() != null))?Integer.toString(req.getJobType().getValue()) :""%>' />
+                	<div id='div-pool-position' style='display: <%= ((req != null) && (req.getJobType() != null) && req.getJobType().equal(JobTypeConstant.POOL)) ? "inline" : "none" %>;'>
+										<div class="pull-left">
+											<label for="chk-is-admin-pool" class="checkbox-inline">Is Admin Pool?</label>
+											<input type="checkbox" id='chk-is-admin-pool' name='chk-is-admin-pool' />
+										</div>
+										<div class="pull-left">
+											<label for="chk-is-leadership-pool" class="checkbox-inline">Is Leadership Pool?</label>
+											<input type="checkbox" id='chk-is-leadership-pool' name='chk-is-leadership-pool' />
+										</div>
+									</div>
+                <%}else{%>
+                	<%=req.getJobType().getDescription()%>
+                	<% if((req != null) && (req.getJobType() != null) && req.getJobType().equal(JobTypeConstant.POOL)) { %>
+                		<br />
+                		Admin Pool: <%= req.isAdminPool() ? "YES" : "NO" %>
+                		<br />
+                		Leadership Pool: <%= req.isLeadershipPool() ? "YES" : "NO" %>
+                	<% } %>                                                                          
+                <%}%>
+                
 			     		</td>
 			     	</tr>
-                     <tr>
+            <tr>
 			     		<td class='tableTitle'>REASON FOR VACANCY:</td>
 			     		<td colspan=3 class='tableResult'>
 			     				<%if(req.getCurrentStatus().equals(RequestStatus.SUBMITTED)){%>
@@ -346,7 +363,7 @@ var pageWordCountConfAd = {
                         
                               
  
-  <script language="JavaScript">
+  <script>
   function setHeight(jq_in){
 	    jq_in.each(function(index, elem){
 	        // This line will work with pure Javascript (taken from NicB's answer):
@@ -357,19 +374,16 @@ var pageWordCountConfAd = {
 	setHeight($('#vacancy_reason')); 
   
   
-  $('document').ready(function(){
+  $(function() {
 		$( ".requiredinput_date" ).datepicker({
 	      	changeMonth: true,//this option for allowing user to select month
 	      	changeYear: true, //this option for allowing user to select from year range
 	      	dateFormat: "dd/mm/yy"	      
 	 	});
 		
-	 
-		  	CKEDITOR.replace('vacancy_reason',{wordcount: pageWordCountConfVac,height:150});
-		    CKEDITOR.replace('ad_text',{wordcount: pageWordCountConfAd,height:350});
-	    
-		
-		
+		CKEDITOR.replace('vacancy_reason',{wordcount: pageWordCountConfVac,height:150});
+		CKEDITOR.replace('ad_text',{wordcount: pageWordCountConfAd,height:350});
+	  
 		//Initialize the selected counts on page load, check for missing Degrees, etc.
 		var degNum = $('.ad_degree:checked').length;		
 		var majNum = $('.ad_major:checked').length;
@@ -403,6 +417,7 @@ var pageWordCountConfAd = {
 				$("#degPanel").removeClass("panel-danger").addClass("panel-success");
 			}
 		});
+		
 		$("#collapse2").click(function(){
 			$("#numMajorsSelected").html($('.ad_major:checked').length);
 			if ($('.ad_major:checked').length == 0) {			
@@ -411,6 +426,7 @@ var pageWordCountConfAd = {
 				$("#majPanel").removeClass("panel-danger").addClass("panel-success");
 			}
 		});
+		
 		$("#collapse3").click(function(){
 			$("#numMinorsSelected").html($('.ad_minor:checked').length);
 			if ($('.ad_minor:checked').length == 0) {			
@@ -418,6 +434,18 @@ var pageWordCountConfAd = {
 			} else {				
 				$("#minPanel").removeClass("panel-danger").addClass("panel-success");
 			}
+		});
+		
+		$('#ad_job_type').on('change', function(){
+			if($(this).val() == '8') { // GENERAL/POOL INTERVIEWS
+				$('#div-pool-position').show();
+			}
+			else {
+				$('#div-pool-position').hide();
+			}
+			
+			$('#chk-is-admin-pool').prop('checked', false);
+			$('#chk-is-leadership-pool').prop('checked', false);
 		});
 		
   });

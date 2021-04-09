@@ -31,7 +31,7 @@ public class AddAdRequestRequestHandler extends RequestHandlerImpl {
 	public AddAdRequestRequestHandler() {
 
 		requiredPermissions = new String[] {
-			"PERSONNEL-ADREQUEST-REQUEST"
+				"PERSONNEL-ADREQUEST-REQUEST"
 		};
 	}
 
@@ -104,6 +104,8 @@ public class AddAdRequestRequestHandler extends RequestHandlerImpl {
 					req.setAdText(form.get("ad_text"));
 
 				req.setUnadvertised(!StringUtils.isEmpty(form.get("is_unadvertised")));
+				req.setAdminPool(!StringUtils.isEmpty(form.get("chk-is-admin-pool")));
+				req.setLeadershipPool(!StringUtils.isEmpty(form.get("chk-is-leadership-pool")));
 
 				if (op.equals("GET_EMPLOYEES")) {
 					if (StringUtils.isEmpty(form.get("location"))) {
@@ -129,8 +131,8 @@ public class AddAdRequestRequestHandler extends RequestHandlerImpl {
 						request.setAttribute("AD_REQUEST", req);
 					}
 					else if (req.getJobType().equal(JobTypeConstant.REPLACEMENT) && req.getEndDate() == null) {
-						request.setAttribute("msg", "END DATE is required for all " + JobTypeConstant.REPLACEMENT.getDescription()
-								+ " positions");
+						request.setAttribute("msg",
+								"END DATE is required for all " + JobTypeConstant.REPLACEMENT.getDescription() + " positions");
 						request.setAttribute("AD_REQUEST", req);
 					}
 					else {

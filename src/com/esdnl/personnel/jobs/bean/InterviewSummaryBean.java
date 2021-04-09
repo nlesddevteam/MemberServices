@@ -159,14 +159,18 @@ public class InterviewSummaryBean {
 		return score;
 	}
 
-	public boolean isAdministrative() {
+	public boolean isAdministrative() throws JobOpportunityException {
 
-		return this.competition.getJobType().equal(JobTypeConstant.ADMINISTRATIVE);
+		return this.competition.getJobType().equal(JobTypeConstant.ADMINISTRATIVE)
+				|| (this.competition.getJobType().equal(JobTypeConstant.POOL) && (this.competition.getAdRequest() != null)
+						&& this.competition.getAdRequest().isAdminPool());
 	}
 
-	public boolean isLeadership() {
+	public boolean isLeadership() throws JobOpportunityException {
 
-		return this.competition.getJobType().equal(JobTypeConstant.LEADERSHIP);
+		return this.competition.getJobType().equal(JobTypeConstant.LEADERSHIP)
+				|| (this.competition.getJobType().equal(JobTypeConstant.POOL) && (this.competition.getAdRequest() != null)
+						&& this.competition.getAdRequest().isLeadershipPool());
 	}
 
 	public String toXML() {

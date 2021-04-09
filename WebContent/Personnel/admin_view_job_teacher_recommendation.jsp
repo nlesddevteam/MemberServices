@@ -38,15 +38,13 @@
 			.getApplicantEducationOtherBean(rec.getCandidateId());
 
 	int candidateCount = 1;
-	ApplicantProfileBean candidate_2 = null;
-	if (!StringUtils.isEmpty(rec.getCandidate2())) {
-		candidate_2 = ApplicantProfileManager.getApplicantProfileBean(rec.getCandidate2());
+	ApplicantProfileBean candidate_2 = (ApplicantProfileBean) request.getAttribute("CANDIDATE_2");
+	if (candidate_2 != null) {
 		candidateCount++;
 	}
 
-	ApplicantProfileBean candidate_3 = null;
-	if (!StringUtils.isEmpty(rec.getCandidate3())) {
-		candidate_3 = ApplicantProfileManager.getApplicantProfileBean(rec.getCandidate3());
+	ApplicantProfileBean candidate_3 = (ApplicantProfileBean) request.getAttribute("CANDIDATE_3");
+	if (candidate_3 != null) {
 		candidateCount++;
 	}
 
