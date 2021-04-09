@@ -2,11 +2,17 @@ package com.esdnl.personnel.jobs.reports;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,12 +22,26 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 	org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionPlannerStaffingExcelReport.class);
 
 	private String schoolYear;
+	private Collection<AllocationsRecord> allocations;
+	private Collection<PermanentsRecord> permanents;
+	private Collection<VacanciesRecord> vacancies;
+	private Collection<RedundanciesRecord> redundancies;
 
 	public PositionPlannerStaffingExcelReport(String schoolYear) {
 
 		super();
 
-		this.schoolYear = schoolYear;
+		try {
+			this.schoolYear = schoolYear;
+			this.allocations = ReportsManager.getPositionPlannerAllocationsBySchoolYear(this.schoolYear);
+			this.permanents = ReportsManager.getPositionPlannerPermanentsBySchoolYear(this.schoolYear);
+			this.vacancies = ReportsManager.getPositionPlannerVacanciesBySchoolYear(this.schoolYear);
+			this.redundancies = ReportsManager.getPositionPlannerRedundanciesBySchoolYear(this.schoolYear);
+		}
+		catch (ReportException e) {
+			log.error("PositionPlannerStaffingExcelReport.PositionPlannerStaffingExcelReport(String schoolYear): SchoolYear["
+					+ this.getSchoolYear() + "]", e);
+		}
 	}
 
 	public String getSchoolYear() {
@@ -52,64 +72,52 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 	private void createRedundanciesSheet(XSSFWorkbook wb) {
 
-		Collection<RedundanciesRecord> recs = null;
-
 		Sheet sheet1 = wb.createSheet("Redundancies - " + this.schoolYear);
 
-		createReportDateHeader(wb, sheet1, 0);
-		createHeader(wb, sheet1, 1,
+		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
+		createHeader(wb, sheet1, nextRowIndex,
 				Arrays.asList("School Year", "School/Location", "Owner", "Seniority (yrs)", "Tenure", "Unit", "Rationale"));
 
 		int numHeaderRows = sheet1.getLastRowNum() + 1;
 
 		freezeHeader(sheet1, numHeaderRows);
 
-		try {
-			recs = ReportsManager.getPositionPlannerRedundanciesBySchoolYear(this.schoolYear);
+		int rows = sheet1.getLastRowNum(), cells = 0;
 
-			int rows = sheet1.getLastRowNum(), cells = 0;
+		for (RedundanciesRecord rec : this.redundancies) {
+			Row row = sheet1.createRow(++rows);
 
-			for (RedundanciesRecord rec : recs) {
-				Row row = sheet1.createRow(++rows);
+			cells = 0;
 
-				cells = 0;
+			row.createCell(cells++).setCellValue(rec.getSchoolYear());
 
-				row.createCell(cells++).setCellValue(rec.getSchoolYear());
+			row.createCell(cells++).setCellValue(rec.getLocation());
 
-				row.createCell(cells++).setCellValue(rec.getLocation());
+			row.createCell(cells++).setCellValue(rec.getOwner());
 
-				row.createCell(cells++).setCellValue(rec.getOwner());
+			row.createCell(cells++).setCellValue(rec.getSeniority());
 
-				row.createCell(cells++).setCellValue(rec.getSeniority());
+			row.createCell(cells++).setCellValue(rec.getTenure());
 
-				row.createCell(cells++).setCellValue(rec.getTenure());
+			row.createCell(cells++).setCellValue(rec.getUnit());
 
-				row.createCell(cells++).setCellValue(rec.getUnit());
-
-				row.createCell(cells++).setCellValue(rec.getRationale());
-			}
-
-			int firstDataRowIndex = numHeaderRows + 1;
-			int lastDataRowIndex = (recs.size() + numHeaderRows);
-
-			createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 5);
-
-			autoFitColumnWidth(sheet1, cells);
+			row.createCell(cells++).setCellValue(rec.getRationale());
 		}
-		catch (ReportException e) {
-			log.error("PositionPlannerStaffingExcelReport.createRedundanciesSheet(XSSFWorkbook wb): SchoolYear["
-					+ this.getSchoolYear() + "]", e);
-		}
+
+		int firstDataRowIndex = numHeaderRows + 1;
+		int lastDataRowIndex = (this.redundancies.size() + numHeaderRows);
+
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 5);
+
+		autoFitColumnWidth(sheet1, cells);
 	}
 
 	private void createAllocationsSheet(XSSFWorkbook wb) {
 
-		Collection<AllocationsRecord> recs = null;
-
 		Sheet sheet1 = wb.createSheet("Allocations - " + this.schoolYear);
 
-		createReportDateHeader(wb, sheet1, 0);
-		createHeader(wb, sheet1, 1,
+		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
+		createHeader(wb, sheet1, nextRowIndex,
 				Arrays.asList("School Year", "School/Location", "Regular Units", "Administration Units", "Specialist Units",
 						"LRT Units", "IRT Units", "Reading Specialist Units", "Adjustments Units", "TCH Extra Units",
 						"Total TCH Units", "TLA Units", "TLA Extra Units", "Total TLA Units", "Total Units", "SA Hours",
@@ -119,76 +127,66 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		freezeHeader(sheet1, numHeaderRows);
 
-		try {
-			recs = ReportsManager.getPositionPlannerAllocationsBySchoolYear(this.schoolYear);
+		int rows = sheet1.getLastRowNum(), cells = 0;
 
-			int rows = sheet1.getLastRowNum(), cells = 0;
+		for (AllocationsRecord rec : this.allocations) {
+			Row row = sheet1.createRow(++rows);
 
-			for (AllocationsRecord rec : recs) {
-				Row row = sheet1.createRow(++rows);
+			cells = 0;
 
-				cells = 0;
+			row.createCell(cells++).setCellValue(rec.getSchoolYear());
 
-				row.createCell(cells++).setCellValue(rec.getSchoolYear());
+			row.createCell(cells++).setCellValue(rec.getLocation());
 
-				row.createCell(cells++).setCellValue(rec.getLocation());
+			row.createCell(cells++).setCellValue(rec.getRegularUnits());
 
-				row.createCell(cells++).setCellValue(rec.getRegularUnits());
+			row.createCell(cells++).setCellValue(rec.getAdministrationUnits());
 
-				row.createCell(cells++).setCellValue(rec.getAdministrationUnits());
+			row.createCell(cells++).setCellValue(rec.getSpecialistUnits());
 
-				row.createCell(cells++).setCellValue(rec.getSpecialistUnits());
+			row.createCell(cells++).setCellValue(rec.getLrtUnits());
 
-				row.createCell(cells++).setCellValue(rec.getLrtUnits());
+			row.createCell(cells++).setCellValue(rec.getIrt1Units());
 
-				row.createCell(cells++).setCellValue(rec.getIrt1Units());
+			row.createCell(cells++).setCellValue(rec.getReadingSpecialistUnits());
 
-				row.createCell(cells++).setCellValue(rec.getReadingSpecialistUnits());
+			row.createCell(cells++).setCellValue(rec.getOtherUnits());
 
-				row.createCell(cells++).setCellValue(rec.getOtherUnits());
+			row.createCell(cells++).setCellValue(rec.getTchExtraUnits());
 
-				row.createCell(cells++).setCellValue(rec.getTchExtraUnits());
+			applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalTchUnits());
 
-				applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalTchUnits());
+			row.createCell(cells++).setCellValue(rec.getTlaUnits());
 
-				row.createCell(cells++).setCellValue(rec.getTlaUnits());
+			row.createCell(cells++).setCellValue(rec.getTlaExtraUnits());
 
-				row.createCell(cells++).setCellValue(rec.getTlaExtraUnits());
+			applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalTLAUnits());
 
-				applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalTLAUnits());
+			applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalUnits());
 
-				applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalUnits());
+			row.createCell(cells++).setCellValue(rec.getStudAsstHours());
 
-				row.createCell(cells++).setCellValue(rec.getStudAsstHours());
+			row.createCell(cells++).setCellValue(rec.getSaExtraHours());
 
-				row.createCell(cells++).setCellValue(rec.getSaExtraHours());
-
-				applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalSAHours());
-			}
-
-			int firstDataRowIndex = numHeaderRows + 1;
-			int lastDataRowIndex = (recs.size() + numHeaderRows);
-
-			createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, createRange(2, 17));
-
-			autoFitColumnWidth(sheet1, cells);
+			applyBoldCellStyle(wb, row.createCell(cells++)).setCellValue(rec.getTotalSAHours());
 		}
-		catch (ReportException e) {
-			log.error("PositionPlannerStaffingExcelReport.createAllocationsSheet(XSSFWorkbook wb): SchoolYear["
-					+ this.getSchoolYear() + "]", e);
-		}
+
+		int firstDataRowIndex = numHeaderRows + 1;
+		int lastDataRowIndex = (this.allocations.size() + numHeaderRows);
+
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, createRange(2, 17));
+
+		autoFitColumnWidth(sheet1, cells);
 	}
 
 	private void createVacanciesSheet(XSSFWorkbook wb) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
 
-		Collection<VacanciesRecord> recs = null;
-
 		Sheet sheet1 = wb.createSheet("Vacancies - " + this.schoolYear);
 
-		createReportDateHeader(wb, sheet1, 0);
-		createHeader(wb, sheet1, 1,
+		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
+		createHeader(wb, sheet1, nextRowIndex,
 				Arrays.asList("School Year", "School/Location", "Job Description", "Position Type", "Owner", "Seniority (yrs)",
 						"Vacancy Reason", "Start Date", "End Date", "Unit", "Ad Requested", "Ad Posted", "Position Filled"));
 
@@ -196,116 +194,300 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		freezeHeader(sheet1, numHeaderRows);
 
-		try {
-			recs = ReportsManager.getPositionPlannerVacanciesBySchoolYear(this.schoolYear);
+		int rows = sheet1.getLastRowNum(), cells = 0;
 
-			int rows = sheet1.getLastRowNum(), cells = 0;
+		for (VacanciesRecord rec : this.vacancies) {
+			Row row = sheet1.createRow(++rows);
 
-			for (VacanciesRecord rec : recs) {
-				Row row = sheet1.createRow(++rows);
+			cells = 0;
 
-				cells = 0;
+			row.createCell(cells++).setCellValue(rec.getSchoolYear());
 
-				row.createCell(cells++).setCellValue(rec.getSchoolYear());
+			row.createCell(cells++).setCellValue(rec.getLocation());
 
-				row.createCell(cells++).setCellValue(rec.getLocation());
+			row.createCell(cells++).setCellValue(rec.getJobDescription());
 
-				row.createCell(cells++).setCellValue(rec.getJobDescription());
+			row.createCell(cells++).setCellValue(rec.getPositionType());
 
-				row.createCell(cells++).setCellValue(rec.getPositionType());
+			row.createCell(cells++).setCellValue(rec.getOwner());
 
-				row.createCell(cells++).setCellValue(rec.getOwner());
+			row.createCell(cells++).setCellValue(rec.getSeniority());
 
-				row.createCell(cells++).setCellValue(rec.getSeniority());
+			row.createCell(cells++).setCellValue(rec.getVacancyReason());
 
-				row.createCell(cells++).setCellValue(rec.getVacancyReason());
-
-				if (rec.getStartDate() != null) {
-					row.createCell(cells++).setCellValue(sdf.format(rec.getStartDate()));
-				}
-				else {
-					row.createCell(cells++).setBlank();
-				}
-
-				if (rec.getEndDate() != null) {
-					row.createCell(cells++).setCellValue(sdf.format(rec.getEndDate()));
-				}
-				else {
-					row.createCell(cells++).setBlank();
-				}
-
-				row.createCell(cells++).setCellValue(rec.getUnit());
-
-				row.createCell(cells++).setCellValue(rec.getAdRequested());
-
-				row.createCell(cells++).setCellValue(rec.getAdPosted());
-
-				row.createCell(cells++).setCellValue(rec.getPositionFilled());
+			if (rec.getStartDate() != null) {
+				row.createCell(cells++).setCellValue(sdf.format(rec.getStartDate()));
+			}
+			else {
+				row.createCell(cells++).setBlank();
 			}
 
-			int firstDataRowIndex = numHeaderRows + 1;
-			int lastDataRowIndex = (recs.size() + numHeaderRows);
+			if (rec.getEndDate() != null) {
+				row.createCell(cells++).setCellValue(sdf.format(rec.getEndDate()));
+			}
+			else {
+				row.createCell(cells++).setBlank();
+			}
 
-			createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 9);
+			row.createCell(cells++).setCellValue(rec.getUnit());
 
-			autoFitColumnWidth(sheet1, cells);
+			row.createCell(cells++).setCellValue(rec.getAdRequested());
+
+			row.createCell(cells++).setCellValue(rec.getAdPosted());
+
+			row.createCell(cells++).setCellValue(rec.getPositionFilled());
 		}
-		catch (ReportException e) {
-			log.error("PositionPlannerStaffingExcelReport.createVacanciesSheet(XSSFWorkbook wb): SchoolYear["
-					+ this.getSchoolYear() + "]", e);
-		}
+
+		int firstDataRowIndex = numHeaderRows + 1;
+		int lastDataRowIndex = (this.vacancies.size() + numHeaderRows);
+
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 9);
+
+		autoFitColumnWidth(sheet1, cells);
+
 	}
 
 	private void createPermanentsSheet(XSSFWorkbook wb) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
-
-		Collection<PermanentsRecord> recs = null;
-
 		Sheet sheet1 = wb.createSheet("Permanents - " + this.schoolYear);
 
-		createReportDateHeader(wb, sheet1, 0);
-		createHeader(wb, sheet1, 1,
+		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
+		createHeader(wb, sheet1, nextRowIndex,
 				Arrays.asList("School Year", "School/Location", "Owner", "Seniority (yrs)", "Unit", "Assignment"));
 
 		int numHeaderRows = sheet1.getLastRowNum() + 1;
 
 		freezeHeader(sheet1, numHeaderRows);
 
-		try {
-			recs = ReportsManager.getPositionPlannerPermanentsBySchoolYear(this.schoolYear);
+		int rows = sheet1.getLastRowNum(), cells = 0;
 
-			int rows = sheet1.getLastRowNum(), cells = 0;
+		for (PermanentsRecord rec : this.permanents) {
+			Row row = sheet1.createRow(++rows);
 
-			for (PermanentsRecord rec : recs) {
-				Row row = sheet1.createRow(++rows);
+			cells = 0;
 
-				cells = 0;
+			row.createCell(cells++).setCellValue(rec.getSchoolYear());
 
-				row.createCell(cells++).setCellValue(rec.getSchoolYear());
+			row.createCell(cells++).setCellValue(rec.getLocation());
 
-				row.createCell(cells++).setCellValue(rec.getLocation());
+			row.createCell(cells++).setCellValue(rec.getOwner());
 
-				row.createCell(cells++).setCellValue(rec.getOwner());
+			row.createCell(cells++).setCellValue(rec.getSeniority());
 
-				row.createCell(cells++).setCellValue(rec.getSeniority());
+			row.createCell(cells++).setCellValue(rec.getUnit());
 
-				row.createCell(cells++).setCellValue(rec.getUnit());
-
-				row.createCell(cells++).setCellValue(rec.getAssignment());
-			}
-
-			int firstDataRowIndex = numHeaderRows + 1;
-			int lastDataRowIndex = (recs.size() + numHeaderRows);
-
-			createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 4);
-
-			autoFitColumnWidth(sheet1, cells);
+			row.createCell(cells++).setCellValue(rec.getAssignment());
 		}
-		catch (ReportException e) {
-			log.error("PositionPlannerStaffingExcelReport.createPermanentsSheet(XSSFWorkbook wb): SchoolYear["
-					+ this.getSchoolYear() + "]", e);
-		}
+
+		int firstDataRowIndex = numHeaderRows + 1;
+		int lastDataRowIndex = (this.permanents.size() + numHeaderRows);
+
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 4);
+
+		autoFitColumnWidth(sheet1, cells);
+
+	}
+
+	public int createSummaryHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
+
+		createReportDateHeader(wb, sheet, rowIndex++);
+		createTotalAllocationUnitsHeader(wb, sheet, rowIndex++);
+		createTotalPermanentUnitsHeader(wb, sheet, rowIndex++);
+		createTotalRedunciesUnitsHeader(wb, sheet, rowIndex++);
+		createTotalVacancyUnitsHeader(wb, sheet, rowIndex++);
+		createOutstandingUnitsHeader(wb, sheet, rowIndex++);
+
+		return rowIndex;
+	}
+
+	public void createTotalAllocationUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
+
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+		CellStyle cs = wb.createCellStyle();
+
+		Font f = wb.createFont();
+
+		f.setFontHeightInPoints((short) 12);
+		f.setBold(true);
+		f.setColor(IndexedColors.RED.getIndex());
+
+		cs.setFont(f);
+		cs.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs.setFillPattern(FillPatternType.BRICKS);
+
+		Row row = sheet.createRow(rowIndex);
+		Cell cell = null;
+
+		cell = row.createCell(0);
+		cell.setCellStyle(cs);
+		cell.setCellValue("TOTAL ALLOCATION");
+
+		cell = row.createCell(1);
+		cell.setCellStyle(cs);
+		cell.setCellValue(df.format(this.getTotalAllocationUnits()));
+	}
+
+	public void createTotalPermanentUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
+
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+		CellStyle cs = wb.createCellStyle();
+
+		Font f = wb.createFont();
+
+		f.setFontHeightInPoints((short) 12);
+		f.setBold(true);
+		f.setColor(IndexedColors.RED.getIndex());
+
+		cs.setFont(f);
+		cs.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs.setFillPattern(FillPatternType.BRICKS);
+
+		Row row = sheet.createRow(rowIndex);
+		Cell cell = null;
+
+		cell = row.createCell(0);
+		cell.setCellStyle(cs);
+		cell.setCellValue("PERMANENTS");
+
+		cell = row.createCell(1);
+		cell.setCellStyle(cs);
+		cell.setCellValue(df.format(this.getTotalPermanentUnits()));
+	}
+
+	public void createTotalRedunciesUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
+
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+		CellStyle cs = wb.createCellStyle();
+
+		Font f = wb.createFont();
+
+		f.setFontHeightInPoints((short) 12);
+		f.setBold(true);
+		f.setColor(IndexedColors.RED.getIndex());
+
+		cs.setFont(f);
+		cs.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs.setFillPattern(FillPatternType.BRICKS);
+
+		Row row = sheet.createRow(rowIndex);
+		Cell cell = null;
+
+		cell = row.createCell(0);
+		cell.setCellStyle(cs);
+		cell.setCellValue("REDUNDANCIES");
+
+		cell = row.createCell(1);
+		cell.setCellStyle(cs);
+		cell.setCellValue(df.format(this.getTotalRedundentUnits()));
+	}
+
+	public void createTotalVacancyUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
+
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+		CellStyle cs = wb.createCellStyle();
+
+		Font f = wb.createFont();
+
+		f.setFontHeightInPoints((short) 12);
+		f.setBold(true);
+		f.setColor(IndexedColors.RED.getIndex());
+
+		cs.setFont(f);
+		cs.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs.setFillPattern(FillPatternType.BRICKS);
+
+		Row row = sheet.createRow(rowIndex);
+		Cell cell = null;
+
+		cell = row.createCell(0);
+		cell.setCellStyle(cs);
+		cell.setCellValue("VACANCIES");
+
+		cell = row.createCell(1);
+		cell.setCellStyle(cs);
+		cell.setCellValue(df.format(this.getTotalVacancyUnits()));
+
+		cell = row.createCell(2);
+		cell.setCellStyle(cs);
+		cell.setCellValue("FILLED");
+
+		cell = row.createCell(3);
+		cell.setCellStyle(cs);
+		cell.setCellValue(df.format(this.getTotalVacanciesFilled()));
+	}
+
+	public void createOutstandingUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
+
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+		CellStyle cs = wb.createCellStyle();
+
+		Font f = wb.createFont();
+
+		f.setFontHeightInPoints((short) 12);
+		f.setBold(true);
+		f.setColor(IndexedColors.RED.getIndex());
+
+		cs.setFont(f);
+		cs.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		cs.setFillPattern(FillPatternType.BRICKS);
+
+		Row row = sheet.createRow(rowIndex);
+		Cell cell = null;
+
+		cell = row.createCell(0);
+		cell.setCellStyle(cs);
+		cell.setCellValue("OUTSTANDING");
+
+		cell = row.createCell(1);
+		cell.setCellStyle(cs);
+		cell.setCellValue(df.format(this.getTotalOutstandingUnits()));
+	}
+
+	public double getTotalTCHAllocationUnits() {
+
+		return this.allocations.stream().mapToDouble(a -> a.getTotalTchUnits()).sum();
+	}
+
+	public double getTotalTLAAllocationUnits() {
+
+		return this.allocations.stream().mapToDouble(a -> a.getTotalTLAUnits()).sum();
+	}
+
+	public double getTotalAllocationUnits() {
+
+		return this.allocations.stream().mapToDouble(a -> a.getTotalUnits()).sum();
+	}
+
+	public double getTotalPermanentUnits() {
+
+		return this.permanents.stream().mapToDouble(p -> p.getUnit()).sum();
+	}
+
+	public double getTotalRedundentUnits() {
+
+		return this.redundancies.stream().mapToDouble(r -> r.getUnit()).sum();
+	}
+
+	public double getTotalVacancyUnits() {
+
+		return this.vacancies.stream().mapToDouble(v -> v.getUnit()).sum();
+	}
+
+	public double getTotalVacanciesUnfilled() {
+
+		return this.vacancies.stream().filter(v -> !v.getPositionFilled().contains("YES")).mapToDouble(
+				v -> v.getUnit()).sum();
+	}
+
+	public double getTotalVacanciesFilled() {
+
+		return this.vacancies.stream().filter(v -> v.getPositionFilled().contains("YES")).mapToDouble(
+				v -> v.getUnit()).sum();
+	}
+
+	public double getTotalOutstandingUnits() {
+
+		return this.getTotalAllocationUnits() - this.getTotalPermanentUnits() - this.getTotalVacanciesFilled();
 	}
 
 	public static class RedundanciesRecord {
