@@ -3,7 +3,8 @@
 	try{
 		User usr = (User) pageContext.getAttribute("usr", PageContext.SESSION_SCOPE);
 		
-		if(!(usr.checkRole("ADMINISTRATOR") || usr.checkRole("AD HR") || usr.checkRole("SEO - PERSONNEL"))) {
+		if(!(usr.checkRole("ADMINISTRATOR") || usr.checkRole("AD HR") || usr.checkRole("SEO - PERSONNEL")
+				|| usr.checkRole("ASSISTANT DIRECTORS") || usr.checkRole("DIRECTOR"))) {
 			// no access
 			
 			return;

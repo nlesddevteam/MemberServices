@@ -88,7 +88,7 @@ q<!-- MyHRP (C) 2018  -->
          		<div class="alert alert-danger" style="margin-top:10px;margin-bottom:10px;padding:5px;"><b><%=request.getParameter("delmesserr") %></b></div>
          	<%} %>			
                   	
-					<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+				<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 				<hr>	
 				<div class="pageHeader">Latest Hiring Statistics</div>	
 				
@@ -286,7 +286,7 @@ q<!-- MyHRP (C) 2018  -->
 								</tbody>
 							</table>
 							
-							<esd:SecurityAccessRequired roles="ADMINISTRATOR,AD HR,SEO - PERSONNEL">
+							<esd:SecurityAccessRequired roles="ADMINISTRATOR,AD HR,SEO - PERSONNEL,DIRECTOR,ASSISTANT DIRECTORS">
 								<div style='text-align: right;'>
 									<a id='btn-download-staffing-report' href="javascript: void(0)" class="btn btn-info pull-right"><i class="fa fa-download" aria-hidden="true"></i> &nbsp;Download Staffing Update Report</a>
 									<div class="clearfix"></div> 
