@@ -115,12 +115,12 @@
 									var newrow="";
 									if(i % 2 == 0)
 									{
-									newrow ="<tr style='background-color:#E5F2FF;' id='" + $(this).find("ID").text() + "'>";
+									newrow ="<tr'>";
  									}else{
- 										newrow ="<tr style='background-color:#white;' id='" + $(this).find("ID").text() + "'>";
+ 										newrow ="<tr'>";
  									}
 									$('#tender_status').val('6');	
-									$('.details_success_message').html("SUCCESS: Tender has been updated!").css("display","block").delay(6000).fadeOut();
+									$('.details_success_message').html("SUCCESS: Tender has been updated!").css("display","block").delay(4000).fadeOut();
  									
 									//now we add each one to the table
 									newrow += "<td>" + $(this).find("TFTITLE").text() + "</td>";
@@ -129,13 +129,13 @@
 									newrow += "<td><a class='btn btn-danger btn-xs' onclick='return confirm(\"Are you sure you want to DELETE this document?\");' href='deleteOtherTendersFile.html?id=${p.id}&fid=${p.tfDoc}&tid=${p.tenderId}'>DEL</a></td>";
 									//<td class='list' align='center'><a class="fancybox" href="#inline1" title="Confirm Deletion" onclick="OpenPopUp(${pledge.pk});">Delete</a></td>
 									newrow +="</tr>";
-									$('table#showlists tr:last').after(newrow);
+									$('table#addendumTable tr:last').after(newrow);
 									i=i+1; 
 									isvalid=true;
 	                   				
  								}else{
  									//alert($(this).find("MESSAGE").text()+ "1");
- 									$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(6000).fadeOut();			
+ 									$(".details_error_message").html($(this).find("MESSAGE").text()).css("display","block").delay(4000).fadeOut();			
  								}
 						});
             },
@@ -150,3 +150,4 @@
     	return isvalid;
     }
    
+
