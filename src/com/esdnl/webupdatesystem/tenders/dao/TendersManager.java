@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -12,9 +15,12 @@ import com.awsd.school.SchoolException;
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.webupdatesystem.tenders.bean.TenderException;
 import com.esdnl.webupdatesystem.tenders.bean.TendersBean;
+import com.esdnl.webupdatesystem.tenders.bean.TendersFileBean;
 import com.esdnl.webupdatesystem.tenders.constants.TenderStatus;
+import com.nlesd.school.bean.SchoolZoneBean;
 import com.nlesd.school.service.SchoolZoneService;
 public class TendersManager {
+	static Map<Integer,SchoolZoneBean> map = null;
 	public static int addNewTender(TendersBean ebean) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -102,6 +108,76 @@ public class TendersManager {
 		}
 		return tenders;
 	}
+	public static Vector<TendersBean> getTendersFull() throws TenderException {
+		Vector<TendersBean> tenders = null;
+		TendersBean tender = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<TendersFileBean>fbeans = new ArrayList<TendersFileBean>();
+		try {
+			tenders = new Vector<TendersBean>(5);
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.get_tenders_full; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			int currentid=-1;
+			while (rs.next()) {
+				if(currentid == -1) {
+					//first tender
+					tender = createTenderBeanFull(rs);
+					currentid=tender.getId();
+					if(rs.getInt("FILEID") > 0) {
+						//tender file create bean and add to collection
+						TendersFileBean filebean = TendersFileManager.createTendersFileBeanFull(rs);
+						fbeans.add(filebean);
+					}
+				}else {
+					if(currentid == rs.getInt("ID")) {
+						//same tender another file
+						TendersFileBean filebean = TendersFileManager.createTendersFileBeanFull(rs);
+						fbeans.add(filebean);
+					}else {
+						//next tender
+						//add files to tender
+						if(!fbeans.isEmpty()) {
+							tender.setOtherTendersFiles(fbeans);
+						}
+						//add tender to list
+						tenders.add(tender);
+						//reset objects
+						tender = createTenderBeanFull(rs);
+						currentid=tender.getId();
+						fbeans = new ArrayList<TendersFileBean>();
+						if(rs.getInt("FILEID") > 0) {
+							TendersFileBean filebean = TendersFileManager.createTendersFileBeanFull(rs);
+							fbeans.add(filebean);
+						}
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			System.err.println("TendersManager.getTendersFull: " + e);
+			throw new TenderException("Can not extract tenders from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return tenders;
+	}	
 	public static void updateTender(TendersBean ebean) {
 		Connection con = null;
 		CallableStatement stat = null;
@@ -256,15 +332,17 @@ public class TendersManager {
 	public static TendersBean createTenderBean(ResultSet rs) {
 		TendersBean abean = null;
 		try {
+			
 			abean = new TendersBean();
 			abean.setId(rs.getInt("ID"));
 			abean.setTenderNumber(rs.getString("TENDER_NUMBER"));
-			abean.setTenderZone(SchoolZoneService.getSchoolZoneBean(rs.getInt("REGION")));
-			//abean.setTenderZone(SchoolZoneService.createSchoolZoneBean(rs));
+			//abean.setTenderZone(SchoolZoneService.getSchoolZoneBean(rs.getInt("REGION")));
+			abean.setTenderZone(getSchoolZone(rs.getInt("REGION")));
 			abean.setTenderTitle(rs.getString("TENDER_TITLE"));
 			abean.setClosingDate(new java.util.Date(rs.getTimestamp("CLOSING_DATE").getTime()));
 			abean.setTenderDoc(rs.getString("TENDER_DOC"));
-			abean.setTenderOpeningLocation(SchoolZoneService.getSchoolZoneBean(rs.getInt("OPENING_LOCATION")));
+			abean.setTenderOpeningLocation(getSchoolZone(rs.getInt("OPENING_LOCATION")));
+			//abean.setTenderOpeningLocation(SchoolZoneService.getSchoolZoneBean(rs.getInt("OPENING_LOCATION")));
 			abean.setTenderStatus(TenderStatus.get(rs.getInt("TENDER_STATUS")));
 			abean.setAddedBy(rs.getString("ADDED_BY"));
 			abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
@@ -281,13 +359,59 @@ public class TendersManager {
 		}
 		catch (SQLException e) {
 			abean = null;
-		}  catch (SchoolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TenderException e) {
+		}  catch (TenderException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return abean;
-	}	
+	}
+	public static SchoolZoneBean getSchoolZone(Integer zid) {
+		SchoolZoneBean z=null;
+		if(map == null) {
+			try {
+				map = SchoolZoneService.getSchoolZoneBeansMap();
+			} catch (SchoolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			z=map.get(zid);
+			
+		}else {
+			z=map.get(zid);
+		}
+		return z;
+	}
+	public static TendersBean createTenderBeanFull(ResultSet rs) {
+		TendersBean abean = null;
+		try {
+			
+			abean = new TendersBean();
+			abean.setId(rs.getInt("ID"));
+			abean.setTenderNumber(rs.getString("TENDER_NUMBER"));
+			//abean.setTenderZone(SchoolZoneService.getSchoolZoneBean(rs.getInt("REGION")));
+			abean.setTenderZone(getSchoolZone(rs.getInt("REGION")));
+			abean.setTenderTitle(rs.getString("TENDER_TITLE"));
+			abean.setClosingDate(new java.util.Date(rs.getTimestamp("CLOSING_DATE").getTime()));
+			abean.setTenderDoc(rs.getString("TENDER_DOC"));
+			abean.setTenderOpeningLocation(getSchoolZone(rs.getInt("OPENING_LOCATION")));
+			//abean.setTenderOpeningLocation(SchoolZoneService.getSchoolZoneBean(rs.getInt("OPENING_LOCATION")));
+			abean.setTenderStatus(TenderStatus.get(rs.getInt("TENDER_STATUS")));
+			abean.setAddedBy(rs.getString("ADDED_BY"));
+			abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+			abean.setDocUploadName(rs.getString("DOC_UPLOAD_NAME"));
+			Timestamp ts= rs.getTimestamp("AWARDED_DATE");
+			if(ts != null){
+				abean.setAwardedDate(new java.util.Date(rs.getTimestamp("AWARDED_DATE").getTime()));
+			}
+			abean.setAwardedTo(rs.getString("AWARDED_TO"));
+			abean.setContractValue(rs.getDouble("CONTRACT_VALUE"));
+			//abean.setOtherTendersFiles(TendersFileManager.getTendersFiles(abean.getId()));
+			
+			
+		}
+		catch (SQLException e) {
+			abean = null;
+		}
+		return abean;
+	}
 }

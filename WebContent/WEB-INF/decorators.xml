@@ -80,6 +80,11 @@
 	<pattern>/SchoolReviews/*</pattern>
   </decorator> 
  
+  <!-- For Tenders System  -->
+  <decorator name="tenderPostings" page="Tenders/includes/decorator/main.jsp">
+	<pattern>/Tenders/*</pattern>
+  </decorator> 
+ 
  
  <!-- For Website CMS 
    <decorator name="CMS" page="WebUpdateSystem/includes/decorator/main.jsp">
@@ -105,6 +110,7 @@
 <excludes>
 <!-- EECD -->
     <pattern>/EECD/eecd_menu*</pattern>
+    
 <!-- MyHR -->    
     <pattern>/Personnel/apply*</pattern>
     <pattern>/Personnel/unapply*</pattern>  

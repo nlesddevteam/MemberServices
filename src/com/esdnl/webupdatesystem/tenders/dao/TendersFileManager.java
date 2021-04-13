@@ -136,4 +136,21 @@ public class TendersFileManager {
 		}
 		return abean;
 	}
+	public static TendersFileBean createTendersFileBeanFull(ResultSet rs) {
+		TendersFileBean abean = null;
+		try {
+			abean = new TendersFileBean();
+			abean.setId(rs.getInt("FILEID"));
+			abean.setTfTitle(rs.getString("TF_TITLE"));
+			abean.setTfDoc(rs.getString("TF_DOC"));
+			abean.setAddedBy(rs.getString("ADDED_BY"));
+			abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+			abean.setTenderId(rs.getInt("TENDER_ID"));
+			abean.setAddendumDate(new java.util.Date(rs.getTimestamp("ADDENDUM_DATE").getTime()));
+		}
+		catch (SQLException e) {
+			abean = null;
+		}
+		return abean;
+	}
 }
