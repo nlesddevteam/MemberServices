@@ -114,8 +114,9 @@ public class UpdateTenderRequestHandler extends RequestHandlerImpl {
 
 				request.setAttribute("statuslist", statuslist);
 				request.setAttribute("tender", TendersManager.getTenderById(form.getInt("id")));
-				path = "view_tender_details.jsp";
-				request.setAttribute("msg", "Tender has been updated");
+				//path = "view_tender_details.jsp";
+				request.setAttribute("msgOK", "SUCCESS: Tender has been updated.");
+				path = "viewTenders.html";
 			}
 			else {
 				Collection<SchoolZoneBean> list = SchoolZoneService.getSchoolZoneBeans();
@@ -126,7 +127,7 @@ public class UpdateTenderRequestHandler extends RequestHandlerImpl {
 				}
 				request.setAttribute("statuslist", statuslist);
 				if (!validate_form()) {
-					request.setAttribute("msg", validator.getErrorString());
+					request.setAttribute("msgERR", validator.getErrorString());
 				}
 				request.setAttribute("tender", TendersManager.getTenderById(form.getInt("id")));
 				path = "view_tender_details.jsp";

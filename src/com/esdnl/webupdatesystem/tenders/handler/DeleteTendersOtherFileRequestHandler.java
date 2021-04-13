@@ -47,7 +47,7 @@ public class DeleteTendersOtherFileRequestHandler extends RequestHandlerImpl {
 				statuslist.put(t.getValue(), t.getDescription());
 			}
 			request.setAttribute("statuslist", statuslist);
-			request.setAttribute("msg", "Other Tenders File has been deleted");
+			request.setAttribute("msgOK", "SUCCESS: Other Tenders File has been deleted");
 			path = "view_tender_details.jsp";
 		}
 		catch (Exception e) {

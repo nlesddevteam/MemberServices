@@ -1808,26 +1808,77 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.handler.ViewWebUpdateSystemRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/viewWebUpdateSystem.html</URL-Pattern>
     </Request-Handler>
+
+
    	<Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.AddNewTenderRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/addNewTender.html</URL-Pattern>
+      	<URL-Pattern>/Tenders/addNewTender.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewTendersRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/viewTenders.html</URL-Pattern>
+      	<URL-Pattern>/Tenders/viewTenders.html</URL-Pattern>
+    </Request-Handler>
+    
+     <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewClosedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewClosedTenders.html</URL-Pattern>
+    </Request-Handler>
+         <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewCancelledTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewCancelledTenders.html</URL-Pattern>
+    </Request-Handler>
+         <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewAwardedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewAwardedTenders.html</URL-Pattern>
+    </Request-Handler>
+         <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewArchivedTenders.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedAwardedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewArchivedAwardedTenders.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedCancelledTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewArchivedCancelledTenders.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedClosedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewArchivedClosedTenders.html</URL-Pattern>
+    </Request-Handler>
+    
+        <Request-Handler>
+     <Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewCurrentTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewCurrentTenders.html</URL-Pattern>
+    </Request-Handler>
+   <Request-Handler>
+     <Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewUnsetTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewUnsetTenders.html</URL-Pattern>
+    </Request-Handler>
+    
+    <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewTenderRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/viewTenderDetails.html</URL-Pattern>
+      	<URL-Pattern>/Tenders/viewTenderDetails.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.UpdateTenderRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/updateTenderDetails.html</URL-Pattern>
+      	<URL-Pattern>/Tenders/updateTenderDetails.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.DeleteTenderRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/deleteTender.html</URL-Pattern>
+      	<URL-Pattern>/Tenders/deleteTender.html</URL-Pattern>
     </Request-Handler>
+      <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.AddNewTendersFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/addOtherTendersFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.DeleteTendersOtherFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/deleteOtherTendersFile.html</URL-Pattern>
+    </Request-Handler>
+ 
+    
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.AddNewMeetingMinutesRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/addNewMeetingMinutes.html</URL-Pattern>
@@ -1967,15 +2018,7 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.newspostings.handler.DeleteNewsPostingsOtherFileRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/NewsPostings/deleteOtherNewsFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.AddNewTendersFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/addOtherTendersFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.DeleteTendersOtherFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Tenders/deleteOtherTendersFile.html</URL-Pattern>
-    </Request-Handler>
+    </Request-Handler>  
     <Request-Handler>
     	<Request-Handler-Class>com.esdnl.payadvice.handler.ExportPayProcessErrorsCSVRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/PayAdvice/exportProcessErrors.html</URL-Pattern>

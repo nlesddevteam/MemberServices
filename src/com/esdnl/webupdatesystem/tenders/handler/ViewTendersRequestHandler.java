@@ -18,7 +18,8 @@ public class ViewTendersRequestHandler extends RequestHandlerImpl {
 				IOException {
 		super.handleRequest(request, reponse);
 	    try {
-			request.setAttribute("tenders", TendersManager.getTenders());
+			//request.setAttribute("tenders", TendersManager.getTenders());
+			request.setAttribute("tenders", TendersManager.getTendersFull());
 			
 		} catch (TenderException e) {
 			// TODO Auto-generated catch block

@@ -32,7 +32,7 @@ public class DeleteTenderRequestHandler extends RequestHandlerImpl {
 			delete_file(filelocation, tb.getDocUploadName());
 			TendersManager.deleteTender(tb.getId());
 
-			request.setAttribute("msg", "Tender has been deleted");
+			request.setAttribute("msgOK", "SUCCESS: Tender has been deleted");
 
 			path = "viewTenders.html";
 		}

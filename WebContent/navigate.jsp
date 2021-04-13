@@ -286,7 +286,7 @@
 					<esd:SecurityAccessRequired
 						permissions="TENDER-ADMIN,TENDER-EDIT,TENDER-VIEW">
 						<div class="menuIconImage">
-							<a href="WebUpdateSystem/Tenders/viewTenders.html"><img
+							<a href="Tenders/viewTenders.html"><img
 								src="includes/img/menu/tenders-off.png"
 								class="img-swap menuImage" title="Tender Posting System"
 								border=0></a>

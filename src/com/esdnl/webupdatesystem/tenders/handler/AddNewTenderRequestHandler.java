@@ -106,8 +106,9 @@ public class AddNewTenderRequestHandler extends RequestHandlerImpl {
 					int id = TendersManager.addNewTender(tb);
 					Collection<SchoolZoneBean> list = SchoolZoneService.getSchoolZoneBeans();
 					request.setAttribute("regions", list);
-					path = "add_new_tender.jsp";
-					request.setAttribute("msg", "Tender has been added");
+					//path = "add_new_tender.jsp";
+					request.setAttribute("msgOK", "SUCCESS: Tender has been successfully added.");
+					path = "viewTenders.html";
 				}
 				else {
 					Collection<SchoolZoneBean> list = SchoolZoneService.getSchoolZoneBeans();
@@ -118,7 +119,7 @@ public class AddNewTenderRequestHandler extends RequestHandlerImpl {
 					}
 					request.setAttribute("statuslist", statuslist);
 					if (!validate_form()) {
-						request.setAttribute("msg", validator.getErrorString());
+						request.setAttribute("msgERR", validator.getErrorString());
 					}
 					path = "add_new_tender.jsp";
 				}
