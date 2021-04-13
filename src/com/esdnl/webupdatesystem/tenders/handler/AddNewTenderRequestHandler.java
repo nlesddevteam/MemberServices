@@ -108,7 +108,8 @@ public class AddNewTenderRequestHandler extends RequestHandlerImpl {
 					request.setAttribute("regions", list);
 					//path = "add_new_tender.jsp";
 					request.setAttribute("msgOK", "SUCCESS: Tender has been successfully added.");
-					path = "viewTenders.html";
+					//path = "viewTenders.html";
+					path = "add_new_tender.jsp";
 				}
 				else {
 					Collection<SchoolZoneBean> list = SchoolZoneService.getSchoolZoneBeans();

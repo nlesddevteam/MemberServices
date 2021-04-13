@@ -257,7 +257,7 @@
                    
                    
 					
-					 <table class="table table-sm table-bordered responsive" width="100%" style="font-size:12px;background-color:White;">
+					 <table class="table table-sm table-bordered responsive" width="100%" style="font-size:12px;background-color:White;" id="addendumTable">
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">							
 							<th width="45%" style="border-right:1px solid white;">TTITLE</th>						    												
@@ -277,7 +277,7 @@
 							<td width="30%"><a href="/includes/files/tenders/doc/${p.tfDoc}" target="_blank">Addendum Document (PDF)</a></td>							
 							<td width="15%">${p.addendumDateFormatted}</td>
 							<td width="10%"><a class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to DELETE this document?');" href='deleteOtherTendersFile.html?id=${p.id}&fid=${p.tfDoc}&tid=${p.tenderId}'>DEL</a></td>
-		                    </tr>
+							 </tr>
 						</c:forEach>		
 						<c:if test="${addendumCoun <= 0}">
 							<tr>
@@ -352,6 +352,8 @@
     
 </div></div>
 
+
+
 <script>
 $(document).ready(function(){
 	
@@ -376,8 +378,14 @@ $(document).ready(function(){
 
 });
 
-</script>    
-    
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+
+</script>   
+   
     
   </body>
 
