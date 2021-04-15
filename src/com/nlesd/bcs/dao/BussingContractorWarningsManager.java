@@ -129,13 +129,13 @@ public class BussingContractorWarningsManager {
 			if(month <6) {
 				//we use the current school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year-1, 5, 30);
+				caltestdate.set(year-1, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 				
 			}else {
 				//we use the next school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year, 5, 30);
+				caltestdate.set(year, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 			}
 			stat.setInt(3, contractorid);
@@ -187,13 +187,13 @@ public class BussingContractorWarningsManager {
 			if(month <6) {
 				//we use the current school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year-1, 5, 30);
+				caltestdate.set(year-1, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 				
 			}else {
 				//we use the next school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year, 5, 30);
+				caltestdate.set(year, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 			}
 			stat.setInt(3, contractorid);
@@ -910,13 +910,13 @@ public class BussingContractorWarningsManager {
 			if(month <6) {
 				//we use the current school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year-1, 5, 30);
+				caltestdate.set(year-1, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 				
 			}else {
 				//we use the next school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year, 5, 30);
+				caltestdate.set(year, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 			}
 			
@@ -1006,13 +1006,13 @@ public class BussingContractorWarningsManager {
 			if(month <6) {
 				//we use the current school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year-1, 5, 30);
+				caltestdate.set(year-1, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 				
 			}else {
 				//we use the next school year
 				Calendar caltestdate = Calendar.getInstance();
-				caltestdate.set(year, 5, 30);
+				caltestdate.set(year, 4, 15);
 				stat.setDate(2,new java.sql.Date(caltestdate.getTimeInMillis()));
 			}
 			
