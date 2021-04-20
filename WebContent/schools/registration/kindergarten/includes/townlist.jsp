@@ -1,4 +1,4 @@
-<option value='-1' selected>--- PLEASE SELECT ---</option>
+<option value selected>---  SELECT ---</option>
 <option value='Abrahams Cove'>Abrahams Cove</option>
 <option value='Adams Cove'>Adams Cove</option>
 <option value='Adeytown'>Adeytown</option>

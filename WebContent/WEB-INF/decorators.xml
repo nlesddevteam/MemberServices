@@ -8,7 +8,7 @@
   	<pattern>/scrs/*</pattern>
   </decorator>
   
-  <decorator name="kindergarten-registration-default" page="schools/registration/kindergarten/decorators/default.jsp">
+  <decorator name="kindergarten-registration-default" page="schools/registration/kindergarten/includes/decorator/main.jsp">
   	<pattern>/schools/registration/kindergarten/*</pattern>
   </decorator>
      

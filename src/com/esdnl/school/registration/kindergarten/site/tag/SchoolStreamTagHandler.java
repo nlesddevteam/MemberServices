@@ -44,7 +44,7 @@ public class SchoolStreamTagHandler extends TagSupport {
 		try {
 			out = pageContext.getOut();
 
-			out.print("<SELECT name=\"" + this.id + "\" id=\"" + this.id + "\"");
+			out.print("<SELECT required name=\"" + this.id + "\" id=\"" + this.id + "\"");
 			if ((this.cls != null) && !this.cls.trim().equals(""))
 				out.print(" class=\"" + this.cls + "\"");
 			if ((this.style != null) && !this.style.trim().equals(""))
