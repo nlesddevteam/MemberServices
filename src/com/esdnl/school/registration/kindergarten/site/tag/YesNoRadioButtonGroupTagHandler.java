@@ -42,7 +42,7 @@ public class YesNoRadioButtonGroupTagHandler extends TagSupport {
 		try {
 			out = pageContext.getOut();
 
-			out.print("Yes<input type=\"radio\" name=\"" + this.id + "\" id=\"" + this.id + "_1\"");
+			out.print("<input type=\"radio\" name=\"" + this.id + "\" id=\"" + this.id + "_1\"");
 			if ((this.cls != null) && !this.cls.trim().equals(""))
 				out.print(" class=\"" + this.cls + "\"");
 			if ((this.style != null) && !this.style.trim().equals(""))
@@ -50,7 +50,7 @@ public class YesNoRadioButtonGroupTagHandler extends TagSupport {
 			out.print(" value=\"1\"");
 			if (this.value != null && this.value.booleanValue())
 				out.print(" CHECKED");
-			out.print("/>&nbsp;&nbsp;No<input type=\"radio\" name=\"" + this.id + "\" id=\"" + this.id + "_0\"");
+			out.print("/> YES &nbsp;&nbsp; <input type=\"radio\" name=\"" + this.id + "\" id=\"" + this.id + "_0\"");
 			if ((this.cls != null) && !this.cls.trim().equals(""))
 				out.print(" class=\"" + this.cls + "\"");
 			if ((this.style != null) && !this.style.trim().equals(""))
@@ -58,7 +58,7 @@ public class YesNoRadioButtonGroupTagHandler extends TagSupport {
 			out.print(" value=\"0\"");
 			if (this.value != null && !this.value.booleanValue())
 				out.print(" CHECKED");
-			out.print("/>");
+			out.print("/> NO");
 
 		}
 		catch (IOException e) {

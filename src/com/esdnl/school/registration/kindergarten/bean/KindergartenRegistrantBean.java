@@ -9,7 +9,7 @@ import com.esdnl.servlet.FormElementFormat;
 public class KindergartenRegistrantBean {
 
 	public enum GENDER {
-		UNKNOWN(0, "UNKNOW GENDER"), FEMALE(1, "Female"), MALE(2, "Male");
+		UNKNOWN(0, "UNKNOW GENDER"), FEMALE(1, "Female"), MALE(2, "Male"),	NONBINARY(3, "Non-Binary");;
 
 		private int value;
 		private String text;
@@ -678,5 +678,64 @@ public class KindergartenRegistrantBean {
 
 		this.status = status;
 	}
-
+	public String getPrimaryFirstName() {
+		String fname="";
+		if(this.getPrimaryContactName() != null) {
+			String[] names= this.primaryContactName.split(" ");
+			if(names.length > 0) {
+				fname = names[0];
+			}
+		}
+		return fname;
+	}
+	public String getPrimaryLastName() {
+		String fname="";
+		if(this.getPrimaryContactName() != null) {
+			String[] names= this.primaryContactName.split(" ");
+			if(names.length > 1) {
+				fname = names[1];
+			}
+		}
+		return fname;
+	}
+	public String getSecondaryFirstName() {
+		String fname="";
+		if(this.secondaryContactName != null) {
+			String[] names= this.secondaryContactName.split(" ");
+			if(names.length > 0) {
+				fname = names[0];
+			}
+		}
+		return fname;
+	}
+	public String getSecondaryLastName() {
+		String fname="";
+		if(this.secondaryContactName != null) {
+			String[] names= this.secondaryContactName.split(" ");
+			if(names.length > 1) {
+				fname = names[1];
+			}
+		}
+		return fname;
+	}	
+	public String getEmergencyFirstName() {
+		String fname="";
+		if(this.emergencyContactName != null) {
+			String[] names= this.emergencyContactName.split(" ");
+			if(names.length > 0) {
+				fname = names[0];
+			}
+		}
+		return fname;
+	}
+	public String getEmergencyLastName() {
+		String fname="";
+		if(this.emergencyContactName != null) {
+			String[] names= this.emergencyContactName.split(" ");
+			if(names.length > 1) {
+				fname = names[1];
+			}
+		}
+		return fname;
+	}
 }

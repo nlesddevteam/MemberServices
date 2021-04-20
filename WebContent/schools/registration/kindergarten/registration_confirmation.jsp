@@ -28,259 +28,173 @@
     		});
     	});
     </script>
+  
   </head>
 
   <body>
 		<c:choose>
-			<c:when test="${kr ne null}">
-				<div align='center'>
-					<div style='padding-bottom:8px; width:100%; text-align:left;'>
-						<p>
-							<span style="color:Green;font-size:14px;font-weight:bold;">Your application for Kindergarten registration for the ${kr.registration.schoolYear} school year has been received at <b><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></b>. 
-							A confirmation email has also been sent to ${kr.primaryContactEmail}.</span>
-						</p>
-						<p> 
+			<c:when test="${kr ne null}">			
+				<div class="alert alert-success no-print">
+				<b>SUCCESS:</b> Your application for Kindergarten registration for the ${kr.registration.schoolYear} school year has been received at 
+				<b><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></b>. <br/>
+				A confirmation email has also been sent to ${kr.primaryContactEmail}.
+				</div>				
+				<br/>
 							Please present proof of address to the school on or before <fmt:formatDate type="date" dateStyle="long" value="${kr.registration.addressConfirmationDeadline}" />
 							 to complete the registration process. This does not guarantee acceptance to the school or program, the District reserves the right to make 
 							 the final decision regarding student acceptance and placement. 
-						</p>
-						<p>
+							<br/><br/>
 							Below is a copy of the application you submitted for your reference. Acceptance letters will follow when acceptance has been approved.<br /><br />
 							Thank You,<br />
 							Newfoundland and Labrador English School District
-						</p>
-						<p>
-							<b>To register another child please click <a style='text-decoration:none;color:red;' href="<c:url value='/schools/registration/kindergarten/index.html?rel=${kr.registrantId}'/>">HERE</a>.</b>
-						</p>
-					</div>
-				</div>
-				
-				<div id='add-registrant-form' style='width:100%; display:inline;'>
+						
+					
+						
+					
+					 <div align="center" class="no-print">
+					 	<hr>
+					 Please print this page for your records. You can also register another child or exit.<br/><br/>
+					 <a class="btn btn-sm btn-primary" href="/schools/registration/kindergarten/index.html?rel=${kr.registrantId}"><i class="fas fa-edit"></i> Register Another Child</a> &nbsp; 	
+					 <a href='#' class="no-print noJump btn btn-sm btn-warning" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>KINDERSTART/KINDERGARTEN REGISTRATION</b></div><br/><br/>'});"><i class="fas fa-print"></i> Print this Page</a> &nbsp; 
+                     <a href="/index.jsp" class="no-print btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
+                      </div>    
+			
+						<br/><br/>		
+					<div id='add-registrant-form' style='width:100%; display:inline;'>
 					<input type='hidden' name='registration_id' value='${ap.registrationId}' />
-					<div align='center'>
-						<fieldset>
-							<legend>School Information</legend>
-							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-								<tr>
-									<td class='label'>School Year:</td>
-									<td style='font-weight:bold;' align='left'>${kr.registration.schoolYear}</td>
-								</tr>
-								<tr>
-									<td class='label required'>School:</td>
-									<td align='left'>${kr.school.schoolName}</td>
-								</tr>
-								<tr>
-									<td class='label required'>Stream:</td>
-									<td align='left'>${kr.schoolStream.text}</td>
-								</tr>
-							</table>
-						</fieldset>
-					</div>
-					<br />
-					<div align='center'>
-						<fieldset>
-							<legend>Student Information</legend>
-							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-								<tr>
-									<td class='label required'>Full Name:</td>
-									<td align='left'>${kr.studentLastName}, ${kr.studentFirstName}</td>
-								</tr>
-								<tr>
-									<td class='label required'>Gender:</td>
-									<td align='left'>${kr.studentGender.text}</td>
-								</tr>
-								<tr>
-									<td class='label required' valign='top'>Date of Birth:</td>
-									<td align='left'>
-										<fmt:formatDate type="date" dateStyle="long" value="${kr.dateOfBirth}" />
-									</td>
-								</tr>
-								<tr>
-									<td class='label required'>MCP Number:</td>
-									<td align='left'>${kr.mcpNumber}</td>
-								</tr>
-								<tr>
-									<td class='label required' valign='top'>MCP Expiration:</td>
-									<td align='left'>
-										${kr.mcpExpiry}
-									</td>
-								</tr>
-							</table>
-							<br />
-							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-								<caption>Physical &amp; Mailing Addresses</caption>
-								<tr>
-									<td class='label' style='text-align:left;'>Physical Address</td>
-									<td class='label' style='text-align:left;'>Mailing Address</td>
-								</tr>
-								<tr>
-									<td align='left'>
-										${kr.physicalStreetAddress1} <br />
-										<c:if test='${kr.physicalStreetAddress2 ne ""}'>
-											${kr.physicalStreetAddress2} <br />
-										</c:if>
-										${kr.physicalCityTown}, NL<br />
-										${kr.physicalPostalCode}
-									</td>
-									<td align='left'>
-										${kr.mailingStreetAddress1} <br />
-										<c:if test='${kr.mailingStreetAddress2 ne ""}'>
-											${kr.mailingStreetAddress2} <br />
-										</c:if>
-										${kr.mailingCityTown}, NL<br />
-										${kr.mailingPostalCode}
-									</td>
-								</tr>
-							</table>
-						</fieldset>
-					</div>
-					<br />
-					<div align='center'>
-						<fieldset>
-							<legend>Contact Information</legend>								
-							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-								<caption>Primary Contact</caption>
-								<tr>
-									<td class='label required'>Full Name:</td>
-									<td align='left'>${kr.primaryContactName}</td>
-								</tr>
-								<tr>
-									<td class='label required'>Relationship to Student:</td>
-									<td align='left'>${kr.primaryContactRelationship.text}</td>
-								</tr>
-								<c:if test='${kr.primaryContactHomePhone ne ""}'>
-									<tr>
-										<td class='label one-required'>Home Phone:</td>
-										<td align='left'>
-											${kr.primaryContactHomePhone}
-										</td>
-									</tr>
-								</c:if>
-								<c:if test='${kr.primaryContactWorkPhone ne ""}'>
-									<tr>
-										<td class='label one-required'>Work Phone:</td>
-										<td align='left'>
-											${kr.primaryContactWorkPhone}
-										</td>
-									</tr>
-								</c:if>
-								<c:if test='${kr.primaryContactCellPhone ne ""}'>
-									<tr>
-										<td class='label one-required'>Cell Phone:</td>
-										<td align='left'>
-											${kr.primaryContactCellPhone}
-										</td>
-									</tr>
-								</c:if>
-								<tr>
-									<td class='label required'>Email:</td>
-									<td align='left'>${kr.primaryContactEmail}</td>
-								</tr>
-							</table><br/>
-							<c:if test='${kr.secondaryContactName ne ""}'>
-								<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-									<caption>Optional Contact</caption>
-									<tr>
-										<td class='label optionally-required'>Full Name:</td>
-										<td align='left'>${kr.secondaryContactName}</td>
-									</tr>
-									<tr>
-										<td class='label optionally-required'>Relationship to Student:</td>
-										<td align='left'>${kr.secondaryContactRelationship.text}</td>
-									</tr>
-									<c:if test='${kr.secondaryContactHomePhone ne ""}'>
-										<tr>
-											<td class='label optionally-one-required'>Home Phone:</td>
-											<td align='left'>
-												${kr.secondaryContactHomePhone}
-											</td>
-										</tr>
-									</c:if>
-									<c:if test='${kr.secondaryContactWorkPhone ne ""}'>
-										<tr>
-											<td class='label optionally-one-required'>Work Phone:</td>
-											<td align='left'>
-												${kr.secondaryContactWorkPhone}
-											</td>
-										</tr>
-									</c:if>
-									<c:if test='${kr.secondaryContactCellPhone ne ""}'>
-										<tr>
-											<td class='label optionally-one-required'>Cell Phone:</td>
-											<td align='left'>
-												${kr.secondaryContactCellPhone}
-											</td>
-										</tr>
-									</c:if>
-									<tr>
-										<td class='label optionally-required'>Email:</td>
-										<td align='left'>${kr.secondaryContactEmail}</td>
-									</tr>
-								</table>
-							</c:if>
-							<div align='center'>
-								<div style='padding-top:8px; padding-bottom:5px; font-style:italic; width:60%; text-align:left;'>
-									All parents/guardians must provide an alternative contact in case of emergency.
+					
+<!-- SCHOOL INFORMATION -->						
+					<div class="card">
+							  <div class="card-header"><b>SCHOOL INFORMATION</b></div>
+							  <div class="card-body">	
+									<div class="row container-fluid" style="padding-top:5px;">
+		      							<div class="col-lg-4 printSet"><b>School Year:</b><br/><div class="dField">${kr.registration.schoolYear ne null?kr.registration.schoolYear:"N/A"} </div></div>
+										<div class="col-lg-4 printSet"><b>School:</b><br/><div class="dField">${kr.school.schoolName ne null?kr.school.schoolName:"N/A"}</div></div>
+										<div class="col-lg-4 printSet"><b>Stream:</b><br/><div class="dField">${kr.schoolStream.text ne null?kr.schoolStream.text:"N/A"}</div></div>
+									</div>
+							</div>
+					</div>		
+					<br/>	
+<!-- STUDENT INFORMATION -->						
+					<div class="card">
+							  <div class="card-header"><b>STUDENT INFORMATION</b></div>
+							  <div class="card-body">	
+								<div class="row container-fluid" style="padding-top:5px;">
+		      							<div class="col-lg-6 printSet"><b>Student Name:</b><br/><div class="dField">${kr.studentLastName ne null?kr.studentLastName:"N/A"}, ${kr.studentFirstName ne null?kr.studentFirstName:"N/A"}</div></div>
+										<div class="col-lg-3 printSet"><b>Gender:</b><br/><div class="dField">${kr.studentGender.text ne null?kr.studentGender.text:"N/A"}</div></div>
+										<div class="col-lg-3 printSet"><b>Date of Birth:</b><br/><div class="dField"><fmt:formatDate type="date" dateStyle="long" value="${kr.dateOfBirth}" /></div></div>
+								</div>
+								<div class="row container-fluid" style="padding-top:5px;">
+		      							<div class="col-lg-4 printSet"><b>MCP Number:</b><br/><div class="dField">${kr.mcpNumber ne null?kr.mcpNumber:"N/A"}</div></div>
+										<div class="col-lg-4 printSet"><b>MCP Expiration: (mm/yyyy)</b><br/><div class="dField">${kr.mcpExpiry ne null?kr.mcpExpiry:"N/A"}</div></div>										
+								</div>	
+								<div class="row container-fluid" style="padding-top:15px;">
+		      							<div class="col-lg-6 printSet"><b>PHYSICAL ADDRESS:</b><br/>
+				      							<div class="dField">${kr.physicalStreetAddress1 ne null?kr.physicalStreetAddress1:"N/A" } <br />
+												<c:if test='${kr.physicalStreetAddress2 ne null}'>
+													${kr.physicalStreetAddress2} <br />
+												</c:if>
+												${kr.physicalCityTown ne null?kr.physicalCityTown:"N/A"}, NL &middot; ${kr.physicalPostalCode ne null?kr.physicalPostalCode:"N/A"}
+		      							</div></div>
+										<div class="col-lg-6 printSet"><b>MAILING ADDRESS:</b><br/>
+												<div class="dField">${kr.mailingStreetAddress1 ne null?kr.mailingStreetAddress1:"N/A"} <br />
+												<c:if test='${kr.mailingStreetAddress2 ne null}'>
+													${kr.mailingStreetAddress2} <br />
+												</c:if>
+												${kr.mailingCityTown ne null?kr.mailingCityTown:"N/A"}, NL &middot;	${kr.mailingPostalCode ne null?kr.mailingPostalCode:"N/A"}
+										</div></div>
+							</div>									
+							</div>
+					</div>						
+				
+							
+				<br/>
+					
+					
+					<!-- STUDENT INFORMATION -->						
+					<div class="card">
+							  <div class="card-header"><b>3. CONTACT INFORMATION</b></div>
+							  <div class="card-body">	
+								<div class="row container-fluid" style="padding-top:5px;">
+		      							<div class="col-lg-4 printSet" style="padding:5px;"><b>(a) PRIMARY CONTACT</b><br/>
+		      								<b>Name:</b><br/>
+		      								<div class="dField">${kr.primaryContactName ne null?kr.primaryContactName:"N/A"}</div>
+		      								<b>Relationship to Student:</b><br/>
+		      								<div class="dField">${kr.primaryContactRelationship.text ne null?kr.primaryContactRelationship.text:"N/A"}</div>
+		      								<b>Home Phone:</b><br/>
+		      								<div class="dField">${kr.primaryContactHomePhone ne null?kr.primaryContactHomePhone:"N/A"}</div>
+		      								<b>Work Phone:</b><br/>
+		      								<div class="dField">${kr.primaryContactWorkPhone ne null?kr.primaryContactWorkPhone:"N/A"}</div>
+		      								<b>Cell Phone:</b><br/>
+		      								<div class="dField">${kr.primaryContactCellPhone ne null?kr.primaryContactCellPhone:"N/A"}</div>
+		      								<b>Email:</b><br/>
+		      								<div class="dField">${kr.primaryContactEmail ne null?kr.primaryContactEmail:"N/A"}</div>
+		      								
+										</div>
+										<div class="col-lg-4 printSet" style="padding:5px;"><b>(b) OPTIONAL CONTACT</b><br/>
+		      								<b>Name:</b><br/>
+		      								<div class="dField">${kr.secondaryContactName ne null?kr.secondaryContactName:"N/A"}</div>
+		      								<b>Relationship to Student:</b><br/>
+		      								<div class="dField">${kr.secondaryContactRelationship.text ne null?kr.secondaryContactRelationship.text:"N/A"}</div>
+		      								<b>Home Phone:</b><br/>
+		      								<div class="dField">${kr.secondaryContactHomePhone ne null?kr.secondaryContactHomePhone:"N/A"}</div>
+		      								<b>Work Phone:</b><br/>
+		      								<div class="dField">${kr.secondaryContactWorkPhone ne null?kr.secondaryContactWorkPhone:"N/A"}</div>
+		      								<b>Cell Phone:</b><br/>
+		      								<div class="dField">${kr.secondaryContactCellPhone ne null?kr.secondaryContactCellPhone:"N/A"}</div>
+		      								<b>Email:</b><br/>
+		      								<div class="dField">${kr.secondaryContactEmail ne null?kr.secondaryContactEmail:"N/A"}</div>			
+										</div>			
+										<div class="col-lg-4 printSet" style="padding:5px;"><b>(c) EMERGENCY CONTACT</b><br/>
+		      								<div class="col-lg-12 col-6">
+		      								<b>Name:</b><br/>
+		      								<div class="dField">${kr.emergencyContactName ne null?kr.emergencyContactName:"N/A"}</div>
+		      								</div>
+		      								<div class="col-lg-12 col-6">		      								
+		      								<b>Telephone:</b><br/>
+		      								<div class="dField">${kr.emergencyContactTelephone ne null?kr.emergencyContactTelephone:"N/A"}</div>
+		      								</div>			
+										</div>								
+									</div>									
+							</div>
+					</div>	
+					<br/>
+					
+<!-- OTHER INFORMATION -->						
+					<div class="card">
+							  <div class="card-header"><b>4. OTHER INFORMATION</b></div>
+							  <div class="card-body">	
+								<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">	
+		      							<div class="col-8">(a) Are there any custody issues of which the school should be aware?<br />
+										<i>Court documentation is required if either parent is to be denied from receiving academic information and/or access to child.</i></div>
+										<div class="col-4">${kr.custodyIssues ? "Yes" : "No"}</div>
+								</div>
+								<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">	
+		      							<div class="col-8">(b) Does your child have any health or other concerns of which we should be aware?</div>
+										<div class="col-4">${kr.healthConcerns ? "Yes" : "No"}</div>
+								</div>
+								<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">	
+		      							<div class="col-8">(c) Does your child require an accessible facility?</div>
+										<div class="col-4">${kr.accessibleFacility ? "Yes" : "No"}</div>
+								</div>
+								<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">	
+		      							<div class="col-8">(d) Do you have a child currently enrolled in the Early French Immersion Program in this school?</div>
+										<div class="col-4">${kr.efiSibling ? "Yes" : "No"}</div>
 								</div>
 							</div>
-							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-								<caption>Emergency Contact</caption>
-								<tr>
-									<td class='label required'>Full Name:</td>
-									<td align='left'>${kr.emergencyContactName}</td>
-								</tr>
-								<tr>
-									<td class='label required'>Telephone:</td>
-									<td align='left'>
-										${kr.emergencyContactTelephone}
-									</td>
-								</tr>
-							</table>
-						</fieldset>
-					</div><br />
-					<div align='center'>
-						<fieldset>
-							<legend>Other Information</legend>
-							<table align='center' cellspacing='0' cellpadding='8' width='100%'>
-								<tr>
-									<td class='label required' style='width:110px;' valign='top'>${kr.custodyIssues ? "Yes" : "No"}</td>
-									<td align='left'>
-										Are there any custody issues of which the school should be aware?<br /><br />
-										<i>Court documentation is required if either parent is to be denied from receiving academic information and/or access to child.</i>
-									</td>
-								</tr>
-								<tr>
-									<td class='label required' style='width:110px;' valign='top'>${kr.healthConcerns ? "Yes" : "No"}</td>
-									<td align='left'>Does your child have any health or other concerns of which we should be aware?</td>
-								</tr>
-								<tr>
-									<td class='label required' style='width:110px;' valign='top'>${kr.accessibleFacility ? "Yes" : "No"}</td>
-									<td align='left'>Does your child require an accessible facility?</td>
-								</tr>
-								<tr>
-									<td class='label required' style='width:110px;' valign='top'>${kr.efiSibling ? "Yes" : "No"}</td>
-									<td align='left'>Do you have a child currently enrolled in the Early French Immersion Program in this school?</td>
-								</tr>
-							</table>
-						</fieldset>
-					</div>
-					<br />
-					<br />
+					</div>					
+
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div style='width=:50%;' align='center'>
-					<br /><br />
-					<fieldset style='text-align:left;'>
-							<legend>Registration Form</legend>
-							We are current not accepting Kindergarten registrations at this time. Please try again later, thank you.
-					</fieldset>
-					<br /><br />
-					<a class='swap' href='http://www.nlesd.ca'><img border='0' src="<c:url value='/schools/registration/kindergarten/includes/images/home-off.png'/>" /></a>
-				</div>
+			<div align="center">
+			<div class="alert alert-danger">Sorry, we are current <b>not</b> accepting Kinderstart/Kindergarten registrations at this time. Please try again later, thank you.</div>
+					<br/><br/>
+					<a class='btn btn-danger btn-sm' href='/families/kindergartenregistration.jsp'><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
+			</div>
 			</c:otherwise>
 		</c:choose>
-		
+<br/><br/>		
 	</body>
 	
 </html>
