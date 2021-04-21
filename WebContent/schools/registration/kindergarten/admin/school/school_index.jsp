@@ -44,6 +44,13 @@
 		<div align='center' style='font-size:14pt;font-weight:bold;color:#33cc33;padding-bottom:15px;'>
 	  	${sch ne null ? sch.schoolName : ""} Kindergarten Registrants
   	</div>
+  	
+  	<div class="alert alert-danger" style="text-align:center;">NOTICE: System is undergoing maintenance. Please do not use at this time. Sorry for any inconvenience.</div>
+  	
+  	
+  	<div style="display:none;">
+  	
+  	
 		<div id='list-registrants-by-form' class='form-panel' style='width:100%; display:inline;'>
 			<form method='post' action="<c:url value='/schools/registration/kindergarten/admin/school/index.html'/>">
 				<table align='center' cellspacing='2' cellpadding='2'>
@@ -108,6 +115,9 @@
 		</div>
 		<br />
 		<br />
+		
+		
+		</div>
 	</body>
 	
 </html>
