@@ -71,6 +71,11 @@
 
 
   <body bgcolor="#BF6200">
+  
+  <div class="alert alert-danger" style="text-align:center;">NOTICE: System is undergoing maintenance. Please do not use at this time. Sorry for any inconvenience.</div>
+  	
+  <div style="display:none;">	
+  
 		<div align='center' style='font-size:14pt;font-weight:bold;color:#33cc33;padding-bottom:15px;'>
 	  	Kindergarten Registration Periods<br/>
 	  	<div style="float:left; width:33%;"><canvas id="provincialChart" height="200"></canvas></div>
@@ -80,6 +85,10 @@
 	  	<canvas id="dataChart" height="100"></canvas>
 	  	
   	</div>
+  
+  
+  
+  	
 		<div>
 			<table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" style='border-bottom: solid 2px grey;'>
 				<tr>
@@ -279,6 +288,10 @@
 
 
 
+</div>
+
+
+
 <script>
      //Get last 4 years
      
@@ -295,7 +308,7 @@
     	 
        type: 'bar',       
        data: {
-         labels: dateLimit,
+         labels: ["1","2","3","4"],
          datasets: [{
            label: 'CWL English Numbers',
            data: englishCWLList,
