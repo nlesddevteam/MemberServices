@@ -57,7 +57,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>		
 
  <!--  CSS LOCAL FILES - ANY MODIFICATIONS DO HERE-->  		
-  		<link rel="stylesheet" href="includes/css/kreg.css?ver=${todayVer}"/>				
+  		<link rel="stylesheet" href="/MemberServices/schools/registration/kindergarten/includes/css/kreg.css?ver=${todayVer}"/>				
 	
 <!-- JAVASCRIPT FILES CDN-->			
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -108,7 +108,7 @@
 			
 		<!-- <script type="text/javascript" src="//serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
 		<script src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>	-->
-		<script src="includes/js/kreg.js?ver=${todayVer}"></script>			 
+		<script src="/MemberServices/schools/registration/kindergarten/includes/js/kreg.js?ver=${todayVer}"></script>			 
       	<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -127,13 +127,13 @@
 	<body>			
 			
 	<!-- Get the loading data animation ready, in front and hidden -->
-	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="/MemberServices/Tenders/includes/img/tenderanimated.gif" width="300" border=0><br/>Loading data, please wait...</div></div>
+	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="/MemberServices/schools/registration/kindergarten/includes//img/tenderanimated.gif" width="300" border=0><br/>Loading data, please wait...</div></div>
 	
 
 	<!-- PAGE BODY -->	
 			<div class="mainContainer">
 				<div class="container-fluid">	
-				 <img src="includes/img/header.png" style="width:100%;"/>
+				 <img src="/MemberServices/schools/registration/kindergarten/includes/img/header.png" style="width:100%;"/>
 				 
 				 				<div class="msgerr alert alert-danger no-print details_error_message" style="display:none;"></div>         
          				    	<div class="msgok alert alert-success no-print details_success_message" style="display:none;"></div>
