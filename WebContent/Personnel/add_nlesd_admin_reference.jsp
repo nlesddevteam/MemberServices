@@ -877,7 +877,7 @@ $('#d3c').keypress(function(e) {
 													    <select name="Q6" class="form-control input-sm">
 																<option value="-1">--- Select One ---</option>
 																<option value="Recommend for Hire" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q6 eq 'Recommend for Hire' ? "SELECTED" : "" } >Recommend for Hire</option>
-																<option value="Do Not Recommend for Hire" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q6 eq 'Do Not Recommend for Hire' ? "SELECTED" : "" } >Do Recommend Not Hire</option>
+																<option value="Do Not Recommend for Hire" ${ REFERENCE_BEAN ne null and REFERENCE_BEAN.q6 eq 'Do Not Recommend for Hire' ? "SELECTED" : "" } >Do Not Recommend for Hire</option>
 															</select>
 															</td>
 													 </tr>													 
