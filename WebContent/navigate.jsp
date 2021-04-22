@@ -360,14 +360,14 @@
 
 					<!-- Personnel Package 2019-->
 					<esd:SecurityAccessRequired
-						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS">
+						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-VIEW-SUBMITTED-REFERENCES">
 						<div class="menuIconImage">
 							<a href="Personnel/admin_index.jsp"> <img
 								src="includes/img/menu/myhrp-off.png" class="img-swap menuImage"
 								border=0 title="Human Resources Profile System">
 							</a>
 						</div>
-					</esd:SecurityAccessRequired>
+					</esd:SecurityAccessRequired> 
 					
 
 					

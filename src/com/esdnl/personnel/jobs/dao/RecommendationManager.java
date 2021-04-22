@@ -76,7 +76,47 @@ public class RecommendationManager {
 
 		return eBean;
 	}
+	public static ArrayList<String> getRecommendationsEmails(String compnum) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<String> rlist = new ArrayList<String>();
+		try {
 
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_rec_emails(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, compnum);
+			stat.execute();
+
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				rlist.add(rs.getString("EMAIL"));
+			}
+				
+
+		}
+		catch (SQLException e) {
+			System.err.println("ArrayList<String> getRecommendationsEmails(String compnum): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return rlist;
+	}
 	public static void deleteTeacherRecommendationBean(int id) throws JobOpportunityException {
 
 		Connection con = null;

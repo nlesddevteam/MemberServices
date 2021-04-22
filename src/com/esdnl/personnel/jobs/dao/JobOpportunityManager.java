@@ -1508,6 +1508,8 @@ public class JobOpportunityManager {
 			else {
 				jBean.add(JobOpportunityAssignmentManager.createJobOpportunityAssignmentBean(rs, loadMetaData));
 			}
+			jBean.setAwardedEmailSent(rs.getInt("AWARDED_EMAIL_SENT") == 1 ? true:false);
+			jBean.setMultipleRecommendations(rs.getInt("MULTIPLE_RECS") == 1 ? true:false);
 
 		}
 		catch (SQLException e) {
@@ -1593,5 +1595,34 @@ public class JobOpportunityManager {
 		}
 
 		return (JobOpportunityBean[]) v_opps.toArray(new JobOpportunityBean[0]);
+	}
+	public static void updateJobSendEmail(String comp_num) throws JobOpportunityException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			// get the opportunity info
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_send_email_rec(?); end;");
+			stat.setString(1, comp_num);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("void updateJobSendEmail(String comp_num): " + e);
+			throw new JobOpportunityException("Can not update send email JobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}
 }

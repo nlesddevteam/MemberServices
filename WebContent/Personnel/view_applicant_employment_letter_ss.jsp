@@ -111,7 +111,12 @@
 							<td>End Date(if applicable):</td>
 							<td>${empty rbean.endDate ?'':rbean.endDateFormatted}</td>
 						</tr>
-						
+						<c:if test="${rec.specialConditions eq 'Yes'}">
+						<tr>
+							<td>Special Conditions:</td>
+							<td>${rec.specialConditionsComment eq null ? 'None': rec.specialConditionsComment }</td>
+						</tr>
+						</c:if>
 						</tbody>
 					</table>
 				</p>

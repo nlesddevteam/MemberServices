@@ -102,25 +102,32 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 								ebean.setFrom("ms@nlesd.ca");
 								ebean.send();
 								//now we get all other applicants and send a position filled email
+								//check to see if it is a regular job or it is multi with no emails sent yet and checkbox set
+								if((!job.isMultipleRecommendations()) || (job.isMultipleRecommendations() && job.isAwardedEmailSent())) {
 								ApplicantProfileBean[] profiles = null;
-								profiles = ApplicantProfileManager.getApplicantProfileBeanByJob(job.getCompetitionNumber());
-								for (ApplicantProfileBean apb : profiles) {
-									if (!(apb.getEmail().equals(profile.getEmail()))) {
-										EmailBean ebeanother = new EmailBean();
-										ebeanother.setTo(apb.getEmail());
-										ebeanother.setSubject("Newfoundland and Labrador English School District - Position Filled - "
-												+ job.getCompetitionNumber() + ": " + job.getPositionTitle());
-										// set values to be used in template
-										model.put("competitionNumber", job.getCompetitionNumber());
-										model.put("competitionTitle", job.getPositionTitle());
-										model.put("candidateName", org.apache.commons.lang.StringUtils.capitalize(profile.getFirstname())
-												+ " " + org.apache.commons.lang.StringUtils.capitalize(profile.getSurname()));
-										ebeanother.setBody(
-												VelocityUtils.mergeTemplateIntoString("personnel/position_filled_response.vm", model));
-										ebeanother.setFrom("ms@nlesd.ca");
-										ebeanother.send();
+									profiles = ApplicantProfileManager.getApplicantProfileBeanByJob(job.getCompetitionNumber());
+									ArrayList<String> rlist = RecommendationManager.getRecommendationsEmails(job.getCompetitionNumber());
+									rlist.add(profile.getEmail());
+									for (ApplicantProfileBean apb : profiles) {
+										//if (!(apb.getEmail().equals(profile.getEmail()))) {
+										if (!(rlist.contains(apb.getEmail()))) {
+											EmailBean ebeanother = new EmailBean();
+											ebeanother.setTo(apb.getEmail());
+											ebeanother.setSubject("Newfoundland and Labrador English School District - Position Filled - "
+													+ job.getCompetitionNumber() + ": " + job.getPositionTitle());
+											// set values to be used in template
+											model.put("competitionNumber", job.getCompetitionNumber());
+											model.put("competitionTitle", job.getPositionTitle());
+											model.put("candidateName", org.apache.commons.lang.StringUtils.capitalize(profile.getFirstname())
+													+ " " + org.apache.commons.lang.StringUtils.capitalize(profile.getSurname()));
+											ebeanother.setBody(
+													VelocityUtils.mergeTemplateIntoString("personnel/position_filled_response.vm", model));
+											ebeanother.setFrom("ms@nlesd.ca");
+											ebeanother.send();
+										}
 									}
 								}
+								
 
 							}
 							catch (EmailException e) {

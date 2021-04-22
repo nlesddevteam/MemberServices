@@ -38,7 +38,16 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 			try {
 				if(form.exists("refreq")) {
 					abean = ApplicantRefRequestManager.getApplicantRefRequestBean(form.getInt("refreq"));
-					profile = ApplicantProfileManager.getApplicantProfileBean(abean.getApplicantId());
+					//check to see if this is null, applicant might have deleted requests
+					//show nice message to user instead of nothing
+					if(abean == null) {
+						path = "view_nlesd_reference_error_app.jsp";
+						request.setAttribute("msg", "Error finding reference request. Requester might have deleted the request.  Please check with the requester");
+						return path;
+					}else {
+						profile = ApplicantProfileManager.getApplicantProfileBean(abean.getApplicantId());
+					}
+					
 				}else if(form.exists("id")) {
 					rbean = ReferenceCheckRequestManager.getReferenceCheckRequestBean(form.getInt("id"));
 					profile = ApplicantProfileManager.getApplicantProfileBean(rbean.getCandidateId());
@@ -75,7 +84,8 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 					}
 					else {
 						//TODO: SHOULD WE EVER GET HERE....YES QUERY PARAM COULD BE MANUALLY CHANGED!!!!!
-						return "/MemberServices/memberservices.html";
+						request.setAttribute("msg","Error retrieving reference request");
+						return "view_nlesd_reference_error_app.jsp";
 					}
 
 					request.setAttribute("PROFILE", profile);
@@ -87,7 +97,8 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 					}
 				}
 				else {
-					path = "/MemberServices/memberservices.html";
+					request.setAttribute("msg","Error retrieving reference request");
+					path = "view_nlesd_reference_error_app.jsp";
 				}
 			}
 			catch (Exception e) {
@@ -95,11 +106,12 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 
 				request.setAttribute("msg", e.getMessage());
 
-				path = "/MemberServices/memberservices.html";
+				path = "view_nlesd_reference_error_app.jsp";
 			}
 		}
 		else {
-			path = "/MemberServices/memberservices.html";
+			request.setAttribute("msg","Error retrieving reference request");
+			path = "view_nlesd_reference_error_app.jsp";
 		}
 
 		return path;

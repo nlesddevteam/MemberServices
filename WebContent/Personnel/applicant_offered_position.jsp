@@ -112,6 +112,19 @@
                                     
                                     <table class="table table-condensed table-striped" style="font-size:12px;">
                                     <tbody>
+                                    <%System.out.println(rec.getSpecialConditions()); %>
+                                    <%if(rec.getSpecialConditions().equals("Yes")){ %>
+                                    <tr>
+					                <td class="tableTitle">SPECIAL CONDITIONS:</td>
+					                <td class="tableResult">
+                					<div id="sc_row">
+                						<%= rec.getSpecialConditionsComment() == null ? "None" :rec.getSpecialConditionsComment() %>
+                                      	
+                                      </div>
+					                </td>
+					              </tr>
+					              <%} %>
+					              
 					     			<tr>
 					                <td class="tableTitle">SOCIAL INSURANCE NUMBER (SIN):</td>
 					                <td class="tableResult">

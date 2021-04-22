@@ -123,6 +123,12 @@
 								<td>${adreq.formatedEndDate}</td>
 							</tr>
 						</c:if>
+						<c:if test="${rec.specialConditions eq 'Yes'}">
+						<tr>
+							<td>Special Conditions:</td>
+							<td>${rec.specialConditionsComment eq null ? 'None': rec.specialConditionsComment }</td>
+						</tr>
+						</c:if>
 						</tbody>
 					</table>
 				</p>

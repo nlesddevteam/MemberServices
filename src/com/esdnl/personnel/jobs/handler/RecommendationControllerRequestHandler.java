@@ -151,6 +151,12 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
 
 					this.sendNotification(rec, form.get("op"));
+					//now we need to check and see if this op has multiple recs and if we are ready to send filled email
+					if(rec.getJob().isMultipleRecommendations()) {
+						if(form.get("lastrec").equals("Y")) {
+							JobOpportunityManager.updateJobSendEmail(rec.getJob().getCompetitionNumber());
+						}
+					}
 
 					request.setAttribute("msg", "Offer has been sent to " + rec.getCandidate().getFullNameReverse() + ".");
 				}
@@ -169,9 +175,9 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					RecommendationManager.updateTeacherRecommendationStatus(rec, usr.getPersonnel(),
 							RecommendationStatus.PROCESSED);
 					rec = RecommendationManager.getTeacherRecommendationBean(form.getInt("id"));
-
-					JobOpportunityManager.awardJobOpportunityBean(rec.getJob().getCompetitionNumber());
-
+					if((!rec.getJob().isMultipleRecommendations()) || (rec.getJob().isMultipleRecommendations() && rec.getJob().isAwardedEmailSent())) {
+						JobOpportunityManager.awardJobOpportunityBean(rec.getJob().getCompetitionNumber());
+					}
 					//now update the teacher vacancy if there was one
 					AdRequestBean adbean = AdRequestManager.getAdRequestBean(rec.getJob().getCompetitionNumber());
 					if (adbean != null) {

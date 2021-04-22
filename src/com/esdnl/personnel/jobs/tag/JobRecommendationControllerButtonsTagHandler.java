@@ -81,6 +81,13 @@ public class JobRecommendationControllerButtonsTagHandler extends TagSupport {
 				else {
 					if (usr.checkPermission("PERSONNEL-ADMIN-OFFER-POSITION")) {
 						out.println("<a class='rec-op-btn btn btn-xs btn-primary' op='offer'  id='offer_btn' href='#'>Make Offer</a>");
+						out.println("<br />");
+						if(recommendation.getJob().isMultipleRecommendations() && !recommendation.getJob().isAwardedEmailSent()) {
+							out.println("<br /><div class=\"alert alert-info\" role=\"alert\">");
+							out.println("<input type='checkbox' id='chklastrec' name='chklastrec' onchange='updatelastrecform(this)'>&nbsp;This is a multiple recommendation opportunity, "
+									+ "please check the box if this is the final recommendation and the opportunity filled email should be sent.");
+							out.println("</div>");
+						}
 					}
 				}
 			}

@@ -4170,6 +4170,22 @@
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.schoolstatus.handler.ExportSchoolStatusRequestHandler</Request-Handler-Class>
       <URL-Pattern>/SchoolStatusExport/exportSchoolStatus.html</URL-Pattern>
-     </Request-Handler>          
+     </Request-Handler>
+      <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.GetContractorEmployeesCRRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewEmployeeDetailsCR.html</URL-Pattern>
+     </Request-Handler>
+      <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewEmployeesRegionalRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewContractorEmployeesReg.html</URL-Pattern>
+     </Request-Handler>
+      <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewEmployeesRegionalDeailsRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewContractorEmployeesRegDetails.html</URL-Pattern>
+     </Request-Handler>
+         <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.DeclineInterviewShortlistApplicantRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/declineInterviewShortlistApplicant.html</URL-Pattern>
+    </Request-Handler>                             
   </Request-Handlers>
 </Member-Services-Config>

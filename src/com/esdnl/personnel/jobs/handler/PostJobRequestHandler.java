@@ -125,6 +125,13 @@ public class PostJobRequestHandler implements RequestHandler {
 					opp.setPrivateCandidateList(true);
 				else if (!StringUtils.isEmpty(request.getParameter("candidatelist_private")))
 					opp.setPrivateCandidateList(true);
+				
+				//check to see if there are more than one recommendations
+				if (!StringUtils.isEmpty(request.getParameter("multiple_positions"))) {
+					opp.setMultipleRecommendations(true);
+				}else {
+					opp.setMultipleRecommendations(false);
+				}
 
 				JobOpportunityAssignmentBean ass = new JobOpportunityAssignmentBean(opp.getCompetitionNumber(), Integer.parseInt(
 						location), 0.0);

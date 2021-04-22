@@ -84,6 +84,8 @@ public class ViewJobShortlistRequestHandler extends RequestHandlerImpl {
 							session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 							session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
 									ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+							session.setAttribute("JOB_SHORTLIST_WITHDRAWS_MAP",
+									ApplicantProfileManager.getApplicantShortlistInterviewWithdrawsMap(opp));
 							path = "admin_view_job_applicants_shortlist.jsp";
 						}
 						if (opp.getIsSupport().contentEquals("Y")) {

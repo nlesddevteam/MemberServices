@@ -309,6 +309,14 @@ var pageWordCountConfAd = {
 	                                 
 	                                 
                                     </esd:SecurityAccessRequired>
+                                    <div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          						 			<div class="checkbox">
+          						 			<label><input type="checkbox" id="multiple_positions" name="multiple_positions" <%=(opp != null && opp.isMultipleRecommendations())?"CHECKED" :""%> />Is there Multiple Recommendations?*</label>
+          						 			</div> 
+          								</div>
+		  							 </div>
+                                    
                                     <div class="row no-print">
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;text-align:center;">
                                  <!-- <a href='#' class="btn btn-sm btn-info" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Advertisement Posting</b></div><br/><br/>'});">Print Page</a> -->
