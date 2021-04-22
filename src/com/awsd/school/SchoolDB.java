@@ -1580,4 +1580,49 @@ public class SchoolDB {
 		}
 		return schools;
 	}
+	public static String getLocationText(int schoolid) {
+
+		String txt = null;
+
+		switch (schoolid) {
+		case -3000:
+			txt = "Central Regional Office";
+			break;
+		case -2000:
+			txt = "Western Regional Office";
+			break;
+		case -1000:
+			txt = "Labrador Regional Office";
+			break;
+		case -999:
+			txt = "District Office";
+			break;
+		case -998:
+			txt = "Avalon Regional Office";
+			break;
+		case -100:
+			txt = "Avalon East Region";
+			break;
+		case -200:
+			txt = "Avalon West Region";
+			break;
+		case -300:
+			txt = "Burin Region";
+			break;
+		case -400:
+			txt = "Vista Region";
+			break;
+		default:
+			try {
+				txt = SchoolDB.getSchool(schoolid).getSchoolName();
+			} catch (SchoolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			break;
+		}
+
+		return txt;
+	}
 }
