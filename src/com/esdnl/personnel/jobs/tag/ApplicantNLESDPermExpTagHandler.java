@@ -51,7 +51,7 @@ public class ApplicantNLESDPermExpTagHandler extends TagSupport {
 					out.println("<TR>");
 					out.println("<TD>" + sdf.format(beans[i].getFrom()) + "</TD>");
 					out.println("<TD>" + sdf.format(beans[i].getTo()) + "</TD>");
-					out.println("<TD>"+ SchoolDB.getSchool(beans[i].getSchoolId()).getSchoolName() + "</TD>");
+					out.println("<TD>"+ SchoolDB.getLocationText(beans[i].getSchoolId()) + "</TD>");
 					out.println("<TD>" + beans[i].getGradesSubjects() + "</TD>");
 					out.println("<TD><a class='btn btn-xs btn-danger' href='applicantRegistration.html?step=2A&del="+ beans[i].getId() + "'>DEL</a></td>");
 					out.println("</TR>");
@@ -66,10 +66,6 @@ public class ApplicantNLESDPermExpTagHandler extends TagSupport {
 		}
 	
 		
-		catch (SchoolException e) {
-			e.printStackTrace();
-			throw new JspException(e.getMessage());
-		}
 		catch (JobOpportunityException e) {
 			e.printStackTrace();
 			throw new JspException(e.getMessage());

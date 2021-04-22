@@ -182,6 +182,13 @@ input {
 		else
 			document.getElementById('accept_btn').style.display = 'none';
 	}
+	function updatelastrecform(obj){
+		if (obj.checked == true){
+			$('#lastrec').val('Y');
+		}else{
+			$('#lastrec').val('N');
+		}
+	}
 
 </script>
 </head>
@@ -206,7 +213,7 @@ input {
 		action='jobRecommentationController.html'>
 		<input type='hidden' name='id' value='<%=rec.getRecommendationId()%>' />
 		<input type='hidden' name='op' id='recommendation-op' value='' />
-
+		<input type='hidden' name='lastrec' id='lastrec' value='' />
 
 
 

@@ -9,7 +9,7 @@ import com.esdnl.util.StringUtils;
 public class ViewNLESDPrincipalCompletedReferenceChecksRequestHandler extends RequestHandlerImpl {
 	public ViewNLESDPrincipalCompletedReferenceChecksRequestHandler() {
 		this.requiredPermissions = new String[] {
-				"PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW",
+				"PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-VIEW-SUBMITTED-REFERENCES"
 		};
 	}
 	@Override

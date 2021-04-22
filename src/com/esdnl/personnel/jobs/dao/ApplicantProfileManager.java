@@ -2789,4 +2789,89 @@ public class ApplicantProfileManager {
 
 		return hasRecs;
 	}
+	public static HashMap<String, ApplicantProfileBean> getApplicantShortlistInterviewWithdrawsMap(JobOpportunityBean opp)
+			throws JobOpportunityException {
+
+		HashMap<String, ApplicantProfileBean> v_opps = null;
+		ApplicantProfileBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			v_opps = new HashMap<String, ApplicantProfileBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_short_list_withdraws(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, opp.getCompetitionNumber());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				eBean = createApplicantProfileBean(rs);
+				v_opps.put(eBean.getSIN(), eBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(
+					"HashMap<String, ApplicantProfileBean> getApplicantShortlistInterviewWithdrawsMap(JobOpportunityBean opp): "
+							+ e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return v_opps;
+	}
+	public static void withdrawShortlistApplicant(String sin, JobOpportunityBean opp)
+			throws JobOpportunityException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.short_list_withdraw(?,?); end;");
+
+			stat.setString(1, sin);
+			stat.setString(2, opp.getCompetitionNumber());
+
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void withdrawShortlistApplicant(String sin, JobOpportunityBean opp): " + e);
+			throw new JobOpportunityException("Can not decline interview.", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}	
 }

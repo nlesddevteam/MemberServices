@@ -25,7 +25,7 @@ public class ViewNLESDTeacherReferenceRequestHandler extends RequestHandlerImpl 
 	public ViewNLESDTeacherReferenceRequestHandler() {
 
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-VIEW-SUBMITTED-REFERENCES"
 		};
 		validator = new FormValidator(new FormElement[] {
 				new RequiredFormElement("id")

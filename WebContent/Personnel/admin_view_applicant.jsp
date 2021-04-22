@@ -873,7 +873,7 @@ input {
 								<tr>
 									<td>[<%= cnt++ %>]&nbsp;<%=sdf.format(per[i].getFrom())%></td>
 									<td><%=sdf.format(per[i].getTo())%></td>
-									<td><%=SchoolDB.getSchool(per[i].getSchoolId()).getSchoolName()%></td>
+									<td><%=SchoolDB.getLocationText(per[i].getSchoolId())%></td>
 									<td><%=per[i].getGradesSubjects()%></td>
 								</tr>
 							<% } %>

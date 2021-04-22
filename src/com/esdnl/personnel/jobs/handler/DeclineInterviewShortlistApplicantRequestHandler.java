@@ -55,10 +55,17 @@ public class DeclineInterviewShortlistApplicantRequestHandler extends RequestHan
 			}
 			else if (validate_form()) {
 				if (opp != null) {
-					ApplicantProfileManager.declineInterviewShortlistApplicant(request.getParameter("sin"), opp);
+					if(request.getParameter("withd").equals("D")) {
+						ApplicantProfileManager.declineInterviewShortlistApplicant(request.getParameter("sin"), opp);
+					}else {
+						ApplicantProfileManager.withdrawShortlistApplicant(request.getParameter("sin"), opp);
+					}
+					
 					session.setAttribute("JOB_SHORTLIST", ApplicantProfileManager.getApplicantShortlist(opp));
 					session.setAttribute("JOB_SHORTLIST_DECLINES_MAP",
 							ApplicantProfileManager.getApplicantShortlistInterviewDeclinesMap(opp));
+					session.setAttribute("JOB_SHORTLIST_WITHDRAWS_MAP",
+							ApplicantProfileManager.getApplicantShortlistInterviewWithdrawsMap(opp));
 					if(opp.getIsSupport().equals("Y")) {
 						request.setAttribute("AD_REQUEST", RequestToHireManager.getRequestToHireByCompNum(opp.getCompetitionNumber()));
 					}else {
@@ -74,8 +81,11 @@ public class DeclineInterviewShortlistApplicantRequestHandler extends RequestHan
 					session.setAttribute("NOTAPPROVED", ApplicantProfileManager.getApplicantsNotApproved(list));
 					*/
 				}
-
-				request.setAttribute("msg", "Applicant flagged as DECLINED INTERVIEW.");
+				if(request.getParameter("withd").equals("D")) {
+					request.setAttribute("msg", "Applicant flagged as DECLINED INTERVIEW.");
+				}else {
+					request.setAttribute("msg", "Applicant flagged as WITHDREW.");
+				}
 			}
 			else {
 				request.setAttribute("msg", validator.getErrorString());

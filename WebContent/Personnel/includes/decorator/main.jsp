@@ -22,7 +22,7 @@
 <fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyHms" var="todayVer" />
 
 
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-SUBMIT-REFERENCE"/>
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-SUBMIT-REFERENCE,PERSONNEL-VIEW-SUBMITTED-REFERENCES"/>
 
 <%
 User usr = (User) session.getAttribute("usr");
@@ -421,6 +421,10 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 		                                      	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDExternalReference.html">Add External Reference</a></li>
 		                                      	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDSupportReference.html">Add Support Staff Reference</a></li>
 		                                      	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDManageReference.html">Add Management Reference</a></li>
+		                                      	<%if(usr.checkRole("SENIOR EDUCATION OFFICIER") ){%>
+													<li class="divider"></li>
+						        				<li><a onclick="loadingData()" href="/MemberServices/Personnel/principalNLESDCompletedReferences.html">Completed Reference(s)</a></li>
+					    						<%}%>
 					          	</ul>
 					        </li>
 
@@ -562,6 +566,15 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 					          	</ul>
 					        </li>
+<%} else if(usr.checkPermission("PERSONNEL-VIEW-SUBMITTED-REFERENCES")){%>
+						<li class="dropdown" id="menuNormal">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> References<span class="caret"></span></a>
+					          	<ul class="dropdown-menu multi-level">
+					          		<li><a onclick="loadingData()" href="/MemberServices/Personnel/principalNLESDCompletedReferences.html">Completed Reference(s)</a></li>
+					    		</ul>
+					        </li>
+
+					        
  <%} %>
 
 

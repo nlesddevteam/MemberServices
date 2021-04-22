@@ -19,7 +19,7 @@ import com.esdnl.util.StringUtils;
 public class ViewNLESDExternalReferenceRequestHandler extends RequestHandlerImpl  {
 	public ViewNLESDExternalReferenceRequestHandler() {
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","PERSONNEL-VIEW-SUBMITTED-REFERENCES"
 		};
 		validator = new FormValidator(new FormElement[] {
 			new RequiredFormElement("id")

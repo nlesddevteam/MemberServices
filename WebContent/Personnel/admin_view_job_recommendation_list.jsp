@@ -122,22 +122,28 @@
 	
 						<div align="center">
 							<a class="btn btn-xs btn-info" href='view_job_post.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View Job Post</a>
-							<% if(!job.isAwarded()) { %>
-								<% if(job.isShortlistComplete() && (all_expired || !existing_rec || (job.isReopened() && !existing_non_processed_rec))) { %>
-									<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
-								<% } else if(!job.isShortlistComplete()) { %>
-									<span class='alert-danger'>Shortlist NOT Complete</span>
-								<% } %>
-							<% } else { %>
-								<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
-									<a class="btn btn-xs btn-primary" href='reopenCompetition.html?comp_num=<%=job.getCompetitionNumber()%>'>Reopen Competition</a>
-								</esd:SecurityAccessRequired>
-							<% } %>
-							<a class="btn btn-danger btn-xs" href="javascript:history.go(-1);">Back</a>
-						</div>
-					<%} else {%>
-						<p class='alert alert-danger'>No recommendations currently on file.</p>
-					<%} %>
+						<% if(!job.isAwarded()) { %>
+								<% if(job.isMultipleRecommendations()) {%>
+										<%if(!job.isAwardedEmailSent() && !existing_non_processed_rec && job.isShortlistComplete()) {%>
+											<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
+										<%} %>
+								<%}else{%>
+									<% if(job.isShortlistComplete() && (all_expired || !existing_rec || (job.isReopened() && !existing_non_processed_rec))) { %>
+										<a class="btn btn-xs btn-primary" href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make Recommendation</a>
+									<% } else if(!job.isShortlistComplete()) { %>
+										<span class='alert-danger'>Shortlist NOT Complete</span>
+									<% }else{ %>
+											<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
+												<a class="btn btn-xs btn-primary" href='reopenCompetition.html?comp_num=<%=job.getCompetitionNumber()%>'>Reopen Competition</a>
+											</esd:SecurityAccessRequired>
+									<% } %>
+								<%} %>
+
+								<a class="btn btn-danger btn-xs" href="javascript:history.go(-1);">Back</a>
+							</div>
+						<%} else {%>
+							<p class='alert alert-danger'>No recommendations currently on file.</p>
+						<%} }%>
 					
 				</div>
 			</div>

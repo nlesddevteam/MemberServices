@@ -36,7 +36,7 @@
 	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_SHORTLIST");
   
 	HashMap<String, ApplicantProfileBean> declinedInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_DECLINES_MAP");
-  
+	HashMap<String, ApplicantProfileBean> withdrawsInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_WITHDRAWS_MAP");
 	AdRequestBean ad = null;
   
 	User usr = (User)session.getAttribute("usr");
@@ -144,9 +144,20 @@
 		$('#response_msg').show();
 	}
 	
-	function openDecline(appid){
+	function openDecline(appid,ptype){
 		$('#sin').val(appid);
-		$('#prindecline').modal('show');
+		if(ptype == "W"){
+			$("#withdtitle").html("Withdraw Confirmation");
+			$("#withdspan").html("Are you sure you want to mark this applicant as WITHDREW?");
+			$("#withd").val("W");
+			$('#prindecline').modal('show');
+		}else{
+			$("#withdtitle").html("Interview Declined Confirmation");
+			$("#withdspan").html("Are you sure you want to mark this applicant as DECLINED INTERVIEW?");
+			$("#withd").val("D");
+			$('#prindecline').modal('show');
+		}
+		
 	}
 	
 	function interviewDeclined(){
@@ -204,16 +215,17 @@
 								boolean hasJobSpecificInterviewSummary = false;
 								boolean declinedInterview = false;
 								JobTypeConstant jtype = null;
+								boolean withdrawInterview = false;
 
 							for (int i = 0; i < applicants.length; i++) {
 								position = "";
-								if (!declinedInterviewMap.containsKey(applicants[i].getUID())) {
+								if (!declinedInterviewMap.containsKey(applicants[i].getUID()) && !withdrawsInterviewMap.containsKey(applicants[i].getUID())) {
 									cssClass = "NoPosition";
 									cssText = "No Position";
 									declinedInterview = false;
+									withdrawInterview = false;
 									position = null;
 									recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
-
 									if ((recs != null) && (recs.length > 0)) {
 										if (recs[0].getJob() != null) {
 											jtype = recs[0].getJob().getJobType();
@@ -275,9 +287,12 @@
 										}
 									}
 								}
-								else {
+								else if (declinedInterviewMap.containsKey(applicants[i].getUID())) {
 									cssClass = "DeclinedInterview";
 									declinedInterview = true;
+								}else if (withdrawsInterviewMap.containsKey(applicants[i].getUID())) {
+									cssClass = "WithdrawInterview";
+									withdrawInterview = true;
 								}
 							%>
 
@@ -324,22 +339,36 @@
 											href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
 										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW">
 											<%
-	                                        		if(!job.isAwarded() && !job.isCancelled() && !job.isShortlistComplete() && !declinedInterview)
+	                                        		if(!job.isAwarded() && !job.isCancelled() && !job.isShortlistComplete() && !declinedInterview && !withdrawInterview)
 	                                        			out.println("<a class='btn btn-xs btn-danger' href='removeShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Remove</a>");
 	                                        	
-	                                        		if(!declinedInterview){
-	                                        			out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "')\">Interview Declined?</a>");
+	                                        		if(!declinedInterview && !withdrawInterview){
+	                                        			out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','D')\">Interview Declined?</a>");
                                         			}
 	                                        		else {
 	                                        	%>
-											<script>
+	                                        		<%if(declinedInterview) {%>
+														<script>
 	                                        			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
 	                                        			</script>
+	                                        		<%} %>
 
 											<%
 	                                        		}
 	                                        		
-	                                        		if(job.getJobType().equal(JobTypeConstant.POOL) && !declinedInterview)
+	                                        		if(!withdrawInterview && !declinedInterview){
+	                                        			out.println("<a id='btn-withdraw-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','W')\">Withdrew?</a>");
+                                        			}
+	                                        		else {
+	    	                                        	%>
+	    	                                        	<%if(withdrawInterview) {%>
+	    												<script>
+	    		                                        			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("WITHDREW AFTER INTERVIEW");
+	    		                                        </script>
+	    		                                        <%} %>	                                        		
+	                                        	<%
+	                                        		}
+	                                        		if(job.getJobType().equal(JobTypeConstant.POOL) && !declinedInterview && !withdrawInterview)
 	                                        			out.println("<a class='btn btn-xs btn-success' href='#' onclick='showAddApplicantDialog(" + applicants[i].getUID() + ");' >Add To</a>");
 	                                        		
 	                                        	%>
@@ -347,14 +376,30 @@
 										<esd:SecurityAccessRequired
 											permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
 											<%
-	                                        	if(!declinedInterview){
-                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "')\">Interview Declined?</a>");
+	                                        	if(!declinedInterview && !withdrawInterview){
+                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','D')\">Interview Declined?</a>");
                                 				}
                                     			else {
                                     		%>
-											<script>
+                                    			<%if(declinedInterview) {%>
+                                    			<script>
                                     			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
                                     			</script>
+												<%} %>
+											<%
+                                    			}
+	                                        %>
+	                                        <%
+	                                        	if(!withdrawInterview && !declinedInterview){
+                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','W')\">Withdrew?</a>");
+                                				}
+                                    			else {
+                                    		%>
+                                    			<%if(withdrawInterview) {%>
+                                    			<script>
+                                    			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("WITHDREW AFTER INTERVIEW");
+                                    			</script>
+                                    			<%} %>
 
 											<%
                                     			}
@@ -400,7 +445,7 @@
 		                                        	%>
 										</esd:SecurityAccessRequired>
 										<% } %>
-										<% if(!declinedInterview) { %>
+										<% if(!declinedInterview && !withdrawInterview) { %>
 										<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference	Request</a>
 										<% } %>
 
@@ -468,14 +513,31 @@
 						target="_blank">Print Profiles</a>
 					<%} %>
 					<%if((rec != null) && (rec.length > 0)){%>
-					<a onclick="loadingData()" class="btn btn-xs btn-primary"
-						href='admin_view_job_recommendation_list.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View
-						Recommendation(s)</a>
+						<% if(job.isMultipleRecommendations()) {%>
+							<%if(!job.isAwardedEmailSent() && !recInProgress) {%>
+							<a class="btn btn-xs btn-success"
+									href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make
+									Recommendation</a>
+							<%} %>
+						<%}%>
+							<a onclick="loadingData()" class="btn btn-xs btn-primary"
+								href='admin_view_job_recommendation_list.jsp?comp_num=<%=job.getCompetitionNumber()%>'>View
+								Recommendation(s)</a>
 					<%}else if(!job.isAwarded() && !job.isCancelled() && job.isClosed()  && job.isShortlistComplete()
                                 		&& (ad != null || rth != null) && (applicants.length > 0) && ((rec == null) || (rec.length < 1))){%>
-					<a class="btn btn-xs btn-success"
-						href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make
-						Recommendation</a>
+					
+						<% if(job.isMultipleRecommendations()) {%>
+							<%if(!job.isAwardedEmailSent() && !recInProgress) {%>
+								<a class="btn btn-xs btn-success"
+									href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make
+									Recommendation</a>
+							<%} %>
+						<%}else{ %>
+							<a class="btn btn-xs btn-success"
+								href='addJobTeacherRecommendation.html?comp_num=<%=job.getCompetitionNumber()%>'>Make
+								Recommendation</a>
+						<%} %>	
+					
 					<%}%>
 					<%if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW")){%>
 					<a class="btn btn-xs btn-danger"
@@ -547,6 +609,7 @@
 	
 	   <form id="frmdecline" method="post">
        <input type="hidden" id="sin" name="sin">
+       <input type='hidden' id="withd" name="withd">
        </form>
 	
 	
@@ -607,10 +670,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Interview Declined Confirmation</h4>
+        <h4 class="modal-title" id="withdtitle"></h4>
       </div>
       <div class="modal-body">
-       Are you sure you want to mark this applicant as DECLINED INTERVIEW?<br/>
+       <span id="withdspan" name="withdspan"></span><br/>
 
        	<div id="request_response_row" style='display:none;'>
          <div id="request_response_msg"></div>

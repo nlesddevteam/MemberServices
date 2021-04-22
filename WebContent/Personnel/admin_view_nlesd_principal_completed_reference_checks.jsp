@@ -14,7 +14,7 @@
 		<%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 		<%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 
-<esd:SecurityCheck permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
+<esd:SecurityCheck permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,PERSONNEL-VIEW-SUBMITTED-REFERENCES" />
  
 <html>
 <head>
@@ -67,8 +67,9 @@ input {
 		                                    	<td>${ref.providedDateFormatted}</td>
 		                                    	<td>${ref.fullName}</td>
 		                                    	<td>
-		                                    	<a class="btn btn-xs btn-primary" href='${ref.viewUrl}'>view</a> 
+		                                    	<a class="btn btn-xs btn-primary" href='${ref.viewUrl}'>view</a>
 		                                    	<a class="btn btn-xs btn-warning" href='${ref.editUrl}'>edit</a>
+		                                    	
 		                                    	</td>
 		                                    	</tr>
 	                              		</c:forEach>
