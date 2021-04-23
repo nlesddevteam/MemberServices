@@ -459,7 +459,7 @@
 								or the NLESD ATIPP Coordinator at 709-758-2372.							
 						</div>
 						<c:choose>
-							<c:when test="${ap eq null}">
+							<c:when test="${ap ne null}">
 								<div align='center' class="alert alert-danger">								
 										By submitting this form, I hereby certify that the information given on this form is accurate and complete to the best of my knowledge. 
 								</div>								
