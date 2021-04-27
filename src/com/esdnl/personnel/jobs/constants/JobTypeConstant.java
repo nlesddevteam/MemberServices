@@ -17,7 +17,7 @@ public class JobTypeConstant implements Serializable {
 	public static transient final JobTypeConstant AWARDED = new JobTypeConstant(6, "AWARDED POSITION");
 	public static transient final JobTypeConstant SUMMER_SCHOOL = new JobTypeConstant(7, "SUMMER SCHOOL POSITION");
 	public static transient final JobTypeConstant POOL = new JobTypeConstant(8, "GENERAL INTERVIEWS");
-	public static transient final JobTypeConstant TLA_REGULAR = new JobTypeConstant(9, "TEACHING AND LEARNING ASSISTANT VACANT POSITION");
+	public static transient final JobTypeConstant TLA_REGULAR = new JobTypeConstant(9, "TEACHING AND LEARNING ASSISTANT PERMANENT POSITION");
 	public static transient final JobTypeConstant TLA_REPLACEMENT = new JobTypeConstant(10, "TEACHING AND LEARNING ASSISTANT REPLACEMENT/TERM POSITION");
 	public static transient final JobTypeConstant INTERNALONLY = new JobTypeConstant(11, "INTERNAL ONLY");
 	public static transient final JobTypeConstant EXTERNALONLY = new JobTypeConstant(12, "EXTERNAL ONLY");
