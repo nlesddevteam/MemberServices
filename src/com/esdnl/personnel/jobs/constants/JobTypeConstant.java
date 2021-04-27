@@ -9,7 +9,7 @@ public class JobTypeConstant implements Serializable {
 	private int value;
 	private String desc;
 
-	public static transient final JobTypeConstant REGULAR = new JobTypeConstant(1, "TEACHER VACANT POSITION");
+	public static transient final JobTypeConstant REGULAR = new JobTypeConstant(1, "TEACHER PERMANENT POSITION");
 	public static transient final JobTypeConstant REPLACEMENT = new JobTypeConstant(2, "TEACHER REPLACEMENT/TERM POSITION");
 	public static transient final JobTypeConstant TRANSFER = new JobTypeConstant(3, "TRANSFER POSITION");
 	public static transient final JobTypeConstant ADMINISTRATIVE = new JobTypeConstant(4, "ADMINISTRATIVE POSITION");
@@ -24,7 +24,8 @@ public class JobTypeConstant implements Serializable {
 	public static transient final JobTypeConstant INTERNALEXTERNAL = new JobTypeConstant(13, "INTERNAL AND EXTERNAL");
 
 	public static final JobTypeConstant[] ALL = new JobTypeConstant[] {
-			POOL, REGULAR, REPLACEMENT, TLA_REGULAR, TLA_REPLACEMENT, ADMINISTRATIVE, LEADERSHIP, SUMMER_SCHOOL, AWARDED,INTERNALONLY,EXTERNALONLY,INTERNALEXTERNAL
+			POOL, REGULAR, REPLACEMENT, TLA_REGULAR, TLA_REPLACEMENT, ADMINISTRATIVE, LEADERSHIP, SUMMER_SCHOOL, AWARDED,
+			INTERNALONLY, EXTERNALONLY, INTERNALEXTERNAL
 	};
 
 	private JobTypeConstant(int value, String desc) {
