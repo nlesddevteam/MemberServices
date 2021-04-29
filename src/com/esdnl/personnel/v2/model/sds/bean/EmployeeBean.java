@@ -433,6 +433,10 @@ public class EmployeeBean implements IEntity {
 		if (tmp == null) {
 			tmp = getPositions(com.esdnl.personnel.v2.utils.StringUtils.getPreviousSchoolYear(new Date()));
 		}
+		//still null - return empty array
+		if (tmp == null) {
+			tmp = new ArrayList<>();
+		}
 
 		return tmp;
 	}
