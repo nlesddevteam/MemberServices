@@ -241,7 +241,7 @@
 								
 									<div class="row container-fluid" style="padding-top:5px;">			      							
 											<div class="col-lg-8 col-12">	
-											<b>Full Name:</b>
+											<b>Full Name: (Firstname Lastname)</b>
 											<input placeholder="Full name (Firstname Lastname)" required class='required form-control' errortext='3. CONTACT INFORMATION, (a) PRIMARY CONTACT - Full Name' type='text' id='txt_PrimaryContactName' name='txt_PrimaryContactName' autocomplete="f" />
 											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please enter name.</div>
 											</div>
@@ -277,7 +277,7 @@
 							<b>(b) OPTIONAL CONTACT</b>
 										<div class="row container-fluid" style="padding-top:5px;">			      							
 											<div class="col-lg-8 col-12">								
-											<b>Full Name:</b>
+											<b>Full Name: (Firstname Lastname)</b>
 											<input placeholder="Optional" class='optionally-required form-control' type='text' id='txt_SecondaryContactName' name='txt_SecondaryContactName'  autocomplete="f"/>
 											</div>
 											<div class="col-lg-4 col-12">			
@@ -309,8 +309,8 @@
 							<span style="color:Red;">&nbsp;&nbsp;All parents/guardians must provide an alternative contact in case of emergency.</span>
 										<div class="row container-fluid" style="padding-top:5px;">			      							
 											<div class="col-lg-8 col-12">								
-											<b>Full Name:</b>
-											<input placeholder="Enter name" required class='required form-control' errortext='3. CONTACT INFORMATION, (c) EMERGENCY CONTACT - Full Name' type='text' id='txt_EmergencyContactName' name='txt_EmergencyContactName'  autocomplete="f" />
+											<b>Full Name (Firstname Lastname):</b>
+											<input placeholder="Enter name (Firstname Lastname)" required class='required form-control' errortext='3. CONTACT INFORMATION, (c) EMERGENCY CONTACT - Full Name' type='text' id='txt_EmergencyContactName' name='txt_EmergencyContactName'  autocomplete="f" />
 											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please enter name.</div>
 											</div>
 											<div class="col-lg-4 col-12">
