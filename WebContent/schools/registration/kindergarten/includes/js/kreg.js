@@ -26,8 +26,8 @@
     	jQuery(function(){
     		
     		    		
-    		$('#ddl_Stream').children().remove();
-    		$('#ddl_Stream').append($('<option>').attr({'value':''}).text('--- Select School ---'));
+    		//$('#ddl_Stream').children().remove();
+    		//$('#ddl_Stream').append($('<option>').attr({'value':''}).text('--- Select Stream ---'));
     		
     		$('#ddl_School').change(function(){
     			$('#ddl_Stream').children().remove();

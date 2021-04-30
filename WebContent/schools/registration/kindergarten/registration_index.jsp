@@ -26,7 +26,7 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
      <script>
  $('document').ready(function(){  		
-
+	 			$("#loadingSpinner").css("display","none");
     		    $( "#txt_DateOfBirth" ).datepicker({
     		      changeMonth: true,//this option for allowing user to select month
     		      changeYear: true, //this option for allowing user to select from year range
@@ -122,9 +122,7 @@
 				</c:otherwise>
 		</c:choose>
 
-		
-		
-		
+				
 		<c:choose>
 			<c:when test="${ap ne null}">	
 			<!--IF  REGISTRATION OPEN -->
@@ -231,6 +229,7 @@
 											<b>Address: (Street Address, P.O. Box, etc)</b>
 											<input required class='required form-control' placeholder="Address Line 1" errortext='1. STUDENT INFORMATION, (c) PHYSICAL ADDRESS - Street Address' type='text' id='txt_PhysicalStreetAddress1' name='txt_PhysicalStreetAddress1' autocomplete="f"/>
 											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
+											<br/>
 											<input placeholder="Address Line 2" class="form-control" type='text' id='txt_PhysicalStreetAddress2' name='txt_PhysicalStreetAddress2' autocomplete="f"/>
 									</div>
 								<div class="col-lg-3 col-12">
@@ -259,6 +258,7 @@
 								<b>Address: (Street Address, P.O. Box, etc)</b>
 								<input placeholder="Address Line 1" required class='required form-control' required errortext='1. STUDENT INFORMATION, (d) MAILING ADDRESS - Address' type='text' id='txt_MailingAddress1' name='txt_MailingAddress1' autocomplete="f"/>
 								<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
+								<br/>
 								<input placeholder="Address Line 2" class="form-control"  type='text' id='txt_MailingAddress2' name='txt_MailingAddress2' autocomplete="f"/>
 								</div>
 								<div class="col-lg-3 col-12">
@@ -408,7 +408,7 @@
 							
 						</div><br />
 						
-						
+<!-- OTHER INFORMATION ----------------------------------------------------------------------------------------->							
 						<div class="card">
 							  <div class="card-header"><b>4. OTHER INFORMATION </b></div>							  
 								<div class="card-body">

@@ -107,8 +107,9 @@
 <!-- JAVASCRIPT FILES LOCAL- ANY MODIFICATIONS DO HERE-->			
 			
 		<!-- <script type="text/javascript" src="//serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
-		<script src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>	-->
-		<script src="/MemberServices/schools/registration/kindergarten/includes/js/kreg.js?ver=${todayVer}"></script>			 
+		<script src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>-->
+		<script src="/MemberServices/schools/registration/kindergarten/includes/js/kreg.js?ver=${todayVer}"></script>	
+
       	<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -127,7 +128,7 @@
 	<body>			
 			
 	<!-- Get the loading data animation ready, in front and hidden -->
-	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="/MemberServices/schools/registration/kindergarten/includes//img/tenderanimated.gif" width="300" border=0><br/>Loading data, please wait...</div></div>
+	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="/MemberServices/schools/registration/kindergarten/includes/img/loading4.gif" width="200" border=0><br/>Loading data, please wait...</div></div>
 	
 
 	<!-- PAGE BODY -->	

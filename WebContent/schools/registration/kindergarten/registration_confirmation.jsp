@@ -19,41 +19,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
     <TITLE>Student Registration</title>
-    <script type='text/javascript'>
-    	jQuery(function(){
-    		$('fieldset table').each(function() {
-	    			$(this).children().children('tr:odd').css({'background-color': "#ffffff"});
-	    			$(this).children().children('tr:even').css({'background-color': "#f0f0f0"});
-	    			$(this).children().children('tr:not(:first)').children('td').css({'border-top': 'solid 1px #333333'});
-    		});
-    	});
-    </script>
-  
+ 
   </head>
 
   <body>
 		<c:choose>
 			<c:when test="${kr ne null}">			
-				<div class="alert alert-success no-print">
+				<div class="alert alert-success no-print" style="text-align:center;">
 				<b>SUCCESS:</b> Your application for Kindergarten registration for the ${kr.registration.schoolYear} school year has been received at 
 				<b><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></b>. <br/>
 				A confirmation email has also been sent to ${kr.primaryContactEmail}.
 				</div>				
-				<br/>
-							Please present proof of address to the school on or before <fmt:formatDate type="date" dateStyle="long" value="${kr.registration.addressConfirmationDeadline}" />
-							 to complete the registration process. This does not guarantee acceptance to the school or program, the District reserves the right to make 
-							 the final decision regarding student acceptance and placement. 
-							<br/><br/>
-							Below is a copy of the application you submitted for your reference. Acceptance letters will follow when acceptance has been approved.<br /><br />
-							Thank You,<br />
-							Newfoundland and Labrador English School District
-						
-					
-						
-					
+				<br/>Below is a copy of the application you submitted for your reference. Acceptance letters will follow when acceptance has been approved.		
+																
 					 <div align="center" class="no-print">
 					 	<hr>
-					 Please print this page for your records. You can also register another child or exit.<br/><br/>
+					 <b>Please print this page for your records. You can also register another child or exit.</b><br/><br/>
 					 <a class="btn btn-sm btn-primary" href="/schools/registration/kindergarten/index.html?rel=${kr.registrantId}"><i class="fas fa-edit"></i> Register Another Child</a> &nbsp; 	
 					 <a href='#' class="no-print noJump btn btn-sm btn-warning" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>KINDERSTART/KINDERGARTEN REGISTRATION</b></div><br/><br/>'});"><i class="fas fa-print"></i> Print this Page</a> &nbsp; 
                      <a href="/index.jsp" class="no-print btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
@@ -133,11 +114,11 @@
 										</div>
 										<div class="col-lg-4 printSet" style="padding:5px;"><b>(b) OPTIONAL CONTACT</b><br/>
 		      								<b>Name:</b><br/>
-		      								<div class="dField">${kr.secondaryContactName ne null?kr.secondaryContactName:"N/A"}</div>
+		      								<div class="dField">${!(kr.secondaryContactName.val())?"N/A":kr.secondaryContactName}</div>
 		      								<b>Relationship to Student:</b><br/>
 		      								<div class="dField">${kr.secondaryContactRelationship.text ne null?kr.secondaryContactRelationship.text:"N/A"}</div>
 		      								<b>Home Phone:</b><br/>
-		      								<div class="dField">${kr.secondaryContactHomePhone ne null?kr.secondaryContactHomePhone:"N/A"}</div>
+		      								<div class="dField">${!(kr.secondaryContactHomePhone.val())?"N/A":kr.secondaryContactHomePhone}</div>
 		      								<b>Work Phone:</b><br/>
 		      								<div class="dField">${kr.secondaryContactWorkPhone ne null?kr.secondaryContactWorkPhone:"N/A"}</div>
 		      								<b>Cell Phone:</b><br/>
@@ -145,21 +126,17 @@
 		      								<b>Email:</b><br/>
 		      								<div class="dField">${kr.secondaryContactEmail ne null?kr.secondaryContactEmail:"N/A"}</div>			
 										</div>			
-										<div class="col-lg-4 printSet" style="padding:5px;"><b>(c) EMERGENCY CONTACT</b><br/>
-		      								<div class="col-lg-12 col-6">
+										<div class="col-lg-4 printSet" style="padding:5px;"><b>(c) EMERGENCY CONTACT</b><br/>		      								
 		      								<b>Name:</b><br/>
-		      								<div class="dField">${kr.emergencyContactName ne null?kr.emergencyContactName:"N/A"}</div>
-		      								</div>
-		      								<div class="col-lg-12 col-6">		      								
+		      								<div class="dField">${kr.emergencyContactName ne null?kr.emergencyContactName:"N/A"}</div>		      								   								
 		      								<b>Telephone:</b><br/>
-		      								<div class="dField">${kr.emergencyContactTelephone ne null?kr.emergencyContactTelephone:"N/A"}</div>
-		      								</div>			
+		      								<div class="dField">${kr.emergencyContactTelephone ne null?kr.emergencyContactTelephone:"N/A"}</div>		      											
 										</div>								
 									</div>									
 							</div>
 					</div>	
 					<br/>
-					
+					<div class="pageBreak"></div>
 <!-- OTHER INFORMATION -->						
 					<div class="card">
 							  <div class="card-header"><b>4. OTHER INFORMATION</b></div>
@@ -184,6 +161,14 @@
 							</div>
 					</div>					
 
+<hr>
+<br/>
+
+							<b>NOTE:</b> Please present proof of address to the school on or before <fmt:formatDate type="date" dateStyle="long" value="${kr.registration.addressConfirmationDeadline}" />
+							 to complete the registration process. This does not guarantee acceptance to the school or program, the District reserves the right to make 
+							 the final decision regarding student acceptance and placement. 
+							<br/><br/>
+
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -195,6 +180,9 @@
 			</c:otherwise>
 		</c:choose>
 <br/><br/>		
+<script>
+$("#loadingSpinner").css("display","none");
+</script>
 	</body>
 	
 </html>
