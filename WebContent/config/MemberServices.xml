@@ -1567,6 +1567,12 @@
       <Request-Handler-Class>com.esdnl.school.registration.kindergarten.site.handler.admin.district.ListKindergartenRegistrationPeriodRegistrantsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/schools/registration/kindergarten/admin/district/viewPeriodRegistrants.html</URL-Pattern>
     </Request-Handler>
+        <Request-Handler>
+      <Request-Handler-Class>com.esdnl.school.registration.kindergarten.site.handler.admin.district.ListKindergartenRegistrationPeriodRegistrantsRequestExportHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/kindergarten/admin/district/viewPeriodRegistrantsExport.html</URL-Pattern>
+    </Request-Handler>
+    
+    
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.school.registration.kindergarten.site.handler.admin.district.DeleteKindergartenRegistrantRequestHandler</Request-Handler-Class>
       <URL-Pattern>/schools/registration/kindergarten/admin/district/deleteRegistrant.html</URL-Pattern>

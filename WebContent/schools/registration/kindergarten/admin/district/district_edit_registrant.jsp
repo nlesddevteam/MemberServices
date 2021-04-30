@@ -13,571 +13,398 @@
 <html>
   
   <head>
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">	
     <TITLE>Student Registration</title>
-    
-    <script type="text/javascript" src="//serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
-		<script type="text/javascript" src="/MemberServices/schools/registration/kindergarten/includes/js/schoolfinder.js"></script>
-    <script type="text/javascript">
-    	// school ids of schools offering efi
-    	var efi = new Array(330, 211, 215, 352, 219, 287, 595, 464, 244, 209, 247, 229, 232, 495, 289, 341, 162, 192, 239, 207, 241, 403, 196, 242, 414);
-    						
-    	//match email address
-    	var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/; 
-    	
-    	//match elements that could contain a phone number
-    	var phoneNumber = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    	
-    	//match date in format DD/MM/YYYY
-    	var dateDDMMYYYRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
-    	
-    	//match date in format MM/YYYY
-    	var dateMMYYYRegex = /^(0[1-9]|1[012])[- /.](19|20)\d\d$/;
-    	
-    	//match postal code
-    	var postalCodeRegex = /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
-    	
-    	//match elements that could contain a MCP number
-    	var mcpNumberRegex = /^([0-9]{12})$/;
-    	
-    	jQuery(function(){
-    		
-    		$('.opbutton').button();
-    		
-    		$('.datefield').datepicker({
-    			dateFormat: "dd/mm/yy",
-					changeYear: true,
-					yearRange: "c-6:c+6"
-    		});
-    		
-    		//$('#ddl_Stream').children().remove();
-    		//$('#ddl_Stream').append($('<option>').attr({'value':''}).text('--- Select School ---'));
-    		
-    		$('#ddl_School').change(function(){
-    			$('#ddl_Stream').children().remove();
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+     <script>
+ $('document').ready(function(){  		
+	 $("#loadingSpinner").css("display","none");
 
-    			if(parseInt($.inArray(parseInt($('#ddl_School').val()), efi)) > -1){
-    				$('#ddl_Stream').append($('<option>').attr({'value':'', 'SELECTED':'SELECTED'}).text('--- Select One ---'));
-        		$('#ddl_Stream').append($('<option>').attr('value', '1').text('ENGLISH'));
-    				$('#ddl_Stream').append($('<option>').attr('value', '2').text('FRENCH'));
-    			}
-    			else {
-    				$('#ddl_Stream').append($('<option>').attr({'value':'1', 'SELECTED':'SELECTED'}).text('ENGLISH'));
-    			}
-    		});
-    		
-    		/*
-    		$('#txt_PhysicalStreetAddress1, #txt_PhysicalCityTown').change(function(){
-    			if($('#txt_PhysicalStreetAddress1').val() != '' && $('#txt_PhysicalCityTown').val() != ''){
-    				getSchoolID();
-    			}
-    		});
-    		*/
-    		
-    		$('#chk_MailingAddressSame').click(function(){
-    			if($(this).is(':CHECKED')){
-    				$('#txt_MailingAddress1').val($('#txt_PhysicalStreetAddress1').val());
-    				$('#txt_MailingAddress2').val($('#txt_PhysicalStreetAddress2').val());
-    				$('#txt_MailingCityTown').val($('#txt_PhysicalCityTown').val());
-    				$('#txt_MailingPostalCode').val($('#txt_PhysicalPostalCode').val());
-    			}
-    			else{
-    				$('#txt_MailingAddress1').val('');
-    				$('#txt_MailingAddress2').val('');
-    				$('#txt_MailingCityTown').val('');
-    				$('#txt_MailingPostalCode').val('');
-    			}
-    		});
-    		
-    		$('#btn_SubmitRegistration').click(function(){
-    			if(validateRegistrantForm()) {
-    				$(this).attr({'disabled' : 'disabled'});
-    				$('#btn_cancelAddReg').attr({'disabled' : 'disabled'});
-    				
-    				$('#add-registrant-form form')[0].submit();
-    			}
-    			else
-    				$('html, body').animate({scrollTop: $("#pnl-error-msg").offset().top}, 2000);
-    		});
-    		
-    		$('#btn_cancelAddReg').click(function(){
-    			history.go(-1);
-    		});
-    		
-    		$('#txt_MCPNumber').change(function(){
-    			$('#tblStudentMCPInfo caption').append("<img src='/MemberServices/schools/registration/kindergarten/includes/images/ajax-loader-1.gif' align='right' border='0' />");
-    			
-    			if(checkMCPExists($(this).val())){
-    				$('#tdMCPNumber').append(
-    						$('<span>')
-    							.attr({'id' : 'tdMCPNumberError'})
-    							.addClass("inline-error-msg")
-    							.html('<br />MCP alreay exists.')
-    				);
-    			}
-    			else{
-    				$('#tdMCPNumber span').remove();
-    			}
-    			
-    			$('#tblStudentMCPInfo caption img').remove();
-    		})
-    		
-    		
-    		$('fieldset table').each(function() {
-    			$(this).children().children('tr:odd').css({'background-color': "#ffffff"});
-    			$(this).children().children('tr:even').css({'background-color': "#f0f0f0"});
-    			$(this).children().children('tr:not(:first)').children('td').css({'border-top': 'solid 1px #333333'});
-    		});
-    		
-    		$('td.required').each(function(){
-    			$(this).html("<span style='color:red;'>*</span>" + $(this).html());
-    		});
-    		
-    		$('td.one-required').each(function(){
-    			$(this).html("<span style='color:blue;'>*</span>" + $(this).html());
-    		});
-    		
-    		$('input[type=text], select').css({'border' : 'solid 1px #7B9EBD', 'background-color' : '#FFFFCC'});
-    		
-    	});
-    	
-    	function checkMCPExists(p_mcp) {
-    		var exists = false;
-    		$.ajax(
-    			{
-    				type: "POST",  
-    				url: "/MemberServices/schools/registration/kindergarten/ajax/checkMCPAlreadyExists.html",
-    				data: {
-    					mcp : p_mcp,
-    					ajax : true 
-    				}, 
-    				success: function(data){
-    					if($(data).find('CHECK-MCP-EXISTS-RESPONSE').length > 0) {
-    						exists = ("true" == $(data).find('CHECK-MCP-EXISTS-RESPONSE').first().attr('exists'));
-    					}
-    				}, 
-    				dataType: "xml",
-    				async: false
-    			}
+    		    $( "#txt_DateOfBirth" ).datepicker({
+    		      changeMonth: true,//this option for allowing user to select month
+    		      changeYear: true, //this option for allowing user to select from year range
+    		      dateFormat: "mm/dd/yy",
+    		      maxDate: '-2y',
+    		      minDate: '-8y'
+    		    });       		  
+    		    
+    		    $( "#txt_MCPExpiration" ).datepicker({
+      		      changeMonth: true,//this option for allowing user to select month
+      		      changeYear: true, //this option for allowing user to select from year range
+      		      dateFormat: "mm/yy",
+      		      maxDate: '+10y',
+      		      minDate: '+0y'
+      		    });  
+    		    
+    		  
+    		    $('.phone').mask('(000) 000-0000');
+    		    $('.pcode').mask('S0S 0S0');
+    		    $('.mcpNum').mask('000000000000');
+    		    
+    		  }
     		);
-    		
-    		return exists
-    	}
-    	
-    	function validateRegistrantForm(){
-				var ul = $('<ul>');
-      	
-				if($('#ddl_School').val() == '')
-					ul.append($('<li>').text('School Information - School'));
-				
-				if($('#ddl_Stream').val() == '')
-					ul.append($('<li>').text('School Information - Stream'));
-				
-				if($('#ddl_Gender').val() == '')
-					ul.append($('<li>').text('Student Information - Gender'));
-				
-				if($('#ddl_PrimaryContactRelationship').val() == '')
-					ul.append($('<li>').text('Primary Contact - Relationship to Student'));
-				
-     		$('input[type=text].required').each(function(){
-     			if($.trim($(this).val()) == ""){
-     				ul.append($('<li>').text($(this).attr('errortext')));
-     			}
-     		});
-     		
-     		if(($('#txt_PrimaryContactHomePhone').val() == '') 
-     				&& ($('#txt_PrimaryContactWorkPhone').val() == '')
-     				&& ($('#txt_PrimaryContactCellPhone').val() == ''))
-     			ul.append($('<li>').text('Primary Contact - One of Home, Work, or Cell Phone'));
-     		
-     		if($.trim($('#txt_SecondaryContactName').val()) != ''){
-     			if($('#ddl_SecondaryContactRelationship').val() == '')
-     				ul.append($('<li>').text('Optional Contact - Relationship to Student'));
-     			
-     			if(($('#txt_SecondaryContactHomePhone').val() == '') 
-         				&& ($('#txt_SecondaryContactWorkPhone').val() == '')
-         				&& ($('#txt_SecondaryContactCellPhone').val() == ''))
-         			ul.append($('<li>').text('Optional Contact - One of Home, Work, or Cell Phone'));
-     			
-     			//if($('#txt_SecondaryContactEmail').val() == '')
-     			//	ul.append($('<li>').text('Optional Contact - Email'));
-     		}
-     		
-     		if(!$('#rbg_CustodyIssues_1').is(':checked') && !$('#rbg_CustodyIssues_0').is(':checked'))
-     			ul.append($('<li>').text('Other Information - Custody Issues'));
-     		
-     		if(!$('#rbg_HealthOtherConcerns_1').is(':checked') && !$('#rbg_HealthOtherConcerns_0').is(':checked'))
-     			ul.append($('<li>').text('Other Information - Health Concerns'));
-     		
-     		if(!$('#rbg_AccessibleFacility_1').is(':checked') && !$('#rbg_AccessibleFacility_0').is(':checked'))
-     			ul.append($('<li>').text('Other Information - Accessible Facility'));
-     		
-     		if(!$('#rbg_CurrentChildEFI_1').is(':checked') && !$('#rbg_CurrentChildEFI_0').is(':checked'))
-     			ul.append($('<li>').text('Other Information - EFI Sibling'));
-     		
-     		if($('#txt_DateOfBirth').val() != '' && !dateDDMMYYYRegex.test($('#txt_DateOfBirth').val()))
-					ul.append($('<li>').text('Student Information - Date of birth invalid format'));
- 		
-     		if($('#txt_MCPNumber').val() != '' && !mcpNumberRegex.test($('#txt_MCPNumber').val()))
-				ul.append($('<li>').text('Student Information - MCP number invalid format'));
-     		
-     		if($('#txt_MCPExpiration').val() != '' && !dateMMYYYRegex.test($('#txt_MCPExpiration').val()))
-					ul.append($('<li>').text('Student Information - MCP Expiration date invalid format'));
- 				
- 				if($('#txt_PhysicalPostalCode').val() != '' && !postalCodeRegex.test($('#txt_PhysicalPostalCode').val()))
-					ul.append($('<li>').text('Physical Address - Postal code invalid format'));
- 				
- 				if($('#txt_MailingPostalCode').val() != '' && !postalCodeRegex.test($('#txt_MailingPostalCode').val()))
-					ul.append($('<li>').text('Mailing Address - Postal code invalid format'));
- 				
-     		if($('#txt_PrimaryContactHomePhone').val() != '' && !phoneNumber.test($('#txt_PrimaryContactHomePhone').val()))
-					ul.append($('<li>').text('Primary Contact - Home phone invalid format'));
-     		
-     		if($('#txt_PrimaryContactWorkPhone').val() != '' && !phoneNumber.test($('#txt_PrimaryContactWorkPhone').val()))
-					ul.append($('<li>').text('Primary Contact - Work phone invalid format'));
-     		
-     		if($('#txt_PrimaryContactCellPhone').val() != '' && !phoneNumber.test($('#txt_PrimaryContactCellPhone').val()))
-					ul.append($('<li>').text('Primary Contact - Cell phone invalid format'));
-     		
-     		if($('#txt_PrimaryContactEmail').val() != '' && !emailRegex.test($('#txt_PrimaryContactEmail').val()))
-					ul.append($('<li>').text('Primary Contact - Email invalid format'));
-     		
-     		if($('#txt_SecondaryContactHomePhone').val() != '' && !phoneNumber.test($('#txt_SecondaryContactHomePhone').val()))
-					ul.append($('<li>').text('Optional Contact - Home phone invalid format'));
- 		
- 				if($('#txt_SecondaryContactWorkPhone').val() != '' && !phoneNumber.test($('#txt_SecondaryContactWorkPhone').val()))
-					ul.append($('<li>').text('Optional Contact - Work phone invalid format'));
- 		
- 				if($('#txt_SecondaryContactCellPhone').val() != '' && !phoneNumber.test($('#txt_SecondaryContactCellPhone').val()))
-					ul.append($('<li>').text('Optional Contact - Cell phone invalid format'));
-     		
-     		if($('#txt_SecondaryContactEmail').val() != '' && !emailRegex.test($('#txt_SecondaryContactEmail').val()))
- 					ul.append($('<li>').text('Optional Contact - Email invalid format'));
-     		
-     		if($('#txt_EmergencyContactPhone').val() != '' && !phoneNumber.test($('#txt_EmergencyContactPhone').val()))
-					ul.append($('<li>').text('Emergency Contact - Telephone invalid format'));
-     		
-     		if(ul.children().length > 0) {
-     			$('#error-msg').children().remove();
-     			$('#error-msg').append(ul);
-     			
-     			$('#pnl-error-msg').show();
 
-     			return false;
-     		}
-     		else {
-     			$('#pnl-error-msg').hide();
-     			return true;
-     		}
-    	}
-    </script>
+	</script>
   </head>
 
-  <body bgcolor="#BF6200">
-  	<div align='center' style='font-size:14pt;font-weight:bold;color:#33cc33;padding-bottom:15px;'>
-	  	Edit Registrant Information
+  <body>
+   <div align='center' style='font-size:14pt;font-weight:bold;color:#004178;;padding-bottom:15px;'>
+  		${kr.registration.schoolYear} <span id="theSchoolName"></span> Registration Information ( <span style="color:Red;">EDITING</span> )<br/>
+	  	<span style="text-transform:Uppercase;color:Black;">${kr.studentLastName ne null?kr.studentLastName:"N/A"}, ${kr.studentFirstName ne null?kr.studentFirstName:"N/A"}</span>
   	</div>
-		<div align='center'>
-			<span style='color:red;'>*</span> Required field.
-			<span style='color:blue;'>*</span> One Required.
-		</div>
-		<br />
-		<div id='pnl-error-msg' style='display:none;padding-bottom:10px;' align='center'>
-			<div style='width:50%;padding:8px;text-align:left;'>						
-				<span><u>Form Errors:</u><br/>The following fields are not complete or have invalid values and must be corrected before your registration can be submitted.</span><br />
-				<div id='error-msg' style='border:none;'></div>
-			</div>
-		</div>
-		<div id='add-registrant-form' style='width:100%; display:inline;'>
-			<form method='post' action="<c:url value='/schools/registration/kindergarten/admin/district/updateKindergartenRegistrant.html'/>" >
+  
+  <div align='center'>
+					<span style='color:red;'><i class="fas fa-exclamation-circle"></i></span> Required field. <span style='color:green;'><i class="fas fa-check"></i></span> Not Required/OK
+				</div>
+				<br />
+				
+				<!-- ERROR PANEL -->
+				<div id='pnl-error-msg' style='display:none;' class="alert alert-danger alert-dismissible">								
+						<button type="button" class="close" data-dismiss="alert">&times;</button> <b style="font-size:16px;">Form Errors:</b>
+						<br/>The following fields must be corrected before your registration can be submitted:
+						<br />
+						<div id='error-msg'></div>
+				</div>
+  
+  <div id='add-registrant-form' style='width:100%; display:inline;'>
+  <form method='post' action="/MemberServices/schools/registration/kindergarten/admin/district/updateKindergartenRegistrant.html" class="was-validated">
 				<input type='hidden' name='registrant_id' value='${kr.registrantId}' />
-				<div align='center'>
-					<fieldset>
-						<legend>Registration Information</legend>
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<tr>
-								<td class='label'>Registration Date:</td>
-								<td style='font-weight:bold;' align="left"><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></td>
-							</tr>
-							<tr>
-								<td class='label required'>Physical Address Approved:</td>
-								<td align="left">
-									${kr.physicalAddressApproved ? "<span style='font-weight:bold;color:green;'>Yes</span>" : "<span style='font-weight:bold;color:red;'>No</span>"}
-								</td>
-							</tr>
-							<tr>
-							<td class='label'>Registration Status:</td>
-								<td>
-									${kr.status.accepted ? "<span style='font-weight:bold;color:green;'>Accepted</span>" : kr.status.waitlisted ? "<span style='font-weight:bold;color:orange;'>Waitlisted</span>" : "<span style='font-weight:bold;color:#9E7BFF;'>Processing</span>"}
-								</td>
-							</tr>
-						</table>
-					</fieldset>
-				</div>
-				<br />
-				<div align='center'>
-					<fieldset>
-						<legend>Student Information</legend>
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Demographics</caption>
-							<tr>
-								<td class='label required'>First Name:</td>
-								<td align='left'><input class='required' errortext='Student Information - First Name' type='text' id='txt_StudentFirstName' name='txt_StudentFirstName' style='width: 150px;' value="${ kr.studentFirstName }" /></td>
-							</tr>
-							<tr>
-								<td class='label required'>Last Name:</td>
-								<td align='left'><input class='required' errortext='Student Information - Last Name' type='text' id='txt_StudentLastName' name='txt_StudentLastName' style='width: 150px;' value="${ kr.studentLastName }"/></td>
-							</tr>
-							<tr>
-								<td class='label required'>Gender:</td>
-								<td align='left'><sreg:GenderDDL id='ddl_Gender' cls='required' value='${kr.studentGender.value}' /></td>
-							</tr>
-							<tr>
-								<td class='label required' valign='top'>Date of Birth:</td>
-								<td align='left'>
-									<input class='required datefield' errortext='Student Information - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' style='width: 75px;' value='${kr.dateOfBirthFormatted}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>dd/mm/yyyyy</span>
-								</td>
-							</tr>
-						</table>
-						<br />
-						<table id='tblStudentMCPInfo' align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Student MCP</caption>
-							<tr>
-								<td class='label required' valign="top">MCP Number:</td>
-								<td id='tdMCPNumber' align='left'>
-									<input class='required' errortext='Student Information - MCP Number' type='text' id='txt_MCPNumber' name='txt_MCPNumber' style='width: 150px;' value="${kr.mcpNumber}"/>
-								</td>
-							</tr>
-							<tr>
-								<td class='label required' valign='top'>MCP Expiration:</td>
-								<td align='left'>
-									<input class='required' errortext='Student Information - MCP Expiration' type='text' id='txt_MCPExpiration' name='txt_MCPExpiration' style='width: 75px;' value="${kr.mcpExpiry}" />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>mm/yyyyy</span>
-								</td>
-							</tr>
-						</table>
-						<br />
-						<table id='tblPhysicalAddress' align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Physical Address</caption>
-							<tr>
-								<td class='label required' valign='top'>Street Address:</td>
-								<td align='left'>
-									<div style='padding-bottom: 3px;'>
-										<input class='required' errortext='Physical Address - Street Address' type='text' id='txt_PhysicalStreetAddress1' name='txt_PhysicalStreetAddress1' style='width: 200px;' value="${kr.physicalStreetAddress1}" />
+  
+  
+  
+  
+  	<!-- REGISTRATION INFORMATION -->						
+					<div class="card">
+							  <div class="card-header"><b>1. REGISTRATION INFORMATION</b></div>
+							  <div class="card-body">	
+									<div class="row container-fluid" style="padding-top:5px;">
+		      							<div class="col-lg-4 printSet"><b>Registration Date:</b><br/><div class="dField"><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></div></div>
+										<div class="col-lg-3 printSet"><b>Address &amp; MCP Approved:</b><br/><div class="dField">${kr.physicalAddressApproved ? "<span style='font-weight:bold;color:green;'><i class='fas fa-check'></i> Yes</span>" : "<span style='font-weight:bold;color:red;'><i class='fas fa-times'></i> No</span>"}</div></div>
+										<div class="col-lg-3 printSet"><b>Status:</b><br/><div class="dField">${kr.status.accepted ? "<span style='font-weight:bold;color:green;'><i class='fas fa-check'></i> Accepted</span>" : kr.status.waitlisted ? "<span style='font-weight:bold;color:orange;'><i class='far fa-hourglass'></i> Waitlisted</span>" : "<span style='font-weight:bold;color:#9E7BFF;'><i class='fas fa-cog'></i> Processing</span>"}</div></div>
+									 </div>
+							</div>
+					</div>	
+  
+  <div class="card">
+							  <div class="card-header"><b>2. STUDENT INFORMATION</b></div>
+							  <div class="card-body">
+						 Please complete the following information to register your child for Kinderstart/Kindergarten. <br/>
+						 <span style='color:red;'><i class="fas fa-exclamation-circle"></i></span> Required field. <span style='color:green;'><i class="fas fa-check"></i></span> Not Required/OK
+						 <br/><br/>
+						<b>(a) DEMOGRAPHICS</b>								
+								
+						<div class="row container-fluid" style="padding-top:5px;">
+      							<div class="col-lg-3 col-12">
+									<b>Student First Name:</b>
+									<input placeholder="Student First Name" class='required form-control' errortext='1. STUDENT INFORMATION, (a) DEMOGRAPHICS First Name' type='text' id='txt_StudentFirstName' name='txt_StudentFirstName' value="${ kr.studentFirstName }" required autocomplete="f"/>
+									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please fill out this field.</div>
+								</div>
+								<div class="col-lg-3 col-12">
+									<b>Student Last Name:</b>
+									<input placeholder="Student Last Name" class='form-control' errortext='1. STUDENT INFORMATION, (a) DEMOGRAPHICS Last Name' type='text' id='txt_StudentLastName' name='txt_StudentLastName' value="${ kr.studentLastName }" required autocomplete="f"/>
+									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please fill out this field.</div>
+								</div>
+								<div class="col-lg-3 col-12">	
+									<b>Gender:</b>
+									<sreg:GenderDDL id='ddl_Gender' cls='form-control required' value='${kr.studentGender.value}'/>
+									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please fill out this field.</div>
+								</div>
+								<div class="col-lg-3 col-12">
+									<b>Date of Birth (MM/DD/YYYY):</b>
+									<input placeholder="mm/dd/yyyy" class='required datefield form-control' onkeydown="return false;" errortext='1. STUDENT INFORMATION, (a) DEMOGRAPHICS - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' value='${kr.dateOfBirthFormatted}' required autocomplete="f"/>
+									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please select date.</div>
+								</div>
+						</div>
+								<!-- 
+								<div align='center'>
+									<div style='padding-top:8px; padding-bottom:5px; font-style:italic; width:60%; text-align:left;'>
+										If an MCP number has not yet been assigned, please click the <b>GENERATE MCP</b> button below to generate a temporary number and expiration date 
+										you can use to complete the registration.
 									</div>
-									<input type='text' id='txt_PhysicalStreetAddress2' name='txt_PhysicalStreetAddress2' style='width: 200px;' value="${kr.physicalStreetAddress2}" />
-								</td>
-							</tr>
-							<tr>
-								<td class='label required'>City/Town:</td>
-								<td align='left'>
-								<select id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' errortext='Physical Address - City/Town' >
-								<jsp:include page="../../includes/townlist.jsp" />   
-                       			 </select> 
-								</td>
-							</tr>
-							<tr>
-								<td class='label'>Province:</td>
-								<td align='left'>Newfoundland and Labrador</td>
-							</tr>
-							<tr>
-								<td class='label required' valign='top'>Postal Code:</td>
-								<td align='left'>
-									<input class='required' errortext='Physical Address - Postal Code' type='text' id='txt_PhysicalPostalCode' name='txt_PhysicalPostalCode' style='width: 75px;' value="${kr.physicalPostalCode}"/>
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>x0x 0x0</span>
-								</td>
-							</tr>
-						</table>
-						<br/>							
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Mailing Address <span style='font-size:10px; color:#333333;'>(<input id='chk_MailingAddressSame' type="checkbox" />Same as physical address.)</span></caption>
-							<tr>
-								<td class='label required' valign='top'>Address:<br/><span style='color:#333333;font-size:9px;'>(street address, p.o. box, etc)</span></td>
-								<td align='left'>
-									<div style='padding-bottom: 3px;'>
-										<input class='required' errortext='Mailing Address - Address' type='text' id='txt_MailingAddress1' name='txt_MailingAddress1' style='width: 200px;' value="${kr.mailingStreetAddress1}"/>
-									</div>
-									<input type='text' id='txt_MailingAddress2' name='txt_MailingAddress2' style='width: 200px;' value="${kr.mailingStreetAddress2}"/>
-								</td>
-							</tr>
-							<tr>
-								<td class='label required'>City/Town:</td>
-								<td align='left'>
-								<select id='txt_MailingCityTown' name='txt_MailingCityTown' errortext='Mailing Address - City/Town' >
-								<jsp:include page="../../includes/townlist.jsp" />   
-                       			 </select> 	
-								</td>
-							</tr>
-							<tr>
-								<td class='label required'>Province:</td>
-								<td align='left'>Newfoundland and Labrador</td>
-							</tr>
-							<tr>
-								<td class='label required' valign='top'>Postal Code:</td>
-								<td align='left'>
-									<input class='required' errortext='Mailing Address - Postal Code' type='text' id='txt_MailingPostalCode' name='txt_MailingPostalCode' style='width: 75px;' value="${kr.mailingPostalCode}"/>
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>x0x 0x0</span>
-								</td>
-							</tr>
-						</table>
-					</fieldset>
-				</div>
-				<br />
-				<div align='center'>
-					<fieldset>
-						<legend>School Information</legend>
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<tr>
-								<td class='label'>School Year:</td>
-								<td style='font-weight:bold;' align='left'>${kr.registration.schoolYear}</td>
-							</tr>
-							<tr>
-								<td class='label required'>School:</td>
-								<td align='left'><sreg:SchoolsDDL cls='required' id='ddl_School' dummy='true' period='${kr.registration}' value='${kr.school}'/></td>
-							</tr>
-							<tr>
-								<td class='label required'>Program:</td>
-								<td align='left'><sreg:SchoolStreamDDL cls='required' id='ddl_Stream' value='${kr.schoolStream.value}' /></td>
-							</tr>
-						</table>
-					</fieldset>
-				</div>
-				<br />
-				<div align='center'>
-					<fieldset>
-						<legend>Contact Information</legend>								
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Primary Contact</caption>
-							<tr>
-								<td class='label required'>Full Name:</td>
-								<td align='left'><input class='required' errortext='Primary Contact - Full Name' type='text' id='txt_PrimaryContactName' name='txt_PrimaryContactName' style='width: 200px;' value='${kr.primaryContactName}' /></td>
-							</tr>
-							<tr>
-								<td class='label required'>Relationship to Student:</td>
-								<td align='left'><sreg:ContactRelationshipDDL id='ddl_PrimaryContactRelationship' cls='required' value='${kr.primaryContactRelationship.value}' /></td>
-							</tr>
-							<tr>
-								<td class='label one-required' valign='top'>Home Phone:</td>
-								<td align='left'>
-									<input class='one-required' errortext='Primary Contact - Home Phone' type='text' id='txt_PrimaryContactHomePhone' name='txt_PrimaryContactHomePhone' style='width: 100px;' value='${kr.primaryContactHomePhone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-							<tr>
-								<td class='label one-required' valign='top'>Work Phone:</td>
-								<td align='left'>
-									<input class='one-required' errortext='Primary Contact - Work Phone' type='text' id='txt_PrimaryContactWorkPhone' name='txt_PrimaryContactWorkPhone' style='width: 100px;' value='${kr.primaryContactWorkPhone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-							<tr>
-								<td class='label one-required' valign='top'>Cell Phone:</td>
-								<td align='left'>
-									<input class='one-required' errortext='Primary Contact - Cell Phone' type='text' id='txt_PrimaryContactCellPhone' name='txt_PrimaryContactCellPhone' style='width: 100px;' value='${kr.primaryContactCellPhone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-							<tr>
-								<td class='label required'>Email:</td>
-								<td align='left'><input class='required' errortext='Primary Contact - Email' type='text' id='txt_PrimaryContactEmail' name='txt_PrimaryContactEmail' style='width: 200px;' value='${kr.primaryContactEmail}' /></td>
-							</tr>
-						</table><br/>
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Optional Contact</caption>
-							<tr>
-								<td class='label optionally-required'>Full Name:</td>
-								<td align='left'><input class='optionally-required' type='text' id='txt_SecondaryContactName' name='txt_SecondaryContactName' style='width: 200px;' value='${kr.secondaryContactName}' /></td>
-							</tr>
-							<tr>
-								<td class='label optionally-required'>Relationship to Student:</td>
-								<td align='left'><sreg:ContactRelationshipDDL id='ddl_SecondaryContactRelationship' cls='required' value='${kr.secondaryContactRelationship.value}' /></td>
-							</tr>
-							<tr>
-								<td class='label optionally-one-required' valign='top'>Home Phone:</td>
-								<td align='left'>
-									<input class='optionally-one-required' type='text' id='txt_SecondaryContactHomePhone' name='txt_SecondaryContactHomePhone' style='width: 100px;' value='${kr.secondaryContactHomePhone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-							<tr>
-								<td class='label optionally-one-required' valign='top'>Work Phone:</td>
-								<td align='left'>
-									<input class='optionally-one-required' type='text' id='txt_SecondaryContactWorkPhone' name='txt_SecondaryContactWorkPhone' style='width: 100px;' value='${kr.secondaryContactWorkPhone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-							<tr>
-								<td class='label optionally-one-required' valign='top'>Cell Phone:</td>
-								<td align='left'>
-									<input class='optionally-one-required' type='text' id='txt_SecondaryContactCellPhone' name='txt_SecondaryContactCellPhone' style='width: 100px;' value='${kr.secondaryContactCellPhone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-							<tr>
-								<td class='label optionally-required'>Email:</td>
-								<td align='left'><input class='optionally-required' type='text' id='txt_SecondaryContactEmail' name='txt_SecondaryContactEmail' style='width: 200px;' value='${kr.secondaryContactEmail}' /></td>
-							</tr>
-						</table>
+									<a id="lnkGenerateMCPInfo" class='opbutton'>GENERATE MCP</a>
+								</div>
+								 -->
 						<br/>
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<caption>Emergency Contact</caption>
-							<tr>
-								<td class='label required'>Full Name:</td>
-								<td align='left'><input class='required' errortext='Emergency Contact - Full Name' type='text' id='txt_EmergencyContactName' name='txt_EmergencyContactName' style='width: 200px;' value='${kr.emergencyContactName}' /></td>
-							</tr>
-							<tr>
-								<td class='label required' valign='top'>Telephone:</td>
-								<td align='left'>
-									<input class='required' errortext='Emergency Contact - Telephone' type='text' id='txt_EmergencyContactPhone' name='txt_EmergencyContactPhone' style='width: 100px;' value='${kr.emergencyContactTelephone}' />
-									<br /><span style='color:#333333;font-weight:bold;font-size:9px;'>xxx xxx-xxxx</span>
-								</td>
-							</tr>
-						</table>
-					</fieldset>
-				</div><br />
-				<div align='center'>
-					<fieldset>
-						<legend>Other Information</legend>
-						<table align='center' cellspacing='0' cellpadding='8' width='75%'>
-							<tr>
-								<td class='label required' style='width:110px;' valign='top'><sreg:YesNoRBG id='rbg_CustodyIssues' value='${kr.custodyIssues}' /></td>
-								<td align='left'>
-									Are there any custody issues of which the school should be aware?<br /><br />
-									<i>Court documentation is required if either parent is to be denied from receiving academic information and/or access to child.</i>
-								</td>
-							</tr>
-							<tr>
-								<td class='label required' style='width:110px;' valign='top'><sreg:YesNoRBG id='rbg_HealthOtherConcerns' value='${kr.healthConcerns}' /></td>
-								<td align='left'>Does your child have any health or other concerns of which we should be aware?</td>
-							</tr>
-							<tr>
-								<td class='label required' style='width:110px;' valign='top'><sreg:YesNoRBG id='rbg_AccessibleFacility' value='${kr.accessibleFacility}' /></td>
-								<td align='left'>Does your child require an accessible facility?</td>
-							</tr>
-							<tr>
-								<td class='label required' style='width:110px;' valign='top'><sreg:YesNoRBG id='rbg_CurrentChildEFI' value='${kr.efiSibling}' /></td>
-								<td align='left'>Do you have a child currently enrolled in the Early French Immersion Program in this school?</td>
-							</tr>
-						</table>
-					</fieldset>
-				</div>
+						<b>(b) STUDENT MCP</b>
+						<div class="row container-fluid" style="padding-top:5px;">
+      							<div class="col-lg-4 col-12">	
+									<b>MCP Number (12 digits):</b>
+									<input type='hidden' id='mcp-original' value='${kr.mcpNumber}' />
+									<input placeholder="Valid MCP Number" class='required form-control mcpNum' autocomplete="f" errortext='1. STUDENT INFORMATION, (b) STUDENT MCP - MCP Number' type='text' id='txt_MCPNumber' name='txt_MCPNumber' maxlength="12" value="${kr.mcpNumber}" required/>
+									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please fill out this field.</div>
+									<div class="alert alert-danger" id="mcpErr" style="display:none;">
+									<b>ERROR:</b> 
+									This MCP number has already been registered. Make sure you have not already registered. 
+									Please confirm your entry and try again or contact the school for assistance.
+									</div>
+									</div>
+									<div class="col-lg-3 col-12">
+									<b>MCP Expiration (mm/yyyy):</b>
+									<input class='required form-control' placeholder="mm/yyyy" autocomplete="f" onkeydown="return false;" errortext='1. STUDENT INFORMATION, (b) STUDENT MCP -  MCP Expiration' type='text' id='txt_MCPExpiration' name='txt_MCPExpiration' maxlength="7" value="${kr.mcpExpiry}" required/>
+									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please select date.</div>
+									</div>
+						</div>
+							
+							
+							<br />
+								<b>(c) PHYSICAL ADDRESS:</b>
+								<div class="row container-fluid" style="padding-top:5px;">
+      								<div class="col-lg-6 col-12">	
+											<b>Address: (Street Address, P.O. Box, etc)</b>
+											<input required class='required form-control' placeholder="Address Line 1" errortext='1. STUDENT INFORMATION, (c) PHYSICAL ADDRESS - Street Address' type='text' id='txt_PhysicalStreetAddress1' name='txt_PhysicalStreetAddress1' value="${kr.physicalStreetAddress1}" autocomplete="f"/>
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
+											<br/>
+											<input placeholder="Address Line 2" class="form-control" type='text' id='txt_PhysicalStreetAddress2' name='txt_PhysicalStreetAddress2' value="${kr.physicalStreetAddress2}" autocomplete="f"/>
+									</div>
+								<div class="col-lg-3 col-12">
+								<b>City/Town:</b>
+								
+										<select id='txt_PhysicalCityTown' name='txt_PhysicalCityTown' errortext='1. STUDENT INFORMATION, (c) PHYSICAL ADDRESS -  City/Town' class="form-control" required>
+											<jsp:include page="../../includes/townlist.jsp" />                      		
+                       					 </select>
+                       					 <div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please select.</div>
+                       			</div>		                      
+								<div class="col-lg-1 col-12">	
+								<b>Province:</b><br/>NL
+								</div>
+								<div class="col-lg-2 col-12">
+								<b>Postal Code (X#X #X#):</b>
+								<!-- make letters capital, add space if no space entered. -->
+								<input required placeholder="X#X #X#" class='required form-control pcode' errortext='1. STUDENT INFORMATION, (c) PHYSICAL ADDRESS -  Postal Code' type='text' id='txt_PhysicalPostalCode' name='txt_PhysicalPostalCode' maxlength="7" autocomplete="f" value="${kr.physicalPostalCode}" style="text-transform: uppercase"/>
+								<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
+								</div>		
+								</div>		
+								
+								<br/>
+								<b>(d) MAILING ADDRESS:</b> <input id='chk_MailingAddressSame' type="checkbox" /> Same as physical address?
+								<div class="row container-fluid" style="padding-top:5px;">
+								<div class="col-lg-6 col-12">										
+								<b>Address: (Street Address, P.O. Box, etc)</b>
+								<input placeholder="Address Line 1" required class='required form-control' required errortext='1. STUDENT INFORMATION, (d) MAILING ADDRESS - Address' type='text' id='txt_MailingAddress1' name='txt_MailingAddress1' value="${kr.mailingStreetAddress1}" autocomplete="f"/>
+								<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
+								<br/>
+								<input placeholder="Address Line 2" class="form-control"  type='text' id='txt_MailingAddress2' name='txt_MailingAddress2' value="${kr.mailingStreetAddress2}" autocomplete="f"/>
+								</div>
+								<div class="col-lg-3 col-12">
+								<b>City/Town:</b>
+										<select class="form-control" id='txt_MailingCityTown' name='txt_MailingCityTown' errortext='1. STUDENT INFORMATION, (d) MAILING ADDRESS - City/Town' required>											
+                       						<jsp:include page="../../includes/townlist.jsp" />       
+                       						<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please select.</div>       		
+                       					 </select>
+                       			</div>		   
+								<div class="col-lg-1 col-12">	
+								<b>Province:</b><br/> NL
+								</div>
+								<div class="col-lg-2 col-12">
+								<b>Postal Code (X#X #X#):</b>
+								<!-- <input required onkeyup="this.value = this.value.toUpperCase();" onchange="this.value = this.value.replace(' ','').replace(/[^\dA-Z]/g,' ').replace(/(.{3})/g, '$1 ').trim();" maxlength="7"/>-->
+								<input required placeholder="X#X #X#" class='required form-control pcode' errortext='1. STUDENT INFORMATION, (d) MAILING ADDRESS - Postal Code' type='text' id='txt_MailingPostalCode' name='txt_MailingPostalCode' maxlength="7" value="${kr.mailingPostalCode}" style="text-transform: uppercase"/>
+								<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>		
+						</div>
+						</div>
+						</div></div>
+  
+  <br/>
+<!-- SCHOOL INFORMATION ----------------------------------------------------------------------------------------->						
+						<div class="card">
+							  <div class="card-header"><b>3. SCHOOL INFORMATION </b></div>
+							  <div class="card-body">							  
+							  <span style='color:red;'><i class="fas fa-exclamation-circle"></i></span> Required field. <span style='color:green;'><i class="fas fa-check"></i></span> Not Required/OK
+						 <br/><br/>
+									<div class="row container-fluid" style="padding-top:5px;">		
+											<div class="col-lg-2 col-12">	
+											<b>School Year:</b><br/>
+											${kr.registration.schoolYear}
+											</div>					
+											<div class="col-lg-6 col-12">	
+											<b>School:</b>
+											<sreg:SchoolsDDL cls='required form-control' id='ddl_School' period='${kr.registration}' value='${kr.school}' dummy='true'/>
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please select.</div>
+											</div>
+											<div class="col-lg-4 col-12">	
+											<b>Program Stream:</b>
+											<sreg:SchoolStreamDDL cls='required form-control' id='ddl_Stream' value='${kr.schoolStream.value}' />
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please select (Select school first to get list.)</div>
+											</div>
+									</div>
+							</div>
+						</div>  
+ 
+  <br/>
+  
+<!-- CONTACT INFORMATION ----------------------------------------------------------------------------------------->		
+						
+						<div class="card">
+							  <div class="card-header"><b>4. CONTACT INFORMATION </b></div>
+								<div class="card-body">
+								<span style='color:red;'><i class="fas fa-exclamation-circle"></i></span> Required field. <span style='color:green;'><i class="fas fa-check"></i></span> Not Required/OK
+						 <br/><br/>
+																
+								<b>(a) PRIMARY CONTACT</b>
+								
+									<div class="row container-fluid" style="padding-top:5px;">			      							
+											<div class="col-lg-8 col-12">	
+											<b>Full Name:</b>
+											<input placeholder="Full name (Firstname Lastname)" required class='required form-control' errortext='3. CONTACT INFORMATION, (a) PRIMARY CONTACT - Full Name' type='text' id='txt_PrimaryContactName' name='txt_PrimaryContactName' value='${kr.primaryContactName}' autocomplete="f" />
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please enter name.</div>
+											</div>
+											<div class="col-lg-4 col-12">		
+											<b>Relationship to Student:</b>
+											<sreg:ContactRelationshipDDL id='ddl_PrimaryContactRelationship' cls='form-control required' value='${kr.primaryContactRelationship.value}'/>
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please select.</div>
+											</div>
+									</div>
+									<div class="row container-fluid" style="padding-top:5px;">
+											<div class="col-lg-3 col-12">
+											<b>Primary Phone (xxx) xxx-xxxx :</b>									
+											<input placeholder="Primary Contact Number" required class='one-required form-control phone' data-mask="00/00/0000" errortext='3. CONTACT INFORMATION, (a) PRIMARY CONTACT - Home Phone' type='text' id='txt_PrimaryContactHomePhone' name='txt_PrimaryContactHomePhone' maxlength="14" autocomplete="f" value='${kr.primaryContactHomePhone}'/>
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out at least one contact number.</div>
+											</div>
+											<div class="col-lg-3 col-12">
+											<b>Work Phone (xxx) xxx-xxxx :</b>
+											<input placeholder="Optional" class='one-required form-control phone' errortext='3. CONTACT INFORMATION, (a) PRIMARY CONTACT -  Work Phone' type='text' id='txt_PrimaryContactWorkPhone' name='txt_PrimaryContactWorkPhone' maxlength="14" value='${kr.primaryContactWorkPhone}' autocomplete="f" />
+											</div>
+											<div class="col-lg-3 col-12">	
+											<b>Cell Phone (xxx) xxx-xxxx :</b>
+											<input placeholder="Optional" class='one-required form-control phone' errortext='3. CONTACT INFORMATION, (a) PRIMARY CONTACT - Cell Phone' type='text' id='txt_PrimaryContactCellPhone' name='txt_PrimaryContactCellPhone' maxlength="14" value='${kr.primaryContactCellPhone}' autocomplete="f" />
+											</div>
+											<div class="col-lg-3 col-12">		
+											<b>Email:</b>
+											<input required placeholder="Enter Valid Email Address" class='required form-control' errortext='3. CONTACT INFORMATION, (a) PRIMARY CONTACT - Email Address' type='text' id='txt_PrimaryContactEmail' name='txt_PrimaryContactEmail' value='${kr.primaryContactEmail}' autocomplete="f" />
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please provide valid email address.</div>
+											</div>
+									</div>
+									<br/>
+									
+							
+							<b>(b) OPTIONAL CONTACT</b>
+										<div class="row container-fluid" style="padding-top:5px;">			      							
+											<div class="col-lg-8 col-12">								
+											<b>Full Name:</b>
+											<input placeholder="Optional" class='optionally-required form-control' type='text' id='txt_SecondaryContactName' name='txt_SecondaryContactName' value='${kr.secondaryContactName}' autocomplete="f"/>
+											</div>
+											<div class="col-lg-4 col-12">			
+											<b>Relationship to Student:</b>
+											<sreg:ContactRelationshipDDL id='ddl_SecondaryContactRelationship' value='${kr.secondaryContactRelationship.value}' cls='form-control'/>
+											</div>
+										</div>
+										<div class="row container-fluid" style="padding-top:5px;">	
+											<div class="col-lg-3 col-12">			
+											<b>Primary Phone (xxx) xxx-xxxx:</b>
+											<input placeholder="Optional" class='optionally-one-required form-control phone' type='text' id='txt_SecondaryContactHomePhone' name='txt_SecondaryContactHomePhone' maxlength="14" value='${kr.secondaryContactHomePhone}' autocomplete="f"/>
+											</div>
+											<div class="col-lg-3 col-12">
+											<b>Work Phone (xxx) xxx-xxxx:</b>
+											<input placeholder="Optional" class='optionally-one-required form-control phone' type='text' id='txt_SecondaryContactWorkPhone' name='txt_SecondaryContactWorkPhone' maxlength="14" value='${kr.secondaryContactWorkPhone}' autocomplete="f"/>
+											</div>
+											<div class="col-lg-3 col-12">			
+											<b>Cell Phone (xxx) xxx-xxxx:</b>
+											<input placeholder="Optional" class='optionally-one-required form-control phone' type='text' id='txt_SecondaryContactCellPhone' name='txt_SecondaryContactCellPhone' maxlength="14" value='${kr.secondaryContactCellPhone}' autocomplete="f"/>
+											</div>
+											<div class="col-lg-3 col-12">			
+											<b>Email:</b>
+											<input placeholder="Optional" class='optionally-required form-control' type='text' id='txt_SecondaryContactEmail' name='txt_SecondaryContactEmail' value='${kr.secondaryContactEmail}' autocomplete="f" />
+											</div>
+									</div>
+							
+							<br/>
+							<b>(c) EMERGENCY  CONTACT</b><br/>
+							<span style="color:Red;">&nbsp;&nbsp;All parents/guardians must provide an alternative contact in case of emergency.</span>
+										<div class="row container-fluid" style="padding-top:5px;">			      							
+											<div class="col-lg-8 col-12">								
+											<b>Full Name:</b>
+											<input placeholder="Enter name" required class='required form-control' errortext='3. CONTACT INFORMATION, (c) EMERGENCY CONTACT - Full Name' type='text' id='txt_EmergencyContactName' name='txt_EmergencyContactName' value='${kr.emergencyContactName}' autocomplete="f" />
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please enter name.</div>
+											</div>
+											<div class="col-lg-4 col-12">
+											<b>Telephone (xxx) xxx-xxxx:</b>
+											<input placeholder="Enter Number" required class='required form-control phone' errortext='3. CONTACT INFORMATION, (c) EMERGENCY CONTACT - Telephone' type='text' id='txt_EmergencyContactPhone' name='txt_EmergencyContactPhone' value='${kr.emergencyContactTelephone}' maxlength="14" autocomplete="f" />
+											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please provide valid contact number.</div>
+											</div>
+										</div>
+							</div>		
+							
+						</div><br />
+
+<!-- OTHER INFORMATION ----------------------------------------------------------------------------------------->	
+
+						<div class="card">
+							  <div class="card-header"><b>4. OTHER INFORMATION </b></div>							  
+								<div class="card-body">
+								<span style="color:red;">This section must have all questions answered.</span><br/>
+																
+										<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">			      							
+											<div class="col-8">	
+											(a) Are there any custody issues of which the school should be aware?<br/>
+											<i>Court documentation is required if either parent is to be denied from receiving academic information and/or access to child.</i>
+											</div>
+											<div class="col-4">
+											<sreg:YesNoRBG id='rbg_CustodyIssues' value='${kr.custodyIssues}'/>											
+											</div>
+										</div>	
+										<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">			      							
+											<div class="col-8">														
+											(b) Does your child have any health or other concerns of which we should be aware?
+											</div>
+											<div class="col-4">
+											<sreg:YesNoRBG id='rbg_HealthOtherConcerns' value='${kr.healthConcerns}'/>
+											</div>
+										</div>	
+										<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">			      							
+											<div class="col-8">
+											(c) Does your child require an accessible facility?
+											</div>
+											<div class="col-4">
+											<sreg:YesNoRBG id='rbg_AccessibleFacility' value='${kr.accessibleFacility}'/>
+											</div>
+										</div>	
+										<div class="row container-fluid" style="padding-top:5px;border-top:1px solid #e5e5e5;">			      							
+											<div class="col-8">											
+											(d) Do you have a child currently enrolled in the Early French Immersion Program in this school?
+											</div>
+											<div class="col-4">
+											<sreg:YesNoRBG id='rbg_CurrentChildEFI' value='${kr.efiSibling}' />
+											</div>
+										</div>
+								</div>
+						</div>
+
+				
+				
+		
 				<br />
-				<div style='text-align: center;'>
-					<input id='btn_SubmitRegistration' type='button' value='Update Registration' class='opbutton' /> <a class='opbutton' href="${ReturnURL}">Cancel</a>
+			<div style='text-align: center;' class="no-print">
+					<input id='btn_SubmitRegistration' type='button' value='Update Registration' class='btn btn-sm btn-primary' /> 
+					<a onclick="loadingData();" class='btn btn-sm btn-danger' href="${ReturnURL}">Cancel</a>
 				</div>
 				<br />
 			</form>
 		</div>
 		
-		<script>
+		
+			<script>
 			$(document).ready(function(){
 								$('select[name="txt_PhysicalCityTown"]').find("option[value=\"${kr.physicalCityTown}\"]").attr("selected",true);								
-								$('select[name="txt_MailingCityTown"]').find("option[value=\"${kr.mailingCityTown}\"]").attr("selected",true);								
-			});								
-		</script>		
-		
-		
+								$('select[name="txt_MailingCityTown"]').find("option[value=\"${kr.mailingCityTown}\"]").attr("selected",true);					
+								
+								$('.datefield').datepicker({
+									dateFormat: "mm/dd/yy",
+									maxDate: "-3y",
+									minDate: "-7y",
+									changeYear: true
+								});
+													
+								var theSchool = $("#ddl_School option:selected" ).text();
+								$("#theSchoolName").html(theSchool);
+			});
+				
+
+			</script>		
+  
+  
 	</body>
 	
 </html>

@@ -13,30 +13,21 @@
 
 <html>
   
-  <head>
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-    <TITLE>Administration</title>
-    
-    <script type="text/javascript">
+  <head>    
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">	
+    <TITLE>Student Registration</title>
+    <script>
     //var efi = new Array(211, 215, 219, 287, 244, 209, 247, 229, 232, 495, 289, 387, 192, 239, 207, 241, 196, 242, 162, 464, 414, 352, 403, 330, 341, 416, 595);
     	var efi = new Array(330, 211, 215, 352, 219, 287, 595, 464, 244, 209, 247, 229, 232, 495, 289, 341, 162, 192, 239, 207, 241, 403, 196, 242, 414);
     	jQuery(function(){
     		
-    		$('.opbutton').button();
-    		
-    		$('#txt_StartDate, #txt_EndDate, #txt_ConfirmationDeadlineDate').datetimepicker({
-					dateFormat: "dd/mm/yy",
-					timeFormat: "hh:mm tt",
-					changeYear: true,
-					yearRange: "c-0:c+1"
-				});
+    	    		
     		
     		$('#btn_cancelAddRegPeriod').click(function(){
     			$('#add-reg-period-form form')[0].reset();
     		});
     		
-    		$('tr.period-data-row:odd').css({'background-color':'#f0f0f0'})
-    		
+    		    		
     		$('#ddl_School').change(function(){
     			$('#ddl_Stream').children().remove();
 
@@ -63,21 +54,76 @@
     	
     </script>
     <script src="/MemberServices/schools/registration/kindergarten/admin/district/Chart.min.js"></script>
+       
+    	<script>
+	$('document').ready(function(){
+		
+		
+		mTable = $(".registrationPeriodsTable").dataTable({
+			"order" : [[0,"desc"]],		
+			"bPaginate": false,
+			responsive: true,
+			dom: 'Bfrtip',
+	        buttons: [			        	
+	        	//'colvis',
+	        	{
+                extend: 'print',
+                title: '<div align="center"><img src="/MemberServices/schools/registration/kindergarten/includes/img/nlesd-colorlogo.png" style="max-width:600px;"/></div>',
+                messageTop: '<div align="center" style="font-size:18pt;">${sy} Kinderstart/Kindergarten Registration Periods</div>',           
+                	 exportOptions: {
+                         columns: [ 0,1,2,3,4,5,6,7 ],
+                     }
+            },
+            {
+                extend: 'csv',
+                exportOptions: {
+                    columns: [ 0,1,2,3,4,5,6,7 ],
+                }
+            },
+            {
+                extend: 'excel',
+                exportOptions: {
+                    columns: [ 0,1,2,3,4,5,6,7 ],
+                }
+            },    	
+	        ],				
+			 "columnDefs": [
+				 {
+		                "targets": [8],			               
+		                "searchable": false,
+		                "orderable": false
+		            }
+		        ]
+		});		
+		
+				
+		$("tr").not(':first').hover(
+		  function () {
+		    $(this).css("background","yellow");
+		  }, 
+		  function () {
+		    $(this).css("background","");
+		  }
+		);				
+		
+			$(".loadPage").show();
+			$(".loadingTable").css("display","none");
+			$("#loadingSpinner").css("display","none");		    		  
+	    		 
+	    		    $('.mcpNum').mask('000000000000');
+	    	    			
+
+		});
+	</script>
+
+    
   </head>
 
 
-
-
-
-
-  <body bgcolor="#BF6200">
+  <body>
   
-  <div class="alert alert-danger" style="text-align:center;">NOTICE: System is undergoing maintenance. Please do not use at this time. Sorry for any inconvenience.</div>
-  	
-  <div style="display:none;">	
-  
-		<div align='center' style='font-size:14pt;font-weight:bold;color:#33cc33;padding-bottom:15px;'>
-	  	Kindergarten Registration Periods<br/>
+  	<div align='center' style='font-size:14pt;font-weight:bold;color:#004178;;padding-bottom:15px;'>
+	  	Kinderstart/Kindergarten Registration Periods<br/>
 	  	<div style="float:left; width:33%;"><canvas id="provincialChart" height="200"></canvas></div>
 	  	<div style="float:left; width:33%;"><canvas id="avalonChart" height="200"></canvas></div>
 	  	<div style="float:left; width:33%;"><canvas id="cwlChart" height="200"></canvas></div>  	
@@ -88,27 +134,34 @@
   
   
   
-  	
-		<div>
-			<table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" style='border-bottom: solid 2px grey;'>
-				<tr>
-					<th>School Year</th>
-					<th>Zones</th>
-					<th>Start Date</th>
-					<th>End Date</th>
-					<th>Is Past?</th>
-					<th>Registrants</th>
-					<th>English</th>
-					<th>French</th>
-					<th>Actions</th>
+     <div class="siteHeaderBlue">REGISTRATION PERIODS</div><br/>
+     Below is the list of registration periods currently in the system. 
+     <ul>
+     <li>You can view the registration periods, or EXPORT complete data to CSV/Excel using the option below right for import into <b>PowerSchool</b>. 
+     <li>You can also use the Print, Excel, or CSV on any table (below left atop any table) to export the current view. 
+    <li>Use the Search on any table (below right atop any table) to quickly find any data as you type.
+	</ul>
+	
+		<table class="registrationPeriodsTable table table-sm table-bordered responsive" width="100%" style="font-size:12px;background-color:White;">
+					<thead class="thead-dark">
+					<tr >							
+					<th>YEAR</th>
+					<th>ZONE(s)</th>
+					<th>START (y/m/d)</th>
+					<th>END (y/m/d)</th>
+					<th>STATUS</th>
+					<th>TOTAL</th>
+					<th>ENGLISH</th>
+					<th>FRENCH</th>
+					<th>OPTIONS</th>
 				</tr>
+				</thead>
+				<tbody>
 				<c:choose>
 					<c:when test="${fn:length(periods) gt 0 }">
-						<c:forEach items="${periods}" var="p">
-						
-				
-						
-							<tr class='period-data-row'>
+					<c:set var="periodCnt" value="0"/>
+						<c:forEach items="${periods}" var="p">												
+							<tr class='period-data-row'>							
 								<td class="dateData">${p.schoolYear}</td>	
 								<script>								       
 							        dateList.push('${p.schoolYear}'); 							        
@@ -147,149 +200,161 @@
 										</c:if>
 									</c:forEach>
 								</td>
-								<td><fmt:formatDate type="both" dateStyle="medium" value="${p.startDate}" /></td>
-								<td><fmt:formatDate type="both" dateStyle="medium" value="${p.endDate}" /></td>
-								<td align='center'>${p.past ? "Yes": "No"}</td>
+								<td><fmt:formatDate type="both" pattern="yyyy/MM/dd @ h:mm a" value="${p.startDate}" /></td>
+								<td><fmt:formatDate type="both" pattern="yyyy/MM/dd @ h:mm a" value="${p.endDate}" /></td>
+								<td align='center'>${p.past ? "<span style='color:red;'>CLOSED</span>": "<span style='color:Green;'>OPEN</span>"}</td>
 								<td align='center' class="totalData">${p.registrantCount}</td>
 								<td align='center' class="englishData">${p.englishCount}</td>
-								<td align='center' class="frenchData">${p.frenchCount}</td>
-									
-								<td><a class='opbutton small' href="<c:url value='/schools/registration/kindergarten/admin/district/viewPeriodRegistrants.html?krp=${p.registrationId}' />">View Registrations</a></td>
+								<td align='center' class="frenchData">${p.frenchCount}</td>									
+								<td><a onclick="loadingData();" class='btn btn-xs btn-primary' href="/MemberServices/schools/registration/kindergarten/admin/district/viewPeriodRegistrants.html?krp=${p.registrationId}"><i class="far fa-eye"></i> VIEW </a>
+								<a onclick="loadingData();" class='btn btn-xs btn-warning' href="/MemberServices/schools/registration/kindergarten/admin/district/viewPeriodRegistrantsExport.html?krp=${p.registrationId}"><i class="fas fa-file-export"></i> EXPORT </a>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan='6'>No kindergarten registrations periods found.</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
+				</tbody>
 			</table>
-		</div>
+
 		<br />
-		<div>
-			<table align='center'>
-				<tr>
-					<td valign='top'>
-						<div id='list-registrants-by-form' class='form-panel' style='width:100%; display:inline;'>
-							<form method='post' action="<c:url value='/schools/registration/kindergarten/admin/district/listKindergartenRegistrantsBy.html'/>">
-								<table align='center' cellspacing='2' cellpadding='2'>
-									<caption>View Registrants By...</caption>
-									<tr>
-										<td class='label required'>School Year:</td>
-										<td><sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='1' listAll='true' /></td>
-									</tr>
-									<tr>
-										<td class='label required'>School:</td>
-										<td><sreg:SchoolsDDL cls='required' id='ddl_School' dummy='true'/></td>
-									</tr>
-									<tr>
-										<td class='label required'>Stream:</td>
-										<td><sreg:SchoolStreamDDL cls='required' id='ddl_Stream' /></td>
-									</tr>
-									<tr>
-										<td colspan='2' align='center'>- OR -</td>
-									</tr>
-									<tr>
-										<td class='label required'>MCP #:</td>
-										<td><input type='text' id='txt_MCPNumber' name='txt_MCPNumber' style='width:150px;' /></td>
-									</tr>
-									<tr>
-										<td class='label required'>Student Name:</td>
-										<td><input type='text' id='txt_StudentName' name='txt_StudentName' style='width:150px;' /></td>
-									</tr>
-									<tr>
-										<td colspan='2' align='right'>
-											<input type='submit' value='GO' class='opbutton' />
-										</td>
-									</tr>
-								</table>
+		
+		
+		<div class="row container-fluid" style="padding-top:5px;">
+      	<div class="col-lg-4 col-12">
+		
+		<div class="card">
+							  <div class="card-header"><b>VIEW REGISTRANTS BY:</b></div>
+							  <div class="card-body">
+										<form method='post' action="/MemberServices/schools/registration/kindergarten/admin/district/listKindergartenRegistrantsBy.html">
+																							
+												<b>School Year:</b>
+												<sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='1' listAll='true' cls="form-control"/>
+												
+												<b>School:</b>
+												<sreg:SchoolsDDL cls='required form-control' id='ddl_School' dummy='true'/>
+												
+												<b>Stream:</b>
+												<sreg:SchoolStreamDDL cls='required form-control' id='ddl_Stream' />
+												
+												<br/><div align="center" style="padding-top:10px;padding-bottom:10px;"><b>- OR -</b><br/></div>
+												
+												<b>MCP #:</b>
+												<input type='text' id='txt_MCPNumber' name='txt_MCPNumber' class="form-control mcpNum"/>
+												
+												<b>Student Name:</b>
+												<input type='text' id='txt_StudentName' name='txt_StudentName' class="form-control" />
+												<div align="center" style="padding-top:10px;">	
+												<input onclick="loadingData();" type='submit' value='Search' class='btn btn-sm btn-primary' />
+												</div>		
+										</form>
+							  </div>
+		</div>
+		
+		</div>
+		
+		<div class="col-lg-4 col-12">
+		
+		<div class="card">
+							  <div class="card-header"><b>SCHOOL REGISTRATION CAPS</b></div>
+							  <div class="card-body">
+							  <form method='post' action="/MemberServices/schools/registration/kindergarten/admin/district/listSchoolRegistrationCaps.html">			
+								<b>School Year:</b>
+								<sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='1' listAll='true' cls="form-control"/>
+								<div align="center" style="padding-top:10px;">	
+								<input onclick="loadingData();"  type='submit' value='Search' class='btn btn-sm btn-primary' />
+								</div>						
+								</form>
+							  </div>
+		</div>
+		<br/>
+		<div class="card">
+							  <div class="card-header"><b>SCHOOL REGISTRATION SUMMARY</b></div>
+							  <div class="card-body">
+							  <form method='post' action="/MemberServices/schools/registration/kindergarten/admin/district/listSchoolRegistrationSummaries.html">							
+							<b>School Year:</b>
+							<sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='1' listAll='true' cls="form-control"/>
+							<div align="center" style="padding-top:10px;">	
+							<input onclick="loadingData();" type='submit' value='Search' class='btn btn-sm btn-primary'/>
+							</div>
 							</form>
-						</div>
-					</td>
-					<td valign='top'>
-						<div id='caps-reports-form' class='form-panel' style='width:100%; display:inline;'>
-							<form method='post' action="<c:url value='/schools/registration/kindergarten/admin/district/listSchoolRegistrationCaps.html'/>">
-								<table align='center' cellspacing='2' cellpadding='2'>
-									<caption>School Registration Caps...</caption>
-									<tr>
-										<td class='label required'>School Year:</td>
-										<td><sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='1' listAll='true' /></td>
-									</tr>
-									<tr>
-										<td colspan='2' align='right'>
-											<input type='submit' value='GO' class='opbutton' />
-										</td>
-									</tr>
-								</table>
-							</form>
-						</div>
-						<div style='height:5px;'>&nbsp;</div>
-						<div id='summary-reports-form' class='form-panel' style='width:100%; display:inline;'>
-							<form method='post' action="<c:url value='/schools/registration/kindergarten/admin/district/listSchoolRegistrationSummaries.html'/>">
-								<table align='center' cellspacing='2' cellpadding='2'>
-									<caption>School Registration Summary...</caption>
-									<tr>
-										<td class='label required'>School Year:</td>
-										<td><sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='1' listAll='true' /></td>
-									</tr>
-									<tr>
-										<td colspan='2' align='right'>
-											<input type='submit' value='GO' class='opbutton' />
-										</td>
-									</tr>
-								</table>
-							</form>
-						</div>
-					</td>
-					<td valign='top'>
-						<div id='add-reg-period-form' class='form-panel' style='width:100%; display:inline;'>
-							<form method='post' action="<c:url value='/schools/registration/kindergarten/admin/district/addKindergartenRegistrationPeriod.html'/>">
-								<table align='center' cellspacing='2' cellpadding='2'>
-									<caption>Add Registration Period...</caption>
-									<tr>
-										<td class='label required'>School Year:</td>
-										<td><sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='2' /></td>
-									</tr>
-									<tr>
-										<td class='label required'>Start Date:</td>
-										<td><input type='text' id='txt_StartDate' name='txt_StartDate' /></td>
-									</tr>
-									<tr>
-										<td  class='label required'>End Date:</td>
-										<td><input type='text' id='txt_EndDate' name='txt_EndDate' /></td>
-									</tr>
-									<tr>
-										<td  class='label required'>Confirmation<br/>Deadline Date:</td>
-										<td><input type='text' id='txt_ConfirmationDeadlineDate' name='txt_ConfirmationDeadlineDate' /></td>
-									</tr>
-									<tr>
-										<td class='label required' valign='top'>Associated Zones:</td>
-										<td>
-											<select id='txt_AssociatedZones' name='txt_AssociatedZones' multiple="multiple">
+							  </div>
+		</div>
+		
+		</div>
+		
+		<div class="col-lg-4 col-12">
+		
+		<div class="card">
+							  <div class="card-header"><b>ADD REGISTRATION PERIOD:</b></div>
+							  <div class="card-body">
+							 <form method='post' action="<c:url value='/MemberServices/schools/registration/kindergarten/admin/district/addKindergartenRegistrationPeriod.html'/>">
+														
+							<b>School Year:</b>
+							<sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='2' cls="form-control"/>
+							
+							<b>Start Date:</b>
+							
+							<input type="text" class="form-control datetimepicker-input" id='txt_StartDate' name='txt_StartDate'  data-toggle="datetimepicker" data-target="#txt_StartDate"/>
+							
+							
+							<b>End Date:</b>							
+							<input type="text" class="form-control datetimepicker-input" id='txt_EndDate' name='txt_EndDate'  data-toggle="datetimepicker" data-target="#txt_EndDate"/>
+							
+							<b>Confirmation Deadline Date:</b>							
+							<input type="text" class="form-control datetimepicker-input" id='txt_ConfirmationDeadlineDate' name='txt_ConfirmationDeadlineDate'  data-toggle="datetimepicker" data-target="#txt_ConfirmationDeadlineDate"/>
+									
+							<b>Associated Zones:</b>
+									
+											<select id='txt_AssociatedZones' name='txt_AssociatedZones' multiple="multiple" class='form-control' >
 												<c:forEach items='${zones}' var='zone'>
 													<option value='${zone.zoneId}' style='text-transform: capitalize'>${zone.zoneName} Zone</option>
 												</c:forEach>
 											</select>
-										</td>
-									</tr>
-									<tr>
-										<td colspan='2' align='right'>
-											<input type='submit' value='add' class='opbutton' /> <input id='btn_cancelAddRegPeriod' type='button' value='cancel' class='opbutton' />
-										</td>
-									</tr>
-								</table>
+									<div align="center" style="padding-top:10px;">			
+											<input type='submit' value='Add' class='btn btn-sm btn-primary' /> &nbsp; <input id='btn_cancelAddRegPeriod' type='button' value='Cancel' class='btn btn-sm btn-danger' />
+									</div>			
 							</form>
-						</div>
-					</td>
-				</tr>
-			</table>
+							  </div>
 		</div>
+		
+		</div>
+		
+		
+		</div>
+		
 
+<script>
 
-
-</div>
-
+$('document').ready(function(){
+	
+	 
+         $('#txt_StartDate,#txt_EndDate').datetimepicker({
+        	 format: 'DD/MM/YYYY hh:mm A'
+      });
+         
+         $('#txt_ConfirmationDeadlineDate').datetimepicker({
+        	 format: 'DD/M/YYYY'  
+        
+     });
+         
+        $('#ddl_School').prop('required',false);
+        $('#ddl_Stream').removeAttr('required');
+	
+});
+</script>
 
 
 <script>
@@ -302,9 +367,17 @@
      
     var dateLimit = uniqueDate.slice(0,4);
     
+  //  var chartYear = parseInt(dateList[1].substring(0,4));
+  
+ 
+    
      var ctx = document.getElementById('dataChart').getContext('2d');
      //ctx.canvas.height = 100;
+
+     
      var dataChart = new Chart(ctx, {
+    
+    	 
     	 
        type: 'bar',       
        data: {
