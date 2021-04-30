@@ -230,8 +230,8 @@ $('document').ready(function(){
 							<td>${r.healthConcerns ? "Yes" : "No"}</td>
 							<td>${r.accessibleFacility ? "Yes" : "No"}</td>
 							<td>${r.efiSibling ? "Yes" : "No"}</td>							
-							<td>${kr.physicalAddressApproved ? "Yes" : "No"}</td>
-							<td>${kr.status.accepted ? "Accepted" : kr.status.waitlisted ? "Waitlisted" : "Processing"}</td>				
+							<td>${r.physicalAddressApproved ? "Yes" : "No"}</td>
+							<td>${r.status.accepted ? "Accepted" : kr.status.waitlisted ? "Waitlisted" : "Processing"}</td>				
 							</tr>
 						</c:forEach>
 					</c:when>
