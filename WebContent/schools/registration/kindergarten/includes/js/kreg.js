@@ -162,8 +162,11 @@
     	function validateRegistrantForm(){
 				var ul = $('<ul>');
       	
+				if($("#mcp-original").val()  !=  $("#txt_MCPNumber").val()) {
 				if(checkMCPExists($('#txt_MCPNumber').val()))
-					ul.append($('<li>').text('1. STUDENT INFORMATION, (b) MCP - MCP Number has already registered.'));
+					ul.append($('<li>').text('1. STUDENT INFORMATION, (b) MCP - MCP Number has already registered.'));				
+				}	
+				
 				
 				if($('#ddl_Gender').val() == '')
 					ul.append($('<li>').text('1. STUDENT INFORMATION, (a) DEMOGRAPHICS - Gender'));
