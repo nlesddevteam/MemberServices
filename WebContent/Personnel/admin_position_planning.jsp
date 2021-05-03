@@ -46,7 +46,7 @@
 					isPositionPlanningAdmin = false;
 					schoolYear = $.cookie('myhrp-pp-schoolyear') ? $.cookie('myhrp-pp-schoolyear') : '<%= StringUtils.getSchoolYear(Calendar.getInstance().getTime()) %>';
 					loadTeacherAllocation(schoolYear, "<%=loc.getLocationDescription() %>");
-					$('.SchoolName').text('<%=loc.getLocationDescription() %>');
+					$('.SchoolName').text("<%=loc.getLocationDescription() %>");
 					$('.SchoolYear').text(schoolYear);
 				<% } else { %>
 					if($.cookie('myhrp-pp-schoolyear') && $.cookie('myhrp-pp-location')) {
