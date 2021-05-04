@@ -30,7 +30,7 @@
     		    $( "#txt_DateOfBirth" ).datepicker({
     		      changeMonth: true,//this option for allowing user to select month
     		      changeYear: true, //this option for allowing user to select from year range
-    		      dateFormat: "mm/dd/yy",
+    		      dateFormat: "dd/mm/yy",
     		      maxDate: '-2y',
     		      minDate: '-8y'
     		    });       		  
@@ -179,8 +179,8 @@
 									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please fill out this field.</div>
 								</div>
 								<div class="col-lg-3 col-12">
-									<b>Date of Birth (MM/DD/YYYY):</b>
-									<input placeholder="mm/dd/yyyy" class='required datefield form-control' onkeydown="return false;" errortext='1. STUDENT INFORMATION, (a) DEMOGRAPHICS - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' required autocomplete="f"/>
+									<b>Date of Birth (DD/MM/YYYY):</b>
+									<input placeholder="dd/mm/yyyy" class='required datefield form-control' onkeydown="return false;" errortext='1. STUDENT INFORMATION, (a) DEMOGRAPHICS - Date of Birth' type='text' id='txt_DateOfBirth' name='txt_DateOfBirth' required autocomplete="f"/>
 									<div class="invalid-feedback"><i class="fas fa-arrow-up"></i>Please select date.</div>
 								</div>
 						</div>
@@ -491,18 +491,6 @@
 			<!-- REGISTRATION CLOSED -->
 			</c:otherwise>
 		</c:choose>
-	<script>
-	//Limit dates to only 4-6 years ago. (May need to be changed!)
-	$(document).ready(function() {		
-	$('.datefield').datepicker({
-		dateFormat: "mm/dd/yy",
-		maxDate: "-3y",
-		minDate: "-7y",
-		changeYear: true
-	});
-
-	});	
-	</script>
 
 	</body>
 	

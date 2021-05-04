@@ -20,6 +20,24 @@
     $('document').ready(function(){
     	
     	$("#loadingSpinner").css("display","none");
+    	$("#viewReg").prop('disabled', true);
+    	
+    	$(function(){
+    		$('#ddl_SchoolYear').change(function(){ 
+    			$('#ddl_Stream').val("1") ;
+    			$("#viewReg").prop('disabled', false);
+    		});
+    	});
+    	
+    	$(function(){
+    		$('#ddl_Stream').change(function(){     			
+    			if($(this).children("option:selected").val() != '') {
+    			$("#viewReg").prop('disabled', false);
+    			} else {
+    			$("#viewReg").prop('disabled', true);    				
+    			};
+    		});
+    	});
     	
     	mTable = $(".registrationPeriodsTable").dataTable({
 			"order" : [[1,"asc"]],		
@@ -147,7 +165,7 @@ if(${sch ne null}) {
 									<c:if test="${krp ne null}">
 											<a onclick="loadingData();" href="/MemberServices/schools/registration/kindergarten/admin/school/addKindergartenRegistrant.html?id=${ krp.registrationId }" class='btn btn-sm btn-primary'>Add New Registrant</a>
 									</c:if>
-									<input onclick="loadingData();" type='submit' value='View Registrants' class='btn btn-danger btn-sm' />
+									<input id="viewReg" onclick="loadingData();" type='submit' value='View Registrants' class='btn btn-danger btn-sm' />
 									</div>		
 									</form>
 		
