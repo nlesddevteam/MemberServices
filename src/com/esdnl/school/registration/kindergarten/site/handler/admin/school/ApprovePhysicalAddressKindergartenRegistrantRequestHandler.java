@@ -38,11 +38,11 @@ public class ApprovePhysicalAddressKindergartenRegistrantRequestHandler extends 
 			KindergartenRegistrantBean kr = KindergartenRegistrationManager.getKindergartenRegistrantBean(form.getInt("kr"));
 
 			kr = KindergartenRegistrationManager.approvePhysicalAddress(kr);
-
+			request.setAttribute("msgOK", "SUCCESS: Address and MCP has been set to APPROVED.");
 			request.setAttribute("kr", kr);
 		}
 		catch (SchoolRegistrationException e) {
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("msgERR", e.getMessage());
 		}
 
 		this.path = "school_view_registrant.jsp";
