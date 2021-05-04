@@ -42,15 +42,17 @@ public class DeleteKindergartenRegistrantRequestHandler extends RequestHandlerIm
 
 			KindergartenRegistrationManager.deleteKindergartenRegistrantBean(kr);
 
-			request.setAttribute("krp", period);
+			//request.setAttribute("krp", period);
 			request.setAttribute("registrants", KindergartenRegistrationManager.getKindergartenRegistrantBeans(period));
 		}
 		catch (SchoolRegistrationException e) {
 			request.setAttribute("msg", e.getMessage());
 		}
-
-		this.path = (String) session.getAttribute("ReturnURL");
-
-		return this.path;
+		 //this.path = (String) session.getAttribute("ReturnURL");
+		 	session.setAttribute("ReturnURL", request.getRequestURI() + "?krp=" + form.get("krp"));	      
+		 
+	        this.path = "district_period_registrants.jsp";	 
+	        
+	        return this.path;
 	}
 }
