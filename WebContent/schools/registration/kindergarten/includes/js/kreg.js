@@ -9,10 +9,7 @@
     	var phoneNumber = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     	
     	//match date in format DD/MM/YYYY
-    	//var dateDDMMYYYRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
-    	
-    	//match date in format MM/DD/YYYY
-    	var dateMMDDYYYRegex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
+    	var dateDDMMYYYRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
     	
     	//match date in format MM/YYYY
     	var dateMMYYYRegex = /^(0[1-9]|1[012])[- /.](19|20)\d\d$/;
@@ -218,7 +215,7 @@
      		if(!$('#rbg_CurrentChildEFI_1').is(':checked') && !$('#rbg_CurrentChildEFI_0').is(':checked'))
      			ul.append($('<li>').text('4. OTHER INFORMATION, (d) EFI Sibling'));
      		
-     		if($('#txt_DateOfBirth').val() != '' && !dateMMDDYYYRegex.test($('#txt_DateOfBirth').val()))
+     		if($('#txt_DateOfBirth').val() != '' && !dateDDMMYYYRegex.test($('#txt_DateOfBirth').val()))
 					ul.append($('<li>').text('1. STUDENT INFORMATION, (a) DEMOGRAPHICS - Date of birth invalid format'));
  		
      		if($('#txt_MCPNumber').val() != '' && !mcpNumberRegex.test($('#txt_MCPNumber').val()))
