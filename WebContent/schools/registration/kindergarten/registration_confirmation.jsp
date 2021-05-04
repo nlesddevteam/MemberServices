@@ -35,7 +35,7 @@
 					 <div align="center" class="no-print">
 					 	<hr>
 					 <b>Please print this page for your records. You can also register another child or exit.</b><br/><br/>
-					 <a class="btn btn-sm btn-primary" href="/schools/registration/kindergarten/index.html?rel=${kr.registrantId}"><i class="fas fa-edit"></i> Register Another Child</a> &nbsp; 	
+					 <a class="btn btn-sm btn-primary" href="/MemberServices/schools/registration/kindergarten/index.html?rel=${kr.registrantId}"><i class="fas fa-edit"></i> Register Another Child</a> &nbsp; 	
 					 <a href='#' class="no-print noJump btn btn-sm btn-warning" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>KINDERSTART/KINDERGARTEN REGISTRATION</b></div><br/><br/>'});"><i class="fas fa-print"></i> Print this Page</a> &nbsp; 
                      <a href="/index.jsp" class="no-print btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
                       </div>    
@@ -114,11 +114,11 @@
 										</div>
 										<div class="col-lg-4 printSet" style="padding:5px;"><b>(b) OPTIONAL CONTACT</b><br/>
 		      								<b>Name:</b><br/>
-		      								<div class="dField">${!(kr.secondaryContactName.val())?"N/A":kr.secondaryContactName}</div>
+		      								<div class="dField">${kr.secondaryContactName ne null?kr.secondaryContactName:"N/A"}</div>
 		      								<b>Relationship to Student:</b><br/>
 		      								<div class="dField">${kr.secondaryContactRelationship.text ne null?kr.secondaryContactRelationship.text:"N/A"}</div>
 		      								<b>Home Phone:</b><br/>
-		      								<div class="dField">${!(kr.secondaryContactHomePhone.val())?"N/A":kr.secondaryContactHomePhone}</div>
+		      								<div class="dField">${kr.secondaryContactHomePhone?kr.secondaryContactHomePhone:"N/A"}</div>
 		      								<b>Work Phone:</b><br/>
 		      								<div class="dField">${kr.secondaryContactWorkPhone ne null?kr.secondaryContactWorkPhone:"N/A"}</div>
 		      								<b>Cell Phone:</b><br/>

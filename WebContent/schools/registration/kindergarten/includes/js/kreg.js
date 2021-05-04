@@ -23,7 +23,7 @@
     	//match elements that could contain a MCP number
     	var mcpNumberRegex = /^([0-9]{12})$/;
     	
-    	jQuery(function(){
+     $('document').ready(function(){  	
     		
     		    		
     		//$('#ddl_Stream').children().remove();
@@ -71,11 +71,10 @@
     				$(this).attr({'disabled' : 'disabled'});
     				$('#btn_cancelAddReg').attr({'disabled' : 'disabled'});    			
     				$('#add-registrant-form form')[0].submit();
-    			}
-    			else
+    			}	else {
     				//$('html, body').animate({scrollTop: $("#pnl-error-msg").offset().top}, 2000);
 					$("#pnl-error-msg").css("display","block");
-
+					}
     		});
     		
     		$('#btn_cancelAddReg').click(function(){
@@ -205,7 +204,7 @@
      			
      			//if($('#txt_SecondaryContactEmail').val() == '')
      			//	ul.append($('<li>').text('Optional Contact - Email'));
-     		}
+     		};
      		
      		if(!$('#rbg_CustodyIssues_1').is(':checked') && !$('#rbg_CustodyIssues_0').is(':checked'))
      			ul.append($('<li>').text('4. OTHER INFORMATION, (a) - Custody Issues'));
