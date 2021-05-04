@@ -63,14 +63,7 @@
 				</div>
 				<br />
 				
-				<!-- ERROR PANEL -->
-				<div id='pnl-error-msg' style='display:none;' class="alert alert-danger alert-dismissible">								
-						<button type="button" class="close" data-dismiss="alert">&times;</button> <b style="font-size:16px;">Form Errors:</b>
-						<br/>The following fields must be corrected before your registration can be submitted:
-						<br />
-						<div id='error-msg'></div>
-				</div>
-  
+			  
   <c:if test="${ msg ne null }">
 			<div clas="alert alert-danger" align='center' >
 				<b>ERRORS:</b><br/> ${ msg }
@@ -365,7 +358,20 @@
 										</div>
 								</div>
 						</div>
+<br/><br/>
+<!-- ERROR INFORMATION ----------------------------------------------------------------------------------------->				
 
+				<div class="card" id="pnl-error-msg" style='display:none;'>
+							  <div class="card-header bg-danger" style="color:White;"><b><i class="fas fa-exclamation-circle"></i> FORM SUBMIT ERRORS! </b></div>							  
+								<div class="card-body" style="color:red;">The following fields MUST be corrected before your registration can be submitted:<br/><br/>
+										<div class="row container-fluid" style="padding-top:5px;">			      							
+											<div class="col-12">	
+												<div id='error-msg'></div>
+											</div>
+											
+											</div>
+										</div>
+								</div>
 				
 					<br />
 				<div style='text-align: center;' class="no-print">

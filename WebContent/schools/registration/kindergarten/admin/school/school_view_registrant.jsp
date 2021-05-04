@@ -165,7 +165,7 @@
 									  	
 									  		<c:if test="${not kr.physicalAddressApproved}">
 									  		<div class="col-lg-2 printSet"><b>Options:</b><br/>
-											<a class='btn btn-xs btn-primaryl no-print' href="/MemberServices/schools/registration/kindergarten/admin/school/approveRegistrantPhysicalAddress.html?kr=${kr.registrantId}">APPROVE</a>
+											<a class='btn btn-xs btn-success no-print' href="/MemberServices/schools/registration/kindergarten/admin/school/approveRegistrantPhysicalAddress.html?kr=${kr.registrantId}">APPROVE</a>
 											</div>
 											</c:if>
 										
@@ -188,7 +188,8 @@
 				 <a href='#' class="no-print noJump btn btn-sm btn-warning" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=/MemberServices/schools/registration/kindergarten/includes/img/nlesd-colorlogo.png></div><br/>'});"><i class="fas fa-print"></i> Print this Page</a> &nbsp; 
                    &nbsp; <a onclick="loadingData();" class='btn btn-sm btn-danger no-print' href="${ReturnURL}">Back to Registrants List</a>
 			</div>
-			
+		
+		<br/>&nbsp;<br/>	
 
 	</body>
 	

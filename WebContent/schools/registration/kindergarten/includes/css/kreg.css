@@ -141,7 +141,7 @@ rgba(192,192,192,0.2); */
 	box-shadow: 0 0 0 100% rgba(0,0,0,0.6); box-shadow: 0 0 0 100vmax rgba(0,0,0,0.6);		
 	}
 
-#pnl-error-msg {
+#pnl-error-msg1 {
 	position: fixed;
 	z-index:999999;
  	 top: 50%; left: 50%;

@@ -190,7 +190,8 @@
 									  	
 									  		<c:if test="${not kr.physicalAddressApproved}">
 									  		<div class="col-lg-2 printSet"><b>Options:</b><br/>
-											<a class='btn btn-xs btn-primaryl no-print' href="/MemberServices/schools/registration/kindergarten/admin/school/approveRegistrantPhysicalAddress.html?kr=${kr.registrantId}">APPROVE</a>
+											<a class='btn btn-xs btn-success no-print' href="/MemberServices/schools/registration/kindergarten/admin/district/approveRegistrantPhysicalAddress.html?kr=${kr.registrantId}">APPROVE</a>				
+													
 											</div>
 											</c:if>
 										
@@ -215,7 +216,7 @@
                    &nbsp; <a onclick="loadingData();" class='btn btn-sm btn-danger no-print' href="${ReturnURL}">Back to Registrants List</a>
                    &nbsp; <input id='btnResendConfirmation' type='button' class='btn btn-warning btn-sm'  value='Resend Confirmation Email' />
 			</div>
-
+<br/>&nbsp;<br/>	
 <script>
 $("#loadingSpinner").css("display","none");
 </script>
