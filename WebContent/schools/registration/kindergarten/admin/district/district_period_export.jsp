@@ -125,7 +125,8 @@ $('document').ready(function(){
 					<div style="clear:both;"></div>
 		
 		
-		Below is the entire registration details of all the students registered for this registration period sorted by registration time. <b>You CANNOT print this datatable.</b>
+		Below is the entire registration details of all the students registered for this registration period sorted by registration time. 
+		The table is very wide by default. This is for export.	<b>You CANNOT print this datatable.</b>
 		Use the options below left to export this data to a CSV or Excel spreadsheet for import into <b>PowerSchool</b>.
 		
 			<br/><br/>
