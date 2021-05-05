@@ -147,7 +147,7 @@ rgba(192,192,192,0.2); */
 
 
 
-
+#closing_date,#addendum_date,#awarded_date { position: relative; z-index: 1000; }
 
 
 
