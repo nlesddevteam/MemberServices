@@ -136,7 +136,11 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 
 							if (ass[0].getLocation() > 0) {
 								School s = SchoolDB.getSchool(ass[0].getLocation());
-								Personnel seo = SchoolFamilyDB.getSchoolFamily(s).getProgramSpecialist();
+								Personnel seo = null;
+								if(s.getSchoolDeptID() > 0) {
+									seo = SchoolFamilyDB.getSchoolFamily(s).getProgramSpecialist();
+								}
+								
 								try {
 									ArrayList<Personnel> to = new ArrayList<Personnel>();
 
@@ -290,7 +294,10 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 						//send to SEO and Principal
 						if (ass[0].getLocation() > 0) {
 							School s = SchoolDB.getSchool(ass[0].getLocation());
-							Personnel seo = SchoolFamilyDB.getSchoolFamily(s).getProgramSpecialist();
+							Personnel seo =null;
+							if(s.getSchoolDeptID() > 0) {
+								seo = SchoolFamilyDB.getSchoolFamily(s).getProgramSpecialist();
+							}
 							try {
 								ArrayList<Personnel> to = new ArrayList<Personnel>();
 
