@@ -114,10 +114,10 @@ $('document').ready(function(){
     
     	jQuery(function(){
     		
-    		$('#btnSendPhysicalAddressProofReminder').click(function(){
+    		$('.btnSendPhysicalAddressProofReminder').click(function(){
     			if(confirm('Send Reminder?')) {
     				
-    				$('#btnSendPhysicalAddressProofReminder').attr('disabled', 'disabled');
+    				$('.btnSendPhysicalAddressProofReminder').attr('disabled', 'disabled');
     				$.post("/MemberServices/schools/registration/kindergarten/admin/district/ajax/sendProofPhysicalAddressReminderEmail.html", 
     						{	
     							id: ${krp ne null ? krp.registrationId : 0},
@@ -125,10 +125,10 @@ $('document').ready(function(){
     						}, 
     						function(data){
     							if($(data).find('PHYSICAL-ADDRESS-PROOF-REMINDER-RESPONSE').length > 0) {
-    								$('.divResponseMsg').css("display","block").html("<br/>" + $(data).find('PHYSICAL-ADDRESS-PROOF-REMINDER-RESPONSE').first().attr('msg') + "<br/>");
+    								$('.details_info_message').css("display","block").html("" + $(data).find('PHYSICAL-ADDRESS-PROOF-REMINDER-RESPONSE').first().attr('msg') + "").delay(3000).fadeOut();
     							}
     							else{
-    								$('#btnSendPhysicalAddressProofReminder').removeAttr('disabled');
+    								$('.btnSendPhysicalAddressProofReminder').removeAttr('disabled');
     							}
     						}, 
     						"xml");
@@ -194,7 +194,7 @@ $('document').ready(function(){
 			<div align='center' class="no-print">
 		
 			<c:if test="${krp ne null}">
-				<input id='btnSendPhysicalAddressProofReminder' type='button' class='btn btn-sm btn-warning'  value='Send Proof of Physical Address Reminder' />
+				<input type='button' class='btnSendPhysicalAddressProofReminder btn btn-sm btn-warning'  value='Send Proof of Physical Address Reminder' />
 			</c:if>
 			<c:if test="${sy ne null and sch ne null}">
 				<a class='btn btn-sm btn-primary' href="<c:url value='/schools/registration/kindergarten/admin/district/processRegistrations.html?sy=${sy}&sid=${sch.schoolID}&ss=${ss.value}' />">Process Registrations</a>
@@ -279,7 +279,7 @@ $('document').ready(function(){
 		<br />
 		<div align='center' class="no-print">
 			<c:if test="${krp ne null}">
-				<input id='btnSendPhysicalAddressProofReminder' type='button' class='btn btn-sm btn-warning'  value='Send Proof of Physical Address Reminder' />
+				<input type='button' class='btnSendPhysicalAddressProofReminder btn btn-sm btn-warning'  value='Send Proof of Physical Address Reminder' />
 			</c:if>
 			<c:if test="${sy ne null and sch ne null}">
 				<a class='btn btn-sm btn-primary' href="<c:url value='/schools/registration/kindergarten/admin/district/processRegistrations.html?sy=${sy}&sid=${sch.schoolID}&ss=${ss.value}' />">Process Registrations</a>
