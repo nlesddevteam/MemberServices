@@ -30,7 +30,7 @@
     						}, 
     						function(data){
     							if($(data).find('RESEND-CONFIRMATION-RESPONSE').length > 0) {
-    								$('.divResponseMsg').css("display","block").html("<br/>" + $(data).find('RESEND-CONFIRMATION-RESPONSE').first().attr('msg') + "<br/>");
+    								$('.details_info_message').css("display","block").html("" + $(data).find('RESEND-CONFIRMATION-RESPONSE').first().attr('msg') + "").delay(3000).fadeOut();
     							}
     							else{
     								$('#btnResendConfirmation').removeAttr('disabled');
@@ -55,7 +55,7 @@
  				<a class='btn btn-primary btn-sm' href="index.html" onclick="loadingData();">Registration Home</a> &nbsp; 
 				 <a href='#' class="no-print noJump btn btn-sm btn-warning" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img width=400 src=/MemberServices/schools/registration/kindergarten/includes/img/nlesd-colorlogo.png></div><br/>'});"><i class="fas fa-print"></i> Print this Page</a> &nbsp; 
                    &nbsp; <a onclick="loadingData();" class='btn btn-sm btn-danger no-print' href="${ReturnURL}">Back to Registrant List</a>
-                    &nbsp; <input id='btnResendConfirmation' type='button' class='btn btn-warning btn-sm'  value='Resend Confirmation Email'/>
+                   
 			</div>  
  	 
  	 <br/>
