@@ -22,6 +22,16 @@
     	
      $('document').ready(function(){  	
     		
+   				$( "#txt_PrimaryContactEmail" ).blur(function() {	    	
+    		    	var emailSpaceCheckP= $("#txt_PrimaryContactEmail").val().trim();
+    		    	$("#txt_PrimaryContactEmail").val(emailSpaceCheckP);
+    		    });
+    		    
+    		    $( "#txt_SecondaryContactEmail" ).blur(function() {	    	
+    		    	var emailSpaceCheckS = $("#txt_SecondaryContactEmail").val().trim();
+    		    	$("#txt_SecondaryContactEmail").val(emailSpaceCheckS);    		    	
+    		    });
+
     		    		
     		//$('#ddl_Stream').children().remove();
     		//$('#ddl_Stream').append($('<option>').attr({'value':''}).text('--- Select Stream ---'));
