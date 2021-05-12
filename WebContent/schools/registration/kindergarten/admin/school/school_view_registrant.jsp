@@ -159,7 +159,7 @@
 							  <div class="card-header"><b>5. REGISTRATION INFORMATION</b></div>
 							  <div class="card-body">	
 									<div class="row container-fluid" style="padding-top:5px;">
-		      							<div class="col-lg-4 printSet"><b>Registration Date:</b><br/><div class="dField"><fmt:formatDate type="both" dateStyle="long" value="${kr.registrationDate}" /></div></div>
+		      							<div class="col-lg-4 printSet"><b>Registration Date:</b><br/><div class="dField"><fmt:formatDate type="both" pattern="MM/dd/yyyy" value="${kr.registrationDate}" /></div></div>
 										<div class="col-lg-3 printSet"><b>Address &amp; MCP Approved:</b><br/><div class="dField">${kr.physicalAddressApproved ? "<span style='font-weight:bold;color:green;'><i class='fas fa-check'></i> Yes</span>" : "<span style='font-weight:bold;color:red;'><i class='fas fa-times'></i> No</span>"}</div></div>
 										<div class="col-lg-3 printSet"><b>Status:</b><br/><div class="dField">${kr.status.accepted ? "<span style='font-weight:bold;color:green;'><i class='fas fa-check'></i> Accepted</span>" : kr.status.waitlisted ? "<span style='font-weight:bold;color:orange;'><i class='far fa-hourglass'></i> Waitlisted</span>" : "<span style='font-weight:bold;color:#9E7BFF;'><i class='fas fa-cog'></i> Processing</span>"}</div></div>
 									  	
