@@ -394,8 +394,8 @@
 		
 			<script>
 			$(document).ready(function(){
-								$('select[name="txt_PhysicalCityTown"]').find("option[value=\"${kr.physicalCityTown}\"]").attr("selected",true);								
-								$('select[name="txt_MailingCityTown"]').find("option[value=\"${kr.mailingCityTown}\"]").attr("selected",true);					
+								$('select[name="txt_PhysicalCityTown"]').find("option[value=\"${kr.physicalCityTown}\"]").prop("selected",true);								
+								$('select[name="txt_MailingCityTown"]').find("option[value=\"${kr.mailingCityTown}\"]").prop("selected",true);					
 								
 								
 								
