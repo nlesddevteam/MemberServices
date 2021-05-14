@@ -75,8 +75,8 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		Sheet sheet1 = wb.createSheet("Redundancies - " + this.schoolYear);
 
 		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
-		createHeader(wb, sheet1, nextRowIndex,
-				Arrays.asList("School Year", "School/Location", "Owner", "Seniority (yrs)", "Tenure", "Unit", "Rationale"));
+		createHeader(wb, sheet1, nextRowIndex, Arrays.asList("School Year", "Region", "School/Location", "Owner",
+				"Seniority (yrs)", "Tenure", "Unit", "Rationale"));
 
 		int numHeaderRows = sheet1.getLastRowNum() + 1;
 
@@ -90,6 +90,8 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 			cells = 0;
 
 			row.createCell(cells++).setCellValue(rec.getSchoolYear());
+
+			row.createCell(cells++).setCellValue(rec.getZoneName());
 
 			row.createCell(cells++).setCellValue(rec.getLocation());
 
@@ -118,10 +120,10 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
 		createHeader(wb, sheet1, nextRowIndex,
-				Arrays.asList("School Year", "School/Location", "Regular Units", "Administration Units", "Specialist Units",
-						"LRT Units", "IRT Units", "Reading Specialist Units", "Adjustments Units", "TCH Extra Units",
-						"Total TCH Units", "TLA Units", "TLA Extra Units", "Total TLA Units", "Total Units", "SA Hours",
-						"SA Extra Hours", "Total SA Hours"));
+				Arrays.asList("School Year", "Region", "School/Location", "Regular Units", "Administration Units",
+						"Specialist Units", "LRT Units", "IRT Units", "Reading Specialist Units", "Adjustments Units",
+						"TCH Extra Units", "Total TCH Units", "TLA Units", "TLA Extra Units", "Total TLA Units", "Total Units",
+						"SA Hours", "SA Extra Hours", "Total SA Hours"));
 
 		int numHeaderRows = sheet1.getLastRowNum() + 1;
 
@@ -135,6 +137,8 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 			cells = 0;
 
 			row.createCell(cells++).setCellValue(rec.getSchoolYear());
+
+			row.createCell(cells++).setCellValue(rec.getZoneName());
 
 			row.createCell(cells++).setCellValue(rec.getLocation());
 
@@ -187,8 +191,9 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
 		createHeader(wb, sheet1, nextRowIndex,
-				Arrays.asList("School Year", "School/Location", "Job Description", "Position Type", "Owner", "Seniority (yrs)",
-						"Vacancy Reason", "Start Date", "End Date", "Unit", "Ad Requested", "Ad Posted", "Position Filled"));
+				Arrays.asList("School Year", "Region", "School/Location", "Job Description", "Position Type", "Owner",
+						"Seniority (yrs)", "Vacancy Reason", "Start Date", "End Date", "Unit", "Ad Requested", "Ad Posted",
+						"Position Filled"));
 
 		int numHeaderRows = sheet1.getLastRowNum() + 1;
 
@@ -202,6 +207,8 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 			cells = 0;
 
 			row.createCell(cells++).setCellValue(rec.getSchoolYear());
+
+			row.createCell(cells++).setCellValue(rec.getZoneName());
 
 			row.createCell(cells++).setCellValue(rec.getLocation());
 
@@ -253,7 +260,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		int nextRowIndex = createSummaryHeader(wb, sheet1, 0);
 		createHeader(wb, sheet1, nextRowIndex,
-				Arrays.asList("School Year", "School/Location", "Owner", "Seniority (yrs)", "Unit", "Assignment"));
+				Arrays.asList("School Year", "Region", "School/Location", "Owner", "Seniority (yrs)", "Unit", "Assignment"));
 
 		int numHeaderRows = sheet1.getLastRowNum() + 1;
 
@@ -267,6 +274,8 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 			cells = 0;
 
 			row.createCell(cells++).setCellValue(rec.getSchoolYear());
+
+			row.createCell(cells++).setCellValue(rec.getZoneName());
 
 			row.createCell(cells++).setCellValue(rec.getLocation());
 
@@ -493,6 +502,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 	public static class RedundanciesRecord {
 
 		private String schoolYear;
+		private String zone;
 		private String location;
 		private String owner;
 		private double seniority;
@@ -502,6 +512,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		public RedundanciesRecord(ResultSet rs) throws SQLException {
 
+			this.zone = rs.getString("zone_name");
 			this.schoolYear = rs.getString("School Year");
 			this.location = rs.getString("School/Location");
 			this.owner = rs.getString("Owner");
@@ -514,6 +525,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		public String getSchoolYear() {
 
 			return schoolYear;
+		}
+
+		public String getZoneName() {
+
+			return this.zone;
 		}
 
 		public String getLocation() {
@@ -550,6 +566,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 	public static class AllocationsRecord {
 
+		private String zone;
 		private String location;
 		private int allocationId;
 		private String schoolYear;
@@ -573,6 +590,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		public AllocationsRecord(ResultSet rs) throws SQLException {
 
+			this.zone = rs.getString("zone_name");
 			this.location = rs.getString("LOC_DESCRIPTION");
 			this.allocationId = rs.getInt("allocation_id");
 			this.schoolYear = rs.getString("school_year");
@@ -593,6 +611,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 			this.tchExtraUnits = rs.getDouble("tchr_extra_units");
 			this.tlaExtraUnits = rs.getDouble("tla_extra_units");
 			this.saExtraHours = rs.getDouble("sa_extra_hours");
+		}
+
+		public String getZoneName() {
+
+			return this.zone;
 		}
 
 		public String getLocation() {
@@ -722,6 +745,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		private String schoolYear;
 		private int positionId;
+		private String zone;
 		private String location;
 		private String jobDescription;
 		private String positionType;
@@ -739,6 +763,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 			this.schoolYear = rs.getString("School Year");
 			this.positionId = rs.getInt("Position ID");
+			this.zone = rs.getString("zone_name");
 			this.location = rs.getString("School/Location");
 			this.jobDescription = rs.getString("Job Description");
 			this.positionType = rs.getString("Position Type");
@@ -774,6 +799,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		public int getPositionId() {
 
 			return positionId;
+		}
+
+		public String getZoneName() {
+
+			return this.zone;
 		}
 
 		public String getLocation() {
@@ -840,6 +870,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 	public static class PermanentsRecord {
 
 		private String schoolYear;
+		private String zone;
 		private String location;
 		private String owner;
 		private double seniority;
@@ -849,6 +880,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		public PermanentsRecord(ResultSet rs) throws SQLException {
 
 			this.schoolYear = rs.getString("School Year");
+			this.zone = rs.getString("zone_name");
 			this.location = rs.getString("School/Location");
 			this.owner = rs.getString("Owner");
 			this.seniority = rs.getDouble("Seniority (yrs)");
@@ -859,6 +891,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		public String getSchoolYear() {
 
 			return schoolYear;
+		}
+
+		public String getZoneName() {
+
+			return this.zone;
 		}
 
 		public String getLocation() {
