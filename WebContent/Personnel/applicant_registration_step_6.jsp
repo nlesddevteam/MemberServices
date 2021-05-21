@@ -177,7 +177,7 @@ input[type=checkbox] {
 						</table>
 						<div class='text-muted text-center'>Recent graduates who
 							will receive their Teaching Certificate at a later date may enter
-							a future date in the "Date Certificate Issues" field.</div>
+							a future date in the "Date Certificate Issued" field.</div>
 						<br />
 						<div align="center">
 							<a class="btn btn-xs btn-danger" href="view_applicant.jsp">Back
