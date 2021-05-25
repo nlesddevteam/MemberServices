@@ -35,7 +35,7 @@
   
   <br/><br/>To begin choose a PLP to view from your Plan Archive above or create a new PLP by clicking the Learning Plan(s) link.
   If you do not have your reflections completed from previous year(s) the option to create a plan will not be available until you complete your self reflection. 
-  Check your previous plans under Plan Archive to make sure they are complete. 
+  Check your previous plans under Plan Archive to make sure they are complete. <b>Please note Plans must be complete by May 1st each school year</b>.
   <br/><br/>
   <%if(ppgps.containsKey(PPGP.getCurrentGrowthPlanYear())){
 	            					

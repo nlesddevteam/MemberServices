@@ -5,7 +5,8 @@
 
 <%@ page language="java"
          session="true"
-         import="com.awsd.ppgp.*,com.awsd.security.*,
+         import="com.awsd.ppgp.*,
+         com.awsd.security.*,
                  java.text.*,
                  java.util.*"
         isThreadSafe="false"%> 
@@ -15,6 +16,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+
+	<c:set var="cacheBuster" value="<%=new java.util.Date()%>" />				 								
+		<fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyHms" var="todayVer" />
+		<fmt:formatDate value="${cacheBuster}" pattern="yyyy" var="todayYear" />
+		<fmt:formatDate value="${cacheBuster}" pattern="MM" var="deadlineDateNotice" />
+
 
 <esd:SecurityCheck permissions='PPGP-VIEW' />
 
@@ -46,13 +53,13 @@
 		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">		
-		<link rel="stylesheet" href="/MemberServices/PPGP/includes/css/ppgp.css">			
+		<link rel="stylesheet" href="/MemberServices/PPGP/includes/css/ppgp.css?ver=${todayVer}">			
 		<link rel="shortcut icon" href="/MemberServices/PPGP/includes/img/favicon.ico">	
 		<link href="/MemberServices/PPGP/includes/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">
 		<link href="/MemberServices/PPGP/includes/css/hover_drop_2.css" rel="stylesheet" media="all" type="text/css" />				
 		
 
-
+	
 	
 	<!-- JAVASCRIPT FILES -->
 		
@@ -67,7 +74,7 @@
 		<script src="/MemberServices/PPGP/includes/js/bootstrap-multiselect.js"></script>
 		<script src="/MemberServices/PPGP/includes/js/iefix.js"></script>
 	    <script src="/MemberServices/PPGP/includes/js/jquery.validate.js"></script>
-	    <script src="/MemberServices/PPGP/includes/js/ppgp.js"></script> 
+	    <script src="/MemberServices/PPGP/includes/js/ppgp.js?ver=${todayVer}"></script> 
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 		<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
@@ -257,13 +264,35 @@
 
 
 			
-				<div class="container-fluid">				
-					
-					
-					<div id="printJob">			
-					
-								<decorator:body />	
+				<div class="container-fluid">	
+				<div id="printJob">	
+		
+		<c:if test="${deadlineDateNotice eq '04' }">
+	<!-- Waring for PLP in April -->			
+				<div class="alert alert-warning" style="text-align:center;margin-top:5px;"><span style="font-weight:bold;font-size:14px;">*** WARNING ${todayYear-1 }-${todayYear} PLP MAY 1st DEADLINE APPROACHING ***</span><br/>
+					Deadline to submit your ${todayYear-1 }-${todayYear} Growth Plan is <b>May 1, ${todayYear}</b>.<br/> 
+					Please make sure your complete your ${todayYear-1 }-${todayYear} as soon as possible. 
+					Once you complete your plan, the ${todayYear }-${todayYear+1} Plan can be started.
 					</div>
+		</c:if>
+		<c:if test="${deadlineDateNotice eq '05' or deadlineDateNotice eq '06' }">
+	<!-- Deadline has passed -->			
+				<div class="alert alert-danger" style="text-align:center;margin-top:5px;"><span style="font-weight:bold;font-size:14px;">*** ${todayYear-1 }-${todayYear} PLP EXPIRATION ***</span><br/>
+					Deadline to submit yout ${todayYear-1 }-${todayYear} Growth Plan has passed as of <b>May 1, ${todayYear}</b>. <br/>					
+					If you missed creating/entering your ${todayYear-1 }-${todayYear} Growth Plan contact your school administrator as you may 
+					still be able to complete a written plan.<br/>
+					You can now start your ${todayYear }-${todayYear+1}. <br/>
+					</div>
+		</c:if>			
+			
+								<decorator:body />	
+								
+								
+								
+								
+					</div>
+					
+					
 
 				</div>
 

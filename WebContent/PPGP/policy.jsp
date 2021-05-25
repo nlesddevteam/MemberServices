@@ -25,9 +25,7 @@ User usr = (User) session.getAttribute("usr");
 					<div class="alert alert-success" align="center" id="msgok" style="display:none;"><b>SUCCESS:</b> ${msg}</div>
 					<div class="alert alert-danger" align="center" id="msgerr" style="display:none;"><b>ERROR:</b> ${errmsg}</div>  
 					
-					<div class="alert alert-danger" align="center"><b>NOTE:</b><br/>It is highly recommended to use a desktop computer, laptop, or tablet to complete your learning plan. <br/>Mobile users may find it difficult to navigate/complete their plan using small screens due to the content required.</div>
-					
-					
+				
  	<%if(usr.getUserPermissions().containsKey("PPGP-VIEW-SUMMARY") || usr.getUserPermissions().containsKey("PPGP-VIEW-SUMMARY-PROGRAMSPECIALIST") ) { %>
 		<div class="alert alert-info" align="center"><b>NOTE TO ADMINS:</b><br/>Administrator tools such as Principal Summaries and/or Progarm Specialists/Director of Schools Summaries can be found 
 		above under the Administration menu or at bottom of page.</div>
