@@ -271,18 +271,19 @@
 		<c:if test="${deadlineDateNotice eq '04' }">
 	<!-- Waring for PLP in April -->			
 				<div class="alert alert-warning" style="text-align:center;margin-top:5px;"><span style="font-weight:bold;font-size:14px;">*** WARNING ${todayYear-1 }-${todayYear} PLP MAY 1st DEADLINE APPROACHING ***</span><br/>
-					Deadline to submit your ${todayYear-1 }-${todayYear} Growth Plan is <b>May 1, ${todayYear}</b>.<br/> 
-					Please make sure your complete your ${todayYear-1 }-${todayYear} as soon as possible. 
+					Deadline to create your ${todayYear-1 }-${todayYear} Growth Plan is <b>May 1, ${todayYear}</b>.<br/> 
+					Please make sure you create and complete your ${todayYear-1 }-${todayYear} as soon as possible. 
 					Once you complete your plan, the ${todayYear }-${todayYear+1} Plan can be started.
 					</div>
 		</c:if>
 		<c:if test="${deadlineDateNotice eq '05' or deadlineDateNotice eq '06' }">
 	<!-- Deadline has passed -->			
 				<div class="alert alert-danger" style="text-align:center;margin-top:5px;"><span style="font-weight:bold;font-size:14px;">*** ${todayYear-1 }-${todayYear} PLP EXPIRATION ***</span><br/>
-					Deadline to submit yout ${todayYear-1 }-${todayYear} Growth Plan has passed as of <b>May 1, ${todayYear}</b>. <br/>					
-					If you missed creating/entering your ${todayYear-1 }-${todayYear} Growth Plan contact your school administrator as you may 
-					still be able to complete a written plan.<br/>
-					You can now start your ${todayYear }-${todayYear+1}. <br/>
+					Deadline to create your ${todayYear-1 }-${todayYear} Growth Plan has passed as of <b>May 1, ${todayYear}</b>. <br/>	
+					If you missed creating your ${todayYear-1 }-${todayYear} Growth Plan, contact your school administrator as you may 
+					still be able to complete a written plan, if necessary.<br/>				
+					Please make sure you complete your ${todayYear-1 }-${todayYear} as soon as possible. <br/>					
+					Once you complete your ${todayYear-1 }-${todayYear} plan (or missed creating last years), the ${todayYear }-${todayYear+1} Plan can be started.
 					</div>
 		</c:if>			
 			
