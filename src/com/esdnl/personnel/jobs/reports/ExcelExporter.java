@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -74,6 +75,7 @@ public abstract class ExcelExporter {
 	public Cell applyTotalsRowCellStyle(XSSFWorkbook wb, Cell cell) {
 
 		CellStyle cs = wb.createCellStyle();
+		DataFormat format = wb.createDataFormat();
 
 		Font f = wb.createFont();
 
@@ -84,6 +86,7 @@ public abstract class ExcelExporter {
 		cs.setBorderTop(BorderStyle.THIN);
 		cs.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 		cs.setFillPattern(FillPatternType.BRICKS);
+		cs.setDataFormat(format.getFormat("0.00"));
 
 		cell.setCellStyle(cs);
 

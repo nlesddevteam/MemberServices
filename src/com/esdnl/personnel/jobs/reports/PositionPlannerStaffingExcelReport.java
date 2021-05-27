@@ -2,7 +2,6 @@ package com.esdnl.personnel.jobs.reports;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -109,7 +108,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		int firstDataRowIndex = numHeaderRows + 1;
 		int lastDataRowIndex = (this.redundancies.size() + numHeaderRows);
 
-		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 5);
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 6);
 
 		autoFitColumnWidth(sheet1, cells);
 	}
@@ -178,7 +177,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		int firstDataRowIndex = numHeaderRows + 1;
 		int lastDataRowIndex = (this.allocations.size() + numHeaderRows);
 
-		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, createRange(2, 17));
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, createRange(3, 18));
 
 		autoFitColumnWidth(sheet1, cells);
 	}
@@ -248,7 +247,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		int firstDataRowIndex = numHeaderRows + 1;
 		int lastDataRowIndex = (this.vacancies.size() + numHeaderRows);
 
-		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 9);
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 10);
 
 		autoFitColumnWidth(sheet1, cells);
 
@@ -291,7 +290,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 		int firstDataRowIndex = numHeaderRows + 1;
 		int lastDataRowIndex = (this.permanents.size() + numHeaderRows);
 
-		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 4);
+		createTotalsRow(wb, sheet1, firstDataRowIndex, lastDataRowIndex, 5);
 
 		autoFitColumnWidth(sheet1, cells);
 
@@ -311,7 +310,6 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 	public void createTotalAllocationUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
 
-		DecimalFormat df = new DecimalFormat("#,##0.00");
 		CellStyle cs = wb.createCellStyle();
 
 		Font f = wb.createFont();
@@ -333,12 +331,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		cell = row.createCell(1);
 		cell.setCellStyle(cs);
-		cell.setCellValue(df.format(this.getTotalAllocationUnits()));
+		cell.setCellValue(this.getTotalAllocationUnits());
 	}
 
 	public void createTotalPermanentUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
 
-		DecimalFormat df = new DecimalFormat("#,##0.00");
 		CellStyle cs = wb.createCellStyle();
 
 		Font f = wb.createFont();
@@ -360,12 +357,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		cell = row.createCell(1);
 		cell.setCellStyle(cs);
-		cell.setCellValue(df.format(this.getTotalPermanentUnits()));
+		cell.setCellValue(this.getTotalPermanentUnits());
 	}
 
 	public void createTotalRedunciesUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
 
-		DecimalFormat df = new DecimalFormat("#,##0.00");
 		CellStyle cs = wb.createCellStyle();
 
 		Font f = wb.createFont();
@@ -387,12 +383,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		cell = row.createCell(1);
 		cell.setCellStyle(cs);
-		cell.setCellValue(df.format(this.getTotalRedundentUnits()));
+		cell.setCellValue(this.getTotalRedundentUnits());
 	}
 
 	public void createTotalVacancyUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
 
-		DecimalFormat df = new DecimalFormat("#,##0.00");
 		CellStyle cs = wb.createCellStyle();
 
 		Font f = wb.createFont();
@@ -414,7 +409,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		cell = row.createCell(1);
 		cell.setCellStyle(cs);
-		cell.setCellValue(df.format(this.getTotalVacancyUnits()));
+		cell.setCellValue(this.getTotalVacancyUnits());
 
 		cell = row.createCell(2);
 		cell.setCellStyle(cs);
@@ -422,12 +417,11 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		cell = row.createCell(3);
 		cell.setCellStyle(cs);
-		cell.setCellValue(df.format(this.getTotalVacanciesFilled()));
+		cell.setCellValue(this.getTotalVacanciesFilled());
 	}
 
 	public void createOutstandingUnitsHeader(XSSFWorkbook wb, Sheet sheet, int rowIndex) {
 
-		DecimalFormat df = new DecimalFormat("#,##0.00");
 		CellStyle cs = wb.createCellStyle();
 
 		Font f = wb.createFont();
@@ -449,7 +443,7 @@ public class PositionPlannerStaffingExcelReport extends ExcelExporter {
 
 		cell = row.createCell(1);
 		cell.setCellStyle(cs);
-		cell.setCellValue(df.format(this.getTotalOutstandingUnits()));
+		cell.setCellValue(this.getTotalOutstandingUnits());
 	}
 
 	public double getTotalTCHAllocationUnits() {
