@@ -249,10 +249,10 @@ input {
     								</div>
     								<div class="panel-collapse collapse in">
     									
-    										<table class="table table-condensed table-striped"
-						style="font-size: 11px; background-color: #FFFFFF;">
+    										<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF;">    										
+    										<tbody>
     										<tr>
-    										<td width="20%">Permanent NLESD Contract?</td>
+    										<td width="30%">Permanent NLESD Contract?</td>
     										<td width="20%">
     											<c:choose>
     												<c:when test="${sfilterparams.permanentContract eq 'Y' }">
@@ -266,68 +266,54 @@ input {
     												</c:otherwise>
     											</c:choose>
     										</td>
-    										<td width="20%"># Math Courses:</td>
+    										<td width="30%"># Math Courses:</td>
     										<td width="20%">
     											${sfilterparams.mathCourses }
-    										</td>
-    										<td width="20%">
-    										Degree(s): ${sfilterparams.getDegreesString() }
-    										</td>
+    										</td>    										
     										</tr>
     										<tr>
-    										<td width="20%">Permanent Exp (Months):</td>
+    										<td width="30%">Permanent Exp (Months):</td>
     										<td width="20%">
     											${sfilterparams.permanentExp }
     										</td>
-    										<td width="20%"># English Courses:</td>
+    										<td width="30%"># English Courses:</td>
     										<td width="20%">
     											${sfilterparams.englishCourses }
-    										</td>
-    										<td width="20%">
-    											Major Subject Group(s): ${sfilterparams.getMajorsSubjectGroupsString() } 
-    										</td>
+    										</td>   										
     										</tr>
     										<tr>
-    										<td width="20%">Replacement Exp (Months):</td>
+    										<td width="30%">Replacement Exp (Months):</td>
     										<td width="20%">
     											${sfilterparams.replacementExp }
     										</td>
-    										<td width="20%"># Music Courses:</td>
+    										<td width="30%"># Music Courses:</td>
     										<td width="20%">
     											${sfilterparams.musicCourses }
-    										</td>
-    										<td width="20%">
-    										Major(s): ${sfilterparams.getMajorsString() }
-    										</td>
+    										</td>    										
     										</tr>
     										<tr>
-    										<td width="20%">Repl + Perm (Months):</td>
+    										<td width="30%">Repl + Perm (Months):</td>
     										<td width="20%">
     											${sfilterparams.totalExp }
     										</td>
-    										<td width="20%"># Technology Courses:</td>
+    										<td width="30%"># Technology Courses:</td>
     										<td width="20%">
     											${sfilterparams.technologyCourses }
-    										</td>
-    										<td width="20%">
-    											Minor Subject Group(s): ${sfilterparams.getMinorsSubjectGroupsString() } 
-    										</td>
+    										</td>    										
     										</tr>
     										<tr>
-    										<td width="20%"># Sub Days:</td>
+    										<td width="30%"># Sub Days:</td>
     										<td width="20%">
     											${sfilterparams.subDays }
     										</td>
-    										<td width="20%"># Science Courses:</td>
+    										<td width="30%"># Science Courses:</td>
     										<td width="20%">
     											${sfilterparams.scienceCourses }
     										</td>
-    										<td width="20%">
-    											Minors(s): ${sfilterparams.getMinorsString() }
-    										</td>
+    										
     										</tr>
     										<tr>
-    										<td width="20%">TLA Courses > 20 / CEC L2:</td>
+    										<td width="30%">TLA Courses > 20 / CEC L2:</td>
     										<td width="20%">
     											<c:choose>
     												<c:when test="${sfilterparams.isTLARequirements()}">
@@ -338,35 +324,47 @@ input {
     												</c:otherwise>
     											</c:choose>
     										</td>
-    										<td width="20%"># Social Studies Courses:</td>
+    										<td width="30%"># Social Studies Courses:</td>
     										<td width="20%">
     											${sfilterparams.socialStudiesCourses }
-    										</td>
-    										<td width="20%" rowspan='3'>
-    											Regional Preferences: ${sfilterparams.getRegionsString()}
-    										</td>
+    										</td>    										
     										</tr>
     										<tr>
-    										<td width="20%"># Special Ed Courses:</td>
+    										<td width="30%"># Special Ed Courses:</td>
     										<td width="20%">
     											${sfilterparams.specialEducationCourses}
     										</td>
-    										<td width="20%"># Art Courses:</td>
+    										<td width="30%"># Art Courses:</td>
     										<td width="20%">
     											${sfilterparams.artCourses }
     										</td>
     										</tr>
     										<tr>
-    										<td width="20%"># French Courses:</td>
+    										<td width="30%"># French Courses:</td>
     										<td width="20%">
     											${sfilterparams.frenchCourses}
     										</td>
-    										<td width="20%">Level Of Prof Training:</td>
+    										<td width="30%">Level Of Prof Training:</td>
     										<td width="20%">
     											${sfilterparams.getTrainingString() }
     										</td>
     										</tr>
+    										</tbody>
     										</table>
+    										
+    										<br/>
+    										
+    									<div style="padding:5px;float:left;width:50%;min-width:300px;">
+    									<b>Degree(s):</b> ${sfilterparams.getDegreesString() }<br/>	
+    									<b>Major Subject Group(s):</b> ${sfilterparams.getMajorsSubjectGroupsString() } 	<br/>	
+    									<b>Major(s):</b> ${sfilterparams.getMajorsString() }
+    									</div>
+    									<div style="padding:5px;float:left;width:50%;min-width:300px;">    											
+    									<b>Minor Subject Group(s):</b> ${sfilterparams.getMinorsSubjectGroupsString() }	<br/>	
+    									<b>Minors(s):</b> ${sfilterparams.getMinorsString() }<br/>	
+    									<b>Regional Preferences:</b> ${sfilterparams.getRegionsString()}<br/>	
+    									</div>
+    										<div style="clear:both;"></div>
     										<div style='text-align:right;padding-right: 5px;'>
     											<form method="POST" action="admin_view_job_applicants.jsp">
     												<button class='btn btn-success' type="submit">Clear Filters</button>

@@ -129,22 +129,89 @@ public class DegreeTagHandler  extends TagSupport
       }
       
       
-      if(listtype != "selectbox") {
+      if(listtype != "selectbox" && listtype != "filterbox" && listtype != "filterboxDataTable") {
       //Modified code for new PP 2019
 	      out.print("<div style=\"clear:both;padding-top:10px;\"></div>");
-	      for(int i = 0; i < degrees.length; i++) {
-	      out.print("<div style=\"float:left;min-width:200px;width:25%;color:DimGrey;font-size:11px;\">");
+	   String degreeName;
+	      for(int i = 0; i < degrees.length; i++) {    
+	    	  
+	      out.print("<div style=\"float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;\">");	    
 	      out.print("<label class=\"checkbox-inline\">");
-	      out.print("<input class='"+this.id+"' type='checkbox' name='" + this.id + "' VALUE=\"" + degrees[i].getAbbreviation() + "\"" + (sel.containsKey(degrees[i].getAbbreviation())? " checked":"") + ">" + degrees[i].getTitle() + "");
+	      //Some are too long name wise, cut em.
+	      if(degrees[i].getTitle().length() >75) {
+			   degreeName = degrees[i].getTitle().substring(0,75);
+		   } else {
+			   degreeName = degrees[i].getTitle();
+		   }
+	      
+	      out.print("<input class='"+this.id+"' type='checkbox' name='" + this.id + "' VALUE=\"" + degrees[i].getAbbreviation() + "\"" + (sel.containsKey(degrees[i].getAbbreviation())? " checked":"") + ">" + degreeName + "");
 	      out.print("</label></div>");
 	      }
-	      out.print("<div style=\"float:left;min-width:200px;width:25%;color:DimGrey;font-size:11px;\">");
+	      out.print("<div style=\"float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;\">");
 	      out.print("<label class=\"checkbox-inline\">");      
 	      out.print("<input class='"+this.id+"' type='checkbox' name='" + this.id + "' VALUE='0'>Not Applicable");
 	      out.print("</label></div>"); 
 	      out.print("<div style=\"clear:both;padding-top:10px;\"></div>");     
 	     
+      } else if (listtype == "filterbox") {
+    	  
+    	  //Modified code for new PP 2019
+	      out.print("<div style=\"clear:both;padding-top:10px;\"></div>");
+	      String degreeName;
+	      for(int i = 0; i < degrees.length; i++) {
+	   
+	     if(degrees[i].getTitle().contains("Diploma") || degrees[i].getTitle().contains("Bachelor") || degrees[i].getTitle().contains("Master")) {
+	    	  
+	      out.print("<div style=\"float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;\">");	    
+	      out.print("<label class=\"checkbox-inline\">");
+	      
+	      if(degrees[i].getTitle().length() >75) {
+			   degreeName = degrees[i].getTitle().substring(0,75);
+		   } else {
+			   degreeName = degrees[i].getTitle();
+		   }
+	      
+	      out.print("<input class='"+this.id+"' type='checkbox' name='" + this.id + "' VALUE=\"" + degrees[i].getAbbreviation() + "\"" + (sel.containsKey(degrees[i].getAbbreviation())? " checked":"") + ">" + degreeName + "");
+	      out.print("</label></div>");
+	      }}
+	      out.print("<div style=\"float:left;min-width:300px;width:50%;color:DimGrey;font-size:11px;\">");
+	      out.print("<label class=\"checkbox-inline\">");      
+	      out.print("<input class='"+this.id+"' type='checkbox' name='" + this.id + "' VALUE='0'>Not Applicable");
+	      out.print("</label></div>"); 
+	      out.print("<div style=\"clear:both;padding-top:10px;\"></div>");   
+    	  
+      }  else if (listtype == "filterboxDataTable") {
+    	  
+    	  out.print("<div style=\"clear:both;padding-top:10px;\"></div>");
+    	  String degreeName;
+    	  out.print("<div style=\"min-width:300px;width:100%;color:DimGrey;font-size:11px;\">");
+    	  out.print("<table width='100%' class='table table-sm table-striped degreeTable' style='width:100%;font-size:11px;'>");	  
+    	  out.print("<thead class='thead-light'>");	 
+    	  out.print("<tr><th width='10%'>SELECT</th><th width='70%'>DEGREE NAME</th><th width='20%'>ABBREVIATION</th></tr>");	 
+    	  out.print("</thead><tbody>");	
+    	 
+	      for(int i = 0; i < degrees.length; i++) {	  	     
+	     
+	    	  
+	    	  
+	  if(!degrees[i].getTitle().contains("Doctor")) {
+	    	  
+	    	  
+	    if(degrees[i].getTitle().length() >100) {
+			   degreeName = degrees[i].getTitle().substring(0,100);
+		   } else {
+			   degreeName = degrees[i].getTitle();
+		   }
+	      out.print("<tr id='"+degrees[i].getAbbreviation()+"'><td width='10%'>");
+	      out.print("<input class='"+this.id+"' type='checkbox' name='" + this.id + "' VALUE=\"" + degrees[i].getAbbreviation() + "\"" + (sel.containsKey(degrees[i].getAbbreviation())? " checked":"") + ">");
+	      out.print("</td><td width='70%'>"+ degreeName +"</td><td width='20%'>"+ degrees[i].getAbbreviation() + "</td></tr>");
+	     }}	     
+	      out.print("</tbody></table></div>");
+	      out.print("<div style=\"clear:both;padding-top:10px;\"></div>");   
+      	
+      
       } else {
+      
 	   
 			      out.print("<SELECT name=\"" + this.id + "\" id=\"" + this.id + "\"");
 			      if((this.cls != null) && !this.cls.trim().equals(""))
