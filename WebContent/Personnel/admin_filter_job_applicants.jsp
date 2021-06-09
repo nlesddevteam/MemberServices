@@ -50,7 +50,13 @@
 			    bottom: 0px;
 			}	
 			
-			.panel-title {color:DimGrey;font-size:14px;}	
+			.panel-title {color:DimGrey;font-size:14px;}
+		
+			input {border: 1px solid silver;}	
+			.dataTables_length,.dt-buttons {float:left;}
+	
+			
+			
 </style>		
 		<script type='text/javascript'>
 			$(function(){
@@ -109,7 +115,43 @@
 								}, 'xml');
 					});
 			});
+	
+			
+			
+		$('document').ready(function(){
+			mTable = $(".degreeTable").dataTable({
+				"order" : [[1,"asc"]],				 
+				responsive: true,
+				"paging":   false,				
+								
+				 "columnDefs": [
+					 {
+			                "targets": [0],			               
+			                "searchable": false,
+			                "orderable": false
+			            }
+			        ]
+			});			
+			
+			$("tr").not(':first').hover(
+			  function () {
+			    $(this).css("background","yellow");
+			  }, 
+			  function () {
+			    $(this).css("background","");
+			  }
+			);			
+		
+			$(".loadPage").show();
+			$(".loadingTable").css("display","none");
+			$("#loadingSpinner").css("display","none");
+		});
+
 		</script>
+		
+		
+		
+		
 	</head>
 	
 	<body><br/>
@@ -207,14 +249,13 @@
         <a data-toggle="collapse" id="selDegs" href="#degrees"><span class="glyphicon glyphicon-triangle-bottom"></span> Select Degree(s)</a>
       </h4>
     </div>
-    <div id="degrees" class="panel-collapse collapse">
-    <div class="input-group" style="padding:3px;">
-      <job:Degrees id="degrees" cls="form-control"/>
-      </div>
-    </div>
+    <div id="degrees" class="panel-collapse collapse">  
+    <div style="padding:5px;">  
+   <job:Degrees id="degrees" cls="form-control" listtype="filterboxDataTable"/>
+  	</div>
   </div>
-</div>
-	
+  </div>
+    </div>	
 	                                     
 <div class="panel-group">
   <div class="panel panel-default">
@@ -330,9 +371,9 @@
 	    $(this).find('span').toggleClass('glyphicon-triangle-bottom').toggleClass('glyphicon-triangle-top');
 	});
 	
-	
-	
-	
+	//HIDE Degress they dont want to filter. Doctor ones are filtered in the Handler.
+	$("#BAED,	#BABA,#BED-E,#BED-P,#BEng,#BES,#BHE,#LLB,#LittB,#BLIBS,#MB,#BPHIL,#BSE,#BSN,#ChB,#BVED,#CFLS,#CLS,#DAED,#DIFA,#DGD,#DILR,#DSRES,#DSPED,#GDELS,#JD").css("display","none");
+
 	</script> 
 	                       
 	</body>
