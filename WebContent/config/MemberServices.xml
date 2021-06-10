@@ -377,6 +377,11 @@
 			      <Request-Handler-Class>com.awsd.security.handler.MSDeletePermissionRequestHandler</Request-Handler-Class>
 			      <URL-Pattern>/Administration/RolesPermissions/deletePermission.html</URL-Pattern>
 			    </Request-Handler>
+  				 <Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSViewPersonnelEffectivePermissionsRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/PersonnelAdmin/personnelEffectivePermissions.html</URL-Pattern>
+    			</Request-Handler>
+   
    
     <!-- SECURITY ROLES --> 		
     			<Request-Handler>

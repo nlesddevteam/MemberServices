@@ -89,7 +89,8 @@
 
 
 <div class="card">
-							  <div class="card-header"><b>PROFILE INFORMATION for <%=p.getFullName()%></b></div>
+							  <div class="card-header"><b>PROFILE INFORMATION for</b><br/><span style="color:Red;font-size:18px;font-weight:bold;text-transform:Capitalize;"><%=p.getFullNameReverse()%></span><br/> 
+							  ID: <%=p.getPersonnelID() %> </div>
 							  <div class="card-body">
 						 Please complete the following information: <br/>
 					<%
@@ -206,6 +207,8 @@
 						
 						</div>
 </div>
+</form>
+
 <br/><br/>
 <div class="siteSubHeaderBlue">Currently Assigned Role(s)/Permission(s)</div>
 
@@ -213,6 +216,12 @@ To change Roles and Permissions, please use the Security Roles/permissions optio
 
 <br/><br/>
 <%int cnt=0; %>
+
+  <form name="change" action="personnelEffectivePermissions.html?pid=${prec.personnelID}" method="post">
+			
+		
+    
+
    <c:choose>
                	<c:when test="${fn:length(roles) gt 0}">		
                	<div id="accordion">                 		
@@ -220,12 +229,15 @@ To change Roles and Permissions, please use the Security Roles/permissions optio
 				                 		<%cnt++;%>
 
 									<div class="card">
-									  <div class="card-header" style="font-size:16px;"><a class="card-link card<%=cnt%>" data-toggle="collapse" href="#collapse<%=cnt%>"><span id="icon<%=cnt%>"><i class='fas fa-folder'></i></span> ${rentry.key}</a></div>
+									  <div class="card-header" style="font-size:16px;"><a class="card-link card<%=cnt%>" data-toggle="collapse" href="#collapse<%=cnt%>"><span id="icon<%=cnt%>"><i class='fas fa-folder'></i></span> ${rentry.key}</a> 
+									  <div style="float:right;padding-right:5px;"><a onclick='return confirm("Are you sure you want to remove this user from \"${rentry.key}\"?");' href="personnelEffectivePermissions.html?pid=${prec.personnelID}&rid=${rentry.key}"><i class="fas fa-trash-alt"></i> REMOVE</a></div></div>
 									<div id="collapse<%=cnt%>" class="collapse" data-parent="#accordion">
 									 <div class="card-body">			 					                 				
 									      			<c:if test="${fn:length(rentry.value.rolePermissions) gt 0 }">						                 			
 									        			<c:forEach items="${rentry.value.rolePermissions}" var='pentry'>
-									        				<div class="bg-primary" style="color:white;font-weight:bold;float:left;min-width:200px;border-radius: 10px; padding:5px;margin:3px;text-align:center;white-space: nowrap;">${pentry.key}</div>
+									        				<div class="bg-primary" style="color:white;font-weight:bold;float:left;min-width:200px;border-radius: 10px; padding:5px;margin:3px;text-align:center;white-space: nowrap;">
+									        				${pentry.key} 
+									        				</div>
 									        			</c:forEach>
 									       			
 									      			</c:if>
@@ -241,9 +253,27 @@ To change Roles and Permissions, please use the Security Roles/permissions optio
 		                 	User has no roles/permissions assigned.		                 	
 		                	</c:otherwise>
 		          			</c:choose>
+</form>
 
-    </form>
     
+      
+      
+      
+      
+      
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
     
     </div>
