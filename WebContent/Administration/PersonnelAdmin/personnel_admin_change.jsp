@@ -230,7 +230,7 @@ To change Roles and Permissions, please use the Security Roles/permissions optio
 
 									<div class="card">
 									  <div class="card-header" style="font-size:16px;"><a class="card-link card<%=cnt%>" data-toggle="collapse" href="#collapse<%=cnt%>"><span id="icon<%=cnt%>"><i class='fas fa-folder'></i></span> ${rentry.key}</a> 
-									  <div style="float:right;padding-right:5px;"><a onclick='return confirm("Are you sure you want to remove this user from \"${rentry.key}\"?");' href="personnelEffectivePermissions.html?pid=${prec.personnelID}&rid=${rentry.key}"><i class="fas fa-trash-alt"></i> REMOVE</a></div></div>
+									  <div style="float:right;padding-right:5px;"><a onclick='return confirm("Are you sure you want to remove this user from \"${rentry.key}\"?");' href="personnelEffectivePermissions.html?remove&pid=${prec.personnelID}&rid=${rentry.key}"><i class="fas fa-trash-alt"></i> REMOVE</a></div></div>
 									<div id="collapse<%=cnt%>" class="collapse" data-parent="#accordion">
 									 <div class="card-body">			 					                 				
 									      			<c:if test="${fn:length(rentry.value.rolePermissions) gt 0 }">						                 			
