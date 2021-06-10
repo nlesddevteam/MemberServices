@@ -46,15 +46,14 @@ public class MSViewPersonnelEffectivePermissionsRequestHandler extends RequestHa
 				}
 			}
 
-			Map<String, Role> roles = RoleDB.getRoles(p);
-
-			request.setAttribute("prec", p);
-			request.setAttribute("roles", roles);
+			//Map<String, Role> roles = RoleDB.getRoles(p);
+request.setAttribute("pid", form.getInt("pid"));
+			//request.setAttribute("roles", roles);
 		}
 		else {
 			request.setAttribute("msgERR", validator.getErrorString());
 		}
-
-		return "personnel_admin_change.jsp";
+	
+		return "personnelAdminChange.html";
 	}
 }
