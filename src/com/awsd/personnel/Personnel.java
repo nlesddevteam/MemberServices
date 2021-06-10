@@ -42,6 +42,7 @@ public class Personnel implements Serializable {
 	private static final long serialVersionUID = 2844110596239596090L;
 
 	private int pID;
+	private String lastLogin;
 	private String userName;
 	private String password;
 	private String firstName;
@@ -52,6 +53,7 @@ public class Personnel implements Serializable {
 	private int sid;
 	private String view_on_next_logon = null;
 	private String district_calendar_updated = null;
+	private String schoolName;
 
 	private static HashMap<Integer, PersonnelCategory> catsMap = null;
 
@@ -513,5 +515,22 @@ public class Personnel implements Serializable {
 			t = (PersonnelCategory) iter.next();
 			catsMap.put(new Integer(t.getPersonnelCategoryID()), t);
 		}
+	}
+
+	public String getLastLogin() {
+		return lastLogin;
+	}
+	
+	public void  setLastLogin(String lastLogin) {		
+		this.lastLogin = lastLogin;
+	}
+	
+	public String getSchoolName() {
+		
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
 	}
 }

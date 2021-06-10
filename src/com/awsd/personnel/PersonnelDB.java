@@ -1463,7 +1463,29 @@ public class PersonnelDB {
 
 		return abean;
 	}
+	public static Personnel createPersonnelBeanSchoolName(ResultSet rs) {
 
+		Personnel abean = null;
+
+		try {
+			abean = new Personnel(rs.getInt("PERSONNEL_ID"), rs.getString("PERSONNEL_USERNAME"), rs.getString(
+					"PERSONNEL_PASSWORD"), rs.getString("PERSONNEL_FIRSTNAME"), rs.getString("PERSONNEL_LASTNAME"), rs.getString(
+							"PERSONNEL_EMAIL"), rs.getInt(
+									"PERSONNEL_CATEGORYID"), rs.getInt("PERSONNEL_SUPERVISOR_ID"), rs.getInt("SCHOOL_ID"));
+			abean.setSchoolName(rs.getString("SCHOOL_NAME"));
+			abean.setLastLogin(rs.getString("LAST_LOGIN"));
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			abean = null;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			abean = null;
+		}
+
+		return abean;
+	}
 	public static Personnel createAssistantPrincipalPersonnelBean(ResultSet rs) {
 
 		Personnel abean = null;
@@ -1536,5 +1558,54 @@ public class PersonnelDB {
 			catch (Exception e) {}
 		}
 		return p;
+	}
+	public static ArrayList<Personnel> getDistrictPersonnelArray() throws PersonnelException {
+
+		ArrayList<Personnel> personnels = null;
+		Connection con = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		String sql;
+
+		try {
+			personnels = new ArrayList<Personnel>();
+
+			//sql = "SELECT PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, "
+					//+ "PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, "
+					//+ "nvl(PERSONNEL_SUPERVISOR_ID, 0) PERSONNEL_SUPERVISOR_ID, " + "nvl(SCHOOL_ID, 0) SCHOOL_ID FROM PERSONNEL "
+					//+ "ORDER BY PERSONNEL_LASTNAME, PERSONNEL_FIRSTNAME";
+			
+			sql=" SELECT p.LAST_LOGIN, p.PERSONNEL_ID, p.PERSONNEL_USERNAME, p.PERSONNEL_PASSWORD, p.PERSONNEL_FIRSTNAME, \r\n" + 
+					"					p.PERSONNEL_LASTNAME, p.PERSONNEL_EMAIL, p.PERSONNEL_CATEGORYID, \r\n" + 
+					"					nvl(p.PERSONNEL_SUPERVISOR_ID, 0) PERSONNEL_SUPERVISOR_ID, nvl(p.SCHOOL_ID, 0) SCHOOL_ID,s.SCHOOL_NAME FROM PERSONNEL p\r\n" + 
+					"          left outer join school s on p.SCHOOL_ID= s.SCHOOL_ID\r\n" + 					
+					"					WHERE p.PERSONNEL_USERNAME LIKE '%nlesd.ca' ORDER BY p.PERSONNEL_LASTNAME, p.PERSONNEL_FIRSTNAME";
+
+			con = DAOUtils.getConnection();
+			stat = con.createStatement();
+			rs = stat.executeQuery(sql);
+
+			while (rs.next())
+				personnels.add(PersonnelDB.createPersonnelBeanSchoolName(rs));
+		}
+		catch (SQLException e) {
+			System.err.println("PersonnelDB.getDistrictPersonnel(): " + e);
+			throw new PersonnelException("Can not extract personnel from DB: " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return personnels;
 	}
 }

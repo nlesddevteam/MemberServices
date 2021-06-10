@@ -20,6 +20,10 @@
   	<pattern>/EECD/*</pattern>
   </decorator>  
   
+   <decorator name="MemberAdministration" page="Administration/includes/decorator/main.jsp">
+  	<pattern>/Administration/*</pattern>
+  </decorator> 
+  
     
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
     <pattern>/Personnel/applicantlogin.html</pattern>
