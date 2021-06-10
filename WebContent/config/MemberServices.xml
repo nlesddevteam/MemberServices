@@ -321,7 +321,7 @@
       <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.PersonnelAdminNameChangeRequestHandler</Request-Handler-Class>
       <URL-Pattern>/MemberAdmin/Apps/Personnel/personnelAdminChangeName.html</URL-Pattern>
     </Request-Handler>
-    <Request-Handler>
+   <Request-Handler>
       <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.LoginAsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/loginAs.html</URL-Pattern>
     </Request-Handler>
@@ -333,6 +333,103 @@
       <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.ViewPersonnelEffectivePermissionsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/MemberAdmin/Apps/Personnel/personnelEffectivePermissions.html</URL-Pattern>
     </Request-Handler>
+    
+    <!-- NEW ADMINISTRATION PORTAL HANDLERS (MS prefix)************************************************************************ -->
+    			  <Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSLoginAsRequestHandler</Request-Handler-Class>
+      				<URL-Pattern>/loginAs.html</URL-Pattern>
+    				</Request-Handler>
+    				<Request-Handler>
+			      <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSDeletePersonnelRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/PersonnelAdmin/personnelDelete.html</URL-Pattern>
+			    </Request-Handler>			    
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSPersonnelAdminChangeRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/PersonnelAdmin/personnelAdminChange.html</URL-Pattern>
+			    </Request-Handler>
+	<!-- SCHOOL ADMIN --> 			    
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSSchoolAdminChangeRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/SchoolAdmin/schoolAdminChange.html</URL-Pattern>
+			    </Request-Handler>			     
+			     <Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSSchoolFamilyAdminRequestHandler</Request-Handler-Class>
+     				<URL-Pattern>/Administration/SchoolAdmin/schoolFamilyAdmin.html</URL-Pattern>
+    			</Request-Handler>
+			         <Request-Handler>
+			      <Request-Handler-Class>com.awsd.weather.handler.MSSchoolSystemAdminRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/SchoolAdmin/schoolSystemAdmin.html</URL-Pattern>
+			    </Request-Handler>
+   <!-- SECURITY PERMISSIONS --> 			
+    			<Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSAddPermissionRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/addPermission.html</URL-Pattern>
+			    </Request-Handler>
+			     <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSViewPermissionRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/viewPermission.html</URL-Pattern>
+			    </Request-Handler>
+    			<Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSModifyPermissionRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/modifyPermission.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSDeletePermissionRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/deletePermission.html</URL-Pattern>
+			    </Request-Handler>
+   
+    <!-- SECURITY ROLES --> 		
+    			<Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSAddRoleRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/addRole.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSViewRoleRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/viewRole.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSModifyRoleRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/modifyRole.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSDeleteRoleRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>//Administration/RolesPermissions/deleteRole.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSModifyRoleMembershipRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/roleMembership.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSRemoveRoleMemberRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/removeRoleMember.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSModifyRolePermissionsRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/rolePermissions.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.security.handler.MSRemoveRolePermissionRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/RolesPermissions/removeRolePermission.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.weather.handler.MSClosureStatusAdminRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/SchoolStatus/weatherStatusCodeAdmin.html</URL-Pattern>
+			    </Request-Handler>
+			    
+			    <Request-Handler>
+     			 <Request-Handler-Class>com.awsd.weather.handler.MSUpdateRegionalizedSchoolSystemStatusRequestHandler</Request-Handler-Class>
+      				<URL-Pattern>/Administration/SchoolStatus/updateRegionalizedSchoolClosureStatus.html</URL-Pattern>
+    			</Request-Handler>
+			     <Request-Handler>
+      			<Request-Handler-Class>com.awsd.admin.apps.handler.MSViewLoginAppRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/viewNextLoginApp.html</URL-Pattern>
+    			</Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.admin.apps.handler.MSSetLoginAppRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/Administration/setNextLoginApp.html</URL-Pattern>
+			    </Request-Handler>
+			    
+   <!--  END NEW ADMINISTRATION PORTAL ********************************************************** --> 
     
     <Request-Handler>
       <Request-Handler-Class>com.awsd.admin.apps.financial.handler.FinancialAdminstrationRequestHandler</Request-Handler-Class>

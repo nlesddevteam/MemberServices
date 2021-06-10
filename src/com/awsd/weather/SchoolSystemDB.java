@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -1107,5 +1108,96 @@ public class SchoolSystemDB {
 		}
 
 		return tmp;
+	}
+	
+	public static TreeMap<Integer,String> getSchoolSystemSchools(int ssid){
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		TreeMap<Integer,String> alist = new TreeMap<Integer,String>();
+		try {
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.schools_pkg.get_school_system_schools(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, ssid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while(rs.next()) {
+				alist.put(rs.getInt("SCHOOL_ID"), rs.getString("SCHOOL_NAME"));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("TreeMap<Integer,String> getSchoolSystemSchools(int ssid): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return alist;
+	}
+	public static void addSchoolSystemSchool(int ssid, int schoolid) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.schools_pkg.add_ss_school(?,?); end;");
+			stat.setInt(1, ssid);
+			stat.setInt(2, schoolid);
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			System.err.println("static void addSchoolSystemSchool(int ssid, int schoolid): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void removeSchoolSystemSchool(int ssid) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin awsd_user.schools_pkg.del_school_system_sch(?); end;");
+			stat.setInt(1, ssid);
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			System.err.println("static void removeSchoolSystemSchool(int ssid): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
 	}
 }

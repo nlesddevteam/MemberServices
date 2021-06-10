@@ -282,52 +282,54 @@ public class SchoolDB {
 	}
 
 	public static Vector<School> getSchools(SchoolFamily ss) throws SchoolException {
+		 
+        Vector<School> schools = null;
+        Connection con = null;
+        Statement stat = null;
+        ResultSet rs = null;
+        String sql;
+ 
+        try {
+            schools = new Vector<School>(10);
 
-		Vector<School> schools = null;
-		Connection con = null;
-		Statement stat = null;
-		ResultSet rs = null;
-		String sql;
+             sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, "
+                    + "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
+                    + "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID, "
+                    + "SCHOOL.TOWNCITY,SCHOOL.REGION_ID,SCHOOL.ZONE_ID "
+                    + "FROM SCHOOL LEFT JOIN PERSONNEL ON PRINCIPAL_ID = PERSONNEL_ID, SCHOOL_FAMILY, SCHOOL_FAMILY_SCHOOLS "
+                    + "WHERE SCHOOL.SCHOOL_ID=SCHOOL_FAMILY_SCHOOLS.SCHOOL_ID "
+                    + "AND SCHOOL_FAMILY.FAMILY_ID=SCHOOL_FAMILY_SCHOOLS.FAMILY_ID " + "AND SCHOOL_FAMILY.FAMILY_ID="
+                    + ss.getSchoolFamilyID() + " ORDER BY SCHOOL_NAME";
 
-		try {
-			schools = new Vector<School>(10);
+ 
 
-			sql = "SELECT SCHOOL.SCHOOL_ID, SCHOOL_NAME, "
-					+ "nvl(PRINCIPAL_ID, 0) PRINCIPAL_ID, "
-					+ "nvl(VICEPRINCIPAL_ID, 0) VICEPRINCIPAL_ID, DEPT_ID, PERSONNEL_ID, PERSONNEL_USERNAME, PERSONNEL_PASSWORD, PERSONNEL_FIRSTNAME, PERSONNEL_LASTNAME, PERSONNEL_EMAIL, PERSONNEL_CATEGORYID, PERSONNEL_SUPERVISOR_ID "
-					+ "FROM SCHOOL LEFT JOIN PERSONNEL ON PRINCIPAL_ID = PERSONNEL_ID, SCHOOL_FAMILY, SCHOOL_FAMILY_SCHOOLS "
-					+ "WHERE SCHOOL.SCHOOL_ID=SCHOOL_FAMILY_SCHOOLS.SCHOOL_ID "
-					+ "AND SCHOOL_FAMILY.FAMILY_ID=SCHOOL_FAMILY_SCHOOLS.FAMILY_ID " + "AND SCHOOL_FAMILY.FAMILY_ID="
-					+ ss.getSchoolFamilyID() + " ORDER BY SCHOOL_NAME";
-
-			con = DAOUtils.getConnection();
-			stat = con.createStatement();
-			rs = stat.executeQuery(sql);
-
-			while (rs.next()) {
-				schools.add(createSchoolBean(rs));
-			}
-		}
-		catch (SQLException e) {
-			System.err.println("SchoolDB.getSchools(SchoolFamily): " + e);
-			throw new SchoolException("Can not extract schools from DB: " + e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-		return schools;
-	}
+            con = DAOUtils.getConnection();
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            while (rs.next()) {
+                schools.add(createSchoolBean(rs));
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("SchoolDB.getSchools(SchoolFamily): " + e);
+            throw new SchoolException("Can not extract schools from DB: " + e);
+        }
+        finally {
+            try {
+                rs.close();
+            }
+            catch (Exception e) {}
+            try {
+                stat.close();
+            }
+            catch (Exception e) {}
+            try {
+                con.close();
+            }
+            catch (Exception e) {}
+        }
+        return schools;
+    }
 
 	public static Vector<School> getSchoolsNotAssignedSchoolFamily() throws SchoolException {
 
@@ -1625,4 +1627,61 @@ public class SchoolDB {
 
 		return txt;
 	}
+	
+	 public static ArrayList<School> getSchoolsAdminAll() {
+
+		 
+
+	        ArrayList<School> alpha = new ArrayList<School>();
+	        School eBean = null;
+	        Connection con = null;
+	        CallableStatement stat = null;
+	        ResultSet rs = null;
+
+	 
+
+	        try {
+	            con = DAOUtils.getConnection();
+	           stat = con.prepareCall("begin ? := SCHOOLS_PKG.get_schools_3; end;");
+	            //stat = con.prepareCall("begin ? := TESTING_PKG.get_schools_333; end;");
+	            
+	            stat.registerOutParameter(1, OracleTypes.CURSOR);
+	            stat.execute();
+	            rs = ((OracleCallableStatement) stat).getCursor(1);
+	            if (rs.next()) {
+	                do {
+	                    eBean = createSchoolBean(rs);
+	                    alpha.add(eBean);    
+	                    if (!rs.isAfterLast() && (rs.getInt("SCHOOL_ID") == eBean.getSchoolID()))
+	                        rs.next();
+	    
+	                } while (!rs.isAfterLast());
+	            }
+	            
+	        }
+	        catch (SQLException e) {
+	            System.err.println("static ArrayList<School> getSchoolsAdminAll(): " + e);
+	        }
+	        finally {
+	            try {
+	                rs.close();
+	            }
+	            catch (Exception e) {}
+	            try {
+	                stat.close();
+	            }
+	            catch (Exception e) {}
+	            try {
+	                con.close();
+	            }
+	            catch (Exception e) {}
+	        }
+
+	 
+
+	        return alpha;
+	    }
+	
+	
+	
 }

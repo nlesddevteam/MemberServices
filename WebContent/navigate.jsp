@@ -140,6 +140,22 @@
 						</div>
 						<br />
 					</esd:SecurityAccessRequired>
+					
+
+<!-- New Member Adminsitration -->
+					<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW">
+						<div class="menuIconImage">
+							<a href="Administration/index.jsp"> <img
+								src="includes/img/menu/membersadmin-off.png"
+								class="img-swap menuImage" border=0
+								title="Member Admin is an administrative interface for assigning permissions to members based on job role and application access requirements.">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
+					
+					
+					
+					
 			<!-- Teacher Profile System -->
 					<esd:SecurityAccessRequired
 						permissions="PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW">
@@ -331,7 +347,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- Member Adminsitration -->
+					<!-- Member Adminsitration 
 					<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW">
 						<div class="menuIconImage">
 							<a href="MemberAdmin/viewMemberAdmin.html"> <img
@@ -341,7 +357,7 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+-->
 
 					<!-- Policy Feedback -->
 					<esd:SecurityAccessRequired
