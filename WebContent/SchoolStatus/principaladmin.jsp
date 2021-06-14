@@ -96,14 +96,7 @@ This will take a few moments!
 
 <div style="display:none;border:0px" class="loadPage"> 
   
-  <div align="center">       
-       <a class="btn btn-sm btn-danger" href="../navigate.jsp">Back to MS</a>
-       </div>
-  <br/><br/>
-
-
-
-
+  
   <form name="schoolstatus" method="post" action="updateSchoolClosureStatus.html">
   <input type="hidden" name="apply_all" value="0">
   <%if(request.getParameter("pid") != null){%>
@@ -123,7 +116,9 @@ This will take a few moments!
   						
   						
   						<b>System Name:</b> <%=systems[i].getSchoolSystemName()%><br/>
-  						<b>Current Administrator(s):</b> <%=(systems[i].getSchoolSystemAdmin() != null)?systems[i].getSchoolSystemAdmin().getFullNameReverse():"UNASSIGNED"%>
+  						<b>Current Administrator(s):</b>
+  						<span style="text-transform:capitalize;">
+  						<%=(systems[i].getSchoolSystemAdmin() != null)?systems[i].getSchoolSystemAdmin().getFullNameReverse():"UNASSIGNED"%>
   							
   							<%
 									Personnel[] tmp = systems[i].getSchoolSystemAdminBackup();
@@ -132,7 +127,7 @@ This will take a few moments!
 											out.println("/" + tmp[k].getFullNameReverse());
 								}
   							%>
-  							
+  						</span>	
   							
   				<br/><br/>
   				Below are the list of school(s) in your school system. Click on the school name to update status details.
@@ -244,14 +239,16 @@ This will take a few moments!
                 
                 
                <b>System Name:</b> <%=sys.getSchoolSystemName()%><br/>
-  				<b>Current Administrator(s):</b> <%=(sys.getSchoolSystemAdmin() != null)?sys.getSchoolSystemAdmin().getFullNameReverse():"UNASSIGNED"%>
+  				<b>Current Administrator(s):</b> 
+  				<span style="text-transform:capitalize;">
+  				<%=(sys.getSchoolSystemAdmin() != null)?sys.getSchoolSystemAdmin().getFullNameReverse():"UNASSIGNED"%>
   							<% 
   								Personnel[] tmp = sys.getSchoolSystemAdminBackup();
   								for(int i=0; ((tmp != null)&&( i < tmp.length));i++)
   									if(tmp[i] != null)
   										out.println("/" + tmp[i].getFullNameReverse());
   							%>
-  						
+  				</span>		
   				<br/><br/>	
 <div class="card">			
                   <div class="card-header siteSubHeaderBlue"><%=school.getSchoolName()%>

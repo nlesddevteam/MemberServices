@@ -117,11 +117,7 @@ This will take a few moments!
 
 <div style="display:none;border:0px" class="loadPage"> 
   
-  <div align="center">       
-       <a class="btn btn-sm btn-danger" href="../navigate.jsp">Back to MS</a>
-       </div>
-  <br/><br/>
-    <form name="schoolstatus" method="post" action="updateRegionalizedSchoolClosureStatus.html">
+      <form name="schoolstatus" method="post" action="updateRegionalizedSchoolClosureStatus.html">
 
 
 
