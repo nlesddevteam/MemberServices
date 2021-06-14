@@ -374,7 +374,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- Member Adminsitration -->
+					<!-- Member Adminsitration 
 					<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW">
 						<div class="menuIconImage">
 							<a href="MemberAdmin/viewMemberAdmin.html"> <img
@@ -384,7 +384,7 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+-->
 
 					<!-- Policy Feedback -->
 					<esd:SecurityAccessRequired
@@ -453,7 +453,7 @@
 					</esd:SecurityAccessRequired>
 
 
-					<!-- Live Webcast System -->
+					<!-- Live Webcast System 
 					<esd:SecurityAccessRequired
 						roles="ADMINISTRATOR,EXECUTIVE ASSISTANT,DIRECTOR,TRUSTEE,MEDIA BROADCASTER">
 						<div class="menuIconImage">
@@ -464,9 +464,9 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
+-->
 
-
-					<!-- Webcast Archive -->
+					<!-- Webcast Archive
 					<esd:SecurityAccessRequired
 						roles="ADMINISTRATOR,EXECUTIVE ASSISTANT,DIRECTOR,TRUSTEE,MEDIA BROADCASTER">
 						<div class="menuIconImage">
@@ -477,11 +477,11 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+ -->
 
 					
 
-					<!-- Survey Creation  -->
+					<!-- Survey Creation 
 					<esd:SecurityAccessRequired permissions="SURVEY-ADMIN-VIEW">
 						<div class="menuIconImage">
 							<a href="survey/admin/"> <img
@@ -492,8 +492,9 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-
-					<!-- Complaint Tracking -->
+ -->
+ 
+					<!-- Complaint Tracking
 					<esd:SecurityAccessRequired
 						permissions="COMPLAINT-MONITOR,COMPLAINT-ADMIN,COMPLAINT-VIEW">
 						<div class="menuIconImage">
@@ -504,7 +505,9 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+ -->
+ 
+ 
 					<!-- Student Travel Request System -->
 					<esd:SecurityAccessRequired
 						permissions="STUDENT-TRAVEL-ADMIN-VIEW,STUDENT-TRAVEL-PRINCIPAL-VIEW">
