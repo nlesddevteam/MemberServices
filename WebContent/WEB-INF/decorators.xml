@@ -23,7 +23,9 @@
    <decorator name="MemberAdministration" page="Administration/includes/decorator/main.jsp">
   	<pattern>/Administration/*</pattern>
   </decorator> 
-  
+  <decorator name="SchoolStatus" page="SchoolStatus/includes/decorator/main.jsp">
+  	<pattern>/SchoolStatus/*</pattern>
+  </decorator> 
     
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
     <pattern>/Personnel/applicantlogin.html</pattern>

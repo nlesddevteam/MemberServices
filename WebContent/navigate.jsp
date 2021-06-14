@@ -153,6 +153,33 @@
 						</div>
 					</esd:SecurityAccessRequired>
 					
+
+	<!-- Weather Central -->
+					<esd:SecurityAccessRequired
+						permissions="WEATHERCENTRAL-PRINCIPAL-ADMINVIEW">
+						<div class="menuIconImage">
+							<a href="SchoolStatus/viewWeatherCentralAdmin.html"> <img
+								src="includes/img/menu/schoolstatus-off.png"
+								class="img-swap menuImage" border=0
+								title="The School Status application allows a principal to set the closure status for schools in their school system.">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
+
+
+					<!-- Weather Central Admin  -->
+					<esd:SecurityAccessRequired
+						permissions="WEATHERCENTRAL-GLOBAL-ADMIN">
+						<div class="menuIconImage">
+							<a href="SchoolStatus/regionalized_school_admin.jsp"> <img
+								src="includes/img/menu/schoolstatusadmin-off.png"
+								class="img-swap menuImage" border=0
+								title="The Weather Central Global Admin application allows an administrator to set the weather closure status for any school in the district.">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
+
+
 					
 					
 					
@@ -347,7 +374,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- Member Adminsitration 
+					<!-- Member Adminsitration -->
 					<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW">
 						<div class="menuIconImage">
 							<a href="MemberAdmin/viewMemberAdmin.html"> <img
@@ -357,7 +384,7 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
--->
+
 
 					<!-- Policy Feedback -->
 					<esd:SecurityAccessRequired
@@ -515,7 +542,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- Weather Central -->
+					<!-- Weather Central 
 					<esd:SecurityAccessRequired
 						permissions="WEATHERCENTRAL-PRINCIPAL-ADMINVIEW">
 						<div class="menuIconImage">
@@ -526,9 +553,9 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
+	-->
 
-
-					<!-- Weather Central Admin  -->
+					<!-- Weather Central Admin  -
 					<esd:SecurityAccessRequired
 						permissions="WEATHERCENTRAL-GLOBAL-ADMIN">
 						<div class="menuIconImage">
@@ -539,7 +566,7 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
-
+-->
 					<esd:SecurityAccessRequired permissions="BCS-SYSTEM-ACCESS">
 						<div class="menuIconImage">
 							<a href="BCS/index.html"><img

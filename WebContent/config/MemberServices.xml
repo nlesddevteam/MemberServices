@@ -416,6 +416,10 @@
 			      <Request-Handler-Class>com.awsd.security.handler.MSRemoveRolePermissionRequestHandler</Request-Handler-Class>
 			      <URL-Pattern>/Administration/RolesPermissions/removeRolePermission.html</URL-Pattern>
 			    </Request-Handler>
+			    
+			    
+			    
+	<!--  STATUS CENTRAL ADMININSTRATION-->		    
 			    <Request-Handler>
 			      <Request-Handler-Class>com.awsd.weather.handler.MSClosureStatusAdminRequestHandler</Request-Handler-Class>
 			      <URL-Pattern>/Administration/SchoolStatus/weatherStatusCodeAdmin.html</URL-Pattern>
@@ -425,7 +429,24 @@
      			 <Request-Handler-Class>com.awsd.weather.handler.MSUpdateRegionalizedSchoolSystemStatusRequestHandler</Request-Handler-Class>
       				<URL-Pattern>/Administration/SchoolStatus/updateRegionalizedSchoolClosureStatus.html</URL-Pattern>
     			</Request-Handler>
-			     <Request-Handler>
+    			
+    <!--  STATUS CENTRAL USERS-->	
+    			
+    			<Request-Handler>
+			      <Request-Handler-Class>com.awsd.weather.handler.MSViewWeatherCentralPrincipalAdminRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/SchoolStatus/viewWeatherCentralAdmin.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.weather.handler.MSUpdateSchoolSystemStatusRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/SchoolStatus/updateSchoolClosureStatus.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.awsd.weather.handler.MSUserUpdateRegionalizedSchoolSystemStatusRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/SchoolStatus/updateRegionalizedSchoolClosureStatus.html</URL-Pattern>
+			    </Request-Handler>
+			    
+	<!-- APP LOGIN ON START  -->		    
+    			  <Request-Handler>
       			<Request-Handler-Class>com.awsd.admin.apps.handler.MSViewLoginAppRequestHandler</Request-Handler-Class>
      				 <URL-Pattern>/Administration/viewNextLoginApp.html</URL-Pattern>
     			</Request-Handler>
