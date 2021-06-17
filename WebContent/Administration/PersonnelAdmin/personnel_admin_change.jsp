@@ -217,7 +217,7 @@ To change Roles and Permissions, please use the Security Roles/permissions optio
 <br/><br/>
 <%int cnt=0; %>
 
-  <form name="change" action="personnelEffectivePermissions.html?pid=${prec.personnelID}" method="post">
+  <form name="changep" action="personnelEffectivePermissions.html?pid=${prec.personnelID}" method="post">
 			
 		
     
