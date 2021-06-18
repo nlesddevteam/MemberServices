@@ -23,8 +23,21 @@
    <decorator name="MemberAdministration" page="Administration/includes/decorator/main.jsp">
   	<pattern>/Administration/*</pattern>
   </decorator> 
+  
   <decorator name="SchoolStatus" page="SchoolStatus/includes/decorator/main.jsp">
   	<pattern>/SchoolStatus/*</pattern>
+  </decorator> 
+  
+    <decorator name="StaffDirectory" page="StaffDirectory/includes/decorator/main.jsp">
+  	<pattern>/StaffDirectory/*</pattern>
+  </decorator> 
+  
+   <decorator name="SchoolDirectory" page="SchoolDirectory/includes/decorator/sd.jsp">
+  	<pattern>/SchoolDirectory/*</pattern>
+  </decorator> 
+    
+      <decorator name="BusRoutes" page="BusRoutes/includes/decorator/main.jsp">
+  	<pattern>/BusRoutes/*</pattern>
   </decorator> 
     
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
