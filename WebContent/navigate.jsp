@@ -153,7 +153,51 @@
 						</div>
 					</esd:SecurityAccessRequired>
 					
+<!-- Office Staff Update -->
+					<esd:SecurityAccessRequired
+						roles="ADMINISTRATOR,OFFICE-STAFF-WEBUPDATE-ALL,OFFICE-STAFF-WEBUPDATE-AVALON,OFFICE-STAFF-WEBUPDATE-CENTRAL,OFFICE-STAFF-WEBUPDATE-WESTERN,OFFICE-STAFF-WEBUPDATE-LABRADOR">
+						<div class="menuIconImage">
+							<a href="StaffDirectory/staff_directory.jsp">
+								<img src="includes/img/menu/staffupdate-off.png"
+								class="img-swap menuImage" title="Office Staff Update System"
+								border=0>
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
 
+<!-- Admin School Profile Update -->
+					<esd:SecurityAccessRequired
+						roles="ADMINISTRATOR,PRINCIPAL,VICE PRINCIPAL,SCHOOL SECRETARY">
+						<div class="menuIconImage">
+							<a href="SchoolDirectory/school_profile.jsp">
+								<img src="includes/img/menu/sps-off.png"
+								class="img-swap menuImage" title="School Profile Update System"
+								border=0>
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>				
+
+			<!-- Bus Route Update -->
+					<esd:SecurityAccessRequired roles="ADMINISTRATOR,BUSROUTE-POST">
+						<div class="menuIconImage">
+							<a href="BusRoutes/school_directory_bus_routes.jsp">
+								<img src="includes/img/menu/busroute-off.png"
+								class="img-swap menuImage" title="Bus Route Update System"
+								border=0>
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
+	
+	<!-- School Review System--> 
+<esd:SecurityAccessRequired roles="ADMINISTRATOR,SCHOOL-REVIEW-ADMIN">
+						<div class="menuIconImage">                              	
+							<a href="SchoolReviews/viewSchoolReviews.html">
+							<img src="includes/img/menu/schoolreview-off.png" class="img-swap menuImage" border=0 title="SCHOOL REVIEW PROCESS ADMIN">
+							</a>                                                         
+						</div>
+</esd:SecurityAccessRequired>
+
+					
 	<!-- Weather Central -->
 					<esd:SecurityAccessRequired
 						permissions="WEATHERCENTRAL-PRINCIPAL-ADMINVIEW">
@@ -180,10 +224,34 @@
 					</esd:SecurityAccessRequired>
 
 
+					<!-- Personnel Package 2019-->
+					<esd:SecurityAccessRequired
+						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-VIEW-SUBMITTED-REFERENCES">
+						<div class="menuIconImage">
+							<a href="Personnel/admin_index.jsp"> <img
+								src="includes/img/menu/myhrp-off.png" class="img-swap menuImage"
+								border=0 title="Human Resources Profile System">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired> 
+					
+
+					
+
+					<!-- Kindergarten Registration -->
+					<esd:SecurityAccessRequired
+						permissions="KINDERGARTEN-REGISTRATION-ADMIN-VIEW,KINDERGARTEN-REGISTRATION-SCHOOL-VIEW">
+						<div class="menuIconImage">
+							<a href="schools/registration/kindergarten/admin/index.html">
+								<img src="includes/img/menu/kindergarten-off.png"
+								class="img-swap menuImage" border=0
+								title="Kindergarten Student Registration - Administration.">
+							</a>
+						</div>
+					</esd:SecurityAccessRequired>
 					
 					
-					
-			<!-- Teacher Profile System -->
+			<!-- Teacher / Secretary Profile System -->
 					<esd:SecurityAccessRequired
 						permissions="PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW">
 						<div class="menuIconImage">
@@ -213,14 +281,7 @@
 							</a>
 						</div>			
 
-<!-- School Review System--> 
-<esd:SecurityAccessRequired roles="ADMINISTRATOR,SCHOOL-REVIEW-ADMIN">
-						<div class="menuIconImage">                              	
-							<a href="SchoolReviews/viewSchoolReviews.html">
-							<img src="includes/img/menu/schoolreview-off.png" class="img-swap menuImage" border=0 title="SCHOOL REVIEW PROCESS ADMIN">
-							</a>                                                         
-						</div>
-</esd:SecurityAccessRequired>
+
 
 
 <!-- Admin Planner --> 
@@ -312,17 +373,7 @@
 						</div>
 					</esd:SecurityAccessRequired>
 
-					<!-- Bus Route Update -->
-					<esd:SecurityAccessRequired roles="ADMINISTRATOR,BUSROUTE-POST">
-						<div class="menuIconImage">
-							<a
-								href="WebUpdateSystem/BusRoutes/school_directory_bus_routes.jsp">
-								<img src="includes/img/menu/busroute-off.png"
-								class="img-swap menuImage" title="Bus Route Update System"
-								border=0>
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
+		
 
 
 					<!-- Tender Posting System -->
@@ -337,30 +388,7 @@
 					</esd:SecurityAccessRequired>
 			
 
-					<!-- Admin School Profile Update -->
-					<esd:SecurityAccessRequired
-						roles="ADMINISTRATOR,PRINCIPAL,VICE PRINCIPAL,SCHOOL SECRETARY">
-						<div class="menuIconImage">
-							<a href="WebUpdateSystem/SchoolProfiles/school_profile.jsp">
-								<img src="includes/img/menu/sps-off.png"
-								class="img-swap menuImage" title="School Profile Update System"
-								border=0>
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
-
-					<!-- Office Staff Update -->
-					<esd:SecurityAccessRequired
-						roles="ADMINISTRATOR,OFFICE-STAFF-WEBUPDATE-ALL,OFFICE-STAFF-WEBUPDATE-AVALON,OFFICE-STAFF-WEBUPDATE-CENTRAL,OFFICE-STAFF-WEBUPDATE-WESTERN,OFFICE-STAFF-WEBUPDATE-LABRADOR">
-						<div class="menuIconImage">
-							<a href="WebUpdateSystem/StaffDirectory/staff_directory.jsp">
-								<img src="includes/img/menu/staffupdate-off.png"
-								class="img-swap menuImage" title="Office Staff Update System"
-								border=0>
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
-
+			
 
 					<!-- Web Maintenance -->
 					<esd:SecurityAccessRequired
@@ -401,31 +429,7 @@
 
 
 
-					<!-- Personnel Package 2019-->
-					<esd:SecurityAccessRequired
-						permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-VIEW-SUBMITTED-REFERENCES">
-						<div class="menuIconImage">
-							<a href="Personnel/admin_index.jsp"> <img
-								src="includes/img/menu/myhrp-off.png" class="img-swap menuImage"
-								border=0 title="Human Resources Profile System">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired> 
 					
-
-					
-
-					<!-- Kindergarten Registration -->
-					<esd:SecurityAccessRequired
-						permissions="KINDERGARTEN-REGISTRATION-ADMIN-VIEW,KINDERGARTEN-REGISTRATION-SCHOOL-VIEW">
-						<div class="menuIconImage">
-							<a href="schools/registration/kindergarten/admin/index.html">
-								<img src="includes/img/menu/kindergarten-off.png"
-								class="img-swap menuImage" border=0
-								title="Kindergarten Student Registration - Administration.">
-							</a>
-						</div>
-					</esd:SecurityAccessRequired>
 
 
 					<!-- Student Conduct Reporting -->

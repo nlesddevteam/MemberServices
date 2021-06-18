@@ -454,6 +454,60 @@
 			      <Request-Handler-Class>com.awsd.admin.apps.handler.MSSetLoginAppRequestHandler</Request-Handler-Class>
 			      <URL-Pattern>/Administration/setNextLoginApp.html</URL-Pattern>
 			    </Request-Handler>
+		
+	<!--  NEW STAFF DIRECTORY -->	
+		
+		    	<Request-Handler>
+			      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSAddStaffDirectoryContactRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/StaffDirectory/addStaffDirectoryContact.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSEditStaffDirectoryContactRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/StaffDirectory/editStaffDirectoryContact.html</URL-Pattern>
+			    </Request-Handler>
+			       <Request-Handler>
+			     	<Request-Handler-Class>com.nlesd.webmaint.site.handler.ajax.MSGetNextContactSortOrderAjaxRequestHandler</Request-Handler-Class>
+			    	 <URL-Pattern>/StaffDirectory/getNextContactSortOrder.html</URL-Pattern>
+			   	</Request-Handler>
+			    <Request-Handler>
+			      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSUpdateStaffDirectoryContactRequestHandler</Request-Handler-Class>
+			      <URL-Pattern>/StaffDirectory/updateStaffDirectoryContact.html</URL-Pattern>
+			    </Request-Handler>
+			    <Request-Handler>
+			    	<Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSDeleteStaffDirectoryContactRequestHandler</Request-Handler-Class>
+			   	<URL-Pattern>/StaffDirectory/deleteDirectoryStaff.html</URL-Pattern>
+			    </Request-Handler>
+		
+	<!-- New School Directory -->	
+		
+
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.school.site.handler.admin.MSAddSchoolRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolDirectory/addSchool.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.school.site.handler.admin.MSEditSchoolRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolDirectory/editSchool.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.school.site.handler.admin.MSUpdateSchoolRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolDirectory/updateSchool.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.school.site.handler.ajax.MSGetZoneRegionsAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolDirectory/getZoneRegions.html</URL-Pattern>
+    </Request-Handler>
+   <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.school.site.handler.ajax.MSGetZoneRegionsSchoolsAjaxRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/SchoolDirectory/getZoneRegionsSchools.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSDeleteSchoolRequesthandler</Request-Handler-Class>
+      <URL-Pattern>/SchoolDirectory/deleteSchool.html</URL-Pattern>
+    </Request-Handler>
+   
+		
+		
 			    
    <!--  END NEW ADMINISTRATION PORTAL ********************************************************** --> 
     
