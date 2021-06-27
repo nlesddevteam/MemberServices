@@ -53,6 +53,7 @@ public class BussingContractorVehicleBean implements Serializable {
 	private String companyName;//used with main screen warnings for contractors and automated ones
 	private String companyEmail;//used with main screen warnings for contractors and automated ones
 	private int wheelchairAccessible = -1;
+	private BussingContractorSystemRegionalBean regionBean;
 	public String getFallInsFile() {
 		return fallInsFile;
 	}
@@ -403,6 +404,12 @@ public class BussingContractorVehicleBean implements Serializable {
 	}
 	public void setWheelchairAccessible(int wheelchairAccessible) {
 		this.wheelchairAccessible = wheelchairAccessible;
+	}
+	public BussingContractorSystemRegionalBean getRegionBean() {
+		return regionBean;
+	}
+	public void setRegionBean(BussingContractorSystemRegionalBean regionBean) {
+		this.regionBean = regionBean;
 	}
 	
 	

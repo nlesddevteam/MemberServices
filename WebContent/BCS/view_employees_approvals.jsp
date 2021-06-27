@@ -86,13 +86,19 @@
 				<th class="listdata">DL Number</th>
 				<th class="listdata">DL Class</th>
 				<th class="listdata">DA Run Date</th>
+				<th class="listdata">Demerit Points</th>
 				<th class="listdata">DA Convictions</th>
+				<th class="listdata">Dangerous Driving 5 YRS</th>
+				<th class="listdata">Suspensions 36 MNTHS</th>
 				<th class="listdata">PRCVSQ Date</th>
 				<th class="listdata">Findings of Guilt</th>
 				<th class="listdata">SCA Document</th>
 				<th class="listdata">FA Expiry Date</th>
+				<th class="listdata">FA Level C</th>
 				<th class="listdata">PCC Date</th>
 				<th class="listdata">Status</th>
+				<th class="listdata">Region</th>
+				<th class="listdata">Depot</th>
 				<th class="listdata">Options</th>
 				</thead>
 				<tbody>
@@ -108,13 +114,19 @@
 	      					<td class="field_content">${rule.dlNumber}</td>
 	      					<td class="field_content">${rule.dlClassText}</td>	      										
 	      					<td class="field_content">${rule.daRunDate}</td>
+	      					<td class="field_content">${rule.demeritPoints}</td>
 	      					<td class="field_content">${rule.daConvictions}</td>
+	      					<td class="field_content">${rule.dangerousDriving}</td>
+							<td class="field_content">${rule.suspensions}</td>
 							<td class="field_content">${rule.prcvsqDateFormatted}</td>
 							<td class="field_content">${rule.findingsOfGuilt}</td>
 							<td class="field_content">${rule.scaDateFormatted}</td>
 	      					<td class="field_content">${rule.faExpiryDateFormatted}</td>
+	      					<td class="field_content">${rule.faLevelC}</td>
 	      					<td class="field_content">${rule.pccDateFormatted}</td>
 	      					<td class="field_content">${rule.statusText}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.regionName : ''}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.depotName : ''}</td>
 	      					<td class="field_content" align="center">
       							<button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewEmployee.html?vid=${rule.id}');">View</button>
       							<c:choose>
@@ -128,7 +140,7 @@
 	        		</c:forEach>
 	        	</c:when>
 	        	<c:otherwise>
-	        		<tr><td colspan='14' style="color:Red;">No employees found.</td></tr>
+	        		<tr><td colspan='16' style="color:Red;">No employees found.</td></tr>
 	        	</c:otherwise>
 	        </c:choose>
 				</tbody>

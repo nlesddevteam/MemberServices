@@ -24,16 +24,15 @@ public class SearchEmployeesRequestHandler extends RequestHandlerImpl
 			status.put(sc.getValue(),sc.getDescription());
 		}
 		request.setAttribute("status", status);
-		TreeMap<Integer,String> items;
 		//get search by values
-		items = DropdownManager.getDropdownValuesTM(9);
-		request.setAttribute("sby", items);
+		request.setAttribute("sby", DropdownManager.getDropdownValuesLinkedHM(9));
 		//get employee position values
-		items = DropdownManager.getDropdownValuesTM(6);
-		request.setAttribute("epositions", items);
+		request.setAttribute("epositions", DropdownManager.getDropdownValuesLinkedHM(6));
 		//get dl class values
-		items = DropdownManager.getDropdownValuesTM(7);
-		request.setAttribute("dlclasses", items);			
+		request.setAttribute("dlclasses", DropdownManager.getDropdownValuesLinkedHM(7));
+		//now we add the regional/depot dropdowns
+		request.setAttribute("rcodes", DropdownManager.getDropdownValuesTM(24));
+		request.setAttribute("dcodes", DropdownManager.getDropdownValuesTM(25));
 		path = "search_employees.jsp";
 
 

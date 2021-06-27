@@ -14,6 +14,7 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRegionalBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
@@ -22,6 +23,7 @@ import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDateHistoryManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
+import com.nlesd.bcs.dao.BussingContractorSystemRegionalManager;
 import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 
@@ -297,6 +299,18 @@ public class UpdateContractorVehicleAdminRequestHandler extends RequestHandlerIm
 				}
 				//now we add the record
 				BussingContractorVehicleManager.updateBussingContractorVehicle(vbean);
+				//now we add the regional info if
+				BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
+				regbean.setrType("V");
+				regbean.setrId(vbean.getId());
+				regbean.setRegionCode(form.getInt("regioncode"));
+				regbean.setDepotCode(form.getInt("depotcode"));
+				if(origbean.getRegionBean() == null) {
+					BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
+				}else {
+					regbean.setId(origbean.getRegionBean().getId());
+					BussingContractorSystemRegionalManager.updateBussingContractorSystemRegionalBean(regbean);
+				}
 				//now we add the archive record
 				BussingContractorVehicleManager.addBussingContractorVehicleArc(origbean);
 				//now we check to see if dates changed

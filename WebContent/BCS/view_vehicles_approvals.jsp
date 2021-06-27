@@ -73,11 +73,14 @@
 				<th class="listdata">Contractor</th>
 				<th class="listdata">Serial Number</th>
 				<th class="listdata">Plate Number</th>
+				<th class="listdata">Unit Number</th>
 				<th class="listdata">Registration Expiry Date</th>
 				<th class="listdata">Insurance Expiry Date</th>
 				<th class="listdata">Primary CMVI Date</th>
 				<th class="listdata">Secondary CMVI Date</th>
 				<th class="listdata">Status</th>
+				<th class="listdata">Region</th>
+				<th class="listdata">Depot</th>
 				<th class="listdata">Options</th>
 				</thead>
 				<tbody>
@@ -89,11 +92,14 @@
 	 						<td class="field_content">${rule.bcBean.contractorName}</td>
 	      					<td class="field_content">${rule.vSerialNumber}</td>
 	      					<td class="field_content">${rule.vPlateNumber}</td>
+	      					<td class="field_content">${rule.unitNumber}</td>
 	      					<td class="field_content">${rule.regExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.insExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.fallInsDateFormatted}</td>
 	      					<td class="field_content">${rule.winterInsDateFormatted}</td>
 	      					<td class="field_content">${rule.statusText}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.regionName : ''}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.depotName : ''}</td>
 							<td class="field_content" align="right">
       								<button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewVehicle.html?cid=${rule.id}');">View</button>
       								<button type="button" class="btn btn-xs btn-danger" onclick="opendeletedialog('${rule.vPlateNumber}','${rule.id}','A');">Del</button>
@@ -102,7 +108,7 @@
 	        		</c:forEach>
 	        	</c:when>
 	        	<c:otherwise>
-	        		<tr><td colspan='9' style="color:Red;">No vehicles found.</td></tr>
+	        		<tr><td colspan='11' style="color:Red;">No vehicles found.</td></tr>
 	        	</c:otherwise>
 	        </c:choose>
 				</tbody>

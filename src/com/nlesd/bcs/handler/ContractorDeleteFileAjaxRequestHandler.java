@@ -2,16 +2,25 @@ package com.nlesd.bcs.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.awsd.mail.bean.EmailBean;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequiredFormElement;
+import com.esdnl.velocity.VelocityUtils;
 import com.nlesd.bcs.bean.BussingContractorBean;
+import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
+import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.bean.FileTypeBean;
+import com.nlesd.bcs.constants.EmployeeStatusConstant;
+import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
+import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 import com.nlesd.bcs.dao.FileTypeManager;
 
@@ -59,6 +68,41 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 			sb.append("<DTYPE>" + deletetype + "</DTYPE>");
 			sb.append("</FILE>");
 			sb.append("</FILES>");
+			if(ftb.getFileCategory().equals("BCS_CONTRACTOR_EMPLOYEE")) {
+				BussingContractorEmployeeBean vbean = BussingContractorEmployeeManager.getBussingContractorEmployeeById(did);
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				//now we send the message
+				EmailBean email = new EmailBean();
+				email.setTo("transportation@nlesd.ca");
+				//email.setTo("rodneybatten@nlesd.ca");
+				email.setFrom("bussingcontractorsystem@nlesd.ca");
+				email.setSubject("NLESD Bussing Contractor System Employee Updated");
+				HashMap<String, Object> model = new HashMap<String, Object>();
+				// set values to be used in template
+				model.put("cname", bcbean.getContractorName());
+				model.put("ename", vbean.getFullName());
+				model.put("elist", ftb.getFileName() + " deleted by " + bcbean.getContractorName());
+				model.put("etypes", "File(s)");
+				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employeeupdated.vm", model));
+				email.send();
+			}else {
+				BussingContractorVehicleBean vbean = BussingContractorVehicleManager.getBussingContractorVehicleById(did);
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				//now we send the message
+				EmailBean email = new EmailBean();
+				email.setTo("transportation@nlesd.ca");
+				//email.setTo("rodneybatten@nlesd.ca");
+				email.setFrom("bussingcontractorsystem@nlesd.ca");
+				email.setSubject("NLESD Bussing Contractor System Employee Updated");
+				HashMap<String, Object> model = new HashMap<String, Object>();
+				// set values to be used in template
+				model.put("cname", bcbean.getContractorName());
+				model.put("ename", vbean.getvPlateNumber() + "(" + vbean.getvSerialNumber() + ")");
+				model.put("elist", ftb.getFileName() + " deleted by " + bcbean.getContractorName());
+				model.put("etypes", "File(s)");
+				email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employeeupdated.vm", model));
+				email.send();
+			}
 	        
 		    }catch(Exception e) {
 		    	sb.append("<FILES>");

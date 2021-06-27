@@ -88,6 +88,8 @@ $(document).ready(function() {
 				<th class="listdata">Status</th>
 				<th class="listdata">Status By</th>
 				<th class="listdata">Status Date</th>
+				<th class="listdata">Region</th>
+				<th class="listdata">Depot</th>
 				<th class="listdata">Options</th>
 				</thead>
 				<tbody>
@@ -107,6 +109,8 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.statusText}</td>
 	      					<td class="field_content">${rule.approvedBy}</td>
 	      					<td class="field_content">${rule.dateApprovedFormatted}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.regionName : ''}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.depotName : ''}</td>
 	      					<td class="field_content" align="center"><button type="button" class="btn btn-xs btn-primary" onclick="closeMenu();loadMainDivPage('adminViewEmployee.html?vid=${rule.id}');">View</button></td>
 	      				</tr>
 	        		</c:forEach>

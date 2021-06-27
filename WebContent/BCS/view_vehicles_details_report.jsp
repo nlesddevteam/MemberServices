@@ -84,6 +84,7 @@ $(document).ready(function() {
 				<th class="listdata">Year</th>
 				<th class="listdata">Serial Number</th>
 				<th class="listdata">Plate Number</th>
+				<th class="listdata">Unit Number</th>
 				<th class="listdata">Type</th>
 				<th class="listdata">Size</th>
 				<th class="listdata">Wheelchair Accessible</th>
@@ -92,7 +93,6 @@ $(document).ready(function() {
 				<th class="listdata">Insurance Expiry Date</th>
 				<th class="listdata">Insurance Provider</th>
 				<th class="listdata">Insurance Policy Number</th>
-				<th class="listdata">Unit Number</th>
 				<th class="listdata">Primary CMVI Date</th>
 				<th class="listdata">Primary CMVI Certificate #</th>
 				<th class="listdata">Primary CMVI Official Inspection Station</th>
@@ -119,6 +119,7 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.vYear}</td>
 	      					<td class="field_content">${rule.vSerialNumber}</td>
 	      					<td class="field_content">${rule.vPlateNumber}</td>
+	      					<td class="field_content">${rule.unitNumber}</td>
 	      					<td class="field_content">${rule.typeText}</td>
 	      					<td class="field_content">${rule.sizeText}</td>
 	      					<td class="field_content">${rule.vModel eq 1 ? 'Yes' : 'No'}</td>
@@ -127,7 +128,6 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.insExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.insuranceProvider}</td>
 	      					<td class="field_content">${rule.insurancePolicyNumber}</td>
-	      					<td class="field_content">${rule.unitNumber}</td>
 	      					<td class="field_content">${rule.fallInsDateFormatted}</td>
 	      					<td class="field_content">${rule.fallCMVI}</td>
 	      					<td class="field_content">${rule.fallInsStation}</td>

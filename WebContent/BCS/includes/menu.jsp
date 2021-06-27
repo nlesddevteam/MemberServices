@@ -66,6 +66,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewContactorsApproval.html?status=s');"><i class="fa fa-fw fa-ban"></i> Suspended  <% if (cbean.getSuspendedContractors()!=0) {out.print("("+cbean.getSuspendedContractors()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewContactorsApproval.html?status=r');"><i class="fa fa-fw fa-close"></i> Rejected <% if (cbean.getRejectedContractors()!=0) {out.print("("+cbean.getRejectedContractors()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewContactorsApproval.html?status=re');"><i class="fa fa-fw fa-close"></i> Removed <% if (cbean.getRemovedContractors()!=0) {out.print("("+cbean.getRemovedContractors()+")");}; %></a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewContactorsApproval.html?status=oh');"><i class="fa fa-fw fa-close"></i> On Hold <% if (cbean.getRemovedContractors()!=0) {out.print("("+cbean.getRemovedContractors()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('searchContractors.html');"><i class="fa fa-fw fa-search"></i> Search Operator</a></li>
            <li><a href="contractorLogin.html">Operator Login</a></li>
            <li><a href="register.html">Operator Registration</a></li>
@@ -81,6 +82,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=s');"><i class="fa fa-fw fa-ban"></i> Suspended <% if (cbean.getSuspendedContractorsEmployees()!=0) {out.print("("+cbean.getSuspendedContractorsEmployees()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=r');"><i class="fa fa-fw fa-close"></i> Rejected <% if (cbean.getRejectedContractorsEmployees()!=0) {out.print("("+cbean.getRejectedContractorsEmployees()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=re');"><i class="fa fa-fw fa-close"></i> Removed</a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesApprovals.html?status=oh');"><i class="fa fa-fw fa-close"></i> Temporarily On Hold</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('searchEmployees.html');"><i class="fa fa-fw fa-search"></i> Search Employees</a></li>
         </ul>
      </li>
@@ -93,6 +95,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=s');"><i class="fa fa-fw fa-ban"></i> Suspended <% if (cbean.getSuspendedContractorsVehicles()!=0) {out.print("("+cbean.getSuspendedContractorsVehicles()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=r');"><i class="fa fa-fw fa-close"></i> Rejected <% if (cbean.getRejectedContractorsVehicles()!=0) {out.print("("+cbean.getRejectedContractorsVehicles()+")");}; %></a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=re');"><i class="fa fa-fw fa-close"></i> Removed <% if (cbean.getRemovedContractorsVehicles()!=0) {out.print("("+cbean.getRemovedContractorsVehicles()+")");}; %></a></li>
+           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesApprovals.html?status=oh');"><i class="fa fa-fw fa-close"></i> Temporarily On Hold</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('searchVehicles.html');"><i class="fa fa-fw fa-search"></i> Search Vehicles</a></li>
         </ul>
      </li>
@@ -111,17 +114,49 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
      </li>
      <li><a href="#"><i class="fa fa-fw fa-file-text-o"></i> Reports</a>
         <ul>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('createNewReport.html');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewMyReports.html');"><i class="fa fa-fw fa-file-text-o"></i> My Reports</a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesReport.html');"><i class="fa fa-fw fa-group"></i> Employee Reports</a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesReport.html');"><i class="fa fa-fw fa-car"></i> Vehicle Reports</a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('getEmployeeMissingSPTReport.html');"><i class="fa fa-fw fa-car"></i> Missing Safe Pupil</a></li>
-           <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewDocumentAuditReport.html?numdays=1');"><i class="fa fa-fw fa-car"></i> Document Audit</a></li>
-           <esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">
-           		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewAllContractors.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Reports</a></li>
-           		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Audit Report</a></li>
-           		<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectDateAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Date Audit Report</a></li>
+        	<li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Custom</a>
+           		<ul>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('createNewReport.html');"><i class="fa fa-fw fa-plus"></i> Add New</a></li>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewMyReports.html');"><i class="fa fa-fw fa-file-text-o"></i> My Reports</a></li>
+           		</ul>
+           	</li>
+          	<li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Employee</a>
+           		<ul>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeeConvictionsReport.html');"><i class="fa fa-fw fa-group"></i> Listing By Convictions</a></li>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeesReport.html');"><i class="fa fa-fw fa-group"></i> Listing By Operator</a></li>
+           			
+           		</ul>
+           	</li>
+           	<esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">           
+          	<li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Operator</a>
+           		<ul>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewAllContractors.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Reports</a></li>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewRouteRunDetailsReport.html');"><i class="fa fa-fw fa-car"></i> Route Run Details</a></li>
+           		</ul>
+           	</li>
            	</esd:SecurityAccessRequired>
+           	<li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Training</a>
+           		<ul>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewEmployeeTrainingReport.html');"><i class="fa fa-fw fa-car"></i> Listing By Type</a></li>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewCompanyEmployeeTrainingReport.html');"><i class="fa fa-fw fa-car"></i> Listing By Company</a></li>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('getEmployeeMissingSPTReport.html');"><i class="fa fa-fw fa-car"></i> Missing Safe Pupil</a></li>
+           		</ul>
+           	</li> 
+           	<li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Vehicle</a>
+           		<ul>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewVehiclesReport.html');"><i class="fa fa-fw fa-car"></i> Listing By Operator</a></li>
+           		</ul>
+           	</li>
+			<esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">          		           
+           	<li><a href="#"><i class="fa fa-fw fa-arrow-circle-o-up"></i> Audit</a>
+           		<ul>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectDateAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Date Audit Report</a></li>
+           			<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('viewDocumentAuditReport.html?numdays=1');"><i class="fa fa-fw fa-car"></i> Document Audit</a></li>
+           		 	<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('selectAuditRequest.html');"><i class="fa fa-fw fa-file-text-o"></i> Operator Audit Report</a></li>          
+           		</ul>
+           	</li>
+           	</esd:SecurityAccessRequired>             
+
            	<esd:SecurityAccessRequired permissions="BCS-WEEKLY-REPORT-STATUS">
            	<li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('weeklyReportStatus.html');"><i class="fa fa-fw fa-file-text-o"></i> Weekly Report Status</a></li>
            	</esd:SecurityAccessRequired>

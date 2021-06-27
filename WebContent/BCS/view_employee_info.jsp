@@ -28,8 +28,9 @@
 String tabs = (String)request.getParameter("tab");
 String settab="";
 if(tabs != null){
-	settab="T";
+	settab="D";
 }
+
 pageContext.setAttribute("settab1", settab);
 %>
 <script type="text/javascript">
@@ -79,6 +80,8 @@ $(document).ready(function() {
 				});
 				if($("#settab1").val() == "T"){
       	    	  $('.nav-tabs a:last').tab('show'); 
+      	      	}else{
+      	      	$('.nav-tabs a:first').tab('show'); 
       	      	}
 				$("#dlexpirydate").change(function(){
 					checkdate('DLEXP');
@@ -99,6 +102,9 @@ $(document).ready(function() {
 				}else{
 					$("#submitapp").hide();
 				}
+				var cvalues = $('#hidctypes').val().split(",");
+				//
+				$("#contypes").val(cvalues);
 				
 });
 		</script>
@@ -156,6 +162,10 @@ $(document).ready(function() {
 	                  	
 	            				<p class="form-control-static"><span style="background-color:BLue;color:white;padding:3px;text-transform:uppercase;">&nbsp;${employee.statusText}&nbsp;</span><br/>
 	            			</c:when>
+	            			<c:when test = "${employee.status eq 7}">
+	         					<span style="background-color:yellow;color:black;padding:3px;text-transform:uppercase;">&nbsp;TEMPORARILY ON HOLD&nbsp;</span><br />	         				
+	            				Notes: ${employee.statusNotes}</p>
+	         				</c:when>	
 	         				<c:otherwise>
 	            				
 	            				<p class="form-control-static"><span style="background-color:black;color:white;padding:3px;text-transform:uppercase;">&nbsp;N/A&nbsp;</span></p>
@@ -185,7 +195,59 @@ $(document).ready(function() {
 		        	</div>
 		        </div>
 
-		    </div> 	
+		    </div>
+		    <c:if test="${bcbean.boardOwned eq 'Y'}">
+		    		  <div class="form-group">		  	
+                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Region:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="regioncode" name="regioncode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${rcodes}">
+						<c:choose>
+							<c:when test = "${employee.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${employee.regionBean.regionCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>
+	      <div class="form-group">		  	
+                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Depot:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="depotcode" name="depotcode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${dcodes}">
+						<c:choose>
+							<c:when test = "${employee.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${employee.regionBean.depotCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>	
+	</c:if>	    
 		  <div class="form-group">		  
                 <label class="control-label col-sm-3" for="email">Employee Position:</label>
                  <div class="col-sm-5">
@@ -413,6 +475,23 @@ $(document).ready(function() {
                 </div>
 	       </div>
       	  <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Lost Demerit Points:</label>
+                <div class="col-sm-5"> 
+                		<select class="form-control" id="demeritpoints" name="demeritpoints">
+                			<c:forEach begin="0" end="20" step="1" varStatus="lcount">
+    								<c:choose>
+    									<c:when test="${employee.demeritPoints eq lcount.count}">
+    										<option value="${lcount.count}" selected>${lcount.count}</option>
+    									</c:when>
+    									<c:otherwise>
+    										<option value="${lcount.count}">${lcount.count}</option>
+    									</c:otherwise>
+    								</c:choose>
+    						</c:forEach>
+                		</select>
+				</div>
+	       </div>	       
+      	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">File:</label> 
                 <div class="col-sm-5">	
                  <c:choose>
@@ -432,27 +511,36 @@ $(document).ready(function() {
  		    		(PDF file format only)<br/>
  		    	</div>
 		  </div>		
-		       
-	       
-	       
-	       
-	       
-      	  <div class="form-group">
+		  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Driver Abstract Convictions:</label>
                 <div class="col-sm-5"> 
                 <label class="radio-inline"><input type="radio" name="daconvictions" value='Y' ${employee.daConvictions == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="daconvictions" value='N' ${employee.daConvictions == 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
 	       </div>
+      	  <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Convicted of Dangerous Driving Within the Last 5yrs:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="dangerousdriving" value='Y' ${employee.dangerousDriving == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="dangerousdriving" value='N' ${employee.dangerousDriving == 'N' ? 'checked=\'checked\'' : ''}>No</label>
+				</div>
+	       </div>	       
 	       <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Driver Abstract Suspensions:</label>
                 <div class="col-sm-5"> 
                 <label class="radio-inline"><input type="radio" name="dasuspensions" value='Y' ${employee.daSuspensions == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="dasuspensions" value='N' ${employee.daSuspensions == 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
-	       </div> 
+	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Suspension Within the Last 36 Months?:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="suspensions" value='Y' ${employee.suspensions == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="suspensions" value='N' ${employee.suspensions == 'N' ? 'checked=\'checked\'' : ''}>No</label>
+				</div>
+	       </div> 	        
 	             	  <div class="form-group">
-                <label class="control-label col-sm-3" for="email">Driver Abstract Accidents:</label>
+                <label class="control-label col-sm-3" for="email">"At Fault" Accident(s):</label>
                 <div class="col-sm-5"> 
                 <label class="radio-inline"><input type="radio" name="daaccidents" value='Y' ${employee.daAccidents == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="daaccidents" value='N' ${employee.daAccidents == 'N' ? 'checked=\'checked\'' : ''}>No</label>
@@ -474,6 +562,13 @@ $(document).ready(function() {
 	                    </div>
                 </div>
 	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Level C:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="falevelc" value='Y' ${employee.faLevelC == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="falevelc" value='N' ${employee.faLevelC == 'N' ? 'checked=\'checked\'' : ''}>No</label>
+				</div>
+	       </div> 
       	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Certificate File:</label> 
                 <div class="col-sm-5">
@@ -513,6 +608,13 @@ $(document).ready(function() {
                     value="${employee.prcvsqDate == null ? '' : employee.prcvsqDateFormatted}">
                 </div>
 	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Vulnerable Sector:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="vulsector" value='-1' ${employee.vulnerableSector == -1 ? 'checked=\'checked\'' : ''}>Negative</label>
+				<label class="radio-inline"><input type="radio" name="vulsector" value='1' ${employee.vulnerableSector == 1 ? 'checked=\'checked\'' : ''}>Positive</label>
+				</div>
+	       </div>	       
       	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">PRC/VSQ File:</label> 
                 <div class="col-sm-5">
@@ -543,6 +645,17 @@ $(document).ready(function() {
                 <label class="radio-inline"><input type="radio" name="findingsofguilt"  value='Y' ${employee.findingsOfGuilt == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="findingsofguilt"  value='N' ${employee.findingsOfGuilt== 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
+	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Conviction Types:</label> 
+                <div class="col-sm-5">
+                	<select id="contypes" name="contypes" size="15" multiple>
+						<option value="0">None</option>
+						<c:forEach var="entry" items="${convicttypes}">
+								<option value='${entry.key}'>${entry.value}</option>
+						</c:forEach>
+					</select><input type="hidden" id="hidctypes" value="${employee.convictionTypes}">
+                </div>
 	       </div>
        	   <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Provincial Court Check Date:</label> 

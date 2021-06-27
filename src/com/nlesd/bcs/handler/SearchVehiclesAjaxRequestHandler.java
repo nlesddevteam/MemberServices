@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -40,6 +39,8 @@ public class SearchVehiclesAjaxRequestHandler extends RequestHandlerImpl {
 				Integer searchtype = form.getInt("searchtype");
 				//Integer searchmodel = form.getInt("searchmodel");
 				Integer searchsize = form.getInt("searchsize");
+				Integer regionid = form.getInt("searchregion");
+				Integer depotid = form.getInt("searchdepot");
 				ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
 				if(usr.checkPermission("BCS-VIEW-WESTERN") || usr.checkPermission("BCS-VIEW-CENTRAL") || usr.checkPermission("BCS-VIEW-LABRADOR")){
 					int cid=0;
@@ -62,6 +63,10 @@ public class SearchVehiclesAjaxRequestHandler extends RequestHandlerImpl {
 						list = BussingContractorVehicleManager.searchVehiclesByIntegerReg(searchby, searchfor,searchtype,cid);
 					}else if(searchby.equals("Size")){
 						list = BussingContractorVehicleManager.searchVehiclesByIntegerReg(searchby, searchfor,searchsize,cid);
+					}else if(searchby.equals("Region")){
+						list = BussingContractorVehicleManager.searchVehiclesByRegion(regionid);
+					}else if(searchby.equals("Depot")){
+						list = BussingContractorVehicleManager.searchVehiclesByDepot(depotid);
 					}else{
 						list = BussingContractorVehicleManager.searchVehiclesByStringReg(searchby, searchfor,searchp,cid);
 					}
@@ -76,6 +81,10 @@ public class SearchVehiclesAjaxRequestHandler extends RequestHandlerImpl {
 						list = BussingContractorVehicleManager.searchVehiclesByInteger(searchby, searchfor,searchtype);
 					}else if(searchby.equals("Size")){
 						list = BussingContractorVehicleManager.searchVehiclesByInteger(searchby, searchfor,searchsize);
+					}else if(searchby.equals("Region")){
+						list = BussingContractorVehicleManager.searchVehiclesByRegion(regionid);
+					}else if(searchby.equals("Depot")){
+						list = BussingContractorVehicleManager.searchVehiclesByDepot(depotid);
 					}else{
 						list = BussingContractorVehicleManager.searchVehiclesByString(searchby, searchfor,searchp);
 					}

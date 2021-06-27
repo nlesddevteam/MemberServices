@@ -345,4 +345,42 @@ public class DropdownManager {
 		}
 		return schoollist;
 	}
+	public static LinkedHashMap<Integer,String> getDropdownValuesLinkedHM(int id) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		LinkedHashMap<Integer, String> hmap = new LinkedHashMap<Integer, String>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_dropdown_items_by_id(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2,id);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				hmap.put(rs.getInt("ID"), rs.getString("DD_TEXT"));
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("TreeMap<Integer,String> getDropdownValuesTM(int id): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return hmap;
+	}
 }

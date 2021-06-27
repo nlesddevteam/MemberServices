@@ -38,6 +38,8 @@ public class SearchEmployeesAjaxRequestHandler extends RequestHandlerImpl {
 				Integer searchi = form.getInt("searchstatus");
 				Integer searchpos = form.getInt("searchposition");
 				Integer searchdl = form.getInt("searchdl");
+				Integer regionid = form.getInt("searchregion");
+				Integer depotid = form.getInt("searchdepot");
 				ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
 				
 				if(usr.checkPermission("BCS-VIEW-WESTERN") || usr.checkPermission("BCS-VIEW-CENTRAL") || usr.checkPermission("BCS-VIEW-LABRADOR")){
@@ -67,6 +69,10 @@ public class SearchEmployeesAjaxRequestHandler extends RequestHandlerImpl {
 						list = BussingContractorEmployeeManager.searchEmployeesByInteger(searchby, searchfor,searchpos);
 					}else if(searchby.equals("Driver Licence Class")){
 						list = BussingContractorEmployeeManager.searchEmployeesByInteger(searchby, searchfor,searchdl);
+					}else if(searchby.equals("Region")){
+						list = BussingContractorEmployeeManager.getContractorsEmployeesByRegion(regionid);
+					}else if(searchby.equals("Depot")){
+						list = BussingContractorEmployeeManager.getContractorsEmployeesByDepot(depotid);
 					}else{
 						list = BussingContractorEmployeeManager.searchEmployeesByString(searchby, searchfor,searchp);
 					}

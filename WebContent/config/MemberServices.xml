@@ -4369,6 +4369,46 @@
          <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.DeclineInterviewShortlistApplicantRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/declineInterviewShortlistApplicant.html</URL-Pattern>
-    </Request-Handler>                             
+    </Request-Handler>
+        <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewVehiclesRegionalDetailsRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewContractorVehiclesRegDetails.html</URL-Pattern>
+     </Request-Handler> 
+      <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewVehiclesRegionalRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewVehiclesEmployeesReg.html</URL-Pattern>
+     </Request-Handler>
+           <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewEmployeeTrainingRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewEmployeeTrainingReport.html</URL-Pattern>
+     </Request-Handler>
+           <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewEmployeeTrainingDetailsRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewEmployeesTrainingDetailsReport.html</URL-Pattern>
+     </Request-Handler>
+           <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewRouteRunDriverReportRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewRouteRunDetailsReport.html</URL-Pattern>
+     </Request-Handler>
+           <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewContractorEmployeeTrainingDetailsReportRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewContractorEmployeeTrainingDetailsReport.html</URL-Pattern>
+     </Request-Handler>
+           <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewContractorEmployeeTrainingReportRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewCompanyEmployeeTrainingReport.html</URL-Pattern>
+     </Request-Handler>
+     <Request-Handler>
+      	<Request-Handler-Class>com.nlesd.bcs.handler.ViewEmployeesRegionalDetailsRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewContractorEmployeesRegDetails.html</URL-Pattern>
+     </Request-Handler>
+     <Request-Handler>
+           	<Request-Handler-Class>com.nlesd.bcs.handler.ViewContractorEmployeeConvictionsDetailsRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewEmployeeConvictionsDetailsReport.html</URL-Pattern>
+     </Request-Handler>
+      <Request-Handler>
+           	<Request-Handler-Class>com.nlesd.bcs.handler.ViewContractorEmployeeConvictionsRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/BCS/viewEmployeeConvictionsReport.html</URL-Pattern>
+     </Request-Handler>                                        
   </Request-Handlers>
 </Member-Services-Config>

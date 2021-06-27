@@ -116,13 +116,13 @@ public class BussingContractorVehicleManager {
 		BussingContractorVehicleBean ebean = new BussingContractorVehicleBean();
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_cont_vehicle_by_id(?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_cont_vehicle_by_id_f(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, cid);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
-				ebean = createBussingContractorVehicleBean(rs);
+				ebean = createBussingContractorVehicleBeanFull(rs);
 				
 			}
 				
@@ -1242,6 +1242,7 @@ public class BussingContractorVehicleManager {
 					abean.setCompanyName("");
 					abean.setCompanyEmail("");
 				}
+				
 		}
 		catch (SQLException e) {
 				abean = null;
@@ -1274,7 +1275,125 @@ public class BussingContractorVehicleManager {
 			catch (Exception e) {}
 		}
 		return check;
-	}	
+	}
+	public static ArrayList<BussingContractorVehicleBean> searchVehiclesByRegion(int regionid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_by_region_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, regionid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorVehicleBean bean = createBussingContractorVehicleBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorVehicleBean> searchVehiclesByRegion(int regionid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorVehicleBean> searchVehiclesByDepot(int depotid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_by_depot_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, depotid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorVehicleBean bean = createBussingContractorVehicleBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorVehicleBean> searchVehiclesByDepot(int depotid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorVehicleBean> getVehiclesByRegionDepot(int depotid,int regionid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorVehicleBean> list = new ArrayList<BussingContractorVehicleBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_vehicles_by_region_dep_f(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, depotid);
+			stat.setInt(3, regionid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorVehicleBean bean = createBussingContractorVehicleBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorVehicleBean> getVehiclesByRegionDepot(int depotid,int regionid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
 	public static BussingContractorVehicleBean createBussingContractorVehicleBeanFull(ResultSet rs) {
 		//creates contractor bean using recordset instead of another db call
 		//old one will be removed once all places that call create bean return contractor information
@@ -1363,6 +1482,7 @@ public class BussingContractorVehicleManager {
 					abean.setCompanyEmail("");
 					abean.setWarningNotes("No Warning Text");
 				}
+				abean.setRegionBean(BussingContractorSystemRegionalManager.createBussingContractorSystemRegionalBean(rs));
 		}
 		catch (SQLException e) {
 				abean = null;

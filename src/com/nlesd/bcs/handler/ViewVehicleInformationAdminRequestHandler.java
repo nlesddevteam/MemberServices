@@ -61,6 +61,9 @@ public class ViewVehicleInformationAdminRequestHandler  extends RequestHandlerIm
 	  		  if((usr.getUserPermissions().containsKey("BCS-VIEW-LABRADOR"))){
 	  		        request.setAttribute("contractorid", BoardOwnedContractorsConstant.LABRADOR.getValue());
 	  		  }
+	  		//now we add the regional/depot dropdowns
+			  request.setAttribute("rcodes", DropdownManager.getDropdownValuesTM(24));
+			  request.setAttribute("dcodes", DropdownManager.getDropdownValuesTM(25));
 	  		  path = "admin_view_vehicle_info.jsp";
 		}else {
 			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));

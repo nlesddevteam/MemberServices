@@ -9,8 +9,9 @@ public class EmployeeStatusConstant {
 	public static final EmployeeStatusConstant SUSPENDED= new EmployeeStatusConstant(4, "Suspended");
 	public static final EmployeeStatusConstant REMOVED= new EmployeeStatusConstant(5, "Removed From System");
 	public static final EmployeeStatusConstant SUBMITTEDFORREVIEW =new EmployeeStatusConstant(6, "Submitted For Approval");
+	public static final EmployeeStatusConstant ONHOLD =new EmployeeStatusConstant(7, "Temporarily On Hold");
 	public static final EmployeeStatusConstant[] ALL = new EmployeeStatusConstant[] {
-		NOTREVIEWED, APPROVED, NOTAPPROVED,SUSPENDED,REMOVED,SUBMITTEDFORREVIEW
+		NOTREVIEWED, APPROVED, NOTAPPROVED,SUSPENDED,REMOVED,SUBMITTEDFORREVIEW,ONHOLD
 	};
 
 	private EmployeeStatusConstant(int value, String desc) {

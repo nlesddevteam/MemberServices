@@ -97,10 +97,14 @@ $(document).ready(function() {
 				<th class="listdata">DL Class</th>
 				<th class="listdata">DL Expiry</th>
 				<th class="listdata">DA Run Date</th>
+				<th class="listdata">Demerit Points</th>
 				<th class="listdata">DA Convictions</th>
+				<th class="listdata">Dangerous Driving 5 YRS</th>
 				<th class="listdata">DA Suspensions</th>
-				<th class="listdata">DA Accidents</th>
+				<th class="listdata">Suspensions 36 MNTHS</th>
+				<th class="listdata">At Falut Accidents</th>
 				<th class="listdata">FA Expiry Date</th>
+				<th class="listdata">FA Level C</th>
 				<th class="listdata">PCC Date</th>
 				<th class="listdata">SCA Date</th>
 				<th class="listdata">PRCVSQ Date</th>
@@ -117,6 +121,8 @@ $(document).ready(function() {
 				<th class="listdata">Status</th>
 				<th class="listdata">Status By</th>
 				<th class="listdata">Status Date</th>
+				<th class="listdata">Region</th>
+				<th class="listdata">Depot</th>
 				</thead>
 				<tbody>
 				<c:choose>
@@ -144,10 +150,14 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.dlClassText}</td>
 	      					<td class="field_content">${rule.dlExpiryDateFormatted}</td>
 	      					<td class="field_content">${rule.daRunDateFormatted}</td>
+	      					<td class="field_content">${rule.demeritPoints}</td>
 	      					<td class="field_content">${rule.daConvictions}</td>
+	      					<td class="field_content">${rule.dangerousDriving}</td>
 	      					<td class="field_content">${rule.daSuspensions}</td>
+	      					<td class="field_content">${rule.suspensions}</td>
 	      					<td class="field_content">${rule.daAccidents}</td>
 	      					<td class="field_content">${rule.faExpiryDateFormatted}</td>
+	      					<td class="field_content">${rule.faLevelC}</td>
 	      					<td class="field_content">${rule.pccDateFormatted}</td>
 	      					<td class="field_content">${rule.scaDateFormatted}</td>
 	      					<td class="field_content">${rule.prcvsqDateFormatted}</td>
@@ -164,6 +174,8 @@ $(document).ready(function() {
 	      					<td class="field_content">${rule.statusText}</td>
 	      					<td class="field_content">${rule.approvedBy}</td>
 	      					<td class="field_content">${rule.dateApprovedFormatted}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.regionName : ''}</td>
+	      					<td class="field_content">${rule.regionBean ne null ? rule.regionBean.depotName : ''}</td>
 	      				</tr>
 	        		</c:forEach>
 	        	</c:when>
