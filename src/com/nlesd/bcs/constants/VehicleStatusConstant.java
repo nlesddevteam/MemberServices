@@ -9,11 +9,11 @@ public class VehicleStatusConstant {
 	public static final VehicleStatusConstant SUSPENDED= new VehicleStatusConstant(4, "Suspended For Use");
 	public static final VehicleStatusConstant REMOVED= new VehicleStatusConstant(5, "Removed From System");
 	public static final VehicleStatusConstant SUBMITTEDFORREVIEW =new VehicleStatusConstant(6, "Submitted For Approval");
-	
+	public static final VehicleStatusConstant ONHOLD =new VehicleStatusConstant(7, "Temporarily On Hold");
 
 
 	public static final VehicleStatusConstant[] ALL = new VehicleStatusConstant[] {
-		SUBMITTED, APPROVED, REJECTED, SUSPENDED, REMOVED,SUBMITTEDFORREVIEW
+		SUBMITTED, APPROVED, REJECTED, SUSPENDED, REMOVED,SUBMITTEDFORREVIEW,ONHOLD
 	};
 
 	private VehicleStatusConstant(int value, String desc) {

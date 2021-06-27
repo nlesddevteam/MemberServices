@@ -14,6 +14,7 @@ import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRegionalBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
@@ -22,6 +23,7 @@ import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDateHistoryManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
+import com.nlesd.bcs.dao.BussingContractorSystemRegionalManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerImpl {
 	public UpdateContractorEmployeeAdminRequestHandler() {
@@ -141,6 +143,36 @@ public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerI
 					vbean.setFindingsOfGuilt(form.get("findingsofguilt"));
 					vbean.setDaSuspensions(form.get("dasuspensions"));
 					vbean.setDaAccidents(form.get("daaccidents"));
+					vbean.setFaLevelC(form.get("falevelc"));
+					if(form.exists("vulsector")) {
+						int testingint = form.getInt("vulsector");
+						vbean.setVulnerableSector(testingint);
+					}else {
+						vbean.setVulnerableSector(0);
+					}
+					if(form.exists("contypes")) {
+						String[] test = form.getArray("contypes");
+						//System.out.println(Arrays.toString(test));
+						StringBuilder sb1 = new StringBuilder();
+						for( String s: test) {
+							if(sb1.length() == 0) {
+								sb1.append(s);
+							}else {
+								sb1.append(",");
+								sb1.append(s);
+							}
+						}
+						vbean.setConvictionTypes(sb1.toString());
+					}else {
+						vbean.setConvictionTypes(null);
+					}
+					vbean.setDemeritPoints(form.getInt("demeritpoints"));
+					if(form.exists("dangerousdriving")) {
+						vbean.setDangerousDriving(form.get("dangerousdriving"));
+					}
+					if(form.exists("suspensions")) {
+						vbean.setSuspensions(form.get("suspensions"));
+					}
 					//now we do the documents
 					String filelocation="/BCS/documents/employeedocs/";
 					String docfilename = "";
@@ -292,6 +324,20 @@ public class UpdateContractorEmployeeAdminRequestHandler extends RequestHandlerI
 				
 				//now we add the record
 				BussingContractorEmployeeManager.updateBussingContractorEmployee(vbean);
+				//now we add the regional info if
+				
+				BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
+				regbean.setrType("E");
+				regbean.setrId(vbean.getId());
+				regbean.setRegionCode(form.getInt("regioncode"));
+				regbean.setDepotCode(form.getInt("depotcode"));
+				if(origbean.getRegionBean() == null) {
+					BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
+				}else {
+					regbean.setId(origbean.getRegionBean().getId());
+					BussingContractorSystemRegionalManager.updateBussingContractorSystemRegionalBean(regbean);
+				}
+				
 				//now we add the archive record
 				BussingContractorEmployeeManager.addBussingContractorEmployeeArc(origbean);
 				//now we check to see if dates changed

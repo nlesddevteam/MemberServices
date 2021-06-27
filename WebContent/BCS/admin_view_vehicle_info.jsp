@@ -91,15 +91,15 @@ $(document).ready(function() {
       	$("#widate").change(function(){
 			checkdate('WIDATE');
 		});
-      	$("#fheidate").change(function(){
-			checkdate('FHEIDATE');
-		});
-      	$("#mheidate1").change(function(){
-			checkdate('MHEIDATE1');
-		});
-      	$("#mheidate2").change(function(){
-			checkdate('MHEIDATE2');
-		});
+      	//$("#fheidate").change(function(){
+			//checkdate('FHEIDATE');
+		//});
+      	//$("#mheidate1").change(function(){
+			//checkdate('MHEIDATE1');
+	//	});
+      //	$("#mheidate2").change(function(){
+		//	checkdate('MHEIDATE2');
+	//	});
 });
 </script>
 <script>
@@ -152,6 +152,10 @@ $(document).ready(function() {
          				<c:when test = "${vehicle.vStatus  eq 6}">
          					<span style="background-color:blue;color:white;padding:3px;text-transform:uppercase;">&nbsp;SUBMITTED FOR APPROVAL&nbsp;</span>
             				<p class="form-control-static">${vehicle.statusText}</p>         				
+         				</c:when>
+         				<c:when test = "${vehicle.vStatus  eq 7}">
+         					<span style="background-color:blue;color:white;padding:3px;text-transform:uppercase;">&nbsp;TEMPORARILY ON HOLD&nbsp;</span>
+            				        				
          				</c:when>
          				<c:otherwise>
          					<span></span>
@@ -214,8 +218,58 @@ $(document).ready(function() {
 				  		</select>
 				  		</div>
 	      			</div>
-
-			   	<div class="form-group">
+	      			
+		  <div class="form-group">		  	
+                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Region:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="regioncode" name="regioncode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${rcodes}">
+						<c:choose>
+							<c:when test = "${vehicle.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${vehicle.regionBean.regionCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>
+		<div class="form-group">		  	
+                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Depot:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="depotcode" name="depotcode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${dcodes}">
+						<c:choose>
+							<c:when test = "${vehicle.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${vehicle.regionBean.depotCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>	      			
+			<div class="form-group">
 	                <label class="control-label col-sm-2" for="email"><img src='includes/css/images/asterisk-small.png'/>Vehicle Make:</label><input type="hidden" id="vid" name="vid" value="${vehicle.id}">
 	                <input type="hidden" id="settab1" name="settab1" value="${settab1}">
 	                <input type="hidden" id="rtype" name="rtype" value="A">

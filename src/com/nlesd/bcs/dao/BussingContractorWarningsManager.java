@@ -592,7 +592,7 @@ public class BussingContractorWarningsManager {
 					vehiclelist.put(ebean.getCompanyName(), alist);
 				}
 				//finally we check to see if it is expired and make sure status set to suspended
-				if(ebean.getWarningNotes().equals("Registration Expiry Date  has Past")) {
+				if(ebean.getWarningNotes().equals("Registration Expiry Date  Expired (Expiring)")) {
 					//now we check the correct date is less than today
 					if(ebean.getRegExpiryDate() != null) {
 						if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {
@@ -605,7 +605,7 @@ public class BussingContractorWarningsManager {
 						}
 					}
 				}
-				if(ebean.getWarningNotes().equals("Insurance Expiry Date  has Past")) {
+				if(ebean.getWarningNotes().equals("Insurance Expiry Date  Expired (Expiring)")) {
 					//now we check the correct date is less than today
 					if(ebean.getInsExpiryDate() != null) {
 						if(ebean.getvStatus() == VehicleStatusConstant.APPROVED.getValue()) {

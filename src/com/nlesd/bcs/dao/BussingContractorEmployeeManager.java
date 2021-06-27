@@ -18,7 +18,7 @@ public class BussingContractorEmployeeManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.add_new_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.NUMBER);
 			stat.setInt(2, vbean.getContractorId());
 			stat.setInt(3, vbean.getEmployeePosition());
@@ -91,6 +91,17 @@ public class BussingContractorEmployeeManager {
 				stat.setTimestamp(38, new Timestamp(vbean.getCodExpiryDate().getTime()));
 			}
 			stat.setString(39,vbean.getCodDocument());
+			stat.setString(40,vbean.getFaLevelC());
+			stat.setInt(41, vbean.getVulnerableSector());
+			//to string not working, so loop through array
+			if(vbean.getConvictionTypes() == null) {
+				stat.setString(42, null);
+			}else {
+				stat.setString(42, vbean.getConvictionTypes());
+			}
+			stat.setInt(43,vbean.getDemeritPoints());
+			stat.setString(44,vbean.getDangerousDriving());
+			stat.setString(45,vbean.getSuspensions());
 			stat.execute();
 			Integer sid= ((OracleCallableStatement) stat).getInt(1);
 			vbean.setId(sid);
@@ -123,13 +134,13 @@ public class BussingContractorEmployeeManager {
 		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_cont_employees_by_id(?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_cont_employees_by_id_f(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2,id);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
-				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBean(rs);
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
 				list.add(bean);
 			}
 				
@@ -216,13 +227,13 @@ public class BussingContractorEmployeeManager {
 		BussingContractorEmployeeBean ebean = new BussingContractorEmployeeBean();
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_cont_employee_by_id(?); end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_cont_employee_by_id_f(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, cid);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
-				ebean = createBussingContractorEmployeeBean(rs);
+				ebean = createBussingContractorEmployeeBeanFull(rs);
 				
 			}
 				
@@ -254,7 +265,7 @@ public class BussingContractorEmployeeManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.bcs_pkg.update_cont_employee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setInt(1, vbean.getContractorId());
 			stat.setInt(2, vbean.getEmployeePosition());
 			stat.setString(3, vbean.getStartDate());
@@ -327,6 +338,12 @@ public class BussingContractorEmployeeManager {
 				stat.setTimestamp(38, new Timestamp(vbean.getCodExpiryDate().getTime()));
 			}
 			stat.setString(39,vbean.getCodDocument());
+			stat.setString(40,vbean.getFaLevelC());
+			stat.setInt(41, vbean.getVulnerableSector());
+			stat.setString(42, vbean.getConvictionTypes() == null ? null :vbean.getConvictionTypes().toString());
+			stat.setInt(43,vbean.getDemeritPoints());
+			stat.setString(44,vbean.getDangerousDriving());
+			stat.setString(45,vbean.getSuspensions());
 			stat.execute();
 		}
 		catch (SQLException e) {
@@ -820,12 +837,12 @@ public class BussingContractorEmployeeManager {
 		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_all_cont_employees; end;");
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_all_cont_employees_f; end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
-				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBean(rs);
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
 				list.add(bean);
 			}
 				
@@ -1333,6 +1350,10 @@ public class BussingContractorEmployeeManager {
 				abean.setDaSuspensions(rs.getString("DASUSPENSIONS"));
 				abean.setDaAccidents(rs.getString("DAACCIDENTS"));
 				abean.setCodDocument(rs.getString("CODDOCUMENT"));
+				abean.setFaLevelC(rs.getString("LEVELC"));
+				abean.setVulnerableSector(rs.getInt("VUNLERABLESECTOR"));
+				abean.setConvictionTypes(rs.getString("CONVICTIONTYPES"));
+				
 				ts= rs.getTimestamp("CODEXPIRYDATE");
 				if(ts != null){
 					abean.setCodExpiryDate(new java.util.Date(rs.getTimestamp("CODEXPIRYDATE").getTime()));
@@ -1352,6 +1373,16 @@ public class BussingContractorEmployeeManager {
 					//in case we missed a function that is not returning all data one query
 					abean.setCompanyName("");
 					abean.setCompanyEmail("");
+				}
+				abean.setDemeritPoints(rs.getInt("DEMERITPOINTS"));
+				abean.setDangerousDriving(rs.getString("DANGEROUSDRIVING"));
+				abean.setSuspensions(rs.getString("SUSPENSIONS"));
+				//extra fields for conviction reporting
+				try {
+					abean.setConvictionTypeLong(rs.getString("CTYPELONG"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setConvictionTypeLong("");
 				}
 		}
 		catch (SQLException e) {
@@ -1455,7 +1486,202 @@ public class BussingContractorEmployeeManager {
 			catch (Exception e) {}
 		}
 		return list;
+	}
+	public static ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByRegion(int id) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_by_region_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2,id);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByRegion(int id): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByDepot(int id) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_by_depot_f(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2,id);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByDepot(int id): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
 	}	
+	public static ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByRegionDepot(int id,int depotid) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_by_region_dep_f(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2,id);
+			stat.setInt(3,depotid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByRegionDepot(int id,int depotid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorEmployeeBean> getContractorEmployeeConvictionsByType(int id) {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_convict_by_type(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2,id);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByRegionDepot(int id,int depotid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
+	public static ArrayList<BussingContractorEmployeeBean> getContractorEmployeeConvictionsAll() {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<BussingContractorEmployeeBean> list = new ArrayList<BussingContractorEmployeeBean>();
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? :=awsd_user.bcs_pkg.get_employees_convictions_all; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()){
+				BussingContractorEmployeeBean bean = createBussingContractorEmployeeBeanFull(rs);
+				list.add(bean);
+			}
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+			System.err.println("ArrayList<BussingContractorEmployeeBean> getContractorsEmployeesByRegionDepot(int id,int depotid): "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return list;
+	}
 	public static BussingContractorEmployeeBean createBussingContractorEmployeeBeanFull(ResultSet rs)  {
 		//new function that will replace old one once all queries have been updated with full data being returned in one query
 		BussingContractorEmployeeBean abean = null;
@@ -1534,6 +1760,9 @@ public class BussingContractorEmployeeManager {
 				abean.setDaSuspensions(rs.getString("DASUSPENSIONS"));
 				abean.setDaAccidents(rs.getString("DAACCIDENTS"));
 				abean.setCodDocument(rs.getString("CODDOCUMENT"));
+				abean.setFaLevelC(rs.getString("LEVELC"));
+				abean.setVulnerableSector(rs.getInt("VUNLERABLESECTOR"));
+				abean.setConvictionTypes(rs.getString("CONVICTIONTYPES"));
 				ts= rs.getTimestamp("CODEXPIRYDATE");
 				if(ts != null){
 					abean.setCodExpiryDate(new java.util.Date(rs.getTimestamp("CODEXPIRYDATE").getTime()));
@@ -1553,6 +1782,18 @@ public class BussingContractorEmployeeManager {
 					//in case we missed a function that is not returning all data one query
 					abean.setCompanyName("");
 					abean.setCompanyEmail("");
+				}
+				//try to create regional bean
+				abean.setRegionBean(BussingContractorSystemRegionalManager.createBussingContractorSystemRegionalBean(rs));
+				abean.setDemeritPoints(rs.getInt("DEMERITPOINTS"));
+				abean.setDangerousDriving(rs.getString("DANGEROUSDRIVING"));
+				abean.setSuspensions(rs.getString("SUSPENSIONS"));
+				//extra fields for conviction reporting
+				try {
+					abean.setConvictionTypeLong(rs.getString("CTYPELONG"));
+				}catch(Exception enew) {
+					//in case we missed a function that is not returning all data one query
+					abean.setConvictionTypeLong("");
 				}
 		}
 		catch (SQLException e) {

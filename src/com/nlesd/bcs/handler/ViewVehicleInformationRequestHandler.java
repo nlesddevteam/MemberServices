@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequiredFormElement;
+import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.constants.DropdownTypeConstant;
 import com.nlesd.bcs.dao.BussingContractorVehicleDocumentManager;
@@ -47,6 +48,10 @@ public class ViewVehicleInformationRequestHandler extends BCSApplicationRequestH
 	    	  //now we set the rel path
 	       	  request.setAttribute("spath",request.getContextPath());
 	    	  request.setAttribute("dpath","/BCS/documents/vehicledocs/");
+	    	//now we add the regional/depot dropdowns
+	    	  request.setAttribute("rcodes", DropdownManager.getDropdownValuesTM(24));
+			  request.setAttribute("dcodes", DropdownManager.getDropdownValuesTM(25));
+			  request.setAttribute("bcbean", (BussingContractorBean) session.getAttribute("CONTRACTOR"));
 	  		path = "view_vehicle_info.jsp";
 		}else {
 			path="contractorLogin.html?msg=Session expired, please login again.";

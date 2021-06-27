@@ -15,6 +15,7 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRegionalBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.BoardOwnedContractorsConstant;
@@ -23,6 +24,7 @@ import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.constants.VehicleStatusConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
+import com.nlesd.bcs.dao.BussingContractorSystemRegionalManager;
 import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 public class AddNewContractorVehicleAdminRequestHandler extends RequestHandlerImpl {
@@ -166,9 +168,17 @@ public class AddNewContractorVehicleAdminRequestHandler extends RequestHandlerIm
 						docfilename=save_file("insFile", filelocation);
 						vbean.setInsFile(docfilename);
 					}
-					
 					//now we add the record
 					BussingContractorVehicleManager.addBussingContractorVehicle(vbean);
+					
+					//now we add the regional info if
+					BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
+					regbean.setrType("V");
+					regbean.setrId(vbean.getId());
+					regbean.setRegionCode(form.getInt("regioncode"));
+					regbean.setDepotCode(form.getInt("depotcode"));
+					BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
+					
 					//now that we have an id we can update the file history objects
 					if(!(vbean.getRegFile() ==  null)) {
 						//now we save document history record

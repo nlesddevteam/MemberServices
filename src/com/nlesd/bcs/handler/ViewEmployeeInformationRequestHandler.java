@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequiredFormElement;
+import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
 import com.nlesd.bcs.constants.DropdownTypeConstant;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
@@ -24,8 +25,7 @@ public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequest
 		super.handleRequest(request, response);
 		if (validate_form() && !(this.sessionExpired)) {
 			//check to see if this is an edit or add
-			System.out.println(request.getParameter("vid"));
-	    	  BussingContractorEmployeeBean vbean = new BussingContractorEmployeeBean();
+			 BussingContractorEmployeeBean vbean = new BussingContractorEmployeeBean();
 	    	  if(request.getParameter("vid") == null){
 	    		  //add
 	    		  vbean.setId(-1);
@@ -46,6 +46,11 @@ public class ViewEmployeeInformationRequestHandler extends BCSApplicationRequest
 	    	  request.setAttribute("dpath","/BCS/documents/employeedocs/");
 	    	  request.setAttribute("training", BussingContractorSystemEmployeeTrainingManager.getEmployeeTrainingById(vbean.getId()));
 			  request.setAttribute("tlengths", DropdownManager.getDropdownValuesTM(23));
+			//now we add the regional/depot dropdowns
+			  request.setAttribute("rcodes", DropdownManager.getDropdownValuesTM(24));
+			  request.setAttribute("dcodes", DropdownManager.getDropdownValuesTM(25));
+			  request.setAttribute("bcbean", (BussingContractorBean) session.getAttribute("CONTRACTOR"));
+			  request.setAttribute("convicttypes", DropdownManager.getDropdownValuesTM(26));
 	    	  
 	  		path = "view_employee_info.jsp";
 		}else {

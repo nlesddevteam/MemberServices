@@ -4,20 +4,29 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awsd.mail.bean.EmailBean;
+import com.awsd.mail.bean.EmailException;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequiredFormElement;
+import com.esdnl.velocity.VelocityUtils;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRegionalBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
+import com.nlesd.bcs.constants.VehicleStatusConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDateHistoryManager;
+import com.nlesd.bcs.dao.BussingContractorSystemRegionalManager;
 import com.nlesd.bcs.dao.BussingContractorVehicleManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequestHandlerImpl {
@@ -117,6 +126,9 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 				//now we check the docs tab
 				String filelocation="/BCS/documents/vehicledocs/";
 				String docfilename = "";
+				StringBuilder sbfiles = new StringBuilder();
+				boolean statusUpdated=false;
+				
 				if(form.getUploadFile("regFile").getFileSize() > 0){
 					docfilename=save_file("regFile", filelocation);
 					vbean.setRegFile(docfilename);
@@ -136,6 +148,12 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 					fhb.setParentObjectId(vbean.getId());
 					fhb.setParentObjectType(8);
 					FileHistoryManager.addFileHistory(fhb);
+					//now set status to not approve and send email
+					sbfiles.append(bcbean.getContractorName() + ": " + vbean.getvPlateNumber() + "(" + vbean.getvSerialNumber() + ")" 
+					+ " - " + "Registration File " + " has been changed by " + bcbean.getContractorName()+ "<br />");
+					vbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+					BussingContractorVehicleManager.updateContractorVehicleStatus(vbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+					statusUpdated=true;
 				}else{
 					vbean.setRegFile(origbean.getRegFile());
 				}
@@ -158,6 +176,14 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 					fhb.setParentObjectId(vbean.getId());
 					fhb.setParentObjectType(9);
 					FileHistoryManager.addFileHistory(fhb);
+					//now set status to not approve and send email
+					sbfiles.append(bcbean.getContractorName() + ": " + vbean.getvPlateNumber() + "(" + vbean.getvSerialNumber() + ")" 
+							+ " - " + "Insurance File " + " has been changed by " + bcbean.getContractorName()+ "<br />");
+							vbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+					if(!statusUpdated) {
+						BussingContractorVehicleManager.updateContractorVehicleStatus(vbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+						statusUpdated=true;
+					}
 				}else{
 					vbean.setInsFile(origbean.getInsFile());
 				}
@@ -180,6 +206,15 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 					fhb.setParentObjectId(vbean.getId());
 					fhb.setParentObjectType(10);
 					FileHistoryManager.addFileHistory(fhb);
+					FileHistoryManager.addFileHistory(fhb);
+					//now set status to not approve and send email
+					sbfiles.append(bcbean.getContractorName() + ": " + vbean.getvPlateNumber() + "(" + vbean.getvSerialNumber() + ")" 
+							+ " - " + "Primary CMVI " + " has been changed by " + bcbean.getContractorName()+ "<br />");
+							vbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+					if(!statusUpdated) {
+						BussingContractorVehicleManager.updateContractorVehicleStatus(vbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+						statusUpdated=true;
+					}
 				}else{
 					vbean.setFallInsFile(origbean.getFallInsFile());
 				}
@@ -202,6 +237,14 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 					fhb.setParentObjectId(vbean.getId());
 					fhb.setParentObjectType(11);
 					FileHistoryManager.addFileHistory(fhb);
+					//now set status to not approve and send email
+					sbfiles.append(bcbean.getContractorName() + ": " + vbean.getvPlateNumber() + "(" + vbean.getvSerialNumber() + ")" 
+							+ " - " + "Secondary CMVI " + " has been changed by " + bcbean.getContractorName()+ "<br />");
+							vbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+					if(!statusUpdated) {
+						BussingContractorVehicleManager.updateContractorVehicleStatus(vbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+						statusUpdated=true;
+					}
 				}else{
 					vbean.setWinterInsFile(origbean.getWinterInsFile());
 				}
@@ -224,6 +267,7 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 					fhb.setParentObjectId(vbean.getId());
 					fhb.setParentObjectType(12);
 					FileHistoryManager.addFileHistory(fhb);
+					
 				}else{
 					vbean.setFallHEInsFile(origbean.getFallHEInsFile());
 				}
@@ -273,6 +317,19 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 				}
 				//now we add the record
 				BussingContractorVehicleManager.updateBussingContractorVehicle(vbean);
+				if(bcbean.getBoardOwned().equals("Y")) {
+					BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
+					regbean.setrType("V");
+					regbean.setrId(vbean.getId());
+					regbean.setRegionCode(form.getInt("regioncode"));
+					regbean.setDepotCode(form.getInt("depotcode"));
+					if(origbean.getRegionBean() == null) {
+						BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
+					}else {
+						regbean.setId(origbean.getRegionBean().getId());
+						BussingContractorSystemRegionalManager.updateBussingContractorSystemRegionalBean(regbean);
+					}
+			}
 				//now we add the archive record
 				BussingContractorVehicleManager.addBussingContractorVehicleArc(origbean);
 				//now we check to see if dates changed
@@ -286,6 +343,28 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 				atbean.setEntryNotes("Contractor vehicle (" + vbean.getvPlateNumber() + ") updated on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
 				atbean.setContractorId(vbean.getContractorId());
 				AuditTrailManager.addAuditTrail(atbean);
+				if(statusUpdated) {
+					//send email to bussing
+					//now we send the message
+					EmailBean email = new EmailBean();
+					email.setTo("transportation@nlesd.ca");
+					//email.setTo("rodneybatten@nlesd.ca");
+					email.setFrom("bussingcontractorsystem@nlesd.ca");
+					email.setSubject("NLESD Bussing Contractor System Vehicle Updated");
+					HashMap<String, Object> model = new HashMap<String, Object>();
+					// set values to be used in template
+					model.put("cname", bcbean.getContractorName());
+					model.put("ename", vbean.getvPlateNumber() + "(" + vbean.getvSerialNumber() + ")");
+					model.put("elist", sbfiles.toString());
+					model.put("etypes", "File(s)");
+					email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employeeupdated.vm", model));
+					try {
+						email.send();
+					} catch (EmailException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}catch(Exception e){
 				message = e.getMessage();
 				sb.append("<CONTRACTORS>");

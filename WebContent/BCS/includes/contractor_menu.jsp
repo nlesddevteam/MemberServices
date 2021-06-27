@@ -7,12 +7,17 @@
                  com.esdnl.util.*,
                  java.util.*,
                  java.io.*,
-                 java.text.*"%>
+                 java.text.*,
+                 com.nlesd.bcs.bean.*"%>
 
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+<%
 
+	BussingContractorBean bcbean = (BussingContractorBean) session.getAttribute("CONTRACTOR");
+
+%>
 <script src="includes/js/menu.js"></script>
    <script>
    $(document).ready(function () {
@@ -46,7 +51,11 @@
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=2');"><i class="fa fa-fw fa-check"></i> View Approved</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=4');"><i class="fa fa-fw fa-ban"></i> View Suspended</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=3');"><i class="fa fa-fw fa-close"></i> Not Approved</a></li>
-           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=-1');"><i class="fa fa-fw fa-tripadvisor"></i> View All</a></li>
+           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=7');"><i class="fa fa-fw fa-close"></i> Temporarily On Hold</a></li>
+           <%if(bcbean.getBoardOwned().equals("Y")){ %>
+           		<li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployeesReg.html');"><i class="fa fa-fw fa-tripadvisor"></i> View Regional</a></li>
+        	<%} %>
+        	<li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorEmployees.html?status=-1');"><i class="fa fa-fw fa-tripadvisor"></i> View All</a></li>
         </ul>
      </li>
      <li><a href="#"><i class="fa fa-fw fa-bus"></i> Fleet</a>
@@ -57,7 +66,14 @@
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=2');"><i class="fa fa-fw fa-check"></i> View Approved</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=4');"><i class="fa fa-fw fa-ban"></i> View Suspended</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=3');"><i class="fa fa-fw fa-close"></i> Not Approved</a></li>
+            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=7');"><i class="fa fa-fw fa-close"></i> Temporarily On Hold</a></li>
+            <%if(bcbean.getBoardOwned().equals("Y")){ %>
+           		<li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewVehiclesEmployeesReg.html');"><i class="fa fa-fw fa-tripadvisor"></i> View Regional</a></li>
+        	<%} %>
+           
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorVehicles.html?status=-1');"><i class="fa fa-fw fa-tripadvisor"></i> View All</a></li>
+        
+        
         </ul>
      </li>
      <li><a href="#"><i class="fa fa-fw fa-file-text-o"></i> Contracts</a>
@@ -72,6 +88,11 @@
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewSecurityInfo.html');"><i class="fa fa-fw fa-lock"></i> Security Information</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewCompanyInfo.html');"><i class="fa fa-fw fa-fort-awesome"></i> Company Information</a></li>
            <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewContractorDocuments.html');"><i class="fa fa-fw fa-file-pdf-o"></i> Documents</a></li>
+        </ul>
+     </li>
+          <li><a href="#"><i class="fa fa-fw fa-user"></i> Reports</a>
+        <ul>
+           <li><a href="#" class="menuBCSC" onclick="closeMenu();loadMainDivPage('viewEmployeeDetailsCR.html');"><i class="fa fa-fw fa-envelope-o"></i> Employee Details</a></li>
         </ul>
      </li>
   </ul>

@@ -32,6 +32,8 @@
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").hide();
     		                $("#divselectsizes").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
     		                break;
     		            case "Province":
     		                $("#divselect").hide();
@@ -40,7 +42,9 @@
     		                $("#divselectmakes").hide();
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").hide();
-    		                $("#divselectsizes").hide();   		                
+    		                $("#divselectsizes").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
     		                break;
     		            case "Make":
     		                $("#divtext").hide();
@@ -50,6 +54,8 @@
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").hide();
     		                $("#divselectsizes").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
     		                break;
     		            case "Model":
     		                $("#divtext").show();
@@ -59,6 +65,8 @@
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").hide();
     		                $("#divselectsizes").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
     		                break;
     		            case "Type":
     		                $("#divtext").hide();
@@ -68,6 +76,8 @@
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").show();
     		                $("#divselectsizes").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
     		                break;
     		            case "Size":
     		                $("#divtext").hide();
@@ -77,6 +87,8 @@
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").hide();
     		                $("#divselectsizes").show();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
     		                break;   		                
     		            case "Status":
     		                $("#divtext").hide();
@@ -86,7 +98,31 @@
     		                $("#divselectmodels").hide();
     		                $("#divselecttypes").hide();
     		                $("#divselectsizes").hide();
-    		                break;    		                
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide(); 
+    		                break;
+    		            case "Region":
+    		                $("#divtext").hide();
+    		                $("#divselect").hide();
+    		                $("#divselectp").hide();
+    		                $("#divselectmakes").hide();
+    		                $("#divselectmodels").hide();
+    		                $("#divselecttypes").hide();
+    		                $("#divselectsizes").hide();
+    		                $("#divselectregion").show();
+    		                $("#divselectdepot").hide(); 
+    		                break;
+    		            case "Depot":
+    		                $("#divtext").hide();
+    		                $("#divselect").hide();
+    		                $("#divselectp").hide();
+    		                $("#divselectmakes").hide();
+    		                $("#divselectmodels").hide();
+    		                $("#divselecttypes").hide();
+    		                $("#divselectsizes").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").show(); 
+    		                break;    
     		            default:
     		                $("#divselect").hide();
     		            	$("#divselectp").hide();
@@ -195,7 +231,24 @@
 			</c:forEach>
 		</select><br/>
 		</div>	
-			
+		<div id="divselectregion"  style="display:none">
+		For:<br/> 
+		<select id="regions">
+			<option value="-1">*** Select ***</option>
+			<c:forEach var="test" items="${rcodes}" >
+				<option value='${test.key}'>${test.value}</option>
+			</c:forEach>
+		</select><br/>
+		</div>
+		<div id="divselectdepot"  style="display:none">
+		For:<br/> 
+		<select id="depots">
+			<option value="-1">*** Select ***</option>
+			<c:forEach var="test" items="${dcodes}" >
+				<option value='${test.key}'>${test.value}</option>
+			</c:forEach>
+		</select><br/>
+		</div>			
 		</td>
 		</tr>
 		<tr><td colspan=2>&nbsp;</td></tr>

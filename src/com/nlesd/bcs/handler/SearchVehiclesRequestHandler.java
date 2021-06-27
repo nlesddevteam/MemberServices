@@ -24,22 +24,20 @@ public class SearchVehiclesRequestHandler extends RequestHandlerImpl
 			status.put(sc.getValue(),sc.getDescription());
 		}
 		request.setAttribute("status", status);
-		TreeMap<Integer,String> items;
 		//get search by values
-		items = DropdownManager.getDropdownValuesTM(10);
-		request.setAttribute("sby", items);
+		request.setAttribute("sby", DropdownManager.getDropdownValuesLinkedHM(10));
 		//get vehicle makes
-		items = DropdownManager.getDropdownValuesTM(1);
-		request.setAttribute("makes", items);
+		request.setAttribute("makes", DropdownManager.getDropdownValuesLinkedHM(1));
 		//get vehicle models
-		items = DropdownManager.getDropdownValuesTM(2);
-		request.setAttribute("models", items);
+		request.setAttribute("models", DropdownManager.getDropdownValuesLinkedHM(2));
 		//get vehicle types
-		items = DropdownManager.getDropdownValuesTM(3);
-		request.setAttribute("types", items);
+		request.setAttribute("types", DropdownManager.getDropdownValuesLinkedHM(3));
 		//get vehicle sizes
-		items = DropdownManager.getDropdownValuesTM(4);
-		request.setAttribute("sizes", items);			
+		request.setAttribute("sizes", DropdownManager.getDropdownValuesLinkedHM(4));
+		//now we add the regional/depot dropdowns
+		request.setAttribute("rcodes", DropdownManager.getDropdownValuesLinkedHM(24));
+		request.setAttribute("dcodes", DropdownManager.getDropdownValuesLinkedHM(25));
+					
 		path = "search_vehicles.jsp";
 
 

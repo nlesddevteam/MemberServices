@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRegionalBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
 import com.nlesd.bcs.constants.EmployeeStatusConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
+import com.nlesd.bcs.dao.BussingContractorSystemRegionalManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
@@ -152,9 +154,49 @@ public class AddNewContractorEmployeeRequestHandler extends BCSApplicationReques
 						vbean.setCodDocument(docfilename);
 					}
 					vbean.setStatus(EmployeeStatusConstant.NOTREVIEWED.getValue());
-					
+					vbean.setFaLevelC(form.get("falevelc"));
+					if(form.exists("vulsector")) {
+						int testingint = form.getInt("vulsector");
+						vbean.setVulnerableSector(testingint);
+					}else {
+						vbean.setVulnerableSector(0);
+					}
+					if(form.exists("contypes")) {
+						String[] test = form.getArray("contypes");
+						//System.out.println(Arrays.toString(test));
+						StringBuilder sb1 = new StringBuilder();
+						for( String s: test) {
+							if(sb1.length() == 0) {
+								sb1.append(s);
+							}else {
+								sb1.append(",");
+								sb1.append(s);
+							}
+						}
+						vbean.setConvictionTypes(sb1.toString());
+					}else {
+						vbean.setConvictionTypes(null);
+					}
+					vbean.setDemeritPoints(form.getInt("demeritpoints"));
+					if(form.exists("dangerousdriving")) {
+						vbean.setDangerousDriving(form.get("dangerousdriving"));
+					}
+					if(form.exists("suspensions")) {
+						vbean.setSuspensions(form.get("suspensions"));
+					}					
 					//now we add the record
 					BussingContractorEmployeeManager.addBussingContractorEmployee(vbean);
+					
+					//now we add the regional info if
+					if(bcbean.getBoardOwned().equals("Y")) {
+						BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
+						regbean.setrType("E");
+						regbean.setrId(vbean.getId());
+						regbean.setRegionCode(form.getInt("regioncode"));
+						regbean.setDepotCode(form.getInt("depotcode"));
+						BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
+					}
+					
 					//now that we have an id we can update the file history objects
 					if(!(vbean.getDlFront() ==  null)) {
 						//now we save document history record

@@ -53,6 +53,9 @@ public class ViewVehiclesApprovalsRequestHandler extends RequestHandlerImpl
 			}else if(status.equals("ns")){
 				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.SUBMITTED.getValue(),cid);
 				reporttitle="Vehicles Not Submitted";
+			}else if(status.equals("oh")){
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusRegFull(VehicleStatusConstant.ONHOLD.getValue(),cid);
+				reporttitle="Vehicles Temporarily On Hold";
 			}
 		}else{
 			vehicles = new ArrayList<BussingContractorVehicleBean>();
@@ -74,6 +77,9 @@ public class ViewVehiclesApprovalsRequestHandler extends RequestHandlerImpl
 			}else if(status.equals("ns")){
 				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.SUBMITTED.getValue());
 				reporttitle="Vehicles Not Submitted";
+			}else if(status.equals("oh")){
+				vehicles=BussingContractorVehicleManager.getVehiclesByStatusFull(VehicleStatusConstant.ONHOLD.getValue());
+				reporttitle="Vehicles Temporarily On Hold";
 			}
 		}
 

@@ -7,12 +7,21 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
 import oracle.jdbc.OracleTypes;
+
+import com.awsd.mail.bean.EmailBean;
+import com.awsd.mail.bean.EmailException;
 import com.esdnl.dao.DAOUtils;
+import com.esdnl.velocity.VelocityUtils;
+import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorDateHistoryBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
 import com.nlesd.bcs.bean.BussingContractorVehicleBean;
 import com.nlesd.bcs.constants.DateFieldConstant;
+import com.nlesd.bcs.constants.EmployeeStatusConstant;
+import com.nlesd.bcs.constants.VehicleStatusConstant;
 public class BussingContractorDateHistoryManager {
 	public static void addBussingContractorDateHistoryBean(BussingContractorDateHistoryBean atbean) {
 		Connection con = null;
@@ -59,6 +68,9 @@ public class BussingContractorDateHistoryManager {
 	}
 	public static void CheckChangedEmployeeDates(BussingContractorEmployeeBean obean,BussingContractorEmployeeBean nbean,String cby){
 		//now we check the date fields and see if they changed, if yes then add entry to date history table
+		StringBuilder sb = new StringBuilder();
+		boolean statusUpdated = false;
+		BussingContractorBean bcbean = BussingContractorManager.getBussingContractorById(nbean.getContractorId());
 		//DL Expiry
 		if(compareDates(obean.getDlExpiryDate(),nbean.getDlExpiryDate()) != 0){
 			BussingContractorDateHistoryBean addbean = new BussingContractorDateHistoryBean();
@@ -68,6 +80,11 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getDlExpiryDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sb.append(bcbean.getContractorName() + ": " + nbean.getFullName() + " - " + DateFieldConstant.DLEXP.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+			BussingContractorEmployeeManager.updateContractorEmployeeStatus(nbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+			statusUpdated=true;
 		}
 		//DA Run Date
 		if(compareDates(obean.getDaRunDate(),nbean.getDaRunDate()) != 0){
@@ -78,6 +95,13 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getDaRunDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sb.append(bcbean.getContractorName() + ": " + nbean.getFullName() + " - " + DateFieldConstant.DARUN.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+			if(!(statusUpdated)) {
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(nbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				statusUpdated=true;
+			}
 		}
 		//FA Expiry
 		if(compareDates(obean.getFaExpiryDate(),nbean.getFaExpiryDate()) != 0){
@@ -88,6 +112,13 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getFaExpiryDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sb.append(bcbean.getContractorName() + ": " + nbean.getFullName() + " - " + DateFieldConstant.FAEXP.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+			if(!(statusUpdated)) {
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(nbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				statusUpdated=true;
+			}
 		}
 		//PRC/VSQ
 		if(compareDates(obean.getPrcvsqDate(),nbean.getPrcvsqDate()) != 0){
@@ -98,6 +129,13 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getPrcvsqDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sb.append(bcbean.getContractorName() + ": " + nbean.getFullName() + " - " + DateFieldConstant.PRCVSQ.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+			if(!(statusUpdated)) {
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(nbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				statusUpdated=true;
+			}
 		}
 		// PCC
 		if(compareDates(obean.getPccDate(),nbean.getPccDate()) != 0){
@@ -108,6 +146,13 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getPccDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sb.append(bcbean.getContractorName() + ": " + nbean.getFullName() + " - " + DateFieldConstant.PCC.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+			if(!(statusUpdated)) {
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(nbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				statusUpdated=true;
+			}
 		}
 		// Confidentiality Agreement
 		if(compareDates(obean.getScaDate(),nbean.getScaDate()) != 0){
@@ -118,11 +163,44 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getScaDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sb.append(bcbean.getContractorName() + ": " + nbean.getFullName() + " - " + DateFieldConstant.CA.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+			if(!(statusUpdated)) {
+				BussingContractorEmployeeManager.updateContractorEmployeeStatus(nbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+				statusUpdated=true;
+			}
+		}
+		
+		if(statusUpdated) {
+			//send email to bussing
+			//now we send the message
+			EmailBean email = new EmailBean();
+			email.setTo("transportation@nlesd.ca");
+			//email.setTo("rodneybatten@nlesd.ca");
+			email.setFrom("bussingcontractorsystem@nlesd.ca");
+			email.setSubject("NLESD Bussing Contractor System Employee Updated");
+			HashMap<String, Object> model = new HashMap<String, Object>();
+			// set values to be used in template
+			model.put("cname", bcbean.getContractorName());
+			model.put("ename", nbean.getFullName());
+			model.put("elist", sb.toString());
+			model.put("etypes", "Date(s)");
+			email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employeeupdated.vm", model));
+			try {
+				email.send();
+			} catch (EmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	public static void CheckChangedVehicleDates(BussingContractorVehicleBean obean,BussingContractorVehicleBean nbean,String cby){
 		//now we check the date fields and see if they changed, if yes then add entry to date history table
 		//Reg Expiry
+		StringBuilder sbfiles = new StringBuilder();
+		boolean statusUpdated=false;
+		BussingContractorBean bcbean = BussingContractorManager.getBussingContractorById(nbean.getContractorId());
 		if(compareDates(obean.getRegExpiryDate(),nbean.getRegExpiryDate()) != 0){
 			BussingContractorDateHistoryBean addbean = new BussingContractorDateHistoryBean();
 			addbean.setLinkId(obean.getId());
@@ -131,6 +209,11 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getRegExpiryDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sbfiles.append(bcbean.getContractorName() + ": " + nbean.getvPlateNumber() + "(" + nbean.getvSerialNumber() + ")" + " - " + DateFieldConstant.REGEXP.getDescription() + " has been changed by " + cby + "<br />");
+			nbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+			BussingContractorVehicleManager.updateContractorVehicleStatus(nbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+			statusUpdated=true;
 		}
 		//Insurance Expiry
 		if(compareDates(obean.getInsExpiryDate(),nbean.getInsExpiryDate()) != 0){
@@ -141,6 +224,12 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getInsExpiryDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sbfiles.append(bcbean.getContractorName() + ": " + nbean.getvPlateNumber() + "(" + nbean.getvSerialNumber() + ")" + " - " + DateFieldConstant.INSEXP.getDescription() + " has been changed by " + cby + "<br />");
+			if(!statusUpdated) {
+				nbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+				BussingContractorVehicleManager.updateContractorVehicleStatus(nbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+			}
 		}
 		//Fall Ins Date
 		if(compareDates(obean.getFallInsDate(),nbean.getFallInsDate()) != 0){
@@ -151,6 +240,12 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getFallInsDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sbfiles.append(bcbean.getContractorName() + ": " + nbean.getvPlateNumber() + "(" + nbean.getvSerialNumber() + ")" + " - " + DateFieldConstant.FALLINS.getDescription() + " has been changed by " + cby + "<br />");
+			if(!statusUpdated) {
+				nbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+				BussingContractorVehicleManager.updateContractorVehicleStatus(nbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+			}
 		}
 		//Winter Ins Date
 		if(compareDates(obean.getWinterInsDate(),nbean.getWinterInsDate()) != 0){
@@ -161,6 +256,12 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getWinterInsDate());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+			// add date change to email
+			sbfiles.append(bcbean.getContractorName() + ": " + nbean.getvPlateNumber() + "(" + nbean.getvSerialNumber() + ")" + " - " + DateFieldConstant.WININS.getDescription() + " has been changed by " + cby + "<br />");
+			if(!statusUpdated) {
+				nbean.setvStatus(VehicleStatusConstant.SUBMITTED.getValue());
+				BussingContractorVehicleManager.updateContractorVehicleStatus(nbean.getId(), VehicleStatusConstant.SUBMITTED.getValue());
+			}
 		}
 		// Fall HE Ins
 		if(compareDates(obean.getFallHeInsDate(),nbean.getFallHeInsDate()) != 0){
@@ -191,6 +292,28 @@ public class BussingContractorDateHistoryManager {
 			addbean.setNewValue(nbean.getMiscHeInsDate2());
 			addbean.setChangedBy(cby);
 			addBussingContractorDateHistoryBean(addbean);
+		}
+		if(statusUpdated) {
+			//send email to bussing
+			//now we send the message
+			EmailBean email = new EmailBean();
+			email.setTo("transportation@nlesd.ca");
+			//email.setTo("rodneybatten@nlesd.ca");
+			email.setFrom("bussingcontractorsystem@nlesd.ca");
+			email.setSubject("NLESD Bussing Contractor System Vehicle Updated");
+			HashMap<String, Object> model = new HashMap<String, Object>();
+			// set values to be used in template
+			model.put("cname", bcbean.getContractorName());
+			model.put("ename", nbean.getvPlateNumber() + "(" + nbean.getvSerialNumber() + ")");
+			model.put("elist", sbfiles.toString());
+			model.put("etypes", "Date(s)");
+			email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employeeupdated.vm", model));
+			try {
+				email.send();
+			} catch (EmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}	
 	private static int compareDates(Date odate, Date ndate){

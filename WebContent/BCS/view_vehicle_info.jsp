@@ -94,15 +94,15 @@ $(document).ready(function() {
         	      	$("#widate").change(function(){
         				checkdate('WIDATE');
         			});
-        	      	$("#fheidate").change(function(){
-        				checkdate('FHEIDATE');
-        			});
-        	      	$("#mheidate1").change(function(){
-        				checkdate('MHEIDATE1');
-        			});
-        	      	$("#mheidate2").change(function(){
-        				checkdate('MHEIDATE2');
-        			});
+        	      	//$("#fheidate").change(function(){
+        			//	checkdate('FHEIDATE');
+        			//});
+        	      	//$("#mheidate1").change(function(){
+        			//	checkdate('MHEIDATE1');
+        			//});
+        	      	//$("#mheidate2").change(function(){
+        			//	checkdate('MHEIDATE2');
+        			//});
         	      	if($("#vstatus").val() == 1 || $("#vstatus").val() == 3 || $("#vstatus").val() == 4){
     					if(confirmVehicleFields('U','Y',true)){
         	      			$("#submitapp").show();
@@ -166,11 +166,66 @@ $(document).ready(function() {
 		            				<span style="background-color:blue;color:white;padding:3px;">&nbsp;${ vehicle.statusText}&nbsp;</span>
 		            				</div>
 		         				</c:when>
+		         				<c:when test = "${vehicle.vStatus  eq 7}">
+         							<span style="background-color:blue;color:white;padding:3px;text-transform:uppercase;">&nbsp;TEMPORARILY ON HOLD&nbsp;</span>
+            					</c:when>
 		         				<c:otherwise>
 		            				<div class="col-sm-5"><span style="background-color:Black;color:white;padding:3px;">&nbsp;N/A&nbsp;</span></div>
 		         				</c:otherwise>
 		      				</c:choose>
         				</div>
+		    <c:if test="${bcbean.boardOwned eq 'Y'}">
+		    		  <div class="form-group">		  	
+                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Region:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="regioncode" name="regioncode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${rcodes}">
+						<c:choose>
+							<c:when test = "${vehicle.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${vehicle.regionBean.regionCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>
+	      <div class="form-group">		  	
+                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Depot:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="depotcode" name="depotcode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${dcodes}">
+						<c:choose>
+							<c:when test = "${vehicle.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${vehicle.regionBean.depotCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>	
+	</c:if>	        				
         		<div class="form-group">
 	                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Serial Number:</label>
 	                <div class="col-sm-5">

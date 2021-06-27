@@ -4,23 +4,28 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.awsd.mail.bean.EmailBean;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequiredFormElement;
+import com.esdnl.velocity.VelocityUtils;
 import com.nlesd.bcs.bean.AuditTrailBean;
 import com.nlesd.bcs.bean.BussingContractorBean;
 import com.nlesd.bcs.bean.BussingContractorEmployeeBean;
+import com.nlesd.bcs.bean.BussingContractorSystemRegionalBean;
 import com.nlesd.bcs.bean.FileHistoryBean;
+import com.nlesd.bcs.constants.EmployeeStatusConstant;
 import com.nlesd.bcs.constants.EntryTableConstant;
 import com.nlesd.bcs.constants.EntryTypeConstant;
 import com.nlesd.bcs.dao.AuditTrailManager;
 import com.nlesd.bcs.dao.BussingContractorDateHistoryManager;
 import com.nlesd.bcs.dao.BussingContractorEmployeeManager;
 import com.nlesd.bcs.dao.BussingContractorManager;
+import com.nlesd.bcs.dao.BussingContractorSystemRegionalManager;
 import com.nlesd.bcs.dao.FileHistoryManager;
 public class UpdateContractorEmployeeRequestHandler extends BCSApplicationRequestHandlerImpl {
 	public UpdateContractorEmployeeRequestHandler() {
@@ -122,6 +127,36 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 					}
 					vbean.setDaSuspensions(form.get("dasuspensions"));
 					vbean.setDaAccidents(form.get("daaccidents"));
+					vbean.setFaLevelC(form.get("falevelc"));
+					if(form.exists("vulsector")) {
+						int testingint = form.getInt("vulsector");
+						vbean.setVulnerableSector(testingint);
+					}else {
+						vbean.setVulnerableSector(0);
+					}
+					if(form.exists("contypes")) {
+						String[] test = form.getArray("contypes");
+						//System.out.println(Arrays.toString(test));
+						StringBuilder sb1 = new StringBuilder();
+						for( String s: test) {
+							if(sb1.length() == 0) {
+								sb1.append(s);
+							}else {
+								sb1.append(",");
+								sb1.append(s);
+							}
+						}
+						vbean.setConvictionTypes(sb1.toString());
+					}else {
+						vbean.setConvictionTypes(null);
+					}
+					vbean.setDemeritPoints(form.getInt("demeritpoints"));
+					if(form.exists("dangerousdriving")) {
+						vbean.setDangerousDriving(form.get("dangerousdriving"));
+					}
+					if(form.exists("suspensions")) {
+						vbean.setSuspensions(form.get("suspensions"));
+					}
 					//now we do the documents
 					String filelocation="/BCS/documents/employeedocs/";
 					String docfilename = "";
@@ -171,6 +206,9 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						docfilename=save_file("coddocument", filelocation);
 						vbean.setCodDocument(docfilename);
 					}
+					StringBuilder sbfiles = new StringBuilder();
+					boolean statusUpdated=false;
+					
 					//now we do the documents
 					if(form.getUploadFile("dlfront").getFileSize() > 0){
 						docfilename=save_file("dlfront", filelocation);
@@ -187,6 +225,12 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(1);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "Licence Image Front" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+						statusUpdated=true;
+						
 					}else{
 						vbean.setDlFront(origbean.getDlFront());
 					}
@@ -205,6 +249,14 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(2);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "Licence Image Back" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
+						
 					}else{
 						vbean.setDlBack(origbean.getDlBack());
 					}
@@ -223,6 +275,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(3);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "Driver Abstract" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
 					}else{
 						vbean.setDaDocument(origbean.getDaDocument());
 					}
@@ -241,6 +300,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(4);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "First Aid Certificate" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
 					}else{
 						vbean.setFaDocument(origbean.getFaDocument());
 					}
@@ -259,6 +325,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(5);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "PRC/VSQ" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
 					}else{
 						vbean.setPrcvsqDocument(origbean.getPrcvsqDocument());
 					}
@@ -277,6 +350,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(6);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "Provincial Court Check" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
 					}else{
 						vbean.setPccDocument(origbean.getPccDocument());
 					}
@@ -295,6 +375,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(7);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "Confidentiality Agreement" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
 					}else{
 						vbean.setScaDocument(origbean.getScaDocument());
 					}
@@ -313,6 +400,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						fhb.setParentObjectId(vbean.getId());
 						fhb.setParentObjectType(15);
 						FileHistoryManager.addFileHistory(fhb);
+						// add date change to email
+						sbfiles.append(bcbean.getContractorName() + ": " + vbean.getFullName() + " - " + "Criminal Offence Declaration" + " has been changed by " + bcbean.getContractorName() + "<br />");
+						vbean.setStatus(EmployeeStatusConstant.NOTAPPROVED.getValue());
+						if(!statusUpdated) {
+							BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
+							statusUpdated=true;
+						}
 					}else{
 						vbean.setCodDocument(origbean.getCodDocument());
 					}
@@ -320,6 +414,19 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 					
 					//now we add the record
 					BussingContractorEmployeeManager.updateBussingContractorEmployee(vbean);
+					if(bcbean.getBoardOwned().equals("Y")) {
+							BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
+							regbean.setrType("E");
+							regbean.setrId(vbean.getId());
+							regbean.setRegionCode(form.getInt("regioncode"));
+							regbean.setDepotCode(form.getInt("depotcode"));
+							if(origbean.getRegionBean() == null) {
+								BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
+							}else {
+								regbean.setId(origbean.getRegionBean().getId());
+								BussingContractorSystemRegionalManager.updateBussingContractorSystemRegionalBean(regbean);
+							}
+					}
 					//now we add the archive record
 					BussingContractorEmployeeManager.addBussingContractorEmployeeArc(origbean);
 					//now we check to see if dates changed
@@ -333,6 +440,25 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 					atbean.setEntryNotes("Contractor employee (" + vbean.getLastName() + "," + vbean.getFirstName() + ") updated on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
 					atbean.setContractorId(vbean.getContractorId());
 					AuditTrailManager.addAuditTrail(atbean);
+					
+					//now check to see if we send an email for the files changing
+					if(statusUpdated) {
+						//send email to bussing
+						//now we send the message
+						EmailBean email = new EmailBean();
+						email.setTo("transportation@nlesd.ca");
+						//email.setTo("rodneybatten@nlesd.ca");
+						email.setFrom("bussingcontractorsystem@nlesd.ca");
+						email.setSubject("NLESD Bussing Contractor System Employee Updated");
+						HashMap<String, Object> model = new HashMap<String, Object>();
+						// set values to be used in template
+						model.put("cname", bcbean.getContractorName());
+						model.put("ename", vbean.getFullName());
+						model.put("elist", sbfiles.toString());
+						model.put("etypes", "File(s)");
+						email.setBody(VelocityUtils.mergeTemplateIntoString("bcs/employeeupdated.vm", model));
+						email.send();
+					}
 					
 					}catch(Exception e){
 						message = e.getMessage();

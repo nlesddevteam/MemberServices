@@ -2212,6 +2212,8 @@ function ajaxSearchEmployees() {
 	var vsearchprovince = $.trim($('#province').val());
 	var vsearchdl = $.trim($('#dlclass').val());
 	var vsearchposition = $.trim($('#position').val());
+	var vsearchregion = $.trim($('#regions').val());
+	var vsearchdepot = $.trim($('#depots').val());
 	var isvalid = false;
 	var cnt = 0;
 	$
@@ -2225,7 +2227,9 @@ function ajaxSearchEmployees() {
 					searchstatus : vsearchstatus,
 					searchprovince : vsearchprovince,
 					searchposition : vsearchposition,
-					searchdl : vsearchdl
+					searchdl : vsearchdl,
+					searchregion: vsearchregion,
+					searchdepot: vsearchdepot
 				},
 				success : function(xml) {
 					$(xml)
@@ -2342,6 +2346,8 @@ function ajaxSearchVehicles() {
 	var vsearchmodel = $.trim($('#models').val());
 	var vsearchtype = $.trim($('#types').val());
 	var vsearchsize = $.trim($('#sizes').val());
+	var vsearchregion = $.trim($('#regions').val());
+	var vsearchdepot = $.trim($('#depots').val());
 	var isvalid = false;
 	var cnt = 0;
 	$
@@ -2357,7 +2363,9 @@ function ajaxSearchVehicles() {
 					searchmake : vsearchmake,
 					searchmodel : vsearchmodel,
 					searchtype : vsearchtype,
-					searchsize : vsearchsize
+					searchsize : vsearchsize,
+					searchregion: vsearchregion,
+					searchdepot: vsearchdepot
 				},
 				success : function(xml) {
 					$(xml)
@@ -4754,7 +4762,6 @@ function deletereport(stitle, id) {
 					});
 		},
 		error : function(xhr, textStatus, error) {
-			alert(error);
 			$("#errormessage").html(error).css("display", "block").delay(6000)
 					.fadeOut();
 			$("#mainalert").show();
@@ -6017,7 +6024,6 @@ function ajaxGetTrainingById(trainingid) {
  * add new employee training
  ******************************************************************************/
 function updateemployeetraining(trantype) {
-	alert(trantype);
 	var selected = $("#trainingtype").val();
 	var tdate = $("#trainingdate").val();
 	var edate = $("#expirydate").val();
@@ -6186,6 +6192,7 @@ function checkdate(datetype){
 			}
 		}
 	}
+	/**
 	if(datetype == 'FHEIDATE'){
 		$("#divfheidate").hide();
 		if(!($("#fheidate").val() == "")){
@@ -6222,6 +6229,7 @@ function checkdate(datetype){
 			}
 		}
 	}
+	**/
 	if(datetype == 'DARUNDATE'){
 		$("#divdarundate").hide();
 		if(!($("#darundate").val() == "")){
@@ -6438,6 +6446,7 @@ function showBypassDialog(){
 			//checkemployee('A','N',false);
 			addupdateemployee('A','N',false);
 			$('#myModal3').modal('hide');
+			
 
 		});
 		$('#myModal3').modal(options);
@@ -7285,6 +7294,108 @@ function populatereport() {
 	var surl = "viewDocumentAuditReport.html?numdays=" + reportid;
 	$("#pageContentBody").load(surl);
 }
+function checkregionvalues(){
+	if($("#regionid").val() == "SELECT"){
+		$("#details_error_message").html("Please Select Region").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	//}
+	//else if($("#depotid").val() == "SELECT"){
+		//$("#details_error_message").html("Please Select Depot").css("display",
+		//"block").delay(6000).fadeOut();
+		//return false;
+	}else{
+		var depotid=-1;
+		if($("#depotid").val() != "SELECT"){
+			depotid = $("#depotid").val();
+		}
+		var values="?regionid=" + $("#regionid").val() + "&depotid=" + depotid;
+		var surl = "viewContractorEmployeesRegDetails.html" + values;
+		$('#loadingSpinner').css("display","inline");
+		$("#pageContentBody").load(surl);
+	}
+	
+	
+}
+function checkregionvaluesvehicles(){
+	if($("#regionid").val() == "SELECT"){
+		$("#details_error_message").html("Please Select Region").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	//}
+	//else if($("#depotid").val() == "SELECT"){
+		//$("#details_error_message").html("Please Select Depot").css("display",
+		//"block").delay(6000).fadeOut();
+		//return false;
+	}else{
+		var depotid=-1;
+		if($("#depotid").val() != "SELECT"){
+			depotid = $("#depotid").val();
+		}
+		var values="?regionid=" + $("#regionid").val() + "&depotid=" + depotid;
+		var surl = "viewContractorVehiclesRegDetails.html" + values;
+		$('#loadingSpinner').css("display","inline");
+		$("#pageContentBody").load(surl);
+	}
+	
+	
+}
+/*******************************************************************************
+ * Calls employee training details page
+ ******************************************************************************/
+function getEmployeeTrainingDetails() {
+	var value = $("#selectttype option:selected");
+	var ttype = value.val();
+	var tstatus = $.trim($('#selectstatus').val());
+	var tstring =  value.text();
+	if(ttype == -1){
+		$("#details_error_message").html("Please Select Training Type").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+		
+	}else if (tstatus == -1){
+		$("#details_error_message").html("Please Select Training Status").css("display",
+		"block").delay(6000).fadeOut();
+		return false;
+	}else{
+		var surl = "viewEmployeesTrainingDetailsReport.html?tid=";
+		surl = surl  + ttype + "&tstatus=" + tstatus + "&tstring=" + tstring;
+		//$('#loadingSpinner').css("display","inline");
+		$("#pageContentBody").load(encodeURI(surl));
+		
+		
+	}
+	
+
+	
+	
+}
+/*******************************************************************************
+ * Calls contractor employee training list
+ ******************************************************************************/
+function getContractorsEmployeeTraining() {
+	var reportid = $.trim($('#selectcon').val());
+	var surl = "viewContractorEmployeeTrainingDetailsReport.html?tid=" + reportid;
+	$("#pageContentBody").load(surl);
+}
+/*******************************************************************************
+ * Calls employee convictions details page
+ ******************************************************************************/
+function getContractorsEmployeeConvictions() {
+	var reportid = $.trim($('#selectcon').val());
+	if(reportid == "-1"){
+		$("#display_error_message_top").html("Please Select Conviction Type").css("display","block").delay(6000).fadeOut();
+		return false;
+	}else{
+		$('#loadingSpinner').css("display","inline");
+		var surl = "viewEmployeeConvictionsDetailsReport.html?cid=" + reportid;
+		$("#pageContentBody").load(surl);
+	}
+
+	
+	
+}
+
 $(document).ajaxComplete(function (event, request, settings) {
     if (request.status === 401) {
     	window.location.replace("contractorLogin.html?msg=Session expired, please login again.");

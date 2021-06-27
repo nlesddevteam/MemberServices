@@ -60,12 +60,19 @@ public class ViewEmployeeInformationAdminRequestHandler extends RequestHandlerIm
 			  if((usr.getUserPermissions().containsKey("BCS-VIEW-LABRADOR"))){
 			        request.setAttribute("contractorid", BoardOwnedContractorsConstant.LABRADOR.getValue());
 			  }
+			  
 			  request.setAttribute("ttypes", DropdownManager.getDropdownValuesTM(22));
 			  request.setAttribute("tlengths", DropdownManager.getDropdownValuesTM(23));
+			  //now we add the regional/depot dropdowns
+			  request.setAttribute("rcodes", DropdownManager.getDropdownValuesTM(24));
+			  request.setAttribute("dcodes", DropdownManager.getDropdownValuesTM(25));
+			  request.setAttribute("convicttypes", DropdownManager.getDropdownValuesTM(26));
+			  
+			  
 			  path = "admin_view_employee_info.jsp";
 		}else {
 			request.setAttribute("msg", com.esdnl.util.StringUtils.encodeHTML(validator.getErrorString()));
-	    	path = "index.html";
+			path = "index.html";
 		}
     	return path;
 	}

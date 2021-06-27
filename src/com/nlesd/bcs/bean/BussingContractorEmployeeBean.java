@@ -58,6 +58,14 @@ public class BussingContractorEmployeeBean implements Serializable {
 	private String companyEmail;//used with main screen warnings for contractors and automated ones
 	private Date codExpiryDate;
 	private String codDocument;
+	private BussingContractorSystemRegionalBean regionBean;
+	private String faLevelC;
+	private int vulnerableSector;
+	private String convictionTypes;
+	private int demeritPoints;
+	private String dangerousDriving;
+	private String suspensions;
+	private String convictionTypeLong;//used for conviction listing
 	public int getId() {
 		return id;
 	}
@@ -471,5 +479,56 @@ public class BussingContractorEmployeeBean implements Serializable {
 		}else{
 			return "";
 		}
+	}
+	public BussingContractorSystemRegionalBean getRegionBean() {
+		return regionBean;
+	}
+	public void setRegionBean(BussingContractorSystemRegionalBean regionBean) {
+		this.regionBean = regionBean;
+	}
+	public String getFaLevelC() {
+		return faLevelC;
+	}
+	public void setFaLevelC(String faLevelC) {
+		this.faLevelC = faLevelC;
+	}
+	public int getVulnerableSector() {
+		return vulnerableSector;
+	}
+	public void setVulnerableSector(int vulnerableSector) {
+		this.vulnerableSector = vulnerableSector;
+	}
+	public String getConvictionTypes() {
+		return convictionTypes;
+	}
+	public void setConvictionTypes(String convictionTypes) {
+		this.convictionTypes = convictionTypes;
+	}
+	public int getDemeritPoints() {
+		return demeritPoints;
+	}
+	public void setDemeritPoints(int demeritPoints) {
+		this.demeritPoints = demeritPoints;
+	}
+	public String getDangerousDriving() {
+		return dangerousDriving;
+	}
+	public void setDangerousDriving(String dangerousDriving) {
+		this.dangerousDriving = dangerousDriving;
+	}
+	public String getSuspensions() {
+		return suspensions;
+	}
+	public void setSuspensions(String suspensions) {
+		this.suspensions = suspensions;
+	}
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
+	}
+	public String getConvictionTypeLong() {
+		return convictionTypeLong;
+	}
+	public void setConvictionTypeLong(String convictionTypeLong) {
+		this.convictionTypeLong = convictionTypeLong;
 	}
 }

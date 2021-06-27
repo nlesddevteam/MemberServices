@@ -23,6 +23,7 @@
 <link href="includes/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css">
 <script src="includes/js/bootstrap-datepicker.min.js"></script>
 <script src="includes/js/bcs.js"></script>
+
 <%
 String tabs = (String)request.getParameter("tab");
 String settab="";
@@ -37,7 +38,7 @@ if(!(request.getAttribute("contractorid") == null)){
 }
 pageContext.setAttribute("pcid", contractorid);
 %>
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function() {
         		//clear spinner on load
     			$('#loadingSpinner').css("display","none");
@@ -114,6 +115,14 @@ $(document).ready(function() {
 					checkdate('PRCVSQDATE');
 				});
 				checkemployee('A','Y',false);
+				//$('#contypes').multiselect();
+				
+				var cvalues = $('#hidctypes').val().split(",");
+				//
+				$("#contypes").val(cvalues);
+				
+				
+				
 });
 		</script>
 	<%pageContext.setAttribute("now", new java.util.Date()); %>   		
@@ -148,13 +157,13 @@ $(document).ready(function() {
 	         				<c:when test = "${employee.status eq 2}">
 	         				
 	         				<span style="background-color:green;color:White;padding:3px;text-transform:uppercase;">&nbsp;APPROVED&nbsp;</span>
-	            				<p class="form-control-static">${ employee.statusText}  on ${employee.dateApprovedFormatted}</p>
+	            				<p class="form-control-static">${ employee.statusText} by: ${ employee.approvedBy}  on ${employee.dateApprovedFormatted}</p>
 	            				
 	         				</c:when>
 	                  		<c:when test = "${employee.status eq 3}">
 	                  		
 	                  		<span style="background-color:Red;color:White;padding:3px;text-transform:uppercase;">&nbsp;NOT APPROVED&nbsp;</span>
-	            				<p class="form-control-static">${employee.statusText} on ${ employee.dateApprovedFormatted} 
+	            				<p class="form-control-static">${employee.statusText} by: ${ employee.approvedBy} on ${ employee.dateApprovedFormatted} 
 	            				<br/>Notes: ${employee.statusNotes}</p>
 	         				
 	         				</c:when>
@@ -163,6 +172,9 @@ $(document).ready(function() {
 	         				</c:when>
 	         				<c:when test = "${employee.status eq 6}">
 	         					<span style="background-color:blue;color:White;padding:3px;text-transform:uppercase;">&nbsp;SUBMITTED FOR APPROVAL&nbsp;</span>
+	         				</c:when>
+	         				<c:when test = "${employee.status eq 7}">
+	         					<span style="background-color:blue;color:White;padding:3px;text-transform:uppercase;">&nbsp;TEMPORARILY ON HOLD&nbsp;</span>
 	         				</c:when>	         				
 	         				<c:otherwise>
 	            				<span></span>
@@ -223,7 +235,57 @@ $(document).ready(function() {
 			  			</c:forEach>
 				  		</select>
 				  		</div>
-	      			</div> 	
+	      			</div>
+		  <div class="form-group">		  	
+                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Region:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="regioncode" name="regioncode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${rcodes}">
+						<c:choose>
+							<c:when test = "${employee.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${employee.regionBean.regionCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>
+		  <div class="form-group">		  	
+                <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Depot:</label>
+                <div class="col-sm-5">
+                <select class="form-control" id="depotcode" name="depotcode"  style="width:auto;">
+                	<option value="-1">N/A</option>
+					<c:forEach var="entry" items="${dcodes}">
+						<c:choose>
+							<c:when test = "${employee.regionBean ne null }">
+								<c:choose>
+									<c:when test = "${employee.regionBean.depotCode == entry.key }">
+										<option value='${entry.key}' SELECTED>${entry.value}</option>
+									</c:when>
+									<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+										<option value='${entry.key}'>${entry.value}</option>
+									</c:otherwise>
+						</c:choose>
+					</c:forEach>
+		  		</select>
+		  		</div>
+	      </div>	      	      			 	
 		  <div class="form-group">		  	
                 <label class="control-label col-sm-3" for="email"><img src='includes/css/images/asterisk-small.png'/>Employee Position:</label>
                 <div class="col-sm-5">
@@ -467,6 +529,23 @@ $(document).ready(function() {
                 </div>
 	       </div>
       	  <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Lost Demerit Points:</label>
+                <div class="col-sm-5"> 
+                		<select class="form-control" id="demeritpoints" name="demeritpoints">
+                			<c:forEach begin="0" end="20" step="1" varStatus="lcount">
+    								<c:choose>
+    									<c:when test="${employee.demeritPoints eq lcount.count-1}">
+    										<option value="${lcount.count-1}" selected>${lcount.count-1}</option>
+    									</c:when>
+    									<c:otherwise>
+    										<option value="${lcount.count-1}">${lcount.count-1}</option>
+    									</c:otherwise>
+    								</c:choose>
+    						</c:forEach>
+                		</select>
+				</div>
+	       </div>	       
+      	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">File:</label> 
                 <div class="col-sm-5">
 					<c:choose>
@@ -495,15 +574,29 @@ $(document).ready(function() {
 				<label class="radio-inline"><input type="radio" name="daconvictions" value='N' ${employee.daConvictions == 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
 	       </div>
+      	  <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Convicted of Dangerous Driving Within the Last 5yrs:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="dangerousdriving" value='Y' ${employee.dangerousDriving == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="dangerousdriving" value='N' ${employee.dangerousDriving == 'N' ? 'checked=\'checked\'' : ''}>No</label>
+				</div>
+	       </div>		       
 	       <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Driver Abstract Suspensions:</label>
                 <div class="col-sm-5"> 
                 <label class="radio-inline"><input type="radio" name="dasuspensions" value='Y' ${employee.daSuspensions == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="dasuspensions" value='N' ${employee.daSuspensions == 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
-	       </div> 
+	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Suspension Within the Last 36 Months?:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="suspensions" value='Y' ${employee.suspensions == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="suspensions" value='N' ${employee.suspensions == 'N' ? 'checked=\'checked\'' : ''}>No</label>
+				</div>
+	       </div>	        
 	             	  <div class="form-group">
-                <label class="control-label col-sm-3" for="email">Driver Abstract Accidents:</label>
+                <label class="control-label col-sm-3" for="email">"At Fault" Accident(s):</label>
                 <div class="col-sm-5"> 
                 <label class="radio-inline"><input type="radio" name="daaccidents" value='Y' ${employee.daAccidents == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="daaccidents" value='N' ${employee.daAccidents == 'N' ? 'checked=\'checked\'' : ''}>No</label>
@@ -522,6 +615,13 @@ $(document).ready(function() {
 	                    </div>
                 </div>
 	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Level C:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="falevelc" value='Y' ${employee.faLevelC == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
+				<label class="radio-inline"><input type="radio" name="falevelc" value='N' ${employee.faLevelC == 'N' ? 'checked=\'checked\'' : ''}>No</label>
+				</div>
+	       </div> 
       	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Certificate File:</label> 
                 <div class="col-sm-5">
@@ -561,6 +661,13 @@ $(document).ready(function() {
 	                    </div>
                 </div>
 	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Vulnerable Sector:</label>
+                <div class="col-sm-5"> 
+                <label class="radio-inline"><input type="radio" name="vulsector" value='-1' ${employee.vulnerableSector == -1 ? 'checked=\'checked\'' : ''}>Negative</label>
+				<label class="radio-inline"><input type="radio" name="vulsector" value='1' ${employee.vulnerableSector == 1 ? 'checked=\'checked\'' : ''}>Positive</label>
+				</div>
+	       </div>
       	  <div class="form-group">
                 <label class="control-label col-sm-3" for="email">PRC/VSQ File:</label> 
                 <div class="col-sm-5">
@@ -589,6 +696,17 @@ $(document).ready(function() {
                 <label class="radio-inline"><input type="radio" name="findingsofguilt" value='Y' ${employee.findingsOfGuilt == 'Y' ? 'checked=\'checked\'' : ''}>Yes</label>
 				<label class="radio-inline"><input type="radio" name="findingsofguilt" value='N' ${employee.findingsOfGuilt== 'N' ? 'checked=\'checked\'' : ''}>No</label>
 				</div>
+	       </div>
+	       <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Conviction Types:</label> 
+                <div class="col-sm-5">
+                	<select id="contypes" name="contypes" size="15" multiple>
+						<option value="0">None</option>
+						<c:forEach var="entry" items="${convicttypes}">
+								<option value='${entry.key}'>${entry.value}</option>
+						</c:forEach>
+					</select><input type="hidden" id="hidctypes" value="${employee.convictionTypes}">
+                </div>
 	       </div>
        	   <div class="form-group">
                 <label class="control-label col-sm-3" for="email">Provincial Court Check Date:</label> 
@@ -1100,5 +1218,6 @@ $(document).ready(function() {
 	    </div>
 	
 	  </div>
-	</div>	   		   		
+	</div>
+	   		   		
 <script src="includes/js/jQuery.print.js"></script>	

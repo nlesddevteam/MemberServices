@@ -30,13 +30,17 @@
     		                $("#divselect").hide();
     		                $("#divselectpos").hide();
     		                $("#divselectdl").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide();
     		                break;
     		            case "Province":
     		                $("#divselect").hide();
     		                $("#divselectp").show();
     		                $("#divtext").hide();
     		                $("#divselectpos").hide();
-    		                $("#divselectdl").hide();    		                
+    		                $("#divselectdl").hide(); 
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide();
     		                break;
     		            case "Driver Licence Class":
     		                $("#divtext").hide();
@@ -44,6 +48,8 @@
     		                $("#divselectp").hide();
     		                $("#divselectpos").hide();
     		                $("#divselectdl").show();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide();
     		                break;
     		            case "Position":
     		                $("#divtext").hide();
@@ -51,6 +57,8 @@
     		                $("#divselectp").hide();
     		                $("#divselectpos").show();
     		                $("#divselectdl").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide();
     		                break;
     		            case "Status":
     		                $("#divtext").hide();
@@ -58,13 +66,35 @@
     		                $("#divselectp").hide();
     		                $("#divselectpos").hide();
     		                $("#divselectdl").hide();
-    		                break;    		                
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide();
+    		                break;
+    		            case "Region":
+    		                $("#divtext").hide();
+    		                $("#divselect").hide();
+    		                $("#divselectp").hide();
+    		                $("#divselectpos").hide();
+    		                $("#divselectdl").hide();
+    		                $("#divselectregion").show();
+    		                $("#divselectdepot").hide();
+    		                break;
+    		            case "Depot":
+    		                $("#divtext").hide();
+    		                $("#divselect").hide();
+    		                $("#divselectp").hide();
+    		                $("#divselectpos").hide();
+    		                $("#divselectdl").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").show();
+    		                break; 
     		            default:
     		                $("#divselect").hide();
     		            	$("#divselectp").hide();
     		                $("#divtext").show();
     		                $("#divselectpos").hide();
     		                $("#divselectdl").hide();
+    		                $("#divselectregion").hide();
+    		                $("#divselectdepot").hide();
     		                break;
     		            }
     		    }
@@ -145,6 +175,24 @@
 		<p><select id="dlclass">
 			<option value="-1">*** Select ***</option>
 			<c:forEach var="test" items="${dlclasses}" >
+				<option value='${test.key}'>${test.value}</option>
+			</c:forEach>
+		</select><br/>
+		</div>
+		<div id="divselectregion"  style="display:none">
+		For:<br/> 
+		<select id="regions">
+			<option value="-1">*** Select ***</option>
+			<c:forEach var="test" items="${rcodes}" >
+				<option value='${test.key}'>${test.value}</option>
+			</c:forEach>
+		</select><br/>
+		</div>
+		<div id="divselectdepot"  style="display:none">
+		For:<br/> 
+		<select id="depots">
+			<option value="-1">*** Select ***</option>
+			<c:forEach var="test" items="${dcodes}" >
 				<option value='${test.key}'>${test.value}</option>
 			</c:forEach>
 		</select><br/>

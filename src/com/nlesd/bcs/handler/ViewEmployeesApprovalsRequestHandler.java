@@ -60,6 +60,9 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 				}else if(status.equals("ns")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.NOTREVIEWED.getValue(),cid);
 					reporttitle="Employees Not Submitted";
+				}else if(status.equals("oh")){
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusRegFull(EmployeeStatusConstant.ONHOLD.getValue(),cid);
+					reporttitle="Employees Temporarily On Hold";
 				}
 			}else{
 				if(status.equals("p")){
@@ -80,6 +83,9 @@ public class ViewEmployeesApprovalsRequestHandler extends RequestHandlerImpl
 				}else if(status.equals("ns")){
 					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.NOTREVIEWED.getValue());
 					reporttitle="Employees Not Submitted";
+				}else if(status.equals("oh")){
+					employees=BussingContractorEmployeeManager.getEmployeesByStatusFull(EmployeeStatusConstant.ONHOLD.getValue());
+					reporttitle="Employees Temporarily On Hold";
 				}
 			}
 
