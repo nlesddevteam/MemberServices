@@ -734,7 +734,7 @@ input {border:1px solid silver;}
 							    <tr>
 							    <td><%=sdf.format(per[i].getFrom())%></td>
 							    <td><%=sdf.format(per[i].getTo())%></td>
-							    <td><%=SchoolDB.getSchool(per[i].getSchoolId()).getSchoolName()%></td>
+							    <td><%=SchoolDB.getLocationText(per[i].getSchoolId())%></td>
 							    <td><%=per[i].getGradesSubjects()%></td>							    
 							    </tr>							    
 							    <%}%>							    
@@ -776,7 +776,7 @@ input {border:1px solid silver;}
 							    <tr>
 							    <td><%=sdf.format(rpl[i].getFrom()) %></td>
 							    <td><%=sdf.format(rpl[i].getTo()) %></td>
-							    <td><%=SchoolDB.getSchool(rpl[i].getSchoolId()).getSchoolName() %></td>
+							    <td><%=SchoolDB.getLocationText(rpl[i].getSchoolId())%></td>
 							    <td><%=rpl[i].getGradesSubjects() %></td>
 							    </tr>
 							    <% } %>							   							    
