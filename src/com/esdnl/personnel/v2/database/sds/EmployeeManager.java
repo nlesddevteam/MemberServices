@@ -592,8 +592,7 @@ public class EmployeeManager {
 					
 				}
 				catch (SQLException e) {
-					seniority.setSeniorityDate1(null);
-					seniority.setSeniorityDate2(null);
+					seniority =  null;
 				}
 		
 		
