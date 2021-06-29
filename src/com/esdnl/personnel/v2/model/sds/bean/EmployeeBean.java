@@ -351,6 +351,14 @@ public class EmployeeBean implements IEntity {
 		return this.seniority.values().stream().filter(
 				s -> !s.getUnion().equals(EmployeeSeniorityBean.Union.NLTA)).findFirst().orElse(null);
 	}
+	
+	public EmployeeSeniorityBean getSenioritySupport() {
+
+		if (seniority.size() < 1)
+			return null;
+
+		return this.seniority.values().stream().findFirst().orElse(null);
+	}
 
 	public void addSeniority(EmployeeSeniorityBean seniority) {
 

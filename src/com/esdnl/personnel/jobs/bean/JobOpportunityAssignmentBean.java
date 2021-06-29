@@ -7,9 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang.StringUtils;
-
 import com.awsd.mail.bean.AlertBean;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
@@ -141,6 +139,9 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		case 285:
 			txt = "Burin Bus Depot";
 			break;
+		case -3001:
+			txt = "Central Satellite Office";
+			break;
 		case -3000:
 			txt = "Central Regional Office";
 			break;
@@ -198,6 +199,10 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		if (this.getLocation() <= 0) {
 			try {
 				switch (this.location) {
+				case -3001:
+					//txt = "Central Regional Office";
+					zone = SchoolZoneService.getSchoolZoneBean(2);
+					break;
 				case -3000:
 					//txt = "Central Regional Office";
 					zone = SchoolZoneService.getSchoolZoneBean(2);

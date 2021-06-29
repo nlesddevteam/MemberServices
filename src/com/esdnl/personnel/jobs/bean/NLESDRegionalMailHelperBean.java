@@ -16,6 +16,9 @@ public class NLESDRegionalMailHelperBean {
 
 		//determine what zone
 		switch (schoolZone) {
+		case -3001:
+			emz = EMAILZONE.CENTRAL;
+			break;
 		case -3000:
 			emz = EMAILZONE.CENTRAL;
 			break;

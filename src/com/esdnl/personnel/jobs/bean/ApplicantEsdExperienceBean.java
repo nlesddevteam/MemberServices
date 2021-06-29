@@ -96,6 +96,9 @@ public class ApplicantEsdExperienceBean implements Serializable {
 		String txt = null;
 
 		switch (this.perm_school) {
+		case -3001:
+			txt = "Central Satellite Office";
+			break;
 		case -3000:
 			txt = "Central Regional Office";
 			break;
@@ -162,6 +165,9 @@ public class ApplicantEsdExperienceBean implements Serializable {
 		String txt = null;
 
 		switch (this.contract_school) {
+		case -3001:
+			txt = "Central Satellite Office";
+			break;
 		case -3000:
 			txt = "Central Regional Office";
 			break;

@@ -5,7 +5,9 @@
          				 com.esdnl.util.*,
          				 com.esdnl.personnel.jobs.constants.*,
                  com.esdnl.personnel.jobs.bean.*,
-                 com.esdnl.personnel.jobs.dao.*" 
+                 com.esdnl.personnel.jobs.dao.*,
+                 com.esdnl.personnel.v2.model.sds.bean.*,
+                 com.esdnl.personnel.v2.database.sds.*" 
          isThreadSafe="false"%>
          
 <!-- LOAD JAVA TAG LIBRARIES -->
@@ -304,11 +306,19 @@
 									<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br />Tel: <%=applicants[i].getHomephone()%>
 								</td>
 								<td style="vertical-align: middle;">
-									<%if (applicants[i].getSenority() > 0) {%> 
-										<span style='color: red;'><%= applicants[i].getSenority()%></span> 
-									<%} else {%>
-										<span style="color: DimGrey;">0</span> 
-									<%}%>
+									<% 
+										EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(applicants[i]);
+										if(empbean == null){ %>
+										<span style="color: DimGrey;">0</span>
+										<%}else{ 
+											if(empbean.getSeniority() == null){%>
+												<span style='color: red;'>0</span>
+											<%}else{ %>
+												<span style='color: red;'><%= String.format("%.2f", empbean.getSeniority().getShortlistValue(),2)%></span>
+											<%} %>
+										<%}%>
+									
+									
 								</td>							
 								<td>
 								<div style="color: DimGrey; padding-bottom: 3px;">	

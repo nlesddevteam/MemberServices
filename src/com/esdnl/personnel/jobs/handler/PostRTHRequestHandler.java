@@ -75,6 +75,9 @@ public class PostRTHRequestHandler implements RequestHandler {
 				case 3000: //Nova Central Regional Office
 					location_id = -3000;
 					break;
+				case 3001: //Nova Central Regional Office
+					location_id = -3001;
+					break;
 				case 5000: //District Conference Centre
 					location_id = 220;
 					break;

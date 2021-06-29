@@ -1,5 +1,8 @@
 package com.esdnl.personnel.v2.model.sds.bean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -65,12 +68,14 @@ public class EmployeeSeniorityBean {
 			return tmp;
 		}
 	}
-
+	
 	private EmployeeBean employee;
 	private String unionCode;
 	private double seniorityValue1;
 	private double seniorityValue2;
 	private double seniorityValue3;
+	private Date seniorityDate1;
+	private Date seniorityDate2;
 
 	public EmployeeSeniorityBean() {
 
@@ -79,6 +84,8 @@ public class EmployeeSeniorityBean {
 		this.seniorityValue1 = 0.0;
 		this.seniorityValue2 = 0.0;
 		this.seniorityValue3 = 0.0;
+		this.seniorityDate1 = null;
+		this.seniorityDate2 = null;
 	}
 
 	public EmployeeBean getEmployee() {
@@ -139,5 +146,80 @@ public class EmployeeSeniorityBean {
 	public double getSeniorityTotal() {
 
 		return this.seniorityValue1 + this.seniorityValue2 + this.seniorityValue3;
+	}
+
+	public Date getSeniorityDate1() {
+		return seniorityDate1;
+	}
+
+	public void setSeniorityDate1(Date seniorityDate1) {
+		this.seniorityDate1 = seniorityDate1;
+	}
+
+	public Date getSeniorityDate2() {
+		return seniorityDate2;
+	}
+
+	public void setSeniorityDate2(Date seniorityDate2) {
+		this.seniorityDate2 = seniorityDate2;
+	}
+	public String getSeniorityDate1Formatted() {
+		String DATE_FORMAT = "dd/MM/yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		if(this.seniorityDate1 == null) {
+			return "N/A";
+		}else {
+			return sdf.format(this.seniorityDate1);
+		}
+		
+	}
+	public String getSeniorityDate2Formatted() {
+		String DATE_FORMAT = "dd/MM/yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		if(this.seniorityDate2 == null) {
+			return "N/A";
+		}else {
+			return sdf.format(this.seniorityDate2);
+		}
+		
+	}
+	public double getShortlistValue() {
+		double sen=0;
+		if(this.unionCode == null) {
+			sen=0;
+		}else if(this.unionCode == EmployeeSeniorityBean.Union.NLTA_TLA.code) {
+			sen = this.getSeniorityTotal();
+		}else {
+			 if(this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_1560.code) || this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_STUDENT_ASSISTANTS.code)  ||
+					 this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_2033.code)  || this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_WESTERN.code)  || 
+					 this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_WESTERN.code )) {
+				 //senority date so we calculated the years
+				 if(this.seniorityDate1 != null) {
+					 Date today = new Date();
+					 long diffInMillies = Math.abs(today.getTime() - this.seniorityDate1.getTime());
+					 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+					 double years = (double)diff/260d; //365.2425d;
+					 sen = years;
+				 }else if(this.seniorityDate2 != null) {
+					 Date today = new Date();
+					 long diffInMillies = Math.abs(today.getTime() - this.seniorityDate2.getTime());
+					 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+					 double years = (double)diff/260d; //365.2425d;
+					 sen = years;
+				 }else {
+					 sen=0;
+				 }
+			 }else if(this.unionCode.equals(EmployeeSeniorityBean.Union.NAPE_CENTRAL.code) || this.unionCode.equals(EmployeeSeniorityBean.Union.NAPE_AVALON_WEST.code) ||
+					 this.unionCode.equals(EmployeeSeniorityBean.Union.NAPE_LABRADOR.code)  || this.unionCode.equals(EmployeeSeniorityBean.Union.NAPE_VISTA.code)  || 
+					 this.unionCode.equals(EmployeeSeniorityBean.Union.NAPE_WESTERN.code )) {
+				 		if(this.getSeniorityTotal() > 0) {
+				 			sen = this.getSeniorityTotal()/260;//260 working days a year
+				 		}else {
+				 			sen=0;
+				 		}
+				 
+			 }
+		}
+		return sen;
 	}
 }

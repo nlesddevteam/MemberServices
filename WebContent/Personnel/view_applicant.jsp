@@ -490,7 +490,7 @@ input {
 							<tr>
 								<td><%=sdf.format(rpl[i].getFrom())%></td>
 								<td><%=sdf.format(rpl[i].getTo())%></td>
-								<td><%=SchoolDB.getSchool(rpl[i].getSchoolId()).getSchoolName()%></td>
+								<td><%=SchoolDB.getLocationText(rpl[i].getSchoolId())%></td>
 								<td><%=rpl[i].getGradesSubjects()%></td>
 							</tr>
 							<%

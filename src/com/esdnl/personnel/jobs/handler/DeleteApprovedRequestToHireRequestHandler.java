@@ -111,6 +111,7 @@ public class DeleteApprovedRequestToHireRequestHandler extends RequestHandlerImp
 				zoneid = 3;
 				break;
 			case 3000: //Nova Central Regional Office
+			case 3001:
 			case 3030:
 			case 3031:
 			case 3032:
