@@ -65,6 +65,14 @@ public class JobLocationTagHandler extends TagSupport {
 			out.println("<OPTION VALUE=\"-3000\""
 					+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == -3000)) ? " SELECTED" : "")
 					+ ">Central Regional Office</OPTION>");
+			
+			out.println("<OPTION VALUE=\"-3001\""
+					+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == -3001)) ? " SELECTED" : "")
+					+ ">Central Satellite Office</OPTION>");
+			
+			out.println("<OPTION VALUE=\"-3001\""
+					+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == -3001)) ? " SELECTED" : "")
+					+ ">Central Satellite Office</OPTION>");
 
 			out.println("<OPTION VALUE=\"-998\""
 					+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == -999)) ? " SELECTED" : "")

@@ -105,6 +105,9 @@ public class ApplicantCurrentPositionsSSTagHandler extends TagSupport{
 		String txt = null;
 
 		switch (schoolid) {
+		case -3001:
+			txt = "Central Satellite Office";
+			break;
 		case -3000:
 			txt = "Central Regional Office";
 			break;

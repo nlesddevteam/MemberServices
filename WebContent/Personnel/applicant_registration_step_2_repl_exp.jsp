@@ -59,7 +59,7 @@ input {
 								</tr>
                                 <tr>
 							    <td class="tableTitle">School*:</td>
-				                <td class="tableResult" colspan=3><job:Schools id="school_id" cls="form-control" /></td>								
+				                <td class="tableResult" colspan=3><job:JobLocation id="school_id" cls="form-control" /></td></td>								
 							    </tr>
 								<tr>
 							    <td class="tableTitle">Grades/Subjects Taught*:</td>

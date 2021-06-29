@@ -58,8 +58,7 @@ public class ApplicantEsdReplExpTagHandler extends TagSupport {
 					out.println("<TR>");
 					out.println("<TD>" + sdf.format(beans[i].getFrom()) + "</TD>");
 					out.println("<TD>" + sdf.format(beans[i].getTo()) + "</TD>");
-					out.println("<TD>"+ SchoolDB.getSchool(beans[i].getSchoolId()).getSchoolName() + "</TD>");
-					out.println("<TD>" + beans[i].getGradesSubjects() + "</TD>");
+					out.println("<TD>"+ SchoolDB.getLocationText(beans[i].getSchoolId())+ "</TD>");
 					out.println("<TD><a class='btn btn-xs btn-danger' href='applicantRegistration.html?step=2B&del="+ beans[i].getId() + "'>DEL</a></td>");
 					out.println("</TR>");
 				}
@@ -69,10 +68,6 @@ public class ApplicantEsdReplExpTagHandler extends TagSupport {
 				out.println("No Replacement Contract Experience currently on file.");
 			}}
 			
-		}
-		catch (SchoolException e) {
-			e.printStackTrace();
-			throw new JspException(e.getMessage());
 		}
 		catch (JobOpportunityException e) {
 			e.printStackTrace();

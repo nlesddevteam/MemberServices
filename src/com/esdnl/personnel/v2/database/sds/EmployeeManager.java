@@ -571,10 +571,33 @@ public class EmployeeManager {
 			seniority.setSeniorityValue1(rs.getDouble("SENIORITY_NUMERIC"));
 			seniority.setSeniorityValue2(rs.getDouble("SENIORITY_NUMERIC_2"));
 			seniority.setSeniorityValue3(rs.getDouble("SENIORITY_NUMERIC_3"));
+			
 		}
 		catch (SQLException e) {
 			seniority = null;
 		}
+		// seniority date fields may not be available.
+				try {
+
+					if(rs.getDate("SENIORITY_DATE1") == null) {
+						seniority.setSeniorityDate1(null);
+					}else {
+						seniority.setSeniorityDate1((new java.util.Date(rs.getDate("SENIORITY_DATE1").getTime())));
+					}
+					if(rs.getDate("SENIORITY_DATE2") == null) {
+						seniority.setSeniorityDate2(null);
+					}else {
+						seniority.setSeniorityDate2((new java.util.Date(rs.getDate("SENIORITY_DATE2").getTime())));
+					}
+					
+				}
+				catch (SQLException e) {
+					seniority.setSeniorityDate1(null);
+					seniority.setSeniorityDate2(null);
+				}
+		
+		
+
 
 		return seniority;
 	}
