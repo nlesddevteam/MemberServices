@@ -74,11 +74,18 @@
 <!-- Bootstrap Grid Variables xs (phones), sm (tablets), md (desktops), and lg (larger desktops). -->
 <!-- class no-print for items not to print -->
 <div id="pageContentBody">
-<div class="alert alert-success">
+<div class="alert alert-success" style="display:none;">
 <b><i class="fas fa-exclamation-circle"></i> NEW UPDATE!</b><br/>We have added the ability to <b>attach/upload receipt(s)</b> now to a travel claim item for lodging and/or other charges where a receipt maybe required. This will prevent claim processing delays where receipts maybe required.
  </div>
 
-<img class="pageHeaderGraphic" style="max-width:200px;" src="/MemberServices/Travel/includes/img/tclaim.png" border=0/>
+<div class="alert alert-danger" style="font-size:14px;">
+<b><i class="fas fa-exclamation-circle"></i>NOTICE:</b> Travel system is now disabled. A new system will be implemented. You will only have access to previous claims. Sorry for any inconvenience this may cause. Please contact finance for assistance.
+ </div>
+
+
+<img class="pageHeaderGraphic" style="max-width:200px;display:none;" src="/MemberServices/Travel/includes/img/tclaim.png" border=0/>
+	
+<div style="display:none;">	
 	Welcome 
 		<span style="text-transform:Capitalize;font-weight:bold;">
 			<%=usr.getPersonnel().getFirstName().toLowerCase() %> 
@@ -101,15 +108,14 @@
 		Always make sure your	information in your profile is up-to-date with your correct mailing address and contact information. 
 	<br/><br/>
 	
-	
 
 	
 	<div class="siteSubHeaderBlue">RATES PER KILOMETER:</div>
 	
 	<c:if test="${todayDate gt expiredDate}">
 	<script>
-	$("#claimRateMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>PLEASE NOTE TRAVEL RATES HAVE EXPIRED</b><br/>Please wait until the official government rates have been approved before updating/editing a claim. You will NOT be able to add or edit a claim until new rates are assigned.");
-	$("#claimRateMessage").css("display","block");
+	//$("#claimRateMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>PLEASE NOTE TRAVEL RATES HAVE EXPIRED</b><br/>Please wait until the official government rates have been approved before updating/editing a claim. You will NOT be able to add or edit a claim until new rates are assigned.");
+//	$("#claimRateMessage").css("display","block");
 	</script>
 	</c:if>
 	
@@ -162,8 +168,8 @@
 		$(function() {
 			var test = $("#ccnt").val();
 			if (test > 0) {
-				$("#claimNoticeMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>NOTICE:</b> You currently have <span style='color:Red;font-size:14px;font-weight:bold;'>"+ test+ "</span> claim(s) awaiting your approval. <br/>Click on the <b>Supervisor</b> menu above to review the(se) outstanding claim(s).<br/>If you are NOT the claiments supervisor for a listed claim, please REJECT it back.");
-				$("#claimNoticeMessage").css("display","block");
+			//	$("#claimNoticeMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>NOTICE:</b> You currently have <span style='color:Red;font-size:14px;font-weight:bold;'>"+ test+ "</span> claim(s) awaiting your approval. <br/>Click on the <b>Supervisor</b> menu above to review the(se) outstanding claim(s).<br/>If you are NOT the claiments supervisor for a listed claim, please REJECT it back.");
+			//	$("#claimNoticeMessage").css("display","block");
 			} else {
 				$("#claimNoticeMessage").css("display","none");				
 			}
@@ -172,5 +178,9 @@
 		
 		
 </script>	
+
+</div>
+
+
 </body>
 </html>
