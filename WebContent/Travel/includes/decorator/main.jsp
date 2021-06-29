@@ -216,20 +216,28 @@ Iterator p_iter = null;
             <li class="nav-item active">
                 <a class="nav-link" href="index.jsp" onclick="loadingData()"><i class="fas fa-home"></i> HOME <span class="sr-only">(current)</span></a>
             </li>  
+   
+   <div style="display:none;">         
             <li class="nav-item">
                 <a class="nav-link" href="myProfile.html"  onclick="loadingData();loadMainDivPage('myProfile.html');return false;"><i class="fas fa-user"></i> PROFILE</a>
-            </li>        
+            </li>     
+   </div>            
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-invoice"></i> CLAIMS</a>
                 <ul class="dropdown-menu">        
 					<li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;"><i class="fa fa-fw fa-user"></i> My Previous Claims</a></li>  
+             <!-- 
               <c:if test="${todayDate le expiredDate}"> 
                     <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;"><i class="fa fa-fw fa-plus"></i> Start New Claim</a></li>
-             </c:if>                                      
+             </c:if>
+             -->                                      
                 </ul>
             </li>
             
- <esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	               
+ <esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	      
+ 
+ <div style="display:none;">
+          
              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-users-cog"></i> SUPERVISOR</a>
                 <ul class="dropdown-menu"> 
@@ -248,8 +256,12 @@ Iterator p_iter = null;
                     <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('viewPreviousApproved.html?sid=5');return false;"><i class="far fa-window-close"></i> Claims I Rejected</a></li>                     
                 </ul>
             </li>
+    </div>        
+            
 </esd:SecurityAccessRequired>    
-<esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-ADMIN,TRAVEL-EXPENSE-VIEW-REPORTS,TRAVEL-EXPENSE-SDS-EXPORT">            
+<esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-ADMIN,TRAVEL-EXPENSE-VIEW-REPORTS,TRAVEL-EXPENSE-SDS-EXPORT">       
+
+<div style="display:block;">
              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog"></i> ADMIN</a>
                 <ul class="dropdown-menu">  
@@ -298,13 +310,14 @@ Iterator p_iter = null;
        </esd:SecurityAccessRequired>  
       
       <esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-ADMIN">        
+                 <!-- 
                     <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-users"></i> Rules</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('listSupervisorRules.html');return false;"><i class="fa fa-fw fa-file-text-o"></i> Current Rules</a></li>
                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addSupervisorRule.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Add/Edit Rule</a></li>
                         </ul>
                     </li>
-                    
+                    -->
                      <!--  ********************* HIDE TRAVEL BUDGETS - FUTURE USE / NOT USED
 					<li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-bar-chart"></i> Budgets</a>
                         <ul class="dropdown-menu">
@@ -313,7 +326,7 @@ Iterator p_iter = null;
                         </ul>
                     </li>
                     END HIDE TRAVEL BUDGETS -->
-                    
+                    <!-- 
                      <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-users"></i> KM Rates</a>
                         <ul class="dropdown-menu">
                         
@@ -325,6 +338,8 @@ Iterator p_iter = null;
                             <li><a class="dropdown-item" href="https://www.gov.nl.ca/exec/hrs/working-with-us/auto-reimbursement/" target="_blank"><i class="fa fa-fw fa-file-text-o"></i> Gov NL Rates</a></li>
                         </ul>
                     </li>
+                    
+                    -->
         </esd:SecurityAccessRequired>
        <esd:SecurityAccessRequired permissions="TRAVEL-EXPENSE-VIEW-REPORTS">                 
                     <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-book"></i> Reports</a>
@@ -374,8 +389,13 @@ Iterator p_iter = null;
             </esd:SecurityAccessRequired>           
                 </ul>
             </li>
-</esd:SecurityAccessRequired>                
+   
+   </div>         
             
+</esd:SecurityAccessRequired>                
+   
+   
+            <!-- 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-question-circle"></i> HELP</a>
                 <ul class="dropdown-menu">
@@ -385,13 +405,14 @@ Iterator p_iter = null;
                		
                 </ul>
             </li>
+            -->
           </ul>
         
     </div>   
     
     <!--  SEARCH BAR IN NAV BAR -->
     <esd:SecurityAccessRequired	permissions="TRAVEL-CLAIM-ADMIN,TRAVEL-CLAIM-SEARCH,TRAVEL-EXPENSE-VIEW-REPORTS,TRAVEL-EXPENSE-SDS-EXPORT"> 
-		        <form class="form-inline searchFormNav" style="font-size:11px;margin-top:5px;">
+		        <form class="form-inline searchFormNav" style="font-size:11px;margin-top:5px;display:none;">
 		        <div class="input-group">
 		        <div class="form-check-inline">
 				  	<label class="form-check-label">
@@ -441,7 +462,7 @@ Iterator p_iter = null;
 								<decorator:body />	
 								
 						<br/>	
-						 <div class="alert alert-info no-print">
+						 <div class="alert alert-info no-print" style="display:none;">
 						 <span style='float:left;font-size:20px;padding-right:5px;'><i class="fas fa-comment"></i></span>						 
 						<b>NOTE:</b> This is a travel claim system ONLY. 
 						All other	expenditures MUST be handled through the District's purchasing system(s) or through school accounts. 
@@ -450,7 +471,7 @@ Iterator p_iter = null;
     					<div class="alert alert-warning no-print" >    					
     					<span style='float:left;font-size:20px;padding-right:5px;'><i class="far fa-question-circle"></i></span>
 						<b>SUPPORT:</b> If you are have any questions regarding a travel claim entry or payments, please contact Travel Claim Support 
-						 <a href="mailto:crystalwhitten@nlesd.ca?Travel Claim Support">Crystal Whitten</a> at (709) 758-2397. <br/>For technical problems, email <a href="mailto:geofftaylor@nlesd.ca?Travel Claim Support">geofftaylor@nlesd.ca</a>.
+						 <a href="mailto:crystalwhitten@nlesd.ca?Travel Claim Support">Crystal Whitten</a> at (709) 758-2397. <!-- <br/>For technical problems, email <a href="mailto:geofftaylor@nlesd.ca?Travel Claim Support">geofftaylor@nlesd.ca</a>.-->
 						 <!-- or   <a href="mailto:sherrymiller@nlesd.ca?Travel Claim Support">Sherry Miller</a> at (709) 758-2373.-->
 						
 						</div>		
@@ -465,12 +486,12 @@ Iterator p_iter = null;
    		<div style="display:inline-block;margin-top:5px;"><a href="index.jsp" class="btn btn-primary btn-sm" role="button" onclick="loadingData();">Home</a></div>
     	
   <c:if test="${todayDate le expiredDate}">  	
-    	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-danger btn-sm" role="button" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;">Start Claim</a></div>
+    	<div style="display:none;margin-top:5px;"><a href="#" class="btn btn-danger btn-sm" role="button" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;">Start Claim</a></div>
   </c:if>  	
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-success btn-sm" role="button" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;">My Claims</a></div>
-    	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-info btn-sm" role="button" onclick="loadingData();loadMainDivPage('myProfile.html');return false;">My Profile</a></div>
+    	<div style="display:none;margin-top:5px;"><a href="#" class="btn btn-info btn-sm" role="button" onclick="loadingData();loadMainDivPage('myProfile.html');return false;">My Profile</a></div>
  		<esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	 
- 		<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Claims to Approve</a></div>
+ 		<div style="display:none;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Claims to Approve</a></div>
  	</esd:SecurityAccessRequired>
 		</div>
 		
