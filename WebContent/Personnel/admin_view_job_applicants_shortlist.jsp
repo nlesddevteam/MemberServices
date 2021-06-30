@@ -307,16 +307,24 @@
 								</td>
 								<td style="vertical-align: middle;">
 									<% 
+									if(job.isSupport()){
 										EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(applicants[i]);
 										if(empbean == null){ %>
-										<span style="color: DimGrey;">0</span>
+											<span style="color: DimGrey;">0</span>
 										<%}else{ 
-											if(empbean.getSeniority() == null){%>
-												<span style='color: red;'>0</span>
-											<%}else{ %>
-												<span style='color: red;'><%= String.format("%.2f", empbean.getSeniority().getShortlistValue(),2)%></span>
-											<%} %>
-										<%}%>
+												if(empbean.getSeniority() == null){%>
+													<span style='color: red;'>0</span>
+												<%}else{ %>
+													<span style='color: red;'><%= String.format("%.2f", empbean.getSeniority().getShortlistValue(),2)%></span>
+												<%} %>
+										<%}%>	
+									<%}else{%>
+											<%if (applicants[i].getSenority() > 0) {%> 
+												<span style='color: red;'><%= applicants[i].getSenority()%></span> 
+											<%} else {%>
+												<span style="color: DimGrey;">0</span> 
+											<%}%>
+									<%} %>
 									
 									
 								</td>							
