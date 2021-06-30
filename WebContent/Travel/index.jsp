@@ -79,13 +79,14 @@
  </div>
 
 <div class="alert alert-danger" style="font-size:14px;">
-<b><i class="fas fa-exclamation-circle"></i>NOTICE:</b> Travel system is now disabled. A new system will be implemented. You will only have access to previous claims. Sorry for any inconvenience this may cause. Please contact finance for assistance.
+<b><i class="fas fa-exclamation-circle"></i>NOTICE:</b> 
+Please be advised that as of August 1st, 2021 all expense claims are to be submitted via the District's new Financial System. Sorry for any inconvenience this may cause.
  </div>
 
 
 <img class="pageHeaderGraphic" style="max-width:200px;display:none;" src="/MemberServices/Travel/includes/img/tclaim.png" border=0/>
 	
-<div style="display:none;">	
+<div style="display:block;">	
 	Welcome 
 		<span style="text-transform:Capitalize;font-weight:bold;">
 			<%=usr.getPersonnel().getFirstName().toLowerCase() %> 
@@ -114,8 +115,8 @@
 	
 	<c:if test="${todayDate gt expiredDate}">
 	<script>
-	//$("#claimRateMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>PLEASE NOTE TRAVEL RATES HAVE EXPIRED</b><br/>Please wait until the official government rates have been approved before updating/editing a claim. You will NOT be able to add or edit a claim until new rates are assigned.");
-//	$("#claimRateMessage").css("display","block");
+	$("#claimRateMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>PLEASE NOTE TRAVEL RATES HAVE EXPIRED</b><br/>Please wait until the official government rates have been approved before updating/editing a claim. You will NOT be able to add or edit a claim until new rates are assigned.");
+	$("#claimRateMessage").css("display","block");
 	</script>
 	</c:if>
 	
@@ -168,8 +169,8 @@
 		$(function() {
 			var test = $("#ccnt").val();
 			if (test > 0) {
-			//	$("#claimNoticeMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>NOTICE:</b> You currently have <span style='color:Red;font-size:14px;font-weight:bold;'>"+ test+ "</span> claim(s) awaiting your approval. <br/>Click on the <b>Supervisor</b> menu above to review the(se) outstanding claim(s).<br/>If you are NOT the claiments supervisor for a listed claim, please REJECT it back.");
-			//	$("#claimNoticeMessage").css("display","block");
+				$("#claimNoticeMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>NOTICE:</b> You currently have <span style='color:Red;font-size:14px;font-weight:bold;'>"+ test+ "</span> claim(s) awaiting your approval. <br/>Click on the <b>Supervisor</b> menu above to review the(se) outstanding claim(s).<br/>If you are NOT the claiments supervisor for a listed claim, please REJECT it back.");
+			$("#claimNoticeMessage").css("display","block");
 			} else {
 				$("#claimNoticeMessage").css("display","none");				
 			}

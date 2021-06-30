@@ -217,7 +217,7 @@ Iterator p_iter = null;
                 <a class="nav-link" href="index.jsp" onclick="loadingData()"><i class="fas fa-home"></i> HOME <span class="sr-only">(current)</span></a>
             </li>  
    
-   <div style="display:none;">         
+   <div style="display:block;">         
             <li class="nav-item">
                 <a class="nav-link" href="myProfile.html"  onclick="loadingData();loadMainDivPage('myProfile.html');return false;"><i class="fas fa-user"></i> PROFILE</a>
             </li>     
@@ -226,17 +226,17 @@ Iterator p_iter = null;
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-invoice"></i> CLAIMS</a>
                 <ul class="dropdown-menu">        
 					<li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;"><i class="fa fa-fw fa-user"></i> My Previous Claims</a></li>  
-             <!-- 
+           
               <c:if test="${todayDate le expiredDate}"> 
                     <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;"><i class="fa fa-fw fa-plus"></i> Start New Claim</a></li>
              </c:if>
-             -->                                      
+                                              
                 </ul>
             </li>
             
  <esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	      
  
- <div style="display:none;">
+ <div style="display:block;">
           
              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-users-cog"></i> SUPERVISOR</a>
@@ -310,14 +310,14 @@ Iterator p_iter = null;
        </esd:SecurityAccessRequired>  
       
       <esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-ADMIN">        
-                 <!-- 
+                
                     <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-users"></i> Rules</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('listSupervisorRules.html');return false;"><i class="fa fa-fw fa-file-text-o"></i> Current Rules</a></li>
                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addSupervisorRule.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Add/Edit Rule</a></li>
                         </ul>
                     </li>
-                    -->
+                   
                      <!--  ********************* HIDE TRAVEL BUDGETS - FUTURE USE / NOT USED
 					<li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-bar-chart"></i> Budgets</a>
                         <ul class="dropdown-menu">
@@ -326,7 +326,7 @@ Iterator p_iter = null;
                         </ul>
                     </li>
                     END HIDE TRAVEL BUDGETS -->
-                    <!-- 
+                   
                      <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-users"></i> KM Rates</a>
                         <ul class="dropdown-menu">
                         
@@ -339,7 +339,7 @@ Iterator p_iter = null;
                         </ul>
                     </li>
                     
-                    -->
+                 
         </esd:SecurityAccessRequired>
        <esd:SecurityAccessRequired permissions="TRAVEL-EXPENSE-VIEW-REPORTS">                 
                     <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-book"></i> Reports</a>
@@ -395,7 +395,7 @@ Iterator p_iter = null;
 </esd:SecurityAccessRequired>                
    
    
-            <!-- 
+          
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-question-circle"></i> HELP</a>
                 <ul class="dropdown-menu">
@@ -405,7 +405,7 @@ Iterator p_iter = null;
                		
                 </ul>
             </li>
-            -->
+           
           </ul>
         
     </div>   
@@ -486,12 +486,12 @@ Iterator p_iter = null;
    		<div style="display:inline-block;margin-top:5px;"><a href="index.jsp" class="btn btn-primary btn-sm" role="button" onclick="loadingData();">Home</a></div>
     	
   <c:if test="${todayDate le expiredDate}">  	
-    	<div style="display:none;margin-top:5px;"><a href="#" class="btn btn-danger btn-sm" role="button" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;">Start Claim</a></div>
+    	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-danger btn-sm" role="button" onclick="loadingData();loadMainDivPage('addTravelClaim.html');return false;">Start Claim</a></div>
   </c:if>  	
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-success btn-sm" role="button" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;">My Claims</a></div>
-    	<div style="display:none;margin-top:5px;"><a href="#" class="btn btn-info btn-sm" role="button" onclick="loadingData();loadMainDivPage('myProfile.html');return false;">My Profile</a></div>
+    	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-info btn-sm" role="button" onclick="loadingData();loadMainDivPage('myProfile.html');return false;">My Profile</a></div>
  		<esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	 
- 		<div style="display:none;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Claims to Approve</a></div>
+ 		<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Claims to Approve</a></div>
  	</esd:SecurityAccessRequired>
 		</div>
 		
