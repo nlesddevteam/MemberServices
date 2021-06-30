@@ -172,7 +172,7 @@
     
 <style>
 		input { border:1px solid silver; }
-		.btn {font-size:11px;}
+		.btn {font-size:11px;line-height:110%;}
 </style>	
 </head>
 <body>
@@ -201,9 +201,9 @@
 						<thead>
 							<tr>
 								<th width='20%'>NAME/EMAIL</th>								
-								<th width='8%'>SENIORITY</th>								
-								<th width='30'>POSITION</th>
-								<th width='*'>OPTIONS</th>
+								<th width='5%'>SEN (Y)</th>								
+								<th width='35%'>POSITION</th>
+								<th width='40%'>OPTIONS</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -301,11 +301,11 @@
 							<tr>
 								<%statusi++; %>
 
-								<td style="vertical-align: top;">
+								<td width="20%" style="vertical-align: top;">
 									<%=applicants[i].getSurname()%>,<%=applicants[i].getFirstname()%><br/>								
 									<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br />Tel: <%=applicants[i].getHomephone()%>
 								</td>
-								<td style="vertical-align: middle;">
+								<td width="5%" style="vertical-align: middle;">
 									<% 
 									if(job.isSupport()){
 										EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(applicants[i]);
@@ -328,7 +328,7 @@
 									
 									
 								</td>							
-								<td>
+								<td width="35%">
 								<div style="color: DimGrey; padding-bottom: 3px;">	
 								<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
 							<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span> <br/>
@@ -351,17 +351,16 @@
 								
 								
 								
-								<td style="text-align:right;">
+								<td width="40%" style="text-align:right;vertical-align: top;">
 									<div style="padding-top: 5px; text-align: right;">
-										<a class='btn btn-xs btn-primary'
-											href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Profile</a>
+										<a class='btn btn-xs btn-primary'	 href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">Applicant<br/>Profile</a>
 										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW">
 											<%
 	                                        		if(!job.isAwarded() && !job.isCancelled() && !job.isShortlistComplete() && !declinedInterview && !withdrawInterview)
-	                                        			out.println("<a class='btn btn-xs btn-danger' href='removeShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Remove</a>");
+	                                        			out.println("<a class='btn btn-xs btn-danger' href='removeShortlistApplicant.html?sin=" + applicants[i].getSIN() + "' >Remove<br/>Applicant</a>");
 	                                        	
 	                                        		if(!declinedInterview && !withdrawInterview){
-	                                        			out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','D')\">Interview Declined?</a>");
+	                                        			out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','D')\">Interview<br/>Declined?</a>");
                                         			}
 	                                        		else {
 	                                        	%>
@@ -375,7 +374,7 @@
 	                                        		}
 	                                        		
 	                                        		if(!withdrawInterview && !declinedInterview){
-	                                        			out.println("<a id='btn-withdraw-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','W')\">Withdrew?</a>");
+	                                        			out.println("<a id='btn-withdraw-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','W')\">Applicant<br/>Withdrew?</a>");
                                         			}
 	                                        		else {
 	    	                                        	%>
@@ -395,7 +394,7 @@
 											permissions="PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW">
 											<%
 	                                        	if(!declinedInterview && !withdrawInterview){
-                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','D')\">Interview Declined?</a>");
+                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','D')\">Interview<br/>Declined?</a>");
                                 				}
                                     			else {
                                     		%>
@@ -409,7 +408,7 @@
 	                                        %>
 	                                        <%
 	                                        	if(!withdrawInterview && !declinedInterview){
-                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','W')\">Withdrew?</a>");
+                                					out.println("<a id='btn-decline-interviewp' class='btn btn-xs btn-danger' onclick=\"openDecline('" + applicants[i].getSIN() + "','W')\">Applicant<br/>Withdrew?</a>");
                                 				}
                                     			else {
                                     		%>
@@ -430,11 +429,11 @@
 		                                        	
 		                                        		if(!interviewSummaryMap.containsKey(applicants[i].getUID()) || job.getJobType().equal(JobTypeConstant.POOL)) {
 		                                        			out.println("<a class='btn btn-xs btn-success' href='addInterviewSummary.html?applicant_id=" + applicants[i].getUID() 
-		                                        				+ "&comp_num=" + job.getCompetitionNumber() + "'>Add Interview Summary</a>");
+		                                        				+ "&comp_num=" + job.getCompetitionNumber() + "'>Add Interview<br/>Summary</a>");
 		                                        		}
 		                                        		else {
 		                                        			out.println("<a class='btn btn-xs btn-primary' href='listInterviewSummaries.html?comp_num=" + job.getCompetitionNumber() + "&id=" + applicants[i].getUID() 
-			                                        			+ "' >Interview Summaries</a>");
+			                                        			+ "' >Interview<br/>Summaries</a>");
 		                                        		}
 		                                        	%>
 										</esd:SecurityAccessRequired>
@@ -453,18 +452,18 @@
 		                                        		
 		                                        		if(!interviewSummaryMap.containsKey(applicants[i].getUID()) || job.getJobType().equal(JobTypeConstant.POOL)) {
 		                                        			out.println("<a class='btn btn-xs btn-success' href='addInterviewSummary.html?applicant_id=" + applicants[i].getUID() 
-		                                        				+ "&comp_num=" + job.getCompetitionNumber() + "'>Add Interview Summary</a>");
+		                                        				+ "&comp_num=" + job.getCompetitionNumber() + "'>Add Interview<br/>Summary</a>");
 		                                        		}
 		                                        		else {
 		                                        			out.println("<a class='btn btn-xs btn-primary' href='listInterviewSummaries.html?comp_num=" + job.getCompetitionNumber() + "&id=" + applicants[i].getUID() 
-			                                        			+ "'>Interview Summaries</a>");
+			                                        			+ "'>Interview<br/>Summaries</a>");
 		                                        		}
 		                                        		
 		                                        	%>
 										</esd:SecurityAccessRequired>
 										<% } %>
 										<% if(!declinedInterview && !withdrawInterview) { %>
-										<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference	Request</a>
+										<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference<br/>Request</a>
 										<% } %>
 
 									</div>
