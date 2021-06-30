@@ -546,7 +546,7 @@ dtable=$("#claimItemsTable").DataTable({
 			
 <%}else { %>
 			<div align="center" class="no-print" style="padding-bottom:10px;">
-					<!-- <a href="#" class="noJump btn btn-sm btn-success" data-toggle="collapse" data-target="#addClaimItemArea" id="addItemLink"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>-->
+					<a href="#" class="noJump btn btn-sm btn-success" data-toggle="collapse" data-target="#addClaimItemArea" id="addItemLink"><i class="far fa-plus-square"></i> Add a Item to this Claim</a>
 			
 			
  <%if(claim instanceof PDTravelClaim){%>
