@@ -247,7 +247,7 @@ public class EmployeePositionBean {
 
 	public boolean isRegular() {
 
-		return EmployeePositionBean.PositionType.REPLACEMENT.equals(getPositionType());
+		return EmployeePositionBean.PositionType.REGULAR.equals(getPositionType());
 	}
 
 	public PositionCode getPositionCode() {
@@ -342,7 +342,7 @@ public class EmployeePositionBean {
 
 	public boolean isError() {
 
-		return (this.startDate == null) || (this.endDate == null)
+		return (this.startDate == null) // || (this.endDate == null) -- open ended contracts do exist and are valid
 				|| (this.endDate != null && this.startDate != null && this.endDate.before(this.startDate))
 				|| (this.startDate != null
 						&& !com.esdnl.personnel.v2.utils.StringUtils.getSchoolYear(this.startDate).equals(this.schoolYear));
