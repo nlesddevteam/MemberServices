@@ -7,7 +7,8 @@
                  com.esdnl.personnel.jobs.bean.*,
                  com.esdnl.personnel.jobs.dao.*,
                  com.esdnl.personnel.v2.model.sds.bean.*,
-                 com.esdnl.personnel.v2.database.sds.*" 
+                 com.esdnl.personnel.v2.database.sds.*,
+                 java.util.stream.*" 
          isThreadSafe="false"%>
          
 <!-- LOAD JAVA TAG LIBRARIES -->
@@ -50,7 +51,12 @@
   
   Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
-		permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
+		//permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
+		
+		Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetitionShortlist(job);
+		
+		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions()))
+				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
 	}
 	
   Calendar rec_search_cal = Calendar.getInstance();
@@ -305,7 +311,7 @@
 									<%=applicants[i].getSurname()%>,<%=applicants[i].getFirstname()%><br/>								
 									<a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a><br />Tel: <%=applicants[i].getHomephone()%>
 								</td>
-								<td width="5%" style="vertical-align: middle;">
+								<td width="5%" style="vertical-align: top;">
 									<% 
 									if(job.isSupport()){
 										EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(applicants[i]);

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.TeacherAllocationBean;
 import com.esdnl.personnel.v2.model.availability.bean.EmployeeAvailabilityBean;
 import com.esdnl.personnel.v2.model.recognition.bean.IEntity;
@@ -351,7 +352,7 @@ public class EmployeeBean implements IEntity {
 		return this.seniority.values().stream().filter(
 				s -> !s.getUnion().equals(EmployeeSeniorityBean.Union.NLTA)).findFirst().orElse(null);
 	}
-	
+
 	public EmployeeSeniorityBean getSenioritySupport() {
 
 		if (seniority.size() < 1)
@@ -506,6 +507,15 @@ public class EmployeeBean implements IEntity {
 	public boolean hasPermanentPositions() {
 
 		return getPermanentPositions().size() > 0;
+	}
+
+	public boolean is(ApplicantProfileBean profile) {
+
+		return org.apache.commons.lang.StringUtils.equals(this.SIN, profile.getSIN())
+				|| (org.apache.commons.lang.StringUtils.isNotBlank(profile.getSIN2())
+						&& org.apache.commons.lang.StringUtils.equals(this.SIN, profile.getSIN2()))
+				|| (org.apache.commons.lang.StringUtils.isNotBlank(this.email) && org.apache.commons.lang.StringUtils.equals(
+						this.email.toLowerCase().trim(), profile.getEmail().toLowerCase().trim()));
 	}
 
 	public String toXML() {
