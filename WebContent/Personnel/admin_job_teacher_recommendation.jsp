@@ -6,7 +6,10 @@
                   com.esdnl.personnel.jobs.dao.*,
                   com.esdnl.personnel.jobs.constants.*,
                   com.esdnl.util.*,
-                  com.esdnl.servlet.Form" 
+                  com.esdnl.servlet.Form,
+                  com.esdnl.personnel.v2.model.sds.bean.*,
+                  com.esdnl.personnel.v2.database.sds.*,
+                  java.util.stream.*" 
          isThreadSafe="false"%>
 
 		<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -43,7 +46,12 @@
   boolean seniorityHire = false;
   Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
-		permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
+		//permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
+		Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetitionShortlist(job);
+		
+		permApplicants = Arrays.stream(ApplicantProfileManager.getApplicantShortlist(job)).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions()))
+				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
+		
 		seniorityHire = (permApplicants.size() > 0);
 	}
 %>

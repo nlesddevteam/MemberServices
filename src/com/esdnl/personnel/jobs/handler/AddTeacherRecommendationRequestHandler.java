@@ -3,6 +3,7 @@ package com.esdnl.personnel.jobs.handler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,8 @@ import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
 import com.esdnl.personnel.jobs.dao.NLESDReferenceListManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
+import com.esdnl.personnel.v2.database.sds.EmployeeManager;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormElementPattern;
 import com.esdnl.servlet.FormValidator;
@@ -60,7 +63,7 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 	public AddTeacherRecommendationRequestHandler() {
 
 		requiredPermissions = new String[] {
-				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW","RTH-VIEW-SHORTLIST"
+				"PERSONNEL-ADMIN-VIEW", "PERSONNEL-PRINCIPAL-VIEW", "PERSONNEL-VICEPRINCIPAL-VIEW", "RTH-VIEW-SHORTLIST"
 		};
 	}
 
@@ -147,8 +150,13 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 							boolean seniorityHire = false;
 							Map<String, ApplicantProfileBean> permApplicants = null;
 							if (job.getJobType().equal(JobTypeConstant.REGULAR)) {
-								permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(
-										job.getCompetitionNumber());
+								//permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
+
+								Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetitionShortlist(job);
+
+								permApplicants = Arrays.stream(ApplicantProfileManager.getApplicantShortlist(job)).filter(
+										a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions())).collect(
+												Collectors.toMap(a -> a.getSIN(), a -> a));
 								seniorityHire = (permApplicants.size() > 0);
 							}
 

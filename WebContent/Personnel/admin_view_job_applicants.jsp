@@ -5,7 +5,9 @@
 			 				 com.esdnl.personnel.jobs.bean.*,                
 			 				 com.awsd.security.*,     
 			 				 com.esdnl.util.*,    				 
-			 				 com.awsd.mail.bean.*,         				 
+			 				 com.awsd.mail.bean.*, 
+			 				 com.esdnl.personnel.v2.database.sds.*,
+			 				 com.esdnl.personnel.v2.model.sds.bean.*,        				 
 			 				 java.util.*,
 			 				 java.text.*,
 			 				 java.util.stream.*"
@@ -44,12 +46,18 @@
 	
 	Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
-		permApplicants = ApplicantProfileManager.getCompetitionPermanentCandidates(job.getCompetitionNumber());
+		//permApplicants = ApplicantProfileManager.getCompetitionPermanentCandidates(job.getCompetitionNumber());
+		Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetition(job);
 		
+		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions()))
+				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
+		
+		/*
 		if(session.getAttribute("sfilterparams") != null) {
 			List<String> filteredApplicants = Arrays.stream(applicants).map(a -> a.getUID()).collect(Collectors.toList());
-			permApplicants = permApplicants.entrySet().stream().filter(e -> filteredApplicants.contains(e.getKey())).collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())) ;
+			permApplicants = permApplicants.entrySet().stream().filter(e -> filteredApplicants.contains(e.getKey())).collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 		}
+		*/
 	}
 	
 	int locationId = ((JobOpportunityAssignmentBean) job.get(0)).getLocation();

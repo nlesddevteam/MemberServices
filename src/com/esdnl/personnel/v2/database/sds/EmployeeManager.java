@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
+import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.v2.database.availability.EmployeeAvailabilityManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
@@ -170,6 +171,108 @@ public class EmployeeManager {
 		}
 
 		return eBean;
+	}
+
+	public static Map<String, EmployeeBean> getEmployeeBeanByCompetition(JobOpportunityBean job)
+			throws EmployeeException {
+
+		Map<String, EmployeeBean> emps = new HashMap<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_comp(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, job.getCompetitionNumber());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
+					if (!emps.containsKey(rs.getString("EMP_ID"))) {
+						emps.put(rs.getString("EMP_ID"), createEmployeeBean(rs));
+					}
+					else {
+						EmployeeBean eBean = emps.get(rs.getString("EMP_ID"));
+						eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+						eBean.addPosition(createEmployeePositionBean(eBean, rs));
+					}
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("EmployeeBean getEmployeeBeanByCompetition(JobOpportunityBean job): " + e);
+			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return emps;
+	}
+
+	public static Map<String, EmployeeBean> getEmployeeBeanByCompetitionShortlist(JobOpportunityBean job)
+			throws EmployeeException {
+
+		Map<String, EmployeeBean> emps = new HashMap<>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_comp_sl(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, job.getCompetitionNumber());
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
+					if (!emps.containsKey(rs.getString("EMP_ID"))) {
+						emps.put(rs.getString("EMP_ID"), createEmployeeBean(rs));
+					}
+					else {
+						EmployeeBean eBean = emps.get(rs.getString("EMP_ID"));
+						eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+						eBean.addPosition(createEmployeePositionBean(eBean, rs));
+					}
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("EmployeeBean getEmployeeBeanByCompetition(JobOpportunityBean job): " + e);
+			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return emps;
 	}
 
 	public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year)
@@ -571,32 +674,31 @@ public class EmployeeManager {
 			seniority.setSeniorityValue1(rs.getDouble("SENIORITY_NUMERIC"));
 			seniority.setSeniorityValue2(rs.getDouble("SENIORITY_NUMERIC_2"));
 			seniority.setSeniorityValue3(rs.getDouble("SENIORITY_NUMERIC_3"));
-			
+
 		}
 		catch (SQLException e) {
 			seniority = null;
 		}
 		// seniority date fields may not be available.
-				try {
+		try {
 
-					if(rs.getDate("SENIORITY_DATE1") == null) {
-						seniority.setSeniorityDate1(null);
-					}else {
-						seniority.setSeniorityDate1((new java.util.Date(rs.getDate("SENIORITY_DATE1").getTime())));
-					}
-					if(rs.getDate("SENIORITY_DATE2") == null) {
-						seniority.setSeniorityDate2(null);
-					}else {
-						seniority.setSeniorityDate2((new java.util.Date(rs.getDate("SENIORITY_DATE2").getTime())));
-					}
-					
-				}
-				catch (SQLException e) {
-					seniority =  null;
-				}
-		
-		
+			if (rs.getDate("SENIORITY_DATE1") == null) {
+				seniority.setSeniorityDate1(null);
+			}
+			else {
+				seniority.setSeniorityDate1((new java.util.Date(rs.getDate("SENIORITY_DATE1").getTime())));
+			}
+			if (rs.getDate("SENIORITY_DATE2") == null) {
+				seniority.setSeniorityDate2(null);
+			}
+			else {
+				seniority.setSeniorityDate2((new java.util.Date(rs.getDate("SENIORITY_DATE2").getTime())));
+			}
 
+		}
+		catch (SQLException e) {
+			seniority = null;
+		}
 
 		return seniority;
 	}
