@@ -412,7 +412,7 @@ Iterator p_iter = null;
     
     <!--  SEARCH BAR IN NAV BAR -->
     <esd:SecurityAccessRequired	permissions="TRAVEL-CLAIM-ADMIN,TRAVEL-CLAIM-SEARCH,TRAVEL-EXPENSE-VIEW-REPORTS,TRAVEL-EXPENSE-SDS-EXPORT"> 
-		        <form class="form-inline searchFormNav" style="font-size:11px;margin-top:5px;display:none;">
+		        <form class="form-inline searchFormNav" style="font-size:11px;margin-top:5px;">
 		        <div class="input-group">
 		        <div class="form-check-inline">
 				  	<label class="form-check-label">
