@@ -32,9 +32,11 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
 import com.esdnl.personnel.jobs.constants.DocumentType;
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
+import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
 import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
 import com.esdnl.personnel.jobs.dao.comparator.IntegerReverseComparator;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
 import com.esdnl.personnel.v2.utils.StringUtils;
 
 import oracle.jdbc.OracleCallableStatement;
@@ -1123,8 +1125,8 @@ public class ApplicantProfileManager {
 
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
-	public static ApplicantProfileBean[] getApplicantShortlistBySchool(int lid, int sid)
-			throws JobOpportunityException {
+
+	public static ApplicantProfileBean[] getApplicantShortlistBySchool(int lid, int sid) throws JobOpportunityException {
 
 		Vector<ApplicantProfileBean> v_opps = null;
 		ApplicantProfileBean eBean = null;
@@ -1149,7 +1151,8 @@ public class ApplicantProfileManager {
 			}
 		}
 		catch (SQLException e) {
-			System.err.println("static ApplicantProfileBean[] getApplicantShortlistBySchool(SubListBean list, School s): " + e);
+			System.err.println(
+					"static ApplicantProfileBean[] getApplicantShortlistBySchool(SubListBean list, School s): " + e);
 			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
 		}
 		finally {
@@ -1169,6 +1172,7 @@ public class ApplicantProfileManager {
 
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
+
 	public static List<ApplicantProfileBean> getApplicantShortlistByTRNLVL(	School s, String sy,
 																																					TrainingMethodConstant trnlvl)
 			throws JobOpportunityException {
@@ -1239,9 +1243,19 @@ public class ApplicantProfileManager {
 			//APPLICANT_ESD_EXP.*,
 			sql.append(" NVL(sen.\"SENORITY\", 0) SENORITY FROM AWSD_USER.APPLICANT LEFT JOIN ");
 			sql.append(
-					"(SELECT REPLACE(REPLACE(TRIM(mas.\"SIN\"),' ', ''), '-', '') \"SENSIN\", SEN.\"Seniority_Numeric\" \"SENORITY\", MAS.\"EMAIL\" \"SENEMAIL\" FROM AWSD_USER.SDS_PREMPMAS mas JOIN AWSD_USER.SDS_PRSENMAS sen ON trim(mas.EMP_ID) = trim(sen.\"Employee\")) sen ");
+					"(SELECT REPLACE(REPLACE(TRIM(mas.\"SIN\"),' ', ''), '-', '') \"SENSIN\", SEN.\"Seniority_Numeric\" \"SENORITY\", MAS.\"EMAIL\" \"SENEMAIL\" FROM AWSD_USER.SDS_PREMPMAS mas JOIN AWSD_USER.SDS_PRSENMAS sen ON trim(mas.EMP_ID) = trim(sen.\"Employee\")");
+			if (params.getJob() != null) {
+				JobTypeConstant jt = params.getJob().getJobType();
+				if (jt.equal(JobTypeConstant.TLA_REGULAR) || jt.equal(JobTypeConstant.TLA_REPLACEMENT)) {
+					sql.append(" AND sen.\"Union_Code\" = '" + EmployeeSeniorityBean.Union.NLTA_TLA.getUnionCode() + "'");
+				}
+				else {
+					sql.append(" AND sen.\"Union_Code\" = '" + EmployeeSeniorityBean.Union.NLTA.getUnionCode() + "'");
+				}
+			}
+
 			sql.append(
-					"ON (REPLACE(REPLACE(TRIM(APPLICANT.SIN2),' ', ''), '-', '') = sen.\"SENSIN\" OR REPLACE(REPLACE(TRIM(APPLICANT.\"SIN\"),' ', ''), '-', '') = sen.\"SENSIN\" OR LOWER(APPLICANT.EMAIL) = LOWER(sen.\"SENEMAIL\")) ");
+					") sen ON (REPLACE(REPLACE(TRIM(APPLICANT.SIN2),' ', ''), '-', '') = sen.\"SENSIN\" OR REPLACE(REPLACE(TRIM(APPLICANT.\"SIN\"),' ', ''), '-', '') = sen.\"SENSIN\" OR LOWER(APPLICANT.EMAIL) = LOWER(sen.\"SENEMAIL\")) ");
 			sql.append(" LEFT JOIN AWSD_USER.APPLICANT_ESD_EXP ON APPLICANT.SIN =  APPLICANT_ESD_EXP.SIN WHERE ");
 
 			if (params.getJob() != null)
@@ -2789,6 +2803,7 @@ public class ApplicantProfileManager {
 
 		return hasRecs;
 	}
+
 	public static HashMap<String, ApplicantProfileBean> getApplicantShortlistInterviewWithdrawsMap(JobOpportunityBean opp)
 			throws JobOpportunityException {
 
@@ -2836,8 +2851,8 @@ public class ApplicantProfileManager {
 
 		return v_opps;
 	}
-	public static void withdrawShortlistApplicant(String sin, JobOpportunityBean opp)
-			throws JobOpportunityException {
+
+	public static void withdrawShortlistApplicant(String sin, JobOpportunityBean opp) throws JobOpportunityException {
 
 		Connection con = null;
 		CallableStatement stat = null;
@@ -2873,5 +2888,5 @@ public class ApplicantProfileManager {
 			}
 			catch (Exception e) {}
 		}
-	}	
+	}
 }
