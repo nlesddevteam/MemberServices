@@ -49,7 +49,7 @@
 		//permApplicants = ApplicantProfileManager.getCompetitionPermanentCandidates(job.getCompetitionNumber());
 		Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetition(job);
 		
-		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions()))
+		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.isPermanent()))
 				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
 		
 		/*
@@ -567,12 +567,12 @@
 								
 								<td style="vertical-align: top;">																		
 									<div style="color: DimGrey; padding-bottom: 3px;">
+										<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
+											<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span>
+										<% } %>	
 										<% if(shortlistMap.containsKey(applicants[i].getUID())) { %>
 												<span style="background-color:#1E90FF;color:white;font-weight:bold;">&nbsp; SHORTLISTED &nbsp; </span> &nbsp;							
 										<% } %>
-										<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
-											<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span>
-										<% } %>		
 										<% if((((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID()))) || shortlistMap.containsKey(applicants[i].getUID())) { %>		
 											<br/>
 										<% } %>											

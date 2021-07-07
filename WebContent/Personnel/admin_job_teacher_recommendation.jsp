@@ -49,7 +49,8 @@
 		//permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
 		Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetitionShortlist(job);
 		
-		permApplicants = Arrays.stream(ApplicantProfileManager.getApplicantShortlist(job)).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions()))
+		permApplicants = Arrays.stream(ApplicantProfileManager.getApplicantShortlist(job))
+				.filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.isPermanent()))
 				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
 		
 		seniorityHire = (permApplicants.size() > 0);
