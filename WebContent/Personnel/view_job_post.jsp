@@ -285,7 +285,7 @@ function parseAddApplicantResponse(data){
 	    	<a class="btn btn-xs btn-danger" href="#" data-toggle="modal" data-target="#deletePost">Delete Post</a>               	
 	      <a class="btn btn-xs btn-info"  href='admin_post_job.jsp?comp_num=<%=request.getParameter("comp_num")%>'>Edit Post</a>
 	    <%}%>
-	    <%if ((opp != null) && (!opp.isCancelled() && !opp.isAwarded()) && !recInProgress) {%>
+	    <%if ((opp != null) && !opp.isCancelled()) {%>
 	    	<a class="btn btn-xs btn-warning" href="#" data-toggle="modal" data-target="#cancelPost">Cancel Post</a>
 	    <%}%>
 		</esd:SecurityAccessRequired>            
