@@ -55,7 +55,7 @@
 		
 		Map<String, EmployeeBean> empBeans = EmployeeManager.getEmployeeBeanByCompetitionShortlist(job);
 		
-		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.hasPermanentPositions()))
+		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.isPermanent()))
 				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
 	}
 	
@@ -336,9 +336,9 @@
 								</td>							
 								<td width="35%">
 								<div style="color: DimGrey; padding-bottom: 3px;">	
-								<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
-							<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span> <br/>
-								<% } %>							
+										<% if((permApplicants != null) && permApplicants.containsKey(applicants[i].getUID())) { %>								
+											<span style="background-color:#228B22;color:white;font-weight:bold;">&nbsp; PERMANENT &nbsp; </span> <br/>
+										<% } %>							
 										<%if(!StringUtils.isEmpty(position)){ %>
 										<b><%=cssText%></b><br/>
 										<%=position %>

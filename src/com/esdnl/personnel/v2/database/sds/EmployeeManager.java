@@ -19,6 +19,7 @@ import com.esdnl.personnel.v2.database.availability.EmployeeAvailabilityManager;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeBean;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeException;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean;
+import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean.ActivityCode;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean.PositionCode;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeePositionBean.PositionType;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
@@ -30,718 +31,678 @@ import oracle.jdbc.OracleTypes;
 
 public class EmployeeManager {
 
-	public static EmployeeBean getEmployeeBean(String emp_id) throws EmployeeException {
+    public static EmployeeBean getEmployeeBean(String emp_id) throws EmployeeException {
 
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-		try {
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, emp_id);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp(?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, emp_id);
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
 
-			while (rs.next()) {
-				if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-				}
-				else {
-					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					eBean.addPosition(createEmployeePositionBean(eBean, rs));
-				}
-			}
+	    while (rs.next()) {
+		if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+		    eBean = createEmployeeBean(rs);
+		} else {
+		    eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+		    eBean.addPosition(createEmployeePositionBean(eBean, rs));
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return eBean;
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean getEmployeeBeanBySIN(String sin) throws EmployeeException {
+	return eBean;
+    }
 
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean getEmployeeBeanBySIN(String sin) throws EmployeeException {
 
-		try {
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_sin(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, sin);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			while (rs.next()) {
-				if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-				}
-				else {
-					eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					eBean.addPosition(createEmployeePositionBean(eBean, rs));
-				}
-			}
+	try {
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_sin(?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, sin);
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+		    eBean = createEmployeeBean(rs);
+		} else {
+		    eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+		    eBean.addPosition(createEmployeePositionBean(eBean, rs));
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean getEmployeeBeanBySIN(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return eBean;
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean getEmployeeBeanBySIN(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean getEmployeeBeanByApplicantProfile(ApplicantProfileBean profile) throws EmployeeException {
+	return eBean;
+    }
 
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean getEmployeeBeanByApplicantProfile(ApplicantProfileBean profile)
+	    throws EmployeeException {
 
-		try {
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_appid(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, profile.getUID());
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			while (rs.next()) {
-				if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
-					if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
-						eBean = createEmployeeBean(rs);
-					}
-					else {
-						eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
-						eBean.addPosition(createEmployeePositionBean(eBean, rs));
-					}
-				}
-			}
+	try {
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_appid(?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, profile.getUID());
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
+		    if (eBean == null || !StringUtils.equalsIgnoreCase(eBean.getEmpId(), rs.getString("EMP_ID"))) {
+			eBean = createEmployeeBean(rs);
+		    } else {
+			eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+			eBean.addPosition(createEmployeePositionBean(eBean, rs));
+		    }
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean getEmployeeBeanByApplicantProfile(ApplicantProfileBean profile): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return eBean;
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean getEmployeeBeanByApplicantProfile(ApplicantProfileBean profile): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static Map<String, EmployeeBean> getEmployeeBeanByCompetition(JobOpportunityBean job)
-			throws EmployeeException {
+	return eBean;
+    }
 
-		Map<String, EmployeeBean> emps = new HashMap<>();
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static Map<String, EmployeeBean> getEmployeeBeanByCompetition(JobOpportunityBean job)
+	    throws EmployeeException {
 
-		try {
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_comp(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, job.getCompetitionNumber());
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	Map<String, EmployeeBean> emps = new HashMap<>();
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			while (rs.next()) {
-				if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
-					if (!emps.containsKey(rs.getString("EMP_ID"))) {
-						emps.put(rs.getString("EMP_ID"), createEmployeeBean(rs));
-					}
-					else {
-						EmployeeBean eBean = emps.get(rs.getString("EMP_ID"));
-						eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
-						eBean.addPosition(createEmployeePositionBean(eBean, rs));
-					}
-				}
-			}
+	try {
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_comp(?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, job.getCompetitionNumber());
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
+		    if (!emps.containsKey(rs.getString("EMP_ID"))) {
+			emps.put(rs.getString("EMP_ID"), createEmployeeBean(rs));
+		    } else {
+			EmployeeBean eBean = emps.get(rs.getString("EMP_ID"));
+			eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+			eBean.addPosition(createEmployeePositionBean(eBean, rs));
+		    }
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean getEmployeeBeanByCompetition(JobOpportunityBean job): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return emps;
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean getEmployeeBeanByCompetition(JobOpportunityBean job): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static Map<String, EmployeeBean> getEmployeeBeanByCompetitionShortlist(JobOpportunityBean job)
-			throws EmployeeException {
+	return emps;
+    }
 
-		Map<String, EmployeeBean> emps = new HashMap<>();
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static Map<String, EmployeeBean> getEmployeeBeanByCompetitionShortlist(JobOpportunityBean job)
+	    throws EmployeeException {
 
-		try {
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_comp_sl(?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, job.getCompetitionNumber());
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	Map<String, EmployeeBean> emps = new HashMap<>();
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			while (rs.next()) {
-				if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
-					if (!emps.containsKey(rs.getString("EMP_ID"))) {
-						emps.put(rs.getString("EMP_ID"), createEmployeeBean(rs));
-					}
-					else {
-						EmployeeBean eBean = emps.get(rs.getString("EMP_ID"));
-						eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
-						eBean.addPosition(createEmployeePositionBean(eBean, rs));
-					}
-				}
-			}
+	try {
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emp_by_comp_sl(?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, job.getCompetitionNumber());
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (StringUtils.isNotBlank(rs.getString("EMP_ID"))) {
+		    if (!emps.containsKey(rs.getString("EMP_ID"))) {
+			emps.put(rs.getString("EMP_ID"), createEmployeeBean(rs));
+		    } else {
+			EmployeeBean eBean = emps.get(rs.getString("EMP_ID"));
+			eBean.addSeniority(createEmployeeSeniorityBean(eBean, rs));
+			eBean.addPosition(createEmployeePositionBean(eBean, rs));
+		    }
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean getEmployeeBeanByCompetition(JobOpportunityBean job): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return emps;
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean getEmployeeBeanByCompetition(JobOpportunityBean job): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year)
-			throws EmployeeException {
+	return emps;
+    }
 
-		Map<String, EmployeeBean> v_opps = null;
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year)
+	    throws EmployeeException {
 
-		try {
-			v_opps = new HashMap<>();
+	Map<String, EmployeeBean> v_opps = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps(?, ?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, position.getId());
-			stat.setString(3, school_year);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    v_opps = new HashMap<>();
 
-			while (rs.next()) {
-				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-					v_opps.put(rs.getString("EMP_ID"), eBean);
-				}
-				else {
-					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
-				}
-			}
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps(?, ?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, position.getId());
+	    stat.setString(3, school_year);
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+		    eBean = createEmployeeBean(rs);
+		    v_opps.put(rs.getString("EMP_ID"), eBean);
+		} else {
+		    v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+		    v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year, String group)
-			throws EmployeeException {
+	return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+    }
 
-		Map<String, EmployeeBean> v_opps = null;
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean[] getEmployeeBeans(PositionConstant position, String school_year, String group)
+	    throws EmployeeException {
 
-		try {
-			v_opps = new HashMap<>();
+	Map<String, EmployeeBean> v_opps = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps(?, ?, ?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, position.getId());
-			stat.setString(3, school_year);
-			stat.setString(4, group);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    v_opps = new HashMap<>();
 
-			while (rs.next()) {
-				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-					v_opps.put(rs.getString("EMP_ID"), eBean);
-				}
-				else {
-					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
-				}
-			}
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps(?, ?, ?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, position.getId());
+	    stat.setString(3, school_year);
+	    stat.setString(4, group);
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+		    eBean = createEmployeeBean(rs);
+		    v_opps.put(rs.getString("EMP_ID"), eBean);
+		} else {
+		    v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+		    v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean[] getEmployeeBeans(String school_year, String location) throws EmployeeException {
+	return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+    }
 
-		Map<String, EmployeeBean> v_opps = null;
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
-		boolean currentSchoolYear = StringUtils.equals(school_year,
-				com.esdnl.personnel.v2.utils.StringUtils.getCurrentSchoolYear("yyyy", "yy", "-"));
+    public static EmployeeBean[] getEmployeeBeans(String school_year, String location) throws EmployeeException {
 
-		try {
-			v_opps = new HashMap<>();
+	Map<String, EmployeeBean> v_opps = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
+	boolean currentSchoolYear = StringUtils.equals(school_year,
+		com.esdnl.personnel.v2.utils.StringUtils.getCurrentSchoolYear("yyyy", "yy", "-"));
 
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_loc(?, ?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, school_year);
-			stat.setString(3, location);
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    v_opps = new HashMap<>();
 
-			while (rs.next()) {
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_loc(?, ?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, school_year);
+	    stat.setString(3, location);
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
 
-				if (currentSchoolYear
-						&& ((rs.getDate("END_DATE") != null)
-								&& (new java.util.Date(rs.getDate("END_DATE").getTime())).before(new Date()))
-						&& StringUtils.equals(rs.getString("TENURE"), "TERM"))
-					continue;
+	    while (rs.next()) {
 
-				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-					v_opps.put(rs.getString("EMP_ID"), eBean);
-				}
-				else {
-					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
-				}
-			}
+		if (currentSchoolYear
+			&& ((rs.getDate("END_DATE") != null)
+				&& (new java.util.Date(rs.getDate("END_DATE").getTime())).before(new Date()))
+			&& StringUtils.equals(rs.getString("TENURE"), "TERM"))
+		    continue;
+
+		if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+		    eBean = createEmployeeBean(rs);
+		    v_opps.put(rs.getString("EMP_ID"), eBean);
+		} else {
+		    v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+		    v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean[] getEmployeeBeansBySenority(PositionConstant position, String school_year,
-																													LocationConstant location)
-			throws EmployeeException {
+	return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+    }
 
-		Map<String, EmployeeBean> v_opps = null;
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean[] getEmployeeBeansBySenority(PositionConstant position, String school_year,
+	    LocationConstant location) throws EmployeeException {
 
-		try {
-			v_opps = new HashMap<>(5);
+	Map<String, EmployeeBean> v_opps = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_senority(?, ?, ?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, position.getId());
-			stat.setString(3, school_year);
-			stat.setString(4, location.getId());
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    v_opps = new HashMap<>(5);
 
-			while (rs.next()) {
-				if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
-					eBean = createEmployeeBean(rs);
-					v_opps.put(rs.getString("EMP_ID"), eBean);
-				}
-				else {
-					v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
-					v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
-				}
-			}
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_senority(?, ?, ?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, position.getId());
+	    stat.setString(3, school_year);
+	    stat.setString(4, location.getId());
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
+
+	    while (rs.next()) {
+		if (!v_opps.containsKey(rs.getString("EMP_ID"))) {
+		    eBean = createEmployeeBean(rs);
+		    v_opps.put(rs.getString("EMP_ID"), eBean);
+		} else {
+		    v_opps.get(rs.getString("EMP_ID")).addSeniority(createEmployeeSeniorityBean(eBean, rs));
+		    v_opps.get(rs.getString("EMP_ID")).addPosition(createEmployeePositionBean(eBean, rs));
 		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
-
-		return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean[] getEmployeeBeansByAvailability(PositionConstant position, String school_year,
-																															LocationConstant location)
-			throws EmployeeException {
+	return (EmployeeBean[]) v_opps.values().toArray(new EmployeeBean[0]);
+    }
 
-		Vector<EmployeeBean> v_opps = null;
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean[] getEmployeeBeansByAvailability(PositionConstant position, String school_year,
+	    LocationConstant location) throws EmployeeException {
 
-		try {
-			v_opps = new Vector<EmployeeBean>(5);
+	Vector<EmployeeBean> v_opps = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_availability(?, ?, ?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, position.getId());
-			stat.setString(3, school_year);
-			stat.setString(4, location.getId());
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    v_opps = new Vector<EmployeeBean>(5);
 
-			while (rs.next()) {
-				eBean = createEmployeeBean(rs);
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_availability(?, ?, ?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, position.getId());
+	    stat.setString(3, school_year);
+	    stat.setString(4, location.getId());
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
 
-				v_opps.add(eBean);
-			}
-		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
+	    while (rs.next()) {
+		eBean = createEmployeeBean(rs);
 
-		return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+		v_opps.add(eBean);
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean[] getEmployeeBeansByAvailability(PositionConstant position, String school_year,
-																															LocationConstant location, java.util.Date viewDate)
-			throws EmployeeException {
+	return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+    }
 
-		Vector<EmployeeBean> v_opps = null;
-		EmployeeBean eBean = null;
-		Connection con = null;
-		CallableStatement stat = null;
-		ResultSet rs = null;
+    public static EmployeeBean[] getEmployeeBeansByAvailability(PositionConstant position, String school_year,
+	    LocationConstant location, java.util.Date viewDate) throws EmployeeException {
 
-		try {
-			v_opps = new Vector<EmployeeBean>(5);
+	Vector<EmployeeBean> v_opps = null;
+	EmployeeBean eBean = null;
+	Connection con = null;
+	CallableStatement stat = null;
+	ResultSet rs = null;
 
-			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_availability_2(?, ?, ?, ?); end;");
-			stat.registerOutParameter(1, OracleTypes.CURSOR);
-			stat.setString(2, position.getId());
-			stat.setString(3, school_year);
-			stat.setString(4, location.getId());
-			stat.setTimestamp(5, new Timestamp(viewDate.getTime()));
-			stat.execute();
-			rs = ((OracleCallableStatement) stat).getCursor(1);
+	try {
+	    v_opps = new Vector<EmployeeBean>(5);
 
-			while (rs.next()) {
-				eBean = createEmployeeBean(rs);
-				eBean.setCurrentAvailability(EmployeeAvailabilityManager.createEmployeeAvailabilityBean(rs));
+	    con = DAOUtils.getConnection();
+	    stat = con.prepareCall("begin ? := awsd_user.sds_hr.get_emps_by_availability_2(?, ?, ?, ?); end;");
+	    stat.registerOutParameter(1, OracleTypes.CURSOR);
+	    stat.setString(2, position.getId());
+	    stat.setString(3, school_year);
+	    stat.setString(4, location.getId());
+	    stat.setTimestamp(5, new Timestamp(viewDate.getTime()));
+	    stat.execute();
+	    rs = ((OracleCallableStatement) stat).getCursor(1);
 
-				v_opps.add(eBean);
-			}
-		}
-		catch (SQLException e) {
-			System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
-			throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
-		}
-		finally {
-			try {
-				rs.close();
-			}
-			catch (Exception e) {}
-			try {
-				stat.close();
-			}
-			catch (Exception e) {}
-			try {
-				con.close();
-			}
-			catch (Exception e) {}
-		}
+	    while (rs.next()) {
+		eBean = createEmployeeBean(rs);
+		eBean.setCurrentAvailability(EmployeeAvailabilityManager.createEmployeeAvailabilityBean(rs));
 
-		return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+		v_opps.add(eBean);
+	    }
+	} catch (SQLException e) {
+	    System.err.println("EmployeeBean[] getEmployeeBeans(String sin): " + e);
+	    throw new EmployeeException("Can not extract EmployeeBean from DB.", e);
+	} finally {
+	    try {
+		rs.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		stat.close();
+	    } catch (Exception e) {
+	    }
+	    try {
+		con.close();
+	    } catch (Exception e) {
+	    }
 	}
 
-	public static EmployeeBean createEmployeeBean(ResultSet rs) {
+	return (EmployeeBean[]) v_opps.toArray(new EmployeeBean[0]);
+    }
 
-		EmployeeBean abean = null;
+    public static EmployeeBean createEmployeeBean(ResultSet rs) {
 
-		try {
-			abean = new EmployeeBean();
+	EmployeeBean abean = null;
 
-			abean.setAddress1(rs.getString("ADDRESS1"));
-			abean.setAddress2(rs.getString("ADDRESS2"));
-			abean.setAlternatePhone(rs.getString("PHONE2"));
-			if (rs.getDate("BOARD_START_DATE") != null)
-				abean.setBoardStartDate(new java.util.Date(rs.getDate("BOARD_START_DATE").getTime()));
-			abean.setCity(rs.getString("CITY"));
-			abean.setEmail(rs.getString("EMAIL"));
-			abean.setEmpId(rs.getString("EMP_ID"));
-			abean.setFirstName(rs.getString("FIRSTNAME"));
-			abean.setGender(rs.getString("GENDER"));
-			abean.setLastName(rs.getString("LASTNAME"));
-			abean.setPhone(rs.getString("PHONE"));
-			abean.setPosition(PositionConstant.get(rs.getString("POSITION")));
-			abean.setPositionDescription(rs.getString("POSITION"));
-			abean.setPostalCode(rs.getString("POSTAL"));
-			abean.setPreviousName(rs.getString("PREVIOUSNAME"));
-			abean.setProvince(rs.getString("PROVINCE"));
-			abean.setSchoolYear(rs.getString("SCHOOL_YR"));
-			if (rs.getDate("SENIORITY_DATE") != null)
-				abean.setSeniorityDate(new java.util.Date(rs.getDate("SENIORITY_DATE").getTime()));
-			abean.setSIN(rs.getString("SIN"));
-			abean.setStatus(rs.getString("STATUS"));
-			abean.setTenurCode(rs.getInt("TENURE_CODE"));
+	try {
+	    abean = new EmployeeBean();
 
-			// location preference may not always be available
-			try {
-				abean.setLocationPreferences(rs.getString("EMP_USER_DEFINED_ALPHA"));
-			}
-			catch (SQLException e) {}
+	    abean.setAddress1(rs.getString("ADDRESS1"));
+	    abean.setAddress2(rs.getString("ADDRESS2"));
+	    abean.setAlternatePhone(rs.getString("PHONE2"));
+	    if (rs.getDate("BOARD_START_DATE") != null)
+		abean.setBoardStartDate(new java.util.Date(rs.getDate("BOARD_START_DATE").getTime()));
+	    abean.setCity(rs.getString("CITY"));
+	    abean.setEmail(rs.getString("EMAIL"));
+	    abean.setEmpId(rs.getString("EMP_ID"));
+	    abean.setFirstName(rs.getString("FIRSTNAME"));
+	    abean.setGender(rs.getString("GENDER"));
+	    abean.setLastName(rs.getString("LASTNAME"));
+	    abean.setPhone(rs.getString("PHONE"));
+	    abean.setPosition(PositionConstant.get(rs.getString("POSITION")));
+	    abean.setPositionDescription(rs.getString("POSITION"));
+	    abean.setPostalCode(rs.getString("POSTAL"));
+	    abean.setPreviousName(rs.getString("PREVIOUSNAME"));
+	    abean.setProvince(rs.getString("PROVINCE"));
+	    abean.setSchoolYear(rs.getString("SCHOOL_YR"));
+	    if (rs.getDate("SENIORITY_DATE") != null)
+		abean.setSeniorityDate(new java.util.Date(rs.getDate("SENIORITY_DATE").getTime()));
+	    abean.setSIN(rs.getString("SIN"));
+	    abean.setStatus(rs.getString("STATUS"));
+	    abean.setTenurCode(rs.getInt("TENURE_CODE"));
 
-			//TENURE may not always be available
-			try {
-				abean.setTenur(rs.getString("TENURE"));
-			}
-			catch (SQLException e) {}
+	    // location preference may not always be available
+	    try {
+		abean.setLocationPreferences(rs.getString("EMP_USER_DEFINED_ALPHA"));
+	    } catch (SQLException e) {
+	    }
 
-			//FTE may not always be available
-			try {
-				abean.setFTE(rs.getDouble("FTE_HRS"));
-				abean.setPositionDescription(Double.toString(abean.getFTE()) + " " + abean.getPositionDescription());
-			}
-			catch (SQLException e) {}
+	    // TENURE may not always be available
+	    try {
+		abean.setTenur(rs.getString("TENURE"));
+	    } catch (SQLException e) {
+	    }
 
-			abean.addSeniority(createEmployeeSeniorityBean(abean, rs));
-			abean.addPosition(createEmployeePositionBean(abean, rs));
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-			abean = null;
-		}
+	    // FTE may not always be available
+	    try {
+		abean.setFTE(rs.getDouble("FTE_HRS"));
+		abean.setPositionDescription(Double.toString(abean.getFTE()) + " " + abean.getPositionDescription());
+	    } catch (SQLException e) {
+	    }
 
-		return abean;
+	    abean.addSeniority(createEmployeeSeniorityBean(abean, rs));
+	    abean.addPosition(createEmployeePositionBean(abean, rs));
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    abean = null;
 	}
 
-	public static EmployeeSeniorityBean createEmployeeSeniorityBean(EmployeeBean emp, ResultSet rs) {
+	return abean;
+    }
 
-		EmployeeSeniorityBean seniority = null;
+    public static EmployeeSeniorityBean createEmployeeSeniorityBean(EmployeeBean emp, ResultSet rs) {
 
-		// seniority fields may not be available.
-		try {
+	EmployeeSeniorityBean seniority = null;
 
-			seniority = new EmployeeSeniorityBean();
-			seniority.setEmployee(emp);
-			seniority.setUnionCode(rs.getString("UNION_CODE"));
-			seniority.setSeniorityValue1(rs.getDouble("SENIORITY_NUMERIC"));
-			seniority.setSeniorityValue2(rs.getDouble("SENIORITY_NUMERIC_2"));
-			seniority.setSeniorityValue3(rs.getDouble("SENIORITY_NUMERIC_3"));
+	// seniority fields may not be available.
+	try {
 
-		}
-		catch (SQLException e) {
-			seniority = null;
-		}
-		// seniority date fields may not be available.
-		try {
+	    seniority = new EmployeeSeniorityBean();
+	    seniority.setEmployee(emp);
+	    seniority.setUnionCode(rs.getString("UNION_CODE"));
+	    seniority.setSeniorityValue1(rs.getDouble("SENIORITY_NUMERIC"));
+	    seniority.setSeniorityValue2(rs.getDouble("SENIORITY_NUMERIC_2"));
+	    seniority.setSeniorityValue3(rs.getDouble("SENIORITY_NUMERIC_3"));
 
-			if (rs.getDate("SENIORITY_DATE1") == null) {
-				seniority.setSeniorityDate1(null);
-			}
-			else {
-				seniority.setSeniorityDate1((new java.util.Date(rs.getDate("SENIORITY_DATE1").getTime())));
-			}
-			if (rs.getDate("SENIORITY_DATE2") == null) {
-				seniority.setSeniorityDate2(null);
-			}
-			else {
-				seniority.setSeniorityDate2((new java.util.Date(rs.getDate("SENIORITY_DATE2").getTime())));
-			}
+	} catch (SQLException e) {
+	    seniority = null;
+	}
+	// seniority date fields may not be available.
+	try {
 
-		}
-		catch (SQLException e) {
-			seniority = null;
-		}
+	    if (rs.getDate("SENIORITY_DATE1") == null) {
+		seniority.setSeniorityDate1(null);
+	    } else {
+		seniority.setSeniorityDate1((new java.util.Date(rs.getDate("SENIORITY_DATE1").getTime())));
+	    }
+	    if (rs.getDate("SENIORITY_DATE2") == null) {
+		seniority.setSeniorityDate2(null);
+	    } else {
+		seniority.setSeniorityDate2((new java.util.Date(rs.getDate("SENIORITY_DATE2").getTime())));
+	    }
 
-		return seniority;
+	} catch (SQLException e) {
+	    seniority = null;
 	}
 
-	public static EmployeePositionBean createEmployeePositionBean(EmployeeBean emp, ResultSet rs) {
+	return seniority;
+    }
 
-		EmployeePositionBean position = null;
+    public static EmployeePositionBean createEmployeePositionBean(EmployeeBean emp, ResultSet rs) {
 
-		try {
-			position = new EmployeePositionBean();
-			position.setEmployee(emp);
-			position.setSchoolYear(rs.getString("SCHOOL_YR"));
-			position.setName(rs.getString("NAME"));
-			position.setEmpId(rs.getString("EMP_ID"));
-			position.setPosition(rs.getString("POSITION"));
-			position.setPositionType(PositionType.get(rs.getString("POSITION_TYPE")));
-			position.setPositionCode(
-					StringUtils.isNotBlank(rs.getString("POSITION")) ? PositionCode.get(rs.getString("POSITION").trim())
-							: PositionCode.UNKNOWN);
+	EmployeePositionBean position = null;
 
-			if (rs.getDate("START_DATE") != null) {
-				position.setStartDate(new java.util.Date(rs.getDate("START_DATE").getTime()));
-			}
-			else {
-				position.setStartDate(null);
-			}
+	try {
+	    position = new EmployeePositionBean();
+	    position.setEmployee(emp);
+	    position.setSchoolYear(rs.getString("SCHOOL_YR"));
+	    position.setName(rs.getString("NAME"));
+	    position.setEmpId(rs.getString("EMP_ID"));
+	    position.setPosition(rs.getString("POSITION"));
+	    position.setPositionType(PositionType.get(rs.getString("POSITION_TYPE")));
+	    position.setPositionCode(
+		    StringUtils.isNotBlank(rs.getString("POSITION")) ? PositionCode.get(rs.getString("POSITION").trim())
+			    : PositionCode.UNKNOWN);
+	    position.setActivityCode(ActivityCode.get(rs.getString("ACTIVITY_CODE")));
 
-			if (rs.getDate("END_DATE") != null) {
-				position.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
-			}
-			else {
-				position.setEndDate(null);
-			}
+	    if (rs.getDate("START_DATE") != null) {
+		position.setStartDate(new java.util.Date(rs.getDate("START_DATE").getTime()));
+	    } else {
+		position.setStartDate(null);
+	    }
 
-			position.setSin(rs.getString("SIN"));
-			position.setLocation(rs.getString("LOCATION"));
-			position.setTenure(EmployeePositionBean.TenureType.get(rs.getString("TENURE")));
-			position.setFteHours(rs.getDouble("FTE_HRS"));
-		}
-		catch (SQLException e) {
-			position = null;
-		}
+	    if (rs.getDate("END_DATE") != null) {
+		position.setEndDate(new java.util.Date(rs.getDate("END_DATE").getTime()));
+	    } else {
+		position.setEndDate(null);
+	    }
 
-		return position;
+	    position.setSin(rs.getString("SIN"));
+	    position.setLocation(rs.getString("LOCATION"));
+	    position.setTenure(EmployeePositionBean.TenureType.get(rs.getString("TENURE")));
+	    position.setFteHours(rs.getDouble("FTE_HRS"));
+	} catch (SQLException e) {
+	    position = null;
 	}
+
+	return position;
+    }
 }
