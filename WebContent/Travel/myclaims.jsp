@@ -227,7 +227,51 @@ input { border:1px solid silver;}
                    			 <%    String monthClaim= String.format("%02d", claim.getFiscalMonth()+1);  %>                    	
                 		 	<td width="10%" style="vertical-align:middle;"><%=(claim.getCreatedDate()!=null)?claim.getCreatedDate():"<span style='color:Silver;'>N/A</span>" %></td>
                     		<td width="10%" style="vertical-align:middle;background-color:#1c90ec;text-align:center;font-size:10px;color:white;font-weight:bold;">&nbsp;MONTHLY&nbsp;</td>
-                    		<td width="20%" style="vertical-align:middle;">Standard Travel Claim</td>                    		
+                    		<td width="20%" style="vertical-align:middle;">
+                    		 <c:set var="travelClaimMonth" value="<%=claim.getFiscalMonth() %>"/>		              			
+				              			<b>
+				              			<c:choose>
+				              			<c:when test="${travelClaimMonth eq 0 }">
+				              			JANUARY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 1 }">
+				              			FEBRUARY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 2 }">
+				              			MARCH
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 3 }">
+				              			APRIL
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 4 }">
+				              			MAY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 5 }">
+				              			JUNE
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 6 }">
+				              			JULY
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 7 }">
+				              			AUGUST
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 8 }">
+				              			SEPTEMBER
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 9 }">
+				              			OCTOBER
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 10 }">
+				              			NOVEMBER
+				              			</c:when>
+				              			<c:when test="${travelClaimMonth eq 11 }">
+				              			DECEMBER
+				              			</c:when>
+				              			<c:otherwise><span style="color:silver;">N/A</span></c:otherwise>
+				              			</c:choose>
+				              			CLAIM</b><br/>
+				              			for school year <%=claim.getFiscalYear() %>	
+                    		</td>                    		
                     		<td width="10%" style="vertical-align:middle;"><%=(claim.getSubmitDate()!=null)?claim.getSubmitDate():"<span style='color:Silver;'>N/A</span>" %></td>
                     		<td width="10%" style="vertical-align:middle;"><%=(claim.getSupervisor()!=null)?claim.getSupervisor().getFullName():"<span style='color:Silver;'>N/A</span>" %></td>
                     	    <td width="10%" style="vertical-align:middle;"><%=(claim.getApprovedDate()!=null)?claim.getApprovedDate():"<span style='color:Silver;'>N/A</span>" %></td>                    		
