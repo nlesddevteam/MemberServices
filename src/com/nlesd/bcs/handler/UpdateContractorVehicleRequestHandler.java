@@ -323,7 +323,7 @@ public class UpdateContractorVehicleRequestHandler extends BCSApplicationRequest
 					regbean.setrId(vbean.getId());
 					regbean.setRegionCode(form.getInt("regioncode"));
 					regbean.setDepotCode(form.getInt("depotcode"));
-					if(origbean.getRegionBean() == null) {
+					if(origbean.getRegionBean() == null || origbean.getRegionBean().getId() <= 0) {
 						BussingContractorSystemRegionalManager.addBussingContractorSystemRegionalBean(regbean);
 					}else {
 						regbean.setId(origbean.getRegionBean().getId());
