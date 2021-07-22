@@ -480,11 +480,11 @@ $(document).ready(function() {
                 		<select class="form-control" id="demeritpoints" name="demeritpoints">
                 			<c:forEach begin="0" end="20" step="1" varStatus="lcount">
     								<c:choose>
-    									<c:when test="${employee.demeritPoints eq lcount.count}">
-    										<option value="${lcount.count}" selected>${lcount.count}</option>
+    									<c:when test="${employee.demeritPoints eq lcount.count-1}">
+    										<option value="${lcount.count-1}" selected>${lcount.count-1}</option>
     									</c:when>
     									<c:otherwise>
-    										<option value="${lcount.count}">${lcount.count}</option>
+    										<option value="${lcount.count-1}">${lcount.count-1}</option>
     									</c:otherwise>
     								</c:choose>
     						</c:forEach>
