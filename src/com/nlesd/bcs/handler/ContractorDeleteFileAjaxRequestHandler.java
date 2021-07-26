@@ -38,7 +38,9 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 		String xml = null;
 		StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 		String smessage="SUCCESS";
+		System.out.println("Starting");
 		if (validate_form() && !(this.sessionExpired)) {
+			System.out.println("Get contractor from session");
 			BussingContractorBean bcbean = (BussingContractorBean) request.getSession(false).getAttribute("CONTRACTOR");
 		    String deletetype="";
 		    try {
@@ -46,12 +48,14 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 	        Integer dtype = form.getInt("dtype");
 	        String fileName = form.get("filename");
 	        //get the file type object to use
+	        System.out.println("Starting Get File Type");
 	        FileTypeBean ftb = FileTypeManager.getFIleTypeById(dtype);
 	        if(ftb.getFileCategory().equals("BCS_CONTRACTOR_EMPLOYEE")) {
 	        	deletetype="E";
 	        }else {
 	        	deletetype="V";
 	        }
+	        System.out.println("Starting File History Bean");
 	        //now we save the current object to history table
 	        FileHistoryBean fhb = new FileHistoryBean();
 	        fhb.setFileName(fileName);
@@ -59,8 +63,10 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 	        fhb.setActionBy(bcbean.getContractorName());
 	        fhb.setParentObjectId(did);
 	        fhb.setParentObjectType(ftb.getId());
+	        System.out.println("Starting Add History");
 	        FileHistoryManager.addFileHistory(fhb);
 	        //now we update the record to show the file delete
+	        System.out.println("Starting Delete File History");
 	        FileHistoryManager.deleteFile(ftb, did);
 	        sb.append("<FILES>");
 			sb.append("<FILE>");
@@ -68,6 +74,7 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 			sb.append("<DTYPE>" + deletetype + "</DTYPE>");
 			sb.append("</FILE>");
 			sb.append("</FILES>");
+			System.out.println("Starting Send Message Update Status");
 			if(ftb.getFileCategory().equals("BCS_CONTRACTOR_EMPLOYEE")) {
 				BussingContractorEmployeeBean vbean = BussingContractorEmployeeManager.getBussingContractorEmployeeById(did);
 				BussingContractorEmployeeManager.updateContractorEmployeeStatus(vbean.getId(), EmployeeStatusConstant.NOTAPPROVED.getValue());
@@ -117,6 +124,7 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 				out.write(xml);
 				out.flush();
 				out.close();
+				System.out.println("Done");
 		    }
 	    }else {
 			
@@ -130,6 +138,7 @@ public class ContractorDeleteFileAjaxRequestHandler extends BCSApplicationReques
 				sb.append("</FILE>");
 				sb.append("</FILES>");
 			}
+			System.out.println("Error");
 		}
 		
 		xml = sb.toString().replaceAll("&", "&amp;");
