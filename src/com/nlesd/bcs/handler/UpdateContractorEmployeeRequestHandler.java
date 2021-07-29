@@ -411,9 +411,10 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 						vbean.setCodDocument(origbean.getCodDocument());
 					}
 					vbean.setStatus(origbean.getStatus());
-					
+					System.out.println("before update");
 					//now we add the record
 					BussingContractorEmployeeManager.updateBussingContractorEmployee(vbean);
+					System.out.println("after update");
 					if(bcbean.getBoardOwned().equals("Y")) {
 							BussingContractorSystemRegionalBean regbean = new BussingContractorSystemRegionalBean();
 							regbean.setrType("E");
@@ -428,10 +429,13 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 							}
 					}
 					//now we add the archive record
+					System.out.println("update archive");
 					BussingContractorEmployeeManager.addBussingContractorEmployeeArc(origbean);
 					//now we check to see if dates changed
+					System.out.println("dates changed");
 					BussingContractorDateHistoryManager.CheckChangedEmployeeDates(origbean, vbean, BussingContractorManager.getBussingContractorById(origbean.getContractorId()).getContractorName());
 					//update audit trail
+					System.out.println("audit trail");
 					AuditTrailBean atbean = new AuditTrailBean();
 					atbean.setEntryType(EntryTypeConstant.CONTRACTOREMPLOYEEUPDATED);
 					atbean.setEntryId(vbean.getId());
@@ -440,7 +444,7 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 					atbean.setEntryNotes("Contractor employee (" + vbean.getLastName() + "," + vbean.getFirstName() + ") updated on  " + dateTimeInstance.format(Calendar.getInstance().getTime()));
 					atbean.setContractorId(vbean.getContractorId());
 					AuditTrailManager.addAuditTrail(atbean);
-					
+					System.out.println("before status email");
 					//now check to see if we send an email for the files changing
 					if(statusUpdated) {
 						//send email to bussing
@@ -481,7 +485,7 @@ public class UpdateContractorEmployeeRequestHandler extends BCSApplicationReques
 					sb.append("<VID>" + vbean.getId() + "</VID>");
 					sb.append("</CONTRACTOR>");
 					sb.append("</CONTRACTORS>");
-					
+					System.out.println("done");
 		}else {
 			if(this.sessionExpired) {
 				path="contractorLogin.html?msg=Session expired, please login again.";
