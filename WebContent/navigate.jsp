@@ -274,9 +274,10 @@
 						</div>
 	<!-- OHS-UPDATES - ALL STAFF -->					
 						<div class="menuIconImage">
-							<a href="OHS/index.jsp"><img
+							<a href="//sites.google.com/nlesd.ca/ohsorientation/home" target="_blank"><img
 								src="includes/img/menu/ohs-off.png"
-								class="img-swap menuImage" border=0
+								class="img-swap menuImage" 
+								border=0 							
 								title="OHS Information Shared with Schools and District Staff">
 							</a>
 						</div>			
