@@ -78,10 +78,7 @@
 <b><i class="fas fa-exclamation-circle"></i> NEW UPDATE!</b><br/>We have added the ability to <b>attach/upload receipt(s)</b> now to a travel claim item for lodging and/or other charges where a receipt maybe required. This will prevent claim processing delays where receipts maybe required.
  </div>
 
-<div class="alert alert-danger" style="font-size:14px;">
-<b><i class="fas fa-exclamation-circle"></i>NOTICE:</b> 
-Please be advised that as of August 1st, 2021 all expense claims are to be submitted via the District's new Financial System. Sorry for any inconvenience this may cause.
- </div>
+
 
 
 <img class="pageHeaderGraphic" style="max-width:200px;display:none;" src="/MemberServices/Travel/includes/img/tclaim.png" border=0/>
