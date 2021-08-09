@@ -216,7 +216,7 @@
 
 <script>
 $(document).ready(function(){	
-	$("#awarded_to").text("TBA");
+	$.trim(("#awarded_to").text("TBA"));
 	$("#contract_value").val("0.00");
 	$("#awarded_date").val("12/12/2021");	
 	var maxChars = $("#awarded_to");

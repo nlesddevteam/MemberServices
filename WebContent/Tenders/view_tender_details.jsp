@@ -193,13 +193,36 @@
                                   		<fmt:parseNumber var="dayAdded" type="number" value="${dayAdded}" />
                                   		<!-- LOGIC TEST: (${todayDay} > ${dayClosed } or ( ${todayDay} = ${dayClosed} and ((${todayHour} = 14 and ${todayMinute } > 29) or ${todayHour} > 14))) and (${tender.tenderStatus.description} = OPEN or ${tender.tenderStatus.description} = AMMENDED)-->                                  		
                                   		<c:choose>
-						    			<c:when test="${ (todayDay gt dayClosed  or   (todayDay eq dayClosed  and ((todayHour eq 14  and todayMinute gt 29) or todayHour gt 14))) and (tender.tenderStatus.description eq 'OPEN' or tender.tenderStatus.description eq 'AMMENDED')}">													
-													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender is now closed. 
-													Please update status above to CLOSED or AWARDED. If AWARDED, please update details below.
+						    			<c:when test="${ ((todayDay gt dayClosed  or   (todayDay eq dayClosed  and ((todayHour eq 14  and todayMinute gt 29) or todayHour gt 14))) and (tender.tenderStatus.description eq 'OPEN' or tender.tenderStatus.description eq 'AMMENDED'))}">													
+													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> 
+													Status has been automatically change to CLOSED for you. Press SAVE below to save these changes.<br/>
+													 If the tender has been AWARDED, change status to AWARDED above and enter details below:
 													</div>
 													<script>$('document').ready(function(){
 														$("#extraDetails").css("position","static").css("visibility","visible");
 														$('#tender_status').val('2');		
+														//$("#tender_status option:contains(CLOSED)").attr('selected', 'selected');
+													
+													});</script>
+				                       	</c:when>
+				                       	<c:when test="${ tender.tenderStatus.description eq 'CLOSED'}">													
+													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender is now closed. 
+													If the tender has been AWARDED, change status to AWARDED above. You will then be able to edit Awarded details.
+													</div>
+													<script>$('document').ready(function(){
+														//$("#extraDetails").css("position","static").css("visibility","visible");
+														//$('#tender_status').val('2');		
+														//$("#tender_status option:contains(CLOSED)").attr('selected', 'selected');
+													
+													});</script>
+				                       	</c:when>
+				                      <c:when test="${ tender.tenderStatus.description eq 'AWARDED'}">													
+													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender is now closed and awarded. 
+													 Update AWARDED details below if needed:
+													</div>
+													<script>$('document').ready(function(){
+														$("#extraDetails").css("position","static").css("visibility","visible");
+														//$('#tender_status').val('2');		
 														//$("#tender_status option:contains(CLOSED)").attr('selected', 'selected');
 													
 													});</script>
@@ -234,6 +257,9 @@
 							  				<textarea  autocomplete="false" id="awarded_to" name="awarded_to" maxlength="3800" style="height:100px;" class="form-control">
 							  				<c:out value="${empty tender.awardedTo ? 'TBA' : tender.awardedTo}" />
 							  				</textarea>
+							  				<script>							  				
+							  				$('#awarded_to').val($.trim($('#awarded_to').val()));							  				
+							  				</script>
 							</div> 
 							</div> 				
 								<div class="row container-fluid">
@@ -356,6 +382,15 @@
 
 <script>
 $(document).ready(function(){
+	
+	$('#tender_status').change(function(){
+		  if($(this).val() == '5'){ 
+			  $("#extraDetails").css("position","static").css("visibility","visible");
+		  } else {
+			  $("#extraDetails").css("display","none");
+		  }
+		});
+	
 	
 	var maxChars = $("#awarded_to");
 	var max_length = maxChars.attr('maxlength');
