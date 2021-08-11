@@ -47,7 +47,7 @@
 	<body>
 	<div class="siteHeaderGreen">Office Staff Contact Edit/Add</div>
 <div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;">
-<img src="../includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Staff Data, please wait.<br/>This will take a few moments!
+<img src="includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Staff Data, please wait.<br/>This will take a few moments!
 </div>		
 
 <div style="display:none;" class="loadPage"> 
@@ -112,11 +112,18 @@
 	                  <b>Division:</b>
 	                      	<select id='divisionId' name='divisionId' class="form-control" required>	                      		
 	                      		<c:forEach items="${ divisions }" var='division'>
-	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
-	                      			
-	                      			${ division.name }
-											
+	                      		<c:choose>
+	                      		<c:when test="${ division.name eq 'Finance and Business Administration' }">
+	                      		<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
+	                      			Corporate Services
 	                      			</option>
+	                      		</c:when>
+	                      		<c:otherwise>
+	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
+	                      			${ division.name }
+	                      			</option>
+	                      		</c:otherwise>	
+	                      		</c:choose>	
 	                      		</c:forEach>
 	                      	</select>
 	                  </div>

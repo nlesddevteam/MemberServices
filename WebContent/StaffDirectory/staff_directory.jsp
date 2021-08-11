@@ -78,7 +78,7 @@
 	<body>
   <div class="siteHeaderGreen">Staff Directory Administration</div>
 <div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;">
-<img src="../includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Staff Data, please wait.<br/>This will take a few moments!
+<img src="includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Staff Data, please wait.<br/>This will take a few moments!
 </div>		
 
 <div style="display:none;" class="loadPage"> 
@@ -93,7 +93,7 @@ Results are color-coded by region:
       Use the search at right in each dropdown to help narrow to the person your are looking for. Listings are sorted by Division and Sort Number. Click on the column header to sort by that column.	  
       
 <br/>
-<div align="center"><a href='addStaffDirectoryContact.html' class="btn btn-sm btn-success" style="color:White;" title="Add new Contact">Add New Contact</a>&nbsp; <a href="../navigate.jsp" class="btn btn-sm btn-danger">Back to MS</a></div>
+<div align="center"><a href='addStaffDirectoryContact.html' class="btn btn-sm btn-success" style="color:White;" title="Add new Contact">Add New Contact</a>&nbsp; <a href="../navigate.jsp" class="btn btn-sm btn-danger">Back to Staff Room</a></div>
 <br/><br/>
 
 <esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING"> 
@@ -169,7 +169,7 @@ Results are color-coded by region:
 	     			<td width="15%">
 	     			<c:choose>
 	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Finance and Business
+	     			Corporate Services
 	     			</c:when>
 	     			<c:otherwise>
 	     			${contact.division.name}
@@ -248,7 +248,7 @@ Results are color-coded by region:
 	     			<td width="15%">
 	     			<c:choose>
 	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Finance and Business
+	     			Corporate Services
 	     			</c:when>
 	     			<c:otherwise>
 	     			${contact.division.name}
@@ -332,7 +332,7 @@ Results are color-coded by region:
 	     			<td width="15%">
 	     			<c:choose>
 	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Finance and Business
+	     			Corporate Services
 	     			</c:when>
 	     			<c:otherwise>
 	     			${contact.division.name}
@@ -415,7 +415,7 @@ Results are color-coded by region:
 	     			<td width="15%">
 	     			<c:choose>
 	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Finance and Business
+	     			Corporate Services
 	     			</c:when>
 	     			<c:otherwise>
 	     			${contact.division.name}
@@ -496,7 +496,7 @@ Results are color-coded by region:
 	     			<td width="15%">
 	     			<c:choose>
 	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Finance and Business
+	     			Corporate Services
 	     			</c:when>
 	     			<c:otherwise>
 	     			${contact.division.name}
