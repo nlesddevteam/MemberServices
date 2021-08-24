@@ -268,7 +268,7 @@
 							  				 <input type="text" class="form-control" id="contract_value" name="contract_value" value="<c:out value="${empty tender.contractValueFormatted ? '1.00' : tender.contractValueFormatted}" />"></input>
 									</div>
 									<div class="col-lg-6 col-12"><b>AWARDED DATE:</b>
-							  				 <input type="text" class="form-control" id="awarded_date" name="awarded_date" autocomplete="off" value="<c:out value="${empty tender.awardedDateFormatted ? '2000-01-01' : tender.awardedDateFormatted}" />"></input>
+							  				 <input type="text" class="form-control" id="awarded_date" name="awarded_date" autocomplete="off" value="<c:out value="${empty tender.awardedDateFormatted ? '01/01/2020' : tender.awardedDateFormatted}" />"></input>
 									
 		                       		</div>
 		                       </div>
