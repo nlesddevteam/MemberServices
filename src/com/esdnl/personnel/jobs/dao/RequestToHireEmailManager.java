@@ -180,28 +180,51 @@ public class RequestToHireEmailManager {
 					if(usr.checkRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")){
 						//we want to update the status
 						//now send the message
-						if(!(resend)) {
-							RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+						if(rbean.getDivision() == 7) {
+							if(!(resend)) {
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 5);
+							}
+							
+							//student assistant, set ready to post and send email
+							//send email to user
+							to.add(PersonnelDB.getPersonnel(rbean.getRequestById()));
+							//send email to position that posts the job
+							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-" + zonename +"-POST-COMP")));
+							emailtemplate="personnel/request_to_hire_post.vm";
+							model.put("requesterName", rbean.getRequestBy());
+							model.put("requestId", rbean.getId());
+							model.put("alevel","5" );
+							model.put("requestTitle",rbean.getJobTitle() );
+							emailsubject="Request To Hire for " + rbean.getRequestBy() + " ready to be posted";
+							historyNotes.append("Ready To Post Email Sent To:");
+						}else {
+							if(!(resend)) {
+								RequestToHireManager.updateRequestToHireStatus(rbean.getId(), 2);
+							}
+							rbean.setStatus(RequestToHireStatus.APPROVEDDIVISION);
+							emailtemplate="personnel/request_to_hire_submitted.vm";
+							model.put("requesterName", rbean.getRequestBy());
+							model.put("requestId", rbean.getId());
+							model.put("requestTitle",rbean.getJobTitle() );
+							emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+							historyNotes.append("Approval Email Sent To:");
+							break;
 						}
-						rbean.setStatus(RequestToHireStatus.APPROVEDDIVISION);
-						emailtemplate="personnel/request_to_hire_submitted.vm";
-						model.put("requesterName", rbean.getRequestBy());
-						model.put("requestId", rbean.getId());
-						model.put("requestTitle",rbean.getJobTitle() );
-						emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
-						historyNotes.append("Approval Email Sent To:");
-						break;
+						
 					}else {
-						// not division director all normal
-						to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
-						emailtemplate="personnel/request_to_hire_submitted.vm";
-						model.put("requesterName", rbean.getRequestBy());
-						model.put("requestId", rbean.getId());
-						model.put("alevel","1" );
-						model.put("requestTitle",rbean.getJobTitle() );
-						emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
-						historyNotes.append("Approval Email Sent To:");
-						break;
+						
+							// not division director all normal
+							to.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-"+ zonename + "-" + rbean.getDivisionStringShort()+ "-DD")));
+							emailtemplate="personnel/request_to_hire_submitted.vm";
+							model.put("requesterName", rbean.getRequestBy());
+							model.put("requestId", rbean.getId());
+							model.put("alevel","1" );
+							model.put("requestTitle",rbean.getJobTitle() );
+							emailsubject="Request To Hire Pending Approval for " + rbean.getRequestBy();
+							historyNotes.append("Approval Email Sent To:");
+							break;
+						
+						
 					}
 					
 				}
