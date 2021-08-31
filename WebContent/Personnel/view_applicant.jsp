@@ -1425,7 +1425,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 								<%if(regions == null || regions.size() <= 1) { %>
 									<%schools = SchoolDB.getSchools(zone).toArray(new School[0]);                                      		
                                 	//int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
-	                                for(int j=0; j < schools.length -1; j++){%>
+	                                for(int j=0; j < schools.length; j++){%>
 	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
 	                                		<tr>
 	                                		<td><%=schools[j].getSchoolName()%></td>
@@ -1441,7 +1441,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
                         			<%schools = SchoolDB.getSchools(region).toArray(new School[0]);
                         			//int middle = (schools.length % 2 == 0) ? schools.length/2 : schools.length/2 + 1;
                         			%>
-                        			<%for(int j=0; j < schools.length-1; j++){%>
+                        			<%for(int j=0; j < schools.length; j++){%>
 	                                	<% if(sel.containsKey(schools[j].getSchoolID())){%>
 	                                		<tr>
 	                                		<td><%=schools[j].getSchoolName()%></td>
