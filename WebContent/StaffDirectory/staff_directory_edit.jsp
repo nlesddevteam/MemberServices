@@ -237,6 +237,7 @@
 						<option value="ESL Teacher">ESL Teacher</option>
 						<option value="Fleet Maintenance Coordinator">Fleet Maintenance Coordinator</option>
 						<option value="Foreman">Foreman</option>
+						<option value="FSL Learning Design Facilitator">FSL Learning Design Facilitator</option>
 						<option value="Functional Analyst">Functional Analyst</option>
 						<option value="GIS Specialist">GIS Specialist</option>
 						<option value="Guidance Counsellor">Guidance Counsellor</option>
