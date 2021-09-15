@@ -2060,7 +2060,10 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.DeleteTendersOtherFileRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/deleteOtherTendersFile.html</URL-Pattern>
     </Request-Handler>
- 
+  <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewExceptionTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewExceptionTenders.html</URL-Pattern>
+    </Request-Handler>   
     
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.AddNewMeetingMinutesRequestHandler</Request-Handler-Class>
