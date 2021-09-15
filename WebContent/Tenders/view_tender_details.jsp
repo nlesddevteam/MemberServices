@@ -196,7 +196,7 @@
 						    			<c:when test="${ ((todayDay gt dayClosed  or   (todayDay eq dayClosed  and ((todayHour eq 14  and todayMinute gt 29) or todayHour gt 14))) and (tender.tenderStatus.description eq 'OPEN' or tender.tenderStatus.description eq 'AMMENDED'))}">													
 													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> 
 													Status has been automatically change to CLOSED for you. Press SAVE below to save these changes.<br/>
-													 If the tender has been AWARDED, change status to AWARDED above and enter details below:
+													 If the tender has been AWARDED or EXCEPTED, change status to AWARDED or EXCEPTED above and enter details below:
 													</div>
 													<script>$('document').ready(function(){
 														$("#extraDetails").css("position","static").css("visibility","visible");
@@ -207,7 +207,7 @@
 				                       	</c:when>
 				                       	<c:when test="${ tender.tenderStatus.description eq 'CLOSED'}">													
 													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender is now closed. 
-													If the tender has been AWARDED, change status to AWARDED above. You will then be able to edit Awarded details.
+													If the tender has been AWARDED or EXCEPTED, change status to AWARDED or EXCEPTED above. You will then be able to edit Awarded details.
 													</div>
 													<script>$('document').ready(function(){
 														//$("#extraDetails").css("position","static").css("visibility","visible");
@@ -216,7 +216,7 @@
 													
 													});</script>
 				                       	</c:when>
-				                      <c:when test="${ tender.tenderStatus.description eq 'AWARDED'}">													
+				                      <c:when test="${ tender.tenderStatus.description eq 'AWARDED' }">													
 													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender is now closed and awarded. 
 													 Update AWARDED details below if needed:
 													</div>
@@ -227,7 +227,24 @@
 													
 													});</script>
 				                       	</c:when>
+				                       	<c:when test="${ tender.tenderStatus.description eq 'EXCEPTIONS' }">													
+													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender is now closed and excepted. 
+													 Update AWARDED/EXCEPTED details below if needed:
+													</div>
+													<script>$('document').ready(function(){
+														$("#extraDetails").css("position","static").css("visibility","visible");
+														//$('#tender_status').val('2');		
+														//$("#tender_status option:contains(CLOSED)").attr('selected', 'selected');
+													
+													});</script>
+				                       	</c:when>
+				                       	
+				                       	
+				                       	
 				                       	<c:otherwise>
+				                       	
+				                       	
+				                       	
 				                       	<script>$('document').ready(function(){$("#extraDetails").css("position","absolute").css("visibility","hidden");});</script>
 				                       	<div class="alert alert-success" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This Tender is still OPEN. Further details on Awarding can be entered once the tender has closed.</div>
 				                       	</c:otherwise>  
@@ -243,8 +260,8 @@
 							<br/> 
                    
 		                   <div id="extraDetails" style="padding:5px;background:#ffffe6;margin-bottom:10px;margin-top:10px;">
-							   <b>TENDER AWARDED DETAILS</b><br/>
-							   Please fill out the below to update the tender details to complete the tender listing if this tender is now CLOSED and AWARDED. 
+							   <b>TENDER AWARDED/EXCEPTION DETAILS</b><br/>
+							   Please fill out the below to update the tender details to complete the tender listing if this tender is now CLOSED and AWARDED/EXCEPTED. 
 							   These details can be edited later on any posted tender. If multiple awarded, please enter each company and the amount awarded to that company. (i.e. Company A for $###.##; Company B for $####.##, etc.) with 
 							   total value of tender entered in the field below.
 							    <br/><br/>
@@ -252,7 +269,7 @@
 							  
 							<div class="row container-fluid">
 							<div class="col-lg-12 col-12">		
-									<b>AWARDED DETAILS:</b>
+									<b>AWARDED/EXCEPTION DETAILS:</b>
 							  				<span style="text-align:right;">Number of chars remaining: <span id="sessionNum_counter">3800</span></span>
 							  				<textarea  autocomplete="false" id="awarded_to" name="awarded_to" maxlength="3800" style="height:100px;" class="form-control">
 							  				<c:out value="${empty tender.awardedTo ? 'TBA' : tender.awardedTo}" />
@@ -384,7 +401,7 @@
 $(document).ready(function(){
 	
 	$('#tender_status').change(function(){
-		  if($(this).val() == '5'){ 
+		  if($(this).val() == '5' || $(this).val() == '9'){ 
 			  $("#extraDetails").css("position","static").css("visibility","visible");
 		  } else {
 			  $("#extraDetails").css("display","none");
