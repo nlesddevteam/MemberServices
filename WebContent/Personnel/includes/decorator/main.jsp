@@ -189,11 +189,21 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          	</ul>
 					        </li>
 
-
+<esd:SecurityAccessRequired permissions="PERSONNEL-IT-VIEW-SCHOOL-EMPLOYEES">
+    <li class="dropdown" id="menuNormal">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> IT Access<span class="caret"></span></a>
+					          	 <ul class="dropdown-menu multi-level">
+								<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_pp_school_employees.jsp">View School Employees</a></li>
+					          	</ul>
+	</esd:SecurityAccessRequired>
 
 <!-- ADMINISTRATION MENU ------------------------------------------------------------------------------>
 
 <%if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")){%>
+
+
+
+
 
 							<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 					        <li class="dropdown" id="menuNormal">
@@ -294,7 +304,10 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning View</a></li>
 					          			<li class="divider"></li>
 					          		</esd:SecurityAccessRequired>
-
+									<esd:SecurityAccessRequired permissions="PERSONNEL-VIEW-SCHOOL-EMPLOYEES">
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_pp_school_employees.jsp">View School Employees</a></li>
+					          			<li class="divider"></li>
+					          		</esd:SecurityAccessRequired>
 					          	        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-JOBS">
 					          	 	 	<li class="dropdown-submenu">
 					          	 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Educational</a>

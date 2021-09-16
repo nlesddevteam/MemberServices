@@ -3586,7 +3586,10 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.UpdateTeacherAllocationStatusByIdAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/ajax/updateTeacherAllocationStatusById.html</URL-Pattern>
     </Request-Handler>
-    
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.ViewEmployeesByLocationAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewEmployeesByLocation.html</URL-Pattern>
+    </Request-Handler> 
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewApplicantEmploymentLetterRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewLetterOfEmployment.html</URL-Pattern>
