@@ -202,6 +202,7 @@
 						<br/><br/>
 						<div align="center">
 						  <a class="btn btn-sm btn-success" name="add" id="add" href="#" onclick="document.change.submit();">Update</a>
+						   <a class="btn btn-sm btn-warning" href="/MemberServices/loginAs.html?pid=<%=p.getPersonnelID() %>" title="Login as this user"> Login As</a>
 						  <a class="btn btn-sm btn-danger" href="personnel_admin_view.jsp">Back to Member List</a>
 						</div>
 						
