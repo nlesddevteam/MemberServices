@@ -17,7 +17,7 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
  
-<esd:SecurityCheck permissions="PERSONNEL-VIEW-SCHOOL-EMPLOYEES" />
+<esd:SecurityCheck permissions="PERSONNEL-IT-VIEW-SCHOOL-EMPLOYEES,PERSONNEL-VIEW-SCHOOL-EMPLOYEES" />
 
 <% 
 	MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings(); 
