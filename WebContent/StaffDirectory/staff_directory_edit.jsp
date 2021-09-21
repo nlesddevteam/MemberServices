@@ -484,6 +484,7 @@
 							 <option value="East Point Elementary">East Point Elementary</option>
 							 <option value="Gonzaga High School">Gonzaga High School</option>
 							 <option value="Holy Heart">Holy Heart</option>
+							 <option value="Horizon Academy">Horizon Academy</option>
 							 <option value="Hospital School">Hospital School</option>
 							 <option value="IMC">IMC</option>
 							 <option value="Indian River Academy">Indian River Academy</option>
