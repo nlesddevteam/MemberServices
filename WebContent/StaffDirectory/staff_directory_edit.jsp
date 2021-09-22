@@ -247,6 +247,7 @@
 						<option value="Internal Auditor">Internal Auditor</option>
 						<option value="Inuktitut Curriculum Worker">Inuktitut Curriculum Worker</option>
 						<option value="Itinerant">Itinerant</option>
+						<option value="Itinerant Assessor">Itinerant Assessor</option>
 						<option value="Itinerant Services">Itinerant Services</option>
 						<option value="Itinerant Teacher">Itinerant Teacher</option>
 						<option value="Instructional Resource Teacher">Instructional Resource Teacher</option>
