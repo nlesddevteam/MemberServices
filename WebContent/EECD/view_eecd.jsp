@@ -46,7 +46,7 @@ $("#loadingSpinner").css("display","none");
 							<br /><br/>
 							To be considered, please visit member services and click on EDU Teacher Working Groups. Here you will find a list of potential EDU working groups and a brief description of their
 							project. If you are interested in participating in an EDU working group this school year, please take the time to review the list and register for the working group(s) that are of interest to you
-							by Friday, September 20, 2019. By registering, you are agreeing to be considered for an EDU working group. Registration is not a guarantee that you will become a working group member.
+							. By registering, you are agreeing to be considered for an EDU working group. Registration is not a guarantee that you will become a working group member.
 							You will be notified if you are approved.
 							<br /><br/>
 							Being a member of an EDU working group can provide valuable professional learning and a tremendous opportunity to contribute to the education of students in Newfoundland and
