@@ -150,6 +150,10 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 		  			<div class="form-group" style="font-size:10px;"> &nbsp;
 					    	<label class="radio-inline"><input type="radio" id='search_type_1' name='search_type' value='1' checked>Competition #</label>
 					   		<label class="radio-inline"><input type="radio" id='search_type_3' name='search_type' value='3'>Applicant</label>
+					   		
+					   		<esd:SecurityAccessRequired roles="PERSONNEL-SEARCH-SDS-ID">
+					   		<label class="radio-inline"><input type="radio" id='search_type_4' name='search_type' value='4'>SDS Id</label>
+					   		</esd:SecurityAccessRequired>
 					</div>
 					</form>
 					<div id="searchError" class="alert alert-danger" style="display:none;">ERROR: No search terms entered. Please try again.</div>

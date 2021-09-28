@@ -87,6 +87,31 @@ public class JobSearchRequestHandler extends RequestHandlerImpl {
 						path = "admin_index.jsp";
 						request.setAttribute("msg", "No applicants found matching \"" + form.get("term") + "\"");
 					}
+				}else if (form.hasValue("type", "4")) { // search by applicant name
+					ApplicantProfileBean[] profiles = ApplicantProfileManager.searchApplicantProfileBeanByEIDSIN(form.get("term"));
+
+					if (profiles.length > 1) {
+						path = "admin_applicant_search_results_list.jsp";
+
+						request.setAttribute("term", form.get("term"));
+						request.setAttribute("SEARCH_RESULTS", profiles);
+					}
+					else if (profiles.length == 1) {
+						if(profiles[0].getProfileType().equals("S")){
+							path = "admin_view_applicant_ss.jsp";
+						}else{
+							path = "admin_view_applicant.jsp";
+						}
+						
+
+						request.setAttribute("APPLICANT", profiles[0]);
+						//set the collection of applied jobs
+						request.setAttribute("jobs", ApplicantJobAppliedManager.getApplicantJobsApplied(profiles[0].getSIN()));
+					}
+					else {
+						path = "admin_index.jsp";
+						request.setAttribute("msg", "No applicants found matching \"" + form.get("term") + "\"");
+					}
 				}
 			}
 			else {
