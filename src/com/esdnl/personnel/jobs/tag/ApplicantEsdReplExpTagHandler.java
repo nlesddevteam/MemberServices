@@ -59,6 +59,7 @@ public class ApplicantEsdReplExpTagHandler extends TagSupport {
 					out.println("<TD>" + sdf.format(beans[i].getFrom()) + "</TD>");
 					out.println("<TD>" + sdf.format(beans[i].getTo()) + "</TD>");
 					out.println("<TD>"+ SchoolDB.getLocationText(beans[i].getSchoolId())+ "</TD>");
+					out.println("<TD>" + beans[i].getGradesSubjects() + "</TD>");
 					out.println("<TD><a class='btn btn-xs btn-danger' href='applicantRegistration.html?step=2B&del="+ beans[i].getId() + "'>DEL</a></td>");
 					out.println("</TR>");
 				}
