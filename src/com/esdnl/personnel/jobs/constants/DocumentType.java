@@ -12,11 +12,12 @@ public class DocumentType {
 	public static final DocumentType ECE = new DocumentType(5, "Level 2 Early Childhood Education Certificate");
 	public static final DocumentType VULNERABLE_SECTOR_CHECK = new DocumentType(6, "Vulnerable Sector Check");
 	public static final DocumentType REENTRYPL = new DocumentType(7, "Re-entry PL and Training");
+	public static final DocumentType COVID19_VAX = new DocumentType(20, "COVID-19 Vaccination");
 	public static final DocumentType LETTER = new DocumentType(99, "District Letter");
 
 	public static final DocumentType[] ALL = new DocumentType[] {
 			UNIVERSITY_TRANSSCRIPT, TEACHING_CERTIFICATE, CODE_OF_CONDUCT, DELF, ECE, VULNERABLE_SECTOR_CHECK, REENTRYPL,
-			LETTER
+			LETTER,COVID19_VAX
 	};
 
 	private DocumentType(int value, String desc) {

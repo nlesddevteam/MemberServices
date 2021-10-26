@@ -94,7 +94,9 @@ input {
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b><%=trnlvl != null ? trnlvl.getDescription() : list != null ? list.getTitle() : "Substitute List" %> - Short List</b> (Total Applicants: <%=applicants.length%>)</div>
       			 	<div class="panel-body">
-
+								<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+									<input type="hidden" value="Y" id="c19" name="c19">
+								</esd:SecurityAccessRequired>
       				
                                   <%if(applicants.length > 0){ %>
                                   By default, the list below is sorted by Last Name. Click on the column header to sort by that column and/or use the search to find a particular applicant.
@@ -104,13 +106,17 @@ input {
                                   <tr>
                                     <th width="10%">First Name</th>
                                     <th width="10%">Last Name</th>                                     
-                                    <th width="25%">Major(s)/Minor(s)</th>                                    
-                                    <th width="15%">Email</th>
+                                    <th width="20%">Major(s)/Minor(s)</th>                                    
+                                    <th width="13%">Email</th>
                                     <th width="10%">Community</th>
-                                    <th width="15%">Telephone</th>
+                                    <th width="12%">Telephone</th>
                                     <% if(school != null) { %>
                                     	<th width="5%">Pref.</th>
                                     <% } %>
+                                    <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+										<th width="15%">Covid19 Vax</th>
+									</esd:SecurityAccessRequired>
+
                                     <th width="10%" class="no-print">Options</th>
                                   </tr>
                                   </thead>
@@ -159,7 +165,10 @@ input {
                                       <% if(school != null) { %>
                                     		<td class='sub-prefs' style='text-align:center;'><%= applicants[i].hasSubstititePrefs(school) ? "Yes" : "No" %></td>
                                    		<% } %>
-                                      <td class="no-print" style="vertical-align:middle;"><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">View Profile</a></td>
+                                   			<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+                                              	<td><%=applicants[i].getCovid19VaxStatus()%></td>
+                                        	</esd:SecurityAccessRequired>
+                                      <td class="no-print" style="vertical-align:middle;"><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">PROFILE</a></td>
                                     </tr>
                                  <% } %>
                                  

@@ -250,7 +250,8 @@ input {
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>DEMOGRAPHICS</b></div>
-      			 	<div class="panel-body">      					 	
+      			 	<div class="panel-body">      
+      			 	<span style="color:grey;">TEACHER/TLA/ADMIN PROFILE for:</span>			<br/>		 	
       			 				<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
       			 				<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
       			 				<input type="hidden" id="id" value="<%=profile.getSIN() %>">
@@ -1345,7 +1346,8 @@ input {
 									int i = 0;
 									for (ApplicantDocumentBean doc : docs) {
 										//only select roles get docs other then transcripts.
-										if ((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) && !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) || (doc.getType().equal(DocumentType.LETTER))) {
+										if ((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) && !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) || (doc.getType().equal(DocumentType.LETTER))
+												) {
 											continue;
 										}
 								%>
@@ -1357,7 +1359,7 @@ input {
 										href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>'
 										target='_blank'>VIEW</a> &nbsp; <a
 										class='viewdoc delete-doc btn btn-xs btn-danger'
-										href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
+										href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
 									</td>
 								</tr>
 								<% } %>
@@ -1372,11 +1374,103 @@ input {
 			</div>
 		</div>
 	</div>
-	
+	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+	<!-- Letters --------------------------------------------------------------->
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-info" id="section16">
+			<div class="panel-heading">
+				<b>COVID-19 Proof of Vaccination</b>
+				<div style="float:right;">
+				</div>
+				</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+				
+						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.COVID19_VAX)).count() > 0)) { %>
+								
+								<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblcovid19">
+							<thead>
+								<tr style="border-top: 1px solid black;">
+									<th width='30%'>TITLE</th>
+									<th width='20%'>UPLOADED</th>
+									<th width='35%'>VERIFIED</th>
+									<th class="no-print" width='15%'>OPTIONS</th>
+								</tr>
+							</thead>
+							<tbody>									
+										
+										
+								<%	for (ApplicantDocumentBean doc : docs) {
+											//only select roles get docs other then transcripts.
+											if (!doc.getType().equal(DocumentType.COVID19_VAX)) {
+												continue;
+											} 
+								%>
+									<tr>
+										<td><%=doc.getType().toString()%></td>
+										<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+										<td>
+										<% if(doc.getType().equal(DocumentType.COVID19_VAX)){ %>
+										<% if(doc.getClBean() == null){ %>
+											
+													<div style="display:none" id="divverify">
+														<span><span id="spvdate"></span> by <span id="spvby"></span></span>
+													</div>
+												
+										<%}else{ %>
+											<% if(doc.getClBean().getDateVerified() != null){ %>
+												
+														<div  id="divverify">
+															<span><span id="spvdate"><%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
+														</div>
+													
+											<%}else{ %>
+												
+													<div style="display:none" id="divverify">
+														<span><span id="spvdate"></span> by <span id="spvby"></span></span>
+													</div>
+												
+											<%} %>
+										<%} %>
+									
+									<%} else {%>
+							
+									<span style="color:Red;">Not Verified</span>
+								
+									
+									<%}%>
+										
+										</td>
+										<td class="no-print">
+											<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp; <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
+											<% if(doc.getClBean() == null){ %>
+												&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>');">VERIFY</a>
+											<%}else{ %>
+												<% if(doc.getClBean().getDateVerified() == null){ %>
+													&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>');">VERIFY</a>
+												<%} %>
+											<%} %>
+										</td>
+									</tr>
+									
+								<% } %>
+								</tbody>
+						</table>
+								<% } else { %>
+									<span style="color: Grey;">No proof of vaccination(s) currently on file.</span>
+									<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script>							
+								<% } %>
+							
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	</esd:SecurityAccessRequired>	
 	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 	<!-- Letters --------------------------------------------------------------->
 	<div class="panel-group" style="padding-top: 5px;">
-		<div class="panel panel-success" id="section16">
+		<div class="panel panel-success" id="section19">
 			<div class="panel-heading">
 				<b>Letters</b>
 				<div style="float:right;">
@@ -1417,7 +1511,7 @@ input {
 						</table>
 								<% } else { %>
 									<span style="color: Grey;">No Letter(s) currently on file.</span>
-									<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script>								
+									<script>$("#section19").removeClass("panel-success").addClass("panel-danger");</script>								
 								<% } %>
 							
 					
@@ -1464,7 +1558,7 @@ input {
 										class='viewdoc btn btn-xs btn-info'
 										href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a> <a
 										class='viewdoc delete-cod btn btn-xs btn-danger'
-										href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
+										href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DEL</a>
 									</td>
 
 								</tr>
@@ -1598,7 +1692,7 @@ input {
 											</c:choose>
 										</td>
 										<td class="no-print"><a class='btn btn-xs btn-info'
-											href='view_job_post.jsp?comp_num=${g.compNum}'>View</a></td>
+											href='view_job_post.jsp?comp_num=${g.compNum}'>VIEW</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>

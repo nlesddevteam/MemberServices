@@ -12,6 +12,7 @@ import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
 import com.esdnl.dao.DAOUtils;
+import com.esdnl.personnel.jobs.bean.ApplicantCovid19LogBean;
 import com.esdnl.personnel.jobs.bean.ApplicantDocumentBean;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
@@ -397,6 +398,22 @@ public class ApplicantDocumentManager {
 				abean.setType(DocumentType.get(rs.getInt("DOCUMENT_TYPE")));
 			}else{
 				abean.setTypeSS(DocumentTypeSS.get(rs.getInt("DOCUMENT_TYPE")));
+			}
+			//populate covid log details
+			try {
+				ApplicantCovid19LogBean clbean= new ApplicantCovid19LogBean();
+				clbean.setAclId(rs.getInt("ACL_ID"));
+				clbean.setVerifiedBy(rs.getString("VERIFIED_BY"));
+				if(rs.getTimestamp("DATE_VERIFIED") ==  null) {
+					clbean.setDateVerified(null);
+				}else {
+					clbean.setDateVerified(new Date(rs.getTimestamp("DATE_VERIFIED").getTime()));
+				}
+				clbean.setDocumentId(abean.getDocumentId());
+				abean.setClBean(clbean);
+			}
+			catch (java.sql.SQLException e) {
+				abean.setClBean(null);
 			}
 			
 		}

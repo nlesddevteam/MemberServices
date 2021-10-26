@@ -227,6 +227,12 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          			<li class="divider"></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/startSync.html"><span class="glyphicon glyphicon-refresh"></span> Start Sync</a></li>
 					          		</esd:SecurityAccessRequired>
+					          		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+					          			<li class="divider"></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_school_report.jsp">View COVID19 Report By Location</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_latest_report.jsp">View Latest COVID19 Report</a></li>
+					          		</esd:SecurityAccessRequired>
+					          		
 					          	</ul>
 					        </li>
 							</esd:SecurityAccessRequired>

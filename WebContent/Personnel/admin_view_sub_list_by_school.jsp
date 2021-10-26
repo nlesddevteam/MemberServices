@@ -120,7 +120,10 @@
 					</div>
 					<div class="col-sm-1">
 						<div class="input-group">
-							<input type="button" value="View List" onclick="getSubListShortlistAppsBySchool()">
+							<a class="btn btn-sm btn-primary" onclick="getSubListShortlistAppsBySchool()">VIEW</a>
+							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+								<input type="hidden" value="Y" id="c19" name="c19">
+							</esd:SecurityAccessRequired>
 						</div>
 					</div>
 				</div>
@@ -132,12 +135,14 @@
 					style="font-size: 11px; background-color: #FFFFFF; margin-top: 5px;">
 					<thead>
 						<tr>
-							<th width="10%">First Name</th>
-							<th width="10%">Last Name</th>
-							<th width="25%">Major(s)/Minor(s)</th>
+							<th width="15%">Name</th>
+							<th width="20%">Major(s)/Minor(s)</th>
 							<th width="15%">Email</th>
 							<th width="10%">Community</th>
-							<th width="15%">Telephone</th>
+							<th width="10%">Telephone</th>
+							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+								<th width="20%">Covid19 Vax</th>
+							</esd:SecurityAccessRequired>
 							<th width="10%" class="no-print">Options</th>
 						</tr>
 					</thead>

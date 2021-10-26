@@ -10,6 +10,7 @@ import com.esdnl.audit.constant.ActionTypeConstant;
 import com.esdnl.audit.constant.ApplicationConstant;
 import com.esdnl.personnel.jobs.bean.ApplicantDocumentBean;
 import com.esdnl.personnel.jobs.constants.DocumentType;
+import com.esdnl.personnel.jobs.dao.ApplicantCovid19LogManager;
 import com.esdnl.personnel.jobs.dao.ApplicantDocumentManager;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
@@ -58,6 +59,11 @@ public class AddApplicantDocumentRequestHandler extends PersonnelApplicationRequ
 				audit.setWho(profile.getUID());
 
 				audit.saveBean();
+				//check to see if it is a covid19 vax doc
+				if(doc.getType() == DocumentType.COVID19_VAX) {
+					//add log entry used for verification
+					ApplicantCovid19LogManager.addCovid19Log(doc.getDocumentId());
+				}
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);

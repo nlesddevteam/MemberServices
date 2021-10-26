@@ -80,10 +80,12 @@ input {
 
 <!-- DEMOGRAPHICS --------------------------------------------------------------->  
 <div style="font-size:30px;padding-top:10px;color:rgb(0, 128, 0,0.3);font-weight:bold;text-align:left;"><%=profile.getFullNameReverse()%></div>
-Your current Support Staff/Management profile information can be found below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. 
+<span style="color:Grey;font-weight:bold;">SUPPORT STAFF/STUDENT ASSISTANT/MANAGEMENT PROFILE</span><br/><br/>
+
+Your current <b>Support Staff/SA/Management profile</b> information can be found below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. 
 There are no registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated. 
 
-<br/><br/><b>Never create a second Support Staff/Management profile</b> if you forget your login to your previous profile. Having more than one profile may result in missed communications regarding any 
+<br/><br/><span style="color:Red;font-weight:bold;">Never create a second Support Staff/Management profile</span> if you forget your login to your previous profile. Having more than one profile may result in missed communications regarding any 
 employment positions and/or applications. 
 
 <br/><br/>Sections with no information will display a red header. Those completed and/or with entries will display green.
@@ -466,7 +468,7 @@ employment positions and/or applications.
                                 
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section8">   
-	               	<div class="panel-heading"><b>7. DOCUMENTS</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_9_ss.jsp">EDIT</a></span></div>
+	               	<div class="panel-heading"><b>7. DOCUMENTS</b> (Upload documents here. They will display in proper sections once uploaded). <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_9_ss.jsp">EDIT/UPLOAD</a></span></div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive">                                
   								<% if((docs != null) && (docs.size() > 0)) {
@@ -481,13 +483,13 @@ employment positions and/or applications.
 	                                </thead>
                                 <tbody>
                                 <% for(ApplicantDocumentBean doc : docs) { 
-                                	if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER)){ %>
+                                	//if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER) || !doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
 	                             	<tr>		                            
 		                           		<td><%=doc.getTypeSS().getDescription() %></td>
 		                            	<td><%=sdf_long.format(doc.getCreatedDate()) %></td>
-		                             	<td><a class='viewdoc btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+		                             	<td><a class='viewdoc btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                             	</tr>
-	                             <%} %>
+	                             <%//} %>
 	                              <%  } %>
 	                              </tbody>
 	                              </table>
@@ -497,6 +499,43 @@ employment positions and/or applications.
 	                              <%} %>
                                 
  </div></div></div></div>
+  <!--10.  COVID19 ----------------------------------------------------------------------------------------->               
+                
+                
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info" id="section10b">   
+	               	<div class="panel-heading"><b>COVID-19 Proof of Vaccination</b> (Upload through Section 7. Documents above)</div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive"> 
+ 										<% if((docs != null) && (docs.size() > 0)) {
+	                                  	int i=0; %>	                                  	
+	                                   <table class="table table-striped table-condensed" style="font-size:11px;">
+      							    <thead>
+      							    <tr>
+                                       <th width="25%">TITLE</th>
+                                       <th width="30%">UPLOAD DATE</th>
+                                       <th width="10%">OPTIONS</th>                                    
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+	                                   <% for(ApplicantDocumentBean doc : docs){ 
+	                                   		if(doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
+	                                   		<tr>
+	                                      		<td><%=doc.getTypeSS().toString()%></td>
+	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                                      				                                      
+	                                      	</tr>
+	                                      <% } %>
+	                                    <%} %>  
+	                                      </tbody>
+	                                      </table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Vaccination(s) currently on file.</span>
+	                                       <script>$("#section10b").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+                              
+</div></div></div></div>
 
 
    <div class="panel-group" style="padding-top:5px;">                               
@@ -517,7 +556,7 @@ employment positions and/or applications.
 	                                  	<%for(ApplicantCriminalOffenceDeclarationBean cod : cods) { %>
 	                                      <tr>
 	                                      <td><%=sdf_long.format(cod.getDeclarationDate())%></td>
-	                                      <td><a class='btn btn-xs btn-primary' href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a></td>
+	                                      <td><a class='btn btn-xs btn-info' href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a></td>
 	                                     </tr>
 	                                      <%} %>  
 	                                   	</tbody>
@@ -552,7 +591,7 @@ employment positions and/or applications.
 	                                   		<tr>
 	                                      		<td><%=doc.getDescription()%></td>
 	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
-	                                      			<td><a class='btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>View</a></td>
+	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                                      				                                      
 	                                      	</tr>
 	                                      <% } %>
