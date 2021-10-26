@@ -234,6 +234,7 @@ input {
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>DEMOGRAPHICS</b></div>
       			 	<div class="panel-body">       			 	
+      			 	<span style="color:grey;">SUPPORT STAFF/STUDENT ASSISTANT/MANAGEMENT PROFILE for:</span>			<br/>
       			 				<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
       			 				<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
       			 				<input type="hidden" id="id" value="<%=profile.getSIN() %>">
@@ -699,9 +700,9 @@ input {
 		                                    			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL"))
 		                                    		continue;
 	                                    	}else{
-	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.LETTER)) {
-	                                    			continue;
-	                                    		}
+	                                    		//if(doc.getTypeSS().equal(DocumentTypeSS.LETTER) || doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX)) {
+	                                    		//	continue;
+	                                    	//	}
 	                                    	}
                                %>
 							    <tr>							   
@@ -720,7 +721,7 @@ input {
 							    </td>
 							    <td class="no-print">
 							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp;
-							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
+							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
 							    </td>
 							    </tr>
 							    <%  }%>
@@ -739,6 +740,104 @@ input {
 </div>                                  	
                                   	
   <%} %>
+  
+  	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+	<!-- Letters --------------------------------------------------------------->
+	<div class="panel-group" style="padding-top: 5px;">
+		<div class="panel panel-info" id="section16">
+			<div class="panel-heading">
+				<b>COVID-19 Proof of Vaccination</b>
+				<div style="float:right;">
+				</div>
+				</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+				
+						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getTypeSS().equal(DocumentTypeSS.COVID19_VAX)).count() > 0)) { %>
+								
+								<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblcovid19">
+							<thead>
+								<tr style="border-top: 1px solid black;">
+									<th width='30%'>TITLE</th>
+									<th width='20%'>UPLOADED</th>
+									<th width='30%'>VERIFIED</th>
+									<th class="no-print" width='20%'>OPTIONS</th>
+								</tr>
+							</thead>
+							<tbody>									
+										
+										
+								<%	for (ApplicantDocumentBean doc : docs) {
+											//only select roles get docs other then transcripts.
+											if (!doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX)) {
+												continue;
+											} 
+								%>
+									<tr>
+										<td><%=doc.getTypeSS().toString()%></td>
+										<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+										<td>
+										<% if(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX)){ %>
+										<% if(doc.getClBean() == null){ %>
+											
+													<div style="display:none" id="divverify">
+														<span><span id="spvdate"></span> by <span id="spvby"></span></span>
+													</div>
+												
+										<%}else{ %>
+											<% if(doc.getClBean().getDateVerified() != null){ %>
+												
+														<div  id="divverify">
+															<span><span id="spvdate"><%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
+														</div>
+													
+											<%}else{ %>
+												
+													<div style="display:none" id="divverify">
+														<span><span id="spvdate"></span> by <span id="spvby"></span></span>
+													</div>
+												
+											<%} %>
+										<%} %>
+									
+									<%} else {%>
+							
+									<span style="color:Red;">Not Verified</span>
+								
+									
+									<%}%>
+										
+										</td>
+										
+										
+										<td class="no-print">
+											<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp; 
+											<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
+											 &nbsp; 
+											 	<% if(doc.getClBean() == null){ %>
+												&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>');">VERIFY</a>
+											<%}else{ %>
+												<% if(doc.getClBean().getDateVerified() == null){ %>
+													&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>');">VERIFY</a>
+												<%} %>
+											<%} %>
+										</td>
+									</tr>
+									
+								<% } %>
+								</tbody>
+						</table>
+								<% } else { %>
+									<span style="color: Grey;">No Letter(s) currently on file.</span>
+									<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script>								
+								<% } %>
+							
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	</esd:SecurityAccessRequired>	
   
 <!-- Letters --------------------------------------------------------------->
  <% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) { %>
@@ -780,7 +879,7 @@ input {
 							    <td><%=sdf_long.format(doc.getCreatedDate())%></td>						    
 							    <td class="no-print">
 							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp;
-							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DELETE</a>
+							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
 							    </td>
 							    </tr>
 							    <%  }%>
@@ -834,7 +933,7 @@ input {
 							    <td class="no-print">
 							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a>
 							    <% if(usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")){ %>
-							    	<a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DELETE</a>
+							    	<a class='viewdoc delete-cod btn btn-xs btn-danger' href='deleteApplicantCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>DEL</a>
 							    <%} %>
 							    </td>
 							    

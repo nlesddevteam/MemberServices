@@ -12,7 +12,7 @@ public class ApplicantDocumentBean {
 	private String filename;
 	private Date createdDate;
 	private DocumentTypeSS typeSS;
-
+	private ApplicantCovid19LogBean clBean;
 	public ApplicantDocumentBean() {
 
 		this.documentId = 0;
@@ -107,6 +107,14 @@ public class ApplicantDocumentBean {
 		}else {
 			return "";
 		}
+	}
+
+	public ApplicantCovid19LogBean getClBean() {
+		return clBean;
+	}
+
+	public void setClBean(ApplicantCovid19LogBean clBean) {
+		this.clBean = clBean;
 	}
 
 }

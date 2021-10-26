@@ -1362,7 +1362,6 @@ function getSubListShortlistAppsBySchool()
      					sid: s,lid:l
      				}, 
      				success: function(xml){
-     					
      					if($(xml).find('MESSAGE').text() ==  "SUCCESS"){
      						//$('#reportdata tr:gt(0)').remove()
      						$('#reportdata').DataTable().clear();
@@ -1371,11 +1370,19 @@ function getSubListShortlistAppsBySchool()
      	     					//now populate schools
      							$(xml).find('PROFILE').each(function(){
      								var buttext ="<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" 
-     									+ $(this).find("APPID").text() + "'>View Profile</a>";
-     								$('#reportdata').DataTable().row.add([$(this).find("FIRSTNAME").text(),$(this).find("LASTNAME").text(),
-     									$(this).find("MAJORS").text().replace("\n","<br />"),
-     										$(this).find("EMAIL").text(),$(this).find("COMMUNITY").text(),$(this).find("PHONE").text().replace("\n","<br />")
-     										,buttext]);
+     									+ $(this).find("APPID").text() + "'>PROFILE</a>";
+     								if($('#c19').length) {
+     									$('#reportdata').DataTable().row.add([$(this).find("LASTNAME").text()+ ", " +$(this).find("FIRSTNAME").text(),
+         									$(this).find("MAJORS").text().replace("\n","<br />"),
+         										$(this).find("EMAIL").text(),$(this).find("COMMUNITY").text(),$(this).find("PHONE").text().replace("\n","<br />")
+         										,$(this).find("CV19").html(),buttext]);
+     									
+     								}else{
+     									$('#reportdata').DataTable().row.add([$(this).find("LASTNAME").text() +", " +$(this).find("FIRSTNAME").text(),
+         									$(this).find("MAJORS").text().replace("\n","<br />"),
+         										$(this).find("EMAIL").text(),$(this).find("COMMUNITY").text(),$(this).find("PHONE").text().replace("\n","<br />")
+         										,buttext]);
+     								}
 
 
      							});
@@ -1449,3 +1456,61 @@ function deleteref(but,refid){
  			}
  		);
 }
+//delete reference ajax call
+function verifycovid19(did){
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "verifyCovid19Doc.html",
+ 				data: {
+ 					id: did
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('STATUS').text() ==  "SUCCESS"){
+ 						$("#spvdate").html($(xml).find('VDATE').text());
+ 						$("#spvby").html($(xml).find('VBY').text());
+ 						$("#divverify").show();
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
+//delete reference ajax call
+function verifycovid19list(did,btn){
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "verifyCovid19Doc.html",
+ 				data: {
+ 					id: did
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('STATUS').text() ==  "SUCCESS"){
+ 						//$("#spvdate").html($(xml).find('VDATE').text());
+ 						//$("#spvby").html($(xml).find('VBY').text());
+ 						//$("#divverify").show();
+ 						var test = "#" + did;
+ 						$(test).html("Document Verified By " + $(xml).find('VBY').text() + " on " + $(xml).find('VDATE').text());
+ 						$(btn).hide();
+ 						
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
+
+

@@ -115,11 +115,12 @@ input {
 	<% } %>
 
 	<div style="font-size: 30px; padding-top: 10px; color: rgb(0, 128, 0, 0.3); font-weight: bold; text-align: left;"><%=profile.getFullNameReverse()%></div>
-	
-	<p>Your current Teaching/Educational profile information can be found	below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. There are no
+	<p>
+	<span style="color:Grey;font-weight:bold;">TEACHING/TLA/EDUCATIONAL ADMIN PROFILE</span><br/>
+	<p>Your current <b>Teaching/TLA/Educational Admin profile</b> information can be found	below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. There are no
 	registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated.
 	
-	<p><b>Never create a second Teaching/Educational  profile</b> if you forget your login to your previous profile. Having more than one profile may result in missed
+	<p><span style="color:Red;font-weight:bold;">Never create a second Teaching/Educational  profile</span> if you forget your login to your previous profile. Having more than one profile may result in missed
 	communications regarding any employment positions and/or applications. You can, however, register for a Support Staff/Management profile account if need be to apply for jobs in those areas. You will need a different email address to register for another account type.
 	
 	<p>Sections with no information will display a red header. Those completed and/or with entries will display green.
@@ -1035,10 +1036,8 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 	<div class="panel-group" style="padding-top: 5px;">
 		<div class="panel panel-success" id="section10">
 			<div class="panel-heading">
-				<b>10. DOCUMENTS</b> <span class="no-print"
-					style="float: right; padding-right: 5px"><a
-					class="btn btn-xs btn-primary"
-					href="applicant_registration_step_10.jsp">EDIT</a></span>
+				<b>10. DOCUMENTS</b>  (Upload documents here. They will display in proper sections once uploaded).<span class="no-print" style="float: right; padding-right: 5px">
+				<a class="btn btn-xs btn-primary" href="applicant_registration_step_10.jsp">EDIT/UPLOAD</a></span>
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
@@ -1046,8 +1045,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 						if ((docs != null) && (docs.size() > 0)) {
 						int i = 0;
 					%>
-					<table class="table table-striped table-condensed"
-						style="font-size: 11px;">
+					<table class="table table-striped table-condensed" style="font-size: 11px;">
 						<thead>
 							<tr>
 								<th width="25%">TYPE</th>
@@ -1058,15 +1056,13 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 						<tbody>
 							<%
 								for (ApplicantDocumentBean doc : docs) {
-									if(!doc.getType().equals(DocumentType.LETTER)){ %>
+									//if(!doc.getType().equals(DocumentType.LETTER) && !doc.getType().equals(DocumentType.COVID19_VAX)){ %>
 							<tr>
 								<td><%=doc.getType().getDescription()%></td>
 								<td><%=sdf_long.format(doc.getCreatedDate())%></td>
-								<td><a class='btn btn-xs btn-primary'
-									href='viewDocument.html?id=<%=doc.getDocumentId()%>'
-									target='_blank'>View</a></td>
+								<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 							</tr>
-							<%} %>
+							<%//} %>
 							<%
 								}
 							%>
@@ -1113,7 +1109,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 	                                   		<tr>
 	                                      		<td><%=doc.getDescription()%></td>
 	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
-	                                      			<td><a class='btn btn-xs btn-primary' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>View</a></td>
+	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                                      				                                      
 	                                      	</tr>
 	                                      <% } %>
@@ -1122,6 +1118,45 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 	                                      </table>	                                      
 	                                      <% } else {%>                                  
 	                                       <span style="color:Grey;">No Documents currently on file.</span>
+	                                       <script>$("#section10b").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+                              
+</div></div></div></div>
+
+ <!--10.  COVID19 ----------------------------------------------------------------------------------------->               
+                
+                
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-info" id="section10b">   
+	               	<div class="panel-heading"><b>COVID-19 Proof of Vaccination</b> (Upload through Section 10. Documents above)
+	               </div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive"> 
+ 										<% if((docs != null) && (docs.size() > 0)) {
+	                                  	int i=0; %>
+	                                   <table class="table table-striped table-condensed" style="font-size:11px;">
+      							    <thead>
+      							    <tr>
+                                       <th width="25%">TITLE</th>
+                                       <th width="30%">UPLOAD DATE</th>
+                                       <th width="10%">OPTIONS</th>                                    
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+	                                   <% for(ApplicantDocumentBean doc : docs){ 
+	                                   		if(doc.getType().equals(DocumentType.COVID19_VAX)){ %>
+	                                   		<tr>
+	                                      		<td><%=doc.getType().toString()%></td>
+	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                                      				                                      
+	                                      	</tr>
+	                                      <% } %>
+	                                    <%} %>  
+	                                      </tbody>
+	                                      </table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Vaccination(s) currently on file.</span>
 	                                       <script>$("#section10b").removeClass("panel-success").addClass("panel-danger");</script>
 	                                    <% } %>
                               
@@ -1156,7 +1191,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 							%>
 							<tr>
 								<td><%=sdf_long.format(cod.getDeclarationDate())%></td>
-								<td><a class='btn btn-xs btn-primary'
+								<td><a class='btn btn-xs btn-info'
 									href='viewCriminalOffenceDeclaration.html?id=<%=cod.getDeclarationId()%>'>VIEW</a></td>
 							</tr>
 							<%
@@ -1209,7 +1244,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 									<td><%= isb.getCompetition().getCompetitionNumber() %></td>
 									<td><%= isb.getCompetition().getPositionTitle( )%></td>
 									<td><%= sdf_medium.format(isb.getCreated()) %></td>
-									<td><a class="btn btn-xs btn-primary"
+									<td><a class="btn btn-xs btn-info"
 										href="/MemberServices/Personnel/applicantViewCompetitionInterviewSummary.html?id=<%= isb.getInterviewSummaryId() %>">VIEW</a></td>
 								</tr>
 							<% } %>
@@ -1289,7 +1324,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 								<td><%=jobs[i].getCompetitionNumber()%></td>
 								<td><%=jobs[i].getPositionTitle()%></td>
 								<td><%=jobs[i].getFormatedCompetitionEndDate()%></td>
-								<td><a class="btn btn-xs btn-primary" href="/employment/view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>">VIEW</a></td>
+								<td><a class="btn btn-xs btn-info" href="/employment/view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>">VIEW</a></td>
 							</tr>
 							<%
 								}

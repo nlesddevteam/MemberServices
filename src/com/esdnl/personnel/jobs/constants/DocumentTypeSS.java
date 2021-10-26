@@ -16,9 +16,10 @@ public class DocumentTypeSS {
 	public static final DocumentTypeSS VULNERABLE_SECTOR_CHECK = new DocumentTypeSS(110, "Vulnerable Sector Check");
 	public static final DocumentTypeSS REENTRYPL = new DocumentTypeSS(111, "Re-entry PL and Training");
 	public static final DocumentTypeSS LETTER = new DocumentTypeSS(99, "District Letter");
+	public static final DocumentTypeSS COVID19_VAX = new DocumentTypeSS(120, "COVID-19 Vaccination");
 	public static final DocumentTypeSS[] ALL = new DocumentTypeSS[] {
 			DRIVERS_ABSTRACT, OHS_TRAINING, CODE_OF_CONDUCT, FIRST_AID, WHMIS, DRIVERS_LICENSE, UNIVERSITY_TRANSSCRIPT,
-			DEGREES, CERTIFICATES, VULNERABLE_SECTOR_CHECK, REENTRYPL, LETTER
+			DEGREES, CERTIFICATES, VULNERABLE_SECTOR_CHECK, REENTRYPL, LETTER,COVID19_VAX
 	};
 
 	private DocumentTypeSS(int value, String desc) {

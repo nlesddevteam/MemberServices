@@ -54,6 +54,7 @@ public class GetSubListApplicantsBySchoolAjaxRequestHandler extends RequestHandl
 				sb.append("<MAJORS>" + majors + "</MAJORS>");
 				sb.append("<EMAIL>" + app.getEmail() + "</EMAIL>");
 				sb.append("<COMMUNITY>" + app.getAddress2() + "</COMMUNITY>");
+				sb.append("<CV19>" + app.getCovid19VaxStatus() + "</CV19>");
 				String ph = "";
 				if(app.getHomephone() != null) {
 					ph = "(h) " + app.getHomephone();

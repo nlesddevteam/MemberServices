@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -2673,6 +2674,29 @@ public class ApplicantProfileManager {
 				}
 			}
 			catch (SQLException e) {}
+			//check to see if covid19 vax status included
+			//check sub prefs
+			try {
+				if (rs.getString("APPID") != null && org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("APPID"))) {
+					if(org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("VERIFIED_BY"))
+							 && org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("VD2"))){
+						DateFormat dt = new SimpleDateFormat("dd/MM/yyyy"); 
+						String status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Verified by " + rs.getString("VERIFIED_BY") + " on " + dt.format(new java.util.Date(rs.getTimestamp("VD2").getTime()))+"</span>" ;
+						aBean.setCovid19VaxStatus(status);
+					}else {
+						aBean.setCovid19VaxStatus("<span style='color:Green;'><i class=\"fas fa-check\"></i> YES</span> - <span style='color:Red;'><i class=\"fas fa-times\"></i> Not Verified</span>");
+					}
+					
+				}else {
+					aBean.setCovid19VaxStatus("<span style='color:Red;'><i class=\"fas fa-times\"></i> No/No Doc</span>");
+				
+				
+				}
+			}
+			catch (SQLException e) {
+				aBean.setCovid19VaxStatus("<span style='color:Red;'><i class=\"fas fa-times\"></i> No/No Doc</span>");
+			
+			}
 
 		}
 		catch (SQLException e) {
