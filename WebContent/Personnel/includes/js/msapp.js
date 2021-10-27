@@ -1471,6 +1471,8 @@ function verifycovid19(did,btn){
  						$("#spvdate").html($(xml).find('VDATE').text());
  						$("#spvby").html($(xml).find('VBY').text());
  						$("#divverify").show();
+						$("#divnotver").hide();
+					
  						$(btn).hide();
  					}
  				},
