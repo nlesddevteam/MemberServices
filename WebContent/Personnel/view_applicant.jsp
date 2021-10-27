@@ -1128,7 +1128,9 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
                 
   <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info" id="section10b">   
-	               	<div class="panel-heading"><b>COVID-19 Proof of Vaccination</b> (Upload through Section 10. Documents above)
+	               	<div class="panel-heading"><b>COVID-19 Proof of Vaccination</b> 
+	               	<span class="no-print" style="float: right; padding-right: 5px">
+				<a class="btn btn-xs btn-primary" href="applicant_registration_step_10.jsp">EDIT/UPLOAD</a></span>
 	               </div>
       			 	<div class="panel-body"> 
 					<div class="table-responsive"> 
