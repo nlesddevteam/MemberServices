@@ -815,10 +815,10 @@ input {
 											<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
 											 &nbsp; 
 											 	<% if(doc.getClBean() == null){ %>
-												&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>');">VERIFY</a>
+												&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
 											<%}else{ %>
 												<% if(doc.getClBean().getDateVerified() == null){ %>
-													&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>');">VERIFY</a>
+													&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
 												<%} %>
 											<%} %>
 										</td>
