@@ -114,7 +114,7 @@ $("#loadingSpinner").css("display","none");
   	
   	$('.delete-cod').click(function(){
   		if(confirm('Are you sure you want to delete this Criminal Offence Declaration?')){
-  			$(this).css({'color': "blue"}).html('DELETING...');
+  			$(this).css({'color': "yellow"}).html('DELETING...');
   			return true;
   		}
   		else
@@ -123,7 +123,7 @@ $("#loadingSpinner").css("display","none");
   	
   	$('.delete-doc').click(function(){
   		if(confirm('Are you sure you want to delete this Document?')){
-  			$(this).css({'color': "blue"}).html('DELETING...');
+  			$(this).css({'color': "yellow"}).html('DELETING...');
   			return true;
   		}
   		else
@@ -780,22 +780,20 @@ input {
 										<% if(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX)){ %>
 										<% if(doc.getClBean() == null){ %>
 											
-													<div style="display:none" id="divverify">
-														<span><span id="spvdate"></span> by <span id="spvby"></span></span>
-													</div>
+												<span style="color:Red;">Not Verified</span>
 												
 										<%}else{ %>
 											<% if(doc.getClBean().getDateVerified() != null){ %>
 												
 														<div  id="divverify">
-															<span><span id="spvdate"><%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
+															<span style="color:Green;"><span id="spvdate"><%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
 														</div>
 													
 											<%}else{ %>
-												
-													<div style="display:none" id="divverify">
-														<span><span id="spvdate"></span> by <span id="spvby"></span></span>
-													</div>
+												<span style="color:Red;" id="divnotver">Not Verified</span>
+												     <div  id="divverify" style="display:none;" >
+															<span style="color:Green;"><span id="spvdate"></span> by <span id="spvby"></span></span>
+														</div>
 												
 											<%} %>
 										<%} %>
@@ -812,13 +810,12 @@ input {
 										
 										<td class="no-print">
 											<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp; 
-											<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
-											 &nbsp; 
+											<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a> &nbsp; 
 											 	<% if(doc.getClBean() == null){ %>
-												&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
+												<a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
 											<%}else{ %>
 												<% if(doc.getClBean().getDateVerified() == null){ %>
-													&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
+													<a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
 												<%} %>
 											<%} %>
 										</td>
