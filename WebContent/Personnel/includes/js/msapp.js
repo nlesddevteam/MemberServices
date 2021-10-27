@@ -1457,7 +1457,7 @@ function deleteref(but,refid){
  		);
 }
 //delete reference ajax call
-function verifycovid19(did){
+function verifycovid19(did,btn){
 	$.ajax(
  			{
  				type: "POST",  
@@ -1471,6 +1471,7 @@ function verifycovid19(did){
  						$("#spvdate").html($(xml).find('VDATE').text());
  						$("#spvby").html($(xml).find('VBY').text());
  						$("#divverify").show();
+ 						$(btn).hide();
  					}
  				},
  				  error: function(xhr, textStatus, error){
@@ -1512,5 +1513,7 @@ function verifycovid19list(did,btn){
  			}
  		);
 }
+
+
 
 
