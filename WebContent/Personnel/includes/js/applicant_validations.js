@@ -257,11 +257,11 @@ function checknewemployment() {
 		$("#divmsg").show();
 		return false;
 	}
-	if (todate == "") {
-		$("#spanmsg").html("To date is a required field");
-		$("#divmsg").show();
-		return false;
-	}
+	//if (todate == "") {
+	//	$("#spanmsg").html("To date is a required field");
+		//$("#divmsg").show();
+	//	return false;
+	//}
 	$("#divmsg").hide();
 	return true;
 }
@@ -334,7 +334,7 @@ function checkneweducationpost1() {
 		$("#spanmsg").html("Please specify to date");
 		$("#divmsg").show();
 		return false;
-	}
+		}
 	$("#divmsg").hide();
 	return true;
 }

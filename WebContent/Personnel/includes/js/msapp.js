@@ -326,12 +326,12 @@ function checknewemployment() {
 		$("#fromdate").focus();	
 		return false;
 	}
-	if (todate == "") {		
-		$("#msgerr").css("display","block").html("ERROR: To Date is a required field.").delay(5000).fadeOut();
-		$("#todateW").addClass("has-error");
-		$("#todate").focus();	
-		return false;
-	}
+	//if (todate == "") {		
+		//$("#msgerr").css("display","block").html("ERROR: To Date is a required field.").delay(5000).fadeOut();
+		//$("#todateW").addClass("has-error");
+	//	$("#todate").focus();	
+	//	return false;
+	//}
 	
 	return true;
 }
