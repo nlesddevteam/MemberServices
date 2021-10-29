@@ -19,8 +19,8 @@ public class AddApplicantEmploymentRequestHandler extends PersonnelApplicationRe
 				new RequiredFormElement("supervisor","Please specify supervisor"),
 				new RequiredFormElement("jobtitle","Please specify job title"),
 				new RequiredFormElement("duties","Please specify duties"),
-				new RequiredFormElement("fromdate","Please specify from date"),
-				new RequiredFormElement("todate","Please specify to date")
+				new RequiredFormElement("fromdate","Please specify from date")
+				//new RequiredFormElement("todate","Please specify to date")
 		});
 	}
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response)
