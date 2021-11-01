@@ -30,7 +30,7 @@ public class TendersBean implements Serializable {
 	private Date awardedDate;
 	private String awardedTo;
 	private double contractValue;
-
+	private TenderExceptionBean teBean;
 	public Integer getId() {
 
 		return id;
@@ -185,7 +185,7 @@ public class TendersBean implements Serializable {
 
 		return this.awardedDate != null ? this.awardedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
 	}
-
+  
 	public void setAwardedDate(Date awardedDate) {
 
 		this.awardedDate = awardedDate;
@@ -204,7 +204,7 @@ public class TendersBean implements Serializable {
 	public String getAwardedDateFormatted() {
 
 		if (this.awardedDate != null) {
-			return new SimpleDateFormat("dd/MM/yyyy").format(this.dateAdded);
+			return new SimpleDateFormat("dd/MM/yyyy").format(this.awardedDate);
 		}
 		else {
 			return "";
@@ -226,5 +226,13 @@ public class TendersBean implements Serializable {
 
 		DecimalFormat df2 = new DecimalFormat(".00");
 		return df2.format(contractValue);
+	}
+
+	public TenderExceptionBean getTeBean() {
+		return teBean;
+	}
+
+	public void setTeBean(TenderExceptionBean teBean) {
+		this.teBean = teBean;
 	}
 }
