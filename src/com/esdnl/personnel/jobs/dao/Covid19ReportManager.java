@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.Covid19ReportBean;
 import oracle.jdbc.OracleCallableStatement;
@@ -72,11 +74,22 @@ public class Covid19ReportManager {
 			stat.setInt(2, numdays);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
-		
+			HashSet<String>testh = new HashSet<String>();
 			while (rs.next()) {
-				eBean = createCovid19ReportBeanBean(rs);
+				if(testh.size() > 0) {
+					if(!testh.contains(rs.getString("SIN").trim())) {
+						eBean = createCovid19ReportBeanBean(rs);
+						testh.add(eBean.getEmployeeSin().trim());
+						v_opps.add(eBean);
+					}
+				}else {
+					eBean = createCovid19ReportBeanBean(rs);
+					testh.add(eBean.getEmployeeSin().trim());
+					v_opps.add(eBean);
+				}
+				
 		
-				v_opps.add(eBean);
+				
 			}
 		}
 		catch (SQLException e) {
