@@ -125,6 +125,7 @@ public class Covid19ReportBean {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<PEMPLOYEE>");
 		sb.append("<NAME>" + this.employeeName + "</NAME>");
+		sb.append("<SIN>" + this.employeeSin + "</SIN>");
 		sb.append("<STATUS>" + this.getStatusString() + "</STATUS>");
 		sb.append("<CDATE>" + this.getCreatedDateFormatted() + "</CDATE>");
 		sb.append("<FTYPE>" + this.getDocumentType() + "</FTYPE>");

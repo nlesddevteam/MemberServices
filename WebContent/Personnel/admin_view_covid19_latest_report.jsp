@@ -94,11 +94,11 @@
 						    
 						    <thead class="thead-light">
 								      <tr>
-								       <th width='20%'>EMPLOYEE</th>
+								       <th width='15%'>EMPLOYEE</th>
 								       <th width='20%'>LOCATION</th>
 								        <th width='35%'>STATUS</th>
 								        <th width='10%'>UPLOAD DATE</th>
-								        <th width='15%'>OPTIONS</th>
+								        <th width='20%'>OPTIONS</th>
 								      </tr>
 								    </thead>
 								 <tbody>
@@ -178,16 +178,20 @@ function getEmployeesByDays(ndays)
      								//now we see what buttons we need
      								if($(this).find("STATUSCODE").text() == "1"){
      									//show no buttons
-     									newrow += "<td></td>";
+     									newrow += "<td>";  
+     									newrow += "<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>";
+     									newrow += "</td>";
      								}else if($(this).find("STATUSCODE").text() == "2"){
      									//show view and verify links
      									newrow += "<td>";
-     									newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>VIEW</a>";
-     									newrow += "&nbsp; <a class='viewdoc  btn btn-xs btn-success' onclick=\"verifycovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\">VERIFY</a>" 
+     									newrow += "<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>&nbsp;";
+     									newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>DOC</a>&nbsp;";
+     									newrow += "<a class='viewdoc  btn btn-xs btn-success' onclick=\"verifycovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\">VERIFY</a>" 
      									newrow += "</td>";
      								}else if($(this).find("STATUSCODE").text() == "3"){
      									newrow += "<td>";
-     									newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>VIEW</a>";
+     									newrow += "<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>&nbsp;";
+     									newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>DOC</a>";
      									newrow += "</td>";
      								}
      								
