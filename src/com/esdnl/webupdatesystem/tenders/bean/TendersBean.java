@@ -185,7 +185,7 @@ public class TendersBean implements Serializable {
 
 		return this.awardedDate != null ? this.awardedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
 	}
-
+  
 	public void setAwardedDate(Date awardedDate) {
 
 		this.awardedDate = awardedDate;
