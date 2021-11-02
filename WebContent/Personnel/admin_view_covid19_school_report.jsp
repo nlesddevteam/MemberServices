@@ -118,6 +118,9 @@
 	                 
 	                
 <script>
+
+
+
 $(function() {
 	$('#lst_school').on('change',function(){		
 		
@@ -208,7 +211,8 @@ function getEmployeesByLocation(locid)
      								$('.empTable').dataTable({
      									
      									"order" : [[0,"asc"]],		
-     									"bPaginate": false,
+     									//"bPaginate": false,
+     									"lengthMenu" : [ [ 25, 50, 100, 200, -1 ], [ 25, 50, 100, 200, "All" ] ],
      									responsive: true,
      									     									
      									
