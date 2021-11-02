@@ -92,7 +92,7 @@ public class ApplicantSecurityManager {
 		ResultSet rs = null;
 		try {
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_security_info_by_email(?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_security_info_by_email2(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setString(2, email);
 			stat.execute();
