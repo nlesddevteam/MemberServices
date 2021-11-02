@@ -19,31 +19,52 @@ public class ResetApplicantPasswordRequestHandler  extends PublicAccessRequestHa
 		ApplicantSecurityBean asb = ApplicantSecurityManager.getApplicantSecurityBeanByEmail(form.get("email"));
 		if (asb != null)
 		{
-			String xml = null;
-			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
-			sb.append("<GET-APPLICANT-SECURITY>");
-			sb.append("<INFO>");
-			sb.append("<SQUESTION>" + asb.getSecurity_question() + "</SQUESTION>");
-			sb.append("<SANSWER>" + asb.getSecurity_answer() + "</SANSWER>");
-			sb.append("<SEMAIL>" + form.get("email") + "</SEMAIL>");
-			sb.append("<ERROR>No Error</ERROR>");
-			sb.append("</INFO>");
-			sb.append("</GET-APPLICANT-SECURITY>");
-			xml = StringUtils.encodeXML(sb.toString());
-			System.out.println(xml);
-			PrintWriter out = response.getWriter();
-			response.setContentType("text/xml");
-			response.setHeader("Cache-Control", "no-cache");
-			out.write(xml);
-			out.flush();
-			out.close();
+			if(asb.getSecurity_question() != null) {
+				String xml = null;
+				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+				sb.append("<GET-APPLICANT-SECURITY>");
+				sb.append("<INFO>");
+				sb.append("<SQUESTION>" + asb.getSecurity_question() + "</SQUESTION>");
+				sb.append("<SANSWER>" + asb.getSecurity_answer() + "</SANSWER>");
+				sb.append("<SEMAIL>" + form.get("email") + "</SEMAIL>");
+				sb.append("<ERROR>No Error</ERROR>");
+				sb.append("</INFO>");
+				sb.append("</GET-APPLICANT-SECURITY>");
+				xml = StringUtils.encodeXML(sb.toString());
+				System.out.println(xml);
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/xml");
+				response.setHeader("Cache-Control", "no-cache");
+				out.write(xml);
+				out.flush();
+				out.close();
+			}else {
+				String xml = null;
+				StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
+				sb.append("<GET-APPLICANT-SECURITY>");
+				sb.append("<INFO>");
+				sb.append("<ERROR>");
+				sb.append("No security question setup for this profile, you cannot reset your password. Please contact support.");
+				sb.append("</ERROR>");
+				sb.append("</INFO>");
+				sb.append("</GET-APPLICANT-SECURITY>");
+				xml = StringUtils.encodeXML(sb.toString());
+				System.out.println(xml);
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/xml");
+				response.setHeader("Cache-Control", "no-cache");
+				out.write(xml);
+				out.flush();
+				out.close();
+			}
+			
 		}else{
 			String xml = null;
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<GET-APPLICANT-SECURITY>");
 			sb.append("<INFO>");
 			sb.append("<ERROR>");
-			sb.append("We could not find the email in our system. Did you create your security question when you initially registered? If not, we cannot reset your password. Please contact support.");
+			sb.append("We could not find the email in our system. Please create a profile or contact support if you think you have an existing profile.");
 			sb.append("</ERROR>");
 			sb.append("</INFO>");
 			sb.append("</GET-APPLICANT-SECURITY>");
