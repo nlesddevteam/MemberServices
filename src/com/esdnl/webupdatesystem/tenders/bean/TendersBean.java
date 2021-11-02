@@ -209,7 +209,8 @@ public class TendersBean implements Serializable {
 		else {
 			return "";
 		}
-
+		
+		
 	}
 
 	public double getContractValue() {
