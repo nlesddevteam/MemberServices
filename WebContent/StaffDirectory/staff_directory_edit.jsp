@@ -180,8 +180,7 @@
 	                    <option value="N/A">---- Please Select (Required) ----</option>
 	                     <option value="Accountant">Accountant</option>
 	                    <option value="Accountant I">Accountant I</option>
-	                    <option value="Accountant II">Accountant II</option>	                    
-	                   	<option value="Accounts Payable Clerk">Accounts Payable Clerk</option>
+	                   <option value="Accounts Payable Clerk">Accounts Payable Clerk</option>
 	                   	<option value="Accounts Payable Clerk I">Accounts Payable Clerk I</option>
 	                   	<option value="Accounts Payable Clerk II">Accounts Payable Clerk II</option>
 						<option value="Accounts Receivable Clerk">Accounts Receivable Clerk</option>
@@ -192,6 +191,7 @@
 						<option value="Alternate Transportation Clerk">Alternate Transportation Clerk</option>
 						<option value="Assistant Director of Education">Assistant Director of Education</option>
 						<option value="Associate Director of Education">Associate Director of Education</option>
+						<option value="Assistant Manager">Assistant Manager</option>
 						<option value="Audiologist">Audiologist</option>
 						<option value="Auditor">Auditor</option>
 						<option value="Auditory Verbal Therapist">Auditory Verbal Therapist</option>
@@ -351,6 +351,7 @@
 							<option value="English Language Arts">English Language Arts</option>
 							<option value="English Language Arts/Social Studies">English Language Arts/Social Studies</option>
 							<option value="Finance">Finance</option>
+							<option value="Finance and Budgeting">Finance and Budgeting</option>
 							<option value="Finance and Business Administration">Finance and Business Administration</option>
 							<option value="Finance and Business Administration / Student Transportation">Finance and Business Administration / Student Transportation</option>
 							<option value="Fine Arts">Fine Arts</option>
