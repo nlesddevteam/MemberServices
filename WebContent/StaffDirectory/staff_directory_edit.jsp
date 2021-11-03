@@ -71,7 +71,7 @@
 	 		</div>
 	 		<div class="col-lg-6 col-12">	
 	 		 <b>Email:</b>
-    				<input required type='text' id='email' name='email' class="form-control" autocomplete="false" value='${ contact.email }' />
+    				<input  type='text' id='email' name='email' class="form-control" autocomplete="false" value='${ contact.email }' />
 	 		
 	 	
 			</div>
