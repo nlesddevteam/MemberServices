@@ -200,6 +200,7 @@
 						
 						<option value="Buyer I">Buyer I</option>
 						<option value="Buyer II">Buyer II</option>
+						<option value="Cayenta Project Manager">Cayenta Project Manager</option>
 						<option value="CEO/Director of Education">CEO/Director of Education</option>
 						<option value="CFO/Assistant Director of Education">CFO/Assistant Director of Education</option>
 						<option value="Classroom Teacher">Classroom Teacher</option>
@@ -357,6 +358,7 @@
 							<option value="Finance and Business Administration / Student Transportation">Finance and Business Administration / Student Transportation</option>
 							<option value="Fine Arts">Fine Arts</option>
 							<option value="French Programs">French Programs</option>
+							 <option value="FMS/WMS">FMS/WMS</option>
 							<option value="Guidance">Guidance</option>
 							<option value="Guidance Counsellor">Guidance Counsellor</option>
 							<option value="Guidance Counsellor/IRT">Guidance Counsellor/IRT</option>
