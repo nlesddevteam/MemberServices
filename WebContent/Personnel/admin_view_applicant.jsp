@@ -1345,7 +1345,7 @@ input {
 								<%
 									int i = 0;
 									for (ApplicantDocumentBean doc : docs) {
-										//only select roles get docs other then transcripts.
+										 //only select roles get docs other then transcripts.
 										if ((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) && !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) || (doc.getType().equal(DocumentType.LETTER)
 												|| (doc.getType().equal(DocumentType.COVID19_VAX)))
 												) {
