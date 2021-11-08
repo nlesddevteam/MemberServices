@@ -205,7 +205,18 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 <%if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")){%>
 
-
+							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+					        <li class="dropdown" id="menuNormal">
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
+					          	 <ul class="dropdown-menu multi-level">
+									<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_school_report.jsp">View COVID19 Report By Location</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_latest_report.jsp">View Latest COVID19 Report</a></li>
+					          		</esd:SecurityAccessRequired>
+					          		
+					          	</ul>
+					        </li>
+							</esd:SecurityAccessRequired>
 
 
 
@@ -231,6 +242,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          			<li class="divider"></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_school_report.jsp">View COVID19 Report By Location</a></li>
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_latest_report.jsp">View Latest COVID19 Report</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_counts_report.jsp">View COVID19 Counts Report</a></li>
 					          		</esd:SecurityAccessRequired>
 					          		
 					          	</ul>
