@@ -1149,7 +1149,15 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 	                                   		if(doc.getType().equals(DocumentType.COVID19_VAX)){ %>
 	                                   		<tr>
 	                                      		<td><%=doc.getType().toString()%></td>
-	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%>
+	                                      		<%if(doc.getClBean() != null){ %>
+	                                      				<%if(doc.getClBean().getDateVerified() != null) {%>
+	                                      					<span style="color:Green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;<i class="fas fa-check"></i>&nbsp;&nbsp;Verified on <%=doc.getClBean().getDateVerifiedFormatted() %>&nbsp;&nbsp;]</span>
+	                                      				
+	                                      				<%} %>
+	                                      			
+	                                      			<%} %>
+	                                      		</td>
 	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                                      				                                      
 	                                      	</tr>
