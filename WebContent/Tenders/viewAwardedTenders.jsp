@@ -39,7 +39,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 
 %>
 <esd:SecurityCheck permissions="TENDER-ADMIN,TENDER-EDIT,TENDER-VIEW"/>
-<!DOCTYPE html> 
+
 <html>
 
 	<head>

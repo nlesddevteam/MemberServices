@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.webupdatesystem.tenders.bean.TenderException;
+import com.esdnl.webupdatesystem.tenders.constants.TenderRenewal;
 import com.esdnl.webupdatesystem.tenders.constants.TenderStatus;
 import com.esdnl.webupdatesystem.tenders.dao.TendersManager;
 import com.nlesd.school.bean.SchoolZoneBean;
@@ -36,6 +37,7 @@ public class ViewTenderRequestHandler extends RequestHandlerImpl {
 				statuslist.put(t.getValue(),t.getDescription());
 			}
 			request.setAttribute("statuslist", statuslist);
+			request.setAttribute("renewallist", TenderRenewal.ALL);
 			
 		} catch (TenderException e) {
 			// TODO Auto-generated catch block

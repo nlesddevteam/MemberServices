@@ -16,8 +16,11 @@ import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
 import com.esdnl.util.StringUtils;
 import com.esdnl.webupdatesystem.tenders.bean.TenderException;
+import com.esdnl.webupdatesystem.tenders.bean.TenderExceptionBean;
 import com.esdnl.webupdatesystem.tenders.bean.TendersBean;
+import com.esdnl.webupdatesystem.tenders.constants.TenderRenewal;
 import com.esdnl.webupdatesystem.tenders.constants.TenderStatus;
+import com.esdnl.webupdatesystem.tenders.dao.TenderExceptionManager;
 import com.esdnl.webupdatesystem.tenders.dao.TendersManager;
 import com.nlesd.school.bean.SchoolZoneBean;
 import com.nlesd.school.service.SchoolZoneService;
@@ -104,6 +107,26 @@ public class UpdateTenderRequestHandler extends RequestHandlerImpl {
 						delete_file(filelocation, tbb.getDocUploadName());
 					}
 				}
+				//now we add the exception record
+				if (!StringUtils.isEmpty(form.get("vendor_name"))) {
+					TenderExceptionBean tebean = new TenderExceptionBean();
+					tebean.setTenderId(tb.getId());
+					tebean.setVendorName(form.get("vendor_name"));
+					tebean.seteDescription(form.get("edescription"));
+					tebean.seteAddress(form.get("eaddress"));
+					tebean.seteLocation(form.get("elocation"));
+					tebean.setePrice(form.get("eprice"));
+					tebean.setPoNumber(form.get("po_number"));
+					tebean.seteTerms(form.get("eterms"));
+					tebean.setTenderRenewal(TenderRenewal.get(form.getInt("erenewal")));
+					tebean.setRenewalother(form.get("erenewalother"));
+					tebean.seteClause(form.get("eclause"));
+					tebean.setAddedBy(usr.getLotusUserFullName());
+					TenderExceptionManager.updateTenderException(tebean);
+					
+				}
+				
+				request.setAttribute("renewallist", TenderRenewal.ALL);
 				Collection<SchoolZoneBean> list = SchoolZoneService.getSchoolZoneBeans();
 				request.setAttribute("regions", list);
 				Map<Integer, String> statuslist = new HashMap<Integer, String>();
