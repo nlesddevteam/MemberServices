@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Vector;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -354,6 +353,11 @@ public class TendersManager {
 			abean.setAwardedTo(rs.getString("AWARDED_TO"));
 			abean.setContractValue(rs.getDouble("CONTRACT_VALUE"));
 			abean.setOtherTendersFiles(TendersFileManager.getTendersFiles(abean.getId()));
+			try {
+				abean.setTeBean(TenderExceptionManager.createTenderExceptionBean(rs));
+			}catch(Exception ee) {
+				abean.setTeBean(null);
+			}
 			
 			
 		}
@@ -406,7 +410,11 @@ public class TendersManager {
 			abean.setAwardedTo(rs.getString("AWARDED_TO"));
 			abean.setContractValue(rs.getDouble("CONTRACT_VALUE"));
 			//abean.setOtherTendersFiles(TendersFileManager.getTendersFiles(abean.getId()));
-			
+			try {
+				abean.setTeBean(TenderExceptionManager.createTenderExceptionBean(rs));
+			}catch(Exception ee) {
+				abean.setTeBean(null);
+			}
 			
 		}
 		catch (SQLException e) {

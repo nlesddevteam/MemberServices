@@ -30,7 +30,7 @@ public class TendersBean implements Serializable {
 	private Date awardedDate;
 	private String awardedTo;
 	private double contractValue;
-	//private TenderExceptionBean teBean;
+	private TenderExceptionBean teBean;
 	public Integer getId() {
 
 		return id;
@@ -229,11 +229,11 @@ public class TendersBean implements Serializable {
 		return df2.format(contractValue);
 	}
 
-	//public TenderExceptionBean getTeBean() {
-	//	return teBean;
-//	}
+	public TenderExceptionBean getTeBean() {
+		return teBean;
+	}
 
-//	public void setTeBean(TenderExceptionBean teBean) {
-//		this.teBean = teBean;
-//	}
+	public void setTeBean(TenderExceptionBean teBean) {
+			this.teBean = teBean;
+	}
 }
