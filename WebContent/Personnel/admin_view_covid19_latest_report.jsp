@@ -69,15 +69,10 @@
 	                       	    	<br/><br/>     
 	  						</div>	
 
-                            
-	                            
-	                             					
-	                             		
+           		
 	                             		
 <!--PERMANENT POSITIONS TAB ---------------------------------------------------------->	                             		
-	                             							
-			                    
-	                             							
+                           							
 	                             								
 	<div class="panel-group">
   <div class="panel panel-success">
@@ -95,10 +90,10 @@
 						    <thead class="thead-light">
 								      <tr>
 								       <th width='15%'>EMPLOYEE</th>
-								       <th width='20%'>LOCATION</th>
-								        <th width='35%'>STATUS</th>
+								       <th width='25%'>LOCATION</th>
+								        <th width='33%'>STATUS</th>
 								        <th width='10%'>UPLOAD DATE</th>
-								        <th width='20%'>OPTIONS</th>
+								        <th width='17%'>OPTIONS</th>
 								      </tr>
 								    </thead>
 								 <tbody>
@@ -120,7 +115,11 @@
       
     
   </div>
-</div>	       
+</div>	
+
+
+
+       
 </div>	
 </div>
 </div>
@@ -138,6 +137,7 @@ $(function() {
 			$('.empvTable').DataTable().destroy();
 			} 
 		
+				
 		//var optionText = $("#selectdays option:selected").val();
 		getEmployeesByDays($("#selectdays").val());
 		
@@ -167,6 +167,7 @@ function getEmployeesByDays(ndays)
      						//$("#reportdata tbody").empty();
      						//refreshdatatable();
      	     					//now populate schools
+     	     					
 								var noemployees = true;
      							$(xml).find('PEMPLOYEE').each(function(){
      								noemployees=false;
@@ -178,20 +179,31 @@ function getEmployeesByDays(ndays)
      								//now we see what buttons we need
      								if($(this).find("STATUSCODE").text() == "1"){
      									//show no buttons
+     								if ($(this).find("SIN").text().length >1) { 
      									newrow += "<td>";  
-     									newrow += "<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>";
+     									
+     									newrow += "<a  title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>";
      									newrow += "</td>";
+     								} else {
+     									newrow += "<td><a style='color:Red;' title='User has no profile' href='#'><i class='fas fa-user-slash'></i></a></td>";  
+     								}
      								}else if($(this).find("STATUSCODE").text() == "2"){
      									//show view and verify links
      									newrow += "<td>";
-     									newrow += "<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>&nbsp;";
-     									newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>DOC</a>&nbsp;";
-     									newrow += "<a class='viewdoc  btn btn-xs btn-success' onclick=\"verifycovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\">VERIFY</a>" 
+     									newrow += "<a title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>&nbsp;";
+     									newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>&nbsp;";
+     									newrow += "<a title='Verify Documentation' id='v" + $(this).find("DOCUMENTID").text() + "' class='viewdoc  btn btn-sm btn-success' onclick=\"verifycovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\"><i class='far fa-check-circle'></i></a>&nbsp;"
+     									newrow += "<a title='Reject Documentation' id='r" + $(this).find("DOCUMENTID").text() + "' class='rejectdoc  btn btn-sm btn-danger' onclick=\"rejectcovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\"><i class='fas fa-ban'></i></a>"
      									newrow += "</td>";
      								}else if($(this).find("STATUSCODE").text() == "3"){
      									newrow += "<td>";
-     									newrow += "<a class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>&nbsp;";
-     									newrow += "<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>DOC</a>";
+     									newrow += "<a title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>&nbsp;";
+     									newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>";
+     									newrow += "</td>";
+     								}else if($(this).find("STATUSCODE").text() == "4"){
+     									newrow += "<td>";
+     									newrow += "<a title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>&nbsp;";
+     									newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>";
      									newrow += "</td>";
      								}
      								
@@ -202,7 +214,8 @@ function getEmployeesByDays(ndays)
      								empps=true;
 
      							});
-     							;
+     							
+     							
      							if(noemployees){
      								var newrow ="<tr><td colspan='4'>No Records Found</td></tr>";
      								$('#permanent-positions-table tbody').append(newrow);
@@ -244,6 +257,38 @@ function getEmployeesByDays(ndays)
 
 </script>	
 
+<div class="modal fade" id="modalreject">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Reject COVID19 Vaccination Document</h4>
+        <input type='hidden' id='hidbutton'>
+      </div>
+      <div class="modal-body">
+        <p>
+        <h4 class="modal-title"><span id="spandesc">Reason For Rejection</span></h4>
+        </p>
+        <p>
+		<h4 class="modal-title"><span id="spandesc">Please remember these notes will be sent back to the Employee\Applicant and saved in the system</span></h4>
+        </p>
+        <p>
+        <textarea rows="7" cols="75" id='txtreason' name='txtreason'></textarea>
+        </p>
+        <p>
+        <div class="alert alert-danger" role="alert" id="errmsg" style="display:none;">
+  			Please enter reason for rejection
+		</div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='btn_reject_doc_ok' class="btn btn-success btn-xs" style="float: left;" onclick="sumbitRejectDocument();">Reject</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+		
         
         
         

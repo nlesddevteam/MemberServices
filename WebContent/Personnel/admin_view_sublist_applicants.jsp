@@ -323,11 +323,11 @@ input {
                                            <th width="10%">Last Name</th>                                       
                                            <th width="15%">Telephone</th>
                                            <th width="20%">Email</th>
-                                           <th width="15%">Applied</th>
+                                           <th width="10%">Applied</th>
                                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-												<th width="20%">Covid19 Vax?</th>
+												<th width="28%">Vax Status</th>
 											</esd:SecurityAccessRequired>
-                                           <th width="10%">Options</th>
+                                           <th width="*">Options</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -340,15 +340,15 @@ input {
                                               continue;
                                         %>  
                                         <tr>
-                                              <td><%=applicants[i].getFirstname()%></td>  
-                                              <td><%=applicants[i].getSurname()%></td>                                            
-                                              <td><%=applicants[i].getHomephone()%></td>
-                                              <td><a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
-                                              <td><%=((applicants[i].getAppliedDate() != null)?applicants[i].getAppliedDateFormatted():"&nbsp")%></td>
+                                              <td width="10%"><%=applicants[i].getFirstname()%></td>  
+                                              <td width="10%"><%=applicants[i].getSurname()%></td>                                            
+                                              <td width="15%"><%=applicants[i].getHomephone()%></td>
+                                              <td width="20%"><a href="mailto:<%=applicants[i].getEmail()%>"><%=applicants[i].getEmail()%></a></td>
+                                              <td width="10%"><%=((applicants[i].getAppliedDate() != null)?applicants[i].getAppliedDateFormatted():"&nbsp")%></td>
                                               <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-                                              	<td><%=applicants[i].getCovid19VaxStatus()%></td>
+                                              	<td width="28%"><%=applicants[i].getCovid19VaxStatus()%></td>
                                               </esd:SecurityAccessRequired>
-                                              <td><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>">PROFILE</a></td>
+                                              <td width="*"><a title='View Profile' class='btn btn-sm btn-primary' href="viewApplicantProfile.html?sin=<%=applicants[i].getSIN()%>"><i class='fas fa-user-alt'></i></a></td>
                                          </tr>
                                          <%cnt++; %>
                                         <%} %>
@@ -380,11 +380,11 @@ input {
                                                  <th width="10%">Last Name</th>                                         
                                                  <th width="15%">Telephone</th>
                                                  <th width="20%">Email</th>
-                                                 <th width="15%">Applied</th>
+                                                 <th width="10%">Applied</th>
                                                  <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-														<th width="20%">Covid19 Vax</th>
+														<th width="28%">Vax Status</th>
 												</esd:SecurityAccessRequired>
-                                                 <th width="10%">Options</th>
+                                                 <th width="*">Options</th>
                                               </tr>
                                               </thead>
                                               <tbody>
@@ -397,11 +397,11 @@ input {
                                                 <td width="10%"><%=shortlisted[i].getSurname()%></td>                                               
                                                 <td width="15%"><%=shortlisted[i].getHomephone()%></td>
                                                 <td width="20%"><a href="mailto:<%=shortlisted[i].getEmail()%>"><%=shortlisted[i].getEmail()%></a></td>
-                                                <td width="15%"><%=((shortlisted[i].getAppliedDate() != null)?shortlisted[i].getAppliedDateFormatted():"&nbsp;")%></td>
+                                                <td width="10%"><%=((shortlisted[i].getAppliedDate() != null)?shortlisted[i].getAppliedDateFormatted():"&nbsp;")%></td>
                                                 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-                                              	<td width="20%"><%=applicants[i].getCovid19VaxStatus()%></td>
+                                              	<td width="28%"><%=shortlisted[i].getCovid19VaxStatus()%></td>
                                              		 </esd:SecurityAccessRequired>
-                                                <td width="10%"><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=shortlisted[i].getSIN()%>">PROFILE</a></td>
+                                                <td width="*"><a title='View Profile' class='btn btn-sm btn-primary' href="viewApplicantProfile.html?sin=<%=shortlisted[i].getSIN()%>"><i class='fas fa-user-alt'></i></a></td>
                                               </tr>
                                         <%  } %>
                                         </tbody>  
@@ -431,11 +431,11 @@ input {
                                            <th width="10%">Last Name</th>                                         
                                            <th width="15%">Telephone</th>
                                            <th width="20%">Email</th>
-                                           <th width="15%">Applied</th>
+                                           <th width="10%">Applied</th>
                                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-												<th width="20%">Covid19 Vax</th>
+												<th width="28%">Vax Status</th>
 											</esd:SecurityAccessRequired>
-                                           <th width="10%">Options</th>
+                                           <th width="*">Options</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -449,11 +449,11 @@ input {
                                                 <td width="10%"><%=notapproved[i].getSurname()%></td>
                                                 <td width="15%"><%=notapproved[i].getHomephone()%></td>
                                                 <td width="20%"><a href="mailto:<%=notapproved[i].getEmail()%>"><%=notapproved[i].getEmail()%></a></td>
-                                                <td width="15%"><%=((notapproved[i].getAppliedDate() != null)?notapproved[i].getAppliedDateFormatted():"&nbsp;")%></td>
+                                                <td width="10%"><%=((notapproved[i].getAppliedDate() != null)?notapproved[i].getAppliedDateFormatted():"&nbsp;")%></td>
                                                 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-                                              		<td width="20%"><%=applicants[i].getCovid19VaxStatus()%></td>
+                                              		<td width="28%"><%=notapproved[i].getCovid19VaxStatus()%></td>
                                               	</esd:SecurityAccessRequired>
-                                                <td width="10%"><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=notapproved[i].getSIN()%>">PROFILE</a></td>
+                                                <td width="*"><a title='View User Profile' class='btn btn-sm btn-primary' href="viewApplicantProfile.html?sin=<%=notapproved[i].getSIN()%>"><i class='fas fa-user-alt'></i></a></td>
                                         </tr>
                                         <%  } %>
                                         </tbody>  
@@ -484,29 +484,30 @@ input {
                                            <th width="10%">Last Name</th>                                         
                                            <th width="15%">Telephone</th>
                                            <th width="20%">Email</th>
-                                           <th width="15%">Applied</th>
+                                           <th width="10%">Applied</th>
                                            <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-												<th width="20%">Covid19 Vax</th>
+												<th width="20%">Vax Status</th>
 											</esd:SecurityAccessRequired>
-                                           <th width="10%">Options</th>
+                                           <th width="*">Options</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                           
                                         <%  cnt = 0;
-                                            for(int i=0; i < working.length; i++){                                                
+                                            for(int i=0; i < working.length; i++){
+                                            	
                                         %>    
                                         	<tr>
                                                 <td width="10%"><%=working[i].getFirstname()%></td>
                                                 <td width="10%"><%=working[i].getSurname()%></td>                                                 
                                                 <td width="15%"><%=working[i].getHomephone()%></td>
                                                 <td width="20%"><a href="mailto:<%=working[i].getEmail()%>"><%=working[i].getEmail()%></a></td>
-                                                <td width="15%"><%=((working[i].getAppliedDate() != null)?working[i].getAppliedDateFormatted():"&nbsp;")%></td>
+                                                <td width="10%"><%=((working[i].getAppliedDate() != null)?working[i].getAppliedDateFormatted():"&nbsp;")%></td>
                                                 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-                                              		<td width="20%"><%=applicants[i].getCovid19VaxStatus()%></td>
+                                              		<td width="28%"><%=working[i].getCovid19VaxStatus()%></td>
                                               	</esd:SecurityAccessRequired>
-                                                <td width="10%"><a class='btn btn-xs btn-primary' href="viewApplicantProfile.html?sin=<%=working[i].getSIN()%>">PROFILE</a></td>
-                                              </tr>
+                                                <td width="*"><a title='View User Profile'  class='btn btn-sm btn-primary' href="viewApplicantProfile.html?sin=<%=working[i].getSIN()%>"><i class='fas fa-user-alt'></i></a></td>
+                                                </tr>
                                               
                                         <%  } %>
                                          </tbody>  
