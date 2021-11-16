@@ -758,10 +758,10 @@ input {
 								<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblcovid19">
 							<thead>
 								<tr style="border-top: 1px solid black;">
-									<th width='30%'>TITLE</th>
+									<th width='20%'>TITLE</th>
 									<th width='20%'>UPLOADED</th>
-									<th width='30%'>VERIFIED</th>
-									<th class="no-print" width='20%'>OPTIONS</th>
+									<th width='45%'>STATUS</th>
+									<th class="no-print" width='15%'>OPTIONS</th>
 								</tr>
 							</thead>
 							<tbody>									
@@ -774,9 +774,9 @@ input {
 											} 
 								%>
 									<tr>
-										<td><%=doc.getTypeSS().toString()%></td>
-										<td><%=sdf_long.format(doc.getCreatedDate())%></td>
-										<td>
+										<td width='20%'><%=doc.getTypeSS().toString()%></td>
+										<td width='20%'><%=sdf_long.format(doc.getCreatedDate())%></td>
+										<td width='50%'>
 										<% if(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX)){ %>
 										<% if(doc.getClBean() == null){ %>
 											
@@ -786,14 +786,29 @@ input {
 											<% if(doc.getClBean().getDateVerified() != null){ %>
 												
 														<div  id="divverify">
-															<span style="color:Green;"><span id="spvdate"><%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
+															<span style="color:Green;"><span id="spvdate">Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
 														</div>
 													
 											<%}else{ %>
-												<span style="color:Red;" id="divnotver">Not Verified</span>
-												     <div  id="divverify" style="display:none;" >
-															<span style="color:Green;"><span id="spvdate"></span> by <span id="spvby"></span></span>
+												<% if(doc.getClBean().getRejectedDate() != null){ 
+												%>
+														<div  id="divrejected">
+															<span style="color:Orange;"><span id="rejdate">Rejected on <%=doc.getClBean().getRejectedDateFormatted() %></span> by <span id="rejby"><%=doc.getClBean().getRejectedBy() %>
+															<br />Notes: <%=doc.getClBean().getRejectedNotes() %>
+															</span></span>
 														</div>
+												<%}else{ %>
+													<span style="color:Red;" id="divnotver<%=doc.getDocumentId()%>">Not Verified</span>
+												     <div  id="divverify<%=doc.getDocumentId()%>" style="display:none;" >
+															<span style="color:Green;">Verified on <span id="spvdate<%=doc.getDocumentId()%>"></span> by <span id="spvby<%=doc.getDocumentId()%>"></span></span>
+														</div>
+														<div  id="divrejected<%=doc.getDocumentId()%>" style="display:none;" >
+															<span style="color:Orange;">Rejected on 
+															<span id="rejdate<%=doc.getDocumentId()%>"></span> by <span id="rejby<%=doc.getDocumentId()%>"></span>
+															<br />Notes: <span id="rejnotes<%=doc.getDocumentId()%>"></span>
+															</span>
+														</div>
+												<%} %>
 												
 											<%} %>
 										<%} %>
@@ -808,14 +823,19 @@ input {
 										</td>
 										
 										
-										<td class="no-print">
-											<a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp; 
-											<a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a> &nbsp; 
+										<td class="no-print"  width='10%'>
+											<a title="View Documentation" class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'><i class="far fa-file-alt"></i></a> &nbsp; 
+											<a title="Delete Documentation" class='viewdoc delete-doc btn btn-sm btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'><i class="far fa-trash-alt"></i></a> &nbsp; 
 											 	<% if(doc.getClBean() == null){ %>
-												<a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
+												<a class='viewdoc  btn btn-sm btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);"><i class='far fa-check-circle'></i></a>
 											<%}else{ %>
 												<% if(doc.getClBean().getDateVerified() == null){ %>
-													<a class='viewdoc  btn btn-xs btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);">VERIFY</a>
+													<% if(doc.getClBean().getRejectedDate() ==  null){ %>
+														<span id='covidbut<%=doc.getDocumentId()%>'>
+														<a title="Verify and Approve Documentation" class='viewdoc  btn btn-sm btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);"><i class='far fa-check-circle'></i></a>
+														<a title="Reject Documentation" class='viewdoc  btn btn-sm btn-danger' onclick="rejectcovid19list('<%=doc.getDocumentId()%>',this);"><i class='fas fa-ban'></i></a>
+														</span>
+													<%} %>
 												<%} %>
 											<%} %>
 										</td>
@@ -1103,5 +1123,36 @@ input {
 			</div>
 		</div>
 		</esd:SecurityAccessRequired>
+				<div class="modal fade" id="modalreject">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Reject COVID19 Vaccination Document</h4>
+        <input type='hidden' id='hidbutton'>
+      </div>
+      <div class="modal-body">
+        <p>
+        <h4 class="modal-title"><span id="spandesc">Reason For Rejection</span></h4>
+        </p>
+        <p>
+		<h4 class="modal-title"><span id="spandesc">Please remember these notes will be sent back to the Employee\Applicant and saved in the system</span></h4>
+        </p>
+        <p>
+        <textarea rows="7" cols="75" id='txtreason' name='txtreason'></textarea>
+        </p>
+        <p>
+        <div class="alert alert-danger" role="alert" id="errmsg" style="display:none;">
+  			Please enter reason for rejection
+		</div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='btn_reject_doc_ok' class="btn btn-success btn-xs" style="float: left;" onclick="sumbitRejectDocumentApp();">Reject</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>

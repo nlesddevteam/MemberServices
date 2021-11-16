@@ -145,7 +145,13 @@ public class Covid19ReportManager {
 				abean.setVerifiedDate(new Date(rs.getTimestamp("DATE_VERIFIED").getTime()));
 			}
 			abean.setVerifiedBy(rs.getString("VERIFIED_BY"));
-			
+			abean.setRejectedBy(rs.getString("REJECTED_BY"));
+			abean.setRejectedNotes(rs.getString("REJECTED_NOTES"));
+			if(rs.getTimestamp("DATE_REJECTED") ==  null) {
+				abean.setRejectedDate(null);
+			}else {
+				abean.setRejectedDate(new Date(rs.getTimestamp("DATE_REJECTED").getTime()));
+			}
 			
 		}
 		catch (SQLException e) {

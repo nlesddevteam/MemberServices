@@ -4428,7 +4428,10 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewLatestCovid19VaccinationsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewCovid19ReportByDays.html</URL-Pattern>
     </Request-Handler>
-      
+        <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.RejectCovid19DocumentAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/rejectCovid19Doc.html</URL-Pattern>
+    </Request-Handler>
                                              
   </Request-Handlers>
 </Member-Services-Config>

@@ -15,6 +15,10 @@ public class Covid19ReportBean {
 	private Date createdDate;
 	private Date verifiedDate;
 	private String verifiedBy;
+	private String rejectedBy;
+	private Date rejectedDate;
+	private String rejectedNotes;
+
 	public String getEmployeeName() {
 		return employeeName;
 	}
@@ -82,11 +86,14 @@ public class Covid19ReportBean {
 	public String getStatusString() {
 		String status="";
 		if(this.employeeSin == null) {
-			status="<span style='color:Red;'><i class=\"fas fa-times\"></i> No Profile/Not Linked</span>";
+			status="<span style='color:Silver;'><i class=\"fas fa-exclamation-circle\"></i> No Profile/Not Linked <i class=\"fas fa-exclamation-circle\"></i></span>";
 		}else if(this.documentId <1) {
-			status="<span style='color:Red;'><i class=\"fas fa-times\"></i> No COVID19 Document Uploaded</span>";
-		}else if(this.verifiedDate == null) {
-			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Vaccination Proof Document Uploaded</span> - <span style='color:Red;'><i class=\"fas fa-times\"></i> Not Verified</span>";
+			status="<span style='color:Orange;'><i class=\"fas fa-times\"></i> No Document Uploaded</span>";
+		}else if(this.verifiedDate == null && this.rejectedDate ==  null) {
+			status="<span style='color:#6495ED;'><i class=\"fas fa-check\"></i> Document Uploaded</span> - <span style='color:Red;'><i class=\"fas fa-times\"></i> Not Verified</span>";
+		}else if(this.rejectedDate != null && this.verifiedDate ==  null) {
+			status="<span style='color:Red;'><i class=\"fas fa-ban\"></i> Rejected By " + this.rejectedBy + " on " + getDateRejectedFormatted();
+			status= status + "<br />" + this.rejectedNotes + "</span>";
 		}else if(this.verifiedBy != null) {
 			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Verified By " + this.verifiedBy + " on " + getDateVerifiedFormatted() +"</span>";
 		}
@@ -94,13 +101,15 @@ public class Covid19ReportBean {
 	}
 	public int getStatus() {
 		int status=0;
-		if(this.employeeSin == null) {
+		if(this.employeeSin == null) {//no profile
 			status=1;
-		}else if(this.documentId <1) {
+		}else if(this.documentId <1) {//no document
 			status=1;
-		}else if(this.verifiedDate == null) {
+		}else if(this.verifiedDate == null && this.rejectedDate ==  null) {//document not approved and not rejected
 			status=2;
-		}else if(this.verifiedBy != null) {
+		}else if(this.rejectedDate != null && this.verifiedDate ==  null) {//document rejected
+			status=4;
+		}else if(this.verifiedBy != null) {//document approved
 			status=3;
 		}
 		return status;
@@ -121,6 +130,14 @@ public class Covid19ReportBean {
 			return dt.format(this.createdDate);
 		}
 	}
+	public String getDateRejectedFormatted() {
+		if(this.rejectedDate == null) {
+			return "";
+		}else {
+			DateFormat dt = new SimpleDateFormat("dd/MM/yyyy"); 
+			return dt.format(this.rejectedDate);
+		}
+	}
 	public String toXml() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<PEMPLOYEE>");
@@ -136,5 +153,23 @@ public class Covid19ReportBean {
 		sb.append("</PEMPLOYEE>");
 		return sb.toString();
 		
+	}
+	public String getRejectedBy() {
+		return rejectedBy;
+	}
+	public void setRejectedBy(String rejectedBy) {
+		this.rejectedBy = rejectedBy;
+	}
+	public Date getRejectedDate() {
+		return rejectedDate;
+	}
+	public void setRejectedDate(Date rejectedDate) {
+		this.rejectedDate = rejectedDate;
+	}
+	public String getRejectedNotes() {
+		return rejectedNotes;
+	}
+	public void setRejectedNotes(String rejectedNotes) {
+		this.rejectedNotes = rejectedNotes;
 	}
 }

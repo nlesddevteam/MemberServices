@@ -514,6 +514,7 @@ employment positions and/or applications.
       							    <tr>
                                        <th width="25%">TITLE</th>
                                        <th width="30%">UPLOAD DATE</th>
+                                       <th width="35%">STATUS</th>
                                        <th width="10%">OPTIONS</th>                                    
                                       </tr>
                                       </thead>
@@ -521,18 +522,22 @@ employment positions and/or applications.
 	                                   <% for(ApplicantDocumentBean doc : docs){ 
 	                                   		if(doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
 	                                   		<tr>
-	                                      		<td><%=doc.getTypeSS().toString()%></td>
-	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%>
+	                                      		<td width="25%"><%=doc.getTypeSS().toString()%></td>
+	                                      		<td width="30%"><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      			<td width="35%">
 	                                      			<%if(doc.getClBean() != null){ %>
 	                                      				<%if(doc.getClBean().getDateVerified() != null) {%>
-	                                      					<span style="color:Green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;<i class="fas fa-check"></i>&nbsp;&nbsp;Verified on <%=doc.getClBean().getDateVerifiedFormatted() %>&nbsp;&nbsp;]</span>
-	                                      				
+	                                      					<span style="color:Green;"><i class="fas fa-check"></i> Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span>	                                      				
+	                                      				<%}else if(doc.getClBean().getRejectedDate() != null){ %>
+	                                      					<span style="color:Red;"><i class="fas fa-ban"></i> Rejected on <%=doc.getClBean().getRejectedDateFormatted() %><br/>
+	                                      					 Notes: <%=doc.getClBean().getRejectedNotes() %>
+	                                      					</span>
 	                                      				<%} %>
 	                                      			
 	                                      			<%} %>
+	                                      			</td>
 	                                      		
-	                                      		</td>
-	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                                      			<td width="10%"><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                                      				                                      
 	                                      	</tr>
 	                                      <% } %>

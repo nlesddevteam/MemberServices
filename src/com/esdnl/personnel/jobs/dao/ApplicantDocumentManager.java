@@ -410,6 +410,14 @@ public class ApplicantDocumentManager {
 					clbean.setDateVerified(new Date(rs.getTimestamp("DATE_VERIFIED").getTime()));
 				}
 				clbean.setDocumentId(abean.getDocumentId());
+				clbean.setRejectedBy(rs.getString("REJECTED_BY"));
+				clbean.setRejectedNotes(rs.getString("REJECTED_NOTES"));
+				if(rs.getTimestamp("DATE_REJECTED") ==  null) {
+					clbean.setRejectedDate(null);
+				}else {
+					clbean.setRejectedDate(new Date(rs.getTimestamp("DATE_REJECTED").getTime()));
+				}
+			
 				abean.setClBean(clbean);
 			}
 			catch (java.sql.SQLException e) {

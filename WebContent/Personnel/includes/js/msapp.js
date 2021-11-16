@@ -1468,12 +1468,16 @@ function verifycovid19(did,btn){
  				success: function(xml){
  					
  					if($(xml).find('STATUS').text() ==  "SUCCESS"){
- 						$("#spvdate").html($(xml).find('VDATE').text());
- 						$("#spvby").html($(xml).find('VBY').text());
- 						$("#divverify").show();
-						$("#divnotver").hide();
-					
- 						$(btn).hide();
+ 						test="#spvdate" + did;
+ 						$(test).html($(xml).find('VDATE').text());
+ 						test="#spvby" + did;
+ 						$(test).html($(xml).find('VBY').text());
+ 						test="#divverify" + did;
+ 						$(test).show();
+ 						test="#divnotver" + did;
+						$(test).hide();
+						test="#covidbut" + did;
+ 						$(test).hide();
  					}
  				},
  				  error: function(xhr, textStatus, error){
@@ -1514,6 +1518,114 @@ function verifycovid19list(did,btn){
  				async: false
  			}
  		);
+}
+
+//reject covid19 doc
+function rejectcovid19list(did,btn){
+	$('#modalreject').modal('show');
+	$('#hidbutton').val(did);
+	$('#txtreason').val("");
+}
+function sumbitRejectDocument(){
+	var rejectnotes = $('#txtreason').val();
+	if(rejectnotes == ""){
+		$("#errmsg").show();
+		return;
+	}
+	submitrejectcovid19list();
+	//hide buttons
+	var test = "#r" +  $('#hidbutton').val();
+	$(test).hide();
+	var test2 = "#v" +  $('#hidbutton').val();
+	$(test2).hide();
+	$('#modalreject').modal('hide');
+}
+//delete reference ajax call
+function submitrejectcovid19list(){
+	$("#errmsg").hide();
+	var did = $('#hidbutton').val();
+	var rejectnotes = $('#txtreason').val();
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "rejectCovid19Doc.html",
+ 				data: {
+ 					id: did,rnotes:rejectnotes
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('STATUS').text() ==  "SUCCESS"){
+ 						//$("#spvdate").html($(xml).find('VDATE').text());
+ 						//$("#spvby").html($(xml).find('VBY').text());
+ 						//$("#divverify").show();
+ 						var test = "#" + did;
+ 						var rstring = "Document Rejected By " + $(xml).find('RBY').text() + " on " + $(xml).find('RDATE').text();
+ 						rstring = rstring + "<br /> Notes: " + $(xml).find('RNOTES').text()
+ 						$(test).html(rstring);
+ 						//$(btn).hide();
+ 						
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
+//different fields on view applicant screen to hide/show
+function sumbitRejectDocumentApp(){
+	var rejectnotes = $('#txtreason').val();
+	if(rejectnotes == ""){
+		$("#errmsg").show();
+		return;
+	}
+	var did = $('#hidbutton').val();
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "rejectCovid19Doc.html",
+ 				data: {
+ 					id: did,rnotes:rejectnotes
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('STATUS').text() ==  "SUCCESS"){
+ 						//$("#spvdate").html($(xml).find('VDATE').text());
+ 						//$("#spvby").html($(xml).find('VBY').text());
+ 						//$("#divverify").show();
+ 						//var test = "#" + did;
+ 						//var rstring = "Document Rejected By " + $(xml).find('RBY').text() + " on " + $(xml).find('RDATE').text();
+ 						//rstring = rstring + "<br /> Notes: " + $(xml).find('RNOTES').text()
+ 						//$(test).html(rstring);
+ 						//$(btn).hide();
+ 						var test="#divnotver" + did;
+ 						$(test).hide();
+ 						test="#rejdate" + did;
+ 						$(test).html($(xml).find('RDATE').text());
+ 						test="#rejby" + did;
+ 						$(test).html($(xml).find('RBY').text());
+ 						test="#rejnotes" + did;
+ 						$(test).html($(xml).find('RNOTES').text());
+ 						test="#divrejected" + did;
+ 						$(test).show();
+ 						test="#covidbut" + did;
+ 						$(test).hide();
+ 						
+ 						//buttons
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+	$('#modalreject').modal('hide');
 }
 
 
