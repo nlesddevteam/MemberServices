@@ -1394,8 +1394,8 @@ input {
 								<tr style="border-top: 1px solid black;">
 									<th width='20%'>TITLE</th>
 									<th width='20%'>UPLOADED</th>
-									<th width='50%'>STATUS</th>
-									<th class="no-print" width='10%'>OPTIONS</th>
+									<th width='45%'>STATUS</th>
+									<th class="no-print" width='15%'>OPTIONS</th>
 								</tr>
 							</thead>
 							<tbody>									
@@ -1410,34 +1410,34 @@ input {
 									<tr>
 										<td width='20%'><%=doc.getType().toString()%></td>
 										<td width='20%'><%=sdf_long.format(doc.getCreatedDate())%></td>
-										<td width='50%'>
+										<td width='45%'>
 										<% if(doc.getType().equal(DocumentType.COVID19_VAX)){ %>
 										<% if(doc.getClBean() == null){ %>
 											
-													<span style="color:Red;">Not Verified</span>
+													<span style="color:Orange;"><i class="fas fa-ban"></i> Not Verified</span>
 												
 										<%}else{ %>
 											<% if(doc.getClBean().getDateVerified() != null){ %>
 												
 														<div  id="divverify">
-															<span style="color:Green;"><span id="spvdate">Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
+															<span style="color:Green;"><span id="spvdate"><i class="fas fa-check"></i> Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
 														</div>
 													
 											<%}else{ %>
 												<% if(doc.getClBean().getRejectedDate() != null){ 
 												%>
 														<div  id="divrejected">
-															<span style="color:Orange;"><span id="rejdate">Rejected on <%=doc.getClBean().getRejectedDateFormatted() %></span> by <span id="rejby"><%=doc.getClBean().getRejectedBy() %>
+															<span style="color:Red;"><span id="rejdate"><i class="fas fa-times"></i> Rejected on <%=doc.getClBean().getRejectedDateFormatted() %></span> by <span id="rejby"><%=doc.getClBean().getRejectedBy() %>
 															<br />Notes: <%=doc.getClBean().getRejectedNotes() %>
 															</span></span>
 														</div>
 												<%}else{ %>
-													<span style="color:Red;" id="divnotver<%=doc.getDocumentId()%>">Not Verified</span>
+													<span style="color:Orange;" id="divnotver<%=doc.getDocumentId()%>"><i class="fas fa-ban"></i> Not Verified</span>
 												     <div  id="divverify<%=doc.getDocumentId()%>" style="display:none;" >
-															<span style="color:Green;">Verified on <span id="spvdate<%=doc.getDocumentId()%>"></span> by <span id="spvby<%=doc.getDocumentId()%>"></span></span>
+															<span style="color:Green;"><i class="fas fa-check"></i> Verified on <span id="spvdate<%=doc.getDocumentId()%>"></span> by <span id="spvby<%=doc.getDocumentId()%>"></span></span>
 														</div>
 														<div  id="divrejected<%=doc.getDocumentId()%>" style="display:none;" >
-															<span style="color:Orange;">Rejected on 
+															<span style="color:Red;"><i class="fas fa-times"></i> Rejected on 
 															<span id="rejdate<%=doc.getDocumentId()%>"></span> by <span id="rejby<%=doc.getDocumentId()%>"></span>
 															<br />Notes: <span id="rejnotes<%=doc.getDocumentId()%>"></span>
 															</span>
@@ -1448,15 +1448,15 @@ input {
 									
 									<%} else {%>
 							
-									<span style="color:Red;">Not Verified</span>
+									<span style="color:Orange;"><i class="fas fa-ban"></i> Not Verified</span>
 								
 									
 									<%}%>
 										
 										</td>
-										<td class="no-print"  width='10%'>
-											<a title='View documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'><i class="far fa-file-alt"></i></a> &nbsp; 
-											<a title='Delete documentation'  class='viewdoc delete-doc btn btn-sm btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'><i class="far fa-trash-alt"></i></a> &nbsp; 
+										<td class="no-print"  width='15%'>
+											<a title='View documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'><i class="far fa-file-alt"></i></a>
+											<a title='Delete documentation'  class='viewdoc delete-doc btn btn-sm btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'><i class="far fa-trash-alt"></i></a> 
 											<% if(doc.getClBean() == null){ %>
 												<a title='Verify and Approve this documentation'  class='viewdoc  btn btn-sm btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);"><i class='far fa-check-circle'></i></a>
 											<%}else{ %>
