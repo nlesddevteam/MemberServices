@@ -141,6 +141,7 @@ You can sort by clicking on the column header or search using the search tool be
  					((g.tenderStatus.description eq 'CLOSED') and 
  					(yearClosed eq todayYear))) and 
  					(g.tenderStatus.description ne 'CANCELLED') and
+ 						(g.tenderStatus.description ne 'EXCEPTIONS') and
  					 (g.tenderStatus.description ne 'AWARDED') }">
 
                     <c:set var="closedThisYear" value="${closedThisYear + 1}" />
