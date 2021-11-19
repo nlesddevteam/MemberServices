@@ -521,7 +521,7 @@
 		<b><span id="awardType"></span> AWARDED DATE</b>
 	<div class="form-group">
   				<label for="awarded_date">Select Date: (Defaults to current date for an exception. Click date field to change.)</label>
-  				<input type="text" class="form-control" id="awarded_date" name="awarded_date" autocomplete="off" value="<c:out value="${empty tender.awardedDateFormatted ? '01/01/2000' : tender.awardedDateFormatted}" />"></input>
+  				<input type="text" class="form-control" id="awarded_date" name="awarded_date" autocomplete="off" value="<c:out value="${empty tender.awardedDateFormatted ? '01/01/2021' : tender.awardedDateFormatted}" />"></input>
   				 
 		</div>
 	</div>
@@ -1358,7 +1358,7 @@ $(document).ready(function(){
 						   // $('#eclause').removeAttr('readonly').prop("required",true);
 						   
 						   $('#awarded_date').removeAttr('readonly').prop("required",true);
-						   
+						   CKEDITOR.instances['awarded_to'].setReadOnly(false);
 						   $('#awarded_to').removeAttr('readonly').prop("required",true);
 						   $('#contract_value').removeAttr('readonly').prop("required",true);	  
 						   
