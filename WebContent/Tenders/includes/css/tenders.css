@@ -105,7 +105,7 @@ rgba(192,192,192,0.2); */
 .textStatusCancelled {color:Grey;text-decoration: line-through;}
 .textStatusClosed {color:Grey;}
 .textStatusNormal {color:Black;}
-
+.textStatusNotAwarded {color:Grey}
 .tenStatusOpen {color:Green;}
 .tenStatusClosed {color:Red;}
 .tenStatusHold {color:Grey;}
@@ -115,6 +115,7 @@ rgba(192,192,192,0.2); */
 .closedTenderHeading {color:Red;font-weight:bold;}
 .cancelledTenderHeading {color:#4D4C4E;font-weight:bold;}
 .awardedTenderHeading {color:#007F01;font-weight:bold;}
+.notAwardedTenderHeading {color:Orange;font-weight:bold;}
 .archivedTenderHeading {color:Grey;font-weight:bold;}
 
 .tenderFilesTable {font-size: 11px;width:100%;border:0px;}
@@ -125,6 +126,7 @@ rgba(192,192,192,0.2); */
 .closedColor {color:Red;}
 .ammendedColor {color:#0000FF;}
 .awardedColor {color:black;}
+.notAwardedColor {color:orange;}
 .hold {color:#E6A75A;}
 .archivedColor {color:Grey;}
 .tenderDocLinkContainer {float:left;width:160px;text-align:center;}

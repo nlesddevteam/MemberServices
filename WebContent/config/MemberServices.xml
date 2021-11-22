@@ -2014,6 +2014,10 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewAwardedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewAwardedTenders.html</URL-Pattern>
     </Request-Handler>
+     <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewNotAwardedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewNotAwardedTenders.html</URL-Pattern>
+    </Request-Handler>
          <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewArchivedTenders.html</URL-Pattern>
@@ -2021,6 +2025,10 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedAwardedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewArchivedAwardedTenders.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedNotAwardedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewArchivedNotAwardedTenders.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedCancelledTendersRequestHandler</Request-Handler-Class>
