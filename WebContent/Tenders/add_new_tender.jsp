@@ -65,8 +65,19 @@
 
 <div class="siteHeaderGreen">Add New Open Tender/Exception</div>
 	   		
-		Please enter the Tender information below. Any tender you add here is assumed to be new and open. You can change this status once the tender is posted by editing or deleting.
-
+		
+ 		<ul> 
+		<li>Any Open Tender you add here is assumed to be new and open. 
+		<li>Tender Number is NOT required for an Exemption.
+		<li>You can change this status once the tender is posted by editing or deleting.
+		<li>Open Tenders and Exemptions to Open Tenders will have different entry requirements. 
+		<li>Required fields will be individually outlined in Red. Non-required and/or completed fields will be outlines in Green.
+		<li>Selecting Exemptions, more fields will become available below and some fields will be grayed out or made non-required. 
+		
+ </ul>
+ <br/>
+ Please enter the Open Tender or Exemption  information below. 
+ 
 			<%if(request.getAttribute("msgOK") != null){%>
                       
                         <p>                       
@@ -486,7 +497,7 @@ $(document).ready(function(){
 			  $("#awarded_date").val("${theClosingDate}");		   
 			  $('#closing_date').val("${theClosingDate}");
 			  $('#tender_number').val("00-0000");
-			  
+			  $('#tender_doc').removeAttr('required');
 			  $('#opening_location').removeAttr('required').prop("readonly",true);
 			  $('#awarded_to').removeAttr('required').prop("readonly",true);
 			  $('#contract_value').removeAttr('required').prop("readonly",true);
@@ -511,6 +522,7 @@ $(document).ready(function(){
 			  			  
 			  
 		  }  else {
+			  $('#tender_doc').prop('required');
 			  $("#awardType").text("");
 			  $('#tender_number').val("");
 			  $("#awarded_date").val("");	

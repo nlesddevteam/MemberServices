@@ -2014,6 +2014,10 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewAwardedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewAwardedTenders.html</URL-Pattern>
     </Request-Handler>
+     <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewNotAwardedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewNotAwardedTenders.html</URL-Pattern>
+    </Request-Handler>
          <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewArchivedTenders.html</URL-Pattern>
@@ -2021,6 +2025,10 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedAwardedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewArchivedAwardedTenders.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedNotAwardedTendersRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Tenders/viewArchivedNotAwardedTenders.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedCancelledTendersRequestHandler</Request-Handler-Class>
@@ -4432,6 +4440,17 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.RejectCovid19DocumentAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/rejectCovid19Doc.html</URL-Pattern>
     </Request-Handler>
-                                             
+         <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AddCovid19ExemptionDocumentAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/addCovid19Exemption.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.Covid19EmailListRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/sendCovid19EmailList.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.Covid19EmailListCSVRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewCovid19EmailListCSV.html</URL-Pattern>
+    </Request-Handler>                                         
   </Request-Handlers>
 </Member-Services-Config>

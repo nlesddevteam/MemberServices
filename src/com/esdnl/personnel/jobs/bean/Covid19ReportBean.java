@@ -18,6 +18,7 @@ public class Covid19ReportBean {
 	private String rejectedBy;
 	private Date rejectedDate;
 	private String rejectedNotes;
+	private boolean exemptionDoc=false;
 
 	public String getEmployeeName() {
 		return employeeName;
@@ -89,6 +90,8 @@ public class Covid19ReportBean {
 			status="<span style='color:Silver;'><i class=\"fas fa-exclamation-circle\"></i> No Profile/Not Linked <i class=\"fas fa-exclamation-circle\"></i></span>";
 		}else if(this.documentId <1) {
 			status="<span style='color:Orange;'><i class=\"fas fa-times\"></i> No Document Uploaded</span>";
+		}else if(this.exemptionDoc) {
+			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Exemption Uploaded By " + this.verifiedBy + " on " + getDateVerifiedFormatted() +"</span>";
 		}else if(this.verifiedDate == null && this.rejectedDate ==  null) {
 			status="<span style='color:#6495ED;'><i class=\"fas fa-check\"></i> Document Uploaded</span> - <span style='color:Red;'><i class=\"fas fa-times\"></i> Not Verified</span>";
 		}else if(this.rejectedDate != null && this.verifiedDate ==  null) {
@@ -171,5 +174,11 @@ public class Covid19ReportBean {
 	}
 	public void setRejectedNotes(String rejectedNotes) {
 		this.rejectedNotes = rejectedNotes;
+	}
+	public boolean isExemptionDoc() {
+		return exemptionDoc;
+	}
+	public void setExemptionDoc(boolean exemptionDoc) {
+		this.exemptionDoc = exemptionDoc;
 	}
 }

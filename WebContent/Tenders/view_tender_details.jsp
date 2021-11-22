@@ -114,13 +114,13 @@
          <div class="col-lg-3 col-12">STATUS:
 									    <select id="tender_status" name="tender_status" class="form-control the_tender_status" required>
 											<c:forEach var="item" items="${statuslist}">
-											<c:if test="${item.key ne '4' and item.key ne '7' and  item.key ne '8' }">
+											<c:if test="${item.key ne '4' and item.key ne '7' and item.key ne '8' }">
 												 <c:choose>
 					    							<c:when test="${item.key eq tender.tenderStatus.value}">					       									
 					       									<option value="${item.key}" selected="selected">${item.value}</option>
 					    							</c:when>
 					    							<c:otherwise>
-					        							<option value="${item.key}">${item.value}</option>
+					        							<option value="${item.key}">${item.value }</option>
 					    							</c:otherwise>
     											</c:choose>
 											</c:if>	
@@ -278,7 +278,19 @@
 													
 													</script>
 				                       	</c:when>
-				                       	
+				                       		<c:when test="${ tender.tenderStatus.description eq 'NOT AWARDED'}">													
+													<div class="alert alert-danger" style="text-align:center;margin-top:10px;"><b>NOTICE:</b> This tender has not been awarded.
+													</div>
+													<script>
+														//$("#exceptionDetails").css("position","static").css("visibility","visible");
+														
+														//$("#exceptionDetails").removeClass("hide");
+														
+														//$('#tender_status').val('2');		
+														//$("#tender_status option:contains(CLOSED)").attr('selected', 'selected');
+													
+													</script>
+				                       	</c:when>
 				                       	
 				                       	<c:otherwise>
 				                       	<script>$('document').ready(function(){$("#extraDetails").addClass("hide");});</script>
@@ -521,7 +533,7 @@
 		<b><span id="awardType"></span> AWARDED DATE</b>
 	<div class="form-group">
   				<label for="awarded_date">Select Date: (Defaults to current date for an exception. Click date field to change.)</label>
-  				<input type="text" class="form-control" id="awarded_date" name="awarded_date" autocomplete="off" value="<c:out value="${empty tender.awardedDateFormatted ? '01/01/2000' : tender.awardedDateFormatted}" />"></input>
+  				<input type="text" class="form-control" id="awarded_date" name="awarded_date" autocomplete="off" value="<c:out value="${empty tender.awardedDateFormatted ? '01/01/2021' : tender.awardedDateFormatted}" />"></input>
   				 
 		</div>
 	</div>
@@ -977,6 +989,73 @@ $(document).ready(function(){
 		   // $('#awarded_to').removeAttr('required').prop("readonly",true);	
 		   // $('#contract_value').removeAttr('required').prop("readonly",true);		
 		   
+} else if( $('#tender_status').val() =='10') {
+	// NOT AWARDED		
+	 $("#awardType").text("TENDER");
+			
+	   // SHOW THIS	   
+	   	$("#addendumBlock").removeClass("hide");
+	   	//$("#theAwardDate").removeClass("hide");
+	  	//$("#extraDetails").removeClass("hide");
+	  	// $("#exceptionsDetails").removeClass("hide");		   
+	   
+	   //ENABLE THIS
+	   $('#tender_status').removeAttr('readonly').prop("required",true);	
+	   $('#tender_title').removeAttr('readonly').prop("required",true);
+	   $('#tender_number').removeAttr('readonly').prop("required",true);
+	   $('#region').removeAttr('readonly').prop("required",true);
+	   $('#closing_date').removeAttr('readonly').prop("required",true);
+	   $('#opening_location').removeAttr('readonly').prop("required",true);	   
+	   $('#tender_doc').removeAttr('readonly').prop("required",false);	 	   
+	   
+	   // $('#edescription').removeAttr('readonly').prop("required",true);
+	   // $('#vendor_name').removeAttr('readonly').prop("required",true);
+	   // $('#eaddress').removeAttr('readonly').prop("required",true);
+	   // $('#elocation').removeAttr('readonly').prop("required",true);
+	   // $('#eprice').removeAttr('readonly').prop("required",true);
+	   // $('#po_number').removeAttr('readonly').prop("required",true);
+	   // $('#erenewal').removeAttr('readonly').prop("required",true);
+	   // $('#erenewalother').removeAttr('readonly').prop("required",true);
+	   // $('#eterms').removeAttr('readonly').prop("required",true);
+	   // $('#eclause').removeAttr('readonly').prop("required",true);
+	   
+	   //$('#awarded_date').removeAttr('readonly').prop("required",true);
+	   
+	   //$('#awarded_to').removeAttr('readonly').prop("required",true);
+	  // $('#contract_value').removeAttr('readonly').prop("required",true);	  
+	   
+	   // HIDE THIS
+	   	// $("#addendumBlock").addClass("hide");
+	    $("#theAwardDate").addClass("hide");
+	  	$("#extraDetails").addClass("hide");
+	  	$("#exceptionsDetails").addClass("hide");		
+	  	$("#tender_status option[value='9']").remove();
+	  	
+	   // DISABLE THIS	
+	   // $('#tender_status').removeAttr('required').prop("readonly",true);	
+	   // $('#tender_title').removeAttr('required').prop("readonly",true);	
+	   // $('#tender_number').removeAttr('required').prop("readonly",true);	
+	   // $('#region').removeAttr('required').prop("readonly",true);	
+	   // $('#closing_date').removeAttr('required').prop("readonly",true);	
+	   // $('#opening_location').removeAttr('required').prop("readonly",true);		   
+	   // $('#tender_doc').removeAttr('required').prop("readonly",true);	
+	   
+	   $('#edescription').removeAttr('required').prop("readonly",true);	
+	   $('#vendor_name').removeAttr('required').prop("readonly",true);	
+	   $('#eaddress').removeAttr('required').prop("readonly",true);	
+	   $('#elocation').removeAttr('required').prop("readonly",true);	
+	   $('#eprice').removeAttr('required').prop("readonly",true);	
+	   $('#po_number').removeAttr('required').prop("readonly",true);	
+	   $('#erenewal').removeAttr('required').prop("readonly",true);	
+	   $('#erenewalother').removeAttr('required').prop("readonly",true);	
+	   $('#eterms').removeAttr('required').prop("readonly",true);	
+	   $('#eclause').removeAttr('required').prop("readonly",true);	
+	   
+	   $('#awarded_date').removeAttr('required').prop("readonly",true);
+	   
+	  $('#awarded_to').removeAttr('required').prop("readonly",true);	
+	    $('#contract_value').removeAttr('required').prop("readonly",true);		
+	   
 		   
 		
 } else if( $('#tender_status').val() =='6') {
@@ -1358,7 +1437,7 @@ $(document).ready(function(){
 						   // $('#eclause').removeAttr('readonly').prop("required",true);
 						   
 						   $('#awarded_date').removeAttr('readonly').prop("required",true);
-						   
+						   CKEDITOR.instances['awarded_to'].setReadOnly(false);
 						   $('#awarded_to').removeAttr('readonly').prop("required",true);
 						   $('#contract_value').removeAttr('readonly').prop("required",true);	  
 						   
@@ -1393,7 +1472,72 @@ $(document).ready(function(){
 						   // $('#awarded_to').removeAttr('required').prop("readonly",true);	
 						   // $('#contract_value').removeAttr('required').prop("readonly",true);		
 						   
-						   
+				} else if($(this).val() =='10') {
+					// AWARDED		
+					 $("#awardType").text("TENDER");
+							
+					   // SHOW THIS	   
+					   	$("#addendumBlock").removeClass("hide");
+					   //	$("#theAwardDate").removeClass("hide");
+					  	//$("#extraDetails").removeClass("hide");
+					  	// $("#exceptionsDetails").removeClass("hide");		   
+					   
+					   //ENABLE THIS
+					   $('#tender_status').removeAttr('readonly').prop("required",true);	
+					   $('#tender_title').removeAttr('readonly').prop("required",true);
+					   $('#tender_number').removeAttr('readonly').prop("required",true);
+					   $('#region').removeAttr('readonly').prop("required",true);
+					   $('#closing_date').removeAttr('readonly').prop("required",true);
+					   $('#opening_location').removeAttr('readonly').prop("required",true);	   
+					   $('#tender_doc').removeAttr('readonly').prop("required",false);	    
+					   
+					   // $('#edescription').removeAttr('readonly').prop("required",true);
+					   // $('#vendor_name').removeAttr('readonly').prop("required",true);
+					   // $('#eaddress').removeAttr('readonly').prop("required",true);
+					   // $('#elocation').removeAttr('readonly').prop("required",true);
+					   // $('#eprice').removeAttr('readonly').prop("required",true);
+					   // $('#po_number').removeAttr('readonly').prop("required",true);
+					   // $('#erenewal').removeAttr('readonly').prop("required",true);
+					   // $('#erenewalother').removeAttr('readonly').prop("required",true);
+					   // $('#eterms').removeAttr('readonly').prop("required",true);
+					   // $('#eclause').removeAttr('readonly').prop("required",true);
+					   
+					   //$('#awarded_date').removeAttr('readonly').prop("required",true);
+					   //CKEDITOR.instances['awarded_to'].setReadOnly(false);
+					   //$('#awarded_to').removeAttr('readonly').prop("required",true);
+					  // $('#contract_value').removeAttr('readonly').prop("required",true);	  
+					   
+					   // HIDE THIS
+					   	// $("#addendumBlock").addClass("hide");
+					    $("#theAwardDate").addClass("hide");
+					    $("#extraDetails").addClass("hide");
+					  	$("#exceptionsDetails").addClass("hide");		
+					  	
+					   // DISABLE THIS	
+					   // $('#tender_status').removeAttr('required').prop("readonly",true);	
+					   // $('#tender_title').removeAttr('required').prop("readonly",true);	
+					   // $('#tender_number').removeAttr('required').prop("readonly",true);	
+					   // $('#region').removeAttr('required').prop("readonly",true);	
+					   // $('#closing_date').removeAttr('required').prop("readonly",true);	
+					   // $('#opening_location').removeAttr('required').prop("readonly",true);		   
+					   // $('#tender_doc').removeAttr('required').prop("readonly",true);	
+					   
+					   $('#edescription').removeAttr('required').prop("readonly",true);	
+					   $('#vendor_name').removeAttr('required').prop("readonly",true);	
+					   $('#eaddress').removeAttr('required').prop("readonly",true);	
+					   $('#elocation').removeAttr('required').prop("readonly",true);	
+					   $('#eprice').removeAttr('required').prop("readonly",true);	
+					   $('#po_number').removeAttr('required').prop("readonly",true);	
+					   $('#erenewal').removeAttr('required').prop("readonly",true);	
+					   $('#erenewalother').removeAttr('required').prop("readonly",true);	
+					   $('#eterms').removeAttr('required').prop("readonly",true);	
+					   $('#eclause').removeAttr('required').prop("readonly",true);	
+					   
+					  $('#awarded_date').removeAttr('required').prop("readonly",true);					   
+					    $('#awarded_to').removeAttr('required').prop("readonly",true);	
+					  $('#contract_value').removeAttr('required').prop("readonly",true);		
+					   
+				
 						
 				} else if($(this).val() =='6') {
 						// AMMENDED	

@@ -11,9 +11,10 @@ public class TenderStatus {
 	public static final TenderStatus TENDER_ARCHIVED = new TenderStatus(7, "ARCHIVED");
 	public static final TenderStatus TENDER_DISABLED = new TenderStatus(8, "DISABLED");
 	public static final TenderStatus TENDER_EXCEPTIONS = new TenderStatus(9, "EXCEPTIONS");
+	public static final TenderStatus TENDER_NOT_AWARDED = new TenderStatus(10, "NOT AWARDED");
 	
 	public static final TenderStatus[] ALL = new TenderStatus[] {
-		TENDER_OPEN, TENDER_CLOSED,TENDER_CANCELLED,TENDER_ON_HOLD,TENDER_AWARDED,TENDER_AMMENDED,TENDER_ARCHIVED,TENDER_DISABLED,TENDER_EXCEPTIONS
+		TENDER_OPEN, TENDER_CLOSED,TENDER_CANCELLED,TENDER_ON_HOLD,TENDER_AWARDED,TENDER_AMMENDED,TENDER_ARCHIVED,TENDER_DISABLED,TENDER_EXCEPTIONS,TENDER_NOT_AWARDED
 	};
 	private TenderStatus(int value, String desc) {
 		this.value = value;

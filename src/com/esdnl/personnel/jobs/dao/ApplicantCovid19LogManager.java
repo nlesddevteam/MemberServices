@@ -92,6 +92,34 @@ public class ApplicantCovid19LogManager {
 		}
 		return id;
 	}
+	public static int addCovid19Excemption(int docid, String vby) {
+		Connection con = null;
+		CallableStatement stat = null;
+		int id=0;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.add_job_appl_covid19_exem(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.INTEGER);
+			stat.setInt(2, docid);
+			stat.setString(3, vby);
+			stat.execute();
+			id = ((OracleCallableStatement) stat).getInt(1);
+		}
+		catch (SQLException e) {
+			System.err.println("static int addCovid19Excemption(int docid, String vby) : " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return id;
+	}
 	public static String[] getRejectEmail(int docid) {
 		Connection con = null;
 		CallableStatement stat = null;
