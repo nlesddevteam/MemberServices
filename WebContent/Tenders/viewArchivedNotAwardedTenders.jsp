@@ -15,7 +15,8 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
 <%
-  User usr = (User) session.getAttribute("usr"); 
+  User usr = (User) session.getAttribute("usr");
+ 
 %>
 <c:set var="currentlyOpen" value="0" /> 
 <c:set var="closedThisYear" value="0" /> 
@@ -23,6 +24,7 @@
 <c:set var="cancelledThisYear" value="0" />
 <c:set var="archivedClosed" value="0" /> 
 <c:set var="archivedAwarded" value="0" />
+<c:set var="archivedNotAwarded" value="0" />
 <c:set var="archivedCancelled" value="0" />
 <c:set var="now" value="0" />
 <c:set var="todayHour" value="0" />
@@ -46,20 +48,21 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 		<script>
 	$('document').ready(function(){
 			mTable = $(".tenderTable").dataTable({
-				"order" : [[4,"desc"],[1,"desc"]],		
+				"order" : [[0,"desc"]],		
 				"bPaginate": false,
 				responsive: true,
 								
 				 "columnDefs": [
 					 {
-			                "targets": [3,6],			               
+			                "targets": [3,4],			               
 			                "searchable": false,
 			                "orderable": false
 			            }
 			        ]
 			});		
 			
-						
+			
+			
 			$("tr").not(':first').hover(
 			  function () {
 			    $(this).css("background","yellow");
@@ -73,7 +76,8 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 			$(".loadingTable").css("display","none");
 			
 			
-	    		   	    			
+	    		   
+	    			
 
 		});
 	</script>
@@ -91,37 +95,28 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 <div class="row pageBottomSpace">
 <div class="col siteBodyTextBlack">
 
-<div class="siteHeaderRed">Closed Tenders for ${todayYear} (<span class="closedThisYearCount"></span>)</div>
-Below is a list of currently CLOSED tenders sorted by date (newest) and tender number (highest). 
-Closed tenders will only display up to 5 days after they close on the public website andunder Open tenders and automatically go to the closed section thereafter. 
-<br/><br/>
-<ul>
-<li>If you notice <span style="color:red;">Please Update Status</span> under the CLOSED status of those listings that require you to manually CLOSE the tender or 
-set the tender to AWARDED if you know the details of the successful bidder. 
-<li>Staff with <b>Tender Admin</b> rights can edit/delete CLOSED/AWARDED/CANCELLED and ARCHIVED tenders as well as add/edit/delete current OPEN/AMMENDED tenders. 
-<li>Staff with <b>Tender Edit</b> rights can add/edit/delete currently OPEN/AMENDED tenders only.
-<li>Some earlier closed tenders will not display AWARDED status and details at this time. These tenders will still show under CLOSED until they are updated. 
-<li>All new tenders posted from May 2018 forward will eventually include all documentation, and successful bidder information.
-</ul>
-
+<div class="siteHeaderGreen">Archived Not Awarded Tenders ( ${todayYear - 1} and previous ) (<span class="archivedNotAwardedCount"></span>)</div>
+  
+Below is a list of currently ARCHIVED Not Awarded tenders sorted by date (newest) and tender number (highest). 
 You can sort by clicking on the column header or search using the search tool below right. 
- 
+
+
  <esd:SecurityAccessRequired permissions="TENDER-VIEW">
  
   									<%if(request.getAttribute("msg")!=null){%>
 									  <div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>*** <%=(String)request.getAttribute("msg")%> ***</div>
                   					 <%} else {%>   
-											 
+                  					 
+	   
   <br/>
   <table class="tenderTable table table-sm table-bordered responsive" width="100%" style="font-size:12px;background-color:White;">
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">							
 					<th width="10%" style="border-right:1px solid white;">TENDER #</th>						    												
-					<th width="30%" style="border-right:1px solid white;">TITLE</th>	
+					<th width="55%" style="border-right:1px solid white;">TITLE</th>	
 					<th width="10%" style="border-right:1px solid white;">REGION</th>		
-					<th width="10%" style="border-right:1px solid white;">STATUS</th>		
-					<th width="10%" style="border-right:1px solid white;">CLOSED</th>			
-					<th width="15%" style="border-right:1px solid white;">OPENED @</th>	
+					<th width="10%" style="border-right:1px solid white;">STATUS</th>	
+											
 					<esd:SecurityAccessRequired permissions="TENDER-ADMIN,TENDER-EDIT">
 						<th width="15%" style="border-right:1px solid white;">OPTIONS</th>	
 					</esd:SecurityAccessRequired>
@@ -131,21 +126,19 @@ You can sort by clicking on the column header or search using the search tool be
   <c:choose>
 	<c:when test='${fn:length(tenders) gt 0}'>  
   	<c:forEach items='${tenders}' var='g'>
-  										<fmt:formatDate value="${g.dateAdded}" pattern="dd/MM/yyyy" var="postedDate" /> 
-  										<fmt:formatDate value="${g.closingDate}" pattern="yyyy/MM/dd" var="closingDate" />  
-                                  		 <fmt:formatDate value="${g.closingDate}" pattern="yyyy" var="yearClosed" />                             		
-                                  		 <fmt:parseNumber value="${-(now.time - g.closingDate.time) / (1000*60*60*24) }" integerOnly="true" var="daysToClose"/> 
-                                  		 <fmt:parseNumber value="${(now.time - g.dateAdded.time) / (1000*60*60*24) }" integerOnly="true" var="dayAdded"/> 
+  	
+  												<fmt:formatDate value="${g.closingDate}" pattern="DDD" var="dayClosed" />
+                                  				<fmt:formatDate value="${g.closingDate}" pattern="yyyy" var="yearClosed" />
+                                  				<fmt:formatDate value="${g.dateAdded}" pattern="DDD" var="dayAdded" />		
+                                  				<fmt:formatDate value="${g.dateAdded}" pattern="dd/MM/yyyy" var="postedDate" />	
+                                  				<fmt:formatDate value="${g.closingDate}" pattern="yyyy/MM/dd" var="closingDate" />   
+                                  		 
  
- <c:if test="${(((daysToClose lt 0 ) and (yearClosed ge todayYear)) or 
- 					((g.tenderStatus.description eq 'CLOSED') and 
- 					(yearClosed eq todayYear))) and 
- 					(g.tenderStatus.description ne 'CANCELLED') and
- 						(g.tenderStatus.description ne 'EXCEPTIONS') and
- 						(g.tenderStatus.description ne 'DISABLED') and
- 					 (g.tenderStatus.description ne 'AWARDED') }">
+<c:if test="${((g.tenderStatus.description eq 'ARCHIVED') or (g.tenderStatus.description eq 'NOT AWARDED')) and (yearClosed lt todayYear)}">
 
-                    <c:set var="closedThisYear" value="${closedThisYear + 1}" />
+          				
+<c:set var="archivedAwarded" value="${archivedAwarded + 1}" />
+
                     <c:set var="statusColorText" value="textStatusClosed"/>	
 																	
                                         <c:if test="${ (g.tenderZone.zoneName eq 'eastern') or (g.tenderZone.zoneName eq 'avalon') }"><c:set var="regionColor" value="bgcolor1"/></c:if>	
@@ -160,7 +153,7 @@ You can sort by clicking on the column header or search using the search tool be
 						                <c:if test="${ g.tenderStatus.description eq 'AMMENDED' }"><c:set var="statusColor" value="ammendedColor"/></c:if>
 						                <c:if test="${ g.tenderStatus.description eq 'AWARDED' }"><c:set var="statusColor" value="awardedColor"/></c:if>
 						                <c:if test="${ g.tenderStatus.description eq 'ON HOLD' }"><c:set var="statusColor" value="hold"/></c:if>															
-															
+											<c:if test="${ g.tenderStatus.description eq 'DISABLED' }"><c:set var="statusColor" value="notAwardedColor"/></c:if>					
                     <c:choose>																
 							<c:when test="${ g.tenderOpeningLocation.zoneName eq 'central' }">
 									<c:set var="openRegionColor" value="region2"/>
@@ -209,9 +202,7 @@ You can sort by clicking on the column header or search using the search tool be
                                   					</td>
                                   					
 													<td class='${statusColorText} ${regionColor}' style="text-align:left;border-bottom:1px solid black;">
-													
-													Days to close: ${daysToClose}<br/>
-													
+																								
 													${g.tenderTitle}
 													<ul>
 													<c:choose>
@@ -228,8 +219,17 @@ You can sort by clicking on the column header or search using the search tool be
 																<li><a href="/includes/files/tenders/doc/${p.tfDoc}" target="_blank" title="${tfTitle}">${p.tfTitle} (${p.addendumDateFormatted})</a></li>
 															</c:forEach>
 														</c:if>
-														</ul>
+														</ul>	
+																												<c:choose>
+														<c:when test="${g.contractValue gt 0 }">
+															Awarded to Company(s):<br/><b>${g.awardedTo}</b><br/>on ${g.awardedDateFormatted} for the total amount of <b>$${g.contractValueFormatted}</b>.
+															</c:when>
+														<c:otherwise>
+														Awarding details not currently available.
+														</c:otherwise>
 														
+														</c:choose>
+															<br/><br/>												
 														<span style="font-size:9px;">Added/Edited by: <span style="text-transform: capitalize;">${g.addedBy} on ${postedDate}</span></span>
 														
 													</td>
@@ -248,34 +248,18 @@ You can sort by clicking on the column header or search using the search tool be
 													
 													</td>
 													
-													<td class='${statusColor}' style="vertical-align:top;border-bottom:1px solid black;">													
-													
-													<c:choose>
-													<c:when test="${g.tenderStatus.description ne 'CLOSED'}">
-													
-													<span style="color:white;background-color:Red;width:100%;font-weight:bold;">&nbsp;<i class="fas fa-envelope"></i>&nbsp;CLOSED&nbsp;</span>
-													<br/><span style="color:Red;" class="tenNew">Please Update Status!</span>														
-													</c:when>
-													<c:otherwise>
-													<span style="color:white;background-color:Red;width:100%;font-weight:bold;">&nbsp;<i class="fas fa-envelope"></i>&nbsp;${g.tenderStatus.description}&nbsp;</span>
-													
-													</c:otherwise>
-													</c:choose>
-													</td>
-													
-													<td style="border-bottom:1px solid black;">${closingDate}</td>
-													<td class='${openRegionColor}' style="border-bottom:1px solid black;">
-													  	<c:choose>
-															<c:when test="${ (g.tenderOpeningLocation.zoneName eq 'eastern') or (g.tenderOpeningLocation.zoneName eq 'avalon')}">														
-																Avalon
+													<td class='${statusColor}' style="vertical-align:top;border-bottom:1px solid black;">												
+															<c:choose>
+															<c:when test="${g.tenderStatus.description eq 'NOT AWARDED'}">
+															<span style="color:white;background-color:Orange;width:100%;font-weight:bold;">&nbsp; NOT AWARDED &nbsp;</span>
 															</c:when>
-															<c:when test="${fn:containsIgnoreCase(g.tenderOpeningLocation.zoneName, 'NLESD')}">
-																Provincial
-															</c:when>
-															<c:otherwise><span style="text-transform:Capitalize;">${g.tenderOpeningLocation.zoneName}</span></c:otherwise>
-														</c:choose>  
-														Regional Office
-													</td>
+															<c:otherwise>
+															<span style="color:white;background-color:Red;width:100%;font-weight:bold;">&nbsp; ${g.tenderStatus.description} &nbsp;</span>
+															</c:otherwise>
+															</c:choose>
+															<br/><span style="color:white;background-color:Silver;width:100%;font-weight:bold;">&nbsp;ARCHIVED&nbsp;</span>
+													</td>													
+													
 <esd:SecurityAccessRequired permissions="TENDER-ADMIN">	
                                   		            <td align="center" style="border-bottom:1px solid black;">
                                   		            <a href="viewTenderDetails.html?id=${g.id}" class="btn btn-sm btn-info" style="color:white;">Edit</a> 		                                      
@@ -293,9 +277,7 @@ You can sort by clicking on the column header or search using the search tool be
 <c:otherwise>
 <tr>
 <td></td>
-<td>No Closed Tenders Found.</td>
-<td></td>
-<td></td>
+<td>No Archived Non-Awarded Tenders Found.</td>
 <td></td>
 <td></td>
 <td></td>
@@ -313,16 +295,12 @@ You can sort by clicking on the column header or search using the search tool be
   </div></div>							
 
 
- <script>
-  			$(".currentOpenCount").html("${currentlyOpen}");   			
-  			$(".closedThisYearCount").html("${closedThisYear}"); 
-  			$(".awardedThisYearCount").html("${awardedThisYear}"); 
-  			$(".cancelledThisYearCount").html("${cancelledThisYear}"); 
-  			$(".archivedClosedCount").html("${archivedClosed}"); 
-  			$(".archivedAwardedCount").html("${archivedAwarded}");   			  			
-  			$(".archivedCancelledCount").html("${archivedCancelled}"); 			
-  			$(".needStatusSetCount").html("${needStatusSet}");   		
- </script>
+<script>
+$('document').ready(function(){		
+		$(".archivedNotAwardedCount").html("${archivedNotAwarded}");   				
+	
+});
+</script>
 
   </body>
 

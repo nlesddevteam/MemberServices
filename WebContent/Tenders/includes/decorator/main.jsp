@@ -150,19 +150,21 @@
 				 			
 				 			<div class="menuFooter">
 											  					<esd:SecurityAccessRequired permissions="TENDER-ADMIN">
-																 		<a title="Add a Tender" class="btn btn-sm btn-info" style="color:white;margin-top:5px;" role="button" href="addNewTender.html" onclick="loadingData();"><i class="fas fa-plus"></i> Add</a> &nbsp; 
+																 		<a title="Add a Tender" class="btn btn-xs btn-info" style="color:white;margin-top:5px;" role="button" href="addNewTender.html" onclick="loadingData();"><i class="fas fa-plus"></i> ADD</a> &nbsp; 
 																</esd:SecurityAccessRequired>
 																<esd:SecurityAccessRequired permissions="TENDER-ADMIN,TENDER-EDIT,TENDER-VIEW">  
-												                      	<a title="Current Tenders" class="btn btn-sm btn-primary" style="color:white;margin-top:5px;" role="button" href="viewTenders.html" onclick="loadingData();"><i class="fas fa-file-alt"></i> Current</a> &nbsp;
-												                      	<a title="Closed Tenders" class="btn btn-sm btn-danger" style="color:white;margin-top:5px;" role="button" href="viewClosedTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> Closed</a> &nbsp;
-												                      	<a title="Awarded Tenders" class="btn btn-sm btn-success" style="color:white;margin-top:5px;" role="button" href="viewAwardedTenders.html" onclick="loadingData();"><i class="fas fa-star"></i> Awarded</a> &nbsp;
-												                      	<a title="Cancelled Tenders" class="btn btn-sm btn-danger" style="color:white;margin-top:5px;" role="button" href="viewCancelledTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> Cancelled</a> &nbsp;												                      	
-												                   		<a title="Exceptions to Open Calls" class="btn btn-sm btn-dark" style="color:white;margin-top:5px;" role="button" href="viewExceptionTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> Exceptions</a> &nbsp;
-												                   		<a title="Archived Closed Tenders" class="btn btn-sm btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedClosedTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> Arc. Closed</a>  &nbsp;
-												                   		<a title="Archived Awarded tenders" class="btn btn-sm btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedAwardedTenders.html" onclick="loadingData();"><i class="fas fa-star"></i> Arc. Awarded</a> &nbsp;
-												                      	<a title="Archived Cancelled Tenders" class="btn btn-sm btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedCancelledTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> Arc. Cancelled</a> &nbsp;												                       
-												                      	<a title="Tenders that need Status Update!" class="btn btn-sm btn-warning" style="color:black;margin-top:5px;" role="button" href="viewUnsetTenders.html" onclick="loadingData();"><i class="fas fa-exclamation"></i> Update </a> &nbsp;
-												                      	<a title="Exit to MS" class="btn btn-sm btn-danger" style="color:white;margin-top:5px;" role="button" href="../navigate.jsp"><i class="fas fa-sign-out-alt"></i> Exit</a>
+												                      	<a title="Current Tenders" class="btn btn-xs btn-primary" style="color:white;margin-top:5px;" role="button" href="viewTenders.html" onclick="loadingData();"><i class="fas fa-file-alt"></i> CURRENT</a> &nbsp;
+												                      	<a title="Closed Tenders" class="btn btn-xs btn-danger" style="color:white;margin-top:5px;" role="button" href="viewClosedTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> CLOSED</a> &nbsp;
+												                      	<a title="Awarded Tenders" class="btn btn-xs btn-success" style="color:white;margin-top:5px;" role="button" href="viewAwardedTenders.html" onclick="loadingData();"><i class="fas fa-star"></i> AWARDED</a> &nbsp;
+												                      	<a title="Not Awarded Tenders" class="btn btn-xs btn-danger" style="color:white;margin-top:5px;" role="button" href="viewNotAwardedTenders.html" onclick="loadingData();"><i class="fas fa-star"></i> NOT AWARDED</a> &nbsp;
+												                      	<a title="Cancelled Tenders" class="btn btn-xs btn-danger" style="color:white;margin-top:5px;" role="button" href="viewCancelledTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> CANCELLED</a> &nbsp;												                      	
+												                   		<a title="Exceptions to Open Calls" class="btn btn-xs btn-dark" style="color:white;margin-top:5px;" role="button" href="viewExceptionTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> EXCEPTIONS</a> &nbsp;
+												                   		<a title="Archived Closed Tenders" class="btn btn-xs btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedClosedTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> ARC. CLOSED</a>  &nbsp;
+												                   		<a title="Archived Awarded tenders" class="btn btn-xs btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedAwardedTenders.html" onclick="loadingData();"><i class="fas fa-star"></i>ARC. AWARDED</a> &nbsp;
+												                      	<a title="Archived Not Awarded tenders" class="btn btn-xs btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedNotAwardedTenders.html" onclick="loadingData();"><i class="fas fa-star"></i> ARC. NOT AWARDED</a> &nbsp;
+												                      	<a title="Archived Cancelled Tenders" class="btn btn-xs btn-secondary" style="color:white;margin-top:5px;" role="button" href="viewArchivedCancelledTenders.html" onclick="loadingData();"><i class="fas fa-times"></i> ARC. CANCELLED</a> &nbsp;												                       
+												                      	<a title="Tenders that need Status Update!" class="btn btn-xs btn-warning" style="color:black;margin-top:5px;" role="button" href="viewUnsetTenders.html" onclick="loadingData();"><i class="fas fa-exclamation"></i> UPDATE</a> &nbsp;
+												                      	<a title="Exit to MS" class="btn btn-xs btn-danger" style="color:white;margin-top:5px;" role="button" href="../navigate.jsp"><i class="fas fa-sign-out-alt"></i> EXIT</a>
 												                 </esd:SecurityAccessRequired>
 											                    <esd:SecurityAccessRequired roles="ADMINISTRATOR">
 											                     	<!-- EMPTY for now -->
@@ -182,7 +184,7 @@
 		 
 		    <div class="row" >
 		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">   	 		
-		  <div class="copyright">Tender Administration System 2.0 &copy; 2021 NLESD &middot; All Rights Reserved.</div>		
+		  <div class="copyright">Tender Administration System 2.3 &copy; 2021 NLESD &middot; All Rights Reserved.</div>		
 		 	  
 		</div> 
 	 	</div>
