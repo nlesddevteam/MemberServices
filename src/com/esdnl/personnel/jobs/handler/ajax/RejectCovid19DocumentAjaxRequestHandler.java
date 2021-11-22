@@ -6,14 +6,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.awsd.mail.bean.EmailBean;
 import com.esdnl.personnel.jobs.dao.ApplicantCovid19LogManager;
-import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.util.StringUtils;
 import com.esdnl.velocity.VelocityUtils;

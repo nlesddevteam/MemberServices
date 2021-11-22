@@ -417,6 +417,11 @@ public class ApplicantDocumentManager {
 				}else {
 					clbean.setRejectedDate(new Date(rs.getTimestamp("DATE_REJECTED").getTime()));
 				}
+				if(rs.getInt("EXCEMPTION_DOC") == 1) {
+					clbean.setExcemptionDoc(true);
+				}else {
+					clbean.setExcemptionDoc(false);
+				}
 			
 				abean.setClBean(clbean);
 			}

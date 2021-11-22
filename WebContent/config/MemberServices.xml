@@ -4440,6 +4440,17 @@
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.RejectCovid19DocumentAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/rejectCovid19Doc.html</URL-Pattern>
     </Request-Handler>
-                                             
+         <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AddCovid19ExemptionDocumentAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/addCovid19Exemption.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.Covid19EmailListRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/sendCovid19EmailList.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.Covid19EmailListCSVRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewCovid19EmailListCSV.html</URL-Pattern>
+    </Request-Handler>                                         
   </Request-Handlers>
 </Member-Services-Config>

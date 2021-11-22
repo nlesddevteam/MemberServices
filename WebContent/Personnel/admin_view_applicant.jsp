@@ -146,7 +146,7 @@ $("#loadingSpinner").css("display","none");
   	
   	$('.delete-cod').click(function(){
   		if(confirm('Are you sure you want to delete this Criminal Offence Declaration?')){
-  			$(this).css({'color': "yellow"}).html('DELETING...');
+  			$(this).css({'color': "white"}).html('Deleting...');
   			return true;
   		}
   		else
@@ -155,7 +155,7 @@ $("#loadingSpinner").css("display","none");
   	
   	$('.delete-doc').click(function(){
   		if(confirm('Are you sure you want to delete this Document?')){
-  			$(this).css({'color': "yellow"}).html('DELETING...');
+  			$(this).css({'color': "white"}).html('Deleting...');
   			return true;
   		}
   		else
@@ -1375,30 +1375,35 @@ input {
 			</div>
 		</div>
 	</div>
-	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
+	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19-STATUS">
 	<!-- Letters --------------------------------------------------------------->
 	<div class="panel-group" style="padding-top: 5px;">
 		<div class="panel panel-info" id="section16">
 			<div class="panel-heading">
 				<b>COVID-19 Proof of Vaccination</b>
+				<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
 				<div style="float:right;">
+				<a href="#" data-toggle="modal" data-target="#add_exemption_dialog" id="btn_show_add_exemtion_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Exemption</a>
 				</div>
+				</esd:SecurityAccessRequired>
 				</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-				
-						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.COVID19_VAX)).count() > 0)) { %>
-								
-								<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblcovid19">
+				<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblcovid19">
 							<thead>
 								<tr style="border-top: 1px solid black;">
 									<th width='20%'>TITLE</th>
 									<th width='20%'>UPLOADED</th>
 									<th width='45%'>STATUS</th>
+									<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
 									<th class="no-print" width='15%'>OPTIONS</th>
+									</esd:SecurityAccessRequired>
 								</tr>
 							</thead>
-							<tbody>									
+							<tbody>	
+						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.COVID19_VAX)).count() > 0)) { %>
+								
+																
 										
 										
 								<%	for (ApplicantDocumentBean doc : docs) {
@@ -1419,15 +1424,21 @@ input {
 										<%}else{ %>
 											<% if(doc.getClBean().getDateVerified() != null){ %>
 												
+														<% if(doc.getClBean().isExcemptionDoc()){ %>
 														<div  id="divverify">
-															<span style="color:Green;"><span id="spvdate"><i class="fas fa-check"></i> Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"><%=doc.getClBean().getVerifiedBy() %></span></span>
+															<span style="color:Green;"><span id="spvdate">Exemption uploaded on <%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"  style="text-transform: capitalize;"><%=doc.getClBean().getVerifiedBy() %></span></span>
 														</div>
+												<%}else{%>
+														<div  id="divverify">
+															<span style="color:Green;"><span id="spvdate">Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span> by <span id="spvby"  style="text-transform: capitalize;"><%=doc.getClBean().getVerifiedBy() %></span></span>
+														</div>
+												<%} %>	
 													
 											<%}else{ %>
 												<% if(doc.getClBean().getRejectedDate() != null){ 
 												%>
 														<div  id="divrejected">
-															<span style="color:Red;"><span id="rejdate"><i class="fas fa-times"></i> Rejected on <%=doc.getClBean().getRejectedDateFormatted() %></span> by <span id="rejby"><%=doc.getClBean().getRejectedBy() %>
+															<span style="color:Red;"><span id="rejdate"><i class="fas fa-times"></i> Rejected on <%=doc.getClBean().getRejectedDateFormatted() %></span> by <span id="rejby"  style="text-transform: capitalize;"><%=doc.getClBean().getRejectedBy() %>
 															<br />Notes: <%=doc.getClBean().getRejectedNotes() %>
 															</span></span>
 														</div>
@@ -1454,31 +1465,37 @@ input {
 									<%}%>
 										
 										</td>
+										<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
 										<td class="no-print"  width='15%'>
-											<a title='View documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'><i class="far fa-file-alt"></i></a>
-											<a title='Delete documentation'  class='viewdoc delete-doc btn btn-sm btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'><i class="far fa-trash-alt"></i></a> 
+											<a title='View documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'><i class="far fa-file-alt"></i></a> &nbsp;
+											<a title='Delete documentation'  class='viewdoc delete-doc btn btn-sm btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'><i class="far fa-trash-alt"></i></a> &nbsp;
 											<% if(doc.getClBean() == null){ %>
 												<a title='Verify and Approve this documentation'  class='viewdoc  btn btn-sm btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);"><i class='far fa-check-circle'></i></a>
 											<%}else{ %>
 												<% if(doc.getClBean().getDateVerified() == null){ %>
 													<% if(doc.getClBean().getRejectedDate() ==  null){ %>
 														<span id='covidbut<%=doc.getDocumentId()%>'>
-														<a title='Verify and Approve this documentation' class='viewdoc  btn btn-sm btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);"><i class='far fa-check-circle'></i></a>
+														<a title='Verify and Approve this documentation' class='viewdoc  btn btn-sm btn-success' onclick="verifycovid19('<%=doc.getDocumentId()%>',this);"><i class='far fa-check-circle'></i></a> &nbsp;
 														<a title='Reject this documentation' class='viewdoc  btn btn-sm btn-danger' onclick="rejectcovid19list('<%=doc.getDocumentId()%>',this);"><i class='fas fa-ban'></i></a>
 														</span>
 													<%} %>
 												<%} %>
 											<%} %>
 										</td>
+										</esd:SecurityAccessRequired>
 									</tr>
 									
 								<% } %>
+								
+								<% } else { %>
+									<tr><td colspan='4'><span style="color: Grey;">No COVID19 doc(s) currently on file.</span>
+									<script>
+									$("#section16").removeClass("panel-success").addClass("panel-danger");
+									
+									</script></td></tr>							
+								<% } %>
 								</tbody>
 						</table>
-								<% } else { %>
-									<span style="color: Grey;">No proof of vaccination(s) currently on file.</span>
-									<script>$("#section16").removeClass("panel-success").addClass("panel-danger");</script>							
-								<% } %>
 							
 					
 				</div>
@@ -2005,6 +2022,30 @@ input {
       <div class="modal-footer">
         <button type="button" id='btn_reject_doc_ok' class="btn btn-success btn-xs" style="float: left;" onclick="sumbitRejectDocumentApp();">Reject</button>
 		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="add_exemption_dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Add COVID19 Exemption Document</h4>
+        <input type='hidden' id='hidbutton'>
+      </div>
+      <div class="modal-body">
+        Please select and upload a valid exemption document for this employee:
+        <p>
+			<input type="file" id="exdocument" class="form-control" name="exdocument" accept="application/pdf">(PDF file format only)
+		</p>
+        <p>
+        <div class="alert alert-danger" role="alert" id="errmsgex" style="display:none;">	Please select a valid PDF  file.</div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='btn_add_exemption_ok' class="btn btn-success btn-xs" style="float: left;" onclick="addCovid19Exemption('20');">ADD FILE</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">CLOSE</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

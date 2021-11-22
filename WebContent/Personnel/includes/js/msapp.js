@@ -1627,6 +1627,117 @@ function sumbitRejectDocumentApp(){
  		);
 	$('#modalreject').modal('hide');
 }
+/*******************************************************************************
+ * add new covid exemption
+ ******************************************************************************/
+function addCovid19Exemption(ltype) {
+	var applicantid = $("#appid").val();
+	var lfile = $('#exdocument')[0].files[0];
+	var requestd = new FormData();
+	requestd.append('edoc', lfile);
+	requestd.append('appid', applicantid);
+	requestd.append('doctype',ltype);
+	$.ajax({
+		url : "addCovid19Exemption.html",
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$("#tblcovid19").find("tr:gt(0)").remove();
+			$(xml).find('CFILE').each(
+				function() {
+					if ($(this).find("MESSAGE").text() == "ADDED") {
+						var newrow = "<tr>";
+						newrow += "<td width='20%'>" + $(this).find("FILETITLE").text() + "</td>";
+						newrow += "<td width='20%'>" + $(this).find("DOCUPLOAD").text() + "</td>";
+						if($(this).find("FSTATUS").text() == "E"){
+							//excemption
+							newrow += "<td width='45'><div  id='divverify'>";
+							newrow += "<span style='color:Green;'><span id='spvdate'>Exemption uploaded on " + $(this).find("VDATE").text() + 
+								"</span> by <span id='spvby'>" + $(this).find("VBY").text() + "</span></span></div>";
+							
+							
+						}else if($(this).find("FSTATUS").text() == "R"){
+							newrow += "<td width='45'><div  id='divverify'>";
+							newow += "<span style='color:Red;'><span id='rejdate'><i class='fas fa-times'></i> Rejected on " + $(this).find("RDATE").text() 
+								+ "</span> by <span id='rejby'>" + $(this).find("RBY").text() + "<br />Notes: " + $(this).find("RNOTES").text() +
+								"</span></span></div>";
+						}else if($(this).find("FSTATUS").text() == "V"){
+							newrow += "<td width='45'><div  id='divverify'>";
+							newrow += "<span style='color:Green;'><span id='spvdate'>Verified on " + $(this).find("VDATE").text() + 
+							"</span> by <span id='spvby'>" + $(this).find("VBY").text() + "</span></span></div>";
+							
+						}else{
+							newrow += "<td width='45'><span style='color:Orange;' id='divnotver" + $(this).find("DOCID").text() + "' ><i class='fas fa-ban'></i> Not Verified</span>";
+							newrow += "<div  id='divverify" + + $(this).find("DOCID").text() + "' style='display:none;'>";
+						    newrow += "<span style='color:Green;'><i class='fas fa-check'></i> Verified on <span id='spvdate" + $(this).find("DOCID").text()
+						    	+ "'></span> by <span id='spvby" + $(this).find("DOCID").text() + "'></span></span></div>";
+							newrow += "<div  id='divrejected" +	$(this).find("DOCID").text() +"' style='display:none;' >";
+							newrow += "<span style='color:Red;'><i class='fas fa-times'></i> Rejected on ";
+							newrow += "<span id='rejdate" + $(this).find("DOCID").text() + "'></span> by <span id='rejby" + $(this).find("DOCID").text() + "'></span>";
+							newrow += "<br />Notes: <span id='rejnotes" + $(this).find("DOCID").text() 	+ "'></span></span></div>"	
+								
+						}
+						newrow += "</td>";
+						//now the buttons
+						newrow += "<td class='no-print'  width='15%'>";
+						newrow += "<a title='View documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCID").text() + 
+						"' target='_blank'><i class='far fa-file-alt'></i></a>";
+						newrow += "<a title='Delete documentation'  class='viewdoc delete-doc btn btn-sm btn-danger' href='deleteApplicantDocument.html?id=" + $(this).find("DOCID").text() 
+						+ "'><i class='far fa-trash-alt'></i></a>"; 
+								
+						if($(this).find("FSTATUS").text() == "NV"){
+							//not verified add reject/approve
+							newrow += "<span id='covidbut" + $(this).find("DOCID").text() + "'>";
+							newrow +="<a title='Verify and Approve this documentation' class='viewdoc  btn btn-sm btn-success' onclick=\"verifycovid19('" + $(this).find("DOCID").text() +
+							"',this);\"><i class='far fa-check-circle'></i></a>";
+							newrow += "<a title='Reject this documentation' class='viewdoc  btn btn-sm btn-danger' onclick=\"rejectcovid19list('" + $(this).find("DOCID").text() + 
+							"',this);\"><i class='fas fa-ban'></i></a>";
+							newrow += "</span>";
+							
+						}
+						newrow += "</td>"
+						newrow += "</tr>";
+						$('#tblcovid19 > tbody:last-child').append(newrow);
+						$('#tblcovid19').show();
+						//alert($("#tblcovid19 tr").length);
+						//if($("#tblcovid19 tr").length == 0){
+							//alert("1");
+							//$('#tblcovid19').append(newrow);
+						//}else{
+							//$('#tblcovid19 tr:last').after(newrow);
+							//alert("2");
+						//}
+						
+						//$('#letterspan').text("Letter has been added.");
+						//$('#letteralert').show();
+					} 
+					else {
+							//$('#letterspan').text($(this).find("MESSAGE").text());
+							//$('#letteralert').show();
+					}
+				});
+			
+			//$("#letteralert").fadeTo(3000, 500).slideUp(500, function(){
+			   // $("#letteralert").slideUp(500);
+			//});
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			//$('#letterspan').text(textStatus);
+			//$('#letteralert').show();
+			
+			//$("#letteralert").fadeTo(10000, 500).slideUp(500, function(){
+			   // $("#letteralert").slideUp(500);
+			//});
+		},
+		dataType : "text",
+		async : false
+	});
+	$('#add_exemption_dialog').modal('hide');
+}
 
 
 

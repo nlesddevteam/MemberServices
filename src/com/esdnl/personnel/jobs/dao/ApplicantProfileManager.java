@@ -2681,9 +2681,15 @@ public class ApplicantProfileManager {
 				if (rs.getString("APPID") != null && org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("APPID"))) {
 					if(org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("VERIFIED_BY"))
 							 && org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("VD2"))){
-						DateFormat dt = new SimpleDateFormat("dd/MM/yyyy"); 
-						String status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Verified by " + rs.getString("VERIFIED_BY") + " on " + dt.format(new java.util.Date(rs.getTimestamp("VD2").getTime()))+"</span>" ;
-						aBean.setCovid19VaxStatus(status);
+						DateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+						if(rs.getInt("EXCEMPTION_DOC") == 1) {
+							String status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Exemption uploaded by " + rs.getString("VERIFIED_BY") + " on " + dt.format(new java.util.Date(rs.getTimestamp("VD2").getTime()))+"</span>" ;
+							aBean.setCovid19VaxStatus(status);
+						}else {
+							String status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Verified by " + rs.getString("VERIFIED_BY") + " on " + dt.format(new java.util.Date(rs.getTimestamp("VD2").getTime()))+"</span>" ;
+							aBean.setCovid19VaxStatus(status);
+						}
+						
 					}else {
 						
 						if(org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("DATE_REJECTED"))){
