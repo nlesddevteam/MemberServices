@@ -152,6 +152,11 @@ public class Covid19ReportManager {
 			}else {
 				abean.setRejectedDate(new Date(rs.getTimestamp("DATE_REJECTED").getTime()));
 			}
+			if(rs.getInt("EXCEMPTION_DOC") == 1) {
+				abean.setExemptionDoc(true);
+			}else {
+				abean.setExemptionDoc(false);
+			}
 			
 		}
 		catch (SQLException e) {
