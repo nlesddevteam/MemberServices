@@ -322,5 +322,75 @@ public class EmailManager {
 
 		return abean;
 	}
+	
+	public static void sendEmailBatch(ArrayList<EmailBean> alist) throws EmailException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		int xx=0;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			stat = con.prepareCall("begin awsd_user.ms_email.add_email(?,?,?,?,?,?,?,?); end;");
+			for(EmailBean abean:alist) {
+				
+				stat.setString(1, abean.getFrom());
+				stat.setString(2, abean.getToComplete());
+				stat.setString(3, abean.getCCComplete());
+				stat.setString(4, abean.getBCCComplete());
+				stat.setString(5, abean.getSubject());
+				//if (abean.content_type.equals(EmailBean.CONTENTTYPE_HTML) && abean.use_template) {
+					String new_body = EmailBean.BASE_TEMPLATE.replace("###EMAIL_BODY###", abean.getBody());
+					abean.setBody(new_body);
+				//}
+
+				oracle.sql.CLOB newClob = oracle.sql.CLOB.createTemporary(con, false, oracle.sql.CLOB.DURATION_SESSION);
+
+				newClob.putString(1, abean.getBody());
+
+				((OracleCallableStatement) stat).setCLOB(6, newClob);
+
+				stat.setString(7, abean.getContentType());
+
+				if (abean.getAttachments() != null)
+					stat.setString(8, abean.getAttachments()[0].getAbsolutePath());
+				else
+					stat.setNull(8, OracleTypes.VARCHAR);
+				
+				stat.addBatch();
+				
+				xx++;
+				if (xx % 1000 == 0 || xx == alist.size()) {
+					stat.executeBatch(); // Execute every 1000 items.
+				}
+			}
+			
+
+			
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("void addEmailBean(EmailBean abean): " + e);
+			throw new EmailException(e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+
 
 }

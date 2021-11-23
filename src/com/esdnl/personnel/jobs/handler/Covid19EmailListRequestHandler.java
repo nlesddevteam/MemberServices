@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
+import com.awsd.mail.dao.EmailManager;
 import com.esdnl.personnel.jobs.bean.Covid19EmailListBean;
 import com.esdnl.personnel.jobs.dao.Covid19EmailListManager;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -59,37 +60,32 @@ public class Covid19EmailListRequestHandler extends RequestHandlerImpl {
 		}
 		
 		//send email to app
-		EmailBean ebean = new EmailBean();
-		ebean.setTo("rodneybatten@nlesd.ca");
-		ebean.setFrom("ms@nlesd.ca");
-		ebean.setSubject("COVID19 Vaccination Document Reminder");
-		HashMap<String, Object> model = new HashMap<String, Object>();
-		ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/covid19_warning_email.vm", model));
+		
+		long test =0l;
+		//now we create the data string
+		ArrayList<EmailBean> alist = new ArrayList<>();
+		for (Map.Entry<String,Covid19EmailListBean> entry : emaillist.entrySet()) {
+			EmailBean ebean = new EmailBean();
+			ebean.setFrom("recorduploads@nlesd.ca");
+			ebean.setSubject("COVID19 Vaccination Document Reminder");
+			HashMap<String, Object> model = new HashMap<String, Object>();
+			ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/covid19_warning_email.vm", model));
+			ebean.setTo(entry.getValue().getEmailAddress());
+			alist.add(ebean);
+		}
+		//now we save the emails
 		try {
-			ebean.send();
+			EmailManager.sendEmailBatch(alist);
 		} catch (EmailException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		long test =0l;
-		//now we create the data string
-		for (Map.Entry<String,Covid19EmailListBean> entry : emaillist.entrySet()) {
-	        sb.append(entry.getValue().toString());
-	        Covid19EmailListManager.addCovid19WarningEmailLog(entry.getValue().getEmailAddress(), -999);
-	        test++;
-		}
+		
+		test= Covid19EmailListManager.addCovid19WarningEmailLogTM(emaillist);
 		Date enddate = new Date();
 		//now we save the warning email table
 		int id = Covid19EmailListManager.addCovid19WarningEmail(startdate, enddate, usr.getLotusUserFullNameReverse(), test);
 		
-		//response.setContentType("application/csv");
-		//response.setHeader("content-disposition","filename=emaillist.csv");
-		//PrintWriter out = response.getWriter();
-		//out.print(sb.toString());
-		//out.flush();
-		//out.close();
-
-		//path = null;
 		request.setAttribute("cid", id);
 		request.setAttribute("emailcount", test);
 		return "admin_send_covid19_warning.jsp";

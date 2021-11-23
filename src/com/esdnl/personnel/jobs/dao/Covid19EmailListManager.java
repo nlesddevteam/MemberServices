@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.Covid19EmailListBean;
 import oracle.jdbc.OracleCallableStatement;
@@ -136,6 +139,72 @@ public class Covid19EmailListManager {
 			catch (Exception e) {}
 		}
 		return id;
+	}
+	
+	public static long addCovid19WarningEmailLogTM(TreeMap<String,Covid19EmailListBean> testing) {
+
+		Connection con = null;
+		CallableStatement stmt = null;
+		long xx=0;
+		
+		try {
+			con = DAOUtils.getConnection();
+			//PreparedStatement stmt = con.prepareStatement("call awsd_user.personnel_jobs_pkg.add_covid19_warning_email_log(?,?)");
+			//for (Map.Entry<String,Covid19EmailListBean> entry : testing.entrySet()) {
+				//stmt.setString(1, entry.getKey());
+				//stmt.setInt(2, -999);
+				//stmt.addBatch();
+				//xx++;
+				//if (xx % 1000 == 0 || xx == testing.size()) {
+				//	stmt.executeBatch(); // Execute every 1000 items.
+				//}
+		    //}
+			stmt = con.prepareCall("begin  awsd_user.personnel_jobs_pkg.add_covid19_warning_email_tm(?,?); end;");
+			for (Map.Entry<String,Covid19EmailListBean> entry : testing.entrySet()) {
+				stmt.setString(1, entry.getKey());
+				stmt.setLong(2, -999);
+				stmt.addBatch();
+				xx++;
+				if (xx % 1000 == 0 || xx == testing.size()) {
+					stmt.executeBatch(); // Execute every 1000 items.
+				}
+			}
+			
+			con.commit();
+			//con.setAutoCommit(true);
+
+			//stat = con.prepareCall("begin ? :=awsd_user.personnel_jobs_pkg.add_covid19_warning_email_log(?,?); end;");
+			//stat.registerOutParameter(1, OracleTypes.INTEGER);
+			//stat.setString(2, emailaddress);
+			//stat.setInt(3, cid);
+			//stat.execute();
+			//id= (int) stat.getInt(1);
+			
+			try {
+				stmt.close();
+			}
+			catch (Exception e) {}
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static int addCovid19WarningEmailLog(String emailaddress,int cid): "
+					+ e);
+			
+		}
+		finally {
+			
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return xx;
 	}
 	public static ArrayList<Covid19EmailListBean> getCovid19EmailListCSV(int id) {
 		ArrayList<Covid19EmailListBean> v_opps = null;
