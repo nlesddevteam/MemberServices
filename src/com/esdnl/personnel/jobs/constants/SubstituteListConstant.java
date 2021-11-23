@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SubstituteListConstant implements Serializable {
 
 	private static final long serialVersionUID = 556280722415675494L;
-
+	//test
 	private int value;
 	private String desc;
 
