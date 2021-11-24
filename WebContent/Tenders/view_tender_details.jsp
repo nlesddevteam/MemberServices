@@ -645,8 +645,8 @@ $(document).ready(function(){
 	
 	//DEFAULTS	
 		 $('#po_number').mask('00 0000');	 
-		 $('#tender_number').mask('00-0000');	 
-		 $("#awardType").text("TENDER");
+		 $('#tender_number').mask('00-0000S');	 
+		 $("#awardType").text("TENDER");		 
 		 
 		var pageWordCountConf = {
 	    	    showParagraphs: true,
@@ -656,7 +656,7 @@ $(document).ready(function(){
 	    	    countHTML: true,
 	    	    maxWordCount: -1,
 	    	    maxCharCount: 3500,
-	    	}
+	    	    }
 		
 		  	CKEDITOR.replace( 'edescription',{wordcount: pageWordCountConf,toolbar : 'Basic'} );
 		    CKEDITOR.replace( 'eterms',{wordcount: pageWordCountConf,toolbar : 'Basic'} );
