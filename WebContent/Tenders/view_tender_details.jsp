@@ -645,7 +645,7 @@ $(document).ready(function(){
 	
 	//DEFAULTS	
 		 $('#po_number').mask('00 0000');	 
-		 $('#tender_number').mask('00-0000S');	 
+		 $('#tender_number').mask('00-000S');	 
 		 $("#awardType").text("TENDER");		 
 		 
 		var pageWordCountConf = {
