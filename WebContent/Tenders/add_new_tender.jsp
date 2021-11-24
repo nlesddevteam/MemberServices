@@ -426,7 +426,6 @@
 
 <script>
 $(document).ready(function(){	
-
 	
 	 $('#po_number').mask('00 0000');	 
 	 $('#tender_number').mask('00-0000S');	 
