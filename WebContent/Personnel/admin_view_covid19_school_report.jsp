@@ -17,7 +17,7 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
  
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW-COVID19" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW-COVID19,PERSONNEL-ADMIN-VIEW-COVID19-STATUS" />
 <% 
 	String test = "";
 	if(request.getParameter("sid") !=  null){
@@ -66,7 +66,8 @@
                               </div>	
 	                       	    </div>
 	                       	    	<br/><br/>     
-	  						</div>	
+	  						</div>
+	  						
                             
 	                            
 	                             					
@@ -190,31 +191,31 @@ function getEmployeesByLocation(locid)
      									//show no buttons   								
      								   									
      								if ($(this).find("SIN").text().length >5) { 
-     									newrow += "<td>";  
+     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'>";  
      									
      									newrow += "<a  title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>";
-     									newrow += "</td>";
+     									newrow += "</esd:SecurityAccessRequired></td>";
      								} else {
-     									newrow += "<td><a style='color:Red;' title='User has no profile'><i class='fas fa-user-slash'></i></a></td>";  
+     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'><a style='color:Red;' title='User has no profile'><i class='fas fa-user-slash'></i></a>/esd:SecurityAccessRequired></esd:SecurityAccessRequired></td>";  
      								}
      								}else if($(this).find("STATUSCODE").text() == "2"){
      									//show view and verify links
-     									newrow += "<td>";
+     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'>";
      									newrow += "<a title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>&nbsp;";
      									newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>&nbsp;";
      									newrow += "<a title='Verify Documentation' id='v" + $(this).find("DOCUMENTID").text() + "' class='viewdoc  btn btn-sm btn-success' onclick=\"verifycovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\"><i class='far fa-check-circle'></i></a>&nbsp;"
      									newrow += "<a title='Reject Documentation' id='r" + $(this).find("DOCUMENTID").text() + "' class='rejectdoc  btn btn-sm btn-danger' onclick=\"rejectcovid19list('" + $(this).find("DOCUMENTID").text()+ "',this);\"><i class='fas fa-ban'></i></a>"
-     									newrow += "</td>";
+     									newrow += "</esd:SecurityAccessRequired></td>";
      								}else if($(this).find("STATUSCODE").text() == "3"){
-     									newrow += "<td>";
+     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'>";
      									newrow += "<a title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>&nbsp;";
      									newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>";
-     									newrow += "</td>";
+     									newrow += "</esd:SecurityAccessRequired></td>";
      								}else if($(this).find("STATUSCODE").text() == "4"){
-     									newrow += "<td>";
+     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'>";
      									newrow += "<a title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>&nbsp;";
      									newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>";
-     									newrow += "</td>";
+     									newrow += "</esd:SecurityAccessRequired></td>";
      								}
      								
      								
