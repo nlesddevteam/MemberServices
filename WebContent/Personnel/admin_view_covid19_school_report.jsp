@@ -196,7 +196,7 @@ function getEmployeesByLocation(locid)
      									newrow += "<a  title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>";
      									newrow += "</esd:SecurityAccessRequired></td>";
      								} else {
-     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'><a style='color:Red;' title='User has no profile'><i class='fas fa-user-slash'></i></a>/esd:SecurityAccessRequired></esd:SecurityAccessRequired></td>";  
+     									newrow += "<td><esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW-COVID19'><a style='color:Red;' title='User has no profile'><i class='fas fa-user-slash'></i></a></esd:SecurityAccessRequired></td>";  
      								}
      								}else if($(this).find("STATUSCODE").text() == "2"){
      									//show view and verify links
