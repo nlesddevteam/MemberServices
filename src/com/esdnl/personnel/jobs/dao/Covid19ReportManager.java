@@ -113,6 +113,49 @@ public class Covid19ReportManager {
 		
 		return v_opps;
 	}
+	public static ArrayList<Covid19ReportBean> getCovid19Exemptions() {
+		ArrayList<Covid19ReportBean> v_opps = null;
+		Covid19ReportBean eBean = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			v_opps = new ArrayList<Covid19ReportBean>(3);
+		
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_covid_exempt; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			HashSet<String>testh = new HashSet<String>();
+			while (rs.next()) {
+				eBean = createCovid19ReportBeanBean(rs);
+				testh.add(eBean.getEmployeeSin().trim());
+					v_opps.add(eBean);
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("ArrayList<Covid19ReportBean> getLatestCovid19VaccinationsByDays(int numdays) : "
+					+ e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		
+		return v_opps;
+	}	
 	public static Covid19ReportBean createCovid19ReportBeanBean(ResultSet rs) {
 
 		Covid19ReportBean abean = null;
