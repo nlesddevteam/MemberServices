@@ -17,7 +17,7 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job" %>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2" %>
  
-<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW-COVID19,PERSONNEL-ADMIN-VIEW-COVID19-STATUS" />
+<esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW-COVID19,PERSONNEL-ADMIN-VIEW-COVID19-STATUS,PERSONNEL-ADMIN-VIEW-COVID19-COUNTS" />
 <% 
 	String test = "";
 	if(request.getParameter("sid") !=  null){
