@@ -200,7 +200,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_pp_school_employees.jsp">View School Employees</a></li>
 					          	</ul>
 	</esd:SecurityAccessRequired>
-	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19-STATUS">
+	<esd:SecurityAccessRequired permissions="COVID19-REPORT-VIEWER">
 	<li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
