@@ -86,4 +86,7 @@ public class Covid19EmailListBean {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
+	}
 }
