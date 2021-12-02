@@ -14,7 +14,7 @@
 <%@ taglib uri="/WEB-INF/personnel_jobs.tld" prefix="job"%>
 <%@ taglib uri="/WEB-INF/personnel_v2.tld" prefix="jobv2"%>
 
-<esd:SecurityCheck roles="ADMINISTRATOR" />
+<esd:SecurityCheck roles="ADMINISTRATOR,AD HR" />
 <html>
 
 <head>
