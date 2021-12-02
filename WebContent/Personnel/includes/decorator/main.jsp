@@ -224,6 +224,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          		</esd:SecurityAccessRequired>
 					          		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19-EMAIL">
 					          			<li><a onclick="loadingData()" href="admin_send_covid19_warning.jsp">Send COVID19 Reminder</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewCovid19Dashboard.html">View COVID19 Dashboard Report</a></li>
 					          		</esd:SecurityAccessRequired>
 					          		
 					          	</ul>
