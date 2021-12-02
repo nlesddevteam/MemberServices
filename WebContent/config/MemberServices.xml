@@ -3694,12 +3694,15 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AdminDeleteReferenceAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/adminDeleteReference.html</URL-Pattern>
-     </Request-Handler>
-     
+     </Request-Handler>     
       <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewMyHrpSettingsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewMyHrpSettings.html</URL-Pattern>
     </Request-Handler> 
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewCovid19DashboardlRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewCovid19Dashboard.html</URL-Pattern>
+    </Request-Handler>     
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.UpdateMyHrpSettingsRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/updateMyHrpSettings.html</URL-Pattern>
