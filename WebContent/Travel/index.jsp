@@ -123,7 +123,7 @@
 	Above  Government Rates are effective <b><%=rates.get(0).getEffectiveStartDateFormatted() %></b> thru to <b><%=rates.get(0).getEffectiveEndDateFormatted() %></b>. 
 	<br/><br/>
 	All employees are set at the Base rate by default. Positions that have been pre-approved will be set at the Approved rate automatically but those who are not in pre-approved positions require approval from Corporate Services.
-	If you need to apply for the Approved rate, please contact Susan Clarke (Email: <a href="mailto:susanclarke@nlesd.ca?subject=Travel Approved Rate Request">susanclarke@nlesd.ca</a> &middot; Tel: 709-758-2382).
+	If you need to apply for the Approved rate, please contact Susan Hussey (Email: <a href="mailto:susanhussey@nlesd.ca?subject=Travel Approved Rate Request">susanhussey@nlesd.ca</a> &middot; Tel: 709-758-2382).
 	
 	
 	
