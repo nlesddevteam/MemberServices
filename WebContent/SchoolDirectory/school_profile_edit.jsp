@@ -206,7 +206,7 @@
   <body>
   <div class="siteHeaderGreen"><span style="color:Red;">${ school.schoolName }</span> Website School Directory Profile Information</div>
 <div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;">
-<img src="../includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Data, please wait.<br/>This will take a few moments!
+<img src="includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Data, please wait.<br/>This will take a few moments!
 </div>		
 
 <div style="display:none;" class="loadPage"> 
@@ -612,7 +612,7 @@
 								<b>School Regional Zone:</b>
 								    <sch:RegionsDDL id="regionId" cls="form-control" value='${ school.region.id }' />
 								</div>
-								<div class="col-lg-4 col-12">
+								<div class="col-lg-4 col-12" style="display:none;">
 								<b>Trustee/Electorial Zone:</b>				
 				    					<select id='electorialZone' name='electorialZone' class="form-control">
 				    					<option value="0">---- Please Select (Required) ----</option>	
@@ -630,8 +630,8 @@
 					                    <option value='12' ${ school.details.electorialZone eq "12" ? "SELECTED" : "" }>Vacant (12)</option> 
 					                    <option value='13' ${ school.details.electorialZone eq "13" ? "SELECTED" : "" }>Kevin Ryan (13)</option> 
 					                    <option value='14' ${ school.details.electorialZone eq "14" ? "SELECTED" : "" }>Vacant (14)</option> 
-					                    <option value='15' ${ school.details.electorialZone eq "15" ? "SELECTED" : "" }>Vacant (15)</option> 
-					                    <option value='16' ${ school.details.electorialZone eq "16" ? "SELECTED" : "" }>Vacant (16)</option> 
+					                    <option value='15' ${ school.details.electorialZone eq "15" ? "SELECTED" : "" }>Vacant  (15)</option> 
+					                    <option value='16' ${ school.details.electorialZone eq "16" ? "SELECTED" : "" }>Peter Whittle (16)</option> 
 					                    <option value='17' ${ school.details.electorialZone eq "17" ? "SELECTED" : "" }>Steve Tessier (17)</option> 
 					                    <option value='0' ${ school.details.electorialZone eq "0" ? "SELECTED" : "" }>Not Assigned</option>
 				    					</select>    				
