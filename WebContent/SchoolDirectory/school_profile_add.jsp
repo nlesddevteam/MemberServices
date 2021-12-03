@@ -196,7 +196,7 @@
   <body>
   <div class="siteHeaderGreen">Adding New School Profile</div>
 <div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;">
-<img src="../includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Data, please wait.<br/>This will take a few moments!
+<img src="includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Data, please wait.<br/>This will take a few moments!
 </div>		
 
 <div style="display:none;" class="loadPage"> 
@@ -251,9 +251,9 @@
 								<b>School Regional Zone:</b>
 								    <sch:RegionsDDL id="regionId" cls="form-control" value='${ school.region.id }' />
 								</div>
-								<div class="col-lg-4 col-12">
+								<div class="col-lg-4 col-12" style="display:none;">
 								<b>Trustee/Electorial Zone:</b>				
-				    					<select id='electorialZone' name='electorialZone' class="form-control" required>
+				    					<select id='electorialZone' name='electorialZone' class="form-control">
 				    					<option value="0">---- Please Select (Required) ----</option>	
 				    					<option value='1' ${ school.details.electorialZone eq "1" ? "SELECTED" : "" }>Raymond Bennett (1)</option> 
 					                    <option value='2' ${ school.details.electorialZone eq "2" ? "SELECTED" : "" }>Goronwy Price (2)</option> 
