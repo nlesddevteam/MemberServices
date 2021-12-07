@@ -101,6 +101,7 @@ public class PSClassManager {
 			kbean.setNumberOfStudents(rs.getInt("NUMBER_OF_STUDENTS"));
 			kbean.setSchoolNumber(rs.getString("KSNUM"));
 			kbean.setSectionNumber(rs.getString("SECTION_NUMBER"));
+			kbean.setGradeLevels(rs.getString("GRADES"));
 		}
 		}
 		catch (SQLException e) {
