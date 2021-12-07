@@ -401,71 +401,24 @@ This includes any class homeroom names, duplicates, and/or info you may have on 
 												<table class="table table-condensed table-striped table-bordered" style="text-align:center;margin:0 auto;font-size:12px;max-width:800px;width:100%;">
 												<thead class="thead-dark">																						
 												<tr style="font-weight:bold;color:White;">
-												<th width="10%">GRADE</th>
 												<th width="30%">CLASS NUMBER</th>
 												<th width="40%">POWER SCHOOL SECTION</th>
 												<th width="20%"># STUDENTS</th>
+												<th width="10%">GRADE(S)</th>
 												</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="entry" items="${psinfo.kClass}">	
 													<c:if test="${entry.value.numberOfStudents gt '0'}">							
 														<tr>
-														    <td>${entry.value.gradeLevel eq "0"?"K":entry.value.gradeLevel}</td>		
-														    <c:choose>
-														    <c:when test="${fn:startsWith(entry.value.gradeSection,'0')}">
-															<td>K-${knum}
+														    		
+														    <td>HR-${knum}
 															<c:set var="knum" value="${knum+1}"/>
 															</td>
-															<td>K${fn:substringAfter(entry.value.gradeSection,'0')}</td>
-															</c:when>
-															<c:otherwise>
-															<td>
-															<c:choose>
-														    <c:when test="${fn:startsWith(entry.value.gradeSection,'1')}">
-															1-${gr1num}															
-															<c:set var="gr1num" value="${gr1num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'2')}">
-															2-${gr2num}															
-															<c:set var="gr2num" value="${gr2num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'3')}">
-															3-${gr3num}															
-															<c:set var="gr3num" value="${gr3num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'4')}">
-															4-${gr4num}															
-															<c:set var="gr4num" value="${gr4num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'5')}">
-															5-${gr5num}															
-															<c:set var="gr5num" value="${gr5num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'6')}">
-															6-${gr6num}															
-															<c:set var="gr6num" value="${gr6num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'7')}">
-															7-${gr7num}															
-															<c:set var="gr7num" value="${gr7num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'8')}">
-															8-${gr8num}															
-															<c:set var="gr8num" value="${gr8num+1}"/>
-															</c:when>
-															<c:when test="${fn:startsWith(entry.value.gradeSection,'9')}">
-															9-${gr9num}															
-															<c:set var="gr9num" value="${gr9num+1}"/>
-															</c:when>															
-															</c:choose>
-															</td>
-															<td>${entry.value.gradeSection}</td>
-															</c:otherwise>
-															</c:choose>														
+															<td>${entry.value.sectionNumber}</td>
 															<td>${entry.value.numberOfStudents}
-															
-															</td>
+															</td>															
+															<td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>
 														</tr>	
 														</c:if>													
 													</c:forEach>
