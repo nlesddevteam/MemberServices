@@ -4454,6 +4454,10 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.Covid19EmailListCSVRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewCovid19EmailListCSV.html</URL-Pattern>
-    </Request-Handler>                                         
+    </Request-Handler>       
+    <Request-Handler>
+      <Request-Handler-Class>com.nlesd.psimport.handler.ViewPSCountsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/PSCounts/viewPSCounts.html</URL-Pattern>
+    </Request-Handler>                                    
   </Request-Handlers>
 </Member-Services-Config>

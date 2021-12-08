@@ -79,6 +79,11 @@
   		<pattern>/covid19/*</pattern>
   </decorator> 
  
+  <!-- For School PS Allocations Data   -->
+  <decorator name="School PS Allocations" page="PSCounts/includes/decorator/main.jsp">
+  		<pattern>/PSCounts/*</pattern>
+  </decorator> 
+ 
   <!-- For OHS System   -->
   <decorator name="OHS SYSTEM" page="OHS/includes/decorator/main.jsp">
   		<pattern>/OHS/*</pattern>
