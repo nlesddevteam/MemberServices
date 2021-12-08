@@ -164,6 +164,15 @@
 							</a>
 						</div>
 					</esd:SecurityAccessRequired>
+<!-- PS Counts -->					
+<esd:SecurityAccessRequired roles="SENIOR EDUCATION OFFICIER,ASSISTANT DIRECTORS,ADMINISTRATOR,ADHR">
+						<div class="menuIconImage">                              
+							<a href="PSCounts/viewPSCounts.html">
+								<img src="includes/img/menu/psdata-off.png" class="img-swap menuImage" border=0 title="School PS Allocation Data">
+							</a>                                                         
+						</div>
+					</esd:SecurityAccessRequired>					
+					
 
 <!-- Admin School Profile Update -->
 					<esd:SecurityAccessRequired
