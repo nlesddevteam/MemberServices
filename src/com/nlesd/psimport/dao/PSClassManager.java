@@ -34,7 +34,8 @@ public class PSClassManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 			while (rs.next()){
 				if(rs.getInt("KID") > 0) {
-					if(rs.getInt("KGRADE") < 10) {
+					//if(rs.getInt("KGRADE") < 10) {
+						if(checkGrades(rs.getString("GRADES"))) {
 						String test = rs.getString("KGRADE") + "-" + rs.getString("SECTION_NUMBER");
 						if(!kbeans.containsKey(test)) {
 							kbean = createPSK9ClassBean(rs);
@@ -130,5 +131,21 @@ public class PSClassManager {
 		}
 		return hbean;
 	}
-
+	private static boolean checkGrades(String grades) {
+		boolean isK=false;
+			if(grades.contains(",")) {
+				String[] testing = grades.split(",");
+				for(String s : testing) {
+						if(Integer.parseInt(s) < 10) {
+							isK=true;
+						}
+				}
+			}else {
+				if(Integer.parseInt(grades) < 10) {
+					isK=true;	
+				}
+			}
+		
+		return isK;
+	}
 }
