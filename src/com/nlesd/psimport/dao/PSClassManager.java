@@ -35,7 +35,7 @@ public class PSClassManager {
 			while (rs.next()){
 				if(rs.getInt("KID") > 0) {
 					//if(rs.getInt("KGRADE") < 10) {
-						if(checkGrades(rs.getString("GRADES"))) {
+						if(checkGrades(rs.getString("GRADES"),rs.getString("KGRADE"))) {
 						String test = rs.getString("KGRADE") + "-" + rs.getString("SECTION_NUMBER");
 						if(!kbeans.containsKey(test)) {
 							kbean = createPSK9ClassBean(rs);
@@ -131,8 +131,9 @@ public class PSClassManager {
 		}
 		return hbean;
 	}
-	private static boolean checkGrades(String grades) {
+	private static boolean checkGrades(String grades,String grade2) {
 		boolean isK=false;
+		if(grades != null) {
 			if(grades.contains(",")) {
 				String[] testing = grades.split(",");
 				for(String s : testing) {
@@ -145,6 +146,12 @@ public class PSClassManager {
 					isK=true;	
 				}
 			}
+		}else {
+			if(Integer.parseInt(grade2) < 10) {
+				isK=true;
+			}
+		}
+		
 		
 		return isK;
 	}
