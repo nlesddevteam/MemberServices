@@ -78,6 +78,8 @@
 			        ]
 		});
 		
+	
+		
 		$("tr").not(':first').hover(
 				  function () {
 				    $(this).css("background","yellow");
@@ -398,27 +400,21 @@ This includes any class homeroom names, duplicates, and/or info you may have on 
 										
 											<c:if test="${ not psinfo.kClass.isEmpty()}">
 											
-												<table class="table table-condensed table-striped table-bordered" style="text-align:center;margin:0 auto;font-size:12px;max-width:800px;width:100%;">
+												<table class="table table-condensed table-striped table-bordered" style="text-align:center;margin:0 auto;font-size:12px;max-width:600px;width:100%;">
 												<thead class="thead-dark">																						
 												<tr style="font-weight:bold;color:White;">
-												<th width="30%">CLASS NUMBER</th>
-												<th width="40%">POWER SCHOOL SECTION</th>
-												<th width="20%"># STUDENTS</th>
-												<th width="10%">GRADE(S)</th>
+												<th width="20%">GRADE(S)</th>
+												<th width="20%">POWER SCHOOL SECTION</th>
+												<th width="20%"># STUDENTS</th>												
 												</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="entry" items="${psinfo.kClass}">	
 													<c:if test="${entry.value.numberOfStudents gt '0'}">							
-														<tr>
-														    		
-														    <td>HR-${knum}
-															<c:set var="knum" value="${knum+1}"/>
-															</td>
-															<td>${entry.value.sectionNumber}</td>
-															<td>${entry.value.numberOfStudents}
-															</td>															
-															<td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>
+														<tr>														    		
+														  	 	<td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>
+																<td>${entry.value.sectionNumber}</td>
+																<td>${entry.value.numberOfStudents}</td>
 														</tr>	
 														</c:if>													
 													</c:forEach>
