@@ -218,6 +218,7 @@
                						</c:if>
                						</td>
                						<td width="10%" style="text-transform:capitalize;">
+               						<c:set var="thisSchool" value="${school.schoolDeptID}"/>
                						<a href="editSchool.html?id=${school.schoolID}" class="btn btn-warning btn-xs"><i class="far fa-edit"></i> EDIT</a>
                						<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-SCHOOLPROFILE-ADMIN">	
                						<a href="" class="btn btn-xs btn-danger" onclick="if(confirm('Are you sure you want to delete ${school.schoolName}?'))document.location.href='deleteSchool.html?sid=${school.schoolID}';"><i class="far fa-trash-alt"></i> DEL</a>
@@ -234,7 +235,7 @@
 WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY'>
 
 <br />
-
+<c:if test="${thisSchool ne 463 }">
 <div class="siteHeaderGreen">School Class Sizes</div>
 
 	Below is a list of class size(s) for your school.  This count is exported weekly from Powerschool on Sundays.  It uses the current 
@@ -250,9 +251,9 @@ This includes any class homeroom names, duplicates, and/or info you may have on 
 											<br/><br/>
 
 
-      
+   
 <c:choose> 
-										<c:when test="${ not empty psinfo }">
+										<c:when test="${ not empty psinfo}">
 											<div style="clear:both;"></div>	
 																				
 											<c:set var="knum" value="1"/>
@@ -462,7 +463,7 @@ This includes any class homeroom names, duplicates, and/or info you may have on 
 											<p>Please contact the School District for further details.</p>
 										</c:otherwise>
 									</c:choose>
-
+</c:if>
 </esd:SecurityAccessRequired>
 </div>
 
