@@ -1154,7 +1154,12 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 	                                      		<td width="35%">
 	                                      		<%if(doc.getClBean() != null){ %>
 	                                      				<%if(doc.getClBean().getDateVerified() != null) {%>
-	                                      					<span style="color:Green;"><i class="fas fa-check"></i> Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span>	                                      				
+	                                      					<%if((doc.getClBean().isExcemptionDoc())){ %>
+	                                      						<span style="color:Green;"><i class="fas fa-check"></i> Exemption verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span>	
+	                                      					<%}else{ %>
+	                                      						<span style="color:Green;"><i class="fas fa-check"></i> Verified on <%=doc.getClBean().getDateVerifiedFormatted() %></span>	
+	                                      					<%} %>
+	                                      					                                      				
 	                                      				<%}else if(doc.getClBean().getRejectedDate() != null){ %>
 	                                      					<span style="color:Red;"><i class="fas fa-ban"></i> Rejected on <%=doc.getClBean().getRejectedDateFormatted() %><br/>
 	                                      					 Notes: <%=doc.getClBean().getRejectedNotes() %> 
@@ -1162,7 +1167,17 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 	                                      				<%} %>	                                      			
 	                                      			<%} %>
 	                                      		</td>
-	                                      		<td  width="10%"><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                                      		<%if(doc.getClBean() != null){ %>
+	                                      			<%if(!(doc.getClBean().isExcemptionDoc())){ %>
+	                                      			<td  width="10%"><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                                      			<%}else{ %>
+	                                      			<td  width="10%"></td>
+	                                      			<%} %>
+	                                      		<%}else{ %>
+	                                      		
+	                                      		
+	                                      		<%} %>
+	                                      		
 	                                      				                                      
 	                                      	</tr>
 	                                      <% } %>
