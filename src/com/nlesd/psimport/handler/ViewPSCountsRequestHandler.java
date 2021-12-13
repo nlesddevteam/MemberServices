@@ -18,7 +18,7 @@ public class ViewPSCountsRequestHandler extends RequestHandlerImpl {
 	public ViewPSCountsRequestHandler() {
 
 		this.requiredRoles = new String[] {
-				"SENIOR EDUCATION OFFICIER", "ASSISTANT DIRECTORS","ADMINISTRATOR","AD HR"
+				"SENIOR EDUCATION OFFICIER", "ASSISTANT DIRECTORS","ADMINISTRATOR","AD HR","DIRECTOR"
 		};
 	}
 
@@ -43,7 +43,7 @@ public class ViewPSCountsRequestHandler extends RequestHandlerImpl {
 				list.add(s);
 				}
 
-			}else if(usr.checkRole("ASSISTANT DIRECTORS") || usr.checkRole("AD HR") || usr.checkRole("ADMINISTRATOR")) {
+			}else if(usr.checkRole("ASSISTANT DIRECTORS") || usr.checkRole("AD HR") || usr.checkRole("ADMINISTRATOR") || usr.checkRole("DIRECTOR")) {
 				for(School s : SchoolDB.getSchools()) {
 					list.add(s);
 				}
