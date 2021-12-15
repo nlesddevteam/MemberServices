@@ -58,12 +58,13 @@
 						    
 						    <thead class="thead-dark">
 								      <tr>
-								       <th width='40%'>LOCATION</th>
+								       <th width='30%'>LOCATION</th>
 								       <th width='10%'>EMPLOYEE(S)</th>
 								        <th width='10%'>DOC UPLOADED</th>
 								        <th width='10%'>NOT VERIFIED</th>
 								        <th width='10%'>VERIFIED</th>
 								        <th width='10%'>REJECTED</th>
+								        <th width='10%'>SPECIAL STATUS</th>
 								        <th width='10%'>OPTIONS</th>
 								        
 								      </tr>
@@ -77,6 +78,7 @@
 		                                    	<td>${loc.notVerifiedCount}</td>
 		                                    	<td>${loc.verifiedCount}</td>
 		                                    	<td>${loc.rejectCount}</td>
+		                                    	<td>${loc.specialStatusCount}</td>
 		                                    	<td><a class='viewdoc btn btn-xs btn-primary' href="admin_view_covid19_school_report.jsp?sid=${loc.location}" target='_blank'>VIEW</a></td>
 		                                    	</tr>
 	                              		</c:forEach>

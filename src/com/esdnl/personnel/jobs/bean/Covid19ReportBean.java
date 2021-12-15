@@ -19,6 +19,8 @@ public class Covid19ReportBean {
 	private Date rejectedDate;
 	private String rejectedNotes;
 	private boolean exemptionDoc=false;
+	private Covid19SDSStatusBean stBean;
+	private String ssText;//used for a report
 
 	public String getEmployeeName() {
 		return employeeName;
@@ -97,6 +99,8 @@ public class Covid19ReportBean {
 		}else if(this.rejectedDate != null && this.verifiedDate ==  null) {
 			status="<span style='color:Red;'><i class=\"fas fa-ban\"></i> Rejected By " + this.rejectedBy + " on " + getDateRejectedFormatted();
 			status= status + "<br />" + this.rejectedNotes + "</span>";
+		}else if(this.stBean != null){
+			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> " + this.stBean.getStatusText() +"</span>";
 		}else if(this.verifiedBy != null) {
 			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Verified By " + this.verifiedBy + " on " + getDateVerifiedFormatted() +"</span>";
 		}
@@ -180,5 +184,17 @@ public class Covid19ReportBean {
 	}
 	public void setExemptionDoc(boolean exemptionDoc) {
 		this.exemptionDoc = exemptionDoc;
+	}
+	public Covid19SDSStatusBean getStBean() {
+		return stBean;
+	}
+	public void setStBean(Covid19SDSStatusBean stBean) {
+		this.stBean = stBean;
+	}
+	public String getSsText() {
+		return ssText;
+	}
+	public void setSsText(String ssText) {
+		this.ssText = ssText;
 	}
 }

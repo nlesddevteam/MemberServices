@@ -9,6 +9,7 @@ public class Covid19EmailListBean {
 	private String dateRejected;
 	private boolean exemptionDoc;
 	private String location;
+	private boolean isSpecialStatus=false;
 	
 	public String getFirstName() {
 		return firstName;
@@ -88,5 +89,11 @@ public class Covid19EmailListBean {
 	}
 	public String getFullName() {
 		return this.firstName + " " + this.lastName;
+	}
+	public boolean isSpecialStatus() {
+		return isSpecialStatus;
+	}
+	public void setSpecialStatus(boolean isSpecialStatus) {
+		this.isSpecialStatus = isSpecialStatus;
 	}
 }

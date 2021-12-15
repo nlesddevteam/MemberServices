@@ -62,7 +62,14 @@ public class Covid19DashboardManager {
 				eBean.setActiveEmployees(rs.getInt("totale"));
 				
 			}
-			
+			// now we nlesd special status
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_sds_ss_counts; end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while (rs.next()) {
+				eBean.setNlesdSpecialStatus(rs.getInt("sscount"));
+			}
 		}
 		catch (SQLException e) {
 			System.err.println("ArrayList<Covid19CountsReportBean> getCovid19CountsReport(): "

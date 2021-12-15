@@ -14,6 +14,7 @@ public class Covid19DashboardBean {
 	private int documentsRejected;
 	private int documentsExemptions;
 	private int activeEmployees;
+	private int nlesdSpecialStatus;
 	public int getNlesdTotalEmployees() {
 		return nlesdTotalEmployees;
 	}
@@ -91,6 +92,12 @@ public class Covid19DashboardBean {
 	}
 	public void setActiveEmployees(int activeEmployees) {
 		this.activeEmployees = activeEmployees;
+	}
+	public int getNlesdSpecialStatus() {
+		return nlesdSpecialStatus;
+	}
+	public void setNlesdSpecialStatus(int nlesdSpecialStatus) {
+		this.nlesdSpecialStatus = nlesdSpecialStatus;
 	}
 	
 	

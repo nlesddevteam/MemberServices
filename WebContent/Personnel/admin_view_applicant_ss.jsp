@@ -750,10 +750,24 @@ input {
 				<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
 				<div style="float:right;">
 				<a href="#" data-toggle="modal" data-target="#add_exemption_dialog" id="btn_show_add_exemtion_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Exemption</a>
+				<%if(profile.getStBean() == null){ %>
+					<a id="btn_add_status" class="btn btn-xs btn-warning" onclick="addspecialstatus('<%=profile.getSIN() %>','${emailAddress}');"> Add Special Status</a>
+				<%} %>
 				</div>
 				</esd:SecurityAccessRequired>
 				</div>
 			<div class="panel-body">
+			<br/>
+				<%if(profile.getStBean() == null){ %>
+					<div id="divsdsstatus" class="alert alert-warning" role="alert" style="display:none;"></div>
+				<%}else{ %>
+					<div id="divsdsstatus" class="alert alert-warning" role="alert">
+						<%=profile.getStBean().getStatusText() %>
+					</div>
+				<%} %>
+				
+				<div id="divsdserror" class="alert alert-danger" role="alert" style="display:none;"></div>
+				<br />
 				<div class="table-responsive">
 						<table class="table table-condensed table-striped" style="font-size: 11px; background-color: #FFFFFF; margin-top: 10px;" id="tblcovid19">
 							<thead>

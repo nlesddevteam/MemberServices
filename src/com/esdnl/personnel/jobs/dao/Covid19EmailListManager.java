@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
-
 import com.esdnl.dao.DAOUtils;
 import com.esdnl.personnel.jobs.bean.Covid19EmailListBean;
 import oracle.jdbc.OracleCallableStatement;
@@ -269,6 +268,16 @@ public class Covid19EmailListManager {
 				}else {
 					abean.setExemptionDoc(true);
 				}
+			}
+			
+			try {
+				if(rs.getInt("CSS_ID") > 0) {
+					abean.setSpecialStatus(true);
+				}else {
+					abean.setSpecialStatus(false);
+				}
+			}catch(Exception e) {
+				abean.setSpecialStatus(false);
 			}
 			
 		}

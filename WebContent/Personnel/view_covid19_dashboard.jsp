@@ -45,7 +45,8 @@
 										<tr><td style="font-weight:bold;width:50%;">Verified Docs:</td><td style="width:50%;">${settings.nlesdDocumentsVerified}</td></tr>
 										<tr><td style="font-weight:bold;width:50%;">Non-Verified Docs:</td><td style="width:50%;">${settings.nlesdDocumentsNotVerified}</td></tr>
 										<tr><td style="font-weight:bold;width:50%;">Rejected Docs:</td><td style="width:50%;">${settings.nlesdDocumentsRejected}</td></tr>
-										<tr><td style="font-weight:bold;width:50%;">Exempted Docs:</td><td style="width:50%;">${settings.nlesdDocumentsExemptions}</td></tr>							
+										<tr><td style="font-weight:bold;width:50%;">Exempted Docs:</td><td style="width:50%;">${settings.nlesdDocumentsExemptions}</td></tr>
+										<tr><td style="font-weight:bold;width:50%;">Special Status <br/> (Retired/On Leave):</td><td style="width:50%;">${settings.nlesdSpecialStatus}</td></tr>							
 										</table>
 							  </div>
 					</div>
@@ -61,6 +62,7 @@
 							<tr><td style="font-weight:bold;width:50%;">Non-Verified Docs:</td><td style="width:50%;">${settings.documentsNotVerified}</td></tr>
 							<tr><td style="font-weight:bold;width:50%;">Rejected Docs:</td><td style="width:50%;">${settings.documentsRejected}</td></tr>
 							<tr><td style="font-weight:bold;width:50%;">Exemption Docs:</td><td style="width:50%;">${settings.documentsExemptions}</td></tr>
+							<tr><td style="font-weight:bold;width:50%;">&nbsp;</td><td style="width:50%;"></td></tr>
 					</table>
 					</div>					
 					</div>	
