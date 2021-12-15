@@ -1738,6 +1738,41 @@ function addCovid19Exemption(ltype) {
 	});
 	$('#add_exemption_dialog').modal('hide');
 }
+/*******************************************************************************
+ * add special status for onleave, retired so they do not count in report totals/emails
+ ******************************************************************************/
+function addspecialstatus(appid,email){
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "addCovi19SdsStatus.html",
+ 				data: {
+ 					applicantid: appid,eml:email
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('MESSAGE').text() ==  "SUCCESS"){
+ 						$('#btn_add_status').hide();
+ 						$("#divsdsstatus").html($(xml).find('STEXT').text());
+ 						$("#divsdsstatus").show();
+ 						$("#divsdserror").hide();
+ 						
+ 					}else{
+ 						//error
+ 						$("#divsdserror").text($(xml).find('MESSAGE').text());
+ 						$("#divsdsstatus").hide();
+ 						$("#divsdserror").show();
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
 
 
 

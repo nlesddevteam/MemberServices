@@ -28,6 +28,7 @@ import com.esdnl.personnel.jobs.bean.ApplicantFilterParametersSS;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.ApplicantSubListAuditBean;
 import com.esdnl.personnel.jobs.bean.ApplicantVerificationBean;
+import com.esdnl.personnel.jobs.bean.Covid19SDSStatusBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
@@ -2709,6 +2710,14 @@ public class ApplicantProfileManager {
 			}
 			catch (SQLException e) {
 				aBean.setCovid19VaxStatus("<span style='color:Orange;'><i class=\"fas fa-times\"></i> No Doc Uploaded</span>");
+			}
+			//check if they have an special status for covid19/sds
+			try {
+				aBean.setStBean(Covid19SDSStatusManager.getCovid19SDSStatus(aBean.getSIN()));
+				
+			}
+			catch (Exception e) {
+				aBean.setStBean(null);
 			}
 
 		}

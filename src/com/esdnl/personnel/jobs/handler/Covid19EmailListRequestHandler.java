@@ -30,7 +30,6 @@ public class Covid19EmailListRequestHandler extends RequestHandlerImpl {
 		super.handleRequest(request, response);
 		ArrayList<Covid19EmailListBean> list = Covid19EmailListManager.getCovid19EmailList();
 		Date startdate= new Date();
-		StringBuilder sb= new StringBuilder();
 		ArrayList<String> verified =  new ArrayList<>();
 		TreeMap<String,Covid19EmailListBean> emaillist =  new TreeMap<>();
 		for(Covid19EmailListBean cb: list) {
@@ -42,7 +41,10 @@ public class Covid19EmailListRequestHandler extends RequestHandlerImpl {
 					verified.add(cb.getEmailAddress());
 				}else {
 					//check to see if doc is there and not verfied
-					if(cb.getDocumentId() > 0) {
+					if(cb.isSpecialStatus()) {
+						//retired/onleave
+						verified.add(cb.getEmailAddress());
+					}else if(cb.getDocumentId() > 0) {
 						//not verified, add it to the verified list
 						verified.add(cb.getEmailAddress());
 					}else {

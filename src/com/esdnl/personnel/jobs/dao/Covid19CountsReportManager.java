@@ -66,6 +66,7 @@ public class Covid19CountsReportManager {
 			abean.setNotVerifiedCount(rs.getInt("NVCOUNT"));
 			abean.setVerifiedCount(rs.getInt("VCOUNT"));
 			abean.setRejectCount(rs.getInt("RCOUNT"));
+			abean.setSpecialStatusCount(rs.getInt("SPCOUNT"));
 		}
 		catch (SQLException e) {
 			abean = null;

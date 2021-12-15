@@ -56,6 +56,7 @@
 		    								<option value="14">Last 2 Weeks</option>
 		    								<option value="21">Last 3 Weeks</option>
 		    								<option value="28">Last Month</option>
+		    								<option value="60">Last 2 Months (Slowing Running)</option>
 		    								</select>		
 		    								
 		    												    

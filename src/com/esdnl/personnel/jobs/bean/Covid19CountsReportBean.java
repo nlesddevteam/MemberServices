@@ -7,6 +7,7 @@ public class Covid19CountsReportBean {
 	private int notVerifiedCount;
 	private int verifiedCount;
 	private int rejectCount;
+	private int specialStatusCount;
 	public String getLocation() {
 		return location;
 	}
@@ -42,5 +43,11 @@ public class Covid19CountsReportBean {
 	}
 	public void setRejectCount(int rejectCount) {
 		this.rejectCount = rejectCount;
+	}
+	public int getSpecialStatusCount() {
+		return specialStatusCount;
+	}
+	public void setSpecialStatusCount(int specialStatusCount) {
+		this.specialStatusCount = specialStatusCount;
 	}
 }

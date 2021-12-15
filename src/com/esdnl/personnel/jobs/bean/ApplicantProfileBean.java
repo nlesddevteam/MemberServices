@@ -56,6 +56,8 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	private boolean isDeleted;
 	//string used for sublist vax status
 	private String covid19VaxStatus;
+	//used for special status sds/covid19
+	private Covid19SDSStatusBean stBean;
 
 	private List<Integer> substituteSchoolIdPrefs;
 
@@ -90,6 +92,7 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 		isDeleted = false;
 
 		substituteSchoolIdPrefs = null;
+		stBean=null;
 	}
 
 	public ApplicantProfileBean(ApplicantProfileBean copy) {
@@ -566,5 +569,13 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 
 	public void setCovid19VaxStatus(String covid19VaxStatus) {
 		this.covid19VaxStatus = covid19VaxStatus;
+	}
+
+	public Covid19SDSStatusBean getStBean() {
+		return stBean;
+	}
+
+	public void setStBean(Covid19SDSStatusBean stBean) {
+		this.stBean = stBean;
 	}
 }

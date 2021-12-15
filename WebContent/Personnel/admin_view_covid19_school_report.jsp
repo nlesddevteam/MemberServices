@@ -148,9 +148,16 @@ $(function() {
 		
 	});
 	if($('#locid').val() != ""){
-		$('#lst_school').val($('#locid').val()).change();
-		//$('#lst_school option[text=$('#locid').val()]').attr('selected','selected');
-		//getEmployeesByLocation($('#locid').val());
+		if($('#locid').val() == "** No Location **"){
+			getEmployeesByLocation($('#locid').val());
+			$('.theSchoolName').text("No Location");
+		}else{
+			$('#lst_school').val($('#locid').val()).change();
+			//$('#lst_school option[text=$('#locid').val()]').attr('selected','selected');
+			//getEmployeesByLocation($('#locid').val());
+		}
+		
+		
 	}
 	
 });
