@@ -88,7 +88,9 @@ public class Covid19ReportBean {
 	}
 	public String getStatusString() {
 		String status="";
-		if(this.employeeSin == null) {
+		if(this.stBean != null){
+			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> " + this.stBean.getStatusText() +"</span>";
+		}else if(this.employeeSin == null) {
 			status="<span style='color:Silver;'><i class=\"fas fa-exclamation-circle\"></i> No Profile/Not Linked <i class=\"fas fa-exclamation-circle\"></i></span>";
 		}else if(this.documentId <1) {
 			status="<span style='color:Orange;'><i class=\"fas fa-times\"></i> No Document Uploaded</span>";
@@ -99,8 +101,6 @@ public class Covid19ReportBean {
 		}else if(this.rejectedDate != null && this.verifiedDate ==  null) {
 			status="<span style='color:Red;'><i class=\"fas fa-ban\"></i> Rejected By " + this.rejectedBy + " on " + getDateRejectedFormatted();
 			status= status + "<br />" + this.rejectedNotes + "</span>";
-		}else if(this.stBean != null){
-			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> " + this.stBean.getStatusText() +"</span>";
 		}else if(this.verifiedBy != null) {
 			status="<span style='color:Green;'><i class=\"fas fa-check\"></i> Verified By " + this.verifiedBy + " on " + getDateVerifiedFormatted() +"</span>";
 		}
