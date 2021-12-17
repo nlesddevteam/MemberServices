@@ -71,6 +71,6 @@
 </div>
 </div>			
 
-${testmessage}
+
 </body>
 </html>
