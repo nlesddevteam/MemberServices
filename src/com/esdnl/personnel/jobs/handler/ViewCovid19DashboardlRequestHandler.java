@@ -27,6 +27,7 @@ public class ViewCovid19DashboardlRequestHandler extends RequestHandlerImpl {
 		try {
 			Covid19DashboardBean cbean = Covid19DashboardManager.getCovid19DashboardReport();
 			request.setAttribute("settings", cbean);
+			request.setAttribute("testmessage", "this is a test");
 			path = "view_covid19_dashboard.jsp";
 		}catch (Exception e) {
 			e.printStackTrace();
