@@ -246,7 +246,7 @@
 						<option value="Guidance Counsellor/IRT">Guidance Counsellor/IRT</option>
 						<option value="Hospital Teacher">Hospital Teacher</option>
 						<option value="Human Resources Assistant">Human Resources Assistant</option>
-						<option value="Human Resources Assistant">Human Resources/Programs Assistant</option>
+						<option value="Human Resources/Programs Assistant">Human Resources/Programs Assistant</option>
 						<option value="Internal Auditor">Internal Auditor</option>
 						<option value="Inuktitut Curriculum Worker">Inuktitut Curriculum Worker</option>
 						<option value="Itinerant">Itinerant</option>
