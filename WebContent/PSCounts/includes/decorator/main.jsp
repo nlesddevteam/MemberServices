@@ -68,7 +68,7 @@
 		<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/fnReloadAjax.js"></script>				
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>	 	
-	 	 
+	 	 <script src="https://cdn.datatables.net/plug-ins/1.11.3/sorting/natural.js"></script>
 	 <!-- LOCAL JAVASCRIPT FILES -->		
 		<script src="/MemberServices/PSCounts/includes/js/scripts.js"></script>	 	
 	 	
