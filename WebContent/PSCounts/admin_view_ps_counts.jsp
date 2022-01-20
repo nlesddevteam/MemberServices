@@ -21,7 +21,33 @@ if(request.getAttribute("PSDATA") != null){
 <html>
   <head>
     <title>Member Services - PowerSchool Class Data</title>    
- 
+ 		
+		
+		<script>		
+		$('document').ready(function(){
+			mTable = $("#classSize").dataTable({
+				"order" : [[0,"asc"],[2,"asc"]],
+				paging: false,
+				responsive: true,
+				 "bInfo":false, 
+				 "bFilter": false, 
+				 "columnDefs": [
+					 {
+			                "targets": [0],			               
+			                "searchable": false,
+			                "visible": false
+			            },
+			            {
+			                "targets": [1,2,3],			               
+			                "orderable": false
+			            }
+			        ]
+			});			
+			
+			
+		});
+
+		</script>
   </head>
   <body>
   		<c:set var="school" value='<%= school %>' />
@@ -32,6 +58,9 @@ if(request.getAttribute("PSDATA") != null){
 				<div class="row no-print">				  
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size:12px;">
     Using the following screen you can select a school and view the class sizes that has been calculated from the current PowerSchool data.
+    										The numbers indicate the number of students, unless otherwise noted. (Green is Nominal, Orange is Large, Red is at or above Capacity)
+										Only classes with 1 or more students will be listed.
+    
         			</div>
   				</div>
  
@@ -90,8 +119,8 @@ if(request.getAttribute("PSDATA") != null){
 
 <c:if test="${ psinfo.scBean ne null}">
 												
-												<table class="table table-sm table-condensed table-bordered" style="margin:0 auto;font-size:12px;max-width:1024px;width:100%;text-align:center;">
-																								<thead class="thead-dark">		
+												<table class="table table-sm table-bordered" style="color:Grey;font-size:11px;width:100%;">
+												<thead class="thead-light">			
 												<tr>
 <c:if test="${ psinfo.scBean.studentsK gt -1}">
 <th>K</th>
@@ -214,21 +243,36 @@ if(request.getAttribute("PSDATA") != null){
 										
 											<c:if test="${ not psinfo.kClass.isEmpty()}">
 											
-												<table class="table table-sm table-condensed table-striped table-bordered" style="text-align:center;margin:0 auto;font-size:12px;max-width:600px;width:100%;">
-												<thead class="thead-dark">																													
-												<tr style="font-weight:bold;color:White;">
-												<th width="20%">GRADE(S)</th>
-												<th width="20%">POWER SCHOOL SECTION</th>
-												<th width="20%"># STUDENTS</th>												
+												<table class="table table-sm table-bordered" id="classSize" style="text-align:center;font-size:11px;width:100%;border-bottom:0px;">
+												<thead class="thead-light">																						
+												<tr>
+												<th></th>
+													<th width="33%">Grade(s)</th>
+												<th width="33%">PowerSchool Class Section</th>
+												<th width="33%">Number Students in the Class</th>												
 												</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="entry" items="${psinfo.kClass}">	
 													<c:if test="${entry.value.numberOfStudents gt '0'}">							
-														<tr>														    		
-														  	 	<td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>
-																<td>${entry.value.sectionNumber}</td>
-																<td>${entry.value.numberOfStudents}</td>
+														<tr>
+														<td>${entry.value.gradesString}</td>
+														  <td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>  																   
+															<td>${entry.value.sectionNumber}</td>
+															<td>
+															<c:choose>
+															<c:when test="${entry.value.numberOfStudents lt 25}">
+															<span style="color:#3CB371;">${entry.value.numberOfStudents}</span>
+															</c:when>
+															<c:when test="${entry.value.numberOfStudents gt 24 and entry.value.numberOfStudents lt 30}">
+															<span style="color:#FFA07A;">${entry.value.numberOfStudents}</span>
+															</c:when>
+															<c:otherwise>
+															<span style="color:Red;">${entry.value.numberOfStudents}</span>
+															</c:otherwise>
+															</c:choose>
+															</td>
+															
 														</tr>	
 														</c:if>													
 													</c:forEach>
@@ -240,16 +284,16 @@ if(request.getAttribute("PSDATA") != null){
 													
 												<c:if test="${ not psinfo.hClass.isEmpty()}">
 												
-													<table class="table table-sm table-condensed table-striped table-bordered" style="text-align:center;margin:0 auto;font-size:12px;max-width:800px;width:100%;">
-												<thead class="thead-dark">																						
-												<tr>														
+													<table class="table table-sm table-bordered" style="color:grey;font-size:11px;width:98%;">
+												<thead class="thead-light">
+												<tr >														
 																<th>LEVELS</th>																
-																<th> <15 STDS </th>
-																<th> 15-19 </th>
-																<th> 20-24 </th>
-																<th> 25-29 </th>
-																<th> 30-34 </th>
-																<th> >35 </th>																
+																<th> <15 Students <span style="background-color:#3CB371;">&nbsp;&nbsp;</span></th>
+																<th> 15-19 <span style="background-color:#3CB371;">&nbsp;&nbsp;</span></th>
+																<th> 20-24 <span style="background-color:#3CB371;">&nbsp;&nbsp;</span></th>
+																<th> 25-29 <span style="background-color:#FFA07A;">&nbsp;&nbsp;</span></th>
+																<th> 30-34 <span style="background-color:#FF0000;">&nbsp;&nbsp;</span></th>
+																<th> >35 Students <span style="background-color:#FF0000;">&nbsp;&nbsp;</span></th>																
 														</tr>
 														</thead>
 														<tbody>
@@ -257,12 +301,12 @@ if(request.getAttribute("PSDATA") != null){
 														<c:if test="${entry.value.gradeLevel le '13'}">
 															<tr>
 																	<td> I, II, III, IV <!-- ${entry.value.gradeLevel}--> </td>											
-																	<td> ${entry.value.lessThan15} </td>
-																	<td> ${entry.value.between1520} </td>
-																	<td> ${entry.value.between2025} </td>
-																	<td> ${entry.value.between2530} </td>
-																	<td> ${entry.value.between3035} </td>
-																	<td> ${entry.value.greaterThan35} </td>
+																	<td> <c:choose><c:when test="${entry.value.lessThan15 ne '0'}"><span style="color:#3CB371;">${entry.value.lessThan15} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between1520 ne '0'}"><span style="color:#3CB371;">${entry.value.between1520} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between2025 ne '0'}"><span style="color:#3CB371;">${entry.value.between2025} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between2530 ne '0'}"><span style="color:#FFA07A;">${entry.value.between2530} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between3035 ne '0'}"><span style="color:Red;">${entry.value.between3035} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.greaterThan35 ne '0'}"><span style="color:Red;">${entry.value.greaterThan35} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
 															</tr>																
 															</c:if>													
 													</c:forEach>
