@@ -212,23 +212,43 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 <%if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")){%>
 
-							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-					        <li class="dropdown" id="menuNormal">
+							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19,PERSONNEL-ADMIN-VIEW-ETHICS-DEC">
+							<li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
+					          	 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
 					          	 <ul class="dropdown-menu multi-level">
+					          	 	<li class="dropdown-submenu">
+					          	 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">COVID19</a>
+					          	 	<ul class="dropdown-menu">
 									<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
-					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_school_report.jsp">View COVID19 Report By Location</a></li>
-					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_latest_report.jsp">View Latest COVID19 Report</a></li>
-					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_counts_report.jsp">View COVID19 Counts Report</a></li>
-					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_exemptions.jsp">View COVID19 Exemptions Report</a></li>
-					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_ss.jsp">View COVID19 Special Status Report</a></li>
+										<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_counts_report.jsp">View Counts Report</a></li>
+										<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_exemptions.jsp">View Exemptions Report</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_school_report.jsp">View By Location</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_latest_report.jsp">View Latest Report</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_ss.jsp">View Special Status Report</a></li>
 					          		</esd:SecurityAccessRequired>
 					          		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19-EMAIL">
+					          			<li class="divider"></li>
 					          			<li><a onclick="loadingData()" href="admin_send_covid19_warning.jsp">Send COVID19 Reminder</a></li>
-					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewCovid19Dashboard.html">View COVID19 Dashboard Report</a></li>
+					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewCovid19Dashboard.html">View Dashboard Report</a></li>
+					          		</esd:SecurityAccessRequired>
+					          		</ul>
+					          		</li>
+					          		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-ETHICS-DEC">
+					          			<li class="dropdown-submenu">
+					          	 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Ethics and Conduct</a>
+					          	 			<ul class="dropdown-menu">
+											<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_ethics_latest_report.jsp">View Latest Report</a></li>
+											<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewEthicsSummary.html">View Summary Report</a></li>
+					          				</ul>
+					          			</li>
 					          		</esd:SecurityAccessRequired>
 					          		
+					          		
 					          	</ul>
+					          	</esd:SecurityAccessRequired>
+					          	
+					          	
 					        </li>
 							</esd:SecurityAccessRequired>
 

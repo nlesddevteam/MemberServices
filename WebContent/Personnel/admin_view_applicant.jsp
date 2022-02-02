@@ -1347,8 +1347,8 @@ input {
 									for (ApplicantDocumentBean doc : docs) {
 										 //only select roles get docs other then transcripts.
 										if ((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) && !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")) || (doc.getType().equal(DocumentType.LETTER)
-												|| (doc.getType().equal(DocumentType.COVID19_VAX)))
-												) {
+												|| (doc.getType().equal(DocumentType.COVID19_VAX) || (doc.getType().equal(DocumentType.COVID19_VAX_BOOSTER)))
+												)) {
 											continue;
 										}
 								%>
@@ -1416,14 +1416,14 @@ input {
 								</tr>
 							</thead>
 							<tbody>	
-						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.COVID19_VAX)).count() > 0)) { %>
+						<% if ((docs != null) && (docs.size() > 0) && (docs.stream().filter(d -> d.getType().equal(DocumentType.COVID19_VAX) || d.getType().equal(DocumentType.COVID19_VAX_BOOSTER)).count() > 0)) { %>
 								
 																
 										
 										
 								<%	for (ApplicantDocumentBean doc : docs) {
 											//only select roles get docs other then transcripts.
-											if (!doc.getType().equal(DocumentType.COVID19_VAX)) {
+											if (!(doc.getType().equal(DocumentType.COVID19_VAX) || doc.getType().equal(DocumentType.COVID19_VAX_BOOSTER))) {
 												continue;
 											} 
 								%>
@@ -1431,7 +1431,7 @@ input {
 										<td width='20%'><%=doc.getType().toString()%></td>
 										<td width='20%'><%=sdf_long.format(doc.getCreatedDate())%></td>
 										<td width='45%'>
-										<% if(doc.getType().equal(DocumentType.COVID19_VAX)){ %>
+										<% if(doc.getType().equal(DocumentType.COVID19_VAX) || doc.getType().equal(DocumentType.COVID19_VAX_BOOSTER)){ %>
 										<% if(doc.getClBean() == null){ %>
 											
 													<span style="color:Orange;"><i class="fas fa-ban"></i> Not Verified</span>

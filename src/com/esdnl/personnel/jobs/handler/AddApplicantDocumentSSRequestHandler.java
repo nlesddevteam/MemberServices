@@ -60,7 +60,7 @@ public class AddApplicantDocumentSSRequestHandler extends PersonnelApplicationRe
 				audit.saveBean();
 				
 				//check to see if it is a covid19 vax doc
-				if(form.getInt("lst_DocumentType") == DocumentTypeSS.COVID19_VAX.getValue()) {
+				if(form.getInt("lst_DocumentType") == DocumentTypeSS.COVID19_VAX.getValue() || form.getInt("lst_DocumentType") == DocumentTypeSS.COVID19_VAX_BOOSTER.getValue()) {
 					//add log entry used for verification
 					ApplicantCovid19LogManager.addCovid19Log(doc.getDocumentId());
 				}
