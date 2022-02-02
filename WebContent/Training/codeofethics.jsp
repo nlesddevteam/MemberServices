@@ -61,7 +61,7 @@ Once you complete the training video, the certificate download will become avail
         It will take you to a generated PDF declaration certificate that you need to download, and upload to your MyHR profile.
        <br/><br/>
        <div align="center"><!-- &controls=0 -->
-       	<iframe id="videoEmbed" width="800" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1" frameborder="0" style="border: solid 1px #37474F"></iframe>
+       	<iframe id="videoEmbed" width="800" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1&controls=0" frameborder="0" style="border: solid 1px #37474F"></iframe>
 		</div>
 
 <br/><br/>
