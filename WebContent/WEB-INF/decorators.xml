@@ -16,6 +16,10 @@
   	<pattern>/Fund3/*</pattern>
   </decorator>
     
+      <decorator name="Training" page="Training/includes/decorator/main.jsp">
+  	<pattern>/Training/*</pattern>
+  </decorator>
+    
   <decorator name="EECD" page="EECD/includes/decorator/main.jsp">
   	<pattern>/EECD/*</pattern>
   </decorator>  

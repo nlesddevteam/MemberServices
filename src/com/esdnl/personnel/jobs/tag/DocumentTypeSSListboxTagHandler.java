@@ -53,7 +53,7 @@ public class DocumentTypeSSListboxTagHandler extends TagSupport {
 
 			out.println("<OPTION VALUE='-1'>--- Select Document Type ---</OPTION>");
 			for (DocumentTypeSS type : DocumentTypeSS.ALL) {
-				if (type.equal(DocumentTypeSS.LETTER)) {
+				if (type.equal(DocumentTypeSS.LETTER) || type.equal(DocumentTypeSS.COVID19_VAX_BOOSTER)) {
 					continue;
 				}
 

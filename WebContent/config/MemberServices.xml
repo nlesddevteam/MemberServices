@@ -4462,6 +4462,14 @@
     <Request-Handler>
       <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AddCovid19SDSStatustAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/addCovi19SdsStatus.html</URL-Pattern>
-    </Request-Handler>                                        
+    </Request-Handler>     
+    <Request-Handler>
+      <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewLatestEthicsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewEthicsReportByDays.html</URL-Pattern>
+    </Request-Handler>
+     <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewEthicsSummaryRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/viewEthicsSummary.html</URL-Pattern>
+    </Request-Handler>                                    
   </Request-Handlers>
 </Member-Services-Config>
