@@ -1,4 +1,4 @@
-<!-- OHS DECORATOR FILE (C) 2020  -->	
+<!-- STAFF TRAINING DECORATOR FILE (C) 2022  -->	
 <!-- APPLICATION FOR NLESD STAFF (MEMBER) SERVICES -->
 <!-- HTML 5 BOOTSTRAP 3.3.7 JQUERY 3.3.1 -->
 
@@ -15,6 +15,10 @@
 		<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 		<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
         <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
+
+<!-- PREVENT CACHE OF LOCAL JS AND CSS FROM AGING TOO LONG -->		
+		<c:set var="cacheBuster" value="<%=new java.util.Date()%>" />				 								
+		<fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyHms" var="todayVer" />
 
 
 <html>
@@ -42,7 +46,7 @@
   	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">		
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  		<link rel="stylesheet" href="/MemberServices/Training/includes/css/training.css">			
+  		<link rel="stylesheet" href="/MemberServices/Training/includes/css/training.css?ver=${todayVer}">			
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 		
 	<!-- CDN JAVASCRIPT> -->	
@@ -69,7 +73,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>	 	
 	 	 
 	 <!-- LOCAL JAVASCRIPT FILES -->		
-		<script src="/MemberServices/Training/includes/js/training.js"></script>	 	
+		<script src="/MemberServices/Training/includes/js/training.js?ver=${todayVer}"></script>	 	
 	 	
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
