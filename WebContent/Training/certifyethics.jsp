@@ -41,7 +41,7 @@
    Please download this certificate using the link below and upload it to your MyHR profile under the documents section.<br/><br/>
      
    The PDF file will download to your web browsers set 'Downloads' folder on your device and saved as <b>COEC-Certificate.pdf</b>.<br/><br/>
-   You will need to know where this file is to select it for upload to your MyHR profile. DO NOT LOSE this file as you will need to redo the training module to generate a new one.
+   You will need to know where this file is saved in order to select it for upload to your MyHR profile. DO NOT LOSE this file as you will need to redo the training module to generate a new one.
      
    
    </div>
