@@ -49,19 +49,19 @@ Once you complete the training video, the certificate download will become avail
 <li>Play the video below. Watch it to the end. You can only play or pause.
 <li>Review all the resources and references listed below on this page.
 <li>Once video stops playing at the end, a training certificate will become available to view via a link below the video.
-<li>Proceed to view and download this declaration certificate to your device (PC, Laptop, tablet or phone).
+<li>Proceed to view and download this declaration certificate to your device. (Recommend using a desktop, laptop, or tablet)
 <li>You will then need to upload this PDF file to the documents section (selecting the Code of Ethics and Conduct Declaration type) of your MyHR profile.
-<li>To login to your MyHR profile, visit the Job opportunities section of the NLESD website.
+<li>To login to your MyHR profile, visit the Job Opportunities section of the NLESD website.
 </ol>
 
 <hr>      
        <span style="font-size:16px;font-weight:bold;">Training Video</span><br/>
-       Please watch the video entirely to complete your training. 
+       Please watch the video entirely to complete your training. Make sure you watch the video on this page and not navigate from it during video playback.
        You will need to complete a declaration certificate once completed using the link below the video.
         It will take you to a generated PDF declaration certificate that you need to download, and upload to your MyHR profile.
        <br/><br/>
        <div align="center"><!-- &controls=0 -->
-       	<iframe id="videoEmbed" width="800" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1&controls=0" frameborder="0" style="border: solid 1px #37474F"></iframe>
+       	<iframe id="videoEmbed" width="100%" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1&controls=0" frameborder="0" style="border: solid 1px #37474F;max-width:800px;"></iframe>
 		</div>
 
 <br/><br/>
@@ -69,7 +69,7 @@ Once you complete the training video, the certificate download will become avail
     <div align="center"><a href="certifyethics.jsp" class="certifyLink btn btn-sm btn-primary disabled">Please watch the training video above. Your Declaration Certificate will be ready once completed.</a><br/><br/>
             
 <div class="alert alert-danger"><b>IMPORTANT NOTICE:</b> Please watch the video entirely and let it play till the end. You may pause or play the video, however if you exit the page without completely watching, you will have to re-watch the entire video to certify the training.
-The blue area above will turn GREEN and inform you that your certificate is READY once video is complete. 
+Once the video has completed playing, the blue area above will turn GREEN and inform you that your certificate is READY.  Please be patient.
 Click on the GREEN area to proceed to your certificate of training.
 If you already watched the video, and downloaded your certificate, check your Downloads folder for your certificate. 
 If you have lost it, you will need to re-watch the video to generate a new certificate.</div>
@@ -93,35 +93,35 @@ If you have lost it, you will need to re-watch the video to generate a new certi
   				
   				
 <ul> 				
-<li><a href="https://assembly.nl.ca/legislation/sr/statutes/a01-2.htm" target="_blank">Access to Information and Privacy Act (ATIPPA)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456147238937.pdf" target="_blank">Acceptable Use of Technology  (FIN - 500)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456153054578.pdf" target="_blank">Community Use of Schools (OPER 602)</a>
+<li><a href="https://assembly.nl.ca/legislation/sr/statutes/a01-2.htm" target="_blank">Access to Information and Protection of Privacy (ATIPPA)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456147238937.pdf" target="_blank">Acceptable Use of Technology  (FIN-500)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456153054578.pdf" target="_blank">Community Use of Schools (OPER-602)</a>
 <li><a href="https://www.nlesd.ca/about/doc/CodeofEthicsConduct.pdf" target="_blank">Code of Ethics and Conduct</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1504806804954.pdf" target="_blank">Conflict of Interest (FIN-405)</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1504805710711.pdf" target="_blank">Conflict of Interest Disclosure Form</a>
 <li><a href="https://www.assembly.nl.ca/Legislation/sr/statutes/c30-1.htm" target="_blank">Conflict of Interest Act</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456152103375.pdf" target="_blank">Disability Management (HR-09)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1637169448523.pdf" target="_blank">Email (FIN 501)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456152103375.pdf" target="_blank">Disability Management (HR-809)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1637169448523.pdf" target="_blank">Email (FIN-501)</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456151700375.pdf" target="_blank">Employee Records (HR-804)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1529585996768.pdf" target="_blank">Facility Security and Access Control (OPER 605)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1529585996768.pdf" target="_blank">Facility Security and Access Control (OPER-605)</a>
 <li><a href="https://drive.google.com/file/d/1aWEhD0i9IbK5HWVGm7u4Q2mWiYFruFlt/view?usp=sharing" target="_blank">Guide to NLESD Purchasing for Schools</a>
 <li><a href="https://assembly.nl.ca/legislation/sr/statutes/h13-1.htm" target="_blank">Human Rights Code Newfoundland and Labrador</a>
 </ul> 			
  </div>  
  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="font-size:12px;">
 <ul>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1548691684460.pdf" target="_blank">Occupational Health and Safety (HR 808)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1548691684460.pdf" target="_blank">Occupational Health and Safety (HR-808)</a>
 <li><a href="https://www.assembly.nl.ca/legislation/sr/statutes/o03.htm" target="_blank">Occupational Health and Safety Act</a>
 <li><a href="https://assembly.nl.ca/Legislation/sr/statutes/p37-2.htm" target="_blank">Public Interest Disclosure & Whistleblower Protection Act</a>
 <li><a href="https://www.assembly.nl.ca/legislation/sr/statutes/p41-001.htm" target="_blank">Public Procurement Act</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1634057936324.pdf" target="_blank">Respectful Workplace/Harassment Prevention and Resolution (HR800)</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1455910704843.pdf" target="_blank">Signing Authority (FIN-400)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456147498671.pdf" target="_blank">Social Media Use (FIN 502)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1456147498671.pdf" target="_blank">Social Media Use (FIN-502)</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1568054925928.pdf" target="_blank">Student Records (PROG-310)</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1618488328738.pdf" target="_blank">Student Travel (PROG-320)</a>
 <li><a href="https://www.nlesd.ca/includes/files/policies/doc/1504103153912.pdf" target="_blank">Travel - District Employees (FIN-400)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1560258837706.pdf" target="_blank">Vehicle Usage (FIN 504)</a>
-<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1555348470575.pdf" target="_blank">Whistleblowing: Employee Disclosure of Wrongdoing (HR813)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1560258837706.pdf" target="_blank">Vehicle Usage (FIN-504)</a>
+<li><a href="https://www.nlesd.ca/includes/files/policies/doc/1555348470575.pdf" target="_blank">Whistleblowing: Employee Disclosure of Wrongdoing (HR-813)</a>
 </ul>  
  
  </div>
