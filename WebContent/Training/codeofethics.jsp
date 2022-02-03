@@ -33,28 +33,32 @@
 The Newfoundland and Labrador English School District is committed to a respectful, ethical, open and transparent workplace. 
 Employees are entitled to a workplace that supports them in making ethical decisions while treating everyone with respect, and avoiding conflicts of interest.
 
-<br/><br/>The NLESD developed a Code of Ethics and Conduct to support this commitment, and can be <a href="https://www.nlesd.ca/about/doc/CodeofEthicsConduct.pdf" target="_blank">found here</a>.
- It applies to all employees and complements other employee codes of conduct.
-  It also supports a recommendation from the Auditor's General's Report - Management of the Procurement of Goods and Services.
+
+<br/><br/>The NLESD developed a Code of Ethics and Conduct to support this commitment, and it can be <a href="https://www.nlesd.ca/about/doc/CodeofEthicsConduct.pdf" target="_blank">found here</a>.
+ It applies to all employees and complements other employee professional codes of conduct. 
+ It also supports a recommendation from the Auditor's General's Report - Management of the Procurement of Goods and Services.
+
 <br/><br/>
 
 <div class="alert alert-info">Employees are required to complete the training video below. The training will take approximately 35 minutes to complete.</div>
 
 
-<div class="alert alert-warning">Employees will also need to complete a Declaration. The Declaration states you have completed the training, and agree to abide by the District's Code of Ethics and Conduct, and the Conflict of Interest Policy. 
+<div class="alert alert-warning">Employees must also complete a Declaration certificate. 
+The Declaration states you have completed the training, and agree to abide by the District's Code of Ethics and Conduct, and the Conflict of Interest Policy. 
 Once you complete the training video, the certificate download will become available for completion and uploading to MyHRP.
+
 </div> 
 
 
 <span style="font-size:16px;font-weight:bold;">Steps to Follow for your Training</span><br/>
 <ol>
 <li>Read all instructions and text on this page before doing anything.
-<li>Play the video below from the play button in the middle of the screen.  <b>Do not play via Youtube</b>. This will result in NO certificate being issued
-<li>Watch the video until it automatically stops at the end. You can only play or pause. 
-<li>Review all the resources and references listed below on this page in the Resources/References section.
-<li>Once video stops playing at the end (let it finish itself automatically), a Declaration certificate will become available to view via a link below the video.
+<li>Play the video below from the play button in the middle of the screen.  <b>Do not play via YouTube</b>. This will result in NO certificate being issued
+<li>Play the video until it automatically stops. You can only play or pause. 
+<li>Review all the resources and references listed below on this page.
+<li>Once the video stops playing at the end, a Declaration certificate will become available to view via a link below the video.
 <li>Proceed to view and download this Declaration certificate to your device. (Recommend using a desktop, laptop, or tablet)
-<li>You will then need to upload this PDF file to the documents section (selecting the Code of Ethics and Conduct Declaration type) of your MyHR profile.
+<li>You must then upload this PDF file to the documents section (selecting the Code of Ethics and Conduct Declaration type) of your MyHR profile.
 <li>To login to your MyHR profile, visit the Job Opportunities section of the NLESD website.
 </ol>
 
@@ -72,10 +76,12 @@ Once you complete the training video, the certificate download will become avail
 
     <div align="center"><a href="certifyethics.jsp" class="certifyLink btn btn-sm btn-primary disabled">Please watch the training video above. Your Declaration Certificate will be ready here once completed.</a><br/><br/>
             
-<div class="alert alert-danger"><b>IMPORTANT NOTICE:</b> Once the video has completed playing and finished automatically, the blue area above will turn GREEN and inform you that your certificate is READY.  Please be patient.
-Click on the GREEN area to proceed to your certificate of training.
-If you already watched the video, and downloaded your certificate, check your Downloads folder for your certificate. 
-If you have lost it, you will need to re-watch the video to generate a new certificate.</div>
+<div class="alert alert-danger"><b>IMPORTANT NOTICE:</b> Please watch the video entirely and let it play until the end. 
+You may pause or play the video, however if you exit the page without completely watching, or use YouTube, you will have to replay the entire video to certify the training. 
+Once the video has completed playing, the blue area above will turn GREEN and inform you that your certificate is READY. 
+Please be patient. Click on the GREEN area to proceed to your certificate of training. 
+If you already watched the video, and downloaded your certificate, check your Downloads folder for your certificate.
+ If you have lost it, you will need to replay the video to generate a new certificate.</div>
     
    </div>  
    </div>
@@ -86,8 +92,9 @@ If you have lost it, you will need to re-watch the video to generate a new certi
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size:12px;">   
   				<span style="font-size:16px;font-weight:bold;">Resources/References</span><br/>
   				
-  				These resources include links to legislation, policies and other documents discussed throughout the session. It is recommended that you print or save it for future reference.
-  				
+  				These resources include links to legislation, policies and other documents discussed throughout the session.
+  				 It is recommended that you print or save it for future reference.
+
   				</div>
   				</div>
   				<br/>
