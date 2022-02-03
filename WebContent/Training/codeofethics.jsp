@@ -37,7 +37,9 @@ Employees are entitled to a workplace that supports them in making ethical decis
  It applies to all employees and complements other employee codes of conduct.
   It also supports a recommendation from the Auditor's General's Report - Management of the Procurement of Goods and Services.
 <br/><br/>
-<div class="alert alert-danger">Employees are required to complete the training video below. The training will take approximately 35 minutes to complete.</div>
+
+<div class="alert alert-info">Employees are required to complete the training video below. The training will take approximately 35 minutes to complete.</div>
+
 
 <div class="alert alert-warning">Employees will also need to complete a Declaration. The Declaration states you have completed the training, and agree to abide by the District's Code of Ethics and Conduct, and the Conflict of Interest Policy. 
 Once you complete the training video, the certificate download will become available for completion and uploading to MyHRP.
@@ -46,30 +48,31 @@ Once you complete the training video, the certificate download will become avail
 
 <span style="font-size:16px;font-weight:bold;">Steps to Follow for your Training</span><br/>
 <ol>
-<li>Play the video below. Watch it to the end. You can only play or pause.
-<li>Review all the resources and references listed below on this page.
-<li>Once video stops playing at the end, a training certificate will become available to view via a link below the video.
-<li>Proceed to view and download this declaration certificate to your device. (Recommend using a desktop, laptop, or tablet)
+<li>Read all instructions and text on this page before doing anything.
+<li>Play the video below from the play button in the middle of the screen.  <b>Do not play via Youtube</b>. This will result in NO certificate being issued
+<li>Watch the video until it automatically stops at the end. You can only play or pause. 
+<li>Review all the resources and references listed below on this page in the Resources/References section.
+<li>Once video stops playing at the end (let it finish itself automatically), a Declaration certificate will become available to view via a link below the video.
+<li>Proceed to view and download this Declaration certificate to your device. (Recommend using a desktop, laptop, or tablet)
 <li>You will then need to upload this PDF file to the documents section (selecting the Code of Ethics and Conduct Declaration type) of your MyHR profile.
 <li>To login to your MyHR profile, visit the Job Opportunities section of the NLESD website.
 </ol>
 
-<hr>      
-       <span style="font-size:16px;font-weight:bold;">Training Video</span><br/>
-       Please watch the video entirely to complete your training. Make sure you watch the video on this page and not navigate from it during video playback.
-       You will need to complete a declaration certificate once completed using the link below the video.
-        It will take you to a generated PDF declaration certificate that you need to download, and upload to your MyHR profile.
+<hr>
+
+      
+       <span style="font-size:16px;font-weight:bold;">Training Video</span><br/>       
        <br/><br/>
        <div align="center"><!-- &controls=0 -->
-       	<iframe id="videoEmbed" width="100%" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1&controls=0" frameborder="0" style="border: solid 1px #37474F;max-width:800px;"></iframe>
+       	<iframe id="videoEmbed" width="100%" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1&amp;controls=0" frameborder="0" style="border: solid 1px #37474F;max-width:800px;"></iframe>
+		<br/><span style="color:Red;font-size:10px;"><b>NOTE:</b> Do NOT click on the YouTube logo bottom right of the video above or use full screen view as it will invalidate your training.</span>
 		</div>
 
-<br/><br/>
+<br/>
 
-    <div align="center"><a href="certifyethics.jsp" class="certifyLink btn btn-sm btn-primary disabled">Please watch the training video above. Your Declaration Certificate will be ready once completed.</a><br/><br/>
+    <div align="center"><a href="certifyethics.jsp" class="certifyLink btn btn-sm btn-primary disabled">Please watch the training video above. Your Declaration Certificate will be ready here once completed.</a><br/><br/>
             
-<div class="alert alert-danger"><b>IMPORTANT NOTICE:</b> Please watch the video entirely and let it play till the end. You may pause or play the video, however if you exit the page without completely watching, you will have to re-watch the entire video to certify the training.
-Once the video has completed playing, the blue area above will turn GREEN and inform you that your certificate is READY.  Please be patient.
+<div class="alert alert-danger"><b>IMPORTANT NOTICE:</b> Once the video has completed playing and finished automatically, the blue area above will turn GREEN and inform you that your certificate is READY.  Please be patient.
 Click on the GREEN area to proceed to your certificate of training.
 If you already watched the video, and downloaded your certificate, check your Downloads folder for your certificate. 
 If you have lost it, you will need to re-watch the video to generate a new certificate.</div>
