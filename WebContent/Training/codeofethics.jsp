@@ -76,12 +76,10 @@ Once you complete the training video, the certificate download will become avail
 
     <div align="center"><a href="certifyethics.jsp" class="certifyLink btn btn-sm btn-primary disabled">Please watch the training video above. Your Declaration Certificate will be ready here once completed.</a><br/><br/>
             
-<div class="alert alert-danger"><b>IMPORTANT NOTICE:</b> Please watch the video entirely and let it play until the end. 
-You may pause or play the video, however if you exit the page without completely watching, or use YouTube, you will have to replay the entire video to certify the training. 
-Once the video has completed playing, the blue area above will turn GREEN and inform you that your certificate is READY. 
-Please be patient. Click on the GREEN area to proceed to your certificate of training. 
-If you already watched the video, and downloaded your certificate, check your Downloads folder for your certificate.
- If you have lost it, you will need to replay the video to generate a new certificate.</div>
+<div class="alert alert-danger"><b>IMPORTANT NOTICE:</b>  Once the video has completed playing and finished automatically, the blue area above will turn GREEN and inform you that your certificate is READY.  Please be patient.
+Click on the GREEN area to proceed to your certificate of training.
+If you already watched the video, and downloaded your certificate, check your Downloads folder for your certificate. 
+If you have lost it, you will need to re-watch the video to generate a new certificate.</div>
     
    </div>  
    </div>
