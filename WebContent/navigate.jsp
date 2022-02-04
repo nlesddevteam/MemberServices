@@ -175,7 +175,7 @@
 					
 <!-- TRAINING - ALL STAFF -->			
 
-<esd:SecurityAccessRequired roles="ADMINISTRATOR,TESTINGCREW">		
+
 						<div class="menuIconImage">
 							<a href="Training/"><img
 								src="includes/img/menu/training-off.png"
@@ -184,7 +184,7 @@
 								title="Training for District Staff">
 							</a>
 						</div>			
-</esd:SecurityAccessRequired>
+
 
 <!-- Admin School Profile Update -->
 					<esd:SecurityAccessRequired
