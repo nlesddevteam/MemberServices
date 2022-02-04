@@ -21,11 +21,16 @@ function loadCertificate() {
 window.location.href = 'certifyethics.jsp';
 }
 
+function restartVideo() {
+player.seekTo(0); 
+}
+
+
   function changeBorderColor(playerStatus) {
     var color;
     if (playerStatus == -1) {
       color = "#37474F"; // unstarted = gray    
-      
+      player.seekTo(0); 
       $(".certifyLink").text("Please watch the training video above. Your Declaration Certificate will be ready once completed.");      
     } else if (playerStatus == 0) {
       color = "#FFFF00"; // ended = yellow      
@@ -34,8 +39,7 @@ window.location.href = 'certifyethics.jsp';
 	  $(".certifyLink").removeClass("disabled");
       $(".certifyLink").removeClass("btn-info").addClass("btn-success");
     } else if (playerStatus == 1) {
-      color = "#33691E"; // playing = green
-      
+      color = "#33691E"; // playing = green      
       $(".certifyLink").text("Training video PLAYING. Your Declaration Certificate will be ready once completed.");
     } else if (playerStatus == 2) {
       color = "#DD2C00"; // paused = red      ;
