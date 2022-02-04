@@ -68,11 +68,12 @@ Once you complete the training video, the certificate download will become avail
        <span style="font-size:16px;font-weight:bold;">Training Video</span><br/>       
        <br/><br/>
        <div align="center"><!-- &controls=0 -->
-       	<iframe id="videoEmbed" width="100%" height="450" src="https://www.youtube.com/embed/7niOss5WxoY?enablejsapi=1&amp;controls=0" frameborder="0" style="border: solid 1px #37474F;max-width:800px;"></iframe>
+       	<iframe id="videoEmbed" width="100%" height="450" src="https://www.youtube.com/embed/h0oMcOvk8rw?enablejsapi=1&amp;controls=0" frameborder="0" style="border: solid 1px #37474F;max-width:800px;"></iframe>
 		<br/><span style="color:Red;font-size:10px;"><b>NOTE:</b> Do NOT click on the YouTube logo bottom right of the video above or use full screen view as it will invalidate your training.</span>
 		</div>
 
 <br/>
+
 
     <div align="center"><a href="#looking-for-something-are-you" class="certifyLink btn btn-sm btn-primary disabled">Please watch the training video above. Your Declaration Certificate will be ready here once completed.</a><br/><br/>
             
