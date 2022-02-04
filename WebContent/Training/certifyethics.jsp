@@ -89,7 +89,12 @@ I acknowledge and accept that any violation of the Code can lead to disciplinary
 </div>
    </div>
 
+<hr>
 
+<div class="alert alert-info" style="text-align:center;font-size:11px;">For questions relating to the Code of Ethics and Conduct, please contact Susan Tobin at 709.757.4652 (<a href="mailto:geofftaylor@nlesd.ca?subject=COC Certification">susantobin1@nlesd.ca</a>).
+  <br/>If you require technical support, please email Geoff Taylor (<a href="mailto:geofftaylor@nlesd.ca?subject=COC Certification">geofftaylor@nlesd.ca</a>). </div>
+<hr>
+  
 <div align="center" style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">DOWNLOAD YOUR CERTIFICATE PDF </a>  
 <a href="index.jsp" class="btn btn-danger btn-sm">Back to Training Modules</a></div>
 
