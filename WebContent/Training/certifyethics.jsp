@@ -51,7 +51,7 @@
 <div align="center" style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">DOWNLOAD YOUR CERTIFICATE PDF</a></div>
   
   <div>
-<div id="printable" style="max-width:900px;text-align:center;margin: 0 auto;border:4px groove silver;padding:20px;background-color:#fffcf7;">
+<div id="printable" style="max-width:900px;min-width:800px;text-align:center;margin: 0 auto;border:4px groove silver;padding:20px;background-color:#fffcf7;">
 
 
 <img src="includes/img/nlesd-colorlogo.png" style="width:100%;max-width:400px;">
