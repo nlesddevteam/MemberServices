@@ -84,7 +84,7 @@ if(request.getAttribute("PSDATA") != null){
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 				  	 <input type='submit' value='Get Data' class="btn btn-sm btn-primary"> 
                     &nbsp;  <a href="#" class="btn btn-dark btn-sm" role="button"  title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center><img src=/includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fas fa-print"></i> Print</a>
-                     &nbsp; <a href="/MemberServices/navigate.jsp" class="btn btn-danger btn-sm">Exit to Member Services</a>
+                     &nbsp; <a href="/MemberServices/navigate.jsp" class="btn btn-danger btn-sm">Exit</a>
                    </div>
                    </div>
                     </form>    					
@@ -257,22 +257,9 @@ if(request.getAttribute("PSDATA") != null){
 													<c:if test="${entry.value.numberOfStudents gt '0'}">							
 														<tr>
 														<td>${entry.value.gradesString}</td>
-														  <td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>  																   
-															<td>${entry.value.sectionNumber}</td>
-															<td>
-															<c:choose>
-															<c:when test="${entry.value.numberOfStudents lt 25}">
-															<span style="color:#3CB371;">${entry.value.numberOfStudents}</span>
-															</c:when>
-															<c:when test="${entry.value.numberOfStudents gt 24 and entry.value.numberOfStudents lt 30}">
-															<span style="color:#FFA07A;">${entry.value.numberOfStudents}</span>
-															</c:when>
-															<c:otherwise>
-															<span style="color:Red;">${entry.value.numberOfStudents}</span>
-															</c:otherwise>
-															</c:choose>
-															</td>
-															
+														<td>${entry.value.gradesString eq '0'?'K':entry.value.gradesString}</td>  																   
+														<td>${entry.value.sectionNumber}</td>
+														<td>${entry.value.numberOfStudents}</td>
 														</tr>	
 														</c:if>													
 													</c:forEach>
@@ -288,12 +275,12 @@ if(request.getAttribute("PSDATA") != null){
 												<thead class="thead-light">
 												<tr >														
 																<th>LEVELS</th>																
-																<th> <15 Students <span style="background-color:#3CB371;">&nbsp;&nbsp;</span></th>
-																<th> 15-19 <span style="background-color:#3CB371;">&nbsp;&nbsp;</span></th>
-																<th> 20-24 <span style="background-color:#3CB371;">&nbsp;&nbsp;</span></th>
-																<th> 25-29 <span style="background-color:#FFA07A;">&nbsp;&nbsp;</span></th>
-																<th> 30-34 <span style="background-color:#FF0000;">&nbsp;&nbsp;</span></th>
-																<th> >35 Students <span style="background-color:#FF0000;">&nbsp;&nbsp;</span></th>																
+																<th> <15 Students </th>
+																<th> 15-19</th>
+																<th> 20-24</th>
+																<th> 25-29</th>
+																<th> 30-34</th>
+																<th> >35 Students</th>																
 														</tr>
 														</thead>
 														<tbody>
@@ -301,12 +288,12 @@ if(request.getAttribute("PSDATA") != null){
 														<c:if test="${entry.value.gradeLevel le '13'}">
 															<tr>
 																	<td> I, II, III, IV <!-- ${entry.value.gradeLevel}--> </td>											
-																	<td> <c:choose><c:when test="${entry.value.lessThan15 ne '0'}"><span style="color:#3CB371;">${entry.value.lessThan15} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
-																	<td> <c:choose><c:when test="${entry.value.between1520 ne '0'}"><span style="color:#3CB371;">${entry.value.between1520} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
-																	<td> <c:choose><c:when test="${entry.value.between2025 ne '0'}"><span style="color:#3CB371;">${entry.value.between2025} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
-																	<td> <c:choose><c:when test="${entry.value.between2530 ne '0'}"><span style="color:#FFA07A;">${entry.value.between2530} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
-																	<td> <c:choose><c:when test="${entry.value.between3035 ne '0'}"><span style="color:Red;">${entry.value.between3035} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
-																	<td> <c:choose><c:when test="${entry.value.greaterThan35 ne '0'}"><span style="color:Red;">${entry.value.greaterThan35} Class(es)</span></c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.lessThan15 ne '0'}">${entry.value.lessThan15} Class(es)</c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between1520 ne '0'}">${entry.value.between1520} Class(es)</c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between2025 ne '0'}">${entry.value.between2025} Class(es)</c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between2530 ne '0'}">${entry.value.between2530} Class(es)</c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.between3035 ne '0'}">${entry.value.between3035} Class(es)</c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
+																	<td> <c:choose><c:when test="${entry.value.greaterThan35 ne '0'}">${entry.value.greaterThan35} Class(es)</c:when><c:otherwise>No Classes</c:otherwise></c:choose></td>
 															</tr>																
 															</c:if>													
 													</c:forEach>
