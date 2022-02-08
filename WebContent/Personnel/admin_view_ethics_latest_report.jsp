@@ -150,6 +150,7 @@ function getEmployeesByDays(ndays)
 {
 	var empps=false;
 	var empvs=false;
+	var datalist=[];
 		$.ajax(
      			{
      				type: "POST",  
@@ -171,22 +172,38 @@ function getEmployeesByDays(ndays)
      	     					
 								var noemployees = true;
      							$(xml).find('PEMPLOYEE').each(function(){
-     								noemployees=false;
-     								var newrow ="<tr>";
-     								newrow += "<td>" + $(this).find("NAME").text() + "</td>";
-     								newrow += "<td>" + $(this).find("LOCATION").text() + "</td>";
-     								newrow += "<td>" + $(this).find("APPEMAIL").text() + "</td>";
-     								newrow += "<td>" + $(this).find("CDATE").text() + "</td>";
-     								//now we see what buttons we need
-     								newrow += "<td>";
-     								newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>&nbsp;";
-     								newrow += "<a  title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>";
-     								newrow += "</td>";
+     								var showrecord=false;
      								
-     								newrow +="</tr>"
-     								$('#permanent-positions-table tbody').append(newrow);
-			                      
-     								empps=true;
+     								if(datalist.length > 0){
+     									if(datalist.indexOf($(this).find("APPEMAIL").text()) >= 0){
+     										//do nothing
+     										showrecord=false;
+     									}else{
+     										datalist.push($(this).find("APPEMAIL").text());
+     										showrecord=true;
+     									}
+     								}else{
+     									datalist.push($(this).find("APPEMAIL").text());
+     									showrecord=true;
+     								}
+     								if(showrecord){
+     									noemployees=false;
+         								var newrow ="<tr>";
+         								newrow += "<td>" + $(this).find("NAME").text() + "</td>";
+         								newrow += "<td>" + $(this).find("LOCATION").text() + "</td>";
+         								newrow += "<td>" + $(this).find("APPEMAIL").text() + "</td>";
+         								newrow += "<td>" + $(this).find("CDATE").text() + "</td>";
+         								//now we see what buttons we need
+         								newrow += "<td>";
+         								newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>&nbsp;";
+         								newrow += "<a  title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>";
+         								newrow += "</td>";
+         								
+         								newrow +="</tr>"
+         								$('#permanent-positions-table tbody').append(newrow);
+    			                      
+         								empps=true;
+     								}
 
      							});
      							
