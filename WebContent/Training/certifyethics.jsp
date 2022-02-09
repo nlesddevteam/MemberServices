@@ -51,7 +51,7 @@
 <div align="center" style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">DOWNLOAD YOUR CERTIFICATE PDF</a></div>
   
   <div>
-<div id="printable" style="max-width:900px;min-width:800px;text-align:center;margin: 0 auto;border:4px groove silver;padding:20px;background-color:#fffcf7;">
+<div id="printable" style="max-width:900px;min-width:900px;text-align:center;margin: 0 auto;border:4px groove silver;padding:20px;background-color:#fffcf7;">
 
 
 <img src="includes/img/nlesd-colorlogo.png" style="width:100%;max-width:400px;">
@@ -59,7 +59,7 @@
 <br/><br/>
   <div class="curved-text" style="font-size:36px;font-style:italic;color:Silver;">Employee Training Declaration</div>  
 
-<br/><br/>
+<br/>
 This is to certify that<br/><br/>
 
 <span style="font-size:24px;font-weight:bold;"><%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></span><br/><br/>
