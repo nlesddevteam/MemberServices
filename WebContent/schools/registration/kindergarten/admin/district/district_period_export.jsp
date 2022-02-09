@@ -135,9 +135,9 @@ $('document').ready(function(){
 					<tr>			
 					<th>SORT</th>									
 					<th>REGISTRATION DATE</th>		
-					<th>SCHOOL YEAR</th>					
-					<th>SCHOOL NAME</th>
-					<th>DEPT ID</th>
+					<th>SCHOOL YEAR</th>	
+					<th>DEPT ID</th>				
+					<th>SCHOOL NAME</th>					
 					<th>STREAM</th>
 					<th>STUDENT ID</th>								
 					<th>STUDENT LAST NAME</th>
@@ -188,9 +188,9 @@ $('document').ready(function(){
 							<tr class='period-data-row'>					
 							<td width="*"><fmt:formatDate value="${r.registrationDate}" pattern="yyyyMMddHHmmss" /></td>						
 							<td><fmt:formatDate value="${r.registrationDate}" pattern="MM/dd/yyyy @ hh:mm:ss" /></td>
-							<td>${r.registration.schoolYear}</td>							
-							<td>${r.school.schoolName}</td>  
-							<td>${r.school.schoolDeptID}</td>
+							<td>${r.registration.schoolYear}</td>
+							<td>${r.school.schoolDeptID}</td>							
+							<td>${r.school.schoolName}</td>  							
 							<td>${r.schoolStream.text}</td>
 							<td></td>									
 							<td>${r.studentLastName}</td>
