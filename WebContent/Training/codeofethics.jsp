@@ -50,9 +50,9 @@ Once you complete the training video, the certificate download will become avail
 </div> 
 
 <div class="noticePhone alert alert-danger" style="text-align:center;"><b>**** IMPORTANT NOTICE ****</b><br/> 
-We detected you are on a mobile device. We highly recommend you use a desktop computer or laptop for this training. 
-Some mobile devices such as some newer iOS devices ( iPhone or iPad ) will not properly generate and save a PDF certificate that you can upload.
-You may need to repeat any training if you continue to use a iOS mobile device if it fails to generate a certificate. Typical results from this error are a blank certificate.</div>
+We detected you are on a mobile device (phone or tablet). We highly recommend you use a desktop computer or laptop for this training. 
+Some mobile devices such as some newer iOS devices ( iPhone or iPad ) will not properly generate and save a PDF certificate.
+You may need to repeat any training if you continue to use this mobile device if it fails to generate a certificate. Typical results from this failure are a blank certificate.</div>
 
 <span style="font-size:16px;font-weight:bold;">Steps to Follow for your Training</span><br/>
 <ol>
@@ -168,7 +168,7 @@ If you have lost it, you will need to re-watch the video to generate a new certi
        $("#Frame1")[0].src = $("#Frame1")[0].src;      
    }
 </script>
-<iframe id="Frame1" src="keepalive.jsp" frameborder="0" height=10 width=10 frameborder=0></iframe>
+<iframe id="Frame1" src="keepalive.jsp" frameborder="0" height=0 width=0 frameborder=0 style="width:0;height:0;"></iframe>
    
   
    
