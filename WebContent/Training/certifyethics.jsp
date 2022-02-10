@@ -27,30 +27,40 @@
    <c:set var="now" value="<%=new java.util.Date()%>" /> 
   <fmt:formatDate value="${now}" pattern="EEEE, MMMM d, y" var="certifyDate" />	
       
+      <style>
+      .btn {margin:2px;}      
+      </style>
+      
   </head>
   <body>
   
 
 
-<div class="container-fluid">		
+<div class="container-fluid no-print">		
 				<div class="row">				  
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size:12px;">   
             
    Congratulations on completing your Code of Ethics and Conduct Training. <br/><br/>
    
-   Please download this certificate using the link below and upload it to your MyHR profile under the documents section.<br/><br/>
+   Please download this certificate using the link below and upload it to your MyHR profile under the documents section. You can also Print a copy of the certificate.<br/><br/>
      
    The PDF file will download to your web browsers set 'Downloads' folder on your device and saved as <b>COEC-Certificate.pdf</b>.<br/><br/>
-   You will need to know where this file is saved in order to select it for upload to your MyHR profile. DO NOT LOSE this file as you will need to redo the training module to generate a new one.
-     
+   You will need to know where this file is saved in order to select it for upload to your MyHR profile. DO NOT LOSE this file as you will need to redo the training module to generate a new one. You should also Print a copy.
+   Take a screenshot if you experience issues and save it. 
+        <br/><br/>
+   <div class="alert alert-danger" style="text-align:center;"><b>**** IMPORTANT NOTICE ****</b><br/>
+   Some current <b>iOS devices (Apple)</b> will not allow generation of a PDF or saving the file.
+    If the DOWNLOAD CERTIFICATE PDF link below fails, you may take a screenshot of this certificate on this page, and, using MS Word or Google Docs, insert the screenshot image and save as a PDF file. 
+    </div>
+  
    
    </div>
   				</div>
  </div>   
- <br/>
-<div align="center" style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">DOWNLOAD YOUR CERTIFICATE PDF</a></div>
+
+<div align="center" class="no-print" style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">1. DOWNLOAD CERTIFICATE PDF</a> <a href='#' class="btn btn-sm btn-primary" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print();">2. PRINT CERTIFICATE</a></div>
   
-  <div>
+<div id="printJob">
 <div id="printable" style="max-width:900px;min-width:900px;text-align:center;margin: 0 auto;border:4px groove silver;padding:20px;background-color:#fffcf7;">
 
 
@@ -88,17 +98,18 @@ I acknowledge and accept that any violation of the Code can lead to disciplinary
  
 </div>
    </div>
-
+<div class="no-print">
 <hr>
 
 <div class="alert alert-info" style="text-align:center;font-size:11px;">For questions relating to the Code of Ethics and Conduct, please contact Susan Tobin at 709.757.4652 (<a href="mailto:geofftaylor@nlesd.ca?subject=COC Certification">susantobin1@nlesd.ca</a>).
   <br/>If you require technical support, please email Geoff Taylor (<a href="mailto:geofftaylor@nlesd.ca?subject=COC Certification">geofftaylor@nlesd.ca</a>). </div>
 <hr>
   
-<div align="center" style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">DOWNLOAD YOUR CERTIFICATE PDF </a>  
+<div align="center"  style="padding-top:5px;padding-bottom:10px;"><a href="#" onClick="printToPDF();" class="btn btn-sm btn-primary">1. DOWNLOAD CERTIFICATE PDF</a> 
+<a href='#' class="btn btn-sm btn-primary" title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print();">2. PRINT CERTIFICATE</a>  
 <a href="index.jsp" class="btn btn-danger btn-sm">Back to Training Modules</a></div>
 
-   
+   </div>
   <script>
 function printToPDF() {
 	  console.log('converting doc...');
@@ -146,8 +157,6 @@ function printToPDF() {
 	  });
 	}
 </script> 
-
-   
    
   </body>
 </html>

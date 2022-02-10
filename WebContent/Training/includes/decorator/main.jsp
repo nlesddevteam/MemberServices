@@ -71,7 +71,7 @@
 		<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/fnReloadAjax.js"></script>				
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>	 	
-	 	 
+	 	 <script src="https://cdn.jsdelivr.net/npm/jQuery.print@1.5.1/jQuery.print.min.js"></script> 
 	 <!-- LOCAL JAVASCRIPT FILES -->		
 		<script src="/MemberServices/Training/includes/js/training.js?ver=${todayVer}"></script>	 	
 	 	
