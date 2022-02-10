@@ -50,8 +50,8 @@ Once you complete the training video, the certificate download will become avail
 </div> 
 
 <div class="noticePhone alert alert-danger" style="text-align:center;"><b>**** IMPORTANT NOTICE ****</b><br/> 
-We detected you are on a mobile device (phone or tablet). We highly recommend you use a desktop computer or laptop for this training. 
-Some mobile devices such as some newer iOS devices ( iPhone or iPad ) will not properly generate and save a PDF certificate.
+We detected you are on a mobile device (phone or tablet). We highly recommend you use a desktop PC computer or laptop for this training.  
+Some mobile devices and Apple iOS devices ( iPhone, iMac or iPad ) will not properly generate and save a PDF certificate due to lack of local file support.
 You may need to repeat any training if you continue to use this mobile device if it fails to generate a certificate. Typical results from this failure are a blank certificate.</div>
 
 <span style="font-size:16px;font-weight:bold;">Steps to Follow for your Training</span><br/>
