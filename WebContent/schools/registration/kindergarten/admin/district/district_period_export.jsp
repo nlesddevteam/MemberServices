@@ -32,14 +32,14 @@ $('document').ready(function(){
        		 extend: 'excel',	
        		 exportOptions: {           	         		 
 
-       			columns: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44]
+       			columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]
                  },
        },
        { 
      		 extend: 'csv',	
      		 exportOptions: {         		           		 
 
-     			columns: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44]
+     			columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]
                },
      },
          
@@ -135,8 +135,9 @@ $('document').ready(function(){
 					<tr>			
 					<th>SORT</th>									
 					<th>REGISTRATION DATE</th>		
-					<th>SCHOOL YEAR</th>
-					<th>SCHOOL NAME</th>
+					<th>SCHOOL YEAR</th>	
+					<th>DEPT ID</th>				
+					<th>SCHOOL NAME</th>					
 					<th>STREAM</th>
 					<th>STUDENT ID</th>								
 					<th>STUDENT LAST NAME</th>
@@ -187,8 +188,9 @@ $('document').ready(function(){
 							<tr class='period-data-row'>					
 							<td width="*"><fmt:formatDate value="${r.registrationDate}" pattern="yyyyMMddHHmmss" /></td>						
 							<td><fmt:formatDate value="${r.registrationDate}" pattern="MM/dd/yyyy @ hh:mm:ss" /></td>
-							<td>${r.registration.schoolYear}</td>	
-							<td>${r.school.schoolName}</td>
+							<td>${r.registration.schoolYear}</td>
+							<td>${r.school.schoolDeptID}</td>							
+							<td>${r.school.schoolName}</td>  							
 							<td>${r.schoolStream.text}</td>
 							<td></td>									
 							<td>${r.studentLastName}</td>

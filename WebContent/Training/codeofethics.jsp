@@ -49,15 +49,20 @@ Once you complete the training video, the certificate download will become avail
 
 </div> 
 
+<div class="noticePhone alert alert-danger" style="text-align:center;"><b>**** IMPORTANT NOTICE ****</b><br/> 
+We detected you are on a mobile device (phone or tablet). We highly recommend you use a desktop PC computer or laptop for this training.  
+Some mobile devices and Apple iOS devices ( iPhone, iMac or iPad ) will not properly generate and save a PDF certificate due to lack of local file support.
+You may need to repeat any training if you continue to use this mobile device if it fails to generate a certificate. Typical results from this failure are a blank certificate.</div>
 
 <span style="font-size:16px;font-weight:bold;">Steps to Follow for your Training</span><br/>
 <ol>
 <li>Read all instructions and text on this page before doing anything.
+<li>Recommend using a desktop PC or laptop computer to do this training.
 <li>Play the video below from the play button in the middle of the screen.  <b>Do not play via YouTube</b>. This will result in NO certificate being issued.
 <li>Play the video until it automatically stops. You can only play or pause. 
 <li>Review all the resources and references listed below on this page.
 <li>Once the video stops playing at the end, a Declaration certificate will become available to view via a link below the video.
-<li>Proceed to view and download this Declaration certificate to your device. (Recommend using a desktop, laptop, or tablet).
+<li>Proceed to view and download this Declaration certificate to your device.
 <li>You must then upload this PDF file to the documents section (selecting the Code of Ethics and Conduct Declaration type) of your MyHR profile.
 <li>To login to your MyHR profile, visit the Job Opportunities section of the NLESD website.
 </ol>
@@ -148,13 +153,22 @@ If you have lost it, you will need to re-watch the video to generate a new certi
 
    
    <script>  
+   
+   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+	   $(".noticePhone").css("display","block");
+	 } else {
+		 
+		 $(".noticePhone").css("display","none");
+	 }
+   
+   
    setInterval(refreshIframe1, 60000);
    
    function refreshIframe1() {	   
        $("#Frame1")[0].src = $("#Frame1")[0].src;      
    }
 </script>
-<iframe id="Frame1" src="keepalive.jsp" frameborder="0" height=10 width=10 frameborder=0></iframe>
+<iframe id="Frame1" src="keepalive.jsp" frameborder="0" height=0 width=0 frameborder=0 style="width:0;height:0;"></iframe>
    
   
    

@@ -3,6 +3,6 @@
 <title>Keep Alive</title>
 </head>
 <body>
-<!-- Keep page alive -->Keep alive Test
+<!-- Keep page alive -->
 </body>
 </html>
