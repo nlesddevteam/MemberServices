@@ -4,6 +4,7 @@ public class EthicsDeclarationSummaryReportBean {
 	private int totalUploaded;
 	private int totalNLESD;
 	private int totalLatest;
+	private int testCount;
 	public int getTotalUploaded() {
 		return totalUploaded;
 	}
@@ -24,5 +25,11 @@ public class EthicsDeclarationSummaryReportBean {
 	}
 	public int getTotalNonNLESD() {
 		return this.totalUploaded-this.totalNLESD;
+	}
+	public int getTestCount() {
+		return testCount;
+	}
+	public void setTestCount(int testCount) {
+		this.testCount = testCount;
 	}
 }
