@@ -53,7 +53,10 @@
 
 	</script>
      
+        <style>
+        .pcode {text-transform:uppercase;}
         
+        </style>
     
   </head>
 
@@ -219,10 +222,10 @@
 								<div class="row container-fluid" style="padding-top:5px;">
       								<div class="col-lg-6 col-12">	
 											<b>Address: (Street Address, P.O. Box, etc)</b>
-											<input required class='required form-control' placeholder="Address Line 1" errortext='1. STUDENT INFORMATION, (c) PHYSICAL ADDRESS - Street Address' type='text' id='txt_PhysicalStreetAddress1' name='txt_PhysicalStreetAddress1' autocomplete="f"/>
+											<input required class='required form-control' placeholder="Enter Street Address (i.e. 10 Main Street)" errortext='1. STUDENT INFORMATION, (c) PHYSICAL ADDRESS - Street Address' type='text' id='txt_PhysicalStreetAddress1' name='txt_PhysicalStreetAddress1' autocomplete="f"/>
 											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
 											<br/>
-											<input placeholder="Address Line 2" class="form-control" type='text' id='txt_PhysicalStreetAddress2' name='txt_PhysicalStreetAddress2' autocomplete="f"/>
+											<input placeholder="Enter PO Box, if any (i.e. P.O. Box 100)" class="form-control" type='text' id='txt_PhysicalStreetAddress2' name='txt_PhysicalStreetAddress2' autocomplete="f"/>
 									</div>
 								<div class="col-lg-3 col-12">
 								<b>City/Town:</b>
@@ -248,10 +251,10 @@
 								<div class="row container-fluid" style="padding-top:5px;">
 								<div class="col-lg-6 col-12">										
 								<b>Address: (Street Address, P.O. Box, etc)</b>
-								<input placeholder="Address Line 1" required class='required form-control' required errortext='1. STUDENT INFORMATION, (d) MAILING ADDRESS - Address' type='text' id='txt_MailingAddress1' name='txt_MailingAddress1' autocomplete="f"/>
+								<input placeholder="Enter Street Address (i.e. 10 Main Street)" required class='required form-control' required errortext='1. STUDENT INFORMATION, (d) MAILING ADDRESS - Address' type='text' id='txt_MailingAddress1' name='txt_MailingAddress1' autocomplete="f"/>
 								<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please fill out this field.</div>
 								<br/>
-								<input placeholder="Address Line 2" class="form-control"  type='text' id='txt_MailingAddress2' name='txt_MailingAddress2' autocomplete="f"/>
+								<input placeholder="Enter PO Box, if any (i.e. P.O. Box 100)" class="form-control"  type='text' id='txt_MailingAddress2' name='txt_MailingAddress2' autocomplete="f"/>
 								</div>
 								<div class="col-lg-3 col-12">
 								<b>City/Town:</b>
