@@ -43,7 +43,7 @@
                   							
 				<div class="no-print" style="text-align: center;">
 				<br />
-					<input id='btn-submit' type="submit" class="btn btn-success"
+					<input id='btn-submit' type="submit" disabled class="btn btn-success"
 						value="Send Warning Email(s)" onclick="loadingData()">&nbsp; <a
 						href="/MemberServices/Personnel/admin_index.jsp"
 						class="btn btn-danger">Cancel</a>
