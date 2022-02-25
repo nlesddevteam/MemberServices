@@ -80,7 +80,8 @@ $('document').ready(function(){
     </script>
     <style> 
     .table td {vertical-align:middle;}
-   td, th {white-space:nowrap;}
+   	td, th {white-space:nowrap;}
+    .pcMask {text-transform:uppercase;}
     @media print {		
 	.pageBreak{page-break-after: always;}			
 	
@@ -93,6 +94,9 @@ $('document').ready(function(){
     margin: 0;
         
   }
+  
+
+  
 }
     
     </style>
