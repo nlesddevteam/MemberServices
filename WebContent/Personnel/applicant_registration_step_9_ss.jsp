@@ -59,6 +59,8 @@ SECTION 7: Editing your Support Staff/Management HR Application Profile
 								    <div class="panel panel-info">
 								      <div class="panel-heading">7. DOCUMENTS (Upload)</div>
 								      <div class="panel-body">	
+								      You can upload all documents with exception to Criminal Offence Declaration(s) here. Criminal Offense Declaration can be uploaded in a section at bottom of this page.
+								     <br/><b>Notice:</b>  For <b>Code of Ethics and Conduct Declaration</b>, make sure you select the proper doc type as there are two Code of Conduct types to choose from. The <b>Code of Conduct</b> is what you request from the RCMP or RNC. The Code of Ethics and Conduct is the staff training module.
 	                                  <div class="table-responsive"> 	
 	                                     <table class="table table-striped table-condensed" style="font-size:12px;">							   
 											    <tbody>
