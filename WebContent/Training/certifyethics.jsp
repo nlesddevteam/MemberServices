@@ -154,7 +154,7 @@ function printToPDF() {
 
 	      }
 	      
-	      if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) {
+	      if (/webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) {
 	    	    window.open(pdf.output('bloburl', { filename: 'COEC-Certificate.pdf' }))
 	    	} else {	      
 	      pdf.save('COEC-Certificate.pdf');
