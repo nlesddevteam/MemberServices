@@ -51,6 +51,7 @@
    <div class="alert alert-danger" style="text-align:center;"><b>**** IMPORTANT NOTICE ****</b><br/>
    Some current <b>iOS devices (Apple)</b> will not allow generation of a PDF or saving the file.
     If the DOWNLOAD CERTIFICATE PDF link below fails, you may take a screenshot of this certificate on this page, and, using MS Word or Google Docs, insert the screenshot image and save as a PDF file. 
+   Some Apple devices will open the PDF in a new window. If this happens, please SAVE the PDF file, or print the page as PDF, or take a screenshot.
     </div>
   
    
@@ -152,7 +153,12 @@ function printToPDF() {
 	        pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width * .62), (height * .62)); // add content to the page
 
 	      }
+	      
+	      if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) {
+	    	    window.open(pdf.output('bloburl', { filename: 'COEC-Certificate.pdf' }))
+	    	} else {	      
 	      pdf.save('COEC-Certificate.pdf');
+	    	}
 	    }
 	  });
 	}
