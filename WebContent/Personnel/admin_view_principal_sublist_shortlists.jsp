@@ -102,12 +102,12 @@ input {
 														<c:if test='${sl.key.value eq 1 }'>
 															<tr>
 																<td>Primary/Elementary - Complete List</td>
-																<td>ALL</td>
+																<td></td>
 																<td><a class="btn btn-xs btn-primary"	href='viewSubListShortListByTrnLvl.html?trnlvl_id=2'>View	List</a></td>
 															</tr>
 															<tr>
 																<td >Secondary - Complete List</td>
-																<td>ALL</td>
+																<td></td>
 																<td><a class="btn btn-xs btn-primary" href='viewSubListShortListByTrnLvl.html?trnlvl_id=3'>View 	List</a></td>
 															</tr>
 															<c:set var="listItemCnt" value="${listItemCnt+2}" />
