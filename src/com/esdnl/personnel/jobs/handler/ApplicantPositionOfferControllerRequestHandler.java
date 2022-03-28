@@ -246,8 +246,11 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 								if (sendBC) {
 									ArrayList<Personnel> finto = new ArrayList<Personnel>();
 									finto.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("POSITION-OFFER-ACCEPTED")));
-									ebean.setTo(finto);
-									ebean.send();
+									for (Personnel p : finto) {
+										ebean.setTo(p.getEmailAddress());
+										ebean.send();
+									}
+									
 								}
 							}
 							catch (EmailException e) {
