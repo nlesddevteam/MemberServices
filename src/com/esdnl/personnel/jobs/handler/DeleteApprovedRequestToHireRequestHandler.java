@@ -210,7 +210,9 @@ public class DeleteApprovedRequestToHireRequestHandler extends RequestHandlerImp
 				ebean.send();
 			}
 			if(addcomptroller) {
-				ebean.setTo("budgethireapproval@nlesd.ca");
+				ArrayList<Personnel> finto = new ArrayList<Personnel>();
+				finto.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-ADDITIONAL")));
+				ebean.setTo(finto);
 				ebean.send();
 			}
 				

@@ -175,6 +175,9 @@ public class AddAdRequestRequestHandler extends RequestHandlerImpl {
 							case 3001: //Nova Central Regional Office
 								location_id = -3001;
 								break;
+							case 666: //Nova Central Regional Office
+								location_id = 846;
+								break;
 							default:
 
 								location_id = SchoolDB.getSchoolFromDeptId(

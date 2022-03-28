@@ -330,13 +330,14 @@ public class RequestToHireEmailManager {
 			//email  region hr seo
 			if(rbean.getStatus().getValue() == 2) {
 				//comptroller approval use new email created
-				// budgethireapproval@nlesd.ca,
 				ebean.setSubject(emailsubject);
-				ebean.setTo("budgethireapproval@nlesd.ca");
+				ArrayList<Personnel> finto = new ArrayList<Personnel>();
+				finto.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-ADDITIONAL")));
+				ebean.setTo(finto);
 				ebean.setBody(VelocityUtils.mergeTemplateIntoString(emailtemplate, model));
 				ebean.setFrom("ms@nlesd.ca");
 				ebean.send();
-				historyNotes.append(" " + "budgethireapproval@nlesd.ca");
+				historyNotes.append(" " + "Finance Email");
 			}else {
 				for (Personnel p : to) {
 					ebean.setSubject(emailsubject);

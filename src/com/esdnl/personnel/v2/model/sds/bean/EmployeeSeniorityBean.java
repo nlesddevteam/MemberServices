@@ -187,7 +187,7 @@ public class EmployeeSeniorityBean {
 		double sen=0;
 		if(this.unionCode == null) {
 			sen=0;
-		}else if(this.unionCode == EmployeeSeniorityBean.Union.NLTA_TLA.code) {
+		}else if(this.unionCode.equals(EmployeeSeniorityBean.Union.NLTA_TLA.code)) {
 			sen = this.getSeniorityTotal();
 		}else {
 			 if(this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_1560.code) || this.unionCode.equals(EmployeeSeniorityBean.Union.CUPE_STUDENT_ASSISTANTS.code)  ||

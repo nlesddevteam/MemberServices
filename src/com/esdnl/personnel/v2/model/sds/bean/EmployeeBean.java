@@ -1,6 +1,7 @@
 package com.esdnl.personnel.v2.model.sds.bean;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -355,6 +356,7 @@ public class EmployeeBean implements IEntity {
 		.findFirst().orElse(null);
     }
 
+
     public EmployeeSeniorityBean getSenioritySupport() {
 
 	if (seniority.size() < 1)
@@ -555,6 +557,77 @@ public class EmployeeBean implements IEntity {
 		+ StringUtils.encodeHTML2(this.getPositionDescription()) + "\" />");
 
 	return buf.toString();
+    }
+    public String viewAllSeniorityTeach() {
+    	StringBuilder sb = new StringBuilder();
+    	NumberFormat nf = new DecimalFormat("0.00");
+    	if((this.seniority.size() > 0 )){
+    		for (Map.Entry<EmployeeSeniorityBean.Union, EmployeeSeniorityBean> entry : this.seniority.entrySet()) {
+    			if(entry.getKey() == EmployeeSeniorityBean.Union.NLTA || entry.getKey() == EmployeeSeniorityBean.Union.NLTA_TLA ) {
+    				if(entry.getKey() == EmployeeSeniorityBean.Union.NLTA) {
+	    				sb.append("NLTA PROVINCIAL: " + nf.format(entry.getValue().getSeniorityValue1()) + " yrs<br />");
+	    				sb.append("OUT OF PROVINCE: " + nf.format(entry.getValue().getSeniorityValue2()) + " yrs<br />");
+	    			}else {
+	    				sb.append(entry.getKey().getUnionName() + ": " + nf.format(entry.getValue().getSeniorityValue1()) + " yrs<br />");
+	    			}
+    			}
+    			
+    		}
+    	
+		} 
+		else {
+			sb.append("N/A");
+	 	}
+    	
+    	return sb.toString();
+    }
+    public String viewAllSenioritySupport() {
+    	StringBuilder sb = new StringBuilder();
+    	NumberFormat nf = new DecimalFormat("0.00");
+    	if((this.seniority.size() > 0 )){
+    		sb.append("<table class='table table-striped table-condensed' style='font-size:12px;'>");
+    		for (Map.Entry<EmployeeSeniorityBean.Union, EmployeeSeniorityBean> entry : this.seniority.entrySet()) {
+    			//support staff emp do not show nlta/tla
+    			
+    			if(entry.getKey() != EmployeeSeniorityBean.Union.NLTA || entry.getKey() != EmployeeSeniorityBean.Union.NLTA_TLA ) {
+    				switch (entry.getKey().getUnionCode()) {
+    				case "01":
+    				case "03":
+    				case "04":
+    				case "10":
+    				case "11":
+    					//check both dates
+    					if(entry.getValue().getSeniorityDate1() != null) {
+    						sb.append("<tr><td class='tableResult'>" + entry.getKey().getUnionName() +": Seniority Date - " + entry.getValue().getSeniorityDate1Formatted() + "</td></tr>");
+    					}else if(entry.getValue().getSeniorityDate2() != null) {
+    						sb.append("<tr><td class='tableResult'>" + entry.getKey().getUnionName() +": Seniority Date - " + entry.getValue().getSeniorityDate2Formatted()+ "</td></tr>");
+    					}else {
+    						sb.append("<tr><td class='tableResult'>" + entry.getKey().getUnionName() +": Seniority Date - N/A</td></tr>");
+    					}
+    					break;
+    				case "02":
+    				case "05":
+    				case "06":
+    				case "07":
+    				case "08":
+    				case "09":
+    						if(entry.getValue().getSeniorityTotal() > 0) {
+    							sb.append("<tr><td class='tableResult'>" + entry.getKey().getUnionName() +":  " + nf.format(entry.getValue().getSeniorityTotal())+ " days worked</td></tr>");
+    						}else {
+    							sb.append("<tr><td class='tableResult'>" + entry.getKey().getUnionName() +":  N/A</td></tr>");
+    						}
+    				}
+    			}
+    		}
+    		sb.append("</table>");
+    	}else {
+    		sb.append("<table class='table table-striped table-condensed' style='font-size:12px;'>");
+    		sb.append("<tr><td class='tableTitle'>Seniority:</td></tr>");
+    		sb.append("<tr><td class='tableResult'>N/A</td></tr>");
+    		sb.append("</table>");
+    	}
+    	System.out.println(sb.toString());
+    	return sb.toString();
     }
 
 }

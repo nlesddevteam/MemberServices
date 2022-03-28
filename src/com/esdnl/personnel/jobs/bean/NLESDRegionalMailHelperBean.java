@@ -25,6 +25,9 @@ public class NLESDRegionalMailHelperBean {
 		case -2000:
 			emz = EMAILZONE.WESTERN;
 			break;
+		case -666:
+			emz = EMAILZONE.PROVINCIAL;
+			break;
 		case -999:
 		case -998:
 		case -100:

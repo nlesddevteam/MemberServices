@@ -87,7 +87,8 @@
 <c:set var="userID" value="<%=profile.getUID()%>"/>
 <c:set var="SDSID" value="<%=empbean != null?empbean.getEmpId():\"N/A\" %>"/>
 <c:set var="seniorityTotal" value="<%=empbean != null && empbean.getSeniority() != null ? empbean.getSeniority().getSeniorityTotal() :\"\"  %>"/>
-<c:set var="SDSBEAN" value="<%=empbean == null ? null : empbean.getSenioritySupport() ==  null ? null: empbean.getSenioritySupport()%>"/> 
+<c:set var="SDSBEAN" value="<%=empbean == null ? null : empbean.getSenioritySupport() ==  null ? null: empbean.getSenioritySupport()%>"/>
+<c:set var="EBEAN" value="<%=empbean == null ? null : empbean%>"/> 
 
 <html>
 <head>
@@ -322,43 +323,15 @@ input {
 							    	<td class="tableTitleL">SDS Employee ID:</td>
 								    <td class="tableResultL">${SDSID}</td>
 								    <c:choose>
-							    	<c:when test="${SDSBEAN eq null}">
-							    		<td class="tableTitleR">Years of Service:</td>
+							    	<c:when test="${EBEAN eq null}">
+							    		<td class="tableTitleR">Service Time:</td>
 							    		<td class="tableResultR">N/A</td>
 							    	</c:when>
 							    	<c:otherwise>
-						    		<c:choose>
-						    			<c:when test="${ SDSBEAN.unionCode eq '01' || SDSBEAN.unionCode eq '03' || SDSBEAN.unionCode eq '04' || SDSBEAN.unionCode eq '10' || SDSBEAN.unionCode eq '11' }">
-						    				<td class="tableTitleR">Seniority Date:</td>
-						    				<c:choose>
-					    						<c:when test="${SDSBEAN ne null}">
-					    							<c:choose>
-					    								<c:when test="${ SDSBEAN.seniorityDate1 ne null}">
-					    									<td class="tableResultR">${ SDSBEAN.seniorityDate1Formatted}</td>
-					    								</c:when>
-					    								<c:when test="${SDSBEAN.seniorityDate2 ne null}">
-					    									<td class="tableResultR">${ SDSBEAN.seniorityDate2Formatted}</td>
-					    								</c:when>
-					    								<c:otherwise>
-					    									<td class="tableResultR">N/A</td>
-					    								</c:otherwise>
-					    							</c:choose>
-					    						</c:when>
-						    					<c:otherwise>N/A </c:otherwise>
-						    				</c:choose>
-						    			</c:when>
-						    			<c:when test="${ SDSBEAN.unionCode eq '02' || SDSBEAN.unionCode eq '05' || SDSBEAN.unionCode eq '06' || SDSBEAN.unionCode eq '07' || SDSBEAN.unionCode eq '08' || SDSBEAN.unionCode eq '09' }">
-						    					<td class="tableTitleR">Days Worked:</td>
-						    					<c:choose>
-						    						<c:when test="${seniorityTotal ne ''}"><td class="tableResultR">${seniorityTotal}</td></c:when>
-						    						<c:otherwise>N/A</c:otherwise>
-						    					</c:choose>
-						    			</c:when>
-						    			<c:otherwise>
-						    				<td class="tableTitleR">Years of Service:</td>
-						    				<td class="tableResultR">N/A</td>
-						    			</c:otherwise>
-						    		</c:choose>
+							    		<td class="tableTitleR">Service Time:</td>
+							    		<td class="tableResultR">
+						    			${EBEAN.viewAllSenioritySupport()}
+						    			</td>
 						    		</c:otherwise>
 						    		</c:choose>
 							    </tr>

@@ -4470,6 +4470,10 @@
      <Request-Handler>
     <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewEthicsSummaryRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewEthicsSummary.html</URL-Pattern>
-    </Request-Handler>                                    
+    </Request-Handler>
+    <Request-Handler>
+    	<Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.RemoveApplicantFromSystemAjaxRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/Personnel/RemoveApplicantFromSystem.html</URL-Pattern>
+    </Request-Handler>                                      
   </Request-Handlers>
 </Member-Services-Config>
