@@ -59,7 +59,6 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 					opp.setJobType(req.getJobType());
 
 					int location_id = 0;
-
 					// map SDS location ids to my location ids
 					switch (Integer.parseInt(req.getLocation().getLocationId().trim())) {
 					case 0: // District Office
@@ -94,6 +93,9 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 						break;
 					case 5000: //District Conference Centre
 						location_id = 220;
+						break;
+					case 666: //Nova Central Regional Office
+						location_id = 846;
 						break;
 					default:
 
@@ -217,9 +219,11 @@ public class PostAdRequestRequestHandler implements RequestHandler {
 						break;
 					case 1003: //Labrador Wabush Bus Depot
 						location_id = 841;
-						break;	
+						break;
+					case 666: //Nova Central Regional Office
+						location_id = 846;
+						break;
 					default:
-
 						location_id = SchoolDB.getSchoolFromDeptId(Integer.parseInt(req.getWorkLocation().trim()) % 1000).getSchoolID();
 					}
 

@@ -1178,6 +1178,62 @@ function openPDeleteApplicant(appid){
 		$('#delete_app_dialog').modal(options);
 		$('#delete_app_dialog').modal('show');
 }
+//open confirm applicant delete box
+function openPDeleteApplicantAjax(aid,therowbutton){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		// now we add the onclick event
+		$("#btn_delete_app_ok_ajax").click(function(event) {
+			event.preventDefault();
+			//window.location="deleteApplicant.html?uid=" + appid;
+			//call ajax to delete
+			$.ajax(
+		 			{
+		 				type: "POST",  
+		 				url: "RemoveApplicantFromSystem.html",
+		 				data: {
+		 					appid: aid
+		 				}, 
+		 				success: function(xml){
+		 					$(xml).find('PROFILE').each(function(){
+		 							if($(this).find("STATUS").text() == "SUCCESS"){
+											//show message
+		 								$("#divsuccess").html($(this).find("DETAILS").text());
+		 								$("#divsuccess").show();
+		 								$("#diverror").hide();
+		 									//deleterow
+		 								$(therowbutton).closest('tr').remove();
+		 							}else{
+		 									//showerrormessage
+		 								$("#diverror").html($(this).find("DETAILS").text());
+		 								$("#divsuccess").hide();
+		 								$("#diverror").show();
+		 									
+		 							}
+		 							$('#delete_app_dialog').modal('hide');
+							});
+
+		 					
+		 				},
+		 				  error: function(xhr, textStatus, error){
+		 				      //show error message
+		 					 $("#diverror").html(textStatus);
+								$("#divsuccess").hide();
+								$("#diverror").show();
+		 				  },
+		 				dataType: "text",
+		 				async: false
+		 			}
+		 		);
+		});
+		
+		$('#delete_app_dialog').modal(options);
+		$('#delete_app_dialog').modal('show');
+}
+
+
 //open approve, reject, reset sublist
 function openSublistDialog(appid,sublistid,ttype){
 	var options = {

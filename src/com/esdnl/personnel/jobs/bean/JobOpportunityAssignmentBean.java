@@ -136,6 +136,9 @@ public class JobOpportunityAssignmentBean implements Serializable {
 		case 843:
 			txt = "Central Botwood Bus Depot";
 			break;
+		case 846:
+			txt = "To Be Determined";
+			break;
 		case 285:
 			txt = "Burin Bus Depot";
 			break;
@@ -275,6 +278,14 @@ public class JobOpportunityAssignmentBean implements Serializable {
 			else if (this.location == 839 || this.location == 840 || this.location == 841) {
 				try {
 					zone = SchoolZoneService.getSchoolZoneBean(4);
+				}
+				catch (SchoolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if (this.location == 846) {
+				try {
+					zone = SchoolZoneService.getSchoolZoneBean(5);
 				}
 				catch (SchoolException e) {
 					// TODO Auto-generated catch block

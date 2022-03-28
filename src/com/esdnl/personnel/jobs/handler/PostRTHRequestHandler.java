@@ -81,6 +81,9 @@ public class PostRTHRequestHandler implements RequestHandler {
 				case 5000: //District Conference Centre
 					location_id = 220;
 					break;
+				case 666: //District Conference Centre
+					location_id = 846;
+					break;
 				default:
 
 					location_id = SchoolDB.getSchoolFromDeptId(Integer.parseInt(rbean.getWorkLocation().trim()) % 1000).getSchoolID();

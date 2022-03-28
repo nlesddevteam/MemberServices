@@ -56,17 +56,22 @@ $("#loadingSpinner").css("display","none");
   <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading">
-	               	<span style="font-size:16px;font-weight:bold;">Deleted Applicants</span>	               	
+	               	<span style="font-size:16px;font-weight:bold;">Deleted Applicants</span>
+	               	
+	               	<br />
+	               	<div class="alert alert-danger" role="alert" id="diverror" style="display:none;text-align:center;">
+
+					</div>
+					<br />
+					<div class="alert alert-success" role="alert" id="divsuccess" style="display:none;text-align:center;">
+
+					</div>	               	
 	               	
 	               	</div>
    
                     <div style="clear:both;"></div>
-    
-										<%if(request.getAttribute("msg")!=null){%>
-	                                      <div class="alert alert-warning" style="text-align:center;">                                       
-	                                          <%=(String)request.getAttribute("msg")%>
-	                                        </div>
-	                                    <%}%>									
+
+	                                    									
 					
                     
                     <div class="table-responsive"> 
@@ -97,7 +102,7 @@ $("#loadingSpinner").css("display","none");
                                      		<td>
                                      		<a onclick="loadingData()" href="viewApplicantProfile.html?sin=${app.SIN}" title="View this Applicant's Profile" class="btn btn-xs btn-primary">PROFILE</a>
                                      		&nbsp;
-                                     		<a onclick="openPDeleteApplicant('${app.SIN}')"  title="Delete Applicant's Profile" class="btn btn-xs btn-primary">DELETE</a>
+                                     		<a onclick="openPDeleteApplicantAjax('${app.SIN}',this)"  title="Delete Applicant's Profile" class="btn btn-xs btn-primary">DELETE</a>
                                      		</td>
                                     	</tr>
 								    	</c:forEach>
@@ -128,7 +133,7 @@ $("#loadingSpinner").css("display","none");
 							<h4 class="modal-title"><span id="spandelete">Are you sure you want to delete this applicant?</span></h4>
 						</div>
 						<div class="modal-footer">
-							<button type="button" id='btn_delete_app_ok'
+							<button type="button" id='btn_delete_app_ok_ajax'
 								class="btn btn-success btn-xs" style="float: left;">Permanently Delete</button>
 							<button type="button" class="btn btn-danger btn-xs"
 								data-dismiss="modal">Close</button>

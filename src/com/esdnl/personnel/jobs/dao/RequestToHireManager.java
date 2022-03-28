@@ -562,6 +562,9 @@ public class RequestToHireManager {
 			case 455: // Janeway Hospital School
 				zoneid = 1;
 				break;
+			case 666: // TBD
+				zoneid = 2;
+				break;
 			case 1000:
 			case 1001:
 			case 1002:

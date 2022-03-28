@@ -85,6 +85,9 @@ public class JobLocationTagHandler extends TagSupport {
 			out.println("<OPTION VALUE=\"-2000\""
 					+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == -2000)) ? " SELECTED" : "")
 					+ ">Western Regional Office</OPTION>");
+			out.println("<OPTION VALUE=\"846\""
+					+ ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == 846)) ? " SELECTED" : "")
+					+ ">To Be Determine</OPTION>");
 
 			out.println("</OPTGROUP>");
 			/*

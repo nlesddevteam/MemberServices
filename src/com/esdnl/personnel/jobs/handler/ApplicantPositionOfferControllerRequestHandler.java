@@ -244,7 +244,9 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 
 								}
 								if (sendBC) {
-									ebean.setTo("budgethireapproval@nlesd.ca");
+									ArrayList<Personnel> finto = new ArrayList<Personnel>();
+									finto.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("POSITION-OFFER-ACCEPTED")));
+									ebean.setTo(finto);
 									ebean.send();
 								}
 							}

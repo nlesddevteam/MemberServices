@@ -346,14 +346,15 @@ input {
 							    <tr>
 							    	<td class="tableTitle">SDS Employee ID:</td>
 								    <td>${SDSID}</td>
-							    	<td class="tableTitle">Years of Service:</td>
+							    	<td class="tableTitle">Service Time:</td>
 							    	<td>
 							    	<% 
-							    		if((empbean != null ) && (empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA) != null)) {
-							    			NumberFormat nf = new DecimalFormat("0.00");
-							    			EmployeeSeniorityBean esb = empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA);
-							    			out.println("PROVINCIAL: " + nf.format(esb.getSeniorityValue1()) + " yrs<br />");
-							    			out.println("OUT OF PROVINCE: " + nf.format(esb.getSeniorityValue2()) + " yrs");
+							    		if((empbean != null )) {
+							    			//NumberFormat nf = new DecimalFormat("0.00");
+							    			//EmployeeSeniorityBean esb = empbean.getSeniority(EmployeeSeniorityBean.Union.NLTA);
+							    			//out.println("PROVINCIAL: " + nf.format(esb.getSeniorityValue1()) + " yrs<br />");
+							    			//out.println("OUT OF PROVINCE: " + nf.format(esb.getSeniorityValue2()) + " yrs");
+							    			out.println(empbean.viewAllSeniorityTeach());
 							    		} 
 							    		else {
 							    			out.println("N/A");
