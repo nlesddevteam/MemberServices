@@ -2,8 +2,8 @@
 <%@ page import="com.awsd.security.*,
 					java.util.*,
 					java.io.*,
-					java.text.*,		
-					java.Util.Date.*,
+					java.text.*,
+					java.util.Date.*,					
 					com.esdnl.webupdatesystem.tenders.bean.*,					
 					com.esdnl.webupdatesystem.tenders.dao.*,
 					com.esdnl.webupdatesystem.tenders.constants.*, 
@@ -195,7 +195,7 @@ You can sort by clicking on the column header or search using the search tool be
 					                                  					<div style="background-color:Green;color:White;font-weight:bold;text-align:center;width:100%;">NEW</div>
 					                                  					<div style="background-color:none;color:Black;font-weight:bold;text-align:center;width:100%;">OPEN</div>
 				                                  					</c:when> 				                                  					                 
-				                                  					<c:when test="${((daysToClose lt 0) or ((daysToClose eq 0) and (todayHour gt 14 or (todayHour eq 14 and todayMinute gt 29))))}">											
+				                                  					<c:when test="${((daysToClose lt 0) or ((daysToClose lt 0) and (todayHour gt 14 or (todayHour eq 14 and todayMinute gt 29))))}">											
 															        	<div style="background-color:#DC143C;color:White;font-weight:bold;text-align:center;width:100%;">CLOSED</div>
 				                                  					</c:when>	
 				                                  					<c:when test="${(daysToClose le 2) and (daysToClose ge 0)}">											
