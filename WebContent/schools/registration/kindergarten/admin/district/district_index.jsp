@@ -300,7 +300,7 @@
 		<div class="card">
 							  <div class="card-header"><b>ADD REGISTRATION PERIOD:</b></div>
 							  <div class="card-body">
-							 <form method='post' action="<c:url value='/MemberServices/schools/registration/kindergarten/admin/district/addKindergartenRegistrationPeriod.html'/>">
+							 <form method='post' action="<c:url value='/schools/registration/kindergarten/admin/district/addKindergartenRegistrationPeriod.html'/>">
 														
 							<b>School Year:</b>
 							<sreg:RegistrationSchoolYearsDDL id='ddl_SchoolYear' offset='2' cls="form-control"/>
@@ -346,7 +346,7 @@ $('document').ready(function(){
       });
          
          $('#txt_ConfirmationDeadlineDate').datetimepicker({
-        	 format: 'DD/M/YYYY'  
+        	 format: 'DD/MM/YYYY'  
         
      });
          
