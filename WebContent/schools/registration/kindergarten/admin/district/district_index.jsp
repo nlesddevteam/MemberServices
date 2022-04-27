@@ -346,7 +346,7 @@ $('document').ready(function(){
       });
          
          $('#txt_ConfirmationDeadlineDate').datetimepicker({
-        	 format: 'DD/MM/YYYY'  
+        	 format: 'DD/MM/YYYY hh:mm A'  
         
      });
          
