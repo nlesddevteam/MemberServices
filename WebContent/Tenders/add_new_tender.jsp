@@ -320,7 +320,7 @@
 		
       		<div class="col-lg-5 col-12">
     			<b>PO Number:</b>  
-  				<input type="text" class="form-control" id="po_number" name="po_number" maxlength="10" placeholder="Enter PO Number 00 0000" required></input>  			
+  				<input type="text" class="form-control" id="po_number" name="po_number" maxlength="10" placeholder="Enter PO Number 00 00000" required></input>  			
   				<div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 			
@@ -427,7 +427,7 @@
 <script>
 $(document).ready(function(){	
 	
-	 $('#po_number').mask('00 0000');	 
+	 $('#po_number').mask('00 #0000');	 
 	 $('#tender_number').mask('00-000S');	 
 	
 	var pageWordCountConf = {
