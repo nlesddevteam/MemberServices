@@ -973,7 +973,7 @@ input {
  <% } %> 
                                    
 <!-- 10. POSITIONS APPLIED FOR --------------------------------------------------------------->
-	
+<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">	
 <div class="panel-group no-print" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section10">   
 	               	<div class="panel-heading"><b>Positions Applied</b></div>
@@ -1015,7 +1015,7 @@ input {
 					</div>
   </div>                  
                                 
-
+</esd:SecurityAccessRequired>
 <!-- OPTIONS --------------------------------------------------------------->    
 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-OTHER-MANAGER-VIEW">                        
 	
