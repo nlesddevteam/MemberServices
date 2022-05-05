@@ -1,26 +1,15 @@
 <div style='padding-bottom:8px; text-align:left;'>
 <p>
-	Registration Status: <b>WAITLISTED.</b>
+	Registration Status: <b>WAITLISTED (French Immersion).</b>
+	
 </p>
 
 <p>
-Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year was 
-received at <b>$kr.registrationDate</b>. Your registration application is currently waitlisted.  Your child will be registered for English Kindergarten $kr.registration.schoolYear at their neighbourhood school.
-</p>
+Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year was received at <b>$kr.registrationDate</b>. </p>
 
-<p>
-This registration is contingent upon validation of the following information for your child:
-<ul> 
-<li>Name</li>
-<li>Date of Birth</li>
-<li>MCP Number</li>
-<li>Current Address <i>(Preferred method for verifying address is a utility bill, e.g., power, cable, oil or phone.  Other forms of proof of address may be accepted at the discretion of the school administrator.)</i></li>
-</ul>
-</p>
-<p> 
-Due to COVID-19 guidelines, families are unable to provide the required documentation in person .  In order to ensure your privacy, we ask that you do not send pictures or scanned copies of documents to 
-the school at this time. A school representative will be in contact with you at a later time to complete this process.
-</p>
+<p>Your registration application is currently waitlisted for French Immersion.</p> 
+
+<p>Your child will be registered for English Kindergarten $kr.registration.schoolYear at their neighbourhood school.</p>
 
 <p>
 Thank You,<br /><br />
