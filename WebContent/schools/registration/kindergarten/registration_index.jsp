@@ -136,7 +136,7 @@
 				
 							
 				<div id='add-registrant-form' style='width:100%; display:inline;'>
-					<form method='post' action="<c:url value='/schools/registration/kindergarten/addKindergartenRegistrant.html'/>" class="was-validated">
+					<form autocomplete="off" method='post' action="<c:url value='/schools/registration/kindergarten/addKindergartenRegistrant.html'/>" class="was-validated">
 						<input type='hidden' name='registration_id' value='${ap.registrationId}' />
 						
 						<!-- SIBLING CHART -->
