@@ -207,7 +207,8 @@
 						<option value="Clerk I">Clerk I</option>
 						<option value="Clerk II">Clerk II</option>
 						<option value="Clerk III">Clerk III</option>
-						<option value="Clerk IV">Clerk IV</option>			
+						<option value="Clerk IV">Clerk IV</option>		
+						<option value="Clerk Typist">Clerk Typist</option>		
 						<option value="Comprehensive School Health Behavioral Specialist">Comprehensive School Health Behavioral Specialist</option>					
 						<option value="Comptroller/Director of Financial Services">Comptroller/Director of Financial Services</option>
 						<option value="Computer Programmer Analyst">Computer Programmer Analyst</option>
@@ -400,6 +401,7 @@
 							<option value="Science and Technology">Science and Technology</option>
 							<option value="Student Assistants">Student Assistants</option>
 							<option value="Student Assistants/Teachers">Student Assistants/Teachers</option>
+							<option value="Student Assistants/Teachers TCAS">Student Assistants/Teachers TCAS</option>
 							<option value="Student Assistants/Teachers (Schools A-E)">Student Assistants/Teachers (Schools A-E)</option>
 							<option value="Student Assistants/Teachers (Schools F-Le)">Student Assistants/Teachers (Schools F-Le)</option>
 							<option value="Student Assistants/Teachers (Schools Lf-Sp)">Student Assistants/Teachers (Schools Lf-Sp)</option>
@@ -422,7 +424,7 @@
 							<option value="Technology/PowerSchool">Technology/PowerSchool</option>
 							<option value="Transportation">Transportation</option>
 							<option value="Visually Impaired">Visually Impaired</option>
-							<option value="Writing">Writing</option>
+							<option value="Writing">Writing</option> 
 	                    </select>
 	             </div>
 	             </div>
@@ -445,6 +447,7 @@
 							 <option value="Central">Central</option>
 							 <option value="Labrador">Labrador</option>
 							 <option value="Labrador/Burin">Labrador/Burin</option>
+							 <option value="Labrador/Burin/CUPE 1560">Labrador/Burin/CUPE 1560</option>
 							 <option value="Labrador/Central">Labrador/Central</option>
 							 <option value="Provincial">Provincial</option>
 							 <option value="Vista">Vista</option>

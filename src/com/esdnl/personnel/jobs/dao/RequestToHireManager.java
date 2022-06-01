@@ -929,6 +929,9 @@ public class RequestToHireManager {
 			break;	
 		case "HR"://Labrador
 			divisionid=6;
+			break;
+		case "FIN"://Labrador
+			divisionid=8;
 			break;	
 		default://nlesd
 			divisionid=6;
@@ -1171,16 +1174,18 @@ public class RequestToHireManager {
 			while (rs.next()) {
 				int schoolid =  rs.getInt("WORK_LOCATION")%1000;
 				if(region.equals("BURIN")) {
-					if(burinschools.contains(schoolid)) {
+					if(burinschools.contains(schoolid) || burinschools.contains(rs.getInt("WORK_LOCATION")) ) {
 						beans.add(createRequestToHireBean(rs));
 					}
 				}else if(region.equals("VISTA")) {
-					if(vistaschools.contains(schoolid)) {
+					if(vistaschools.contains(schoolid) || vistaschools.contains(rs.getInt("WORK_LOCATION"))) {
 						beans.add(createRequestToHireBean(rs));
 					}
 				}else {
-					
-					beans.add(createRequestToHireBean(rs));
+					if((!vistaschools.contains(schoolid) && !vistaschools.contains(rs.getInt("WORK_LOCATION")))
+							 && (!burinschools.contains(schoolid) && !burinschools.contains(rs.getInt("WORK_LOCATION")))) {
+						beans.add(createRequestToHireBean(rs));
+					}
 				}
 			}
 		}
