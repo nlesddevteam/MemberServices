@@ -87,7 +87,7 @@
 						        <td><%=reqs[i].getTitle()%></td>
 						        <td><%=reqs[i].getLocation().getLocationDescription()%></td>
 						        <td><span style="text-transform:capitalize;"><%=((history != null)?history.getPersonnel().getFullNameReverse():"")%></span></td>
-						        <td><%=history.getFormatedHistoryDate()%></td>
+						        <td><%=history == null? "" : history.getFormatedHistoryDate() %></td>
 	                   <td class="no-print"><a onclick="loadingData()" href="viewAdRequest.html?rid=<%=reqs[i].getId()%>" class="btn btn-xs btn-warning">VIEW</a></td>
 						      </tr>
 						    <% } %>

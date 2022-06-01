@@ -346,7 +346,7 @@ public class RequestToHireBean {
 			dString="HR";
 			break;
 		case 8:
-			dString="PBS";
+			dString="FIN";
 			break;	
 		default:
 			dString="";

@@ -212,8 +212,10 @@ public class DeleteApprovedRequestToHireRequestHandler extends RequestHandlerImp
 			if(addcomptroller) {
 				ArrayList<Personnel> finto = new ArrayList<Personnel>();
 				finto.addAll(Arrays.asList(PersonnelDB.getPersonnelByRole("RTH-ADDITIONAL")));
-				ebean.setTo(finto);
-				ebean.send();
+				for (Personnel p : finto) {
+					ebean.setTo(p.getEmailAddress());
+					ebean.send();
+				}
 			}
 				
 		} catch (SchoolException e) {
