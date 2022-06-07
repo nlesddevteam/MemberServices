@@ -144,6 +144,21 @@ if(${sch ne null}) {
 	  	${sch ne null ? sch.schoolName : ""} Kinderstart/Kindergarten Registrants
   	</div>
   	
+       <c:if test="${krp ne null}">
+<div class="card">
+							  <div class="card-header"><b>ADD REGISTRANT:</b></div>
+							  <div class="card-body">		
+									
+		You can add a new registrant to the most recent registration period by clicking the link below. Registrations for years past cannot be added as the data may have already been merged with PowerSchool.<br/><br/>
+		<div align="center">
+		<a onclick="loadingData();" href="/MemberServices/schools/registration/kindergarten/admin/school/addKindergartenRegistrant.html?id=${ krp.registrationId }" class='btn btn-sm btn-primary'>Add New Registrant</a>
+		</div>
+		
+		
+						</div>
+		</div>       
+       <br/><br/>
+       </c:if>
        
 		
 		<div class="card">
@@ -162,9 +177,7 @@ if(${sch ne null}) {
 									</div>
 									<br/><br/>
 									<div align="center">
-									<c:if test="${krp ne null}">
-											<a onclick="loadingData();" href="/MemberServices/schools/registration/kindergarten/admin/school/addKindergartenRegistrant.html?id=${ krp.registrationId }" class='btn btn-sm btn-primary'>Add New Registrant</a>
-									</c:if>
+									
 									<input id="viewReg" onclick="loadingData();" type='submit' value='View Registrants' class='btn btn-danger btn-sm' />
 									</div>		
 									</form>
@@ -173,7 +186,8 @@ if(${sch ne null}) {
 		</div>
 		
 		
-		<hr>
+		
+		
 		
 		<c:choose>
 		<c:when test="${sy ne null}">
