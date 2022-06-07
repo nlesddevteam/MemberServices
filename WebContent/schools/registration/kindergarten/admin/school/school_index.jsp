@@ -192,7 +192,7 @@ if(${sch ne null}) {
 		<c:choose>
 		<c:when test="${sy ne null}">
 					<div class="siteHeaderBlue">${sy} ${ss ne null ? ss.text : ""}  <span style='color:red;'>(${ fn:length(registrants)})</span></div><br/>
-					Below is the list of registratnts for ${sy} sorted by Student Name. You can sort by clicking on any column header, or search using the search tool at right. You can also <b>Print</b> the list, or export the list to Excel or CSV data. To print, use the Print option below - <b>DO NOT USE</b> the browser file, print feature.<br/>
+					Below is the list of registrants for ${sy} sorted by Student Name. You can sort by clicking on any column header, or search using the search tool at right. You can also <b>Print</b> the list, or export the list to Excel or CSV data. To print, use the Print option below - <b>DO NOT USE</b> the browser file, print feature.<br/>
 		</c:when>
 		<c:otherwise>
 					<div class="siteHeaderBlue">No Registrants Listed</div>
