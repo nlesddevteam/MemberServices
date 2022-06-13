@@ -109,32 +109,82 @@
 
 	
 	<div class="siteSubHeaderBlue">RATES PER KILOMETER:</div>
-	
+	Below are the kilometer rates as set by the Provincial Government <a href="https://www.gov.nl.ca/exec/tbs/working-with-us/auto-reimbursement/" target="_blank">Automobile Reimbursement Rates for Using a Private Vehicle at Work</a>.
 	<c:if test="${todayDate gt expiredDate}">
 	<script>
 	$("#claimRateMessage").html("<span class='blink-me' style='float:left;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;'><i class='fas fa-exclamation-triangle'></i></span><b>PLEASE NOTE TRAVEL RATES HAVE EXPIRED</b><br/>Please wait until the official government rates have been approved before updating/editing a claim. You will NOT be able to add or edit a claim until new rates are assigned.");
 	$("#claimRateMessage").css("display","block");
 	</script>
 	</c:if>
-	
-	<b>Base Rate:</b> $<%=rates.get(0).getBaseRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if><br/>		 
-	<b>Approved Rate:</b>$<%=rates.get(0).getApprovedRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if>
 	<br/><br/>
+	
+	<table class="table table-bordered table-striped table-sm" style="padding-top:5px;width:100%;max-width:350px;font-size:11px;">
+	<tr style="background-color:#6495ED;color:White;font-weight:bold;">
+	<th>TYPE</th>
+	<th>RATE</th>	
+	</tr>
+	<tr>
+	<td>BASE</td>
+	<td>$<%=rates.get(0).getBaseRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if></td>
+	</tr>
+	<tr>
+	<td>APPROVED</td>
+	<td>$<%=rates.get(0).getApprovedRate() %> <c:if test="${todayDate gt expiredDate}"><span style="color:Red;">EXPIRED</span></c:if></td>
+	</tr>
+	</table>
+	
 	Above  Government Rates are effective <b><%=rates.get(0).getEffectiveStartDateFormatted() %></b> thru to <b><%=rates.get(0).getEffectiveEndDateFormatted() %></b>. 
 	<br/><br/>
 	All employees are set at the Base rate by default. Positions that have been pre-approved will be set at the Approved rate automatically but those who are not in pre-approved positions require approval from Corporate Services.
 	If you need to apply for the Approved rate, please contact Susan Hussey (Email: <a href="mailto:susanhussey@nlesd.ca?subject=Travel Approved Rate Request">susanhussey@nlesd.ca</a> &middot; Tel: 709-758-2382).
 	
+	<br/><br/>
+	<div class="siteSubHeaderBlue">MEAL RATES:</div>
+	Below are the maximum meals rates you are allowed to claim per day as outlined by the <a href="https://www.gov.nl.ca/exec/tbs/working-with-us/meal-rates/#rates" target="_blank">Provincial Government Meal Rates Policy</a>.
 	
-	
-	
-	
-		<br/><br/>
+	<br/><br/>
+	<table class="table table-bordered table-striped table-sm" style="width:100%;max-width:640px;font-size:11px;">
+	<tr style="background-color:#6495ED;color:White;font-weight:bold;">
+	<th>LOCATION</th>
+	<th>BREAKFAST</th>
+	<th>LUNCH</th>
+	<th>DINNER</th>
+	<th>TOTAL</th>
+	</tr>
+	<tr>
+	<td>NL</td>
+	<td>$8.00</td>
+	<td>$14.00</td>
+	<td>$21.70</td>
+	<td>$43.70</td>
+	</tr>
+	<tr>
+	<td>Other Provinces</td>
+	<td>$10.15</td>
+	<td>$16.40</td>
+	<td>$23.65</td>
+	<td>$50.20</td>
+	</tr>
+	<tr>
+	<td>USA</td>
+	<td>$10.15 (US)</td>
+	<td>$16.40 (US)</td>
+	<td>$23.65 (US)</td>
+	<td>$50.20 (US)</td>
+	</tr>
+	<tr>
+	<td>Other</td>
+	<td>$11.25</td>
+	<td>$17.95</td>
+	<td>$26.00</td>
+	<td>$55.20</td>
+	</tr>
+	</table>
+	<br/>
 		<div class="siteSubHeaderBlue">YOUR YEAR TO DATE (YTD) TOTALS:</div>
 <b>YTD Total km (<%=(Calendar.getInstance()).get(Calendar.YEAR)%>):</b> 
 
-  								<%
-                                  if(usr.getPersonnel().getYearToDateKilometerUsage()<9000) { %>
+  								<% if(usr.getPersonnel().getYearToDateKilometerUsage()<9000) { %>
                                 	  <%=df.format(usr.getPersonnel().getYearToDateKilometerUsage())%>  kms
                                  <%  } else { %>
                                 	  <span style="color:Red;">

@@ -327,15 +327,16 @@ Iterator p_iter = null;
                     </li>
                     END HIDE TRAVEL BUDGETS -->
                    
-                     <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-users"></i> KM Rates</a>
+                     <li><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-fw fa-users"></i> KM &amp; Meal Rates</a>
                         <ul class="dropdown-menu">
                         
                             
-                            <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('listKmRates.html');return false;"><i class="fa fa-fw fa-file-text-o"></i> List Current Rates</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addKmRate.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Set New Rate</a></li>              
-                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('travel_rates.jsp');return false;"><i class="fa fa-fw fa-file-text-o"></i> View/Set Approved Rates</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('listKmRates.html');return false;"><i class="fa fa-fw fa-file-text-o"></i> Current KM Rates</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('addKmRate.html');return false;"><i class="fa fa-fw fa-user-plus"></i> Set New KM Rate</a></li>              
+                             <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('travel_rates.jsp');return false;"><i class="fa fa-fw fa-file-text-o"></i> Set User KM Rates</a></li>
                             <li class="dropdown-divider"></li>              
                             <li><a class="dropdown-item" href="https://www.gov.nl.ca/exec/hrs/working-with-us/auto-reimbursement/" target="_blank"><i class="fa fa-fw fa-file-text-o"></i> Gov NL Rates</a></li>
+                        <li><a class="dropdown-item" href="https://www.gov.nl.ca/exec/tbs/working-with-us/meal-rates/#rates" target="_blank"><i class="fa fa-fw fa-file-text-o"></i> Gov Meal Rates</a></li>
                         </ul>
                     </li>
                     
