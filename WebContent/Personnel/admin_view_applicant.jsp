@@ -1103,7 +1103,12 @@ input {
 	
 					<div class="table-responsive"> 
       			 	       
-      			 	       
+      			 	    <div class="alert alert-warning">
+      			 	    NOTE: Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference. 
+      			 	    Teachers cannot complete references for other teachers. If an intern requires a reference from a teacher, 
+      			 	    they can select the TLA/External option in the reference type dropdown.
+      			 	    
+      			 	    </div>   
 							  <% if((refs != null) && (refs.length > 0))
                               		{ %>
                               <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
