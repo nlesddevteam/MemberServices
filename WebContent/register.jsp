@@ -31,9 +31,10 @@
   
   if(form == null && preload == null) {
   	throw new RuntimeException("How did you get here!!");
-  }
+  } 
   
   preload = preload.getJSONObject("user");
+  
 %> 
   
 
@@ -326,8 +327,9 @@
       history.go(1);
     </script>
     <form id='frm-register' action="memberRegistration.html" method="POST">
-    <CENTER>
-    	<br /><br />
+      
+    	<br/><br/>
+    	<div align="center">
       <table width="770" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td valign="top">
@@ -351,8 +353,8 @@
       <table width="770" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td width="770" valign="top">
-            <center>
-              <table width="600" cellpadding="0" cellspacing="0" bgcolor="#666666" border="0">
+           
+              <table width="600" cellpadding="0" cellspacing="0" bgcolor="#666666" border="0" align="center">
                 <tr>
                   <td width="100%">
                     <table width="100%" cellpadding="4" cellspacing="1" border="0">
@@ -367,7 +369,7 @@
                         </td>
                         <td width="*" bgcolor="#FFFFFF" colspan="1" valign="middle" align="left">
                         	<input type="hidden" id="firstname" name="firstname" value='<%= form != null ? form.get("firstname"): preload != null ? preload.getString("firstname") : "" %>' />
-                          <input type="text" size="30" value='<%= form != null ? form.get("firstname"): preload != null ? preload.getString("firstname") : "" %>' disabled />
+                          <input type="text" size="30" value='<%= form != null ? form.get("firstname"): preload != null ? preload.getString("firstname") : "" %>' />
                         </td>
                       </tr>
                       <tr>
@@ -376,7 +378,7 @@
                         </td>
                         <td width="*" bgcolor="#f4f4f4" colspan="1" valign="middle" align="left">
                         	<input type="hidden" id="lastname" name="lastname" value='<%= form != null ? form.get("lastname"): preload != null ? preload.getString("lastname") : "" %>' />
-                          <input type="text" size="30" value='<%= form != null ? form.get("lastname"): preload != null ? preload.getString("lastname") : "" %>' disabled />
+                          <input type="text" size="30" value='<%= form != null ? form.get("lastname"): preload != null ? preload.getString("lastname") : "" %>' />
                         </td>
                       </tr>
                       <tr>
@@ -417,7 +419,7 @@
                   </td>
                 </tr>
               </table>
-            </center>
+            
           </td>
         </tr>
         <tr id='msg'>
@@ -433,8 +435,7 @@
               onMouseOver="src='images/register_02.jpg'" 
               onMouseOut="src='images/register_01.jpg'" 
               onMouseDown="src='images/register_03.jpg'" 
-              onMouseUp="src='images/register_02.jpg'"><BR><BR>
-            <img src="images/assistance_2.gif"><BR>
+              onMouseUp="src='images/register_02.jpg'">
           </td>
         </tr>
       </table>
@@ -454,7 +455,7 @@
           </td>
         </tr>
       </table>
-    </CENTER>
+   </div>
     </form>
   </body>
 </html>
