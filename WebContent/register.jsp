@@ -377,8 +377,8 @@
                           <span class="text3">Last Name</span><BR>
                         </td>
                         <td width="*" bgcolor="#f4f4f4" colspan="1" valign="middle" align="left">
-                        	<input type="hidden" id="lastname" name="lastname" value='<%= form != null ? form.get("lastname"): preload != null ? preload.getString("lastname") : "" %>' />
-                          <input type="text" size="30" value='<%= form != null ? form.get("lastname"): preload != null ? preload.getString("lastname") : "" %>' />
+                        
+                          <input  id="lastname" name="lastname" type="text" size="30" value='<%= form != null ? form.get("lastname"): preload != null ? preload.getString("lastname") : "" %>' />
                         </td>
                       </tr>
                       <tr>
