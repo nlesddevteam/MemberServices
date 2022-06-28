@@ -264,6 +264,7 @@
 						<option value="Manager of Accounting and Financial Operations">Manager of Accounting and Financial Operations</option>
 						<option value="Manager of ATIPP">Manager of ATIPP</option>
 						<option value="Manager of Accounts Payable">Manager of Accounts Payable</option>
+						<option value="Manager of Accounts Payable and Receivables">Manager of Accounts Payable and Receivables</option> 
 						<option value="Manager of Budgeting">Manager of Budgeting</option>
 						<option value="Manager of Communications">Manager of Communications</option>						
 						<option value="Manager of Contracted Student Transportation">Manager of Contracted Student Transportation</option>
@@ -311,6 +312,7 @@
 						<option value="Senior Administrative Officer">Senior Administrative Officer</option>
 						<option value="Senior Education Officer">Senior Education Officer</option>
 						<option value="Senior Manager of Student Transportation">Senior Manager of Student Transportation</option>
+						<option value="Senior Manager of Contracted Student Transportation">Senior Manager of Contracted Student Transportation</option>
 						<option value="Senior Programmer Analyst">Senior Programmer Analyst</option>
 						<option value="Senior Systems Analyst">Senior Systems Analyst</option>
 						<option value="Solicitor">Solicitor</option>
@@ -338,6 +340,7 @@
 	                    <select id="posSector" name="posSector" class="form-control">
 	                        <option value="">---- Please Select (If Necessary) ----</option>
 							<option value="">Not Applicable</option>
+							<option value="Alternate Service and Programs">Alternate Service and Programs</option>
 							<option value="ASL Immersion Program">ASL Immersion Program</option>
 	                    	<option value="Auditory Verbal Therapist">Auditory Verbal Therapist</option>
 							<option value="Autism">Autism</option>
