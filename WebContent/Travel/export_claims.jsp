@@ -39,6 +39,16 @@
 		      changeYear: true, //this option for allowing user to select from year range
 		      dateFormat: "dd/mm/yy"
 		 });
+    	
+    	$('#submit').click(function() {
+            if (!$('#start_date').val()) {
+                alert('Please enter start date.');
+                return false;
+            } else {
+            	loadingData();
+            }
+        })
+    	
     });
     </script>
 
@@ -50,13 +60,15 @@
  Click on the box below to select starting date to export data from:<br/><br/>
              <div class="pageBodyText">    
       
-      <input  class="form-control" type="text" name="start_date" id="start_date" readonly style="max-width:250px;" placeholder="Select Date for File Export"><br/>
+     <input  class="form-control" type="text" name="start_date" id="start_date" readonly style="max-width:250px;" placeholder="Select Date for File Export"><br/>
       
-      <input type="checkbox" id="include_exported" name="include_exported"> Include already exported claims?
+      <input type="checkbox" id="include_exported" name="include_exported"> Include already exported claims?<br/>
+      
+      <input type="checkbox" id="dataTableExcel" name="dataTableExcel"> Build Excel/CVS ready Table? (This will NOT export a SDS .dat file. Uncheck this option if you wish to do old way.)
       <br/><br/>
                       
 				  <%if((request.getAttribute("RESULT") == null) && !no_permission){%>
-				                 <button type="submit" class="btn btn-sm btn-success" title="Export Data"  onclick="loadingData();">Export Data File</button>                                        
+				                 <button id="submit" type="submit" class="btn btn-sm btn-success" title="Export Data">Export Data File</button>                                        
 				                 <a href="index.jsp" class="btn btn-sm btn-danger" title="Cancel Export"  onclick="loadingData();">Cancel Export</a>
 				 <%}else{%>
 				                  <a href="index.jsp" class="btn btn-sm btn-danger" title="Cancel Export"  onclick="loadingData();">Cancel Export</a>
