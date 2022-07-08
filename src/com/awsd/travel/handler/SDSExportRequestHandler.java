@@ -77,6 +77,20 @@ public class SDSExportRequestHandler extends RequestHandlerImpl {
 							claims = TravelClaimDB.getPaidClaimsNotExported(sd);
 
 						try {
+							
+							if (request.getParameter("dataTableExcel") != null) {
+							
+							//Just export the data for printing and excel if ticked. No Data file for SDS saved.
+								request.setAttribute("msgok", "SUCCESS: Export Excel successfull.");
+								request.setAttribute("RESULT", "SUCCESS");
+								request.setAttribute("TRAVELCLAIMS", claims);
+								request.setAttribute("EXCELCLAIMS", claims);
+								path = "data_export_table.jsp";	
+								
+							} else {
+							
+							//For now, keep the SDS data export dat file in case they need it.
+								
 							iter = claims.iterator();
 
 							sds = new SimpleDateFormat("yyyyMMdd");
@@ -151,12 +165,14 @@ public class SDSExportRequestHandler extends RequestHandlerImpl {
 							request.setAttribute("TRAVELCLAIMS", claims);
 							path = "sds_export_report.jsp";
 						}
+						}
 						catch (Exception e) {
 							e.printStackTrace(System.err);
 							request.setAttribute("msgerr", "ERROR: Could NOT export paid claims.");
 							request.setAttribute("RESULT", "FAILED");
 							path = "export_claims.jsp";
 						}
+						
 					}
 					else {
 						request.setAttribute("msgerr", "ERROR: Could NOT export paid claims (START DATE IS NULL).");

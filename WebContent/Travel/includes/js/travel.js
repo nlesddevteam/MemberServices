@@ -1355,7 +1355,7 @@ function ajaxRequestInfo(sletter)
  					$(".claimsTable tbody").append(newrow);
  					
  					$("#claims-table").DataTable({ 					
-						  "order": [[ 0, "asc" ]],
+						  "order": [[ 0, "desc" ]],
 						   "responsive": true,
 						  dom: 'Blfrtip',
 					        buttons: [			        	

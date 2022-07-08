@@ -28,7 +28,7 @@ input { border:1px solid silver;}
 
 	<img class="pageHeaderGraphic" src="/MemberServices/Travel/includes/img/approved_stamp.png" style="max-width:200px;" border=0/> 
 		<div class="siteHeaderBlue">Travel Claims Approved For Payment</div>
-		Below are a list of claims approved for payment sorted by approved date. 
+		Below are a list of claims approved for payment sorted by approved date, oldest first. 
 		<br/>To sort by another column, simply click on the column header or use the search.
 			<br/><br/>	
 
