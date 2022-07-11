@@ -120,7 +120,7 @@
   		function startPrint() {
   		$(".printTable").css("display","block");
   		 $(".excelTableView").css("display","none");
-  		  $(".msginfo2").css("display","block").delay(4000).fadeOut();;
+  		 $(".msginfo2").css("display","block"); 
   		    setTimeout(function () {  		    	
   		    	loadPrint(); 		    	
   		    }, 4000);
@@ -131,6 +131,7 @@
   		
   		
   		function loadPrint() {
+  		 $(".msginfo2").css("display","none");
   		    window.print();
   		  $(".msgok").css("display","block").delay(5000).fadeOut();
   		    setTimeout(function () {  		    	
@@ -150,13 +151,15 @@
 			
 			
 			$('.excelTable').DataTable( {
-			    dom: 'Bfrtip',
+			    dom: 'Blfrtip',
 			    "order" : [[0,"asc"]],
 			    buttons: [	
 			    	'excel',			    	
 			        'csv',
 			        'print'
-			    ]
+			    ],
+			    "lengthMenu": [[10, 25, 50, 100, 250, -1], [10, 25, 50, 100, 250, "All"]]	
+			    
 			} );
 			
 			
@@ -175,9 +178,9 @@
  
  <div style="padding:10px;font-size:12px;">
  
-<div class="msgok alert alert-success" style="display:none;font-weight:bold;">Closing Print Job.<br/>You will be redirected. Please Wait....</div>
-<div class="msginfo1 alert alert-info" style="display:block;font-weight:bold;">Building data file and loading data. This process is automatic so please wait.</div>
-<div class="msginfo2 alert alert-info" style="display:none;font-weight:bold;">Loading data for print job. This process is automatic so please wait until PRINT DIALOG opens..</div>
+<div class="msgok alert alert-success" style="display:none;font-weight:bold;">Closing Print Job.<br/>You will be redirected. Please Wait...</div>
+<div class="msginfo1 alert alert-info" style="display:block;font-weight:bold;">Building data table file. This process may take a few minutes, please wait...</div>
+<div class="msginfo2 alert alert-info" style="display:none;font-weight:bold;">Loading data for print job. Please wait for the PRINT DIALOG to open.</div>
 
 <div class="excelTableView">
 <script>$(".msginfo1").css("display","block");</script>
@@ -186,17 +189,18 @@
 
 To export/download this claim data in an Excel or CVS format, please select one of the following options below left atop the table. 
 After clicking, your browser will start the download process of the xls file to your default downloads directory. You can also print this table. <br/><br/>
-If you wish, you can Print these claims individually using the RED link at bottom of this table. (Select Save/Print as PDF to save as file when print dialog opens. Please be patient.)
+If you wish, you can Print these claims individually using the blue link at bottom of this table. (Select Save/Print as PDF to save as file when print dialog opens. Please be patient.)
 <br/><br/>
-<table class="excelTable table table-striped" width="100%" style="font-size:11px;background-color:White;padding-top:10px;">
+<table class="excelTable table table-sm table-striped" width="100%" style="font-size:11px;background-color:White;padding-top:10px;">
 
-<thead>
+<thead style="background-color:black;color:white;">
 <tr>
-<td width="10%">INVOICE #</td>
-<td width="10%">PROCESSED</td>
-<td width="10%">VENDOR #</td>
-<td width="15%">NAME</td>
-<td width="30%">DESCRIPTION</td>
+<td width="8%">INVOICE #</td>
+<td width="5%">PROCESSED</td>
+<td width="8%">VENDOR #</td>
+<td width="12%">NAME</td>
+<td width="17%">ADDRESS</td>
+<td width="25%">DESCRIPTION</td>
 <td width="5%">TOTAL</td>
 <td width="5%">GST</td>
 <td width="15%">GL CODE</td>
@@ -211,11 +215,12 @@ If you wish, you can Print these claims individually using the RED link at botto
       
       
     <tr>
-    <td width="10%">TC<%=claim.getClaimID() %></td>
-    <td width="10%"><%=sdf.format(claim.getPaidDate()) %></td>
-    <td width="10%"><%=claim.getPersonnel().getSDSInfo().getVendorNumber().replaceAll("-", "")%></td>
-    <td width="15%"><%=claim.getPersonnel().getFullNameReverse().toUpperCase() %></td>
-    <td width="30%">      
+    <td width="8%">TC<%=claim.getClaimID() %></td>
+    <td width="5%"><%=sdf.format(claim.getPaidDate()) %></td>
+    <td width="8%"><%=claim.getPersonnel().getSDSInfo().getVendorNumber().replaceAll("-", "")%></td>
+    <td width="12%"><%=claim.getPersonnel().getFullName().toUpperCase() %></td>
+    <td width="17%"><%=claim.getPersonnel().getProfile().getStreetAddress() != null ? claim.getPersonnel().getProfile().getStreetAddress() : "N/A" %><br/><%=claim.getPersonnel().getProfile().getCommunity() %>, <%=claim.getPersonnel().getProfile().getProvince() %> &middot; <%=claim.getPersonnel().getProfile().getPostalCode() %></td>
+    <td width="25%">      
       	<%if(claim instanceof PDTravelClaim){%>
 	      	<%=sdf_title.format(((PDTravelClaim)claim).getPD().getStartDate())%> PD Claim<br/> 
 	      	<%=((PDTravelClaim)claim).getPD().getTitle().replace("\"", "")%><br/>          				        				
@@ -261,7 +266,7 @@ If you wish, you can Print these claims individually using the RED link at botto
 </table>
 <br/>
 <div align="center">If you wish to print these claims into one file with one full claim with all details per page, please use the Print below. If just the table above, use the Print atop left. The Excel and CSV links above will initiate a file download to open in Excel.<br/><br/>
-<a class="btn btn-xs btn-info no-print" title="Print Claims" href="#" onclick="startPrint();return false;">Print These Claim Details</a> <a class="btn btn-xs btn-danger no-print" title="Back" href="index.html">Back</a></div>
+<a class="btn btn-xs btn-primary no-print" title="Print Claims" href="#" onclick="startPrint();return false;">Print These Claim Details</a> <a class="btn btn-xs btn-danger no-print" title="Back" href="index.html">Back</a></div>
 <br/><br/>
 </div>
 
