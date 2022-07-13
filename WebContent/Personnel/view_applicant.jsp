@@ -117,6 +117,20 @@ input {
 	<div style="font-size: 30px; padding-top: 10px; color: rgb(0, 128, 0, 0.3); font-weight: bold; text-align: left;"><%=profile.getFullNameReverse()%></div>
 	<p>
 	<span style="color:Grey;font-weight:bold;">TEACHING/TLA/EDUCATIONAL ADMIN PROFILE</span><br/>
+	
+	<div id="COENotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
+	Your profile is currently missing the <b>Code of Ethics and Conduct Declaration Certificate</b>. 
+	Please upload this document as soon as possible to section 10. If you have already uploaded this certificate, please make sure it is uploaded as the correct type as 
+	<i>Code of Ethics and Conduct Declaration</i>.
+	</div>
+	
+	<div id="COVNotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: COVID-19 Proof of Vaccination</b> ***<br/><br/>
+	Your profile is currently missing the proof of <b>Covid-19 Vaccination</b> documentation.  
+	Please upload this document as soon as possible. If you have already uploaded this documentation please make sure it is uploaded as the correct type as 
+	<i>Covid-19 Vaccination</i>. If you have been approved for exemption, please disregard this message. 
+	</div>
+	
+	
 	<p>Your current <b>Teaching/TLA/Educational Admin profile</b> information can be found	below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. There are no
 	registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated.
 	
@@ -1055,7 +1069,25 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 								for (ApplicantDocumentBean doc : docs) {
 									//if(!doc.getType().equals(DocumentType.LETTER) && !doc.getType().equals(DocumentType.COVID19_VAX)){ %>
 							<tr>
-								<td><%=doc.getType().getDescription()%></td>
+								<td><%=doc.getType().getDescription()%>
+								
+								<%
+								//Has COE Training uploaded?
+								if(doc.getType().equals(DocumentType.CODE_OF_ETHICS_CONDUCT)) {%>
+								
+								<script>
+								$("#COENotice").css("display","none");
+								</script>
+								
+								<% }
+								//Has Covid done?
+																		
+								if(doc.getType().equals(DocumentType.COVID19_VAX)) {%>
+								<script>
+								$("#COVNotice").css("display","none");
+								</script>
+								<%} %>
+								</td>
 								<td><%=sdf_long.format(doc.getCreatedDate())%></td>
 								<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 							</tr>

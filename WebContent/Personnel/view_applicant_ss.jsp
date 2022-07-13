@@ -83,6 +83,21 @@ input {
 <div style="font-size:30px;padding-top:10px;color:rgb(0, 128, 0,0.3);font-weight:bold;text-align:left;"><%=profile.getFullNameReverse()%></div>
 <span style="color:Grey;font-weight:bold;">SUPPORT STAFF/STUDENT ASSISTANT/MANAGEMENT PROFILE</span><br/><br/>
 
+
+<div id="COENotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
+	Your profile is currently missing the <b>Code of Ethics and Conduct Declaration Certificate</b>. 
+	Please upload this document as soon as possible to section 7. If you have already uploaded this certificate, please make sure it is uploaded as the correct type as 
+	<i>Code of Ethics and Conduct Declaration</i>.
+	</div>
+	
+	<div id="COVNotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: COVID-19 Proof of Vaccination</b> ***<br/><br/>
+	Your profile is currently missing the proof of <b>Covid-19 Vaccination</b> documentation.  
+	Please upload this document as soon as possible. If you have already uploaded this documentation please make sure it is uploaded as the correct type as 
+	<i>Covid-19 Vaccination</i>. If you have been approved for exemption, please disregard this message. 
+	</div>
+
+
+
 Your current <b>Support Staff/SA/Management profile</b> information can be found below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. 
 There are no registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated. 
 
@@ -458,7 +473,27 @@ employment positions and/or applications.
                                 <% for(ApplicantDocumentBean doc : docs) { 
                                 	//if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER) || !doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
 	                             	<tr>		                            
-		                           		<td><%=doc.getTypeSS().getDescription() %></td>
+		                           		<td><%=doc.getTypeSS().getDescription() %>
+		                           		
+		                           		<%
+								//Has COE Training uploaded?
+								if(doc.getTypeSS().equals(DocumentTypeSS.CODE_OF_ETHICS_CONDUCT)) {%>
+								
+								<script>
+								$("#COENotice").css("display","none");
+								</script>
+								
+								<% }
+								//Has Covid done?
+																		
+								if(doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)) {%>
+								<script>
+								$("#COVNotice").css("display","none");
+								</script>
+								<%} %>                           		
+		                           		
+		                           		
+		                           		</td>
 		                            	<td><%=sdf_long.format(doc.getCreatedDate()) %></td>
 		                             	<td><a class='viewdoc btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
 	                             	</tr>
