@@ -475,13 +475,12 @@ employment positions and/or applications.
                                 	//if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER) || !doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
 	                             	<tr>		                            
 		                           		<td><%=doc.getTypeSS().getDescription() %>	                          
-		                         
-								
-								<c:if test="${fn:endsWith(emailCheck,'@nlesd.ca')}">
+		                         	<!-- if user has nlesd email, check if code of conduct, and if so, hide warning. If user has NON nlesd email, hide it anyways.-->
+								<c:choose>
+								<c:when test="${fn:endsWith(emailCheck,'@nlesd.ca')}">
 		                          
-		                           		
-		                           		<%
-								//Has COE Training uploaded and has NLESD email.
+		                        <%
+								//Has COE Training uploaded
 								if(doc.getTypeSS().equals(DocumentTypeSS.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
@@ -489,8 +488,14 @@ employment positions and/or applications.
 								</script>
 								
 								<% } %>
-								</c:if>
+								</c:when>
+								<c:otherwise>
+								<script>
+								$("#COENotice").css("display","none");
+								</script>
 								
+								</c:otherwise>
+								</c:choose>
 								
 								<%
 								//Has Covid done?

@@ -1066,19 +1066,14 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 						</thead>
 						<tbody>
 						<c:set var="emailCheck" value="<%=profile.getEmail()%>" />
-							<%
-								for (ApplicantDocumentBean doc : docs) {
+							<%	for (ApplicantDocumentBean doc : docs) {
 									//if(!doc.getType().equals(DocumentType.LETTER) && !doc.getType().equals(DocumentType.COVID19_VAX)){ %>
 							<tr>
-								<td><%=doc.getType().getDescription()%>
-								
-								
-								
-								<c:if test="${fn:endsWith(emailCheck,'@nlesd.ca')}">
-										
-								<%
-					//Has nlesd email address?
-					//Has COE Training uploaded?
+								<td><%=doc.getType().getDescription()%>								
+								<!-- if user has nlesd email, check if code of conduct, and if so, hide warning. If user has NON nlesd email, hide it anyways.-->
+								<c:choose>
+								<c:when test="${fn:endsWith(emailCheck,'@nlesd.ca')}">										
+								<%					
 								if(doc.getType().equals(DocumentType.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
@@ -1087,7 +1082,14 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 								
 								<% }%>		
 										
-							   </c:if>
+							   </c:when>							  
+								<c:otherwise>
+								<script>
+								$("#COENotice").css("display","none");
+								</script>
+								
+								</c:otherwise>
+								</c:choose>
 								
 														
 								<%
