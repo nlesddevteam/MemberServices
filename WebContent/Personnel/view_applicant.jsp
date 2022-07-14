@@ -1065,21 +1065,33 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 							</tr>
 						</thead>
 						<tbody>
+						<c:set var="emailCheck" value="<%=profile.getEmail()%>" />
 							<%
 								for (ApplicantDocumentBean doc : docs) {
 									//if(!doc.getType().equals(DocumentType.LETTER) && !doc.getType().equals(DocumentType.COVID19_VAX)){ %>
 							<tr>
 								<td><%=doc.getType().getDescription()%>
 								
+								
+								
+								<c:if test="${fn:endsWith(emailCheck,'@nlesd.ca')}">
+										
 								<%
-								//Has COE Training uploaded?
+					//Has nlesd email address?
+					//Has COE Training uploaded?
 								if(doc.getType().equals(DocumentType.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
 								$("#COENotice").css("display","none");
 								</script>
 								
-								<% }
+								<% }%>		
+										
+							   </c:if>
+								
+														
+								<%
+																
 								//Has Covid done?
 																		
 								if(doc.getType().equals(DocumentType.COVID19_VAX)) {%>
