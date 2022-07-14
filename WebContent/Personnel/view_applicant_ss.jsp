@@ -470,20 +470,29 @@ employment positions and/or applications.
 	                                </tr>
 	                                </thead>
                                 <tbody>
+                                <c:set var="emailCheck" value="<%=profile.getEmail()%>" />
                                 <% for(ApplicantDocumentBean doc : docs) { 
                                 	//if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER) || !doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
 	                             	<tr>		                            
-		                           		<td><%=doc.getTypeSS().getDescription() %>
+		                           		<td><%=doc.getTypeSS().getDescription() %>	                          
+		                         
+								
+								<c:if test="${fn:endsWith(emailCheck,'@nlesd.ca')}">
+		                          
 		                           		
 		                           		<%
-								//Has COE Training uploaded?
+								//Has COE Training uploaded and has NLESD email.
 								if(doc.getTypeSS().equals(DocumentTypeSS.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
 								$("#COENotice").css("display","none");
 								</script>
 								
-								<% }
+								<% } %>
+								</c:if>
+								
+								
+								<%
 								//Has Covid done?
 																		
 								if(doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)) {%>
