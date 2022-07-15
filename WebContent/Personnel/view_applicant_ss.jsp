@@ -84,10 +84,18 @@ input {
 <span style="color:Grey;font-weight:bold;">SUPPORT STAFF/STUDENT ASSISTANT/MANAGEMENT PROFILE</span><br/><br/>
 
 
-<div id="COENotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
-	Your profile is currently missing the <b>Code of Ethics and Conduct Declaration Certificate</b>. 
-	Please upload this document as soon as possible to section 7. If you have already uploaded this certificate, please make sure it is uploaded as the correct type as 
-	<i>Code of Ethics and Conduct Declaration</i>.
+<div id="COENotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b style="font-size:16px;">NOTICE: Missing Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
+	Your profile is currently missing the <b>Code of Ethics and Conduct Training Declaration Certificate</b>. 
+	
+	This training is <b>mandatory for all staff</b> and new hires as communicated in a memo on February 8, 2022. 
+
+Please upload this document as soon as possible to the <b>Documents Section</b> of your Profile (Section 10 for a Teaching Profile/Section 7 for a Support Profile).  
+Please ensure that the document is uploaded by selecting <i>Code of Ethics and Conduct Declaration</i> as the Document Type.  
+
+Profiles are considered <b>incomplete</b> for existing staff if this certificate is not uploaded properly and may affect job opportunities.  New hires will need to complete and upload prior to commencement of position.  
+
+Link to the Training and Reference Materials can be <a href="/MemberServices/" target="_blank">found here</a> under Staff Training Modules icon.
+
 	</div>
 	
 	<div id="COVNotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: COVID-19 Proof of Vaccination</b> ***<br/><br/>
