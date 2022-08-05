@@ -333,23 +333,33 @@
 </esd:SecurityAccessRequired>
 
 <!-- Professional Learning Series --> 				
+<!-- Professional Learning PLAN  --> 
+<esd:SecurityAccessRequired permissions="PPGP-VIEW">	
 
 						<div class="menuIconImage">
 							<a href="https://sites.google.com/nlesd.ca/plseries-sept2020/home"
 								target="_blank"> <img
 								src="includes/img/menu/pls-off.png"
 								class="img-swap menuImage" border=0
-								title="Professional Learning Series - September 2020">
+								title="Professional Learning Series">
 							</a>
 						</div>
+					
 						
-<!-- Professional Learning PLAN  --> 
-<esd:SecurityAccessRequired permissions="PPGP-VIEW">
 						<div class="menuIconImage">
-							<a href="PPGP/ppgpPolicy.html"> <img
+							<a href="https://sites.google.com/nlesd.ca/plseries-sept2020/professional-learning-journey?authuser=0"
+								target="_blank"> <img
 								src="includes/img/menu/learningplan-off.png"
 								class="img-swap menuImage" border=0
-								title="Professional Learning Plans">
+								title="Professional Learning Journey">
+							</a>
+						</div>
+
+						<div class="menuIconImage">
+							<a href="PPGP/ppgpPolicy.html"> <img
+								src="includes/img/menu/learningplana-off.png"
+								class="img-swap menuImage" border=0
+								title="Professional Learning Plans Archive">
 							</a>
 						</div>
 </esd:SecurityAccessRequired>
