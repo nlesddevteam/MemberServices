@@ -160,7 +160,8 @@
                    
                   
 
-					    	<li class="dropdown" id="menuNormal">
+					    	<li class="dropdown" id="menuNormal" style="display:none;">
+					    	
 					    	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-apple"></span> Your Learning Plan(s) <span class="caret"></span></a>
 					    	 <ul class="dropdown-menu multi-level">
 					    	
@@ -267,6 +268,9 @@
 			
 				<div class="container-fluid">	
 				<div id="printJob">	
+				<br/><br/>
+				<div class="alert alert-danger"><b>NOTICE:</b> Please refer to the 
+				<a href="https://sites.google.com/nlesd.ca/plseries-sept2020/professional-learning-journey?authuser=0" target="_blank">Professional Learning Journey</a> web site for your learning Plans going forward. Any past plans you entered can still be accessed through the Plan Archive menu above.</div>
 		
 		<c:if test="${deadlineDateNotice eq '04' }">
 	<!-- Waring for PLP in April -->			
