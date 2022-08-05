@@ -9,13 +9,15 @@
   <div class="panel panel-success">
   <div class="panel-heading"><b>Email Status Response</b></div>
   <div class="panel-body">  
-   <% if(msg != null) { %>
+  
+  
+   <% if(request.getAttribute("msg") != null) { %>
   <div align="center" class="alert alert-info"><%=request.getAttribute("msg")%></div>
   <%} %>
-  <% if(msgOK != null) { %>
+  <% if(request.getAttribute("msgOK") != null) { %>
   <div align="center" class="alert alert-success" id="successEmail"><%=request.getAttribute("msgOK")%></div>
   <%} %>
-  <% if(msgERR != null) { %>
+  <% if(request.getAttribute("msgERR") != null) { %>
   <div align="center" class="alert alert-danger" id="errorEmail"><%=request.getAttribute("msgERR")%></div>
   <%} %>
   <br/>
