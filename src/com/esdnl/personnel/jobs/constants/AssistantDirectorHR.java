@@ -24,7 +24,9 @@ public enum AssistantDirectorHR {
 																	"Assistant Director of Education - Human Resources and School Leadership",
 																	"images/lloydcollins-sig.png", "06/09/2016", "01/28/2018"), Ed_Walsh_2("Ed Walsh",
 																			"Associate Director of Education (Programs and Human Resources)",
-																			"images/ed-sig.png", "01/29/2018", null);
+																			"images/ed-sig.png", "01/29/2018", "08/07/2022"), Andrew_Hickey("Andrew Hickey",
+																					"Assistant Director of Education (Human Resources)",
+																					"includes/img/ah-sig.png", "08/08/2022", null);
 
 	private String name;
 	private String title;
