@@ -299,7 +299,8 @@
 						<option value="Programmer Analyst I">Programmer Analyst I</option>
 						<option value="Programmer Analyst II">Programmer Analyst II</option>
 						<option value="Project Coordinator">Project Coordinator</option>
-						<option value="Provincial Lead, Employee Safety and Wellness">Provincial Lead, Employee Safety and Wellness</option>
+						<option value="Provincial Lead">Provincial Lead</option>
+						<option value="Provincial Lead, Employee Safety and Wellness">Provincial Lead, Employee Safety and Wellness</option>						
 						<option value="Receptionist">Receptionist</option>
 						<option value="Regional Office Manager">Regional Office Manager</option>
 						<option value="Requisition Clerk">Requisition Clerk</option>
