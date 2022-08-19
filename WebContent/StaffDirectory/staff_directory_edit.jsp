@@ -283,7 +283,7 @@
 						<option value="Manager of Student Transportation">Manager of Student Transportation</option>
 						<option value="Network Architect">Network Architect</option>
 						<option value="Network Administrator">Network Administrator</option>
-						<option value="NG Clerk">NG Clerk</option>
+						<option value="NG Clerk">NG Clerk</option> 
 						<option value="Numeracy Support Teacher">Numeracy Support Teacher</option>
 						<option value="Operations Manager">Operations Manager</option>
 						<option value="Operations Manager (Energy Management)">Operations Manager (Energy Management)</option>
