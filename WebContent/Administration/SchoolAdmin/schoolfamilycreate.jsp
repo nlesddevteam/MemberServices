@@ -103,7 +103,7 @@
 								</div>							
 								<div class="row container-fluid" style="padding-top:5px;">
       							<div class="col-lg-12 col-12">							
-											<b>SCHOOL(s) TO INCLUDE IN FAMILY (Select up to 30)</b><br/>
+											<b>SCHOOL(s) TO INCLUDE IN FAMILY (Select up to 40)</b><br/>
 											Start to type in the name of the school to find if not in the initial list.
 													<select multiple name="schools" class="form-control choicesFam" required>
 						                                  <%
@@ -139,7 +139,7 @@
 
     	var schoolsForFamilySelect = new Choices('.choicesFam', {
     	removeItemButton: true,
-    	maxItemCount:30,
+    	maxItemCount:40,
     	paste: false,
         duplicateItemsAllowed: false,
         editItems: true,
