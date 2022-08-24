@@ -16,7 +16,7 @@
   Personnel p = null;
   Iterator sch_iter = null;
   Iterator p_iter = null;
-  Vector specialists = null;
+  Vector specialists = null; 
 %>
 
 <%
@@ -52,7 +52,7 @@
 		
 		var schoolsForFamilySelect = new Choices('.choicesFam', {
 	    	removeItemButton: true,
-	    	maxItemCount:30,
+	    	maxItemCount:40,
 	    	paste: false,
 	        duplicateItemsAllowed: false,
 	        editItems: true,
@@ -114,7 +114,7 @@ This will take a few moments!
 							</div>
 							<div class="row container-fluid" style="padding-top:5px;">
       							<div class="col-lg-12 col-12">
-							<b>SCHOOL(s) TO INCLUDE IN FAMILY (Select up to 30)</b><br/>
+							<b>SCHOOL(s) TO INCLUDE IN FAMILY (Select up to 40)</b><br/>
 							Start to type in the name of the school to find if not in the initial list.													
 							<select multiple name="schools" id="schools" class="form-control choicesFam" required>
                                   <%sch_iter = family.getSchoolFamilySchools().iterator();
