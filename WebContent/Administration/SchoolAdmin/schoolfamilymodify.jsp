@@ -16,7 +16,7 @@
   Personnel p = null;
   Iterator sch_iter = null;
   Iterator p_iter = null;
-  Vector specialists = null;
+  Vector specialists = null; 
 %>
 
 <%
