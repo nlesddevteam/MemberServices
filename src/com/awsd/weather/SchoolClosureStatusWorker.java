@@ -118,7 +118,7 @@ public class SchoolClosureStatusWorker extends TimerTask {
 						+ "<th width='25%'>SCHOOL/BUILDING</th>"
 						+ "<th width='15%'>STATUS</th>"
 						+ "<th width='50%'>DESCRIPTION/NOTE</th>"						
-						+ "<th width='10%'>REGION</th>"						
+						//+ "<th width='10%'>REGION</th>"						
 						+ "</tr></thead>");
 				writer.println("<tbody>");
 				
@@ -229,7 +229,7 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			        writer.println(((schoolST.getSchoolClosureStatus().getSchoolClosureNote() !=null)?"<br/><div style='margin-top:5px;'><b>NOTE:</b> "+schoolST.getSchoolClosureStatus().getSchoolClosureNote()+"</div>":""));  
 			        writer.println("</td>");     			        
 			        
-			        if (schoolST.getZone() !=null) {			    	  			    	
+			       /* if (schoolST.getZone() !=null) {			    	  			    	
 			    	  
 			    	  int schoolZone=schoolST.getZone().getZoneId();		        
 				      switch (schoolZone) {
@@ -257,7 +257,7 @@ public class SchoolClosureStatusWorker extends TimerTask {
 			    	  writer.println("<td class='region5solid' style='text-align:center;color:rgba(255,255,255,1);vertical-align:middle;font-weight:bold;'>PROVINCIAL</td>");
 			      }
 			      
-				     				      					    
+				   */  				      					    
 			      		
 					
 			        writer.println("</tr>");			        
