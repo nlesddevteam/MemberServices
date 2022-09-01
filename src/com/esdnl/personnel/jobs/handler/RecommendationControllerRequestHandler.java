@@ -28,6 +28,7 @@ import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityAssignmentBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
+import com.esdnl.personnel.jobs.bean.JobRecommendationLetterBean;
 import com.esdnl.personnel.jobs.bean.NLESDRegionalMailHelperBean;
 import com.esdnl.personnel.jobs.bean.RequestToHireBean;
 import com.esdnl.personnel.jobs.bean.TeacherRecommendationBean;
@@ -36,6 +37,7 @@ import com.esdnl.personnel.jobs.constants.RecommendationStatus;
 import com.esdnl.personnel.jobs.dao.AdRequestManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityAssignmentManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
+import com.esdnl.personnel.jobs.dao.JobRecommendationLetterManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 import com.esdnl.personnel.jobs.dao.TeacherAllocationVacantPositionManager;
@@ -183,6 +185,13 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 					if (adbean != null) {
 						TeacherAllocationVacantPositionManager.updateTeacherAllocationVacantPositionFilled(adbean.getId());
 					}
+					//now we save the letter type that was selected
+					//older comps before the change will default to original letter in system
+					JobRecommendationLetterBean jlbean = new JobRecommendationLetterBean();
+					jlbean.setLetterId(form.getInt("letterid"));
+					jlbean.setRecommendationId(rec.getRecommendationId());
+					jlbean.setSelectedBy(usr.getLotusUserFullName());
+					JobRecommendationLetterManager.addInterviewGuideBean(jlbean);
 
 					request.setAttribute("msg", "Recommendation has been processed successfully.");
 				}
@@ -501,7 +510,7 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			cal.clear(Calendar.MILLISECOND);
 			cal.clear(Calendar.SECOND);
 			cal.clear(Calendar.MINUTE);
-
+			/**
 			if ((cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) && (cal.get(Calendar.HOUR_OF_DAY) >= 12)) {
 				cal.add(Calendar.DAY_OF_MONTH, 3);
 			}
@@ -511,7 +520,9 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 			}
-			else if (cal.get(Calendar.HOUR_OF_DAY) >= 12) {
+			else 
+			**/
+			if (cal.get(Calendar.HOUR_OF_DAY) >= 12) {
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 			}
 			cal.set(Calendar.HOUR_OF_DAY, 12);
