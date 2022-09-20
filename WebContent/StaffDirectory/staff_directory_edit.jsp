@@ -355,6 +355,8 @@
 							<option value="Comprehensive School Health">Comprehensive School Health</option>
 							<option value="Corporate Services">Corporate Services</option>
 							<option value="Deaf and Hard of Hearing">Deaf and Hard of Hearing</option>
+							<option value="Distance Learning">Distance Learning</option>			
+							
 							<option value="Educational Assessment Specialist">Educational Assessment Specialist</option>
 							<option value="English Language Arts">English Language Arts</option>
 							<option value="English Language Arts/Social Studies">English Language Arts/Social Studies</option>
@@ -491,6 +493,9 @@
 	                     <select id="posLocation" name="posLocation" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option> 
+	                    	 <option value="CDLI">CDLI</option> 
+	                    	 <option value="ConnectED">ConnectED</option> 
+	                    	 <option value="CDLI / ConnectED">CDLI / ConnectED</option> 
 	                    	 <option value="Curriculum Centre (Nain)">Curriculum Centre (Nain)</option>
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
