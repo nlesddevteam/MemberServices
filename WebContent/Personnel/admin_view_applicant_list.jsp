@@ -53,7 +53,50 @@ $("#loadingSpinner").css("display","none");
 			
 			"order": [[ 0, "asc" ]],
 			"lengthMenu": [[-1], ["All"]],
-			"lengthChange": false
+			"lengthChange": false,
+			dom: 'Blfrtip',
+	        buttons: [			        	
+	        	//'colvis',
+	        	{
+	        	
+                extend: 'print',
+                title: '<div align="center"><img src="/MemberServices/Administration/includes/img/nlesd-colorlogo.png" style="max-width:600px;"/></div>',
+                messageTop: '<div align="center" style="font-size:18pt;">MemberServices Personnel List</div>',
+                messageBottom: '<div class="alert alert-danger"><b>Confidentiality Warning:</b> This document and any attachments are intended for the sole use of the intended recipient(s), and contain privileged and/or confidential information. If you are not an intended recipient, any review, retransmission, printing, copying, circulation or other use 	of this message and any attachments is strictly prohibited.</div>',
+                	 exportOptions: {
+                			                		 
+                         columns: [ 0,1,2,3,4,5],
+                       
+                     }
+            },
+            { 
+       		 extend: 'excel',	
+       		 exportOptions: {
+           		        		 
+
+                    columns: [ 0,1,2,3,4,5],
+                 },
+       },
+       { 
+     		 extend: 'csv',	
+     		 exportOptions: {
+         		            		 
+
+                    columns: [ 0,1,2,3,4,5],
+               },
+     },
+         
+	        ],	
+			
+							
+			 "columnDefs": [
+				 {
+		                "targets": [6],			               
+		                "searchable": false,
+		                "orderable": false
+		            }
+		        ]
+			
 		}	  
 	  );
  });
