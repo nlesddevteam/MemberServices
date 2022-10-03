@@ -131,13 +131,14 @@ Profiles are considered <b>incomplete</b> for existing staff if this certificate
 Link to the Training and Reference Materials can be <a href="/MemberServices/" target="_blank">found here</a> under Staff Training Modules icon.
 
 	</div>
-	
+
+<!-- 	
 	<div id="COVNotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: COVID-19 Proof of Vaccination</b> ***<br/><br/>
 	Your profile is currently missing the proof of <b>Covid-19 Vaccination</b> documentation.  
 	Please upload this document as soon as possible. If you have already uploaded this documentation please make sure it is uploaded as the correct type as 
 	<i>Covid-19 Vaccination</i>. If you have been approved for exemption, please disregard this message. 
 	</div>
-	
+-->	
 	
 	<p>Your current <b>Teaching/TLA/Educational Admin profile</b> information can be found	below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. There are no
 	registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated.
@@ -1098,17 +1099,8 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 								
 								</c:otherwise>
 								</c:choose>
+																						
 								
-														
-								<%
-																
-								//Has Covid done?
-																		
-								if(doc.getType().equals(DocumentType.COVID19_VAX)) {%>
-								<script>
-								$("#COVNotice").css("display","none");
-								</script>
-								<%} %>
 								</td>
 								<td><%=sdf_long.format(doc.getCreatedDate())%></td>
 								<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>

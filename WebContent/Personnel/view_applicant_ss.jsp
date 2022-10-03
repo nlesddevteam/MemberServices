@@ -97,13 +97,14 @@ Profiles are considered <b>incomplete</b> for existing staff if this certificate
 Link to the Training and Reference Materials can be <a href="/MemberServices/" target="_blank">found here</a> under Staff Training Modules icon.
 
 	</div>
-	
+
+<!-- 	
 	<div id="COVNotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: COVID-19 Proof of Vaccination</b> ***<br/><br/>
 	Your profile is currently missing the proof of <b>Covid-19 Vaccination</b> documentation.  
 	Please upload this document as soon as possible. If you have already uploaded this documentation please make sure it is uploaded as the correct type as 
 	<i>Covid-19 Vaccination</i>. If you have been approved for exemption, please disregard this message. 
 	</div>
-
+-->
 
 
 Your current <b>Support Staff/SA/Management profile</b> information can be found below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. 
@@ -505,14 +506,7 @@ employment positions and/or applications.
 								</c:otherwise>
 								</c:choose>
 								
-								<%
-								//Has Covid done?
-																		
-								if(doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)) {%>
-								<script>
-								$("#COVNotice").css("display","none");
-								</script>
-								<%} %>                           		
+								                  		
 		                           		
 		                           		
 		                           		</td>
