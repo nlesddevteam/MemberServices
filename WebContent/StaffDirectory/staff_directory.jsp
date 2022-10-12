@@ -95,11 +95,14 @@
 					
 Below is a complete list of district office staff as entered. This data will display on the public website under the District Staff Directory. The system is divided into 4 office locations: St. John's, Gander, Corner Brook, and Happy Valley - Goose Bay (HV-GB). <p>
 
-If no location is set, it will display NOT-SET or UNKNOWN in the Location field. Please update these entries by editing the persons main office location. If the user is at a school, set the location as the closest office responsible for that school. 
+If no location is set, it will display UNKNOWN or OTHER/SCHOOL in the Location field. You can also select OTHER/SCHOOL if the person is located outside the main office, but you should enter the proper location in the Position/Title section(3) when adding/editing. Please update these entries by editing the persons main office location. If the user is at a school, set the location as the closest office responsible for that school. 
 You will also notice any vacancies as red. Please update these when possible, or remove if the position will no longer be filled. All results are color-coded by division and office, and sorted by Division, Location, and Sort Number.<p>
 <b>For the head of a division, assign sort order number 1 to have their title highlighted and displayed at the start of the listings. Always try to order the sort by ranking with priority sort 1 to the division head. <p>
  Please make sure you keep your office staff directory updated at all times and remove anyone that has left unless the position will be filled soon, you can then set the position as vacant on the edit page.
 <p>
+
+<div class="alert alert-warning">NOTE: After making a change, it may take up to 5 minutes before the change displays on below list, and up to 20 minutes before it displays on live website. Please give it time before attempting to change again.</div>
+
 <div align="center"><a href='addStaffDirectoryContact.html' class="btn btn-sm btn-success" style="color:White;" title="Add new Contact">Add New Contact</a>&nbsp; <a href="../navigate.jsp" class="btn btn-sm btn-danger">Back to Staff Room</a></div>
 
 <esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING"> 
@@ -113,11 +116,11 @@ You will also notice any vacancies as red. Please update these when possible, or
 					<th width="35%">POSITION</th>
 					<th width="10%">TELEPHONE</th>		
 					<th width="15%">DIVISION</th>			
-					<th width="10%">LOCATION</th>				
+					<th width="10%">DISTRICT OFFICE</th>				
 					<th width="10%">OPTIONS</th>
 					<th width="*">REG# 6</th>
 					<th width="*">DIV# 7</th>
-					<th width="*">SORT# 8</th>		
+					<th width="*">SORT#</th>		
 				</tr>
 				</thead>
 				<tbody>    
@@ -181,7 +184,7 @@ You will also notice any vacancies as red. Please update these when possible, or
 							<td style="text-align:center;background-color:rgba(127, 130, 255, 0.3);">HV-GB</td>																																												
 						</c:when>	
 						<c:when test="${ (contact.zone.zoneName eq 'provincial')}">
-							<td style="text-align:center;background-color:Red;color:White">NOT SET</td>
+							<td style="text-align:center;background-color:rgba(128, 0, 128, 0.3);color:Black">OTHER/SCHOOL</td>
 						</c:when>	
 						<c:otherwise>
 							<td style="text-align:center;background-color:Red;color:White;">UNKNOWN</td>
