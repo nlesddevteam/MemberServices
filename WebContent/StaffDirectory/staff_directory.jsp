@@ -143,7 +143,7 @@ You will also notice any vacancies as red. Please update these when possible, or
 					<c:otherwise>
 						<td width="15%">${ contact.fullName }</td>
 					</c:otherwise>
-					</c:choose>
+					</c:choose> 
 									   										
 	     			<td width="35%">${ contact.position }</td>
 	     			<td width="10%">${ contact.telephone }</td> 
