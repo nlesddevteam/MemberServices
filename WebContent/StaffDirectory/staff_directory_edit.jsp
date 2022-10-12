@@ -128,14 +128,14 @@
 	                      	</select>
 	                  </div>
 	                  <div class="col-lg-6 col-12">
-	                  <b>Region:</b>
+	                  <b>Main Office Location:</b>
     					<select id="zoneId" name="zoneId" class="form-control" required>
     					<option value="">---- Please Select (Required) ----</option>
-	                    <option value='1' ${ contact.zone eq "avalon" ? "SELECTED" : "" }>Avalon</option>
-	                    <option value='2' ${ contact.zone eq "central" ? "SELECTED" : "" }>Central</option>
-	                    <option value='3' ${ contact.zone eq "western" ? "SELECTED" : "" }>Western</option>
-	                    <option value='4' ${ contact.zone eq "labrador" ? "SELECTED" : "" }>Labrador</option>
-	                    <option value='5' ${ contact.zone eq "provincial" ? "SELECTED" : "" }>Provincial</option>
+	                    <option value='1' ${ contact.zone eq "avalon" ? "SELECTED" : "" }>St. John's</option>
+	                    <option value='2' ${ contact.zone eq "central" ? "SELECTED" : "" }>Gander</option>
+	                    <option value='3' ${ contact.zone eq "western" ? "SELECTED" : "" }>Corner Brook</option>
+	                    <option value='4' ${ contact.zone eq "labrador" ? "SELECTED" : "" }>Happy Valley - Goose Bay</option>
+	                    <option value='5' ${ contact.zone eq "provincial" ? "SELECTED" : "" }>Unknown</option>
     					</select>
 </div></div>
 						
@@ -229,7 +229,7 @@
 						<option value="Director of Schools">Director of Schools</option>
 						<option value="Director of Strategic Planning, Policy and Communications">Director of Strategic Planning, Policy and Communications</option>
 						<option value="Director of Student Services">Director of Student Services</option>
-						<option value="Director of Student Support Services">Director of Student Support Services</option>
+						<option value="Director of Student Support Services">Director of Student Support Services</option> 
 						<option value="Director of Student Transportation">Director of Student Transportation</option>
 						<option value="Director of Student Transportation and School Financial Support">Director of Student Transportation and School Financial Support</option>
 						<option value="E-Learning Facilitator">E-Learning Facilitator</option>
@@ -355,8 +355,7 @@
 							<option value="Comprehensive School Health">Comprehensive School Health</option>
 							<option value="Corporate Services">Corporate Services</option>
 							<option value="Deaf and Hard of Hearing">Deaf and Hard of Hearing</option>
-							<option value="Distance Learning">Distance Learning</option>			
-							
+							<option value="Distance Learning">Distance Learning</option>
 							<option value="Educational Assessment Specialist">Educational Assessment Specialist</option>
 							<option value="English Language Arts">English Language Arts</option>
 							<option value="English Language Arts/Social Studies">English Language Arts/Social Studies</option>
@@ -398,6 +397,7 @@
 							<option value="Programs and Human Resources">Programs and Human Resources</option>
 							<option value="Programs/Reception">Programs/Reception</option>
 							<option value="Programs/Multiculturalism">Programs/Multiculturalism</option>
+							<option value="Programs/Student Services">Programs/Student Services</option>
 							<option value="Programs/Student Support Services">Programs/Student Support Services</option>							
 							<option value="Reading">Reading</option>
 							<option value="Safe and Inclusive Schools">Safe and Inclusive Schools</option>

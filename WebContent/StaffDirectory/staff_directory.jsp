@@ -46,17 +46,27 @@
 		
 	$('document').ready(function(){
 		aTable = $(".staffingTable").dataTable({
-			"order" : [[4,"asc"],[0,"asc"]],			
+			"order" : [[ 7, "asc" ],[6,"asc"],[8,"asc"]],			
 			  "paging":   false,
 			  "searching": true,			 
 				responsive: true,
 				"lengthChange": false,
 				"columnDefs": [
 					 {
-			                "targets": [0,5],			               
+			                "targets": [5,8],			               
 			                "searchable": false,
-			                "visible": true
-			            }
+			                "visible": true,
+			            },
+			            {
+			                "targets": [6,7],			               
+			                "searchable": false,
+			                "visible": false,
+			            },
+			            {
+			                "targets": [0,1,2,3,4,5,8],			               
+			                "sortable": false,
+			                
+			            },
 			        ]
 		});
 		
@@ -76,461 +86,146 @@
  </head>
 
 	<body>
-  <div class="siteHeaderGreen">Staff Directory Administration</div>
+  <div class="siteHeaderGreen">Staff Directory Administration (<span class="provincialCount">0</span>)</div>
 <div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;">
 <img src="includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Staff Data, please wait.<br/>This will take a few moments!
 </div>		
 
 <div style="display:none;" class="loadPage"> 
-
- 
 					
-Below is a list of district office staff you have access to update. The system is divided into 5 regions as below. Not all users will have access to update all regions. 
-Please keep in mind if you create/edit a position as PROVINCIAL only the person with access to edit Provincial staff can make further changes to that staff member.<p>
-Results are color-coded by region:
-<br/><br/>
-<b>For the head of a division in your region, assign sort order number 1 to have their title highlighted and displayed.</b> Always sort the staff based on priority order where possible.
-      Use the search at right in each dropdown to help narrow to the person your are looking for. Listings are sorted by Division and Sort Number. Click on the column header to sort by that column.	  
-      
-<br/>
+Below is a complete list of district office staff as entered. This data will display on the public website under the District Staff Directory. The system is divided into 4 office locations: St. John's, Gander, Corner Brook, and Happy Valley - Goose Bay (HV-GB). <p>
+
+If no location is set, it will display NOT-SET or UNKNOWN in the Location field. Please update these entries by editing the persons main office location. If the user is at a school, set the location as the closest office responsible for that school. 
+You will also notice any vacancies as red. Please update these when possible, or remove if the position will no longer be filled. All results are color-coded by division and office, and sorted by Division, Location, and Sort Number.<p>
+<b>For the head of a division, assign sort order number 1 to have their title highlighted and displayed at the start of the listings. Always try to order the sort by ranking with priority sort 1 to the division head. <p>
+ Please make sure you keep your office staff directory updated at all times and remove anyone that has left unless the position will be filled soon, you can then set the position as vacant on the edit page.
+<p>
 <div align="center"><a href='addStaffDirectoryContact.html' class="btn btn-sm btn-success" style="color:White;" title="Add new Contact">Add New Contact</a>&nbsp; <a href="../navigate.jsp" class="btn btn-sm btn-danger">Back to Staff Room</a></div>
-<br/><br/>
 
 <esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING"> 
 
-
-                 
-   <div id="accordion">
-
-
-<!-- PROVINCIAL STAFF -->
-<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING-PROVINCIAL"> 
-
-
-  <div class="card">
-    <div class="card-header region5">
-      <a class="card-link cardP" data-toggle="collapse" href="#collapseProvincial"><span class="iconP"><i class='fas fa-folder'></i></span> PROVINCIAL STAFF</a>  (<span class="provincialCount">0</span>) 
-  </div> 
-    
-     <div id="collapseProvincial" class="collapse" data-parent="#accordion">
-      <div class="card-body">  
-      
-      <script>
- 				$('.cardP').on("click", function(e){       
-				 if( $("#collapseProvincial").hasClass("show")) {
-	                	$(".iconP").html("<i class='fas fa-folder'></i>");
-	                } else {                	
-	                	 $(".iconP").html("<i class='fas fa-folder-open'></i>");
-	                }
-				 e.preventDefault();                	 
-	                	});                 
-	</script>
-      
       
            
     <table class="staffingTable table table-sm table-hover table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
-					<thead class="region5solid">
-					<tr style="color:white;font-size:12px;">
-					<th width="5%">SORT#</th>							
-					<th width="15%">NAME</th>
-					<th width="10%">TELEPHONE</th>							
-					<th width="35%">POSITION</th>	
-					<th width="15%">DIVISION</th>							
-					<th width="10%">OPTIONS</th>	
+					<thead class="thead-dark">
+					<tr style="color:white;font-size:12px;">											
+					<th width="15%">NAME</th>											
+					<th width="35%">POSITION</th>
+					<th width="10%">TELEPHONE</th>		
+					<th width="15%">DIVISION</th>			
+					<th width="10%">LOCATION</th>				
+					<th width="10%">OPTIONS</th>
+					<th width="*">REG# 6</th>
+					<th width="*">DIV# 7</th>
+					<th width="*">SORT# 8</th>		
 				</tr>
 				</thead>
-				<tbody>                          
-				<c:forEach items='${ contacts }' var='contact'>			
+				<tbody>    
 				
 				
-				<c:if test="${ (contact.zone.zoneName eq 'provincial')}">
+					                      
+				<c:forEach items='${ contacts }' var='contact'>						
+				
+	
 				<c:set var="provincialCnt" value="${provincialCnt+1 }"/>
-				<c:choose>
-				<c:when test="${ contact.sortorder eq '1' }">
-  					<tr class="region5" style="font-weight:bold;text-transform:uppercase;">
-  				</c:when>
-  				<c:otherwise>
-  					<tr>
-  				</c:otherwise>
-  				</c:choose>	
-  					<td width="5%">${ contact.sortorder }</td>  					
-  					<td width="15%">	
+				
+  				
+  				<tr>  		
+  									
+  					
   					<c:choose>
-					<c:when test="${ not empty contact.email }">
-						<a href="mailto:${contact.email}">${ contact.fullName }</a>
+					<c:when test="${ not empty contact.email and contact.fullName ne 'VACANT' and contact.fullName ne '*** VACANT ***' }">
+						<td width="15%"><a href="mailto:${contact.email}">${ contact.fullName }</a></td>
+					</c:when>
+					<c:when test="${ contact.fullName eq 'VACANT' or contact.fullName eq '*** VACANT ***' }">
+						<td width="15%" style="color:white;background-color:Red;">*** VACANT ***</td>
 					</c:when>
 					<c:otherwise>
-						${ contact.fullName }
+						<td width="15%">${ contact.fullName }</td>
 					</c:otherwise>
-					</c:choose>
-					</td>
-					<td width="10%">${ contact.telephone }</td>    										
+					</c:choose> 
+									   										
 	     			<td width="35%">${ contact.position }</td>
-	     			<td width="15%">
+	     			<td width="10%">${ contact.telephone }</td> 
+	     			
 	     			<c:choose>
-	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Corporate Services
+	     			<c:when test="${contact.division.id eq '1'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(255, 218, 185,0.5);">DIRECTOR'S OFFICE</td>
+	     			</c:when>
+	     			<c:when test="${contact.division.id eq '2'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(178, 34, 34,0.2);">PROGRAMS</td>
+	     			</c:when>
+	     			<c:when test="${contact.division.id eq '3'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(47, 79, 79,0.2);">HUMAN RESOURCES</td>
+	     			</c:when>
+	     			<c:when test="${contact.division.id eq '4'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">CORPORATE SERVICES</td>
 	     			</c:when>
 	     			<c:otherwise>
-	     			${contact.division.name}
+	     			<td width="15%" style="text-align:center;background-color:Silver;">UNKNOWN</td>
 	     			</c:otherwise>
-	     			</c:choose>
-	     			</td>
+	     			</c:choose>	     			
+	     			
+	     			
+	     			<c:choose>
+					<c:when test="${ (contact.zone.zoneName eq 'eastern') or (contact.zone.zoneName eq 'avalon') or (contact.zone.zoneName eq 'AVALON') }">
+							<td style="text-align:center;background-color:rgba(191, 0, 0, 0.3);">ST. JOHN'S</td>																								
+						</c:when>
+						<c:when test="${ (contact.zone.zoneName eq 'central')}">
+							<td style="text-align:center;background-color:rgba(143, 188, 143, 0.3);">GANDER</td>																				
+						</c:when>
+						<c:when test="${ (contact.zone.zoneName eq 'western')}">
+							<td style="text-align:center;background-color:rgba(255, 132, 0, 0.13);">CORNER BROOK</td>																								
+						</c:when>
+						<c:when test="${ (contact.zone.zoneName eq 'labrador')}">
+							<td style="text-align:center;background-color:rgba(127, 130, 255, 0.3);">HV-GB</td>																																												
+						</c:when>	
+						<c:when test="${ (contact.zone.zoneName eq 'provincial')}">
+							<td style="text-align:center;background-color:Red;color:White">NOT SET</td>
+						</c:when>	
+						<c:otherwise>
+							<td style="text-align:center;background-color:Red;color:White;">UNKNOWN</td>
+						</c:otherwise>
+					</c:choose>     			
+	     			
+	     			
 	     			<td width="10%">	
 					<a href="editStaffDirectoryContact.html?id=${contact.contactId}" class="btn btn-xs btn-success" style="color:White;">EDIT</a>
 					<a href="#" onclick="if(confirm('Are you sure you want to delete ${fn:escapeXml(contact.fullName)}?'))document.location.href='deleteDirectoryStaff.html?id=${contact.contactId}';" class="btn btn-xs btn-danger" style="color:White;">DEL</a>
 					</td>
+					<td width="*">
+					<c:choose>
+					<c:when test="${ (contact.zone.zoneName eq 'provincial')}">1</c:when>
+					<c:when test="${ (contact.zone.zoneName eq 'eastern') or (contact.zone.zoneName eq 'avalon') or (contact.zone.zoneName eq 'AVALON') }">2</c:when>
+					<c:when test="${ (contact.zone.zoneName eq 'central')}">3</c:when>
+					<c:when test="${ (contact.zone.zoneName eq 'western')}">4</c:when>
+					<c:otherwise>5</c:otherwise>
+					</c:choose>		
+					</td>
+					<td width="*" class="divisionNum">${ contact.division.id }</td>
+					
+					<td width="5%">${ contact.sortorder }</td>  	
+					
+					
 					</tr>
-					</c:if>
+					
+								
+					
 	     		</c:forEach>
+	     		
   		</tbody>
   		</table>
-  		</div>
-  		</div>
-  		</div>
- </esd:SecurityAccessRequired> 
-  
- <!--  AVALON STAFF -->
- <esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING-AVALON"> 
- 
- <div class="card">
-    <div class="card-header region1">
-      <a class="card-link cardA" data-toggle="collapse" href="#collapseAvalon"><span class="iconA"><i class='fas fa-folder'></i></span> AVALON STAFF</a>  (<span class="avalonCount">0</span>)
-  </div> 
-    <script>
- 				$('.cardA').on("click", function(e){       
-				 if( $("#collapseAvalon").hasClass("show")) {
-	                	$(".iconP").html("<i class='fas fa-folder'></i>");
-	                } else {                	
-	                	 $(".iconP").html("<i class='fas fa-folder-open'></i>");
-	                }
-				 e.preventDefault();                	 
-	                	});                 
-	</script>
-     <div id="collapseAvalon" class="collapse" data-parent="#accordion">
-      <div class="card-body">       
-    <table class="staffingTable table table-sm table-hover table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
-					<thead class="region1solid">
-					<tr style="color:white;font-size:12px;">
-					<th width="5%">SORT#</th>							
-					<th width="15%">NAME</th>
-					<th width="10%">TELEPHONE</th>							
-					<th width="45%">POSITION</th>	
-					<th width="15%">DIVISION</th>							
-					<th width="10%">OPTIONS</th>	
-				</tr>
-				</thead>
-				<tbody>                          
-				<c:forEach items='${ contacts }' var='contact'>			
-				<c:if test="${ (contact.zone.zoneName eq 'avalon' or contact.zone.zoneName eq 'eastern')}">
-				<c:set var="avalonCnt" value="${avalonCnt+1 }"/>
-				<c:choose>
-				<c:when test="${ contact.sortorder eq '1' }">
-  					<tr class="region1" style="font-weight:bold;text-transform:uppercase;">
-  				</c:when>
-  				<c:otherwise>
-  					<tr>
-  				</c:otherwise>
-  				</c:choose>	
-  					<td width="5%">${ contact.sortorder }</td>  					
-  					<td width="15%">	
-  					<c:choose>
-					<c:when test="${ not empty contact.email }">
-						<a href="mailto:${contact.email}">${ contact.fullName }</a>
-					</c:when>
-					<c:otherwise>
-						${ contact.fullName }
-					</c:otherwise>
-					</c:choose>
-					</td>
-					<td width="10%">${ contact.telephone }</td>    										
-	     			<td width="45%">${ contact.position }</td>
-	     			<td width="15%">
-	     			<c:choose>
-	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Corporate Services
-	     			</c:when>
-	     			<c:otherwise>
-	     			${contact.division.name}
-	     			</c:otherwise>
-	     			</c:choose>
-	     			</td>
-	     			<td width="10%">	
-					<a href="editStaffDirectoryContact.html?id=${contact.contactId}" class="btn btn-xs btn-success" style="color:White;">EDIT</a>
-					<a href="#" onclick="if(confirm('Are you sure you want to delete ${fn:escapeXml(contact.fullName)}?'))document.location.href='deleteDirectoryStaff.html?id=${contact.contactId}';" class="btn btn-xs btn-danger" style="color:White;">DEL</a>
-					</td>
-					</tr>
-					</c:if>
-	     		</c:forEach>
-  		</tbody>
-  		</table>
-  		</div>
-  		</div>
-  		</div>
- 
- </esd:SecurityAccessRequired>
- 
   		
- <!-- CENTRAL STAFF --> 		
- <esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING-CENTRAL"> 
- 
-  		
- <div class="card">
-    <div class="card-header region2">
-      <a class="card-link cardC" data-toggle="collapse" href="#collapseCentral"><span class="iconC"><i class='fas fa-folder'></i></span> CENTRAL STAFF</a>  (<span class="centralCount">0</span>)
-  </div> 
-    <script>
- 				$('.cardC').on("click", function(e){       
-				 if( $("#collapseProvincial").hasClass("show")) {
-	                	$(".iconC").html("<i class='fas fa-folder'></i>");
-	                } else {                	
-	                	 $(".iconC").html("<i class='fas fa-folder-open'></i>");
-	                }
-				 e.preventDefault();                	 
-	                	});                 
-	</script>
-     <div id="collapseCentral" class="collapse" data-parent="#accordion">
-      <div class="card-body">       
-    <table class="staffingTable table table-sm table-hover table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
-					<thead class="region2solid">
-					<tr style="color:white;font-size:12px;">
-					<th width="5%">SORT#</th>							
-					<th width="15%">NAME</th>
-					<th width="10%">TELEPHONE</th>							
-					<th width="45%">POSITION</th>	
-					<th width="15%">DIVISION</th>							
-					<th width="10%">OPTIONS</th>	
-				</tr>
-				</thead>
-				<tbody>                          
-				<c:forEach items='${ contacts }' var='contact'>			
-				
-				
-				<c:if test="${ (contact.zone.zoneName eq 'central')}">
-				<c:set var="centralCnt" value="${centralCnt+1 }"/>
-				<c:choose>
-				<c:when test="${ contact.sortorder eq '1' }">
-  					<tr class="region2" style="font-weight:bold;text-transform:uppercase;">
-  				</c:when>
-  				<c:otherwise>
-  					<tr>
-  				</c:otherwise>
-  				</c:choose>	
-  					<td width="5%">${ contact.sortorder }</td>  					
-  					<td width="15%">	
-  					<c:choose>
-					<c:when test="${ not empty contact.email }">
-						<a href="mailto:${contact.email}">${ contact.fullName }</a>
-					</c:when>
-					<c:otherwise>
-						${ contact.fullName }
-					</c:otherwise>
-					</c:choose>
-					</td>
-					<td width="10%">${ contact.telephone }</td>    										
-	     			<td width="45%">${ contact.position }</td>
-	     			<td width="15%">
-	     			<c:choose>
-	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Corporate Services
-	     			</c:when>
-	     			<c:otherwise>
-	     			${contact.division.name}
-	     			</c:otherwise>
-	     			</c:choose>
-	     			</td>
-	     			<td width="10%">	
-					<a href="editStaffDirectoryContact.html?id=${contact.contactId}" class="btn btn-xs btn-success" style="color:White;">EDIT</a>
-					<a href="#" onclick="if(confirm('Are you sure you want to delete ${fn:escapeXml(contact.fullName)}?'))document.location.href='deleteDirectoryStaff.html?id=${contact.contactId}';" class="btn btn-xs btn-danger" style="color:White;">DEL</a>
-					</td>
-					</tr>
-					</c:if>
-	     		</c:forEach>
-  		</tbody>
-  		</table>
-  		</div>
-  		</div>
-  		</div>
- </esd:SecurityAccessRequired>
- 
- 
-  <!-- WESTERN STAFF --> 		
- <esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING-WESTERN"> 
- 
-  		
- <div class="card">
-    <div class="card-header region3">
-      <a class="card-link cardW" data-toggle="collapse" href="#collapseWestern"><span class="iconW"><i class='fas fa-folder'></i></span> WESTERN STAFF</a>  (<span class="westernCount">0</span>) 
-  </div> 
-    <script>
- 				$('.cardW').on("click", function(e){       
-				 if( $("#collapseProvincial").hasClass("show")) {
-	                	$(".iconW").html("<i class='fas fa-folder'></i>");
-	                } else {                	
-	                	 $(".iconW").html("<i class='fas fa-folder-open'></i>");
-	                }
-				 e.preventDefault();                	 
-	                	});                 
-	</script>
-     <div id="collapseWestern" class="collapse" data-parent="#accordion">
-      <div class="card-body">       
-    <table class="staffingTable table table-sm table-hover table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
-					<thead class="region3solid">
-					<tr style="color:white;font-size:12px;">
-					<th width="5%">SORT#</th>							
-					<th width="15%">NAME</th>
-					<th width="10%">TELEPHONE</th>							
-					<th width="45%">POSITION</th>	
-					<th width="15%">DIVISION</th>							
-					<th width="10%">OPTIONS</th>	
-				</tr>
-				</thead>
-				<tbody>                          
-				<c:forEach items='${ contacts }' var='contact'>			
-				
-				
-				<c:if test="${ (contact.zone.zoneName eq 'western')}">
-				<c:set var="westernCnt" value="${westernCnt+1 }"/>
-				<c:choose>
-				<c:when test="${ contact.sortorder eq '1' }">
-  					<tr class="region3" style="font-weight:bold;text-transform:uppercase;">
-  				</c:when>
-  				<c:otherwise>
-  					<tr>
-  				</c:otherwise>
-  				</c:choose>	
-  					<td width="5%">${ contact.sortorder }</td>  					
-  					<td width="15%">	
-  					<c:choose>
-					<c:when test="${ not empty contact.email }">
-						<a href="mailto:${contact.email}">${ contact.fullName }</a>
-					</c:when>
-					<c:otherwise>
-						${ contact.fullName }
-					</c:otherwise>
-					</c:choose>
-					</td>
-					<td width="10%">${ contact.telephone }</td>    										
-	     			<td width="45%">${ contact.position }</td>
-	     			<td width="15%">
-	     			<c:choose>
-	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Corporate Services
-	     			</c:when>
-	     			<c:otherwise>
-	     			${contact.division.name}
-	     			</c:otherwise>
-	     			</c:choose>
-	     			</td>
-	     			<td width="10%">	
-					<a href="editStaffDirectoryContact.html?id=${contact.contactId}" class="btn btn-xs btn-success" style="color:White;">EDIT</a>
-					<a href="#" onclick="if(confirm('Are you sure you want to delete ${fn:escapeXml(contact.fullName)}?'))document.location.href='deleteDirectoryStaff.html?id=${contact.contactId}';" class="btn btn-xs btn-danger" style="color:White;">DEL</a>
-					</td>
-					</tr>
-					</c:if>
-	     		</c:forEach>
-  		</tbody>
-  		</table>
-  		</div>
-  		</div>
-  		</div>
- </esd:SecurityAccessRequired>
- 
- 
-   <!-- LABRADOR STAFF --> 		
-<esd:SecurityAccessRequired permissions="MEMBERADMIN-VIEW,WEBMAINTENANCE-STAFFING-LABRADOR">   		
- <div class="card">
-    <div class="card-header region4">
-      <a class="card-link cardL" data-toggle="collapse" href="#collapseLabrador"><span class="iconL"><i class='fas fa-folder'></i></span> LABRADOR STAFF</a> (<span class="labradorCount">0</span>) 
-  </div> 
-    <script>
- 				$('.cardL').on("click", function(e){       
-				 if( $("#collapseProvincial").hasClass("show")) {
-	                	$(".iconL").html("<i class='fas fa-folder'></i>");
-	                } else {                	
-	                	 $(".iconL").html("<i class='fas fa-folder-open'></i>");
-	                }
-				 e.preventDefault();                	 
-	                	});                 
-	</script>
-     <div id="collapseLabrador" class="collapse" data-parent="#accordion">
-      <div class="card-body">       
-    <table class="staffingTable table table-sm table-hover table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
-					<thead class="region4solid">
-					<tr style="color:white;font-size:12px;">
-					<th width="5%">SORT#</th>							
-					<th width="15%">NAME</th>
-					<th width="10%">TELEPHONE</th>							
-					<th width="45%">POSITION</th>	
-					<th width="15%">DIVISION</th>							
-					<th width="10%">OPTIONS</th>	
-				</tr>
-				</thead>
-				<tbody>                          
-				<c:forEach items='${ contacts }' var='contact'>			
-				
-				
-				<c:if test="${ (contact.zone.zoneName eq 'labrador')}">
-				<c:set var="labradorCnt" value="${labradorCnt+1 }"/>
-				<c:choose>
-				<c:when test="${ contact.sortorder eq '1' }">
-  					<tr class="region4" style="font-weight:bold;text-transform:uppercase;">
-  				</c:when>
-  				<c:otherwise>
-  					<tr>
-  				</c:otherwise>
-  				</c:choose>	
-  					<td width="5%">${ contact.sortorder }</td>  					
-  					<td width="15%">	
-  					<c:choose>
-					<c:when test="${ not empty contact.email }">
-						<a href="mailto:${contact.email}">${ contact.fullName }</a>
-					</c:when>
-					<c:otherwise>
-						${ contact.fullName }
-					</c:otherwise>
-					</c:choose>
-					</td>
-					<td width="10%">${ contact.telephone }</td>    										
-	     			<td width="45%">${ contact.position }</td>
-	     			<td width="15%">
-	     			<c:choose>
-	     			<c:when test="${contact.division.name eq 'Finance and Business Administration'}">
-	     			Corporate Services
-	     			</c:when>
-	     			<c:otherwise>
-	     			${contact.division.name}
-	     			</c:otherwise>
-	     			</c:choose>
-	     			</td>
-	     			<td width="10%">	
-					<a href="editStaffDirectoryContact.html?id=${contact.contactId}" class="btn btn-xs btn-success" style="color:White;">EDIT</a>
-					<a href="#" onclick="if(confirm('Are you sure you want to delete ${fn:escapeXml(contact.fullName)}?'))document.location.href='deleteDirectoryStaff.html?id=${contact.contactId}';" class="btn btn-xs btn-danger" style="color:White;">DEL</a>
-					</td>
-					</tr>
-					</c:if>
-	     		</c:forEach>
-  		</tbody>
-  		</table>
-  		</div>
-  		</div>
-  		</div>
- </esd:SecurityAccessRequired>
- 
-  
-  
-</div>
+  	
 
 </esd:SecurityAccessRequired>
- </div>
+</div>
+
  
-       
+ 
     
      <script>
-  			$(".avalonCount").html("${avalonCnt}");   			
-  			$(".centralCount").html("${centralCnt}"); 
-  			$(".westernCount").html("${westernCnt}"); 
-  			$(".labradorCount").html("${labradorCnt}"); 
+  			
   			$(".provincialCount").html("${provincialCnt}"); 
   		    		
   		
