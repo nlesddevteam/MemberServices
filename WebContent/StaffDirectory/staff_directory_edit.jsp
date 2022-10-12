@@ -104,7 +104,7 @@
 	</div>       
 <br/><br/>
   <div class="card">
-						  	<div class="card-header siteSubHeaderBlue">2. DIVISION &amp; REGION</div>
+						  	<div class="card-header siteSubHeaderBlue">2. DIVISION &amp; DISTRICT OFFICE</div>
 						  	<div class="card-body">
 	                  
 	                  <div class="row container-fluid" style="padding-top:5px;">
@@ -135,7 +135,7 @@
 	                    <option value='2' ${ contact.zone eq "central" ? "SELECTED" : "" }>Gander</option>
 	                    <option value='3' ${ contact.zone eq "western" ? "SELECTED" : "" }>Corner Brook</option>
 	                    <option value='4' ${ contact.zone eq "labrador" ? "SELECTED" : "" }>Happy Valley - Goose Bay</option>
-	                    <option value='5' ${ contact.zone eq "provincial" ? "SELECTED" : "" }>Unknown</option>
+	                    <option value='5' ${ contact.zone eq "provincial" ? "SELECTED" : "" }>Other/School</option>
     					</select>
 </div></div>
 						
@@ -489,7 +489,7 @@
       				<div class="col-lg-6 col-12">
 	            <div class="alert alert-danger" id="warningMessage5" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 	            <div  id="posLocationSelect">
-    			<b>E. Position Location</b>
+    			<b>E. Position Location</b> - No need to select if at a main District office Location designated in Section 2 bbove.
 	                     <select id="posLocation" name="posLocation" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option> 
@@ -504,6 +504,7 @@
 							 <option value="Holy Heart">Holy Heart</option>
 							 <option value="Horizon Academy">Horizon Academy</option>
 							 <option value="Hospital School">Hospital School</option>
+							 <option value="Holy Redeemer Elementary">Holy Redeemer Elementary</option>
 							 <option value="IMC">IMC</option>
 							 <option value="Indian River Academy">Indian River Academy</option>
 							 <option value="Makkovik">Makkovik</option>
