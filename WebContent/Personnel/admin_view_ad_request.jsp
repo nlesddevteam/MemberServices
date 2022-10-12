@@ -340,14 +340,15 @@ var pageWordCountConfAd = {
                          
         <a href="#" class="btn btn-xs btn-primary" onclick="doPost('P','<%=req.getId()%>');">POST THIS AD</a>
                       
-     <%}else if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST") && req.getCurrentStatus().equals(RequestStatus.POSTED)){%>
-     
-     	<a href="#" class="btn btn-xs btn-primary" onclick="doPost('R','<%=req.getId()%>');">RE-POST AD</a>
-                         
      <%}else if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST") && req.getCurrentStatus().equals(RequestStatus.REJECTED)){%>
         
         <div class="alert alert-danger">Request has been REJECTED.</div>
       <%}%>
+      <%if(usr.getUserPermissions().containsKey("PERSONNEL-ADREQUEST-POST") && req.getCurrentStatus().equals(RequestStatus.POSTED)){%>
+     
+     	<a href="#" class="btn btn-xs btn-primary" onclick="doPost('R','<%=req.getId()%>');">RE-POST AD</a>
+                         
+     <%}%>
       <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
 								    
 						</div>
