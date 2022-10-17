@@ -400,9 +400,9 @@ Iterator p_iter = null;
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-question-circle"></i> HELP</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('calculatedistance.jsp');return false;"><i class="fa fa-fw fa-car"></i> Distance Calculator</a></li>
+                    <li><a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfWm5FdaMXKCAAdSZZM_gTQGgkU7zkiUkZPupMWM9Pi-96NOw/viewform" target="_blank"><i class="fa fa-fw fa-calendar-minus-o"></i> HelpDesk</a></li>                 
+               		<li><a class="dropdown-item" href="#" onclick="loadingData();loadMainDivPage('calculatedistance.jsp');return false;"><i class="fa fa-fw fa-car"></i> Distance Calculator</a></li>
                     <li><a class="dropdown-item" href="/about/policies.jsp#FIN-401" target="_blank"><i class="fa fa-fw fa-calendar-minus-o"></i> Travel Policy (FIN-401)</a></li>                 
-               		<li><a class="dropdown-item" href="https://forms.gle/xCxyaPMgTDcY18Tm6" target="_blank"><i class="fa fa-fw fa-calendar-minus-o"></i> Feedback Form</a></li>                 
                		
                 </ul>
             </li>
@@ -469,12 +469,9 @@ Iterator p_iter = null;
 						All other	expenditures MUST be handled through the District's purchasing system(s) or through school accounts. 
 						Where other expenditures are included, claim processing may be delayed.
 						</div>						
-    					<div class="alert alert-warning no-print" >    					
+    					<div class="alert alert-warning no-print">    					
     					<span style='float:left;font-size:20px;padding-right:5px;'><i class="far fa-question-circle"></i></span>
-						<b>SUPPORT:</b> If you are have any questions regarding a travel claim entry or payments, please contact Travel Claim Support 
-						 <a href="mailto:crystalwhitten@nlesd.ca?Travel Claim Support">Crystal Whitten</a> at (709) 758-2397. <!-- <br/>For technical problems, email <a href="mailto:geofftaylor@nlesd.ca?Travel Claim Support">geofftaylor@nlesd.ca</a>.-->
-						 <!-- or   <a href="mailto:sherrymiller@nlesd.ca?Travel Claim Support">Sherry Miller</a> at (709) 758-2373.-->
-						
+						<b>SUPPORT:</b> If you are have any questions regarding a travel claim entry or payments, please visit the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWm5FdaMXKCAAdSZZM_gTQGgkU7zkiUkZPupMWM9Pi-96NOw/viewform" target="_blank" >Travel Claim Help Desk</a> 
 						</div>		
 								
 						</div>					
@@ -600,7 +597,7 @@ $.cookie("displayTCWelcomeModalCookie", "hideWelcome", {
 if (displayTCWelcomeModalCookie=="hideWelcome") {
 $("#welcomeMessage").modal('hide').css("display","none");
 }	else {		
-$("#welcomeMessage").modal('show');
+$("#welcomeMessage").modal('hide');
 }	
 });
 </script>
