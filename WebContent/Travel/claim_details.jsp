@@ -1098,12 +1098,12 @@ dtable=$("#claimItemsTable").DataTable({
                     <span id="title4"></span>
                     
                     <div id="sdsvendorbox" style="display:none;">
-                    SDS VENDOR NUMBER: <input type="text"  class="form-control" name="sds_ven_num" id="sds_ven_num" value='<%=sds != null ? sds.getVendorNumber() : "" %>'/>                     	
+                    SDS VENDOR NUMBER: <input type="text"  class="form-control" name="sds_ven_num" id="sds_ven_num" autocomplete="off" value='<%=sds != null ? sds.getVendorNumber() : "" %>'/>                     	
                     </div>
                     
                     <div id="glaccountbox" style="display:none;">
                     	<b><span id="optionaltitle">Mandatory Information</span></b>
-                    	<b>GL ACCOUNT CODE:</b> <input type="text"  class="form-control" name="glaccount" id="glaccount"  value='<%=acct_code != null ? acct_code : "" %>'/>						 
+                    	<b>GL ACCOUNT CODE:</b> <input type="text"  class="form-control" name="glaccount" id="glaccount"  autocomplete="off" value='<%=acct_code != null ? acct_code : "" %>'/>						 
                     </div>
                     
                     <div id="teacherpaybox" style="display:none;">
@@ -1172,7 +1172,7 @@ dtable=$("#claimItemsTable").DataTable({
     			$( "#item_lodging" ).blur();
     			$( "#item_other" ).blur();
     			window.parent.$('#claim_details').css('height', $('#add_claim_item_form').height()+100);
-				$("#glaccount").mask("9-9999-9-99-9999-99-999", {placeholder: "_-____-_-__-____-__-___"});
+				//$("#glaccount").mask("9-9999-9-99-9999-99-999", {placeholder: "_-____-_-__-____-__-___"});
 				
 		});
 		</script>
