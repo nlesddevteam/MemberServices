@@ -525,8 +525,8 @@ employment positions and/or applications.
  </div></div></div></div>
   <!--10.  COVID19 ----------------------------------------------------------------------------------------->               
                 
-                
-  <div class="panel-group" style="padding-top:5px;">                               
+                <!-- HIDDEN NOW. Keep in case we need it again -->
+  <div class="panel-group" style="padding-top:5px;display:none;">                               
 	               	<div class="panel panel-info" id="section10b">   
 	               	<div class="panel-heading"><b>COVID-19 Proof of Vaccination</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_9_ss.jsp">EDIT/UPLOAD</a></span></div>
       			 	<div class="panel-body"> 
