@@ -1383,7 +1383,7 @@ input {
 	</div>
 	<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19-STATUS">
 	<!-- Letters --------------------------------------------------------------->
-	<div class="panel-group" style="padding-top: 5px;">
+	<div class="panel-group" style="padding-top: 5px;display:none;">
 		<div class="panel panel-info" id="section16">
 			<div class="panel-heading">
 				<b>COVID-19 Proof of Vaccination</b>
