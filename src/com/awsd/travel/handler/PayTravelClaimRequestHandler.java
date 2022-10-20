@@ -58,7 +58,7 @@ public class PayTravelClaimRequestHandler extends RequestHandlerImpl {
 						gl_acc.append(request.getParameter("gl_acc_part_6"));
 						gl_acc.append(request.getParameter("gl_acc_part_7"));
 
-						if (gl_acc.toString().trim().length() == 17) {
+						
 							sds = SDSInfoDB.getSDSInfo(claim.getPersonnel());
 							if (sds == null) {
 								SDSInfoDB.addSDSInfo(claim.getPersonnel(),
@@ -104,11 +104,8 @@ public class PayTravelClaimRequestHandler extends RequestHandlerImpl {
 								request.setAttribute("RESULT", "FAILED");
 							}
 						}
-						else {
-							request.setAttribute("msg", "GL ACCOUNT CODE INVALID.");
-							request.setAttribute("RESULT", "FAILED");
-						}
-					}
+						
+					
 					else {
 						request.setAttribute("msg", "Invalid option.");
 						request.setAttribute("RESULT", "FAILED");
