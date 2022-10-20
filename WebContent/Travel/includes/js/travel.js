@@ -901,7 +901,8 @@ function approvedeclinetravelclaim(claimid,optext)
 	var glaccount = "";
 	var notetext = "";
 	if(optext == "APPROVED"){
-		glaccount=$("#glaccount").data().rawMaskFn();
+		//glaccount=$("#glaccount").data().rawMaskFn();
+		glaccount=$("#glaccount").val();
 		if(glaccount == ""){
 			$('#glaccount').css('background','yellow');
 			$('#glaccount').focus();
@@ -962,7 +963,8 @@ function paytravelclaim(claimid)
 	var glaccount = "";
 	var sdsvendor = "";
 	var sdsteacher ="";
-	glaccount=$("#glaccount").data().rawMaskFn();
+	//glaccount=$("#glaccount").data().rawMaskFn();
+	glaccount=$("#glaccount").val();
 	sdsvendor = $("#sds_ven_num").val();
 	if($("#sds_tchr_par").is(':checked')){
 		sdsteacher="Y";

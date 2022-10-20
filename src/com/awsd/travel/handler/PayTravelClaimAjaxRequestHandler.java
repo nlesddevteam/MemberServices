@@ -62,7 +62,7 @@ public class PayTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 				else {
 					gl_acc = new StringBuffer("");
 				}
-				if (gl_acc.toString().trim().length() == 17) {
+				
 					TravelClaimDB.setClaimGLAccount(claim, gl_acc.toString().trim());
 					claim.setSDSGLAccountCode(gl_acc.toString().trim());
 					sds = SDSInfoDB.getSDSInfo(claim.getPersonnel());
@@ -115,11 +115,8 @@ public class PayTravelClaimAjaxRequestHandler extends RequestHandlerImpl {
 						iserror = true;
 						errormessage = "Claim status NOT set to PAID.";
 					}
-				}
-				else {
-					iserror = true;
-					errormessage = "GL ACCOUNT CODE INVALID.";
-				}
+				
+				
 			}
 			else {
 				iserror = true;
