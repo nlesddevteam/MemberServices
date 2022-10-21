@@ -96,14 +96,10 @@ public class ApproveDeclineTravelClaimAjaxRequestHandler extends RequestHandlerI
 								}
 								if (!StringUtils.isEmpty(request.getParameter("gl_acc"))) {
 									gl_acc = new StringBuffer(request.getParameter("gl_acc"));
-									if (gl_acc.toString().trim().length() == 17) {
+									
 										TravelClaimDB.setClaimGLAccount(claim, gl_acc.toString().trim());
 										claim.setSDSGLAccountCode(gl_acc.toString().trim());
-									}
-									else {
-										iserror = true;
-										errormessage = "Claim approved, GL Account could not be set.";
-									}
+									
 								}
 							}
 							else {

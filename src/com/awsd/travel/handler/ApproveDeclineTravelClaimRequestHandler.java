@@ -112,13 +112,9 @@ public class ApproveDeclineTravelClaimRequestHandler extends RequestHandlerImpl 
 									gl_acc.append(request.getParameter("gl_acc_part_6"));
 									gl_acc.append(request.getParameter("gl_acc_part_7"));
 
-									if (gl_acc.toString().trim().length() == 17) {
 										TravelClaimDB.setClaimGLAccount(claim, gl_acc.toString().trim());
 										claim.setSDSGLAccountCode(gl_acc.toString().trim());
-									}
-									else {
-										request.setAttribute("msg", "Claim approved, GL Account could not be set.");
-									}
+									
 								}
 							}
 							else {
