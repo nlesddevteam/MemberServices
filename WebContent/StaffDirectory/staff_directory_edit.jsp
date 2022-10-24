@@ -196,8 +196,7 @@
 						<option value="Auditor">Auditor</option>
 						<option value="Auditory Verbal Therapist">Auditory Verbal Therapist</option>
 						<option value="Budget Analyst">Budget Analyst</option>
-						<option value="Bus Foreperson">Bus Foreperson</option>
-						
+						<option value="Bus Foreperson">Bus Foreperson</option>						
 						<option value="Buyer I">Buyer I</option>
 						<option value="Buyer II">Buyer II</option>
 						<option value="Cayenta Project Manager">Cayenta Project Manager</option>
@@ -280,6 +279,7 @@
 						<option value="Manager of Policy">Manager of Policy</option>
 						<option value="Manager of Plants & Facilities">Manager of Plants & Facilities</option>
 						<option value="Manager of Procurement">Manager of Procurement</option>
+						<option value="Manager of School Generated Funds">Manager of School Generated Funds</option>
 						<option value="Manager of Student Transportation">Manager of Student Transportation</option>
 						<option value="Network Architect">Network Architect</option>
 						<option value="Network Administrator">Network Administrator</option>
@@ -342,6 +342,7 @@
 	                        <option value="">---- Please Select (If Necessary) ----</option>
 							<option value="">Not Applicable</option>
 							<option value="Alternate Service and Programs">Alternate Service and Programs</option>
+							<option value="Alternate Service and Systems">Alternate Service and Systems</option>
 							<option value="ASL Immersion Program">ASL Immersion Program</option>
 	                    	<option value="Auditory Verbal Therapist">Auditory Verbal Therapist</option>
 							<option value="Autism">Autism</option>
@@ -361,6 +362,7 @@
 							<option value="English Language Arts/Social Studies">English Language Arts/Social Studies</option>
 							<option value="Finance">Finance</option>
 							<option value="Finance and Budgeting">Finance and Budgeting</option>
+							<option value="Financial Services">Financial Services</option>
 							<option value="Finance and Business Administration">Finance and Business Administration</option>
 							<option value="Finance and Business Administration / Student Transportation">Finance and Business Administration / Student Transportation</option>
 							<option value="Fine Arts">Fine Arts</option>
@@ -402,6 +404,7 @@
 							<option value="Reading">Reading</option>
 							<option value="Safe and Inclusive Schools">Safe and Inclusive Schools</option>
 							<option value="School Support">School Support</option>
+							<option value="School Finance">School Finance</option>
 							<option value="Science">Science</option>
 							<option value="Science and Career Education">Science and Career Education</option>
 							<option value="Science and Technology">Science and Technology</option>
