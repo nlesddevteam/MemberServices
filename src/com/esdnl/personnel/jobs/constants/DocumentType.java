@@ -16,11 +16,14 @@ public class DocumentType {
 	public static final DocumentType COVID19_VAX_BOOSTER = new DocumentType(21, "COVID-19 Vaccination Booster");
 	public static final DocumentType LETTER = new DocumentType(99, "District Letter");
 	public static final DocumentType CODE_OF_ETHICS_CONDUCT = new DocumentType(22, "Code of Ethics and Conduct Declaration");
+	public static final DocumentType VIOLENCE_HAR_PREVENTION = new DocumentType(23, "Violence and Harassment Prevention Training");
+	
 
 	public static final DocumentType[] ALL = new DocumentType[] {
 			//UNIVERSITY_TRANSSCRIPT, TEACHING_CERTIFICATE, CODE_OF_CONDUCT, DELF, ECE, VULNERABLE_SECTOR_CHECK, REENTRYPL,
 			//LETTER,COVID19_VAX,COVID19_VAX_BOOSTER
-			CODE_OF_CONDUCT,CODE_OF_ETHICS_CONDUCT,COVID19_VAX,COVID19_VAX_BOOSTER, DELF, ECE,LETTER,REENTRYPL,TEACHING_CERTIFICATE, UNIVERSITY_TRANSSCRIPT,VULNERABLE_SECTOR_CHECK
+			CODE_OF_CONDUCT,CODE_OF_ETHICS_CONDUCT,COVID19_VAX,COVID19_VAX_BOOSTER, DELF, ECE,LETTER,REENTRYPL,TEACHING_CERTIFICATE, UNIVERSITY_TRANSSCRIPT,VIOLENCE_HAR_PREVENTION,
+			VULNERABLE_SECTOR_CHECK
 	};
 
 	private DocumentType(int value, String desc) {
