@@ -22,7 +22,7 @@
 <fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyHms" var="todayVer" />
 
 
-<esd:SecurityCheck permissions="PERSONNEL-IT-VIEW-SCHOOL-EMPLOYEES,PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-SUBMIT-REFERENCE,PERSONNEL-VIEW-SUBMITTED-REFERENCES"/>
+<esd:SecurityCheck permissions="PERSONNEL-IT-VIEW-SCHOOL-EMPLOYEES,PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,ADMINISTRATOR,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-SUBMIT-REFERENCE,PERSONNEL-VIEW-SUBMITTED-REFERENCES,PERSONNEL-SEARCH-APPLICANTS-NON"/>
 
 <%
 User usr = (User) session.getAttribute("usr");
@@ -200,19 +200,42 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_pp_school_employees.jsp">View School Employees</a></li>
 					          	</ul>
 	</esd:SecurityAccessRequired>
+	
+	<!-- 
 	<esd:SecurityAccessRequired roles="COVID19-REPORT-VIEWER">
-	<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
+								<li class="dropdown" id="menuNormal">
+					          	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
+					          	 <esd:SecurityAccessRequired roles="COVID19-REPORT-VIEWER">
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_covid19_counts_report.jsp">View COVID19 Counts Report</a></li>
-					          	</ul>
+								</esd:SecurityAccessRequired>
+								</ul>
+	</esd:SecurityAccessRequired>
+	-->
+	<esd:SecurityAccessRequired permissions="PERSONNEL-SEARCH-APPLICANTS-NON">
+									<li class="dropdown" id="menuNormal">
+					          		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
+					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-SEARCH-APPLICANTS-NON">
+					          	 	<ul class="dropdown-menu multi-level">					          	
+									<li class="dropdown-submenu">
+					          	 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Code of Ethics/Conduct</a>
+					          	 			<ul class="dropdown-menu">
+					          	 			<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewMissingCoeReport.html">Missing COE Report</a></li>
+											<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_ethics_latest_report.jsp">View Latest Report</a></li>
+											<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewEthicsSummary.html">View Summary Report</a></li>
+											<li><a onclick="loadingData()" href="/MemberServices/Personnel/search_applicants_non.jsp">Search Profile(s)</a></li>
+					          				</ul>
+					          			</li>								
+					          		</ul>
+					          		</esd:SecurityAccessRequired>
+    							
 	</esd:SecurityAccessRequired>
 
 <!-- ADMINISTRATION MENU ------------------------------------------------------------------------------>
 
 <%if(usr.checkPermission("PERSONNEL-ADMIN-VIEW")){%>
-
-							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19,PERSONNEL-ADMIN-VIEW-ETHICS-DEC">
+  <!--  HIDE COVID
+							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19,PERSONNEL-ADMIN-VIEW-ETHICS-DEC,PERSONNEL-SEARCH-APPLICANTS-NON">
 							<li class="dropdown" id="menuNormal">
 					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
 					          	 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-COVID19">
@@ -234,15 +257,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					          		</esd:SecurityAccessRequired>
 					          		</ul>
 					          		</li>
-					          		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-ETHICS-DEC">
-					          			<li class="dropdown-submenu">
-					          	 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Ethics and Conduct</a>
-					          	 			<ul class="dropdown-menu">
-											<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_view_ethics_latest_report.jsp">View Latest Report</a></li>
-											<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewEthicsSummary.html">View Summary Report</a></li>
-					          				</ul>
-					          			</li>
-					          		</esd:SecurityAccessRequired>
+
 					          		
 					          		
 					          	</ul>
@@ -252,7 +267,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					        </li>
 							</esd:SecurityAccessRequired>
 
-
+-->
 
 							<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 					        <li class="dropdown" id="menuNormal">
