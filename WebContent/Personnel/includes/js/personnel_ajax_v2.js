@@ -653,3 +653,98 @@ function addApplicantLetter() {
 	});
 	$('#add_letter_dialog').modal('hide');
 }
+/*******************************************************************************
+ * search applicants non hr employee
+ ******************************************************************************/
+function searchApplicantProfileNon() {
+
+
+
+	$("#diverror").hide();
+	var selectby = $("#selectby").val();
+	var txtfor = $("#txtfor").val();
+	
+	if(txtfor == ""){
+		$("#spanerror").html("Please enter Search Text");
+		$("#diverror").show();
+		return;
+	}
+	var requestd = new FormData();
+	requestd.append('searchby', selectby);
+	requestd.append('searchfor', txtfor);
+	var noresults=true;
+	$.ajax({
+		url : "searchApplicantsNonHr.html",
+		type : 'POST',
+		data : requestd,
+		contentType : false,
+		cache : false,
+		processData : false,
+		success : function(xml) {
+			$("#applicants-table").find("tr:gt(0)").remove();
+			
+			if($(xml).find('RESULT').text() == "SUCCESS"){
+				$(xml).find('APPLICANT').each(
+						function() {
+								noresults=false;
+								var newrow = "<tr>";
+								newrow += "<td>" + $(this).find("SDSLASTNAME").text() + "</td>";
+								newrow += "<td>" + $(this).find("SDSFIRSTNAME").text() + "</td>";
+								newrow += "<td>" + $(this).find("SDSEMAIL").text() + "</td>";
+								if($(this).find("DOCID").text() == "0"){
+									newrow += "<td style='color:Red;'>" + "NONE" + "</td>";
+								}else{
+									newrow += "<td>" + "<a class='btn btn-xs btn-info' href='viewApplicantDocument.html?id=" +
+									$(this).find("DOCID").text() + "'>VIEW</td>";
+								}
+								
+								if($(this).find("SDSLINKED").text() == "LINKED"){								
+								newrow += "<td style='color:Green;'>" + $(this).find("SDSLINKED").text() + "</td>";
+								
+								} else {
+								newrow += "<td style='color:Red;'>" + $(this).find("SDSLINKED").text() + "</td>";
+								}
+								
+								if($(this).find("DOCTYPE").text() == "T"){
+									newrow += "<td style='color:Blue;'>TEACHING</td>";
+								}else{
+									newrow += "<td style='color:Brown;'>SUPPORT</td>";
+								}
+								if($(this).find("APPSIN").text() == ""){
+									newrow += "<td>" + "NO PROFILE" + "</td>";
+								}else{
+									newrow += "<td>" + "<a class='btn btn-xs btn-primary' href='viewApplicantNonHr.html?sin=" + $(this).find("APPSIN").text()  + "' target='_blank'>PROFILE</a></td>";
+								}
+								
+								newrow += "</tr>";
+								$('#applicants-table tr:last').after(newrow);
+								
+							
+						});
+						
+						
+							
+						
+						
+			}else{
+				var newrow = "<tr>" + $(xml).find('RESULT').text() + "</tr>";
+				$('#applicants-table tr:last').after(newrow);
+			}
+			if(noresults){
+				var newrow = "<tr>No Applicants Found</tr>";
+				$('#applicants-table tr:last').after(newrow);
+			}
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			
+			var newrow = "<tr>" + textStatus + "</tr>";
+			$('#applicants-table tr:last').after(newrow);
+		},
+		dataType : "text",
+		async : false
+	});
+	
+	
+	
+}

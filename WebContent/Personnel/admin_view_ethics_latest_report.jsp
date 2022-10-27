@@ -195,8 +195,8 @@ function getEmployeesByDays(ndays)
          								newrow += "<td>" + $(this).find("CDATE").text() + "</td>";
          								//now we see what buttons we need
          								newrow += "<td>";
-         								newrow += "<a title='View Covid Documentation' class='viewdoc btn btn-sm btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'><i class='far fa-file-alt'></i></a>&nbsp;";
-         								newrow += "<a  title='View User Profile' class='btn btn-sm btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'><i class='fas fa-user-alt'></i></a>";
+         								newrow += "<a title='View COE Document' class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=" + $(this).find("DOCUMENTID").text() + "' target='_blank'>COE DOC</a>&nbsp;";
+         								newrow += "<a title='View User Profile' class='btn btn-xs btn-primary' href='viewApplicantProfile.html?sin=" + $(this).find("SIN").text() + "' target='_blank'>PROFILE</a>";
          								newrow += "</td>";
          								
          								newrow +="</tr>"
