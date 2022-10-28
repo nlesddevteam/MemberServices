@@ -1858,7 +1858,7 @@ if(dialogtype == "submitclaim"){
 			$('#title3').html("<br/>Are you sure you want to <b>APPROVE</b> this claim?");
 			$('#title4').html("<div class='alert alert-info'><b>NOTE:</b> A Cayenta account code MUST be used for all claims going forward. Acceptable formats are as follows:<br/>For DAC: ##.####.### (ex. 30.3200.699)<br/>For JOB: AA####-A###&#47;#### (ex. SF9110-A699&#47;3200)<br/>Codes entered in a format other than the above will be rejected.</div>");
 			$('#buttonleft').text("YES");
-			$('#buttonright').text("NO");
+			$('#buttonright').text("NO"); 
 			$('#selectbox').hide();
 			$('#glaccountbox').show();
 			$('#declinenotes').hide();
