@@ -295,6 +295,7 @@ If you wish, you can Print these claims individually using the blue link at bott
      <table width="100%" style="font-size:14px;width:100%;">
      <tr>
      <td colspan="2">
+     <span style="font-size:16px;color:Red;">TC<%=claim.getClaimID() %></span><br/>
      <span style="font-weight:bold;text-transform:capitalize;font-size:30px;"><%=claim.getPersonnel().getFullNameReverse()%></span> 
       <div style="float:right;font-weight:bold;font-size:30px;"><%=Utils.getMonthString(claim.getFiscalMonth()) + " " +  Utils.getYear(claim.getFiscalMonth(), claim.getFiscalYear()) %></div>
       </td>
@@ -303,7 +304,8 @@ If you wish, you can Print these claims individually using the blue link at bott
      <td colspan="2">&nbsp;</td>
      </tr>
           <tr>
-            <td width="50%" style="font-size:12px;vertical-align:top;">            
+            <td width="50%" style="font-size:12px;vertical-align:top;">  
+               
              		  <b>ADDRESS:</b>  <%=claim.getPersonnel().getProfile().getStreetAddress() != null ? claim.getPersonnel().getProfile().getStreetAddress() : "N/A" %>, <%=claim.getPersonnel().getProfile().getCommunity() %>, <%=claim.getPersonnel().getProfile().getProvince() %> &middot; <%=claim.getPersonnel().getProfile().getPostalCode() %><br/>
 		              <b>TEL:</b> <%=(claim.getPersonnel().getProfile().getPhoneNumber() != null ? claim.getPersonnel().getProfile().getPhoneNumber() : "N/A") %> &nbsp;&middot;&nbsp; <b>Cell:</b> <%=claim.getPersonnel().getProfile().getCellPhoneNumber() != null ? claim.getPersonnel().getProfile().getCellPhoneNumber(): "N/A" %>&nbsp;&middot;&nbsp;
 		              <b>FAX:</b> <%=claim.getPersonnel().getProfile().getFaxNumber() != null ? claim.getPersonnel().getProfile().getFaxNumber() : "N/A" %><br/>
