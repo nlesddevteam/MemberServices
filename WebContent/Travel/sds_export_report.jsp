@@ -218,14 +218,7 @@
              		
                            <br/><br/> <b>TEACHER PAYROLL? </b> <%=claim.isPaidThroughTeacherPayroll()?"YES":"NO"%><br/>
                             <b>GL ACCOUNT:</b>
-                                    	<%=(claim.getSDSGLAccountCode()!=null)?
-                                      claim.getSDSGLAccountCode().substring(0, 1) + "-"
-                                      + claim.getSDSGLAccountCode().substring(1, 5) + "-"
-                                      + claim.getSDSGLAccountCode().substring(5, 6) + "-"
-                                      + claim.getSDSGLAccountCode().substring(6, 8) + "-"
-                                      + claim.getSDSGLAccountCode().substring(8, 12) + "-"
-                                      + claim.getSDSGLAccountCode().substring(12, 14) + "-"
-                                      + claim.getSDSGLAccountCode().substring(14):""%>
+                                    	<%=(claim.getSDSGLAccountCode()!=null)?claim.getSDSGLAccountCode().trim():""%>
                     
         </td>
             </tr>           
