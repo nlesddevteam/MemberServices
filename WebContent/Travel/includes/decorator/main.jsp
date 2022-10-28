@@ -213,6 +213,9 @@ Iterator p_iter = null;
     </button>
     <div class="collapse navbar-collapse" id="navbarDD">
         <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+                <a class="nav-link" href="../navigate.jsp" onclick="loadingData()"><i class="fa-sharp fa-solid fa-backward-step"></i> MS</a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="index.jsp" onclick="loadingData()"><i class="fas fa-home"></i> HOME <span class="sr-only">(current)</span></a>
             </li>  
@@ -481,6 +484,7 @@ Iterator p_iter = null;
 <!-- FOOTER AREA -->		
 
   <div align="center" class="no-print navBottom">
+  <div style="display:inline-block;margin-top:5px;"><a href="../navigate.jsp" class="btn btn-danger btn-sm" role="button" onclick="loadingData();">MS</a></div>
    		<div style="display:inline-block;margin-top:5px;"><a href="index.jsp" class="btn btn-primary btn-sm" role="button" onclick="loadingData();">Home</a></div>
     	
   <c:if test="${todayDate le expiredDate}">  	
