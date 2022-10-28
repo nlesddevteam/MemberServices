@@ -77,9 +77,10 @@
   SDSInfo sds = null;
   sds = claim.getPersonnel().getSDSInfo();
   
-  if((claim.getSDSGLAccountCode()!=null)&&(!claim.getSDSGLAccountCode().trim().equals("10000000000000000")))
+  //if((claim.getSDSGLAccountCode()!=null)&&(!claim.getSDSGLAccountCode().trim().equals("10000000000000000")))
+	  if((claim.getSDSGLAccountCode()!=null))
   {
-    acct_code = claim.getSDSGLAccountCode();
+    acct_code = claim.getSDSGLAccountCode().trim();
   }
   //else if((sds != null) && (sds.getAccountCode()!= null) && (!sds.getAccountCode().trim().equals("10000000000000000")))
   //{
@@ -525,14 +526,7 @@ dtable=$("#claimItemsTable").DataTable({
                             
                             <b>Teacher Payroll:</b> <%=claim.isPaidThroughTeacherPayroll()?"YES":"NO"%><br/>
                             <b>GL Account:</b>
-                                    	<%=(claim.getSDSGLAccountCode()!=null)?
-                                      claim.getSDSGLAccountCode().substring(0, 1) + "-"
-                                      + claim.getSDSGLAccountCode().substring(1, 5) + "-"
-                                      + claim.getSDSGLAccountCode().substring(5, 6) + "-"
-                                      + claim.getSDSGLAccountCode().substring(6, 8) + "-"
-                                      + claim.getSDSGLAccountCode().substring(8, 12) + "-"
-                                      + claim.getSDSGLAccountCode().substring(12, 14) + "-"
-                                      + claim.getSDSGLAccountCode().substring(14):""%>
+                                    	<%=(claim.getSDSGLAccountCode()!=null)?claim.getSDSGLAccountCode().trim():""%>
                             
                            
                             <%}%>
