@@ -234,7 +234,7 @@
 
 					<!-- Weather Central Admin  -->
 					<esd:SecurityAccessRequired
-						permissions="WEATHERCENTRAL-GLOBAL-ADMIN">
+						roles="ADMINISTRATOR">
 						<div class="menuIconImage">
 							<a href="SchoolStatus/regionalized_school_admin.jsp"> <img
 								src="includes/img/menu/schoolstatusadmin-off.png"
