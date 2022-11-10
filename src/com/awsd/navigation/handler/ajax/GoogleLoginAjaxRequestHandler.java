@@ -2,18 +2,14 @@ package com.awsd.navigation.handler.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
-
 import com.awsd.personnel.Personnel;
 import com.awsd.security.IllegalAccessAttemptException;
 import com.awsd.security.SecurityException;
@@ -57,17 +53,17 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 			if (this.validate_form()) {
 				HttpTransport transport = new NetHttpTransport();
 				JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-
 				GoogleIdTokenVerifier verifier = (new GoogleIdTokenVerifier.Builder(transport, jsonFactory)).setAudience(
 						Arrays.asList(CLIENT_ID)).build();
 
 				GoogleIdToken idToken = null;
-
+				
 				try {
 					idToken = verifier.verify(form.get("id_token"));
 				}
-				catch (GeneralSecurityException e) {
-					throw new SecurityException(e.getMessage());
+				catch (Exception e) {
+					//throw new Exception(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 
 				if (idToken != null) {
@@ -120,6 +116,7 @@ public class GoogleLoginAjaxRequestHandler extends PublicAccessRequestHandlerImp
 									+ "*].");
 
 							session.setAttribute("usr", usr);
+							session.setAttribute("gmailicon", form.get("picture_u"));
 
 							try {
 								permissions = usr.getUserPermissions();
