@@ -41,7 +41,17 @@
 						<img src="/MemberServices/includes/img/msheader.png" class="msHeaderLogo"><br/>	
 						<div style="width:500px; text-align:center;">
 							
-					  	<div id="my-signin2" style='padding: 25px; width: 240px;margin: 0 auto;'></div>
+					  	<div id="my-signin2" style='padding: 25px; width: 240px;margin: 0 auto;'>
+					  	<script src="https://accounts.google.com/gsi/client" async defer></script>
+    						<div id="g_id_onload"
+        						 data-client_id="362546788437-ntuv1jsloeagtrkn8vqd2d1r85hnt79t.apps.googleusercontent.com" data-auto_select="true"
+        							data-callback="handleCredentialResponse">
+    							</div>
+    							<div class="g_id_signin" data-type="standard"></div>
+					  	
+					  	
+					  	
+					  	</div>
 					  	
 					  	<div id="my-signin2-error-alert" style="padding-bottom: 10px;display:none;color:Red;text-align:center;"></div>
 						</div>
@@ -72,18 +82,16 @@
 		</div>
 		<script type="text/javascript">
 			function onSuccess(googleUser) {
-			  	var profile = googleUser.getBasicProfile();
-			  	
-				  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-				  console.log('Name: ' + profile.getName());
-				  console.log('Image URL: ' + profile.getImageUrl());
-				  console.log('Email: ' + profile.getEmail());
-				  
-				  var id_token = googleUser.getAuthResponse().id_token;
-				  console.log('ID_TOKEN: ' + id_token);
-				  
+			  	//var profile = googleUser.getBasicProfile();
+			  	var ctoken = parseJwt(googleUser.credential);
+			  		console.log('ID: ' + ctoken.sub); // Do not send to your backend! Use an ID token instead.
+				  console.log('Name: ' + ctoken.name);
+				  console.log('Image URL: ' + ctoken.picture);
+				  console.log('Email: ' + ctoken.email);
 				  var params = {};
-				  params.id_token = id_token;
+				  //params.id_token = id_token;
+				  params.id_token = googleUser.credential;
+				  params.picture_u=ctoken.picture;
 				  
 				  $.getJSON('/MemberServices/google/ajax/validate-login.html', params, function(data) {
 					  console.log(data);
@@ -119,19 +127,27 @@
 			    $('#my-signin2-error-alert').html(error).show();
 			  }
 			  
-			  function renderButton() {
-			    gapi.signin2.render('my-signin2', {
-			      'scope': 'profile email',
-			      'width': 240,
-			      'height': 50,
-			      'longtitle': true,
-			      'theme': 'dark',
-			      'onsuccess': onSuccess,
-			      'onfailure': onFailure
-			    });
+			  
+			  function handleCredentialResponse(response){
+				  if(response && !response.error){
+					  onSuccess(response);
+					  
+				  }else{
+					  onFailure(response.error);
+				  }
+				  
 			  }
+			  function parseJwt (token) {
+				    var base64Url = token.split('.')[1];
+				    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+				    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+				        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+				    }).join(''));
+
+				    return JSON.parse(jsonPayload);
+				};
 		</script>
 
-		<script  type="text/javascript" src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+		
 	</body>
 </html>

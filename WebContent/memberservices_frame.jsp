@@ -27,41 +27,8 @@
 		          function(){this.src = this.src.replace("-on","-off");});
 			});
 		</script>
-		<script  type="text/javascript" src="https://apis.google.com/js/platform.js?onload=appStart" async defer></script>
-		<script type="text/javascript">
-		  	var auth2; // The Sign-In object.
-		  	var googleUser; // The current user.
+		<script  type="text/javascript" src="https://accounts.google.com/gsi/client?onload=appStart" async defer></script>
 
-		  	/**
-		  	 * Calls startAuth after Sign in V2 finishes setting up.
-		  	 */
-		  	var appStart = function() {
-		  	  gapi.load('auth2', initSigninV2);
-		  	};
-
-		  	/**
-		  	 * Initializes Signin v2 and sets up listeners.
-		  	 */
-		  	var initSigninV2 = function() {
-		  	  auth2 = gapi.auth2.init({
-		  	      client_id: '362546788437-ntuv1jsloeagtrkn8vqd2d1r85hnt79t.apps.googleusercontent.com',
-		  	      scope: 'profile email'
-		  	  });
-
-		  	  // Listen for sign-in state changes.
-		  	  auth2.isSignedIn.listen(function(loggedIn){
-		  		  console.log('Google Login? ' + loggedIn);
-		  		  if(!loggedIn) {
-		  			  location.href='/MemberServices/logout.html';
-		  		  }
-		  	  });
-
-		  	  // Sign in the user if they are currently signed in.
-		  	  if (auth2.isSignedIn.get() == true) {
-		  	    auth2.signIn();
-		  	  }
-		  	};
-		</script>
 	
   </head>
   
