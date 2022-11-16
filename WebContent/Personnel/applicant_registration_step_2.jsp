@@ -169,7 +169,7 @@ if(esd_exp.getContractSchool() > 0){%>
 	      	changeMonth: true,
 	      	changeYear: true,
 	      	dateFormat: "mm/yy",
-	      	yearRange: "-75:+0"
+	      	yearRange: "-75:+1"
 	   });
  });
  </script>  	
