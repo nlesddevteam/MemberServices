@@ -51,6 +51,10 @@ $("#loadingSpinner").css("display","none");
 							<br /><br/>
 							Being a member of an EDU working group can provide valuable professional learning and a tremendous opportunity to contribute to the education of students in Newfoundland and
 							Labrador. All educators are encouraged to put their names forward for consideration.
+							<br /><br/>
+							<div class="alert alert-warning" role="alert" style="text-align: center;">
+  									<h5>Please remember to click the Update Teacher Area button at the bottom after selecting your areas</h5>
+							</div>
 							
                  	<jsp:include page="eecd_menu.jsp"/>
 										
