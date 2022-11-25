@@ -199,6 +199,8 @@
 						<option value="Bus Foreperson">Bus Foreperson</option>						
 						<option value="Buyer I">Buyer I</option>
 						<option value="Buyer II">Buyer II</option>
+						<option value="Buyer III">Buyer III</option>
+						<option value="Buyer IV">Buyer IV</option>
 						<option value="Cayenta Project Manager">Cayenta Project Manager</option>
 						<option value="CEO/Director of Education">CEO/Director of Education</option>
 						<option value="CFO/Assistant Director of Education">CFO/Assistant Director of Education</option>
@@ -263,6 +265,7 @@
 						<option value="Manager of Accounting and Financial Operations">Manager of Accounting and Financial Operations</option>
 						<option value="Manager of ATIPP">Manager of ATIPP</option>
 						<option value="Manager of Accounts Payable">Manager of Accounts Payable</option>
+						<option value="Manager of Accounts Payable and Accounts Receivable">Manager of Accounts Payable and Accounts Receivable</option>
 						<option value="Manager of Accounts Payable and Receivables">Manager of Accounts Payable and Receivables</option> 
 						<option value="Manager of Budgeting">Manager of Budgeting</option>
 						<option value="Manager of Communications">Manager of Communications</option>						
