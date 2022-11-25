@@ -47,10 +47,12 @@
 	$('document').ready(function(){
 		aTable = $(".staffingTable").dataTable({
 			"order" : [[ 7, "asc" ],[6,"asc"],[8,"asc"]],			
-			  "paging":   false,
+			  "paging":   true,
 			  "searching": true,			 
 				responsive: true,
-				"lengthChange": false,
+				"pageLength": 25,
+				"lengthMenu": [[25, 50, 75, 100, -1], [25, 50, 75, 100, "All"]],
+				"lengthChange": true,
 				"columnDefs": [
 					 {
 			                "targets": [5,8],			               
