@@ -324,6 +324,7 @@
 						<option value="Store Keeper">Store Keeper</option>
 						<option value="Student Services">Student Services</option>
 						<option value="Student Transportation Enforcement Officer">Student Transportation Enforcement Officer</option>
+						<option value="Superintendent of Schools">Superintendent of Schools</option>
 						<option value="Supervisor of Board Owned Bus Services">Supervisor of Board Owned Bus Services</option>
 						<option value="Supervisor of District-Operated Busing">Supervisor of District-Operated Busing</option>
 						<option value="Training Specialist">Training Specialist</option>
