@@ -155,7 +155,7 @@ You will also notice any vacancies as red. Please update these when possible, or
 	     			
 	     			<c:choose>
 	     			<c:when test="${contact.division.id eq '1'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(255, 218, 185,0.5);">DIRECTOR'S OFFICE</td>
+	     			<td width="15%" style="text-align:center;background-color:rgba(255, 218, 185,0.5);">SUPERINTENDENT'S OFFICE</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '2'}">
 	     			<td width="15%" style="text-align:center;background-color:rgba(178, 34, 34,0.2);">PROGRAMS</td>

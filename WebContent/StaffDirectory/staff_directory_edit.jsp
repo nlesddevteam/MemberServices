@@ -113,6 +113,11 @@
 	                      	<select id='divisionId' name='divisionId' class="form-control" required>	                      		
 	                      		<c:forEach items="${ divisions }" var='division'>
 	                      		<c:choose>
+	                      		<c:when test="${ division.id eq '1' }">
+	                      		<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
+	                      			Superintendent
+	                      			</option>
+	                      		</c:when>
 	                      		<c:when test="${ division.name eq 'Finance and Business Administration' }">
 	                      		<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
 	                      			Corporate Services
