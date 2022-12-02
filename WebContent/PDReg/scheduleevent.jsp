@@ -19,6 +19,14 @@
 
 <%
   User usr = null;
+
+SchoolFamilies families = null;
+SchoolFamily family = null;
+Iterator fam_iter = null;
+
+families = new SchoolFamilies();
+fam_iter = families.iterator();
+
   boolean private_only = false;
   boolean isPrincipal = false;
   boolean isVicePrincipal = false;
@@ -223,7 +231,15 @@ var pageWordCountConf = {
 						              		<option value="41">SCHOOL PD REQUEST</option>
 						            	<%} else {
 						                	for(EventType type : new EventTypes()){
-						                  	if((type.getEventTypeID() != 41)&&(type.getEventTypeID() != 61)){ %>  
+						                  	if((type.getEventTypeID() != 1)&&
+						                  		(type.getEventTypeID() != 2)&&
+						                  		(type.getEventTypeID() != 3)&&
+						                  		(type.getEventTypeID() != 23)&&
+						                  		(type.getEventTypeID() != 24)&&
+						                  		(type.getEventTypeID() != 5)&&
+						                  		(type.getEventTypeID() != 62)&&
+						                  		(type.getEventTypeID() != 41)&&
+						                  		(type.getEventTypeID() != 61)){ %>  
 						              	<option value="<%=type.getEventTypeID()%>"><%=type.getEventTypeName()%></option>
 						              	<%}}}%>
 						            </select>
@@ -265,13 +281,22 @@ var pageWordCountConf = {
 </div>
     							
     							
-<div class="formTitle">REGION:</div>
-<div class="formBody">	  
+<div class="formTitle">FAMILY OF SCHOOLS:</div>
+<div class="formBody">
+If this event is for a particular Family of Schools, select the Family from the dropdown below. If for all the province, select Provincial.<br/>  
     								<select id="lstSchoolZone" name="EventZoneID" class="form-control">
-					              	<option value="">--- SELECT REGION ---</option>
-					              	<% for(SchoolZoneBean sz : SchoolZoneService.getSchoolZoneBeans()){ %>
-					              			<option value="<%= sz.getZoneId() %>"><%= StringUtils.capitalize(sz.getZoneName()) %> Region</option>
+					              		<option value="">--- SELECT FAMILY ---</option>
+					              	<% while(fam_iter.hasNext()) {
+				                          family = (SchoolFamily) fam_iter.next();                        
+				                      %>
+					       				<option value="<%=family.getSchoolFamilyID()%>"><%=family.getSchoolFamilyName()%></option>
+					       			<%}%> 
+					       			<% for(SchoolZoneBean sz : SchoolZoneService.getSchoolZoneBeans()){ %>				       			
+					       			<%if (sz.getZoneId() == 5) { %>
+					              			<option value="<%= sz.getZoneId() %>">PROVINCIAL</option>
+					              			<%} %>
 					              	<% } %>
+					              	
 					              	</select>
  </div>   							
     					<%}else{%>
@@ -469,10 +494,10 @@ var pageWordCountConf = {
 </div>
    <div style="clear:both;"></div>   
    <hr>          							
-    <div class="formBody">								
+    <div class="formBody" style="padding-bottom:50px;">								
     							<input type="checkbox" name="chk-is-government-funded" /><label for='chk-is-government-funded'>&nbsp;&nbsp;*&nbsp;Is Event Funded by Nunatsiavut Government?</label>
        </div>  
-        
+    <br/>&nbsp;<br/>    
  <hr>                 
                <div align="center" class="no-print navBottom">
                   <a href="#" class="btn btn-xs btn-primary" onclick="if(validateEvent(document.schedule)==true)onClick(document.schedule);">Schedule This Event</a>

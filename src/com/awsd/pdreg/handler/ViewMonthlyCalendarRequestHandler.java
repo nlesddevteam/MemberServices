@@ -71,7 +71,7 @@ public class ViewMonthlyCalendarRequestHandler implements RequestHandler {
 		SchoolZoneBean centralZone = null;
 		SchoolZoneBean westernZone = null;
 		SchoolZoneBean labradorZone = null;
-		SchoolZoneBean provincialZone = null;		
+		SchoolZoneBean provincialZone = null;			
 		
 		avalonZone = SchoolZoneService.getSchoolZoneBean(1);
 		centralZone = SchoolZoneService.getSchoolZoneBean(2);
@@ -79,12 +79,13 @@ public class ViewMonthlyCalendarRequestHandler implements RequestHandler {
 		labradorZone = SchoolZoneService.getSchoolZoneBean(4);
 		provincialZone = SchoolZoneService.getSchoolZoneBean(5);
 		
+		
 		request.setAttribute("avalonMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), avalonZone));
 		request.setAttribute("centralMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), centralZone));
 		request.setAttribute("westernMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), westernZone));
 		request.setAttribute("labradorMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), labradorZone));
 		request.setAttribute("provincialMonthlyEvents", new MonthlyCalendar(sdf.format(cur.getTime()), provincialZone));
-
+		
 		nextM = (Calendar) cur.clone();
 		nextM.add(Calendar.MONTH, 1);
 		prevM = (Calendar) cur.clone();

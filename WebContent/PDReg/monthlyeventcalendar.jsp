@@ -52,12 +52,16 @@
   MonthlyCalendar monthWestern = (MonthlyCalendar) request.getAttribute("westernMonthlyEvents");
   MonthlyCalendar monthLabrador = (MonthlyCalendar) request.getAttribute("labradorMonthlyEvents");
   MonthlyCalendar monthProvincial = (MonthlyCalendar) request.getAttribute("provincialMonthlyEvents");
+
+  
+  
   int total = month.totalEvents();
   int totalAvalon = monthAvalon.totalEvents();
   int totalCentral = monthCentral.totalEvents();
   int totalWestern = monthWestern.totalEvents();
   int totalLabrador = monthLabrador.totalEvents();
   int totalProvincial = monthProvincial.totalEvents();  
+
   int totalAll = totalAvalon+totalCentral+totalWestern+totalLabrador+totalProvincial;     
 %>
 
@@ -79,6 +83,28 @@
    			} 
    		});    	
     });
+    
+    //For Chart
+    	 var eA = 0;
+    	 var eC = 0;
+    	 var eW = 0;
+    	 var eL = 0;
+    	 var eP = 0;
+    	 var eF1 = 0;
+    	 var eF2 = 0;
+    	 var eF3 = 0;
+    	 var eF4 = 0;
+    	 var eF5 = 0;
+    	 var eF6 = 0;
+    	 var eF7 = 0;
+    	 var eF8 = 0;
+    	 var eF9 = 0;
+    	 var eF10 = 0;
+    	 var eF11 = 0;
+    	 var eF12 = 0;
+    	 var eF13 = 0;
+    	 var unk = 0;
+        
   </script>
 <script src="/MemberServices/PDReg/includes/js/Chart.min.js"></script>
 
@@ -86,7 +112,12 @@
 <style>
  .affix { top: 0px; width: 100%;z-index: 999 !important;}
 .affix + .container-fluid { padding-top: 110px;}
+canvas{
 
+  width:100% !important;
+  height:400px !important;
+
+}
 @media only screen and (max-width: 850px) {		
 		.affix + .container-fluid {padding-top: 105px; }
 	
@@ -273,11 +304,9 @@
  
  
  <div align="center" class="no-print navBottom">
-  <div style="display:inline-block;margin-top:5px;"><a href="#" class='btnRegionView btn btn-xs btn-primary' title="List All Regional Events" onclick="loadingData()" data-region-id='0'>All Events</a></div>
-   			<% for(SchoolZoneBean sz : SchoolZoneService.getSchoolZoneBeans()){ %> 
-   			    <div style="display:inline-block;margin-top:5px;"><a href="#" class='btnRegionView btn btn-xs btn-primary' onclick="loadingData()" data-region-id="<%= sz.getZoneId() %>" title="Show <%= StringUtils.capitalize(sz.getZoneName())%> Regional Events"> <%= StringUtils.capitalize(sz.getZoneName())%></a></div>
-   			<%}%> 
+  <div style="display:inline-block;margin-top:5px;"><a href="#" class='btnRegionView btn btn-xs btn-primary' title="List All Regional Events" onclick="loadingData()" data-region-id='0'><span class="glyphicon glyphicon-home"></span> Home</a></div>
    			
+    		
    			<% if(usr.checkPermission("CALENDAR-SCHEDULE")) { %>
            		<div style="display:inline-block;margin-top:5px;"><a href="scheduleEvent.html?passthrough=true" class="btn btn-xs btn-success" title="Schedule Event" onclick="loadingData();"><span class="glyphicon glyphicon-plus"></span> Add Event</a></div>
             	<div style="display:inline-block;margin-top:5px;"><a href="viewUpcomingEvents.html?pid=<%=usr.getPersonnel().getPersonnelID()%>" title="List events that I have scheduled for others to attend." class="btn btn-xs btn-danger" onclick="loadingData();"><span class="glyphicon glyphicon-calendar"></span> My Scheduled Events</a></div>
@@ -288,27 +317,50 @@
             <% } %>
             
             <div style="display:inline-block;margin-top:5px;"><a href='#' title='Print this page (pre-formatted)'  class="btn btn-xs btn-success"  onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:10px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><b>Professional Development Calendar</b></div><br/>'});"><span class="glyphicon glyphicon-print"></span> Print</a></div>
-            <div style="display:inline-block;margin-top:5px;"><a href="https://forms.gle/UrYhxVAXRpAWhJGf7" class="btn btn-xs btn-warning" title="Provide Feedback - Will open in a new tab." target="_blank"><span class="glyphicon glyphicon-bullhorn"></span> Feedback</a></div>
+            <!-- <div style="display:inline-block;margin-top:5px;"><a href="https://forms.gle/UrYhxVAXRpAWhJGf7" class="btn btn-xs btn-warning" title="Provide Feedback - Will open in a new tab." target="_blank"><span class="glyphicon glyphicon-bullhorn"></span> Feedback</a></div>-->
   		 	<div style="display:inline-block;margin-top:5px;"><a href="/MemberServices/navigate.jsp" class="btn btn-xs btn-danger" title="Back to MS" onclick="loadingData();"><span class="glyphicon glyphicon-eject"></span> Exit</a></div>
  </div>
  
   	 </form>   
   <div class="mainView" style="font-size:11px;color:Black;text-align:center;padding-top:5px;"><b>CALENDAR  / CHART LEGEND (#Events) Percentage of Total</b><br/>
-	  <div style="display:inline-block;white-space: nowrap;"><span class="region1a">&nbsp; AVALON (<%=totalAvalon%>) <span id="pA"></span>&nbsp;</span></div>
-	   <div style="display:inline-block;white-space: nowrap;"><span class="region2a">&nbsp; CENTRAL (<%=totalCentral%>) <span id="pC"></span>&nbsp;</span></div>
-	   <div style="display:inline-block;white-space: nowrap;"><span class="region3a">&nbsp; WESTERN (<%=totalWestern%>) <span id="pW"></span>&nbsp;</span></div>
-	   <div style="display:inline-block;white-space: nowrap;"><span class="region4a">&nbsp; LABRADOR (<%=totalLabrador%>) <span id="pL"></span>&nbsp;</span></div>
-	   <div style="display:inline-block;white-space: nowrap;"><span class="region5a">&nbsp; PROVINCIAL (<%=totalProvincial%>) <span id="pP"></span>&nbsp;</span></div>
-	   <div style="display:inline-block;white-space: nowrap;"><span class="pastEvt">&nbsp; PAST EVENT</span></div>	 	
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb1">&nbsp;FOS 01 (<span id="numFOS1"></span>) <span id="p1"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb2">&nbsp;FOS 02 (<span id="numFOS2"></span>) <span id="p2"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb3">&nbsp;FOS 03 (<span id="numFOS3"></span>) <span id="p3"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb4">&nbsp;FOS 04 (<span id="numFOS4"></span>) <span id="p4"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb5">&nbsp;FOS 05 (<span id="numFOS5"></span>) <span id="p5"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb6">&nbsp;FOS 06 (<span id="numFOS6"></span>) <span id="p6"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb7">&nbsp;FOS 07 (<span id="numFOS7"></span>) <span id="p7"></span>&nbsp;</div><br/>
+  
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb8">&nbsp;FOS 08 (<span id="numFOS8"></span>) <span id="p8"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb9">&nbsp;FOS 09 (<span id="numFOS9"></span>) <span id="p9"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb10">&nbsp;FOS 10 (<span id="numFOS10"></span>) <span id="p10"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb11">&nbsp;FOS 11 (<span id="numFOS11"></span>) <span id="p11"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb12">&nbsp;FOS 12 (<span id="numFOS12"></span>) <span id="p12"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numFOSb13">&nbsp;FOS 13 (<span id="numFOS13"></span>) <span id="p13"></span>&nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" id="numUnkb">&nbsp;OTHER (<span id="numUnk"></span>) <span id="pU"></span>&nbsp;</div><br/>
+ <%if (curY <= 2022) { %>  
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;"><span class="region1">&nbsp; AVALON (<%=totalAvalon%>) <span id="pA"></span>&nbsp;</span></div>
+	   <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;"><span class="region2">&nbsp; CENTRAL (<%=totalCentral%>) <span id="pC"></span>&nbsp;</span></div>
+	   <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;"><span class="region3">&nbsp; WESTERN (<%=totalWestern%>) <span id="pW"></span>&nbsp;</span></div>
+	   <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;"><span class="region4">&nbsp; LABRADOR (<%=totalLabrador%>) <span id="pL"></span>&nbsp;</span></div>
+<%} %>	   
+	   <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;"><span class="region5">&nbsp; PROVINCIAL (<%=totalProvincial%>) <span id="pP"></span>&nbsp;</span></div>
+	   <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;"><span style="color:Grey;background-color:#f2f2f2;">&nbsp; PAST EVENT &nbsp;</span></div>	 	
   </div>
 
 
 <!--  ONLY SHOW CHART IN NORMAL VIEW -->
 
 <div align='center' class="mainView" style='font-size:14pt;font-weight:bold;color:#33cc33;padding-bottom:15px;padding-top:10px;'>
-	  	Regional Event Comparisons<br/>	
-	    <canvas id="eventsByRegionChart" height="300"></canvas>
+
+Family of Schools/Regional Event Comparisons<br/>	
+	  <canvas id="eventsByFamilyChart"></canvas>
+	
+	   
 </div>
+<div style="clear:both;"></div>
+<br/>&nbsp;<br/>
+<div style="padding-bottom:50px;">&nbsp;</div>
 <script>
 $(document).ready(function(){
   $('[data-toggle="popover"]').popover();  
@@ -316,52 +368,176 @@ $(document).ready(function(){
   //$('html').css({'background': 'url(includes/img/season/${seasonImage}) no-repeat center center fixed','-webkit-background-size':'cover','-moz-background-size':'cover','-o-background-size':'cover','background-size':'cover'});
   
 });
-</script>
 
-
-<script>
+$("#numFOS1").text(eF1);
+$("#numFOSb1").css("color","rgba(2, 134, 209,1)").css("background-color","rgba(2, 134, 209,0.2)");
+$("#numFOS2").text(eF2);
+$("#numFOSb2").css("color","rgba(148, 39, 97,1)").css("background-color","rgba(148, 39, 97,0.2)");
+$("#numFOS3").text(eF3);
+$("#numFOSb3").css("color","rgba(169, 205, 130,1)").css("background-color","rgba(169, 205, 130,0.2)");
+$("#numFOS4").text(eF4);
+$("#numFOSb4").css("color","rgba(15, 157, 87,1)").css("background-color","rgba(15, 157, 87,0.2)");
+$("#numFOS5").text(eF5);
+$("#numFOSb5").css("color","rgba(1, 87, 155,1)").css("background-color","rgba(1, 87, 155,0.2)");
+$("#numFOS6").text(eF6);
+$("#numFOSb6").css("color","rgba(57, 73, 171,1)").css("background-color","rgba(57, 73, 171,0.2)");
+$("#numFOS7").text(eF7);
+$("#numFOSb7").css("color","rgba(32, 126, 75,1)").css("background-color","rgba(32, 126, 75,0.2)");
+$("#numFOS8").text(eF8);
+$("#numFOSb8").css("color","rgba(133, 123, 29,1)").css("background-color","rgba(133, 123, 29,0.2)");
+$("#numFOS9").text(eF9);
+$("#numFOSb9").css("color","rgba(165, 39, 20,1)").css("background-color","rgba(165, 39, 20,0.2)");
+$("#numFOS10").text(eF10);
+$("#numFOSb10").css("color","rgba(103, 58, 183,1)").css("background-color","rgba(103, 58, 183,0.2)");
+$("#numFOS11").text(eF11);
+$("#numFOSb11").css("color","rgba(249, 171, 45,1)").css("background-color","rgba(249, 171, 45,0.2)");
+$("#numFOS12").text(eF12);
+$("#numFOSb12").css("color","rgba(105, 83, 78,1)").css("background-color","rgba(105, 83, 78,0.2)");
+$("#numFOS13").text(eF13);
+$("#numFOSb13").css("color","rgba(175, 180, 43,1)").css("background-color","rgba(175, 180, 43,0.2)");
+$("#numUnk").text(unk);
+$("#numUnkb").css("color","Black").css("background-color","Silver");
+var eFTotal = eF1+eF2+eF3+eF4+eF5+eF6+eF7+eF8+eF9+eF10+eF11+eF12+eF13+unk+<%=totalAll%>;
  //Get percentages (rounded)
-var percentAvalon = Math.round(<%=totalAvalon%>/<%=totalAll%>*100);
-var percentCentral = Math.round(<%=totalCentral%>/<%=totalAll%>*100);
-var percentWestern = Math.round(<%=totalWestern%>/<%=totalAll%>*100);
-var percentLabrador = Math.round(<%=totalLabrador%>/<%=totalAll%>*100);
-var percentProvincial = Math.round(<%=totalProvincial%>/<%=totalAll%>*100);
+var percentFOS1 = Math.round(eF1/eFTotal*100);
+var percentFOS2 = Math.round(eF2/eFTotal*100);
+var percentFOS3 = Math.round(eF3/eFTotal*100);
+var percentFOS4 = Math.round(eF4/eFTotal*100);
+var percentFOS5 = Math.round(eF5/eFTotal*100);
+var percentFOS6 = Math.round(eF6/eFTotal*100);
+var percentFOS7 = Math.round(eF7/eFTotal*100);
+var percentFOS8 = Math.round(eF8/eFTotal*100);
+var percentFOS9 = Math.round(eF9/eFTotal*100);
+var percentFOS10 = Math.round(eF10/eFTotal*100);
+var percentFOS11 = Math.round(eF11/eFTotal*100);
+var percentFOS12 = Math.round(eF12/eFTotal*100);
+var percentFOS13 = Math.round(eF13/eFTotal*100);
+var percentUnk = Math.round(unk/eFTotal*100);
+var percentAvalon = Math.round(<%=totalAvalon%>/eFTotal*100);
+var percentCentral = Math.round(<%=totalCentral%>/eFTotal*100);
+var percentWestern = Math.round(<%=totalWestern%>/eFTotal*100);
+var percentLabrador = Math.round(<%=totalLabrador%>/eFTotal*100);
+var percentProvincial = Math.round(<%=totalProvincial%>/eFTotal*100);
 //Write to calendar legend bottom
+$('#p1').text(percentFOS1+"%");
+$('#p2').text(percentFOS2+"%");
+$('#p3').text(percentFOS3+"%");
+$('#p4').text(percentFOS4+"%");
+$('#p5').text(percentFOS5+"%");
+$('#p6').text(percentFOS6+"%");
+$('#p7').text(percentFOS7+"%");
+$('#p8').text(percentFOS8+"%");
+$('#p9').text(percentFOS9+"%");
+$('#p10').text(percentFOS10+"%");
+$('#p11').text(percentFOS11+"%");
+$('#p12').text(percentFOS12+"%");
+$('#p13').text(percentFOS13+"%");
+$('#pU').text(percentUnk+"%");
 $('#pA').text(percentAvalon+"%");
 $('#pC').text(percentCentral+"%");
 $('#pW').text(percentWestern+"%");
 $('#pL').text(percentLabrador+"%");
-$('#pP').text(percentProvincial+"%");     
+$('#pP').text(percentProvincial+"%");    
+
   
- //Pie Chart
-var ctx = document.getElementById('eventsByRegionChart').getContext('2d');
+   
+//Chart Families
+var ctx = document.getElementById('eventsByFamilyChart').getContext('2d');
+
+if (<%=curY%> <=2022 ) {
+
 var eventsByRegionChart = new Chart(ctx, {
-	type: 'pie',
+	type: 'bar',
 	  data: {
-		  labels: ['Avalon Events','Central Events','Western Events','Labrador Events','Provincial Events'],
+		  labels: ['FOS 01','FOS 02','FOS 03','FOS 04','FOS 05','FOS 06','FOS 07','FOS 08','FOS 09','FOS 10','FOS 11','FOS 12','FOS 13','AVALON','CENTRAL','WESTERN','LABRADOR','PROVINCIAL','OTHER'],
 	    datasets: [{
-	    	backgroundColor: ['rgba(220, 20, 60, 0.3)','rgb(51, 153, 51, 0.3)','rgba(255, 153, 0, 0.3)','rgba(0, 102, 255, 0.3)','rgba(128, 0, 128, 0.3)'],
-	    	data: [<%=totalAvalon%>, <%=totalCentral%>, <%=totalWestern%>, <%=totalLabrador%>,<%=totalProvincial%> ]
+	    	backgroundColor: ['rgba(2, 134, 209,0.2)',
+	    		'rgba(148, 39, 97,0.2)',
+	    		'rgba(169, 205, 130,0.2)',
+	    		'rgba(15, 157, 87,0.2)',
+	    		'rgba(1, 87, 155,0.2)',
+	    		'rgba(57, 73, 171,0.2)',
+	    		'rgba(32, 126, 75,0.2)',
+	    		'rgba(133, 123, 29,0.2)',
+	    		'rgba(165, 39, 20,0.2)',
+	    		'rgba(103, 58, 183,0.2)',
+	    		'rgba(249, 171, 45,0.2)',
+	    		'rgba(105, 83, 78,0.2)',
+	    		'rgba(175, 180, 43,0.2)',	    		
+	    		'rgba(220, 20, 60, 0.3)',
+	    		'rgba(51, 153, 51, 0.3)',
+	    		'rgba(255, 153, 0, 0.3)',
+	    		'rgba(0, 102, 255, 0.3)',
+	    		'rgba(128, 0, 128, 0.3)',
+	    		'#C0C0C0',],
+	    	data: [eF1,eF2,eF3,eF4,eF5,eF6,eF7,eF8,eF9,eF10,eF11,eF12,eF13,<%=totalAvalon%>, <%=totalCentral%>, <%=totalWestern%>, <%=totalLabrador%>,<%=totalProvincial%>,unk]
 	    }]
 	  },	  
 	  options: {		  	  
 	      title: {
 	         display: true,
-	         fontSize: 14,
+	         fontSize: 12,
 	         text: 'Breakdown for this Month'
 	     },
 	     legend: {
 	         display: false,
-	         fontSize: 14,
+	         fontSize: 12,
 	         position: 'top',
 
 	     },
-	     responsive: false
+	     responsive: true,
+	     maintainAspectRatio: false,
 	 }
  
 	  
 	});   
-     
+} else {
+	
+	var eventsByRegionChart = new Chart(ctx, {
+		type: 'bar',
+		  data: {
+			  labels: ['FOS 01','FOS 02','FOS 03','FOS 04','FOS 05','FOS 06','FOS 07','FOS 08','FOS 09','FOS 10','FOS 11','FOS 12','FOS 13','PROVINCIAL','OTHER'],
+		    datasets: [{
+		    	backgroundColor: ['rgba(2, 134, 209,0.2)',
+		    		'rgba(148, 39, 97,0.2)',
+		    		'rgba(169, 205, 130,0.2)',
+		    		'rgba(15, 157, 87,0.2)',
+		    		'rgba(1, 87, 155,0.2)',
+		    		'rgba(57, 73, 171,0.2)',
+		    		'rgba(32, 126, 75,0.2)',
+		    		'rgba(133, 123, 29,0.2)',
+		    		'rgba(165, 39, 20,0.2)',
+		    		'rgba(103, 58, 183,0.2)',
+		    		'rgba(249, 171, 45,0.2)',
+		    		'rgba(105, 83, 78,0.2)',
+		    		'rgba(175, 180, 43,0.2)',		    			    		
+		    		'rgba(128, 0, 128, 0.3)',
+		    		'#C0C0C0'],
+		    	data: [eF1,eF2,eF3,eF4,eF5,eF6,eF7,eF8,eF9,eF10,eF11,eF12,eF13,<%=totalProvincial%>,unk]
+		    }]
+		  },	  
+		  options: {		  	  
+		      title: {
+		         display: true,
+		         fontSize: 12,
+		         text: 'Breakdown for this Month'
+		     },
+		     legend: {
+		         display: false,
+		         fontSize: 12,
+		         position: 'top',
+
+		     },
+		     responsive: true,
+		     maintainAspectRatio: false,
+		 }
+	 
+		  
+		}); 
+	
+	
+	
+}
      </script>  
 
 

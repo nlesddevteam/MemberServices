@@ -38,31 +38,102 @@
   //If event is deleted and this is a response back from class, ignore this.
   if(evt !=null) {
   
-  if(evt.getEventSchoolZoneID() ==1) {
-		 bgcolor ="rgba(191, 0, 0, 0.1)";
-		 txtcolor ="rgba(191, 0, 0, 1);";
-		 regionName ="AVALON REGION";
-	 } else if (evt.getEventSchoolZoneID() == 2) {
-		 bgcolor ="rgba(0, 191, 0, 0.1)";
-		 txtcolor ="rgba(0, 191, 0, 1);";
-		 regionName ="CENTRAL REGION";
-	 } else if (evt.getEventSchoolZoneID() ==3) {
-		 bgcolor ="rgba(255, 132, 0, 0.1)";
-		 txtcolor ="rgba(255, 132, 0, 1);";
-		 regionName ="WESTERN REGION";
-	 } else if (evt.getEventSchoolZoneID() ==4) {
-		 bgcolor ="rgba(127, 130, 255, 0.1)";
-		 txtcolor ="rgba(127, 130, 255, 1);";
-		 regionName ="LABRADOR REGION";
-	 } else if (evt.getEventSchoolZoneID() ==5) {
-		 bgcolor ="rgba(128, 0, 128, 0.1)";
-		 txtcolor ="rgba(128, 0, 128, 1);";
-		 regionName ="PROVINCIAL";
-	 } else {
-		 bgcolor ="#FFFFFF";
-		 txtcolor ="#000000;";
-		 regionName ="";
-	 }}
+	
+	  if(evt.getEventSchoolZoneID() ==1) {
+	  	 bgcolor ="rgba(191, 0, 0, 0.1)";
+	  	 txtcolor ="rgba(191, 0, 0, 1);";
+	  	 regionName ="AVALON REGION";
+	  	
+	  } else if (evt.getEventSchoolZoneID() == 2) {
+	  	 bgcolor ="rgba(0, 191, 0, 0.1)";
+	  	 txtcolor ="rgba(0, 191, 0, 1);";
+	  	 regionName ="CENTRAL REGION";
+	  	 
+	  } else if (evt.getEventSchoolZoneID() ==3) {
+	  	 bgcolor ="rgba(255, 132, 0, 0.1)";
+	  	 txtcolor ="rgba(255, 132, 0, 1);";
+	  	 regionName ="WESTERN REGION";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==4) {
+	  	 bgcolor ="rgba(127, 130, 255, 0.1)";
+	  	 txtcolor ="rgba(127, 130, 255, 1);";
+	  	 regionName ="LABRADOR REGION";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==5) {
+	  	 bgcolor ="rgba(128, 0, 128, 0.1)";
+	  	 txtcolor ="rgba(128, 0, 128, 1);";
+	  	 regionName ="PROVINCIAL";
+	  	 
+	  } else if (evt.getEventSchoolZoneID() ==267) {
+	  	 bgcolor ="rgba(2, 134, 209,0.1)";
+	  	 txtcolor ="rgba(2, 134, 209, 1);";
+	  	 regionName ="FOS 01";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==607) {
+	  	 bgcolor ="rgba(148, 39, 97,0.1)";
+	  	 txtcolor ="rgba(148, 39, 97, 1);";
+	  	 regionName ="FOS 02";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==608) {
+	  	 bgcolor ="rgba(169, 205, 130,0.1)";
+	  	 txtcolor ="rgba(169, 205, 130, 1);";
+	  	 regionName ="FOS 03";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==609) {
+	  	 bgcolor ="rgba(15, 157, 87,0.1)";
+	  	 txtcolor ="rgba(15, 157, 87, 1);";
+	  	 regionName ="FOS 04";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==610) {
+	  	 bgcolor ="rgba(1, 87, 155,0.1)";
+	  	 txtcolor ="rgba(1, 87, 155, 1);";
+	  	 regionName ="FOS 05";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==611) {
+	  	 bgcolor ="rgba(57, 73, 171,0.1)";
+	  	 txtcolor ="rgba(57, 73, 171, 1);";
+	  	 regionName ="FOS 06";
+	  	 
+	  } else if (evt.getEventSchoolZoneID() ==612) {
+	  	 bgcolor ="rgba(32, 126, 75,0.1)";
+	  	 txtcolor ="rgba(32, 126, 75, 1);";
+	  	 regionName ="FOS 07";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==613) {
+	  	 bgcolor ="rgba(133, 123, 29,0.1)";
+	  	 txtcolor ="rgba(133, 123, 29, 1);";
+	  	 regionName ="FOS 08";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==614) {
+	  	 bgcolor ="rgba(165, 39, 20,0.1)";
+	  	 txtcolor ="rgba(165, 39, 20, 1);";
+	  	 regionName ="FOS 09";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==615) {
+	  	 bgcolor ="rgba(103, 58, 183,0.1)";
+	  	 txtcolor ="rgba(103, 58, 183, 1);";
+	  	 regionName ="FOS 10";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==567) {
+	  	 bgcolor ="rgba(249, 171, 45,0.1)";
+	  	 txtcolor ="rgba(249, 171, 45, 1);";
+	  	 regionName ="FOS 11 (DSS)";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==627) {
+	  	 bgcolor ="rgba(105, 83, 78,0.1)";
+	  	 txtcolor ="rgba(105, 83, 78, 1);";
+	  	 regionName ="FOS 12 (DSS)";
+	  	
+	  } else if (evt.getEventSchoolZoneID() ==628) {
+	  	 bgcolor ="rgba(175, 180, 43,0.1)";
+	  	 txtcolor ="rgba(175, 180, 43, 1);";
+	  	 regionName ="FOS 13 (DSS)";
+	  		  	 
+	  } else {
+	  	 bgcolor ="#FFFFFF";
+	  	 txtcolor ="#000000;";
+	  	 regionName ="";
+	  }}
  
 %>
     
@@ -126,7 +197,7 @@
     <table class="table table-condensed" style="font-size:11px;">	
                 <tbody>
  				<tr>
-                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Region:</td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Family/Region:</td>
                 <td class="tableResult" colspan=3 style="color:<%=txtcolor%>;border-top:1px solid <%=txtcolor%>;"><%=regionName%></td>
                 </tr>
                 <tr>
@@ -143,7 +214,7 @@
                 <td class="tableResult" colspan=3><%=(evt==null)?"N/A":evt.getEventDescription()%></td>
               </tr>
                <tr>
-                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Location (Host):</td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Location:</td>
                 <td class="tableResult" colspan=3 style="text-transform:Capitalize;"><%=(evt==null)?"N/A":evt.getEventLocation()%></td>
               </tr>
               <tr>
