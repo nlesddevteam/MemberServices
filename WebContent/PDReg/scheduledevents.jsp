@@ -96,6 +96,26 @@ boolean eventIsPast = false;
   
   cur =  Calendar.getInstance();
   dayofweek = cur.get(Calendar.DAY_OF_WEEK);
+
+  
+  int eA = 0;
+  int eC = 0;
+  int eW = 0;
+  int eL = 0;
+  int eP = 0;
+  int eF1 = 0;
+  int eF2 = 0;
+  int eF3 = 0;
+  int eF4 = 0;
+  int eF5 = 0;
+  int eF6 = 0;
+  int eF7 = 0;
+  int eF8 = 0;
+  int eF9 = 0;
+  int eF10 = 0;
+  int eF11 = 0;
+  int eF12 = 0;
+  int eF13 = 0;
   
 %>
 
@@ -134,11 +154,30 @@ input {border:1px solid silver;}
     
      
      <div style="font-size:10px;color:Black;text-align:center;padding-top:10px;padding-bottom:10px;">   
-	  <span class="region1a">&nbsp; AVALON REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region2a">&nbsp; CENTRAL REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region3a">&nbsp; WESTERN REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region4a">&nbsp; LABRADOR REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region5a">&nbsp; PROVINCIAL &nbsp;</span>
+	 
+	 <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb1">&nbsp; FOS 01 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb2">&nbsp; FOS 02 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb3">&nbsp; FOS 03 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb4">&nbsp; FOS 04 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb5">&nbsp; FOS 05 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb6">&nbsp; FOS 06 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb7">&nbsp; FOS 07 &nbsp;</div><br/>
+  
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb8">&nbsp; FOS 08 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb9">&nbsp; FOS 09 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb10">&nbsp; FOS 10 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb11">&nbsp; FOS 11 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb12">&nbsp; FOS 12 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb13">&nbsp; FOS 13 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numUnkb">&nbsp; OTHER &nbsp;</div><br/>
+	 
+	 
+	 
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region1">&nbsp; AVALON REGION &nbsp;</div>
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region2">&nbsp; CENTRAL REGION &nbsp;</div>
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region3">&nbsp; WESTERN REGION &nbsp;</div> 
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region4">&nbsp; LABRADOR REGION &nbsp;</div>
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region5">&nbsp; PROVINCIAL &nbsp;</div>
   </div>
       
         <table class="table table-condensed" style="font-size:11px;">
@@ -166,37 +205,122 @@ input {border:1px solid silver;}
               eventRCount++;
               numEmpAttended=0;
             //Check Regions of the events.
-			if(evt.getEventSchoolZoneID() ==1) {
-				 bgcolor ="rgba(191, 0, 0, 0.1)";
-				 txtcolor ="rgba(191, 0, 0, 1);";
-				 regionName ="AVALON REGION";
-			 } else if (evt.getEventSchoolZoneID() == 2) {
-				 bgcolor ="rgba(0, 191, 0, 0.1)";
-				 txtcolor ="rgba(0, 191, 0, 1);";
-				 regionName ="CENTRAL REGION";
-			 } else if (evt.getEventSchoolZoneID() ==3) {
-				 bgcolor ="rgba(255, 132, 0, 0.1)";
-				 txtcolor ="rgba(255, 132, 0, 1);";
-				 regionName ="WESTERN REGION";
-			 } else if (evt.getEventSchoolZoneID() ==4) {
-				 bgcolor ="rgba(127, 130, 255, 0.1)";
-				 txtcolor ="rgba(127, 130, 255, 1);";
-				 regionName ="LABRADOR REGION";
-			 } else if (evt.getEventSchoolZoneID() ==5) {
-				 bgcolor ="rgba(128, 0, 128, 0.1)";
-				 txtcolor ="rgba(128, 0, 128, 1);";
-				 regionName ="PROVINCIAL";
-			 } else {
-				 bgcolor ="#FFFFFF";
-				 txtcolor ="#000000;";
-				 regionName ="";
-			 }
+				if(evt.getEventSchoolZoneID() ==1) {
+					 bgcolor ="rgba(191, 0, 0, 0.1)";
+					 txtcolor ="rgba(191, 0, 0, 1);";
+					 regionName ="AVALON REGION";
+					 eA++;
+				 } else if (evt.getEventSchoolZoneID() == 2) {
+					 bgcolor ="rgba(0, 191, 0, 0.1)";
+					 txtcolor ="rgba(0, 191, 0, 1);";
+					 regionName ="CENTRAL REGION";
+					 eC++;
+				 } else if (evt.getEventSchoolZoneID() ==3) {
+					 bgcolor ="rgba(255, 132, 0, 0.1)";
+					 txtcolor ="rgba(255, 132, 0, 1);";
+					 regionName ="WESTERN REGION";
+					 eW++;
+				 } else if (evt.getEventSchoolZoneID() ==4) {
+					 bgcolor ="rgba(127, 130, 255, 0.1)";
+					 txtcolor ="rgba(127, 130, 255, 1);";
+					 regionName ="LABRADOR REGION";
+					 eL++;
+				 } else if (evt.getEventSchoolZoneID() ==5) {
+					 bgcolor ="rgba(128, 0, 128, 0.1)";
+					 txtcolor ="rgba(128, 0, 128, 1);";
+					 regionName ="PROVINCIAL";
+					 eP++;
+						//FOS 01
+				 } else if (evt.getEventSchoolZoneID() ==267) {
+					 bgcolor ="rgba(2, 134, 209,0.1)";
+					 txtcolor ="rgba(2, 134, 209, 1);";
+					 regionName ="FOS 01";
+					 eF1++;
+					//FOS 02
+				 } else if (evt.getEventSchoolZoneID() ==607) {
+					 bgcolor ="rgba(148, 39, 97,0.1)";
+					 txtcolor ="rgba(148, 39, 97, 1);";
+					 regionName ="FOS 02";
+					 eF2++;
+					//FOS 03
+				 } else if (evt.getEventSchoolZoneID() ==608) {
+					 bgcolor ="rgba(169, 205, 130,0.1)";
+					 txtcolor ="rgba(169, 205, 130, 1);";
+					 regionName ="FOS 03";
+					 eF3++;
+					//FOS 04
+				 } else if (evt.getEventSchoolZoneID() ==609) {
+					 bgcolor ="rgba(15, 157, 87,0.1)";
+					 txtcolor ="rgba(15, 157, 87, 1);";
+					 regionName ="FOS 04";
+					 eF4++;
+					//FOS 05
+				 } else if (evt.getEventSchoolZoneID() ==610) {
+					 bgcolor ="rgba(1, 87, 155,0.1)";
+					 txtcolor ="rgba(1, 87, 155, 1);";
+					 regionName ="FOS 05";
+					 eF5++;
+					//FOS 06
+				 } else if (evt.getEventSchoolZoneID() ==611) {
+					 bgcolor ="rgba(57, 73, 171,0.1)";
+					 txtcolor ="rgba(57, 73, 171, 1);";
+					 regionName ="FOS 06";
+					 eF6++;
+					//FOS 07
+				 } else if (evt.getEventSchoolZoneID() ==612) {
+					 bgcolor ="rgba(32, 126, 75,0.1)";
+					 txtcolor ="rgba(32, 126, 75, 1);";
+					 regionName ="FOS 07";
+					 eF7++;
+					//FOS 08
+				 } else if (evt.getEventSchoolZoneID() ==613) {
+					 bgcolor ="rgba(133, 123, 29,0.1)";
+					 txtcolor ="rgba(133, 123, 29, 1);";
+					 regionName ="FOS 08";
+					 eF8++;
+					//FOS 09
+				 } else if (evt.getEventSchoolZoneID() ==614) {
+					 bgcolor ="rgba(165, 39, 20,0.1)";
+					 txtcolor ="rgba(165, 39, 20, 1);";
+					 regionName ="FOS 09";
+					 eF9++;
+					//FOS 10
+				 } else if (evt.getEventSchoolZoneID() ==615) {
+					 bgcolor ="rgba(103, 58, 183,0.1)";
+					 txtcolor ="rgba(103, 58, 183, 1);";
+					 regionName ="FOS 10";
+					 eF10++;
+					//FOS 11
+				 } else if (evt.getEventSchoolZoneID() ==567) {
+					 bgcolor ="rgba(249, 171, 45,0.1)";
+					 txtcolor ="rgba(249, 171, 45, 1);";
+					 regionName ="FOS 11 (DSS)";
+					 eF11++;
+					//FOS 12
+				 } else if (evt.getEventSchoolZoneID() ==627) {
+					 bgcolor ="rgba(105, 83, 78,0.1)";
+					 txtcolor ="rgba(105, 83, 78, 1);";
+					 regionName ="FOS 12 (DSS)";
+					 eF12++;
+					//FOS 13
+				 } else if (evt.getEventSchoolZoneID() ==628) {
+					 bgcolor ="rgba(175, 180, 43,0.1)";
+					 txtcolor ="rgba(175, 180, 43, 1);";
+					 regionName ="FOS 13 (DSS)";
+					 eF13++;
+					 
+				 } else {
+					 bgcolor ="#FFFFFF";
+					 txtcolor ="#000000;";
+					 regionName ="";
+				 }
+                    
             
             
             if(!evt.isPrivateCalendarEntry() || (evt.isPrivateCalendarEntry() && (evt.getSchedulerID() == id))) { %>
             
              <tr>
-                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Region:</td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Family/Region:</td>
                 <td class="tableResult" colspan=3 style="color:<%=txtcolor%>;border-top:1px solid <%=txtcolor%>;"><%=regionName%></td>
               </tr>
               
@@ -215,7 +339,7 @@ input {border:1px solid silver;}
               </tr>
               <tr>
                 <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Location (Host):</td>
-                <td class="tableResult" colspan=3><%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "") %>
+                <td class="tableResult" colspan=3><%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "&nbsp;"+regionName) %>
                 <% if(evt.isCloseOutDaySession() || evt.isPDOpportunity()) { %>
               	 	<br/>(Hosted by: <span style="text-transform:Capitalize;"><%=evt.getScheduler().getFullNameReverse()%></span>)  
                 <% } else {%>
@@ -339,7 +463,7 @@ input {border:1px solid silver;}
                         
 							                        <% if(evt.isPDOpportunity()) { %>                        
 							                            					<% if(revts.get(new Integer(evt.getEventID())) != null){ %>
-							                            								  <div class="alert alert-info" align="center">NOTICE: You have already registered for this event.</div>  
+							                            								  <div class="alert alert-success" align="center">NOTICE: You have already registered for this event.</div>  
 							                            					<% } else if(evt.isFull()) { %>
 							                              									 <div class="alert alert-danger" align="center">SORRY! Registration has ended. Event is full.</div>  
 							                            					<% } else { %>              
@@ -455,7 +579,8 @@ if (numberOfAttenddees > 0) {
 </div></div>
 
 
-
+<div style="clear:both;"></div>
+<br/>&nbsp;<br/>
 
 <script>
 $(document).ready(function(){
@@ -469,6 +594,36 @@ $(document).ready(function(){
 		$('#noAttendance').modal('show');
 	}	
 });
+
+$(".numFOSb1").css("color","rgba(2, 134, 209,1)").css("background-color","rgba(2, 134, 209,0.2)");
+
+$(".numFOSb2").css("color","rgba(148, 39, 97,1)").css("background-color","rgba(148, 39, 97,0.2)");
+
+$(".numFOSb3").css("color","rgba(169, 205, 130,1)").css("background-color","rgba(169, 205, 130,0.2)");
+
+$(".numFOSb4").css("color","rgba(15, 157, 87,1)").css("background-color","rgba(15, 157, 87,0.2)");
+
+$(".numFOSb5").css("color","rgba(1, 87, 155,1)").css("background-color","rgba(1, 87, 155,0.2)");
+
+$(".numFOSb6").css("color","rgba(57, 73, 171,1)").css("background-color","rgba(57, 73, 171,0.2)");
+
+$(".numFOSb7").css("color","rgba(32, 126, 75,1)").css("background-color","rgba(32, 126, 75,0.2)");
+
+$(".numFOSb8").css("color","rgba(133, 123, 29,1)").css("background-color","rgba(133, 123, 29,0.2)");
+
+$(".numFOSb9").css("color","rgba(165, 39, 20,1)").css("background-color","rgba(165, 39, 20,0.2)");
+
+$(".numFOSb10").css("color","rgba(103, 58, 183,1)").css("background-color","rgba(103, 58, 183,0.2)");
+
+$(".numFOSb11").css("color","rgba(249, 171, 45,1)").css("background-color","rgba(249, 171, 45,0.2)");
+
+$(".numFOSb12").css("color","rgba(105, 83, 78,1)").css("background-color","rgba(105, 83, 78,0.2)");
+
+$(".numFOSb13").css("color","rgba(175, 180, 43,1)").css("background-color","rgba(175, 180, 43,0.2)");
+
+$(".numUnkb").css("color","Black").css("background-color","Silver");
+
+
 </script>
 
 

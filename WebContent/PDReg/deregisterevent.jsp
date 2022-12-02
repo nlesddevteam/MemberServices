@@ -22,6 +22,24 @@
     String regionName = "";
     int width;
     SimpleDateFormat sdf = null;
+    int eA = 0;
+    int eC = 0;
+    int eW = 0;
+    int eL = 0;
+    int eP = 0;
+    int eF1 = 0;
+    int eF2 = 0;
+    int eF3 = 0;
+    int eF4 = 0;
+    int eF5 = 0;
+    int eF6 = 0;
+    int eF7 = 0;
+    int eF8 = 0;
+    int eF9 = 0;
+    int eF10 = 0;
+    int eF11 = 0;
+    int eF12 = 0;
+    int eF13 = 0;
 %>
 
 <%
@@ -56,33 +74,116 @@
   }  
 %>
 <%
-            //Check Regions of the events.
-				if(evt.getEventSchoolZoneID() ==1) {
-					 bgcolor ="rgba(191, 0, 0, 0.1)";
-					 txtcolor ="rgba(191, 0, 0, 1);";
-					 regionName ="AVALON REGION";
-				 } else if (evt.getEventSchoolZoneID() == 2) {
-					 bgcolor ="rgba(0, 191, 0, 0.1)";
-					 txtcolor ="rgba(0, 191, 0, 1);";
-					 regionName ="CENTRAL REGION";
-				 } else if (evt.getEventSchoolZoneID() ==3) {
-					 bgcolor ="rgba(255, 132, 0, 0.1)";
-					 txtcolor ="rgba(255, 132, 0, 1);";
-					 regionName ="WESTERN REGION";
-				 } else if (evt.getEventSchoolZoneID() ==4) {
-					 bgcolor ="rgba(127, 130, 255, 0.1)";
-					 txtcolor ="rgba(127, 130, 255, 1);";
-					 regionName ="LABRADOR REGION";
-				 } else if (evt.getEventSchoolZoneID() ==5) {
-					 bgcolor ="rgba(128, 0, 128, 0.1)";
-					 txtcolor ="rgba(128, 0, 128, 1);";
-					 regionName ="PROVINCIAL";
-				 } else {
-					 bgcolor ="#FFFFFF";
-					 txtcolor ="#000000;";
-					 regionName ="";
-				 }
-              
+//Check Regions of the events.
+if(evt.getEventSchoolZoneID() ==1) {
+	 bgcolor ="rgba(191, 0, 0, 0.1)";
+	 txtcolor ="rgba(191, 0, 0, 1);";
+	 regionName ="AVALON REGION";
+	 eA++;
+ } else if (evt.getEventSchoolZoneID() == 2) {
+	 bgcolor ="rgba(0, 191, 0, 0.1)";
+	 txtcolor ="rgba(0, 191, 0, 1);";
+	 regionName ="CENTRAL REGION";
+	 eC++;
+ } else if (evt.getEventSchoolZoneID() ==3) {
+	 bgcolor ="rgba(255, 132, 0, 0.1)";
+	 txtcolor ="rgba(255, 132, 0, 1);";
+	 regionName ="WESTERN REGION";
+	 eW++;
+ } else if (evt.getEventSchoolZoneID() ==4) {
+	 bgcolor ="rgba(127, 130, 255, 0.1)";
+	 txtcolor ="rgba(127, 130, 255, 1);";
+	 regionName ="LABRADOR REGION";
+	 eL++;
+ } else if (evt.getEventSchoolZoneID() ==5) {
+	 bgcolor ="rgba(128, 0, 128, 0.1)";
+	 txtcolor ="rgba(128, 0, 128, 1);";
+	 regionName ="PROVINCIAL";
+	 eP++;
+		//FOS 01
+ } else if (evt.getEventSchoolZoneID() ==267) {
+	 bgcolor ="rgba(2, 134, 209,0.1)";
+	 txtcolor ="rgba(2, 134, 209, 1);";
+	 regionName ="FOS 01";
+	 eF1++;
+	//FOS 02
+ } else if (evt.getEventSchoolZoneID() ==607) {
+	 bgcolor ="rgba(148, 39, 97,0.1)";
+	 txtcolor ="rgba(148, 39, 97, 1);";
+	 regionName ="FOS 02";
+	 eF2++;
+	//FOS 03
+ } else if (evt.getEventSchoolZoneID() ==608) {
+	 bgcolor ="rgba(169, 205, 130,0.1)";
+	 txtcolor ="rgba(169, 205, 130, 1);";
+	 regionName ="FOS 03";
+	 eF3++;
+	//FOS 04
+ } else if (evt.getEventSchoolZoneID() ==609) {
+	 bgcolor ="rgba(15, 157, 87,0.1)";
+	 txtcolor ="rgba(15, 157, 87, 1);";
+	 regionName ="FOS 04";
+	 eF4++;
+	//FOS 05
+ } else if (evt.getEventSchoolZoneID() ==610) {
+	 bgcolor ="rgba(1, 87, 155,0.1)";
+	 txtcolor ="rgba(1, 87, 155, 1);";
+	 regionName ="FOS 05";
+	 eF5++;
+	//FOS 06
+ } else if (evt.getEventSchoolZoneID() ==611) {
+	 bgcolor ="rgba(57, 73, 171,0.1)";
+	 txtcolor ="rgba(57, 73, 171, 1);";
+	 regionName ="FOS 06";
+	 eF6++;
+	//FOS 07
+ } else if (evt.getEventSchoolZoneID() ==612) {
+	 bgcolor ="rgba(32, 126, 75,0.1)";
+	 txtcolor ="rgba(32, 126, 75, 1);";
+	 regionName ="FOS 07";
+	 eF7++;
+	//FOS 08
+ } else if (evt.getEventSchoolZoneID() ==613) {
+	 bgcolor ="rgba(133, 123, 29,0.1)";
+	 txtcolor ="rgba(133, 123, 29, 1);";
+	 regionName ="FOS 08";
+	 eF8++;
+	//FOS 09
+ } else if (evt.getEventSchoolZoneID() ==614) {
+	 bgcolor ="rgba(165, 39, 20,0.1)";
+	 txtcolor ="rgba(165, 39, 20, 1);";
+	 regionName ="FOS 09";
+	 eF9++;
+	//FOS 10
+ } else if (evt.getEventSchoolZoneID() ==615) {
+	 bgcolor ="rgba(103, 58, 183,0.1)";
+	 txtcolor ="rgba(103, 58, 183, 1);";
+	 regionName ="FOS 10";
+	 eF10++;
+	//FOS 11
+ } else if (evt.getEventSchoolZoneID() ==567) {
+	 bgcolor ="rgba(249, 171, 45,0.1)";
+	 txtcolor ="rgba(249, 171, 45, 1);";
+	 regionName ="FOS 11 (DSS)";
+	 eF11++;
+	//FOS 12
+ } else if (evt.getEventSchoolZoneID() ==627) {
+	 bgcolor ="rgba(105, 83, 78,0.1)";
+	 txtcolor ="rgba(105, 83, 78, 1);";
+	 regionName ="FOS 12 (DSS)";
+	 eF12++;
+	//FOS 13
+ } else if (evt.getEventSchoolZoneID() ==628) {
+	 bgcolor ="rgba(175, 180, 43,0.1)";
+	 txtcolor ="rgba(175, 180, 43, 1);";
+	 regionName ="FOS 13 (DSS)";
+	 eF13++;
+	 
+ } else {
+	 bgcolor ="#FFFFFF";
+	 txtcolor ="#000000;";
+	 regionName ="Other/Unknown";
+ }
               %>        
 <html>
   <head>
@@ -118,7 +219,7 @@ input {border:1px solid silver;}
     <table class="table table-condensed" style="font-size:11px;">	
    
     <tr>
-                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Region:</td>
+                <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%> border-top:1px solid <%=txtcolor%>;" colspan=1>Family/Region:</td>
                 <td class="tableResult" colspan=3 style="color:<%=txtcolor%>;border-top:1px solid <%=txtcolor%>;"><%=regionName%></td>
               </tr>
               
@@ -138,7 +239,7 @@ input {border:1px solid silver;}
               
               <tr>
                 <td class="tableTitle" style="background-color:<%=bgcolor%>;color:<%=txtcolor%>" colspan=1>Location (Host):</td>
-                <td class="tableResult" colspan=3><%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "") %>
+                <td class="tableResult" colspan=3><%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "&nbsp;"+regionName) %>
                 <% if(evt.isCloseOutDaySession() || evt.isPDOpportunity()) { %>
               	 <br/>(Hosted by: <span style="text-transform:Capitalize;"><%=evt.getScheduler().getFullNameReverse()%></span>) 
                 <% } else {%>

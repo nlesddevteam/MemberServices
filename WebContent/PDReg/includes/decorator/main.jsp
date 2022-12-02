@@ -135,7 +135,7 @@ function googleTranslateElementInit() {
 		  </div>
 		
 		  <div class="copyright">		
-		 PD Calendar App 2.1 &copy; 2019 NLESD &middot; All Rights Reserved.
+		 PL Calendar Application 3.0 &copy; 2022 NLESD &middot; All Rights Reserved.
 		 </div>
 		
 	</div>	

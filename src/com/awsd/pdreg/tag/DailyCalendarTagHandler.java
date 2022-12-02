@@ -72,6 +72,7 @@ public class DailyCalendarTagHandler extends TagSupport {
 		String eventDays="";
 		int numEventsThisDay=0;
 		
+		
 		SimpleDateFormat sdf = null;
 		User usr = null;
 		int i = 0;
@@ -127,6 +128,13 @@ public class DailyCalendarTagHandler extends TagSupport {
 				if (iter.hasNext()) {
 					evt = (Event) iter.next();
 					
+					
+					
+					
+					
+					
+					
+					
 					if (evt.isCloseOutDaySession() || evt.isSchoolPDRequest() || evt.isSchoolCloseoutRequest()
 							|| (evt.isPrivateCalendarEntry() && (evt.getSchedulerID() != uid))) {
 						
@@ -139,6 +147,66 @@ public class DailyCalendarTagHandler extends TagSupport {
 				
 				if ((evt != null) && (i <= NUM_ROWS)) {
 					numEventsThisDay++;
+					
+					
+					//Check Regions of the events.
+					if(evt.getEventSchoolZoneID() ==1) {						 
+						out.println("<script>eA++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==2) {
+						 out.println("<script>eC++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==3) {
+						 out.println("<script> eW++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==4) {
+						 out.println("<script>eL++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==5) {
+						 out.println("<script>eP++;</script>");
+							//FOS 01
+					 } else if (evt.getEventSchoolZoneID() ==267) {
+						 out.println("<script>eF1++;</script>");
+						//FOS 02
+					 } else if (evt.getEventSchoolZoneID() ==607) {
+						 out.println("<script>eF2++;</script>");
+						//FOS 03
+					 } else if (evt.getEventSchoolZoneID() ==608) {
+						 out.println("<script>eF3++;</script>");
+						//FOS 04
+					 } else if (evt.getEventSchoolZoneID() ==609) {
+						 out.println("<script>eF4++;</script>");
+						//FOS 05
+					 } else if (evt.getEventSchoolZoneID() ==610) {
+						 out.println("<script>eF5++;</script>");
+						//FOS 06
+					 } else if (evt.getEventSchoolZoneID() ==611) {
+						 out.println("<script>eF6++;</script>");
+						//FOS 07
+					 } else if (evt.getEventSchoolZoneID() ==612) {
+						 out.println("<script>eF7++;</script>");
+						//FOS 08
+					 } else if (evt.getEventSchoolZoneID() ==613) {
+						 out.println("<script>eF8++;</script>");
+						//FOS 09
+					 } else if (evt.getEventSchoolZoneID() ==614) {
+						 out.println("<script>eF9++;</script>");
+						//FOS 10
+					 } else if (evt.getEventSchoolZoneID() ==615) {
+						 out.println("<script> eF10++;</script>");
+						//FOS 11
+					 } else if (evt.getEventSchoolZoneID() ==567) {
+						 out.println("<script> eF11++;</script>");
+						//FOS 12
+					 } else if (evt.getEventSchoolZoneID() ==627) {
+						 out.println("<script> eF12++;</script>");
+						//FOS 13
+					 } else if (evt.getEventSchoolZoneID() ==628) {
+						 out.println("<script> eF13++;</script>");
+						 
+					 } else {
+						 out.println("<script>unk++;</script>"); 
+					 }
+					
+					
+					
+					
 					out.println("<tr>");
 
 					if ((i == NUM_ROWS)) {
@@ -183,25 +251,95 @@ public class DailyCalendarTagHandler extends TagSupport {
 							if(evt.getEventSchoolZoneID() ==1) {
 								 bgcolor ="background-color:rgba(191, 0, 0, 0.2);";
 								 txtcolor ="rgba(191, 0, 0, 1);";
-								 regionName ="(AVALON REGION) ";
+								 regionName ="(AVALON) ";
+								 
 							 } else if (evt.getEventSchoolZoneID() ==2) {
 								 bgcolor ="background-color:rgba(0, 191, 0, 0.2);";
 								 txtcolor ="rgba(0, 191, 0, 1);";
-								 regionName ="(CENTRAL REGION) ";
+								 regionName ="(CENTRAL) ";
+								
 							 } else if (evt.getEventSchoolZoneID() ==3) {
 								 bgcolor ="background-color:rgba(255, 132, 0, 0.2);";
 								 txtcolor ="rgba(255, 132, 0, 1);";
-								 regionName ="(WESTERN REGION) ";
+								 regionName ="(WESTERN) ";
+								
 							 } else if (evt.getEventSchoolZoneID() ==4) {
 								 bgcolor ="background-color:rgba(127, 130, 255, 0.2);";
 								 txtcolor ="rgba(127, 130, 255, 1);";
-								 regionName ="(LABRADOR REGION) ";
+								 regionName ="(LABRADOR) ";
+								
 							 } else if (evt.getEventSchoolZoneID() ==5) {
 								 bgcolor ="background-color:rgba(128, 0, 128, 0.2);";
 								 txtcolor ="rgba(128, 0, 128, 1);";
-								 regionName ="(PROVINCIAL) ";
+								 regionName ="(PROV) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==267) {
+								 bgcolor ="background-color:rgba(2, 134, 209,0.2)";
+								 txtcolor ="rgba(2, 134, 209, 1);";
+								 regionName ="(FOS 01) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==607) {
+								 bgcolor ="background-color:rgba(148, 39, 97,0.2)";
+								 txtcolor ="rgba(148, 39, 97, 1);";
+								 regionName ="(FOS 02) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==608) {
+								 bgcolor ="background-color:rgba(169, 205, 130,0.2)";
+								 txtcolor ="rgba(169, 205, 130, 1);";
+								 regionName ="(FOS 03) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==609) {
+								 bgcolor ="background-color:rgba(15, 157, 87,0.2)";
+								 txtcolor ="rgba(15, 157, 87, 1);";
+								 regionName ="(FOS 04) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==610) {
+								 bgcolor ="background-color:rgba(1, 87, 155,0.2)";
+								 txtcolor ="rgba(1, 87, 155, 1);";
+								 regionName ="(FOS 05) ";
+								 
+							 } else if (evt.getEventSchoolZoneID() ==611) {
+								 bgcolor ="background-color:rgba(57, 73, 171,0.2)";
+								 txtcolor ="rgba(57, 73, 171, 1);";
+								 regionName ="(FOS 06) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==612) {
+								 bgcolor ="background-color:rgba(32, 126, 75,0.2)";
+								 txtcolor ="rgba(32, 126, 75, 1);";
+								 regionName ="(FOS 07) ";
+								 
+							 } else if (evt.getEventSchoolZoneID() ==613) {
+								 bgcolor ="background-color:rgba(133, 123, 29,0.2)";
+								 txtcolor ="rgba(133, 123, 29, 1);";
+								 regionName ="(FOS 08) ";
+								 
+							 } else if (evt.getEventSchoolZoneID() ==614) {
+								 bgcolor ="background-color:rgba(165, 39, 20,0.2)";
+								 txtcolor ="rgba(165, 39, 20, 1);";
+								 regionName ="(FOS 09) ";
+								 
+							 } else if (evt.getEventSchoolZoneID() ==615) {
+								 bgcolor ="background-color:rgba(103, 58, 183,0.2)";
+								 txtcolor ="rgba(103, 58, 183, 1);";
+								 regionName ="(FOS 10) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==567) {
+								 bgcolor ="background-color:rgba(249, 171, 45,0.2)";
+								 txtcolor ="rgba(249, 171, 45, 1);";
+								 regionName ="(FOS 11 (DSS)) ";
+								
+							 } else if (evt.getEventSchoolZoneID() ==627) {
+								 bgcolor ="background-color:rgba(105, 83, 78,0.2)";
+								 txtcolor ="rgba(105, 83, 78, 1);";
+								 regionName ="(FOS 12 (DSS)) ";
+								 
+							 } else if (evt.getEventSchoolZoneID() ==628) {
+								 bgcolor ="background-color:rgba(175, 180, 43,0.2)";
+								 txtcolor ="rgba(175, 180, 43, 1);";
+								 regionName ="(FOS 13 (DSS)) ";
+								
 							 } else {
-								 bgcolor ="";
+								 bgcolor ="background-color:#FFFFFF";
 								 txtcolor ="#000000;";
 								 regionName ="";
 							 }
@@ -233,6 +371,7 @@ public class DailyCalendarTagHandler extends TagSupport {
 								}
 
 								//display link
+								
 								if (!evt.isDistrictCalendarCloseOutEntry()) {
 									if (evt.isHolidayCalendarEntry()) {
 										usr = (User) pageContext.getSession().getAttribute("usr");
@@ -288,7 +427,7 @@ public class DailyCalendarTagHandler extends TagSupport {
 							}}
 							else
 								//out.print(evt.getEventName().substring(0, Math.min(evt.getEventName().length(), 25)));
-								out.print(evt.getEventName().replaceAll("(?<=.{50})\\b.*", ""));
+								out.print(regionName+ evt.getEventName().replaceAll("(?<=.{50})\\b.*", ""));
 
 							
 
@@ -317,6 +456,46 @@ public class DailyCalendarTagHandler extends TagSupport {
 					out.println("</tr>");
 				} else {
 					numEventsThisDay++;
+					//Check Regions of the events.
+					if(evt.getEventSchoolZoneID() ==1) {						 
+						out.println("<script>eA++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==2) {
+						 out.println("<script>eC++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==3) {
+						 out.println("<script>eW++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==4) {
+						 out.println("<script>eL++;</script>");
+					 } else if (evt.getEventSchoolZoneID() ==5) {
+						 out.println("<script>eP++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==267) {
+						 out.println("<script>eF1++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==607) {
+						 out.println("<script>eF2++;</script>");				
+					 } else if (evt.getEventSchoolZoneID() ==608) {
+						 out.println("<script>eF3++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==609) {
+						 out.println("<script>eF4++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==610) {
+						 out.println("<script>eF5++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==611) {
+						 out.println("<script>eF6++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==612) {
+						 out.println("<script>eF7++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==613) {
+						 out.println("<script>eF8++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==614) {
+						 out.println("<script>eF9++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==615) {
+						 out.println("<script>eF10++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==567) {
+						 out.println("<script>eF11++;</script>");						
+					 } else if (evt.getEventSchoolZoneID() ==627) {
+						 out.println("<script>eF12++;</script>");					
+					 } else if (evt.getEventSchoolZoneID() ==628) {
+						 out.println("<script>eF13++;</script>");						 
+					 } else {	
+						 out.println("<script>unk++;</script>"); 
+					 }
 				}
 
 				i++;

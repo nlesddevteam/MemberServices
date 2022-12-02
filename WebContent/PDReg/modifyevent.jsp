@@ -23,6 +23,33 @@
 
 <%
   User usr = (User) session.getAttribute("usr");
+
+SchoolFamilies families = null;
+SchoolFamily family = null;
+Iterator fam_iter = null;
+families = new SchoolFamilies();
+fam_iter = families.iterator();
+int eA = 0;
+int eC = 0;
+int eW = 0;
+int eL = 0;
+int eP = 0;
+int eF1 = 0;
+int eF2 = 0;
+int eF3 = 0;
+int eF4 = 0;
+int eF5 = 0;
+int eF6 = 0;
+int eF7 = 0;
+int eF8 = 0;
+int eF9 = 0;
+int eF10 = 0;
+int eF11 = 0;
+int eF12 = 0;
+int eF13 = 0;
+String bgcolor = "";
+String txtcolor = "";
+String regionName = "";
 	boolean private_only = false;
 	boolean isPrincipal = false;
 	boolean isVicePrincipal = false;
@@ -268,7 +295,118 @@
   <div class="container-fluid no-print" data-spy="affix" data-offset-top="0" style="position:fixed;width:100%;height:30px;background-color:#008B8B;color:White;text-align:center;font-weight:bold;padding:5px;">                      
  <span class="pageTitle"><%=evt.getEventName()%></span>
 </div>
+<%
+if(evt.getEventSchoolZoneID() ==1) {
+	 bgcolor ="rgba(191, 0, 0, 0.1)";
+	 txtcolor ="rgba(191, 0, 0, 1);";
+	 regionName ="AVALON REGION";
+	 eA++;
+} else if (evt.getEventSchoolZoneID() == 2) {
+	 bgcolor ="rgba(0, 191, 0, 0.1)";
+	 txtcolor ="rgba(0, 191, 0, 1);";
+	 regionName ="CENTRAL REGION";
+	 eC++;
+} else if (evt.getEventSchoolZoneID() ==3) {
+	 bgcolor ="rgba(255, 132, 0, 0.1)";
+	 txtcolor ="rgba(255, 132, 0, 1);";
+	 regionName ="WESTERN REGION";
+	 eW++;
+} else if (evt.getEventSchoolZoneID() ==4) {
+	 bgcolor ="rgba(127, 130, 255, 0.1)";
+	 txtcolor ="rgba(127, 130, 255, 1);";
+	 regionName ="LABRADOR REGION";
+	 eL++;
+} else if (evt.getEventSchoolZoneID() ==5) {
+	 bgcolor ="rgba(128, 0, 128, 0.1)";
+	 txtcolor ="rgba(128, 0, 128, 1);";
+	 regionName ="PROVINCIAL";
+	 eP++;
+		//FOS 01
+} else if (evt.getEventSchoolZoneID() ==267) {
+	 bgcolor ="rgba(2, 134, 209,0.1)";
+	 txtcolor ="rgba(2, 134, 209, 1);";
+	 regionName ="FOS 01";
+	 eF1++;
+	//FOS 02
+} else if (evt.getEventSchoolZoneID() ==607) {
+	 bgcolor ="rgba(148, 39, 97,0.1)";
+	 txtcolor ="rgba(148, 39, 97, 1);";
+	 regionName ="FOS 02";
+	 eF2++;
+	//FOS 03
+} else if (evt.getEventSchoolZoneID() ==608) {
+	 bgcolor ="rgba(169, 205, 130,0.1)";
+	 txtcolor ="rgba(169, 205, 130, 1);";
+	 regionName ="FOS 03";
+	 eF3++;
+	//FOS 04
+} else if (evt.getEventSchoolZoneID() ==609) {
+	 bgcolor ="rgba(15, 157, 87,0.1)";
+	 txtcolor ="rgba(15, 157, 87, 1);";
+	 regionName ="FOS 04";
+	 eF4++;
+	//FOS 05
+} else if (evt.getEventSchoolZoneID() ==610) {
+	 bgcolor ="rgba(1, 87, 155,0.1)";
+	 txtcolor ="rgba(1, 87, 155, 1);";
+	 regionName ="FOS 05";
+	 eF5++;
+	//FOS 06
+} else if (evt.getEventSchoolZoneID() ==611) {
+	 bgcolor ="rgba(57, 73, 171,0.1)";
+	 txtcolor ="rgba(57, 73, 171, 1);";
+	 regionName ="FOS 06";
+	 eF6++;
+	//FOS 07
+} else if (evt.getEventSchoolZoneID() ==612) {
+	 bgcolor ="rgba(32, 126, 75,0.1)";
+	 txtcolor ="rgba(32, 126, 75, 1);";
+	 regionName ="FOS 07";
+	 eF7++;
+	//FOS 08
+} else if (evt.getEventSchoolZoneID() ==613) {
+	 bgcolor ="rgba(133, 123, 29,0.1)";
+	 txtcolor ="rgba(133, 123, 29, 1);";
+	 regionName ="FOS 08";
+	 eF8++;
+	//FOS 09
+} else if (evt.getEventSchoolZoneID() ==614) {
+	 bgcolor ="rgba(165, 39, 20,0.1)";
+	 txtcolor ="rgba(165, 39, 20, 1);";
+	 regionName ="FOS 09";
+	 eF9++;
+	//FOS 10
+} else if (evt.getEventSchoolZoneID() ==615) {
+	 bgcolor ="rgba(103, 58, 183,0.1)";
+	 txtcolor ="rgba(103, 58, 183, 1);";
+	 regionName ="FOS 10";
+	 eF10++;
+	//FOS 11
+} else if (evt.getEventSchoolZoneID() ==567) {
+	 bgcolor ="rgba(249, 171, 45,0.1)";
+	 txtcolor ="rgba(249, 171, 45, 1);";
+	 regionName ="FOS 11 (DSS)";
+	 eF11++;
+	//FOS 12
+} else if (evt.getEventSchoolZoneID() ==627) {
+	 bgcolor ="rgba(105, 83, 78,0.1)";
+	 txtcolor ="rgba(105, 83, 78, 1);";
+	 regionName ="FOS 12 (DSS)";
+	 eF12++;
+	//FOS 13
+} else if (evt.getEventSchoolZoneID() ==628) {
+	 bgcolor ="rgba(175, 180, 43,0.1)";
+	 txtcolor ="rgba(175, 180, 43, 1);";
+	 regionName ="FOS 13 (DSS)";
+	 eF13++;
+	 
+} else {
+	 bgcolor ="#FFFFFF";
+	 txtcolor ="#000000;";
+	 regionName ="";
+}
 
+%>
 <div class="registerEventDisplay" style="padding-top:25px;font-size:11px;">
 <div style="margin-left:5px;margin-right:5px;">
  <div align="center" class="no-print"><a href="viewDistrictCalendar.html"><img class="topLogoImg" src="includes/img/pdcalheader.png" border=0 style="padding-bottom:10px;"/></a></div>
@@ -302,7 +440,15 @@
 									              	<option value="41">SCHOOL PD REQUEST</option>
 									            	<%} else {
 									              		for(EventType type : new EventTypes()){
-									                  	if((type.getEventTypeID() != 41)&&(type.getEventTypeID() != 61)){
+									              			if((type.getEventTypeID() != 1)&&
+											                  		(type.getEventTypeID() != 2)&&
+											                  		(type.getEventTypeID() != 3)&&
+											                  		(type.getEventTypeID() != 23)&&
+											                  		(type.getEventTypeID() != 24)&&
+											                  		(type.getEventTypeID() != 5)&&
+											                  		(type.getEventTypeID() != 62)&&
+											                  		(type.getEventTypeID() != 41)&&
+											                  		(type.getEventTypeID() != 61)){  
 									              %>  		<option value="<%=type.getEventTypeID()%>" <%=(type.getEventTypeID()==evt.getEventType().getEventTypeID())?"SELECTED":""%>><%=type.getEventTypeName()%></option>
 									            	<%  	}
 									                	}
@@ -359,13 +505,27 @@
 	              				</div>
 </div>
         						
-<div class="formTitle"> REGION:</div>
+<div class="formTitle"> FAMILY OF SCHOOLS:</div>
 <div class="formBody">	
+If this event is for a particular Family of Schools, select the Family from the dropdown below. If for all the province, select Provincial.<br/>	
     								<select id="lstSchoolZone" name="EventZoneID" class="form-control">
-		              					<option value="">--- SELECT REGION ---</option>
+		              					<option value="">--- SELECT FAMILY ---</option>
+		              					<% while(fam_iter.hasNext()) {
+				                          family = (SchoolFamily) fam_iter.next();                        
+				                      %>
+					       					<option value="<%=family.getSchoolFamilyID()%>" <%=(family.getSchoolFamilyID()==evt.getEventSchoolZoneID())?"SELECTED":""%>><%=family.getSchoolFamilyName()%></option>
+					      				 <%}%> 		              					
+		              					
 						              	<% for(SchoolZoneBean sz : SchoolZoneService.getSchoolZoneBeans()){ %>
-						              			<option value="<%= sz.getZoneId() %>" <%=(sz.getZoneId()==evt.getEventSchoolZoneID())?"SELECTED":""%>><%= StringUtils.capitalize(sz.getZoneName()) %> Region</option>
+						              	<%if (sz.getZoneId() == 5) { %>
+						              			<option value="<%= sz.getZoneId() %>" <%=(sz.getZoneId()==evt.getEventSchoolZoneID())?"SELECTED":""%>>PROVINCIAL</option>
+						              			<%} %>
 						              	<% } %>
+						              	
+						              	       	
+						              	
+						              	
+						              	
 		              				</select>
 </div>    							
             				<%}else{%>
@@ -375,7 +535,7 @@
 <div class="formBody">	
 				              	<input type="text" name="EventLocation" class="form-control" title="Please Enter the location here" value="<%=school.getSchoolName()%>" readonly>
 </div>				              	
-<div class="formTitle">  REGION:</div>
+<div class="formTitle">  FAMILY/REGION:</div>
 <div class="formBody">	
 				              	<input type="text" id="txtEventZone" class="form-control" value="<%= StringUtils.capitalize(school.getZone().getZoneName()) %> Region" readonly>				            				              					              
 				              <input type='hidden' name='EventSchoolID' value='<%=school.getSchoolID()%>' />
@@ -384,9 +544,9 @@
 			            	<%}%>
                             <% } else { %>
                            
-<div class="formTitle"> LOCATION:</div>
+<div class="formTitle"> LOCATION/FAMILY:</div>
 <div class="formBody">	
-              					<%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "") %>
+              					<%=evt.getEventLocation() + ((evt.getEventSchoolZone() != null) ? " - " + StringUtils.capitalize(evt.getEventSchoolZone().getZoneName()) + " Region" : "&nbsp;"+regionName) %>
  </div>           					
             				<% } %>
           					
@@ -637,7 +797,7 @@
 
  <div style="clear:both;"></div>           
  <hr>            
-   <div class="formBody">	                            
+  <div class="formBody" style="padding-bottom:50px;">		                            
     							<% if(!modified)  {%>
     							<input type="checkbox" name="chk-is-government-funded" <%= evt.isGovernmentFunded() ? "checked=checked" : "" %> /><label for='chk-is-government-funded'>&nbsp;&nbsp;*&nbsp;Is Event Funded by Nunatsiavut Government?</label>
     							<% } else { %>
@@ -696,7 +856,8 @@
     });
     
     </script>
-   
+  <div style="clear:both;"></div>
+<br/>&nbsp;<br/> 
     
   </body>
 </html>
