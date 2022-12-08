@@ -67,9 +67,9 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 							email.setTo(new String[] {
 									claim_owner.getEmailAddress()
 							});
-							email.setCC(new String[] {
-									usr.getPersonnel().getEmailAddress()
-							});
+							//email.setCC(new String[] {
+									//usr.getPersonnel().getEmailAddress()
+							//});
 							email.setSubject("NLESD TravelClaim System - PAYMENT PENDING - Futher Information Required.");
 							HashMap<String, Object> model = new HashMap<String, Object>();
 							model.put("ownerfirst", claim_owner.getFirstName());
@@ -86,8 +86,7 @@ public class PaymentPendingTravelClaimAjaxRequestHandler extends RequestHandlerI
 							model.put("claimnote", claimnote);
 							model.put("alink",
 									"<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a>");
-							String maillink = "<a href='mailto:" + usr.getPersonnel().getEmailAddress() + "'>"
-									+ usr.getPersonnel().getFullNameReverse() + "</a>";
+							String maillink = "<a href='mailto:travelclaims@nlesd.ca'>Travel Claim Support</a>";
 							model.put("maillink", maillink);
 							email.setBody(
 									VelocityUtils.mergeTemplateIntoString("stafftravel/staff_travel_claim_payment_pending.vm", model));
