@@ -67,9 +67,9 @@ public class PaymentPendingTravelClaimRequestHandler extends RequestHandlerImpl 
 									email.setTo(new String[] {
 											claim_owner.getEmailAddress()
 									});
-									email.setCC(new String[] {
-											usr.getPersonnel().getEmailAddress()
-									});
+									//email.setCC(new String[] {
+											//usr.getPersonnel().getEmailAddress()
+									//});
 									email.setSubject("NLESD TravelClaim System - PAYMENT PENDING - Futher Information Required.");
 									email.setBody(claim_owner.getFirstName() + ", <br/><br/>Your claim for "
 											+ Utils.getMonthString(claim.getFiscalMonth()) + " "
@@ -78,8 +78,8 @@ public class PaymentPendingTravelClaimRequestHandler extends RequestHandlerImpl 
 											+ (StringUtils.isNotEmpty(request.getParameter("note"))
 													? request.getParameter("note").replace("\r\n", "<br />") + "<br /><br />"
 													: "")
-											+ "If you need to submit receipts; send originals to the attention of <a href='mailto:"
-											+ usr.getPersonnel().getEmailAddress() + "'>" + usr.getPersonnel().getFullNameReverse()
+											+ "If you need to submit receipts; send originals to the attention of <a href='mailto:travelclaims@nlesd.ca"
+											+ "'>Travel Claim Support"  
 											+ "</a>.<br/><br/> "
 											+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br/><br/>"
 											+ "<a href='http://www.nlesd.ca/MemberServices/Travel/viewTravelClaimSystem.html'><B>CLICK HERE</B></a><br/><br/>"
