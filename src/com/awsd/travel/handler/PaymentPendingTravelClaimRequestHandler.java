@@ -78,7 +78,7 @@ public class PaymentPendingTravelClaimRequestHandler extends RequestHandlerImpl 
 											+ (StringUtils.isNotEmpty(request.getParameter("note"))
 													? request.getParameter("note").replace("\r\n", "<br />") + "<br /><br />"
 													: "")
-											+ "If you need to submit receipts; send originals to the attention of <a href='mailto:travelclaims@nlesd.ca"
+											+ "If you need to submit receipts; send originals to the attention of <a href='mailto:travelclaims@nlesd.ca?subject=Travel Claim Support"
 											+ "'>Travel Claim Support"  
 											+ "</a>.<br/><br/> "
 											+ " To review this claim click the link below to login to Member Services and access the Travel Claim System.<br/><br/>"
