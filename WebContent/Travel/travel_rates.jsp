@@ -61,7 +61,7 @@
 		   	                messageTop: 'Travel/PD Claims ',
 		   	                messageBottom: null,
 		   	                exportOptions: {
-		   	                    columns: [ 0, 1, 2 ,3,4]
+		   	                    columns: [ 0, 1, 2 ,3,4,5,6]
 		   	                }
 		   	            },
 		   	        	{
@@ -71,7 +71,7 @@
 		   	                messageTop: 'Travel/PD Claims',
 		   	                messageBottom: null,
 		   	                exportOptions: {
-		   	                    columns: [ 0, 1, 2,3,4]
+		   	                    columns: [ 0, 1, 2,3,4,5,6]
 		   	                }
 		   	            }
 		   	        ],		  
@@ -183,9 +183,11 @@ optgroup{ font-size:10px; }
       <table id="claims-table" class="table table-condensed compact table-striped table-bordered claimsTable" style="font-size:11px;background-color:White;" width="100%">	
 				<thead>
 				<tr style="text-transform:uppercase;font-weight:bold;">  	
-      		<td width="35%">EMPLOYEE</td>
+      		<td width="15%">EMPLOYEE</td>
       		<td width="10%">ID</td>
-      		<td width="35%">EMAIL</td>
+      		<td width="20%">EMAIL</td>
+      		<td width="15%">SUPER</td>
+      		<td width="20%">POSITION</td>      		
       		<td width="10%">YTD KM</td>
       		<td width="10%">YTD $</td>      		
      		</tr>
@@ -198,9 +200,11 @@ optgroup{ font-size:10px; }
                                 per = (Personnel) iter.next();                             
                             %>  
                            <tr>    
-                                  <td width="35%"><%=per.getFullName()%></td>
-                                  <td width="10%"><%=per.getPersonnelID()%></td>
-                                  <td width="35%"><a href="mailto:<%=per.getEmailAddress() %>?subject=Travel Claim Message"><%=per.getEmailAddress() %></a></td> 
+                                  <td width="15%"><%=per.getFullName()%></td>                                  
+                                  <td width="10%"><%=per.getPersonnelID()%></td>                                  
+                                  <td width="20%"><a href="mailto:<%=per.getEmailAddress() %>?subject=Travel Claim Message"><%=per.getEmailAddress() %></a></td> 
+                                  <td width="15%" style="text-transform:Capitalize;"><%=per.getSupervisor()!=null?per.getSupervisor().getFullNameReverse():"N/A"%></td>
+                                  <td width="20%"><%=per.getPersonnelCategory().getPersonnelCategoryName() != null ? per.getPersonnelCategory().getPersonnelCategoryName() : "N/A" %></td>
                                    <td width="10%">
                                    <%
                                   if(per.getYearToDateKilometerUsage()<9000) { %>
