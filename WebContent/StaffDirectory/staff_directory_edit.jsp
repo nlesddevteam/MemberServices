@@ -244,6 +244,7 @@
 						<option value="Equipment Operator">Equipment Operator</option>
 						<option value="Equipment Operator/Utility Worker I">Equipment Operator/Utility Worker I</option>
 						<option value="ESL Teacher">ESL Teacher</option>
+						<option value="Facilities Clerk">Facilities Clerk</option>
 						<option value="Fleet Maintenance Coordinator">Fleet Maintenance Coordinator</option>
 						<option value="Foreman">Foreman</option>
 						<option value="FSL Learning Design Facilitator">FSL Learning Design Facilitator</option>
