@@ -347,10 +347,10 @@ q<!-- MyHRP (C) 2018  -->
          	</c:if>					
 					
 					
-					<div class="alert alert-warning" style="text-align:center"><b>****** ACCESS TO INFORMATION PRIVACY NOTICE / WARNING ******</b><br/>
+					<div class="alert alert-warning" style="text-align:center"><b>****** ACCESS TO INFORMATION PRIVACY NOTICE ******</b><br/>
 					The NLESD is committed to the protection of all personal information collected, used and/or disclosed in the operation and management of its activities.  
 					As a  public body, all information collected, used and/or disclosed will be in accordance with Access to Information and Protection of Privacy Act,2015.
-					By continuing to use this site, you agree with the above Act.</div>
+					</div>
 					
 					
 					
