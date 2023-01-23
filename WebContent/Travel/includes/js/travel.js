@@ -3128,7 +3128,7 @@ function addnewmembers(){
    
    
     $("#claims-table").DataTable().row.add([
-    thename, ids, response, '--','--'
+    thename, ids, response, '--','--','--','--'
     ]).draw(false); 
     
    
