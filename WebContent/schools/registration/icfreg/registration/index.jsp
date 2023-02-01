@@ -40,7 +40,7 @@
   
   
   		<c:choose>
-				<c:when test="${ap eq null}">
+				<c:when test="${ap.icfRegPerId lt 1}">
 				<!-- IF REGISTRATION CLOSED -->
 				<div class="alert alert-danger" style="text-align:center;margin-top:10px;">
 				<div style="float:left;font-size:24px;"><i class="fas fa-exclamation-circle"></i></div>
@@ -77,7 +77,7 @@
 				
 				
 				
-			<c:when test="${ap ne null}">	
+			<c:when test="${ap.icfRegPerId gt 0}">	
 			<!--IF  REGISTRATION OPEN -->
 					
 				<div class="alert alert-success" style="margin-top:10px;text-align:center;"><b>REGISTRATION IS OPEN</b></div>			
