@@ -11,7 +11,15 @@
   <decorator name="kindergarten-registration-default" page="schools/registration/kindergarten/includes/decorator/main.jsp">
   	<pattern>/schools/registration/kindergarten/*</pattern>
   </decorator>
-     
+  
+   <decorator name="icf-admin" page="schools/registration/icfreg/admin/includes/decorator/main.jsp">
+  	<pattern>/schools/registration/icfreg/admin/*</pattern>
+  </decorator>
+  
+  <decorator name="icf-registration" page="schools/registration/icfreg/registration/includes/decorator/main.jsp">
+  	<pattern>/schools/registration/icfreg/registration/*</pattern>
+  </decorator>
+  
   <decorator name="fund3" page="Fund3/decorator/main.jsp">
   	<pattern>/Fund3/*</pattern>
   </decorator>

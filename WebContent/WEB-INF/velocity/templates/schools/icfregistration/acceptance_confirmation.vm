@@ -1,0 +1,14 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+Registration Status: <b>ACCEPTED.</b>
+</p>
+
+<p>
+Your application for ICF registration for  $studentname at $schoolname  for the $schoolyear school year was received at <b>$regdate</b>. Your registration application is now accepted. 
+</p>
+
+<p>
+Thank You,<br /><br />
+Newfoundland and Labrador English School District
+</p>
+</div>

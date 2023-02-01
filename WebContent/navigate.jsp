@@ -271,6 +271,26 @@
 						</div>
 					</esd:SecurityAccessRequired>
 					
+			
+			<!-- ICF Registration -->
+			<esd:SecurityAccessRequired permissions="ICF-REGISTRATION-ADMIN-VIEW">
+						<div class="menuIconImage">                              
+							<a href="schools/registration/icfreg/admin/index.html">
+								<img src="includes/img/menu/icfa-off.png" class="img-swap menuImage" border=0 title="ICF REGISTRATION">
+							</a>                                                         
+						</div>
+					</esd:SecurityAccessRequired>
+					
+					
+				<esd:SecurityAccessRequired permissions="ICF-REGISTRATION-SCHOOL-VIEW">
+						<div class="menuIconImage">                              
+							<a href="schools/registration/icfreg/admin/schoolindex.html">
+								<img src="includes/img/menu/icfs-on.png" class="img-swap menuImage" border=0 title="ICF REGISTRATION SCHOOL">
+							</a>                                                         
+						</div>
+					</esd:SecurityAccessRequired>
+			
+
 					
 			<!-- Teacher / Secretary Profile System -->
 					<esd:SecurityAccessRequired
