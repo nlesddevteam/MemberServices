@@ -21,6 +21,7 @@ import com.nlesd.icfreg.constants.IcfRegistrationStatusConstant;
 import com.nlesd.icfreg.dao.IcfApplicantHistoryManager;
 import com.nlesd.icfreg.dao.IcfApplicantManager;
 import com.nlesd.icfreg.dao.IcfRegistrationPeriodManager;
+import com.nlesd.icfreg.dao.IcfSchoolManager;
 
 public class UpdateRegistrantStatusAjaxRequestHandler extends RequestHandlerImpl{
 	public UpdateRegistrantStatusAjaxRequestHandler() {
@@ -43,45 +44,53 @@ public class UpdateRegistrantStatusAjaxRequestHandler extends RequestHandlerImpl
 			int sid = form.getInt("sid");
 			if (validate_form()) {
 				try {
-					
-					//get a copy of old values to use with audit
-					IcfRegApplicantBean origbean = IcfApplicantManager.getApplicantById(rid);
-					IcfRegistrationPeriodBean perbean = IcfRegistrationPeriodManager.getRegistrationPeriodById(origbean.getIcfAppRegPer());
-					//update the status
-					IcfApplicantManager.updateRegistrantStatus(rid, sid);
-					//save audit trail
-					IcfApplicantHistoryManager.updateAuditTrailStatus(usr.getLotusUserFullName(), origbean, sid);
-					
-					//send confirmation email.	
-					HashMap<String, Object> model = new HashMap<String, Object>();
-					model.put("studentname", origbean.getIcfAppFullName());
-					model.put("schoolname", origbean.getIcfAppSchoolName());
-					model.put("schoolyear", perbean.getIcfRegPerSchoolYear());
-					model.put("regdate", origbean.getIcfAppDateSubmittedFormatted());
-					try {
-						EmailBean email = new EmailBean();
-						email.setTo(origbean.getIcfAppEmail());
-						if(sid == 2) {
-							email.setSubject("Newfoundland and Labrador English School District - ICF Registration - Application Approval");
-							email.setBody(VelocityUtils.mergeTemplateIntoString(
-									"schools/icfregistration/acceptance_confirmation.vm", model));
-							email.send();
-						}else if( sid == 3) {
-							email.setSubject("Newfoundland and Labrador English School District - ICF Registration - Application Not Approved");
-							email.setBody(VelocityUtils.mergeTemplateIntoString(
-									"schools/icfregistration/nonacceptance_confirmation.vm", model));
-						}else if(sid == 4) {
-							email.setSubject("Newfoundland and Labrador English School District - ICF Registration - Application Waitlisted");
-							email.setBody(VelocityUtils.mergeTemplateIntoString(
-									"schools/icfregistration/waitlisted_confirmation.vm", model));
-							email.send();
+					//first we check to see if it is approving and then check limit
+					if(sid == IcfRegistrationStatusConstant.APPROVED.getValue()) {
+						if(!(IcfSchoolManager.checkLimits(form.getInt("scid"), form.getInt("pid")))) {
+							message="School cap already reached";
 						}
+					}else {
+						//get a copy of old values to use with audit
+						IcfRegApplicantBean origbean = IcfApplicantManager.getApplicantById(rid);
+						IcfRegistrationPeriodBean perbean = IcfRegistrationPeriodManager.getRegistrationPeriodById(origbean.getIcfAppRegPer());
+						//update the status
+						IcfApplicantManager.updateRegistrantStatus(rid, sid);
+						//save audit trail
+						IcfApplicantHistoryManager.updateAuditTrailStatus(usr.getLotusUserFullName(), origbean, sid);
 						
-						
+						//send confirmation email.	
+						HashMap<String, Object> model = new HashMap<String, Object>();
+						model.put("studentname", origbean.getIcfAppFullName());
+						model.put("schoolname", origbean.getIcfAppSchoolName());
+						model.put("schoolyear", perbean.getIcfRegPerSchoolYear());
+						model.put("regdate", origbean.getIcfAppDateSubmittedFormatted());
+						try {
+							EmailBean email = new EmailBean();
+							email.setTo(origbean.getIcfAppEmail());
+							if(sid == 2) {
+								email.setSubject("Newfoundland and Labrador English School District - ICF Registration - Application Approval");
+								email.setBody(VelocityUtils.mergeTemplateIntoString(
+										"schools/icfregistration/acceptance_confirmation.vm", model));
+								email.send();
+							}else if( sid == 3) {
+								email.setSubject("Newfoundland and Labrador English School District - ICF Registration - Application Not Approved");
+								email.setBody(VelocityUtils.mergeTemplateIntoString(
+										"schools/icfregistration/nonacceptance_confirmation.vm", model));
+							}else if(sid == 4) {
+								email.setSubject("Newfoundland and Labrador English School District - ICF Registration - Application Waitlisted");
+								email.setBody(VelocityUtils.mergeTemplateIntoString(
+										"schools/icfregistration/waitlisted_confirmation.vm", model));
+								email.send();
+							}
+							
+							
+						}
+						catch (EmailException e) {
+							e.printStackTrace();
+						}
 					}
-					catch (EmailException e) {
-						e.printStackTrace();
-					}
+					
+					
 				}
 				catch (Exception e) {
 					message=e.getMessage();
