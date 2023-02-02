@@ -217,6 +217,48 @@ public class IcfSchoolManager {
 			catch (Exception e) {}
 		}
 	}
+	public static boolean checkLimits(int sid,int pid)  {
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		boolean limitcheck=false;
+		try {
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.icf_reg_pkg.check_school_limit(?,?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setInt(2, sid);
+			stat.setInt(3, pid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+			while(rs.next()) {
+				if(rs.getInt("ICF_SCH_CAP") > 0) {
+					if((rs.getInt("ACOUNT") + 1) < rs.getInt("ICF_SCH_CAP")) {
+						limitcheck=true;
+					}
+				}else {
+					limitcheck=true;
+				}
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("static boolean checkLimits(int sid,int pid)  " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+		return limitcheck;
+	}
 	public static IcfSchoolBean createIcfSchoolBeanBean(ResultSet rs) {
 		IcfSchoolBean abean = null;
 		try {
