@@ -55,7 +55,7 @@
 									<b>UPCOMING REGISTRATION DATES</b><br/><br/>							
 									<ul>
 										<c:forEach items="${fp}" var='f'>											
-												<li><fmt:formatDate type="both" dateStyle="long" value="${f.icfRegStartDate}" /></b> to <b><fmt:formatDate type="both" dateStyle="long" value="${f.icfRegEndDate}" />
+												<li><b><fmt:formatDate type="both" dateStyle="long" value="${f.icfRegStartDate}" /></b> to <b><fmt:formatDate type="both" dateStyle="long" value="${f.icfRegEndDate}" /></b>
 										</c:forEach>
 									</ul>
 							</div>
