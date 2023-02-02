@@ -4487,6 +4487,83 @@
     <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewMissingCoeReportRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewMissingCoeReport.html</URL-Pattern>
     </Request-Handler>
+   
+   
+<!-- ICF REGISTRATION  -->
+
+    <Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewIcfRegRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/index.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.AddNewRegistrationPeriodAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/addNewRegistrationPeriodAjax.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewPeriodSchoolsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/viewPeriodSchools.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.AddUpdateRegistrationSchoolAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/addUpdateRegistrationSchoolAjax.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewStudentRegistrationRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/registration/viewStudentRegistration.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.AddNewIcfApplicantRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/registration/addNewRegistration.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewPeriodRegistrantsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/viewPeriodRegistrants.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewApplicantRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/viewRegistrant.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewPeriodRegistrantsBySchoolRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/viewPeriodRegistrantsBySchool.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.DeletePeriodSchoolAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/deletePeriodSchool.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.AdminUpdateRegistrantAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/adminUpdateRegistrant.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.UpdateRegistrantStatusAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/updateRegistrantStatus.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ResendEmailAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/resendEmail.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.DeleteRegistrantAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/deleteRegistrant.html</URL-Pattern>
+    </Request-Handler>
+	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ExportRegistrantsRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/exportRegistrants.html</URL-Pattern>
+    </Request-Handler>
+    	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.AdminAddNewApplicantRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/adminAddNewApplicant.html</URL-Pattern>
+    </Request-Handler>
+    	<Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.AdminAddRegistrantAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/adminAddNewRegistrantAjax.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.nlesd.icfreg.handler.ViewIcfRegSchoolRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/schools/registration/icfreg/admin/schoolindex.html</URL-Pattern>
+    </Request-Handler> 
+    
     
                                        
   </Request-Handlers>
