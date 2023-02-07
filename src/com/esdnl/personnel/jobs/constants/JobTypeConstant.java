@@ -1,6 +1,8 @@
 package com.esdnl.personnel.jobs.constants;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class JobTypeConstant implements Serializable {
 
@@ -12,20 +14,22 @@ public class JobTypeConstant implements Serializable {
 	public static transient final JobTypeConstant REGULAR = new JobTypeConstant(1, "TEACHER PERMANENT POSITION");
 	public static transient final JobTypeConstant REPLACEMENT = new JobTypeConstant(2, "TEACHER REPLACEMENT/TERM POSITION");
 	public static transient final JobTypeConstant TRANSFER = new JobTypeConstant(3, "TRANSFER POSITION");
-	public static transient final JobTypeConstant ADMINISTRATIVE = new JobTypeConstant(4, "ADMINISTRATIVE POSITION");
-	public static transient final JobTypeConstant LEADERSHIP = new JobTypeConstant(5, "LEADERSHIP POSITION");
+	public static transient final JobTypeConstant ADMINISTRATIVE = new JobTypeConstant(4, "SCHOOL ADMINISTRATIVE POSITION");
+	public static transient final JobTypeConstant LEADERSHIP = new JobTypeConstant(5, "DISTRICT LEADERSHIP POSITION");
 	public static transient final JobTypeConstant AWARDED = new JobTypeConstant(6, "AWARDED POSITION");
 	public static transient final JobTypeConstant SUMMER_SCHOOL = new JobTypeConstant(7, "SUMMER SCHOOL POSITION");
-	public static transient final JobTypeConstant POOL = new JobTypeConstant(8, "GENERAL INTERVIEWS");
+	public static transient final JobTypeConstant POOL = new JobTypeConstant(8, "GENERAL(POOL) INTERVIEWS");
 	public static transient final JobTypeConstant TLA_REGULAR = new JobTypeConstant(9, "TEACHING AND LEARNING ASSISTANT PERMANENT POSITION");
 	public static transient final JobTypeConstant TLA_REPLACEMENT = new JobTypeConstant(10, "TEACHING AND LEARNING ASSISTANT REPLACEMENT/TERM POSITION");
 	public static transient final JobTypeConstant INTERNALONLY = new JobTypeConstant(11, "INTERNAL ONLY");
 	public static transient final JobTypeConstant EXTERNALONLY = new JobTypeConstant(12, "EXTERNAL ONLY");
 	public static transient final JobTypeConstant INTERNALEXTERNAL = new JobTypeConstant(13, "INTERNAL AND EXTERNAL");
+	public static transient final JobTypeConstant PROGRAMS = new JobTypeConstant(14, "PROGRAMS POSITION");
+	public static transient final JobTypeConstant DEPARTMENT_HEAD = new JobTypeConstant(15, "SCHOOL DEPARTMENT HEAD POSITION");
 
 	public static final JobTypeConstant[] ALL = new JobTypeConstant[] {
 			POOL, REGULAR, REPLACEMENT, TLA_REGULAR, TLA_REPLACEMENT, ADMINISTRATIVE, LEADERSHIP, SUMMER_SCHOOL, AWARDED,
-			INTERNALONLY, EXTERNALONLY, INTERNALEXTERNAL
+			INTERNALONLY, EXTERNALONLY, INTERNALEXTERNAL,PROGRAMS,DEPARTMENT_HEAD
 	};
 
 	private JobTypeConstant(int value, String desc) {
@@ -73,6 +77,10 @@ public class JobTypeConstant implements Serializable {
 			return JobTypeConstant.EXTERNALONLY;
 		case 13:
 			return JobTypeConstant.INTERNALEXTERNAL;
+		case 14:
+			return JobTypeConstant.PROGRAMS;
+		case 15:
+			return JobTypeConstant.DEPARTMENT_HEAD;	
 		default:
 			return null;
 		}
@@ -89,5 +97,9 @@ public class JobTypeConstant implements Serializable {
 	public String toString() {
 
 		return this.getDescription();
+	}
+	public static JobTypeConstant[] ALLSORTED() {
+		Arrays.sort(JobTypeConstant.ALL, Comparator.comparing(JobTypeConstant::getDescription));
+		return JobTypeConstant.ALL;
 	}
 }

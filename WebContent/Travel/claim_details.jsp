@@ -588,18 +588,49 @@ dtable=$("#claimItemsTable").DataTable({
    		 	<div class="valid-feedback" style="display:none;">A valid date is entered.</div>
     		<div class="invalid-feedback">ERROR: Please fill out this field.</div>
    		</div>  	
+   		
+   		
+   	
    		<div  class="col-xs-6 col-sm-6 col-md-4" style="padding-bottom:5px;">       	
    			<label for="item_departure_time"><b>Departure Time:</b></label>
-    		<input required class="form-control datetimepicker-input departureTimePicker mb-2 mr-sm-2" type="text" placeholder="Departure Date" data-toggle="datetimepicker" data-target="#item_departure_time" name="item_departure_time" id="item_departure_time" onfocus="this.select();">
-   			 <div class="form-check"> <label class="form-check-label"><input type="checkbox" class="form-check-input" id="timeDepartureON" value="" /> Is this Overnight? </label></div>
-   			<div class="invalid-feedback">TIME ERROR: Please fill out this field as a valid time (i.e. 12:00 AM), unless Overnight, check below.</div>    		
+    		<input required class="depTime form-control datetimepicker-input departureTimePicker mb-2 mr-sm-2" type="text" placeholder="Departure Date" data-toggle="datetimepicker" data-target="#item_departure_time" name="item_departure_time" id="item_departure_time" onfocus="this.select();">
+   			 <div class="form-check"> <label class="form-check-label"><input type="checkbox" class="form-check-input" id="timeDepartureON" /> Is this Overnight? </label></div>
+   			<div class="invalid-feedback">TIME ERROR: Please fill out this field as a valid time (i.e. 12:00 AM), unless Overnight, check below.</div>  
+   			<script>
+   			
+   			depVal = "<%=(failed_item !=null)?failed_item.getDepartureTime():""%>";
+   			
+   			if (depVal === "Overnight" ) {  				
+   				$("#timeDepartureON").prop( "checked", true );
+   				$(".depTime").removeClass("datetimepicker-input").removeClass("departureTimePicker");
+   				$(".depTime").val('<%=(failed_item !=null)?failed_item.getDepartureTime():""%>');
+   				$(".depTime").prop( "disabled", true );
+   			} 
+   			
+   			</script>  		
    		</div>
     	<div  class="col-xs-6 col-sm-6 col-md-4" style="padding-bottom:5px;">         
     		<label for="item_return_time"><b>Return Time:</b></label>    				
-    		<input required class="form-control datetimepicker-input returnTimePicker mb-2 mr-sm-2" type="text" placeholder="Return Date" data-toggle="datetimepicker" data-target="#item_return_time"  name="item_return_time" id="item_return_time" onfocus="this.select();">
-   			 <div class="form-check"> <label class="form-check-label"><input type="checkbox" class="form-check-input" id="timeReturnON" value="" /> Is this Overnight? </label></div>
+    		<input required class="retTime form-control datetimepicker-input returnTimePicker mb-2 mr-sm-2" type="text" placeholder="Return Date" data-toggle="datetimepicker" data-target="#item_return_time"  name="item_return_time" id="item_return_time" onfocus="this.select();">
+   			 <div class="form-check"> <label class="form-check-label"><input type="checkbox" class="form-check-input" id="timeReturnON" /> Is this Overnight? </label></div>
    			<div class="invalid-feedback">DATE ERROR: Please fill out this field as a valid time (i.e. 12:00 AM), unless Overnight, check below.</div>    		
-   		</div>			
+   		<script>
+   			retVal = "<%=(failed_item !=null)?failed_item.getReturnTime():""%>";
+			
+			if (retVal === "Overnight" ) {     			
+   				$("#timeReturnON").prop( "checked", true );
+   				$(".retTime").removeClass("datetimepicker-input").removeClass("returnTimePicker");
+   				$(".retTime").val('<%=(failed_item !=null)?failed_item.getReturnTime():""%>');
+   				$(".retTime").prop( "disabled", true );
+   			} 
+   			
+   			
+   			</script>  	
+   		
+   		
+   		</div>	
+   
+   				
    		<div  class="col-xs-6 col-sm-6 col-md-3" style="padding-bottom:5px;">   
    			<label for="item_kms" class="mr-sm-2"><b>KMs Traveled:</b></label>
     		<input required class="form-control mb-2 mr-sm-2 integerOnly" type="text" name="item_kms"  id="item_kms" autocomplete="no" placeholder="# Kilometers" value="<%=(failed_item != null)?""+failed_item.getItemKMS():"0"%>" onkeypress="return isNumber(event);" onfocus="this.select();" maxlength="4" onpaste="return false;">
@@ -1173,7 +1204,10 @@ dtable=$("#claimItemsTable").DataTable({
 
 <!-- ENABLE DATE/TIME PICKERS -->	
 <script> 
-$('document').ready(function(){  		
+$('document').ready(function(){  	
+	
+	
+
 
       $('.datepicker').datetimepicker({
     	 	   format: 'L',
@@ -1213,8 +1247,19 @@ $('#timeDepartureON').change(function(){
         $('#item_departure_time').val("Overnight");
         $( "#item_departure_time" ).prop( "disabled", true );
     } else {
-    	$('#item_departure_time').val("Overnight");
+    	 $('#item_departure_time').val("8:30 AM");
     	 $( "#item_departure_time" ).prop( "disabled",false );
+    	 //remove in case already set.
+    	 $(".depTime").removeClass("datetimepicker-input").removeClass("departureTimePicker");
+    	 //add if missing
+    	 $(".depTime").addClass("datetimepicker-input").addClass("departureTimePicker");
+    	 //Reset
+    	 $('.departureTimePicker').datetimepicker({		 
+		 		format: 'LT',
+	 			date: moment('<%=(failed_item != null)?failed_item.getDepartureTime():"8:30 AM"%>','LT')
+		 		
+	 			});
+    	 
     }
 });
 
@@ -1225,6 +1270,18 @@ $('#timeReturnON').change(function(){
     } else {
     	 $('#item_return_time').val("4:30 PM");
     	$( "#item_return_time" ).prop( "disabled", false );
+    	 //remove in case already set.
+   	 $(".retTime").removeClass("datetimepicker-input").removeClass("returnTimePicker");
+   	 //add if missing
+   	 $(".retTime").addClass("datetimepicker-input").addClass("returnTimePicker");
+   //Reset
+   	 $('.returnTimePicker').datetimepicker({		 
+		 		format: 'LT',
+		 		date: moment('<%=(failed_item != null)?failed_item.getReturnTime():"4:30 PM"%>','LT')	    
+		 		
+	 			});
+    	
+    	
     }
 });
 
