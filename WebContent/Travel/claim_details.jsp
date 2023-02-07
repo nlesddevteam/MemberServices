@@ -1247,7 +1247,7 @@ $('#timeDepartureON').change(function(){
         $('#item_departure_time').val("Overnight");
         $( "#item_departure_time" ).prop( "disabled", true );
     } else {
-    	$('#item_departure_time').val("Overnight");
+    	 $('#item_departure_time').val("8:30 AM");
     	 $( "#item_departure_time" ).prop( "disabled",false );
     	 //remove in case already set.
     	 $(".depTime").removeClass("datetimepicker-input").removeClass("departureTimePicker");
