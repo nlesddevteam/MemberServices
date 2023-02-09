@@ -153,32 +153,33 @@
 	</tr>
 	<tr>
 	<td>NL</td>
-	<td>$8.00</td>
-	<td>$14.00</td>
-	<td>$21.70</td>
-	<td>$43.70</td>
+	<td>$9.60</td>
+	<td>$16.80</td>
+	<td>$26.04</td>
+	<td>$52.44</td>
 	</tr>
 	<tr>
 	<td>Other Provinces</td>
-	<td>$10.15</td>
-	<td>$16.40</td>
-	<td>$23.65</td>
-	<td>$50.20</td>
+	<td>$12.18</td>
+	<td>$19.68</td>
+	<td>$28.38</td>
+	<td>$60.24</td>
 	</tr>
 	<tr>
 	<td>USA</td>
-	<td>$10.15 (US)</td>
-	<td>$16.40 (US)</td>
-	<td>$23.65 (US)</td>
-	<td>$50.20 (US)</td>
+	<td>$12.18 (US)</td>
+	<td>$19.68 (US)</td>
+	<td>$28.38 (US)</td>
+	<td>$60.24 (US)</td>
 	</tr>
 	<tr>
 	<td>Other</td>
-	<td>$11.25</td>
-	<td>$17.95</td>
-	<td>$26.00</td>
-	<td>$55.20</td>
+	<td>$13.50</td>
+	<td>$21.54</td>
+	<td>$31.20</td>
+	<td>$66.24</td>
 	</tr>
+	<tr><td colspan=5 style="color:Grey;text-align:Center;font-size:10px;">*MEAL RATES UPDATED AS PER GOV NL FEBRUARY 9, 2023</td></tr>
 	</table>
 	<br/>
 		<div class="siteSubHeaderBlue">YOUR YEAR TO DATE (YTD) TOTALS:</div>
