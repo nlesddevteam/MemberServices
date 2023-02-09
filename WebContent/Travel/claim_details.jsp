@@ -693,14 +693,52 @@ dtable=$("#claimItemsTable").DataTable({
   	</div> 	
 	</div>
 	
-	
+	<hr>
 	<div  class="col-xs-12 col-sm-12 col-md-12">
-	
-	
+	<div align="center"><br/><b>MEAL RATES:</b><br/>
+	<table class="table table-bordered table-striped table-sm" style="width:100%;max-width:640px;font-size:11px;background-color:white;">
+	<tr style="background-color:#6495ED;color:White;font-weight:bold;">
+	<th>LOCATION</th>
+	<th>BREAKFAST</th>
+	<th>LUNCH</th>
+	<th>DINNER</th>
+	<th>TOTAL</th>
+	</tr>
+	<tr>
+	<td>NL</td>
+	<td>$9.60</td>
+	<td>$16.80</td>
+	<td>$26.04</td>
+	<td>$52.44</td>
+	</tr>
+	<tr>
+	<td>Other Provinces</td>
+	<td>$12.18</td>
+	<td>$19.68</td>
+	<td>$28.38</td>
+	<td>$60.24</td>
+	</tr>
+	<tr>
+	<td>USA</td>
+	<td>$12.18 (US)</td>
+	<td>$19.68 (US)</td>
+	<td>$28.38 (US)</td>
+	<td>$60.24 (US)</td>
+	</tr>
+	<tr>
+	<td>Other</td>
+	<td>$13.50</td>
+	<td>$21.54</td>
+	<td>$31.20</td>
+	<td>$66.24</td>
+	</tr>
+	<tr><td colspan=5 style="color:Grey;text-align:Center;font-size:10px;">*MEAL RATES UPDATED AS PER GOV NL FEBRUARY 9, 2023</td></tr>
+	</table>
+	</div>
 		<hr>
 	<input type="hidden" id="hidfiledelete" name="hidfiledelete">
 	<div style="float:right;"><a href="#" class="noJump btn btn-xs btn-primary" id="butaddb" onclick="addattach();"><i class="fas fa-paperclip"></i> Add Receipt(s)</a></div> 
-		<b>Current Receipts):</b><br/>
+		<b>Current Receipts:</b><br/>
 		Below are a list of any receipt(s) for this claim item.<br/>
 		<b>NOTE:</b> If no value entered for lodging and other is less than or equal to $5, (or it is a ferry expense), no receipts are required.
 			<%if(failed_item == null || failed_item.getAttachments() == null || failed_item.getAttachments().isEmpty()){ %>
