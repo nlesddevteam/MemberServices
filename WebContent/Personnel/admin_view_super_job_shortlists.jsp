@@ -83,7 +83,10 @@ input {
 										<tr>
 											<td><%=jobs[i].getCompetitionNumber()%></td>
 											<td><%=jobs[i].getPositionTitle()%></td>
-											<td><%=jobs[i].getFormatedCompetitionEndDate()%></td>
+											<td>
+											<fmt:formatDate value="<%=jobs[i].getCompetitionEndDate()%>" pattern="yyyy/MM/dd hh:mm a" var="dateToUse"/>
+											${dateToUse}
+											</td>
 											<td><a class="btn btn-xs btn-primary"
 												href='view_job_post.jsp?comp_num=<%=jobs[i].getCompetitionNumber()%>'>View
 													Job</a></td>

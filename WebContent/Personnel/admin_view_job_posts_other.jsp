@@ -17,7 +17,7 @@
 <%
 	int zoneid=0;
 	zoneid = Integer.parseInt(request.getParameter("zoneid").toString());
-	System.out.println(zoneid);
+	//System.out.println(zoneid);
 	String statuslong="";
 	
 	if(request.getParameter("status").equals("All")){
