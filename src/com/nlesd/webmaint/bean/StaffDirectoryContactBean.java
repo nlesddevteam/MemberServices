@@ -10,8 +10,16 @@ public class StaffDirectoryContactBean implements Serializable {
 
 	public enum STAFF_DIRECTORY_DIVISION {
 
-		INVALID(0, ""), DIRECTORSOFFICE(1, "Director's Office"), PROGRAMS(2, "Programs"), HR(3, "Human Resources"), FINANCE(
-				4, "Finance and Business Administration"), OPERATIONS(5, "Operations");
+		INVALID(0, ""), 
+		DIRECTORSOFFICE(1, "Director's Office"), 
+		PROGRAMS(2, "Programs"), 
+		HR(3, "Human Resources"), 
+		FINANCE(4, "Finance and Business Administration"), 
+		OPERATIONS(5, "Operations"), 
+		CORPORATESERVICES(6,"Corporate Services"), 
+		STUDENTSERVICES(7,"Student Services"),
+		SCHOOLSYSTEMS(8,"School Systems"), 
+		EXECUTIVE(9,"Executive");
 
 		private int id;
 		private String name;

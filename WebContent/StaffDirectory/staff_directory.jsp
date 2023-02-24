@@ -47,7 +47,7 @@
 	$('document').ready(function(){
 		aTable = $(".staffingTable").dataTable({
 			"order" : [[ 7, "asc" ],[6,"asc"],[8,"asc"]],			
-			  "paging":   true,
+			  "paging":   false,
 			  "searching": true,			 
 				responsive: true,
 				"pageLength": 25,
@@ -99,11 +99,14 @@ Below is a complete list of district office staff as entered. This data will dis
 
 If no location is set, it will display UNKNOWN or OTHER/SCHOOL in the Location field. You can also select OTHER/SCHOOL if the person is located outside the main office, but you should enter the proper location in the Position/Title section(3) when adding/editing. Please update these entries by editing the persons main office location. If the user is at a school, set the location as the closest office responsible for that school. 
 You will also notice any vacancies as red. Please update these when possible, or remove if the position will no longer be filled. All results are color-coded by division and office, and sorted by Division, Location, and Sort Number.<p>
-<b>For the head of a division, assign sort order number 1 to have their title highlighted and displayed at the start of the listings. Always try to order the sort by ranking with priority sort 1 to the division head. <p>
+<p>For the head of a division, assign sort order number 1 to have their title highlighted and displayed at the start of the listings. Always try to order the sort by ranking with priority sort 1 to the division head. <p>
  Please make sure you keep your office staff directory updated at all times and remove anyone that has left unless the position will be filled soon, you can then set the position as vacant on the edit page.
 <p>
 
-<div class="alert alert-warning">NOTE: After making a change, it may take up to 5 minutes before the change displays on below list, and up to 20 minutes before it displays on live website. Please give it time before attempting to change again.</div>
+<div class="alert alert-warning">NOTE: After making a change, it may take up to 5 minutes before the change displays on below list, and up to 20 minutes before it displays on live website. Please give it time before attempting to change again.
+</div>
+
+<div align="center"><b>NOTICE:</b> If you see a <span style="color:White;background-color:Red;"> &nbsp; *** NEED UPDATE *** &nbsp; </span> &nbsp; or an <span style="color:White;background-color:Silver;"> &nbsp; UNKNOWN  &nbsp;</span> under Division Category, then they require updating to the new 2023 Divisions.</div><br/>
 
 <div align="center"><a href='addStaffDirectoryContact.html' class="btn btn-sm btn-success" style="color:White;" title="Add new Contact">Add New Contact</a>&nbsp; <a href="../navigate.jsp" class="btn btn-sm btn-danger">Back to Staff Room</a></div>
 
@@ -118,7 +121,7 @@ You will also notice any vacancies as red. Please update these when possible, or
 					<th width="35%">POSITION</th>
 					<th width="10%">TELEPHONE</th>		
 					<th width="15%">DIVISION</th>			
-					<th width="10%">DISTRICT OFFICE</th>				
+					<th width="10%">OFFICE</th>				
 					<th width="10%">OPTIONS</th>
 					<th width="*">REG# 6</th>
 					<th width="*">DIV# 7</th>
@@ -154,17 +157,26 @@ You will also notice any vacancies as red. Please update these when possible, or
 	     			<td width="10%">${ contact.telephone }</td> 
 	     			
 	     			<c:choose>
-	     			<c:when test="${contact.division.id eq '1'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(255, 218, 185,0.5);">SUPERINTENDENT'S OFFICE</td>
+	     			<c:when test="${contact.division.id eq '1' or contact.division.id eq '4' or contact.division.id eq '5' }">
+	     			<td width="15%" style="text-align:center;color:White;background-color:rgba(255, 0, 0,1);">*** NEED UPDATE ***</td>
 	     			</c:when>
-	     			<c:when test="${contact.division.id eq '2'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(178, 34, 34,0.2);">PROGRAMS</td>
+	     			<c:when test="${contact.division.id eq '2' }">
+	     			<td width="15%" style="text-align:center;background-color:rgba(255, 218, 185,0.5);">PROGRAMS</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '3'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(47, 79, 79,0.2);">HUMAN RESOURCES</td>
+	     			<td width="15%" style="text-align:center;background-color:rgba(178, 34, 34,0.2);">HUMAN RESOURCES</td>
 	     			</c:when>
-	     			<c:when test="${contact.division.id eq '4'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">CORPORATE SERVICES</td>
+	     			<c:when test="${contact.division.id eq '6'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(47, 79, 79,0.2);">CORPORATE SERVICES</td>
+	     			</c:when>
+	     			<c:when test="${contact.division.id eq '7'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">STUDENT SERVICES</td>
+	     			</c:when>
+	     			<c:when test="${contact.division.id eq '8'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">SCHOOL SYSTEMS</td>
+	     			</c:when>
+	     			<c:when test="${contact.division.id eq '9'}">
+	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">EXECUTIVE</td>
 	     			</c:when>
 	     			<c:otherwise>
 	     			<td width="15%" style="text-align:center;background-color:Silver;">UNKNOWN</td>
@@ -174,24 +186,24 @@ You will also notice any vacancies as red. Please update these when possible, or
 	     			
 	     			<c:choose>
 					<c:when test="${ (contact.zone.zoneName eq 'eastern') or (contact.zone.zoneName eq 'avalon') or (contact.zone.zoneName eq 'AVALON') }">
-							<td style="text-align:center;background-color:rgba(191, 0, 0, 0.3);">ST. JOHN'S</td>																								
+							<td class="officeAvalon" style="vertical-align:middle;text-align:center;">AVALON</td>																								
 						</c:when>
 						<c:when test="${ (contact.zone.zoneName eq 'central')}">
-							<td style="text-align:center;background-color:rgba(143, 188, 143, 0.3);">GANDER</td>																				
+							<td class="officeCentral" style="vertical-align:middle;text-align:center;">CENTRAL</td>																				
 						</c:when>
 						<c:when test="${ (contact.zone.zoneName eq 'western')}">
-							<td style="text-align:center;background-color:rgba(255, 132, 0, 0.13);">CORNER BROOK</td>																								
+							<td class="officeWestern" style="vertical-align:middle;text-align:center;">WESTERN</td>																								
 						</c:when>
 						<c:when test="${ (contact.zone.zoneName eq 'labrador')}">
-							<td style="text-align:center;background-color:rgba(127, 130, 255, 0.3);">HV-GB</td>																																												
+							<td class="officeLabrador" style="vertical-align:middle;text-align:center;">LABRADOR</td>																																												
 						</c:when>	
 						<c:when test="${ (contact.zone.zoneName eq 'provincial')}">
-							<td style="text-align:center;background-color:rgba(128, 0, 128, 0.3);color:Black">OTHER/SCHOOL</td>
+							<td class="officeProvincial" style="vertical-align:middle;text-align:center;">GOV/DEPT</td>
 						</c:when>	
 						<c:otherwise>
-							<td style="text-align:center;background-color:Red;color:White;">UNKNOWN</td>
+							<td class="officeError" style="vertical-align:middle;text-align:center;">UNKNOWN</td>
 						</c:otherwise>
-					</c:choose>     			
+					</c:choose>          			
 	     			
 	     			
 	     			<td width="10%">	
