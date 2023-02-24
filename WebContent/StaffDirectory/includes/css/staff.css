@@ -59,12 +59,23 @@ html { background-color:White;}
 
 .region6 {background-color:rgba(0, 0, 0, 0.1);}
 
-.regionAvalon {}
-.regionEastern {}
-.regionCentral {}
-.regionWestern {}
-.regionLabrador {}
-.regionProvincial {}
+/*OFFICE LOCATIONS COLOR */
+.officeAvalon {background-color:rgba(191, 0, 0, 0.5);color:White;}
+.officeCentral {background-color:rgba(143, 188, 143, 0.5);}
+.officeWestern {background-color:rgba(255, 132, 0, 0.5);}
+.officeLabrador {background-color:rgba(127, 130, 255, 0.5);color:white;}
+.officeProvincial {background-color:rgba(128, 0, 128, 0.5);color:white;}
+.officeError {background-color:rgba(255, 0, 0, 1);color:White;}
+/*DIVISION COLOR SETTINGS */
+.divisions {vertical-align:middle;text-align:center;}
+.divisionEXECUTIVE {background-color:rgba(220, 20, 60, 0.5);color:White;}
+.divisionHR {background-color:rgba(100, 149, 237, 0.5);color:White;}
+.divisionPROGRAMS {background-color:rgba(222, 184, 135, 0.5);}
+.divisionSCHOOLSYSTEMS {background-color:rgba(138, 43, 226, 0.5);color:White;}
+.divisionSTUDENTSERVICES {background-color:rgba(0, 100, 0, 0.5);color:White;}
+.divisionCORPORATESERVICES {background-color:rgba(47, 79, 79, 0.5);color:White;}
+.divisionERROR {background-color:rgba(255, 255, 255, 1);color:Silver;}
+
 .regionStyle {padding:0px 0px 0px 0px;float:left;width:20%;}
 
 /*DIVISION COLOR SETTINGS */

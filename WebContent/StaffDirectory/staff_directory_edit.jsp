@@ -109,20 +109,15 @@
 	                  
 	                  <div class="row container-fluid" style="padding-top:5px;">
       		<div class="col-lg-6 col-12">
-	                  <b>Division:</b>
+	                   <b>Division: (New divisions have been added.)</b>
 	                      	<select id='divisionId' name='divisionId' class="form-control" required>	                      		
 	                      		<c:forEach items="${ divisions }" var='division'>
 	                      		<c:choose>
-	                      		<c:when test="${ division.id eq '1' }">
-	                      		<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
-	                      			Superintendent
+	                      		<c:when test="${ division.id eq '1' or division.id eq '4' or division.id eq '5' }">
+	                      		<option style="background-color:Red;color:White;" value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
+	                      			${ division.name } **INVALID-PLEASE UPDATE**
 	                      			</option>
-	                      		</c:when>
-	                      		<c:when test="${ division.name eq 'Finance and Business Administration' }">
-	                      		<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
-	                      			Corporate Services
-	                      			</option>
-	                      		</c:when>
+	                      		</c:when>	                      		
 	                      		<c:otherwise>
 	                      			<option value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
 	                      			${ division.name }
@@ -133,14 +128,14 @@
 	                      	</select>
 	                  </div>
 	                  <div class="col-lg-6 col-12">
-	                  <b>Main Office Location:</b>
+	                  <b>District Office:</b>
     					<select id="zoneId" name="zoneId" class="form-control" required>
     					<option value="">---- Please Select (Required) ----</option>
-	                    <option value='1' ${ contact.zone eq "avalon" ? "SELECTED" : "" }>St. John's</option>
-	                    <option value='2' ${ contact.zone eq "central" ? "SELECTED" : "" }>Gander</option>
-	                    <option value='3' ${ contact.zone eq "western" ? "SELECTED" : "" }>Corner Brook</option>
-	                    <option value='4' ${ contact.zone eq "labrador" ? "SELECTED" : "" }>Happy Valley - Goose Bay</option>
-	                    <option value='5' ${ contact.zone eq "provincial" ? "SELECTED" : "" }>Other/School</option>
+	                    <option value='1' ${ contact.zone eq "avalon" ? "SELECTED" : "" }>AVALON</option>
+	                    <option value='2' ${ contact.zone eq "central" ? "SELECTED" : "" }>CENTRAL</option>
+	                    <option value='3' ${ contact.zone eq "western" ? "SELECTED" : "" }>WESTERN</option>
+	                    <option value='4' ${ contact.zone eq "labrador" ? "SELECTED" : "" }>LABRADOR</option>
+	                    <option value='5' ${ contact.zone eq "provincial" ? "SELECTED" : "" }>GOV/DEPT</option>
     					</select>
 </div></div>
 						

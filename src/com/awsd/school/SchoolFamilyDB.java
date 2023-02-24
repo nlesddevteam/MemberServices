@@ -26,7 +26,7 @@ public class SchoolFamilyDB {
 		try {
 			sfs = new Vector(10);
 
-			sql = "SELECT * FROM SCHOOL_FAMILY";
+			sql = "SELECT * FROM SCHOOL_FAMILY order by family_name asc";
 
 			con = DAOUtils.getConnection();
 			stat = con.createStatement();
