@@ -119,9 +119,9 @@ You will also notice any vacancies as red. Please update these when possible, or
 					<tr style="color:white;font-size:12px;">											
 					<th width="15%">NAME</th>											
 					<th width="35%">POSITION</th>
-					<th width="10%">TELEPHONE</th>		
-					<th width="15%">DIVISION</th>			
-					<th width="10%">OFFICE</th>				
+					<th width="10%">TELEPHONE</th>
+					<th width="15%">DIVISION</th>
+					<th width="10%">OFFICE</th>			
 					<th width="10%">OPTIONS</th>
 					<th width="*">REG# 6</th>
 					<th width="*">DIV# 7</th>
@@ -156,34 +156,35 @@ You will also notice any vacancies as red. Please update these when possible, or
 	     			<td width="35%">${ contact.position }</td>
 	     			<td width="10%">${ contact.telephone }</td> 
 	     			
+	     			
+	     			
+	     			
 	     			<c:choose>
 	     			<c:when test="${contact.division.id eq '1' or contact.division.id eq '4' or contact.division.id eq '5' }">
-	     			<td width="15%" style="text-align:center;color:White;background-color:rgba(255, 0, 0,1);">*** NEED UPDATE ***</td>
+	     			<td width="15%" class="divisionERROR divisions">*** NEED UPDATE ***</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '2' }">
-	     			<td width="15%" style="text-align:center;background-color:rgba(255, 218, 185,0.5);">PROGRAMS</td>
+	     			<td width="15%" class="divisionPROGRAMS divisions">PROGRAMS</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '3'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(178, 34, 34,0.2);">HUMAN RESOURCES</td>
+	     			<td width="15%" class="divisionHR divisions">HUMAN RESOURCES</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '6'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(47, 79, 79,0.2);">CORPORATE SERVICES</td>
+	     			<td width="15%" class="divisionCORPORATESERVICES divisions">CORPORATE SERVICES</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '7'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">STUDENT SERVICES</td>
+	     			<td width="15%" class="divisionSTUDENTSERVICES divisions">STUDENT SERVICES</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '8'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">SCHOOL SYSTEMS</td>
+	     			<td width="15%" class="divisionSCHOOLSYSTEMS divisions">SCHOOL SYSTEMS</td>
 	     			</c:when>
 	     			<c:when test="${contact.division.id eq '9'}">
-	     			<td width="15%" style="text-align:center;background-color:rgba(30, 144, 255,0.2);">EXECUTIVE</td>
+	     			<td width="15%" class="divisionEXECUTIVE divisions">EXECUTIVE</td>
 	     			</c:when>
 	     			<c:otherwise>
-	     			<td width="15%" style="text-align:center;background-color:Silver;">UNKNOWN</td>
+	     			<td width="15%" class="divisionERROR divisions">UNKNOWN</td>
 	     			</c:otherwise>
 	     			</c:choose>	     			
-	     			
-	     			
 	     			<c:choose>
 					<c:when test="${ (contact.zone.zoneName eq 'eastern') or (contact.zone.zoneName eq 'avalon') or (contact.zone.zoneName eq 'AVALON') }">
 							<td class="officeAvalon" style="vertical-align:middle;text-align:center;">AVALON</td>																								
@@ -203,7 +204,9 @@ You will also notice any vacancies as red. Please update these when possible, or
 						<c:otherwise>
 							<td class="officeError" style="vertical-align:middle;text-align:center;">UNKNOWN</td>
 						</c:otherwise>
-					</c:choose>          			
+					</c:choose>     
+	     			
+	     			     			
 	     			
 	     			
 	     			<td width="10%">	
@@ -219,7 +222,17 @@ You will also notice any vacancies as red. Please update these when possible, or
 					<c:otherwise>5</c:otherwise>
 					</c:choose>		
 					</td>
-					<td width="*" class="divisionNum">${ contact.division.id }</td>
+					<td width="*" class="divisionNum">
+					<c:choose>
+													<c:when test="${ (contact.division.id eq '9')}">1</c:when>
+													<c:when test="${ (contact.division.id eq '2')}">2</c:when>
+													<c:when test="${ (contact.division.id eq '7')}">3</c:when>
+													<c:when test="${ (contact.division.id eq '8')}">4</c:when>
+													<c:when test="${ (contact.division.id eq '3')}">5</c:when>
+													<c:when test="${ (contact.division.id eq '6')}">6</c:when>
+													<c:otherwise>7</c:otherwise>
+													</c:choose>
+					</td>
 					
 					<td width="5%">${ contact.sortorder }</td>  	
 					

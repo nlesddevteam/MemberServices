@@ -68,7 +68,7 @@ html { background-color:White;}
 .officeError {background-color:rgba(255, 0, 0, 1);color:White;}
 /*DIVISION COLOR SETTINGS */
 .divisions {vertical-align:middle;text-align:center;}
-.divisionEXECUTIVE {background-color:rgba(220, 20, 60, 0.5);color:White;}
+.divisionEXECUTIVE {background-color:rgba(139, 0, 0,0.7);color:White;}
 .divisionHR {background-color:rgba(100, 149, 237, 0.5);color:White;}
 .divisionPROGRAMS {background-color:rgba(222, 184, 135, 0.5);}
 .divisionSCHOOLSYSTEMS {background-color:rgba(138, 43, 226, 0.5);color:White;}

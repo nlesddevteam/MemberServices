@@ -79,7 +79,7 @@
 <div class="row container-fluid" style="padding-top:5px;">
       		<div class="col-lg-3 col-12">
 	 			<b>Telephone #: </b>
-	                     <input type='text' id='telephone' name='telephone' class="form-control" autocomplete="false" value='${ contact.telephone }' />
+	                     <input type='text' id='telephone' name='telephone' class="form-control" autocomplete="false" required value='${ contact.telephone }' />
 	           </div>          
 	          <div class="col-lg-3 col-12">  
 	            <b>Extension:</b>
