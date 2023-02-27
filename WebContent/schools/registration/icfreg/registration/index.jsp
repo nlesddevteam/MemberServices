@@ -191,13 +191,18 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-			<div class="alert alert-danger" style="text-align:center;">
+			<div class="alert alert-danger" style="text-align:center;margin-top:10px;">
 				<div style="float:left;font-size:24px;"><i class="fas fa-exclamation-circle"></i></div>
 				<div style="float:right;font-size:24px;"><i class="fas fa-exclamation-circle"></i></div>
 					<b>****** IMPORTANT NOTICE REGISTRATION IS CLOSED ******</b><br/>					
 					We are currently NOT accepting ICF registrations at this time. <br/>
 					Official ICF registration dates and times will be displayed on the <a href="/families/icfregistration.jsp">ICF information page HERE</a>.
 					</div>	
+					
+					<div style='text-align: center;' class="no-print">						
+									<a href='/families/icfregistration.jsp' class="btn btn-sm btn-primary">EXIT REGISTRATION</a>
+								</div>
+					
 			</c:otherwise>
 		</c:choose>
 	</body>
