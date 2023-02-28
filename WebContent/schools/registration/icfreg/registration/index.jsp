@@ -109,7 +109,7 @@
 						</div>
 						<div class="row" style="padding-top:5px;">		
 								<div class="col-lg-4 col-md-4 col-sm-12">		
-											<b>Parent/Guardian Email Address:</b>
+											<b>Parent/Guardian Email Address:</b> (No spaces)
 											<input required placeholder="Enter a valid email address" class='form-control' errortext='Parent/Guardian Email Address' type='text' id='txt_ParentGuardianEmail' name='txt_ParentGuardianEmail' autocomplete="f" />
 											<div class="invalid-feedback"><i class="fas fa-arrow-up"></i> Please provide valid email address.</div>
 								</div>
@@ -136,12 +136,17 @@
 											</select>
 											
 								</div>
-						</div>		
+						</div>	
+						
+						
+						</div>
+						
+							
 						</div>
 						<br />
 	
-						</div>
-						</div>
+					
+						
 						
 						
 						<br/>
@@ -152,10 +157,17 @@
 
 				<div class="card" id="pnl-error-msg" style='display:none;margin-bottom:10px;'>
 							  <div class="card-header bg-danger" style="color:White;"><b><i class="fas fa-exclamation-circle"></i> SUBMISSION ERROR: YOU HAVE FORM SUBMIT ERRORS! </b></div>							  
-								<div class="card-body">The following fields MUST be corrected before your registration can be submitted:<br/>
+								<div class="card-body"><b>The following fields MUST be corrected before your registration can be submitted:</b><br/><br/>
 										<ul>
 										<div id='error-msg'></div>
 										</ul>
+										
+								<div class="alert alert-danger">
+								<b>PLEASE NOTE:</b> If the form gives a submission error saying <b>&quot;Parent/Guardian Email Address invalid format&quot;</b>, please make sure there are NO SPACES entered 
+								before or at the end of the email address. Using auto-fill and/or copy and paste, on some phones may insert a space by 
+								default which will result in an error.
+								</div>		
+										
 								</div>
 				</div>
 												

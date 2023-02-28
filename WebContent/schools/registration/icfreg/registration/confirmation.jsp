@@ -18,7 +18,7 @@
   <body>
 		<c:choose>
 			<c:when test="${reg ne null}">			
-				<div class="alert alert-success no-print" style="text-align:center;font-size:14px;">
+				<div class="alert alert-success no-print" style="text-align:center;font-size:14px;margin-top:5px;">
 				<b>SUCCESS:</b> Your application for ICF Registration for the ${regper.icfRegPerSchoolYear} school year has been received at 
 				<b><fmt:formatDate type="both" dateStyle="long" value="${reg.icfAppDateSubmitted}" /></b>. <br/>
 				A confirmation email has also been sent to ${reg.icfAppEmail}.
