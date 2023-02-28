@@ -115,7 +115,7 @@
 	                      		<c:choose>
 	                      		<c:when test="${ division.id eq '1' or division.id eq '4' or division.id eq '5' }">
 	                      		<option style="background-color:Red;color:White;" value='${ division.id }' ${ contact.division.id eq division.id ? "SELECTED" : "" }>
-	                      			${ division.name } **INVALID-PLEASE UPDATE**
+	                      			${ division.name } **INVALID**
 	                      			</option>
 	                      		</c:when>	                      		
 	                      		<c:otherwise>
@@ -396,6 +396,7 @@
 							<option value="Operations">Operations</option>
 							<option value="Operations/HR">Operations/HR</option>
 							<option value="Orientation and Mobility Specialist">Orientation and Mobility Specialist</option>
+							<option value="Partnerships and Initiatives">Partnerships and Initiatives</option>
 							<option value="Pension and Benefits">Pension and Benefits</option>
 							<option value="Physical Education, Health, Social Studies">Physical Education, Health, Social Studies</option>
 							<option value="PowerSchool">PowerSchool</option>
@@ -449,7 +450,7 @@
       				<div class="col-lg-6 col-12">
 	             <div class="alert alert-danger" id="warningMessage3" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 	             <div  id="posregionSelect" >
-    				<b>C. Position Region</b>
+    				<b>C. Position Region/Area</b>
 	                     <select id="posRegion" name="posRegion" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option>
@@ -465,6 +466,7 @@
 							 <option value="Labrador/Burin/CUPE 1560">Labrador/Burin/CUPE 1560</option>
 							 <option value="Labrador/Central">Labrador/Central</option>
 							 <option value="Provincial">Provincial</option>
+							 <option value="Provincial lead">Provincial Lead</option>
 							 <option value="Vista">Vista</option>
 							 <option value="Vista/Avalon West">Vista/Avalon West</option>
 							 <option value="Burin/Vista/Avalon West">Burin/Vista/Avalon West</option>
@@ -488,8 +490,10 @@
 							 <option value="K-6">K-6</option>
 							 <option value="7-12">7-12</option>
 							 <option value="K-12">K-12</option>
+							  <option value="Primary">Primary</option>
+							  <option value="Elementary">Elementary</option>
 							 <option value="Intermediate">Intermediate</option>
-							 
+							 <option value="Senior High">Senior High</option>
 	                     </select>
 	            </div>
 	            </div>
@@ -498,7 +502,7 @@
       				<div class="col-lg-6 col-12">
 	            <div class="alert alert-danger" id="warningMessage5" style="display:none;margin-top:10px;margin-bottom:10px;padding:5px;"></div>
 	            <div  id="posLocationSelect">
-    			<b>E. Position Location</b> - No need to select if at a main District office Location designated in Section 2 bbove.
+    			<b>E. Position/Area/FOS Location</b> - No need to select if at a main office Location designated in Section 2 above. FOS set here.
 	                     <select id="posLocation" name="posLocation" class="form-control">
 	                         <option value="">---- Please Select (Optional) ----</option>
 	                    	 <option value="">Not Applicable</option> 
@@ -509,6 +513,20 @@
 	                     	 <option value="DCC">District Conference Centre</option>
 							 <option value="District School">District School</option>
 							 <option value="East Point Elementary">East Point Elementary</option>
+							 <option value="FOS">FOS</option>
+							 <option value="FOS 01">FOS 01</option>
+							 <option value="FOS 02">FOS 02</option>
+							 <option value="FOS 03">FOS 03</option>
+							 <option value="FOS 04">FOS 04</option>
+							 <option value="FOS 05">FOS 05</option>
+							 <option value="FOS 06">FOS 06</option>
+							 <option value="FOS 07">FOS 07</option>
+							 <option value="FOS 08">FOS 08</option>
+							 <option value="FOS 09">FOS 09</option>
+							 <option value="FOS 10">FOS 10</option>
+							 <option value="FOS 11">FOS 11</option>
+							 <option value="FOS 12">FOS 12</option>
+							 <option value="FOS 13">FOS 13</option>							 
 							 <option value="Gonzaga High School">Gonzaga High School</option>
 							 <option value="Holy Heart">Holy Heart</option>
 							 <option value="Horizon Academy">Horizon Academy</option>
@@ -548,7 +566,7 @@
 	                    	 <option value="CUPE 1560 (12 Month) Staff">CUPE 1560 (12 Month) Staff</option>
 	                    	 <option value="CUPE 1560 (10 and 12 Month) Staff">CUPE 1560 (10 and 12 Month) Staff</option>
 	                     	 <option value="Interim">Interim</option>
-	                     	 <option value="On Leave">On Leave</option>
+	                     	 <option value="On Leave">On Leave</option>	                     	 
 							 <option value="Provisional">Provisional</option>
                <option value="Provisional Registration">Provisional Registration</option> 
 							 <option value="Temporary">Temporary</option>
