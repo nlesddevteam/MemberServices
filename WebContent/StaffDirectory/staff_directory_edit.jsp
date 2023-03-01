@@ -234,7 +234,7 @@
 						<option value="Director of Student Transportation">Director of Student Transportation</option>
 						<option value="Director of Student Transportation and School Financial Support">Director of Student Transportation and School Financial Support</option>
 						<option value="E-Learning Facilitator">E-Learning Facilitator</option>
-						<option value="EAL Teacher">EAL Teacher</option> 
+						<option value="EAL Teacher">EAL Teacher</option>
 						<option value="Educational Psychologist">Educational Psychologist</option>
 						<option value="Electrician">Electrician</option>
 						<option value="Equipment Operator">Equipment Operator</option>
