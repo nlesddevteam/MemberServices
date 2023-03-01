@@ -73,7 +73,7 @@
 	<body>	
 					<% if(rbean.isPpBlockSchools()) { %> 					
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
-					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED while HR processes Reassignment and Redundancy positions.
+					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED, it will reopen Thursday after 4 PM.
 					</div>  
 					<%} %>				
 
