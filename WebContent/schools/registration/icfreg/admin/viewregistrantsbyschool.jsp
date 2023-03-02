@@ -29,7 +29,7 @@ $('document').ready(function(){
 	        	
                 extend: 'print',
                 title: '<div align="center"><img src="/MemberServices/schools/registration/icfreg/admin/includes/img/nlesd-colorlogo.png" style="max-width:600px;"/></div>',
-                messageTop: '<div align="center" style="font-weight:bold;font-size:16pt;"><br/>${regbean.icfRegPerSchoolYear} ${sname} Intensive Core French (ICF) Registrants</div>',
+                messageTop: "<div align=\"center\" style=\"font-weight:bold;font-size:16pt;\"><br/>${regbean.icfRegPerSchoolYear} ${sname} Intensive Core French (ICF) Registrants</div>",
                 messageBottom: '<div class="alert alert-danger"><b>Confidentiality Warning:</b> This document and any attachments are intended for the sole use of the intended recipient(s), and contain privileged and/or confidential information. If you are not an intended recipient, any review, retransmission, printing, copying, circulation or other use 	of this message and any attachments is strictly prohibited.</div>',
                 	 exportOptions: {
                 		 columns: [ 0,1,2,3],
