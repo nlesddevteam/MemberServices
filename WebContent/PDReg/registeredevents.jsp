@@ -143,11 +143,29 @@ input {border:1px solid silver;}
 
      You are registered for the following <span class="evntPCount"></span> events. You may de-register from any listed event by selecting DE-REGISTER option. You can also ADD this event to your Google Calendar.
      <div style="font-size:10px;color:Black;text-align:center;padding-top:10px;padding-bottom:10px;">   
-	  <span class="region1a">&nbsp; AVALON REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region2a">&nbsp; CENTRAL REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region3a">&nbsp; WESTERN REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region4a">&nbsp; LABRADOR REGION &nbsp;</span> &nbsp;&nbsp;
-	  <span class="region5a">&nbsp; PROVINCIAL &nbsp;</span>
+	<div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb1">&nbsp; FOS 01 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb2">&nbsp; FOS 02 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb3">&nbsp; FOS 03 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb4">&nbsp; FOS 04 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb5">&nbsp; FOS 05 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb6">&nbsp; FOS 06 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb7">&nbsp; FOS 07 &nbsp;</div><br/>
+  
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb8">&nbsp; FOS 08 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb9">&nbsp; FOS 09 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb10">&nbsp; FOS 10 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb11">&nbsp; FOS 11 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb12">&nbsp; FOS 12 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numFOSb13">&nbsp; FOS 13 &nbsp;</div>
+  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="numUnkb">&nbsp; OTHER &nbsp;</div><br/>
+	 
+	 
+	 
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region1">&nbsp; AVALON REGION &nbsp;</div>
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region2">&nbsp; CENTRAL REGION &nbsp;</div>
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region3">&nbsp; WESTERN REGION &nbsp;</div> 
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region4">&nbsp; LABRADOR REGION &nbsp;</div>
+	  <div style="display:inline-block;white-space: nowrap;padding:1px;margin:3px;" class="region5">&nbsp; PROVINCIAL &nbsp;</div>
   </div>
       
         <table class="table table-condensed" style="font-size:11px;">
