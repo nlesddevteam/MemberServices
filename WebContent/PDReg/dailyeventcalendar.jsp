@@ -467,7 +467,7 @@ canvas{
 				 } else {
 					 bgcolor ="#FFFFFF";
 					 txtcolor ="#000000;";
-					 regionName ="";
+					 regionName ="FOS N/A";
 					 unk++;
 				 }
               

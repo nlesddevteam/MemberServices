@@ -305,7 +305,7 @@ If this event is for a particular Family of Schools, select the Family from the 
 <div class="formBody">	  
     									<input type="text" name="EventLocation" class="form-control" title="Please Enter the location here" value="<%=school.getSchoolName()%>" readonly>
 						              	<input type='hidden' name='EventSchoolID' value='<%=school.getSchoolID()%>' />
-						              	<input type='hidden' name='EventZoneID' value='<%=school.getZone().getZoneId()%>' />
+						              	<input type='hidden' name='EventZoneID' value='<%=school.getSchoolFamily().getSchoolFamilyID() %>' />
  </div>   							
     							<%}%>
     							
