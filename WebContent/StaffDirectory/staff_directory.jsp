@@ -95,7 +95,8 @@
 
 <div style="display:none;" class="loadPage"> 
 					
-Below is a complete list of district office staff as entered. This data will display on the public website under the District Staff Directory. The system is divided into 4 office locations: St. John's, Gander, Corner Brook, and Happy Valley - Goose Bay (HV-GB). <p>
+Below is a complete list of district office staff as entered. This data will display on the public website under the District Staff Directory. 
+The system is divided into 4 office locations: AVALON - St. John's, CENTRAL - Gander, WESTERN - Corner Brook, and LABRADOR - Happy Valley - Goose Bay (HV-GB). <p>
 
 If no location is set, it will display UNKNOWN or OTHER/SCHOOL in the Location field. You can also select OTHER/SCHOOL if the person is located outside the main office, but you should enter the proper location in the Position/Title section(3) when adding/editing. Please update these entries by editing the persons main office location. If the user is at a school, set the location as the closest office responsible for that school. 
 You will also notice any vacancies as red. Please update these when possible, or remove if the position will no longer be filled. All results are color-coded by division and office, and sorted by Division, Location, and Sort Number.<p>
@@ -103,7 +104,8 @@ You will also notice any vacancies as red. Please update these when possible, or
  Please make sure you keep your office staff directory updated at all times and remove anyone that has left unless the position will be filled soon, you can then set the position as vacant on the edit page.
 <p>
 
-<div class="alert alert-warning">NOTE: After making a change, it may take up to 5 minutes before the change displays on below list, and up to 20 minutes before it displays on live website. Please give it time before attempting to change again.
+<div class="alert alert-warning">NOTE: After making a change, it may take up to 5 minutes before the change displays on below list, and up to 20 minutes before it displays on live website. 
+Please give it time before attempting to change again. Also, any <span style="background-color: Red;color:white;"> &nbsp;VACANT&nbsp; </span>&nbsp; positions will NOT display on public web site, but will below if entered/updated as such. 
 </div>
 
 <div align="center"><b>NOTICE:</b> If you see a <span style="color:White;background-color:Red;"> &nbsp; *** NEED UPDATE *** &nbsp; </span> &nbsp; or an <span style="color:White;background-color:Silver;"> &nbsp; UNKNOWN  &nbsp;</span> under Division Category, then they require updating to the new 2023 Divisions.</div><br/>

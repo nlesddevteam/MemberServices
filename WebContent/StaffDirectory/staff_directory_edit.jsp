@@ -95,9 +95,9 @@
 </div>
 </div>   				
     				
-<div class="row container-fluid" style="padding-top:5px;">
-      		<div class="col-lg-3 col-12">	         
-	         	<input type="checkbox" value="" id="posVacant"> Position Currently Vacant?
+<div class="row container-fluid" style="margin-top:10px;">
+      		<div class="col-lg-12 col-12">	         
+	         	<input type="checkbox" value="" id="posVacant"> <b>Is this Position Currently Vacant?</b> <i>(This will set the position as Vacant and hide it on the Public Web Site.)</i>
 	</div>
 </div> 
 	</div>
@@ -163,7 +163,7 @@
 	                  <br/>
 	                  The above will show current position title (if any). As you select the fields below, the position builder will display the selections above.
 	                  When editing you may see an error saying current position is not valid.
-	                  If this is the case, please rebuild the position using the builder.
+	                  If this is the case, please rebuild the position using the builder. If the name is more than 80 characters it will truncate with ... on the main web site.
 	                  Only use the fields below to add/edit a position title. <b>Leave alone if no changes</b>. Current title for ${ contact.fullName } is <b>${ contact.position }</b>.
 
 <br/><br/>
