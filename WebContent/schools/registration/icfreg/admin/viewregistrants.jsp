@@ -32,7 +32,7 @@ $('document').ready(function(){
                 messageBottom: '<div class="alert alert-danger"><b>Confidentiality Warning:</b> This document and any attachments are intended for the sole use of the intended recipient(s), and contain privileged and/or confidential information. If you are not an intended recipient, any review, retransmission, printing, copying, circulation or other use 	of this message and any attachments is strictly prohibited.</div>',
                 	 exportOptions: {
                 		                 		 
-                         columns: [ 0,1,2,3,4],
+                         columns: [ 0,1,2,3,4,5,6],
                        
                      }
             },
@@ -41,21 +41,21 @@ $('document').ready(function(){
        		 exportOptions: {
            		        		 
 
-                    columns: [0,1,2,3,4],
+                    columns: [0,1,2,3,4,5,6],
                  },
        },
        { 
      		 extend: 'csv',	
      		 exportOptions: {        		    		 
 
-                    columns: [ 0,1,2,3,4],
+                    columns: [ 0,1,2,3,4.5,6],
                },
      },
          
 	        ],				
 			 "columnDefs": [
 				 {
-		                "targets": [5],			               
+		                "targets": [7],			               
 		                "searchable": false,
 		                "orderable": false
 		            },
@@ -145,10 +145,12 @@ $('document').ready(function(){
 					<tr>
 					<th width="10%">DATE</th>
 					<th width="10%">TIME</th>
-					<th width="20%">APPLICANT NAME</th>
-					<th width="20%">SCHOOL</th>
-					<th width="20%">STATUS</th>
-					<th width="20%">OPTIONS</th>
+					<th width="15%">APPLICANT</th>
+					<th width="15%">SCHOOL</th>
+					<th width="10%">TEL</th>
+					<th width="15%">EMAIL</th>
+					<th width="10%">STATUS</th>
+					<th width="15%">OPTIONS</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -158,10 +160,12 @@ $('document').ready(function(){
 							<tr class='period-data-row'>								
 								<td width="10%"><fmt:formatDate value="${r.icfAppDateSubmitted}" pattern="MM/dd/yyyy" /></td>
 								<td width="10%"><fmt:formatDate value="${r.icfAppDateSubmitted}" pattern="HH:mm:ss a" /></td>
-								<td width="20%">${r.icfAppFullName}</td>
-								<td width="20%">${r.icfAppSchoolName}</td>
-								<td width="20%">${r.getApplicantStatusString()}</td>
-								<td width="20%" align="center">
+								<td width="15%">${r.icfAppFullName}</td>
+								<td width="15%">${r.icfAppSchoolName}</td>
+								<td width="10%">${r.icfAppContact1}</td>
+								<td width="15%">${r.icfAppEmail}</td>
+								<td width="10%">${r.getApplicantStatusString()}</td>
+								<td width="15%" align="center">
 									<a onclick="loadingData();" class='btn btn-xs btn-primary' href="<c:url value='/schools/registration/icfreg/admin/viewRegistrant.html?irp=${r.icfAppId}&vtype=V' />">VIEW</a> 
 									<a onclick="loadingData();" class='btn btn-xs btn-warning' href="<c:url value='/schools/registration/icfreg/admin/viewRegistrant.html?irp=${r.icfAppId}&vtype=A' />">EDIT</a> 
 									<esd:SecurityAccessRequired permissions="ICF-REGISTRATION-ADMIN-DELETE">	
@@ -179,7 +183,8 @@ $('document').ready(function(){
 							<td>N/A</td>
 							<td>N/A</td>
 							<td>N/A</td>
-							
+							<td>N/A</td>
+							<td>N/A</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>

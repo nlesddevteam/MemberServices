@@ -32,26 +32,26 @@ $('document').ready(function(){
                 messageTop: "<div align=\"center\" style=\"font-weight:bold;font-size:16pt;\"><br/>${regbean.icfRegPerSchoolYear} ${sname} Intensive Core French (ICF) Registrants</div>",
                 messageBottom: '<div class="alert alert-danger"><b>Confidentiality Warning:</b> This document and any attachments are intended for the sole use of the intended recipient(s), and contain privileged and/or confidential information. If you are not an intended recipient, any review, retransmission, printing, copying, circulation or other use 	of this message and any attachments is strictly prohibited.</div>',
                 	 exportOptions: {
-                		 columns: [ 0,1,2,3],
+                		 columns: [ 0,1,2,3,4,5],
                      }
             },
             { 
        		 extend: 'excel',	
        		 exportOptions: {         		           		 
-					columns: [0,1,2,3],
+					columns: [0,1,2,3,4,5],
                  },
        },
        { 
      		 extend: 'csv',	
      		 exportOptions: {        		             		 
-					 columns: [ 0,1,2,3],
+					 columns: [ 0,1,2,3,4,5],
                },
      },
          
 	        ],				
 			 "columnDefs": [
 				 {
-		                "targets": [4],			               
+		                "targets": [6],			               
 		                "searchable": false,
 		                "orderable": false
 		            },
@@ -120,11 +120,13 @@ $('document').ready(function(){
 			<table class="registrationTable table table-sm table-bordered responsive" width="100%" style="font-size:11px;background-color:White;" id="registrationTable">
 			<thead class="thead-dark">
 					<tr>
-					<th width="12%">DATE</th>
-					<th width="13%">TIME</th>
-					<th width="25%">APPLICANT NAME</th>
-					<th width="25%">STATUS</th>
-					<th width="25%">OPTIONS</th>
+					<th width="10%">DATE</th>
+					<th width="10%">TIME</th>
+					<th width="25%">APPLICANT</th>
+					<th width="10%">TEL</th>
+					<th width="20%">EMAIL</th>
+					<th width="10%">STATUS</th>
+					<th width="15%">OPTIONS</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -132,11 +134,13 @@ $('document').ready(function(){
 					<c:when test="${fn:length(reglist) gt 0 }">
 						<c:forEach items="${reglist}" var="r">
 							<tr class='period-data-row'>								
-								<td width="12%"><fmt:formatDate value="${r.icfAppDateSubmitted}" pattern="MM/dd/yyyy" /></td>
-								<td width="13%"><fmt:formatDate value="${r.icfAppDateSubmitted}" pattern="HH:mm:ss a" /></td>
+								<td width="10%"><fmt:formatDate value="${r.icfAppDateSubmitted}" pattern="MM/dd/yyyy" /></td>
+								<td width="10%"><fmt:formatDate value="${r.icfAppDateSubmitted}" pattern="HH:mm:ss a" /></td>
 								<td width="25%">${r.icfAppFullName}</td>
-								<td width="25%">${r.getApplicantStatusString()}</td>
-								<td width="25%" align="center">
+								<td width="10%">${r.icfAppContact1}</td>
+								<td width="20%">${r.icfAppEmail}</td>
+								<td width="10%">${r.getApplicantStatusString()}</td>
+								<td width="15%" align="center">
 									<a onclick="loadingData();" class='btn btn-xs btn-primary' href="<c:url value='/schools/registration/icfreg/admin/viewRegistrant.html?irp=${r.icfAppId}&vtype=V' />">VIEW</a> 
 									<a onclick="loadingData();" class='btn btn-xs btn-warning' href="<c:url value='/schools/registration/icfreg/admin/viewRegistrant.html?irp=${r.icfAppId}&vtype=A' />">EDIT</a> 
 									<esd:SecurityAccessRequired permissions="ICF-REGISTRATION-ADMIN-DELETE">
@@ -153,7 +157,8 @@ $('document').ready(function(){
 							<td>N/A</td>
 							<td>N/A</td>
 							<td>N/A</td>
-							
+							<td>N/A</td>
+							<td>N/A</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
