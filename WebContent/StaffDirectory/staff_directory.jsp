@@ -143,9 +143,21 @@ You will also notice any vacancies as red. Please update these when possible, or
   					
   					<c:choose>
 					<c:when test="${ not empty contact.email and contact.fullName ne 'VACANT' and contact.fullName ne '*** VACANT ***' }">
-						<td width="15%"><a href="mailto:${contact.email}">${ contact.fullName }</a></td>
+						<td width="15%">
+						<c:choose>
+						<c:when test="${not empty contact.email and (fn:length(contact.email) gt 9) and fn:containsIgnoreCase(contact.email, '@nlesd.ca')}">
+						<a href="mailto:${ contact.email }" title="${ contact.email }">${ contact.fullName }</a>
+						</c:when>
+						<c:when test="${(fn:length(contact.email) lt 10) or (contact.email eq '@nlesd.ca') or  !fn:containsIgnoreCase(contact.email, '@nlesd.ca') }">
+						${ contact.fullName }
+						</c:when>
+						<c:otherwise>
+						${ contact.fullName }
+						</c:otherwise>													
+						</c:choose>
+						</td>
 					</c:when>
-					<c:when test="${ contact.fullName eq 'VACANT' or contact.fullName eq '*** VACANT ***' }">
+					<c:when test="${ fn:containsIgnoreCase(contact.fullName,'VACANT') or contact.fullName eq '*** VACANT ***' }">
 						<td width="15%" style="color:white;background-color:Red;">*** VACANT ***</td>
 					</c:when>
 					<c:otherwise>
@@ -154,11 +166,7 @@ You will also notice any vacancies as red. Please update these when possible, or
 					</c:choose> 
 									   										
 	     			<td width="35%">${ contact.position }</td>
-	     			<td width="10%">${ contact.telephone }</td> 
-	     			
-	     			
-	     			
-	     			
+	     			<td width="10%">${ not empty contact.telephone ? contact.telephone : "<span style='font-weight:normal;color:silver;'>N/A</span>" }</td> 
 	     			<c:choose>
 	     			<c:when test="${contact.division.id eq '1' or contact.division.id eq '4' or contact.division.id eq '5' }">
 	     			<td width="15%" class="divisionERROR divisions">*** NEED UPDATE ***</td>
