@@ -105,7 +105,7 @@ $('document').ready(function(){
   			${regbean.icfRegPerSchoolYear} Registration Period<br/>${regbean.getStartDateFormatted()} - ${regbean.getStartDateFormatted()}<br/>Total: <span style="color:red;font-weight:normal;" id="spancount">${fn:length(reglist)}</span>
 		</div>			
   		</div>
-  		<div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;"><img src="../../includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading Registrant Data, please wait...</div>		
+  		<div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;"><img src="/MemberServices/schools/registration/icfreg/admin/includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading Registrant Data, please wait...</div>		
 		
 		
 		<div style="display:none;" class="loadPage">  
