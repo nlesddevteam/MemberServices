@@ -559,6 +559,8 @@ function deleteRegistrant(aid,formtype) {
 														$(this).find("APPDATESUBMITTED").text(),
 														$(this).find("APPDATESUBMITTEDT").text(),
 														$(this).find("APPFULLNAME").text(),
+														$(this).find("APPCONTACT1").text(),
+														$(this).find("APPEMAIL").text(),
 														$(this).find("APPSTATUSTEXT").text(),
 														newlinks
 														] ).draw();
@@ -568,6 +570,8 @@ function deleteRegistrant(aid,formtype) {
 														$(this).find("APPDATESUBMITTEDT").text(),
 														$(this).find("APPFULLNAME").text(),
 														$(this).find("APPSCHOOLNAME").text(),
+														$(this).find("APPCONTACT1").text(),
+														$(this).find("APPEMAIL").text(),
 														$(this).find("APPSTATUSTEXT").text(),
 														newlinks
 														] ).draw();
