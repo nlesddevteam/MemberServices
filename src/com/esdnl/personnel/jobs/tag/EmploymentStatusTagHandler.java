@@ -57,10 +57,15 @@ public class EmploymentStatusTagHandler extends TagSupport {
       out.println(">");
       
       out.println("<OPTION VALUE='-1'>--- EMPLOYMENT STATUS ---</OPTION>");
-      for(int i = 0; i < EmploymentConstant.ALL.length; i++)
-        out.println("<OPTION VALUE=\"" + EmploymentConstant.ALL[i].getValue() + "\"" + (((this.value != null) && this.value.equal(EmploymentConstant.ALL[i]))? " SELECTED":"") + ">" + EmploymentConstant.ALL[i] + "</OPTION>");
-      
-      out.println("</SELECT>");
+      for(int i = 0; i < EmploymentConstant.ALL.length; i++) {
+    	  if(EmploymentConstant.ALL[i].getValue() == 7) {
+    		  continue;
+    	  }
+    	  out.println("<OPTION VALUE=\"" + EmploymentConstant.ALL[i].getValue() + "\"" + (((this.value != null) && this.value.equal(EmploymentConstant.ALL[i]))? " SELECTED":"") + ">" + EmploymentConstant.ALL[i] + "</OPTION>");
+          
+           
+      }
+        out.println("</SELECT>");
       
     }
     catch(IOException e)
