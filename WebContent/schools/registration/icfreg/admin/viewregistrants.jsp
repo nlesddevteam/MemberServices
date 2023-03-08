@@ -169,7 +169,7 @@ $('document').ready(function(){
 									<a onclick="loadingData();" class='btn btn-xs btn-primary' href="<c:url value='/schools/registration/icfreg/admin/viewRegistrant.html?irp=${r.icfAppId}&vtype=V' />">VIEW</a> 
 									<a onclick="loadingData();" class='btn btn-xs btn-warning' href="<c:url value='/schools/registration/icfreg/admin/viewRegistrant.html?irp=${r.icfAppId}&vtype=A' />">EDIT</a> 
 									<esd:SecurityAccessRequired permissions="ICF-REGISTRATION-ADMIN-DELETE">	
-									<a class='btn btn-xs btn-danger opbutton-delete' onclick='openDeleteConfirm("${r.icfAppId}","${r.icfAppFullName}","A");'>DEL</a>
+									<a class='btn btn-xs btn-danger opbutton-delete' onclick='openDeleteConfirm("${r.icfAppId}", "${fn:replace(r.icfAppFullName,'\'',' ')}","A")'>DEL</a>
 									</esd:SecurityAccessRequired>
 								</td>
 							</tr>
