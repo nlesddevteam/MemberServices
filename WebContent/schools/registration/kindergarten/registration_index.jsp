@@ -10,7 +10,7 @@
 <%@ taglib prefix="esd" uri="/WEB-INF/memberservices.tld" %>
 
 <%
-	System.out.println(">>> KINDERGARTEN REGISTRATION VIEWED BY " + request.getRemoteAddr() + " <<<");
+	//System.out.println(">>> KINDERGARTEN REGISTRATION VIEWED BY " + request.getRemoteAddr() + " <<<");
 %>
 
 <html>
