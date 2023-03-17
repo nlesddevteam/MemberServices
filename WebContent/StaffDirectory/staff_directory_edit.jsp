@@ -311,6 +311,7 @@
 						<option value="Requisition Clerk">Requisition Clerk</option>
 						<option value="Safety and Compliance Officer">Safety and Compliance Officer</option>
 						<option value="School Health Promotion Liaison Consultant">School Health Promotion Liaison Consultant</option>
+						<option value="School Financial Support Clerk">School Financial Support Clerk</option>
 						<option value="School Principal">School Principal</option>
 						<option value="Secretary">Secretary</option>
 						<option value="Secretary/Receptionist">Secretary/Receptionist</option>
