@@ -1,0 +1,15 @@
+<div style='padding-bottom:8px; text-align:left;'>
+<p>
+The shortlist for position $competitionNumber: $competitionTitle $location has been marked complete and is ready for a recommendation.
+</p>
+<br>
+To review this recommendation click the link below.
+<br><br>
+<a href='https://www.nlesd.ca/MemberServices/Personnel/viewJobShortList.html?comp_num=$competitionNumber'><b>CLICK HERE</b></a>
+<br><br>
+<p>
+PLEASE DO NOT REPLY TO THIS MESSAGE.
+<br><br>
+Member Services
+</p>
+</div>

@@ -289,14 +289,18 @@ function parseAddApplicantResponse(data){
 	    	<a class="btn btn-xs btn-warning" href="#" data-toggle="modal" data-target="#cancelPost">Cancel Post</a>
 	    <%}%>
 		</esd:SecurityAccessRequired>            
-	</esd:SecurityAccessRequired>
-	
+		</esd:SecurityAccessRequired>
+		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-UNCANCEL">
+		<%if ((opp != null) && opp.isCancelled()) {%>
+	    	<a class="btn btn-xs btn-warning" href="uncancelJobOpp.html?comp_num=<%=opp.getCompetitionNumber()%>">Uncancel Post</a>
+	    <%}%>
+		</esd:SecurityAccessRequired>	
 	<esd:SecurityAccessRequired roles="ADMINISTRATOR,SEO - PERSONNEL">
 		<% if((opp != null) && !opp.isAwarded() && !opp.isCancelled() && opp.isClosed() && !recInProgress) { %>
 			<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to RE-POST this competition?');" href='repostCompetition.html?comp_num=<%=opp.getCompetitionNumber()%>'>Re-Post Competition</a>
 		<% } %>
 	</esd:SecurityAccessRequired>
-	          
+          
 	<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>     
 </div>                               
                  <br/><br/> 

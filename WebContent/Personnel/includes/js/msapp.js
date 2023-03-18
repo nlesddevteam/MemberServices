@@ -1829,7 +1829,312 @@ function addspecialstatus(appid,email){
  			}
  		);
 }
+//stop applicant offer button
+function stopApplicantOffer(recid){
+	$('#stop_offer_dialog').modal('show');
+	$('#hidrecid').val(recid);
+}
+//call stop offer
+function stopOfferAjax()
+{
+	var recidv = $("#hidrecid").val();
+	var options = $("input[name='radrecoption']:checked").val();
 
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "stopApplicantOffer.html",
+ 				data: {
+ 					recid: recidv, roptions:options
+ 				}, 
+ 				success: function(xml){
+ 					$(xml).find('OFFER').each(function(){
+ 							
+ 							
+ 							if($(this).find("STATUS").text() == "SUCCESS")
+ 								{
+									window.location="admin_view_job_recommendation_list.jsp?comp_num=" + $(this).find("COMP").text();
+ 								}else{
+ 									alert("Error stopping offer.");
+ 									
+ 								}
+					});
 
+ 					
+ 				},
+ 				  error: function(xhr, textStatus, error){
+ 				      alert("Status:" + xhr.statusText + "  " + "Text:" +textStatus + "  " + "Error:" + error );
 
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}
+//open update rec dialog
+function openUpdateRecDialog(utype){
+	var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		//set value of the update type
+		$("#hiduptype").val(utype);
+		if(utype =="CS"){
+			$("#updatetitle").html("Employment Status");
+			if($("#hidjtype").val() == "Y"){
+				$("#selcontractt").hide();
+				$("#selcontracts").show();
+				$("#selcontracts").val($("#cstatus").val());
+				
+			}else{
+				$("#selcontractt").show();
+				$("#selcontracts").hide();
+				$("#selcontractt").val($("#cstatus").val());
+			}
+			$("#dtnewdate").hide();
+			$("#specon").hide();
+			$("#errmsgup").hide();
+		}else if(utype =="SD"){
+			$("#updatetitle").html("Start Date");
+			$("#selcontractt").hide();
+			$("#selcontracts").hide();
+			$("#dtnewdate").show();
+			$("#specon").hide();
+			$("#errmsgup").hide();
+			var dt = $("input[name='sdatevalue']").val().split('/');
+			var setdate = dt[2] +"-"+ dt[1] +"-"+ dt[0];
+			$("#dtnewdate").val(setdate);
+			
+		}else if(utype =="ED"){
+			$("#updatetitle").html("End Date");
+			$("#selcontractt").hide();
+			$("#selcontracts").hide();
+			$("#dtnewdate").show();
+			$("#specon").hide();
+			$("#errmsgup").hide();
+			//check to see if there was a value or not
+			if($("input[name='edatevalue']").val() != ""){
+				//set the value
+				var dt = $("input[name='edatevalue']").val().split('/');
+				var setdate = dt[2] +"-"+ dt[1] +"-"+ dt[0];
+				$("#dtnewdate").val(setdate);
+			}
+			
+		}else if(utype =="SC"){
+			$("#updatetitle").html("Special Conditions");
+			$("#selcontractt").hide();
+			$("#selcontracts").hide();
+			$("#dtnewdate").hide();
+			$("#specon").show();
+			$("#errmsgup").hide();
+			$("#selspecon").val($("#hidsc").val());
+			if($("#hidscc").val() == "null"){
+				$("#sccom").val("");
+			}else{
+				$("#sccom").val($("#hidscc").val());
+			}
+		}
+		$('#update_rec_dialog').modal(options);
+		$('#update_rec_dialog').modal('show');
+}
+function updateRecommendation(){
+	$("#errmsgup").hide();
+	//first get what is being updated
+	var utype=$("#hiduptype").val();
+	//check fields
+	if(utype =="CS"){
+		if($("#hidjtype").val() == "Y"){
+			if($("#selcontracts").val() == "-1"){
+				$("#errmsgup").html("Please select status");
+				$("#errmsgup").show();
+				return;
+			}
+		}else{
+			if($("#selcontractt").val() == "-1"){
+				$("#errmsgup").html("Please select status");
+				$("#errmsgup").show();
+				return;
+			}
+		}
+	}else if(utype =="SD"){
+		if($("#dtnewdate").val() == ""){
+			$("#errmsgup").html("Please select date");
+			$("#errmsgup").show();
+			return;
+		}
+	}else if(utype =="SC"){
+		if($("#selspecon").val() == "Yes"){
+			if($("#sccom").val() == ""){
+				$("#errmsgup").html("Please enter conditions");
+				$("#errmsgup").show();
+				return;
+			}
+		}
+	}
+	//now we submit the request
+	//set the parameters
+	var cstatusval ="";
+	var cstatusfull="";
+	var dval ="";
+	var scval ="";
+	var sccval="";
+	if(utype =="CS"){
+		if($("#hidjtype").val() == "Y"){
+			cstatusval = $("#selcontracts").val();
+			cstatusfull = $( "#selcontracts option:selected" ).text();
+		}else{
+			cstatusval = $("#selcontractt").val();
+			cstatusfull = $( "#selcontractt option:selected" ).text();
+		}
+	}else if(utype =="SD" || utype =="ED" ){
+		dval = $("#dtnewdate").val();
+	}else if(utype =="SC"){
+		scval = $("#selspecon").val();
+		sccval = $("#sccom").val();
+	}
 
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "updateRecommendation.html",
+ 				data: {
+ 					ut: utype,rid: $("#id").val(), cstatus: cstatusval, dvalue: dval,sc: scval,scc: sccval
+ 				}, 
+ 				success: function(xml){
+ 					$(xml).find('UPDATEREC').each(function(){
+ 							if($(this).find("RSTATUS").text() == "SUCCESS")
+ 								{
+ 									$('#update_rec_dialog').modal('hide');
+ 									if(utype =="CS"){
+ 										//update label
+ 										$("#spancs").html(cstatusfull);
+ 										//update hidden value
+ 										$("#cstatus").val(cstatusval);
+ 									}else if(utype =="SD"){
+ 										//update label
+ 										var dateparts = dval.split("-");
+ 										var fdate = dateparts[2] + "/" + dateparts[1] +"/" + dateparts[0];
+ 										$("#spansdate").html(fdate);
+ 										//update hidden value
+ 										$("#sdatevalue").val(fdate);
+ 									}else if(utype =="ED"){
+ 										//update label
+ 										if(dval == ""){
+ 											$("#spanedate").html("Not Specified");
+ 	 										//update hidden value
+ 	 										$("#edatevalue").val("");
+ 										}else{
+ 											var dateparts = dval.split("-");
+ 	 										var fdate = dateparts[2] + "/" + dateparts[1] +"/" + dateparts[0];
+ 	 										$("#spanedate").html(fdate);
+ 	 										//update hidden value
+ 	 										$("#edatevalue").val(fdate);
+ 										}
+ 										
+ 									}else if(utype =="SC"){
+ 										$("#spansc").html(scval);
+ 										$("#spanscc").html(sccval);
+ 										if(scval == "No"){
+ 											$("#spanscc1").html("");
+ 										}
+ 										$("#hidsc").val(scval);
+ 										$("#hidscc").val(sccval);
+ 										
+ 									}
+ 								}else{
+ 									
+ 								}
+					});
+
+ 					
+ 				},
+ 				  error: function(xhr, textStatus, error){
+ 				      alert("Status:" + xhr.statusText + "  " + "Text:" +textStatus + "  " + "Error:" + error );
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+	
+}
+//different fields on view applicant screen to hide/show
+function sumbitAddEdu(){
+	$("#erredu").html("");
+	$("#erredu").hide();
+	if($("#selmajor").val() == "-1"){
+		$("#erredu").html("Please select major");
+		$("#erredu").show();
+		return;
+	}
+	if($("#selminor").val() == "-1"){
+		$("#erredu").html("Please select minor");
+		$("#erredu").show();
+		return;
+	}
+	
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "adminAddEducation.html",
+ 				data: {
+ 					applicantid: $("#id").val(),insname:"NLESD",pfname:"Deemed Equivalent by HR",majorid:$("#selmajor").val(),minorid:$("#selminor").val(),degreeid:$("#seldegree").val()
+ 				}, 
+ 				success: function(xml){
+ 					
+ 					if($(xml).find('MESSAGE').text() ==  "SUCCESS"){
+ 						$("#tabedu").find("tr:gt(0)").remove();
+ 						$(xml).find('EDUENTRY').each(
+ 							function() {
+ 								var newrow ="<tr>";
+ 								newrow += "<td>" + $(this).find("EINS").text() + "</td>";
+ 								newrow += "<td>" + $(this).find("EDATES").text() + "</td>";
+ 								newrow += "<td>" + $(this).find("EPF").text() + "</td>";
+ 								newrow += "<td>" + $(this).find("EMAJORS").text() + "(" + $(this).find("EMAJORSCRS").text()  + ")</td>";
+ 								newrow += "<td>" + $(this).find("EMINORS").text() + "(" + $(this).find("EMINORSCRS").text()  + ")</td>";
+ 								newrow += "<td>" + $(this).find("EDEGREE").text() + "</td>";
+ 								if($(this).find("EPF").text() == "Deemed Equivalent by HR"){
+ 									newrow += "<td><button type=\"button\" class=\"btn btn-danger btn-xs\"  onclick=\"deleteedu('" + $(this).find("EID").text() + "',this);\">DEL</button></td>";
+ 								}else{
+ 									newrow += "<td></td>";
+ 								}
+ 								newrow += "</tr>";
+ 								$('#tabedu tr:last').after(newrow);
+ 							});
+ 						
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+	$('#modaladdedu').modal('hide');
+}
+function deleteedu(id,bedu){
+	//adminDeleteEducation.html
+	$.ajax(
+ 			{
+ 				type: "POST",  
+ 				url: "adminDeleteEducation.html",
+ 				data: {
+ 					eid: id
+ 				}, 
+ 				success: function(xml){
+ 					if($(xml).find('STATUS').text() ==  "SUCCESS"){
+ 						//$("#tabedu").find("tr:gt(0)").remove();
+ 						$(bedu).closest('tr').remove(); 
+ 					}
+ 				},
+ 				  error: function(xhr, textStatus, error){
+ 					$(".msgerr").html("ERROR: " + xhr.statusText +", "+textStatus + ", "+ error ).css("display","block").delay(4000).fadeOut(); 				      
+
+ 				  },
+ 				dataType: "text",
+ 				async: false
+ 			}
+ 		);
+}

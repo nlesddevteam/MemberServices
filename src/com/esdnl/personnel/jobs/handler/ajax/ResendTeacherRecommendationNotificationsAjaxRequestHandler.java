@@ -459,7 +459,7 @@ public class ResendTeacherRecommendationNotificationsAjaxRequestHandler extends 
 
 			HashMap<String, Object> model = new HashMap<String, Object>();
 			// set values to be used in template
-			model.put("jobDetails", job.toHTML());
+			model.put("jobDetails", job.toHTMLNoAd(rec));
 			model.put("expiryDate", rec.getOfferValidDateFormatted());
 			ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/position_offer_app.vm", model));
 			ebean.setFrom("ms@nlesd.ca");

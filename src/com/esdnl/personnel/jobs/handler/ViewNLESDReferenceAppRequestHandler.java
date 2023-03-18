@@ -72,6 +72,11 @@ public class ViewNLESDReferenceAppRequestHandler extends PersonnelApplicationReq
 					NLESDReferenceSSManageBean ref = NLESDReferenceSSManageManager.getNLESDReferenceSSManageBean(form.getInt("id"));
 					request.setAttribute("REFERENCE_BEAN", ref);
 					request.setAttribute("PROFILE", ref.getProfile());
+				}else if(referenceType.equals("TE") ){
+					path = "view_nlesd_support_reference_app.jsp";
+					NLESDReferenceSSSupportBean ref = NLESDReferenceSSSupportManager.getNLESDReferenceSSSupportBean(form.getInt("id"));
+					request.setAttribute("REFERENCE_BEAN", ref);
+					request.setAttribute("PROFILE", ref.getProfile());
 				}
 				
 

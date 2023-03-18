@@ -74,7 +74,7 @@ input {border:1px solid silver;}
     function sendexternalemail(rid,em){
     	$("#emaila").val(em);
     	$("#refreqid").val(rid);
-    	sendrequest("E");
+    	sendrequest("TE");
     }
     function sendrequest(rtype){
     	var isvalid=false;
@@ -115,10 +115,10 @@ input {border:1px solid silver;}
     	//send ajax
     	var reftype=null;
     	if(externalentered){
-    		reftype="E";
+    		reftype="TE";
     	}else{
-    		if(rtype == "E"){
-        		reftype="E";
+    		if(rtype == "TE"){
+        		reftype="TE";
         	}else{
         		reftype=$('select[name=selType]').val();
         		if(reftype == "-1"){
@@ -180,8 +180,19 @@ SECTION 8: Editing your Teacher/Educator HR Application Profile
 </div>
 
 <br/>Please add up to 3 references to your online profile.<br/>
-<div class="alert alert-warning" style="margin-top:5px;"><b>NOTE:</b> Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference. 
-Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.  If an intern requires a reference from a teacher, they can select the TLA/External option in the reference type dropdown.</div>
+<div class="alert alert-warning" style="margin-top:5px;"><b>NOTE:</b> 
+<br />
+<ul>
+<li>Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference.</li>
+<li>Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.</li>
+<li>If an intern requires a reference from a teacher, they can select the TLA/External option in the reference type dropdown.</li>
+<li>If the email address of the  referencer is not a <b>@nlesd.ca</b> email address then a External/TLA link will be sent.  You will only be prompted <br />
+to select a reference type for <b>@nlesd.ca</b> email addresses.
+  </li>
+</ul>
+
+ 
+  </div>
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-info">   
 	               	<div class="panel-heading"><b>8. REFERENCES</b></div>
@@ -248,7 +259,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
       					<option value="T">Teaching Reference</option>
       					<option value="A">Administrative Reference</option>
       					<option value="G">Guidance Reference</option>
-      					<option value="E">TLA/External Reference</option>
+      					<option value="TE">TLA/External Reference</option>
       				</select>
       <span style="font-size:10px;color:DimGrey;"><b>Note:</b> You do not have to select Reference Type if entering a non NLESD email address.</span>
       </div>

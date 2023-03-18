@@ -16,6 +16,8 @@ import com.awsd.servlet.RequestHandler;
 import com.esdnl.audit.IAuditable;
 import com.esdnl.util.FileUtils;
 import com.esdnl.util.StringUtils;
+import com.nlesd.msauditlog.bean.MsAuditLogBean;
+import com.nlesd.msauditlog.dao.MsAuditLogManager;
 
 import javazoom.upload.UploadFile;
 
@@ -166,5 +168,8 @@ public class RequestHandlerImpl implements RequestHandler, IAuditable {
 			f.delete();
 
 		return !f.exists();
+	}
+	public final void add_audit_log(MsAuditLogBean abean) {
+		MsAuditLogManager.addMsAuditLogBean(abean);
 	}
 }

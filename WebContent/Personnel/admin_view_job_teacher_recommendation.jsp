@@ -22,7 +22,8 @@
 <esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{"JOB"}%>'
 	scope='<%=PageContext.SESSION_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />
-<esd:SecurityRequiredPageObjectsCheck names='<%=new String[]{"RECOMMENDATION_BEAN"}%>'
+<esd:SecurityRequiredPageObjectsCheck
+	names='<%=new String[]{"RECOMMENDATION_BEAN"}%>'
 	scope='<%=PageContext.REQUEST_SCOPE%>'
 	redirectTo="/Personnel/admin_index.jsp" />
 
@@ -55,14 +56,14 @@
 	if (job.getIsSupport().equals("N")) {
 		ad = AdRequestManager.getAdRequestBean(job.getCompetitionNumber());
 
-		if(ad == null) {
-			request.setAttribute("msg", job.getCompetitionNumber() + " does not have an associated Ad Request. Please contact a system administrator");
+		if (ad == null) {
+			request.setAttribute("msg", job.getCompetitionNumber()
+					+ " does not have an associated Ad Request. Please contact a system administrator");
 			request.getRequestDispatcher("admin_index.jsp").forward(request, response);
-			
+
 			return;
 		}
-	} 
-	else {
+	} else {
 		rth = RequestToHireManager.getRequestToHireByCompNum(job.getCompetitionNumber());
 	}
 
@@ -148,7 +149,20 @@ input {
 				
 				$('.rec-op-btn').click(function(){
 					$('#recommendation-op').val($(this).attr('op'));
+					$('#admin_rec_form').submit();
 					
+					return false;
+				});
+				$('.rec-op-btnp').click(function(){
+					$('#recommendation-op').val($(this).attr('op'));
+					//show selection pop up
+					//$('#admin_rec_form').submit();
+					//$('#myModalsl').modal('show');
+					return false;
+				});
+				$('#btnmodalprocess').click(function(){
+					$('#recommendation-op').val('process');
+					//$('#myModalsl').modal('hide');
 					$('#admin_rec_form').submit();
 					
 					return false;
@@ -159,22 +173,27 @@ input {
 					
 					params.id = '<%=rec.getRecommendationId()%>';
 
-						$.post('/MemberServices/Personnel/ajax/resendRecommendationNotifications.html', params,
-								function(data) {
-									alert($(data).find('RESEND-TEACHER-RECOMMENDATION-NOTIFICATIONS-RESPONSE').attr('msg'));
-								}
-						);
-				});
-				
-				$('.modal.printable').on('shown.bs.modal', function() {
-					$('.modal-dialog', this).addClass('focused');
-					$('body').addClass('modalprinter');
+							$
+									.post(
+											'/MemberServices/Personnel/ajax/resendRecommendationNotifications.html',
+											params,
+											function(data) {
+												alert($(data)
+														.find(
+																'RESEND-TEACHER-RECOMMENDATION-NOTIFICATIONS-RESPONSE')
+														.attr('msg'));
+											});
+						});
 
-				}).on('hidden.bs.modal', function() {
-					$('.modal-dialog', this).removeClass('focused');
-					$('body').removeClass('modalprinter');
-				});
+		$('.modal.printable').on('shown.bs.modal', function() {
+			$('.modal-dialog', this).addClass('focused');
+			$('body').addClass('modalprinter');
+
+		}).on('hidden.bs.modal', function() {
+			$('.modal-dialog', this).removeClass('focused');
+			$('body').removeClass('modalprinter');
 		});
+	});
 
 	function COC_Check(chkbox) {
 		if (chkbox.checked == true)
@@ -182,14 +201,13 @@ input {
 		else
 			document.getElementById('accept_btn').style.display = 'none';
 	}
-	function updatelastrecform(obj){
-		if (obj.checked == true){
+	function updatelastrecform(obj) {
+		if (obj.checked == true) {
 			$('#lastrec').val('Y');
-		}else{
+		} else {
 			$('#lastrec').val('N');
 		}
 	}
-
 </script>
 </head>
 
@@ -211,9 +229,10 @@ input {
 	%>
 	<form method="POST" name="admin_rec_form" id="admin_rec_form"
 		action='jobRecommentationController.html'>
-		<input type='hidden' name='id' value='<%=rec.getRecommendationId()%>' />
-		<input type='hidden' name='op' id='recommendation-op' value='' />
+		<input type='hidden' name='id' id='id' value='<%=rec.getRecommendationId()%>' />
+		<input type='hidden' name='op' id='recommendation-op' value='' /> 
 		<input type='hidden' name='lastrec' id='lastrec' value='' />
+		<input type='hidden' name="hidjtype" id="hidjtype" value="<%=job.getIsSupport()%>" />
 
 
 
@@ -333,8 +352,7 @@ input {
 									%></td>
 							</tr>
 							<%
-								}
-								else {
+								} else {
 							%>
 							<tr>
 								<td class="tableTitle">POSITION:</td>
@@ -368,7 +386,7 @@ input {
 											<tr>
 												<td><%=rec.getGSU()[i].getGrade().getGradeName()%></td>
 												<td><%=((rec.getGSU()[i].getSubject() != null) ? rec.getGSU()[i].getSubject().getSubjectName()
-								: "<span style='color:Silver;'>N/A</span>")%></td>
+										: "<span style='color:Silver;'>N/A</span>")%></td>
 												<td><%=rec.getGSU()[i].getUnitPercentage()%> %</td>
 											</tr>
 											<%
@@ -376,8 +394,7 @@ input {
 											%>
 										</tbody>
 									</table> <%
- 	}
- 		else {
+ 	} else {
  %> <span style='color: Silver;'>None currently on file.</span> <%
  	}
  	}
@@ -406,8 +423,7 @@ input {
 								<td class="tableQuestion">1.) Does this teacher own a
 									Permanent Contract with the Board?</td>
 								<%
-									}
-									else {
+									} else {
 								%>
 								<td class="tableQuestion">1.) Does this employee own a
 									Permanent Contract with the Board?</td>
@@ -421,16 +437,13 @@ input {
 											if ((esd_exp.getPermanentContractSchool() != 0) && (esd_exp.getPermanentContractSchool() != -1)) {
 												sch_str = "YES<BR>" + esd_exp.getPermanentContractLocationText() + "<BR>"
 														+ esd_exp.getPermanentContractPosition();
-											}
-											else if ((esd_exp.getContractSchool() != 0) && (esd_exp.getContractSchool() != -1)) {
-												sch_str = "REPLACEMENT<BR>" + esd_exp.getReplacementContractLocationText() + "<BR>(Replacement End Date: "
-														+ esd_exp.getFormattedContractEndDate() + ")";
-											}
-											else {
+											} else if ((esd_exp.getContractSchool() != 0) && (esd_exp.getContractSchool() != -1)) {
+												sch_str = "REPLACEMENT<BR>" + esd_exp.getReplacementContractLocationText()
+														+ "<BR>(Replacement End Date: " + esd_exp.getFormattedContractEndDate() + ")";
+											} else {
 												sch_str = "NO";
 											}
-										}
-										else
+										} else
 											sch_str = "NO";
 
 										out.println(sch_str);
@@ -445,8 +458,7 @@ input {
 										if (job.getIsSupport().equals("N")) {
 									%> <%=(!ad.isVacantPosition() ? "YES" : "NO")%> - <%=ad.getJobType()%>
 									<%
-										}
-										else {
+										} else {
 									%> <%=org.apache.commons.lang.StringUtils.isNotEmpty(rth.getPreviousIncumbent()) ? "Yes" : "No"%>
 									<%
 										}
@@ -457,18 +469,16 @@ input {
  				|| org.apache.commons.lang.StringUtils.isNotEmpty(ad.getVacancyReason())) {
  %> <%
  	if (ad.getOwner() != null) {
- %> <br />Previous Teacher: <%=ad.getOwner().getFullnameReverse()%>
-									<%
-										}
-									%> <%
+ %> <br />Previous Teacher: <%=ad.getOwner().getFullnameReverse()%> <%
+ 	}
+ %> <%
  	if (org.apache.commons.lang.StringUtils.isNotEmpty(ad.getVacancyReason())) {
  %> <br />Reason For Vacancy: <%=ad.getVacancyReason()%> <%
  	}
  %> <%
  	}
  %> <%
- 	}
- 	else {
+ 	} else {
  %> <%
  	if (org.apache.commons.lang.StringUtils.isNotEmpty(rth.getPreviousIncumbent())) {
  %> <br />Previous Incumbent: <%=rth.getPreviousIncumbent()%> <%
@@ -484,12 +494,18 @@ input {
 								<td class="tableAnswer">
 									<%
 										if (job.getIsSupport().equals("N")) {
-									%> <%=rec.getEmploymentStatus().getDescription()%> <%
- 	}
- 	else {
- %> <%=rth.getPositionTypeString()%> <%
- 	}
- %>
+									%> <span id="spancs"><%=rec.getEmploymentStatus().getDescription()%></span> 
+										<input type="hidden" id="cstatus" value="<%=rec.getEmploymentStatus().getValue()%>">
+									<%
+ 										} else {
+ 											%> <span id="spancs"><%=rth.getPositionTypeString()%></span> 
+ 											<input type="hidden" id="cstatus" value="<%=rth.getPositionType()%>">
+ 											<%
+ 										}
+ 									%>
+ 									<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EDIT-RECOMMENDATION">
+									&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-xs" onclick="openUpdateRecDialog('CS')">EDIT</button>
+									</esd:SecurityAccessRequired>
 								</td>
 							</tr>
 
@@ -499,7 +515,7 @@ input {
 							<tr>
 								<td class="tableQuestion">4.) Position Details</td>
 								<td class="tableAnswer">Union: <%=rth.getUnionCodeString()%><br />
-									Position: <%=rth.getPositionNameString()%> <%=rth.getPositionSalary() == null?"":"<br />Salary: "+ rth.getPositionSalary()%>
+									Position: <%=rth.getPositionNameString()%> <%=rth.getPositionSalary() == null ? "" : "<br />Salary: " + rth.getPositionSalary()%>
 								</td>
 							</tr>
 							<%
@@ -511,8 +527,7 @@ input {
 								%>
 								<td class="tableQuestion">4.) Start Date (dd/mm/yyyy):</td>
 								<%
-									}
-									else {
+									} else {
 								%>
 								<td class="tableQuestion">5.) Start Date (dd/mm/yyyy):</td>
 								<%
@@ -523,44 +538,23 @@ input {
 								<%
 									if (job.getIsSupport().equals("N")) {
 								%>
+								 
+										<td class="tableAnswer"><span id="spansdate">
+										<%=ad.getFormatedStartDate()%></span>
+										<input type="hidden" id="sdatevalue" name="sdatevalue" value="<%=ad.getFormatedStartDate() %>">
+								
 								<%
-									if (usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION") && rec.isApproved() && !rec.isAccepted()
-												&& !rec.isRejected()) {
+									} else {
 								%>
-								<td class="tableAnswer"><input id='start-date'
-									name='start_date' type='text' class='datefield form-control'
-									value='<%=ad.getFormatedStartDate()%>' /></td>
-								<%
-									}
-										else {
-								%>
-								<td class="tableAnswer"><%=ad.getFormatedStartDate()%></td>
+								
+								<td class="tableAnswer"><span id="spansdate"><%=rth.getStartDateFormattedRec()%></span> <input type="hidden" id="sdatevalue" name="sdatevalue" value="<%=rth.getStartDateFormattedRec() %>">
 								<%
 									}
 								%>
-								<%
-									}
-									else {
-								%>
-								<%
-									if (usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION") && rec.isApproved() && !rec.isAccepted()
-												&& !rec.isRejected()) {
-								%>
-								<td class="tableAnswer"><input id='start-date'
-									name='start_date' type='text'
-									class='datefield requiredInputBox'
-									value='<%=rth.getStartDateFormattedRec()%>' /></td>
-								<%
-									}
-										else {
-								%>
-								<td class="tableAnswer"><%=rth.getStartDateFormattedRec()%></td>
-								<%
-									}
-								%>
-								<%
-									}
-								%>
+								<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EDIT-RECOMMENDATION">
+									&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-xs"  onclick="openUpdateRecDialog('SD')">EDIT</button>
+									</esd:SecurityAccessRequired>
+								</td>
 							</tr>
 
 							<%
@@ -569,47 +563,30 @@ input {
 							<tr>
 
 								<td class="tableQuestion">5.) End Date (dd/mm/yyyy):</td>
-
-								<%
-									if (usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION") && rec.isApproved() && !rec.isAccepted()
-												&& !rec.isRejected()) {
-								%>
-								<td class="tableAnswer"><input id='end-date'
-									name='end_date' type='text' class='datefield requiredInputBox'
-									value='<%=(ad.getEndDate() != null ? ad.getFormatedEndDate() : "")%>' /></td>
-								<%
-									}
-										else {
-								%>
-								<td class="tableAnswer"><%=(ad.getEndDate() != null ? ad.getFormatedEndDate() : "Not Specified")%></td>
-								<%
-									}
-								%>
-							</tr>
-							<%
-								}else{
-							%>
-								<tr>
-									<td class="tableQuestion">5.) End Date (dd/mm/yyyy):</td>
-							<%
-									if (usr.checkPermission("PERSONNEL-ADMIN-ACCEPT-RECOMMENDATION") && rec.isApproved() && !rec.isAccepted()
-												&& !rec.isRejected()) {
-							%>
-								<td class="tableAnswer"><input id='end-date'
-									name='end_date' type='text' class='datefield requiredInputBox'
-									value='<%=(rth.getEndDate() != null ? rth.getEndDateFormattedRec() : "")%>' /></td>
-								<%
-									}
-										else {
-								%>
-								<td class="tableAnswer"><%=(rth.getEndDate() != null ? rth.getEndDateFormattedRec() : "Not Specified")%></td>
-								<%
-									}
-								%>
-							</tr>
-									
+								<td class="tableAnswer"><span id="spanedate"><%=(ad.getEndDate() != null ? ad.getFormatedEndDate() : "Not Specified")%></span>
+								<input type="hidden" id="edatevalue" name="edatevalue" value="<%=(ad.getEndDate() != null ? ad.getFormatedEndDate() : "")%>">
+								
 							
-							<%} %>
+							<%
+								} else {
+							%>
+							<tr>
+								<td class="tableQuestion">5.) End Date (dd/mm/yyyy):</td>
+								<td class="tableAnswer"><span id="spanedate"><%=(rth.getEndDate() != null ? rth.getEndDateFormattedRec() : "Not Specified")%></span>
+								<input type="hidden" id="edatevalue" name="edatevalue" value="<%=(rth.getEndDate() != null ? rth.getEndDateFormattedRec() : "")%>">
+								
+							
+
+
+							<%
+								}
+							
+							%>
+							<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EDIT-RECOMMENDATION">
+									&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-xs"  onclick="openUpdateRecDialog('ED')">EDIT</button>
+									</esd:SecurityAccessRequired>
+								</td>
+							</td></tr>
 						</tbody>
 					</table>
 
@@ -662,8 +639,8 @@ input {
 							<esd:SecurityAccessRequired
 								permissions="PERSONNEL-ADMIN-APPROVE-RECOMMENDATION">
 								<%
-									NLESDReferenceListBean ref = NLESDReferenceListManager.getReferenceBeansByApplicantRec(rec.getReferenceId(),
-													rec.getCandidateId());
+									NLESDReferenceListBean ref = NLESDReferenceListManager
+													.getReferenceBeansByApplicantRec(rec.getReferenceId(), rec.getCandidateId());
 								%>
 
 								<tr>
@@ -694,8 +671,7 @@ input {
 												</tr>
 											</tbody>
 										</table> <%
- 	}
- 			else {
+ 	} else {
  %> No reference checks found. <%
  	}
  %>
@@ -709,13 +685,33 @@ input {
 									cntrx++;
 								%>
 								<td class="tableQuestion">Should any special conditions be
-									attached to this appointment?</td>
-								<td class="tableAnswer"><%=rec.getSpecialConditions()%> <%
+									attached to this appointment?
+									</td>
+								<td class="tableAnswer"><%=rec.getSpecialConditions()%>
+								<input type="hidden" id="hidsc" value="<%=rec.getSpecialConditions()%>">
+								<input type="hidden" id="hidscc" value="<%=rec.getSpecialConditionsComment()%>">
+								 <%
  	if (rec.getSpecialConditions().equalsIgnoreCase("Yes")) {
  %> <br /><%=rec.getSpecialConditionsComment()%> <%
  	}
- %></td>
+ %>
+<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EDIT-RECOMMENDATION">
+									&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-xs"  onclick="openUpdateRecDialog('SC')">EDIT</button>
+									</esd:SecurityAccessRequired>
+								
+ </td>
 							</tr>
+							<%
+								if (rec.isConfirmedSpecialConditions()) {
+							%>
+							<tr>
+								<td class="tableQuestion">Do you accept these special
+									conditions on your offer?</td>
+								<td class="tableAnswer">Yes</td>
+							</tr>
+							<%
+								}
+							%>
 							<tr>
 								<%
 									cntrx++;
@@ -727,8 +723,7 @@ input {
 					</table>
 
 					<%
-						}
-						else {
+						} else {
 					%>
 					<%
 						if (exp_other != null) {
@@ -787,8 +782,8 @@ input {
 										permissions="PERSONNEL-ADMIN-APPROVE-RECOMMENDATION">
 
 										<%
-											NLESDReferenceListBean ref = NLESDReferenceListManager.getReferenceBeansByApplicantRec(rec.getReferenceId(),
-																rec.getCandidateId());
+											NLESDReferenceListBean ref = NLESDReferenceListManager
+																.getReferenceBeansByApplicantRec(rec.getReferenceId(), rec.getCandidateId());
 														if (ref != null) {
 										%>
 
@@ -812,8 +807,7 @@ input {
 											</tbody>
 										</table>
 										<%
-											}
-														else {
+											} else {
 										%>
 			                                      	No reference checks found.
 			                                      	<%
@@ -828,13 +822,31 @@ input {
 								%>
 								<td class="tableQuestion"><%=cntrx%>. Should any special
 									conditions be attached to this appointment?</td>
-								<td class="tableAnswer"><%=rec.getSpecialConditions()%> <%
+								<td class="tableAnswer"><span id="spansc"><%=rec.getSpecialConditions()%></span>&nbsp;<span id="spanscc"></span>
+								<input type="hidden" id="hidsc" value="<%=rec.getSpecialConditions()%>">
+								<input type="hidden" id="hidscc" value="<%=rec.getSpecialConditionsComment()%>">
+								<%
  	if (rec.getSpecialConditions().equalsIgnoreCase("Yes")) {
- %> <%=rec.getSpecialConditionsComment()%> <%
+ %> <span id="spanscc1"><%=rec.getSpecialConditionsComment()%></span> <%
  	}
- %></td>
+ %>
+ <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-EDIT-RECOMMENDATION">
+									&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-xs"  onclick="openUpdateRecDialog('SC')">EDIT</button>
+									</esd:SecurityAccessRequired>
+ </td>
 							</tr>
-
+							<%
+								if (rec.isConfirmedSpecialConditions()) {
+											cntrx++;
+							%>
+							<tr>
+								<td class="tableQuestion"><%=cntrx%>. Do you accept these
+									special conditions on your offer?</td>
+								<td class="tableAnswer">Yes</td>
+							</tr>
+							<%
+								}
+							%>
 
 
 							<tr>
@@ -850,8 +862,7 @@ input {
 
 
 					<%
-						}
-							else {
+						} else {
 					%>
 					<%
 						if (job.getIsSupport().equals("N")) {
@@ -1135,8 +1146,7 @@ input {
 		%>
 		<job:RecommendationControllerButtons recommendation='<%=rec%>' />
 		<%
-			}
-			else {
+			} else {
 		%>
 		<a class="btn btn-danger btn-xs" href="javascript:history.go(-1);">Back</a>
 		<%
@@ -1163,8 +1173,7 @@ input {
 						<%=rec.getPositionType().getDescription()%>,
 						<%=(ass[0].getLocation() > 0) ? ass[0].getLocationText() : "&nbsp;"%>)
 						<%
-							}
-							else {
+							} else {
 						%>
 						()<b>Position:</b>
 						<%=rec.getRth_position_type().getDescription()%>,
@@ -1369,7 +1378,62 @@ input {
 
 		</div>
 	</div>
-
+<div class="modal fade" id="update_rec_dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Update Recommendation</h4>
+        <input type='hidden' id='hidbutton'>
+      </div>
+      <div class="modal-body">
+        <p>
+        	<span id="updatetitle"></span>
+        	<input type="hidden" id="hiduptype">
+        </p>
+        <p>
+			<select name="selcontracts" id="selcontracts">
+				<option value="-1">Please select</option>
+				<%for(RTHPositionTypeConstant p: RTHPositionTypeConstant.ALL) {%>
+					<option value="<%=p.getValue() %>"><%=p.getDescription() %></option>
+				<%} %>
+			</select>
+			<select name="selcontractt" id="selcontractt">
+				<option value="-1">Please select</option>
+				<%for(EmploymentConstant p: EmploymentConstant.ALL) {%>
+					<option value="<%=p.getValue() %>"><%=p.getDescription() %></option>
+				<%} %>
+			</select>
+			<input type="date" name="dtnewdate" id="dtnewdate">
+			<div id="specon" style="display:none;">
+				<p>
+				Should any special conditions be attached to this appointment?
+				</p>
+				<p>
+				<select id="selspecon" id="selspecon">
+					<option value="">Please select</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+				</select>
+				</p>
+				<p>
+				<b>If Yes, please explain</b><br />
+				<textarea  name="sccom" id="sccom" rows="4" cols="75"></textarea>
+				</p>
+				
+			</div>
+		</p>
+        <p>
+        <div class="alert alert-danger" role="alert" id="errmsgup" style="display:none;"></div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='btn_add_exemption_ok' class="btn btn-success btn-xs" style="float: left;" onclick="updateRecommendation();">UPDATE</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

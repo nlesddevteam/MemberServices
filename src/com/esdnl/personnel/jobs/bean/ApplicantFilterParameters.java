@@ -38,6 +38,7 @@ public class ApplicantFilterParameters {
 	private String applicantId;
 	private int shortlistedBy;
 	private String shortlistReason;
+	private boolean delfDocument;
 	public ApplicantFilterParameters() {
 
 	}
@@ -394,4 +395,13 @@ public class ApplicantFilterParameters {
 	public void setShortlistedBy(int shortlistedBy) {
 		this.shortlistedBy = shortlistedBy;
 	}
+
+	public boolean isDelfDocument() {
+		return delfDocument;
+	}
+
+	public void setDelfDocument(boolean delfDocument) {
+		this.delfDocument = delfDocument;
+	}
+
 }

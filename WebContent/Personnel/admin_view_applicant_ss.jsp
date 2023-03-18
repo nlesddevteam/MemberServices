@@ -673,7 +673,7 @@ input {
 		                                    			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")))
 		                                    		continue;
 	                                    	}else{
-	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX) || doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX_BOOSTER)) {
+	                                    		if(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX) || doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX_BOOSTER) || doc.getTypeSS().equal(DocumentTypeSS.RESUME) || doc.getTypeSS().equal(DocumentTypeSS.COVER_LETTER)) {
 	                                    			continue;
 	                                    		}
 	                                    	}
@@ -761,7 +761,7 @@ input {
 										
 								<%	for (ApplicantDocumentBean doc : docs) {
 											//only select roles get docs other then transcripts.
-											if (!(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX) || doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX_BOOSTER))) {
+											if (!(doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX) || doc.getTypeSS().equal(DocumentTypeSS.COVID19_VAX_BOOSTER) )) {
 												continue;
 											} 
 								%>
@@ -970,7 +970,82 @@ input {
 					</div>
 					</div>
 </div>
- <% } %> 
+ <% } %>
+ 
+ <!-- 9. DOCUMENTATION --------------------------------------------------------------->
+ <% if(usr.checkPermission("PERSONNEL-ADMIN-VIEW-DOCS") || usr.checkPermission("PERSONNEL-OTHER-MANAGER-VIEW")) { %>
+	 
+ 
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section9">   
+	               	<div class="panel-heading"><b>Resume/Cover Letter</b></div>
+      			 	<div class="panel-body"> 	
+	
+					<div class="table-responsive"> 
+      			 	       
+      			 	       
+							  <% if((docs != null) && (docs.size() > 0))
+                              { %>
+                              
+                              <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
+									    <thead>
+									    
+									      <tr style="border-top:1px solid black;">
+									      	<th width='55%'>TYPE</th>
+									        <th width='25%'>UPLOADED</th>
+									        							       								        
+									        <th class="no-print" width='20%'>OPTIONS</th>		
+									      </tr>
+									    </thead>
+							    
+							    <tbody>
+                              
+                              
+                              <%
+                                	int i=0;
+                                  for(ApplicantDocumentBean doc : docs)
+                                  {                                  
+                                  	 //only select roles get docs other then transcripts.
+	                                    	if(doc.getApplicant().getProfileType().equals("T")){
+	                                    		if((!doc.getType().equal(DocumentType.UNIVERSITY_TRANSSCRIPT) 
+		                                    			&& !usr.checkPermission("PERSONNEL-ADMIN-DOCUMENTS-VIEW-ALL")))
+		                                    		continue;
+	                                    	}else{
+	                                    		if(!(doc.getTypeSS().equal(DocumentTypeSS.RESUME) || doc.getTypeSS().equal(DocumentTypeSS.COVER_LETTER))) {
+	                                    			continue;
+	                                    		}
+	                                    	}
+                               %>
+							    <tr>							   
+							    <td>
+							    <%if(doc.getApplicant().getProfileType().equals("T")){ %>
+	                            <%=doc.getType().getDescription()%>
+	                                     <% }else{%>
+	                            <%=doc.getTypeSS().getDescription()%>
+	                                    <% }%>
+							    </td>	
+							    <td><%=sdf_long.format(doc.getCreatedDate())%></td>						    
+							    <td class="no-print">
+							    <a class='viewdoc btn btn-xs btn-info' href='viewApplicantDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a> &nbsp;
+							    <a class='viewdoc delete-doc btn btn-xs btn-danger' href='deleteApplicantDocument.html?id=<%=doc.getDocumentId()%>'>DEL</a>
+							    </td>
+							    </tr>
+							    <%  }%>
+							    </tbody>
+							    </table>
+							    <%}	else { %>							   
+                                    <span style="color:Grey;">No Resume/Cover Letter currently on file.</span>
+                                    <script>$("#section9").removeClass("panel-success").addClass("panel-danger");</script>
+                                 <% } %> 
+							    
+							    
+						
+					</div>
+					</div>
+					</div>
+</div>                                  	
+                                  	
+  <%} %> 
                                    
 <!-- 10. POSITIONS APPLIED FOR --------------------------------------------------------------->
 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">	

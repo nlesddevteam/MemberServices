@@ -70,9 +70,9 @@
 							<thead>
 								<tr>
 									<th width='25%'>RECOMMENDATION DATE</th>
-									<th width='50%'>CANDIDATE</th>
+									<th width='40%'>CANDIDATE</th>
 									<th width='15%'>STATUS</th>
-									<th width='10%'>OPTIONS</th>
+									<th width='20%'>OPTIONS</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -114,6 +114,16 @@
 													onclick="return confirmRecDelete();"
 													href='deleteJobTeacherRecommendation.html?id=<%=rec[i].getRecommendationId()%>'>DEL</a>
 											</esd:SecurityAccessRequired>
+											<esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-STOP-OFFER'>
+												<!-- check status and see if it has been sent yet -->
+												<%if(rec[i].getCurrentStatus().equals(RecommendationStatus.OFFERED)
+														&& rec[i].checkStopOffer()){ 
+												%>
+												
+												<a class="btn btn-xs btn-danger"
+													onclick="stopApplicantOffer('<%=rec[i].getRecommendationId()%>');">Stop Offer</a>
+												<%} %>
+											</esd:SecurityAccessRequired>
 										</td>
 									</tr> 
 								<% } %>
@@ -149,6 +159,32 @@
 			</div>
 		</div>
 	</div>
-
+<div class="modal fade" id="stop_offer_dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Stop Offer</h4>
+        <input type='hidden' id='hidrecid'>
+      </div>
+      <div class="modal-body">
+        This will delete the offer email so it will not be sent to the applicant.  
+        <br />
+        <br />
+        Please select an option below for the recommendation
+        <p>
+			<input type="radio" id="radrecoption"  name="radrecoption" value="reset">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset the status of the recommendation back to Recommended
+		</p>
+		<p>
+			<input type="radio" id="radrecoption"  name="radrecoption" value="delete">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete the recommendation from the system
+		</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='btn_stop_offer_ok' class="btn btn-success btn-xs" style="float: left;" onclick="stopOfferAjax();">STOP OFFER</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>

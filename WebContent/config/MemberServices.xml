@@ -4487,11 +4487,7 @@
     <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ViewMissingCoeReportRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/viewMissingCoeReport.html</URL-Pattern>
     </Request-Handler>
-   
-   
-<!-- ICF REGISTRATION  -->
-
-    <Request-Handler>
+	<Request-Handler>
     <Request-Handler-Class>com.nlesd.icfreg.handler.ViewIcfRegRequestHandler</Request-Handler-Class>
       <URL-Pattern>/schools/registration/icfreg/admin/index.html</URL-Pattern>
     </Request-Handler>
@@ -4563,8 +4559,33 @@
     <Request-Handler-Class>com.nlesd.icfreg.handler.ViewIcfRegSchoolRequestHandler</Request-Handler-Class>
       <URL-Pattern>/schools/registration/icfreg/admin/schoolindex.html</URL-Pattern>
     </Request-Handler> 
-    
-    
-                                       
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.StopApplicantOfferAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/stopApplicantOffer.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.UncancelJobOpportunityRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/uncancelJobOpp.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ResetWithdrawDeclineRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/resetWithdrawDecline.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.UpdateRecommendationAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/updateRecommendation.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.nlesd.eecd.handler.ExportWithNoShortlistRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/EECD/exportNoShortlist.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.AdminAddEducationAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/adminAddEducation.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.DeleteNlesdEducationAjaxRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/adminDeleteEducation.html</URL-Pattern>
+    </Request-Handler>                                
   </Request-Handlers>
 </Member-Services-Config>

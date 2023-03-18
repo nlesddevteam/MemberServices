@@ -56,8 +56,12 @@ public class JobTypeTagHandler extends TagSupport
       out.println(">");
       
       out.println("<OPTION VALUE='-1'>SELECT POSITION TYPE</OPTION>");
-      for(int i = 0; i < JobTypeConstant.ALL.length; i++)
-        out.println("<OPTION VALUE=\"" + JobTypeConstant.ALL[i].getValue() + "\"" + ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == JobTypeConstant.ALL[i].getValue()))? " SELECTED":"") + ">" + JobTypeConstant.ALL[i].getDescription() + "</OPTION>");
+      for(int i = 0; i < JobTypeConstant.ALLSORTED().length; i++) {
+    	  if((!(JobTypeConstant.ALL[i] == JobTypeConstant.SUMMER_SCHOOL) && !(JobTypeConstant.ALL[i] == JobTypeConstant.TRANSFER))) {
+    		  out.println("<OPTION VALUE=\"" + JobTypeConstant.ALL[i].getValue() + "\"" + ((!StringUtils.isEmpty(this.value) && (Integer.parseInt(this.value) == JobTypeConstant.ALL[i].getValue()))? " SELECTED":"") + ">" + JobTypeConstant.ALL[i].getDescription() + "</OPTION>");
+          }
+    	  
+      }
       
       out.println("</SELECT>");
       

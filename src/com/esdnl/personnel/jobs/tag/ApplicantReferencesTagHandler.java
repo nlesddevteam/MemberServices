@@ -310,7 +310,8 @@ public int doStartTag() throws JspException
 		} else {
 			out.println("<td width='15%' style='color:Red;'>" +refExpiresInDays + " days</td>");
 		}			
-			out.println("<td width='10%'><a class='btn btn-xs btn-primary' href='viewNLESDReferenceApp.html?id=" + bean.getId() + "&reftype=" + bean.getReferenceType().substring(0,1) + "'>VIEW</a>"); 
+			out.println("<td width='10%'><a class='btn btn-xs btn-primary' href='viewNLESDReferenceApp.html?id=" + bean.getId() + "&reftype=" + 
+		(bean.getReferenceType().equals("SUPPORT") ? "SS" : bean.getReferenceType().equals("EXTERNAL/TLA") ? "SS": bean.getReferenceType().substring(0,1)) + "'>VIEW</a>"); 
 			out.println("</tr>");				
 		}
 		out.println("</tbody></table>");	

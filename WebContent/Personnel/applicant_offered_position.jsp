@@ -1,6 +1,6 @@
 <%@ page language="java"
          import="com.esdnl.personnel.jobs.bean.*,
-         				 com.esdnl.util.*" 
+         				 com.esdnl.util.*,com.esdnl.personnel.jobs.dao.*" 
          isThreadSafe="false"%>
 
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -15,6 +15,7 @@
 <%
   TeacherRecommendationBean rec = (TeacherRecommendationBean) request.getAttribute("RECOMMENDATION_BEAN");
 	ApplicantProfileBean profile = (ApplicantProfileBean) session.getAttribute("APPLICANT");
+	JobOpportunityBean jbean = JobOpportunityManager.getJobOpportunityBean(rec.getCompetitionNumber());
 %>
 
 <html>
@@ -41,32 +42,60 @@
 		
     function validateAcceptOffer()
     {
+    	
     	var issupport=$("#issupport").val();
     	//check that the sin2 and dob are not empty
     	if(!validateSINFormat(document.forms[0].sin2)){
-    		alert('Please enter your SOCIAL INSURANCE NUMBER (xxx-xxx-xxx).');
+    		//alert('Please enter your SOCIAL INSURANCE NUMBER (xxx-xxx-xxx).');
+    		$(".msgerr").css("display", "block").html("Please enter your SOCIAL INSURANCE NUMBER (xxx-xxx-xxx).").delay(3000).fadeOut(2000);
     	}else if(!validateDateFormat2(document.forms[0].dob)){
-    		alert('Please enter your DATE OF BIRTH (dd/mm/yyyy).');
+    		//alert('Please enter your DATE OF BIRTH (dd/mm/yyyy).');
+    		$(".msgerr").css("display", "block").html("Please enter your DATE OF BIRTH (dd/mm/yyyy).").delay(3000).fadeOut(2000);
+    	}else if($("#hidsc").val() == "Yes" && $('input[name="radAcceptSC"]:checked').val() == "0"){
+    		//check to make sure they have selected yes radio
+    		//alert("Please accept special conditions attached to this offer");
+    		$(".msgerr").css("display", "block").html("Please accept special conditions attached to this offer.").delay(3000).fadeOut(2000);
     	}else if(issupport == "Y"){
     		document.forms[0].op.value='accept'; 
 			document.forms[0].submit();
     	}else{
-    		if(confirm('As part of your acceptance of this position you will be removed from all substitute lists for which you have been approved.\nAre you sure you want to ACCEPT this offer?'))
-        	{
-        			document.forms[0].op.value='accept'; 
+    		//show the dialog for accepting an offer
+    		$("#modaltitle").html("Accept Offer");
+    		$("#modalmsg").html("As part of your acceptance of this position you will be removed from all substitute lists for which you have been approved.\nAre you sure you want to ACCEPT this offer?");
+    		$("#modalmsg").show();
+    		$("#btn_qd_ok").unbind("click").click(
+				function () {
+					document.forms[0].op.value='accept'; 
         			document.forms[0].submit();
-        	}
+				}
+			)
+			var options = {
+				"backdrop" : "static",
+				"show" : true
+			};
+			$('#questionsdialog').modal(options);
     	}
     	
     }
     
     function validateDeclineOffer()
     {
-    	if(confirm('Are you sure you want to DECLINE this offer?'))
-    	{
-    			document.forms[0].op.value='reject'; 
+    	//show the dialog for accepting an offer
+		$("#modaltitle").html("Decline Offer");
+		$("#modalmsg").html("Are you sure you want to DECLINE this offer?");
+		$("#modalmsg").show();
+		$("#btn_qd_ok").unbind("click").click(
+			function () {
+				document.forms[0].op.value='reject'; 
     			document.forms[0].submit();
-    	}
+			}
+		)
+		var options = {
+			"backdrop" : "static",
+			"show" : true
+		};
+		$('#questionsdialog').modal(options);
+    	
     }
   </script>
   <style>
@@ -108,12 +137,109 @@
                                        
                                     <%}%>
                                   
-                                        <job:ViewPost competitionNumber='<%=rec.getCompetitionNumber()%>' />
+                                        
                                     
-                                    <table class="table table-condensed table-striped" style="font-size:12px;">
+                                    <input type="hidden" id="hidsc" name="hidsc" value="<%=rec.getSpecialConditions()%>">
+                                    <table class="table table-condensed table-striped" style="font-size:12px;width:75%;margin-left: auto;margin-right: auto;">
                                     <tbody>
-                                    <%System.out.println(rec.getSpecialConditions()); %>
+                                    <%if(jbean.isSupport()){ 
+                                    	RequestToHireBean rbean =  RequestToHireManager.getRequestToHireByCompNum(rec.getCompetitionNumber()); %>
+                                   		<tr>
+											<td class="tableTitle" style="width:50%">Competition Number:</td>
+											<td style="width:50%"><%=rec.getCompetitionNumber() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle" style="width:50%">School/Work Location:</td>
+											<td style="width:50%"><%=rbean.getWorkLocation() ==  null ? "" : rbean.getLocationDescription() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle">Position:</td>
+											<td><%=rbean.getJobTitle() ==  null ? "" : rbean.getJobTitle() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle">Hours/Week:</td>
+											<td><%=rbean.getPositionHours() ==  null ? "" : rbean.getPositionHours() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle">10 or 12 Month:</td>
+											<td><%=rbean.getPositionTerm() ==  0 ? "" : rbean.getPositionTermString() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle">Type:</td>
+											<td><%=rbean.getPositionType() ==  0 ? "" : rbean.getPositionTypeString() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle">Start Date:</td>
+											<td><%=rbean.getStartDate () ==  null ? "" : rbean.getStartDateFormatted() %></td>
+										</tr>
+										<tr>
+											<td class="tableTitle">End Date(if applicable):</td>
+											<td><%=rbean.getEndDate () ==  null ? "" : rbean.getEndDateFormatted() %></td>
+										</tr>
+						
+                                    <%}else{%>
+                                    	<tr>
+											<td class="tableTitle" style="width:50%">Competition Number:</td>
+											<td style="width:50%"><%=rec.getCompetitionNumber() %></td>
+										</tr>
+                                    	<tr>
+											<td>School:</td>
+											<td><%=jbean.getJobLocation()%></td>
+										</tr>
+										<tr>
+											<td>Position:</td>
+											<td><%= jbean.getPositionTitle() %></td>
+										</tr>
+										<tr>
+											<td>Percentage:</td>
+										<%if(rec.getTotalUnits() > 0){%> 
+											<td><%=String.format("%.2f",rec.getTotalUnits()) %></td>
+										<%}else if(jbean.getAdRequest().getUnits() > 0){%>
+											<td><%=String.format("%.2f",jbean.getAdRequest().getUnits())%></td>
+										<%}else{%>
+											<td>0.0</td>
+										<%} %>
+										</tr>
+										<tr>
+											<td>Type:</td>
+											<td><%= rec.getEmploymentStatus().getDescription()%></td>
+										</tr>
+										<%if(jbean.getAdRequest().getStartDate() != null){%>
+										<tr>
+											<td>Start Date (dd/mm/yyyy):</td>
+											<td><%=jbean.getAdRequest().getFormatedStartDate()%></td>
+										</tr>
+										<%}%>
+										<%if(jbean.getAdRequest().getEndDate() != null){%>
+										<tr>
+											<td>End Date (dd/mm/yyyy):</td>
+											<td><%=jbean.getAdRequest().getFormatedEndDate()%></td>
+										</tr>
+										<%}%>
+						
+                                    
+                                    <%}%>
+                                    
                                     <%if(rec.getSpecialConditions().equals("Yes")){ %>
+                                    <tr><td colspan='2'></td></tr>
+                                    <tr>
+                                    	<td class="tableTitle">DO YOU ACCEPT THESE SPECIAL CONDITIONS ON YOUR OFFER?</td>
+                                    	
+                                    	<td class="tableResult" style="white-space: nowrap;">
+                							<div id="sc_row_accept">
+                							<%if(!rec.isOfferAccepted() && !rec.isOfferRejected()){ %>
+                								<input type="radio" name="radAcceptSC" value="1"><span>YES</span><input type="radio" name="radAcceptSC" value="0" checked><span>No</span>
+                							<%}else{%>
+                								<%if(rec.isConfirmedSpecialConditions()) {%>
+                									Yes
+                								<%}else{%>
+                									No
+                								<%} %>
+                							<%}%>
+                							</div>
+					                	</td>
+					                	
+                                    </tr>
                                     <tr>
 					                <td class="tableTitle">SPECIAL CONDITIONS:</td>
 					                <td class="tableResult">
@@ -123,6 +249,7 @@
                                       </div>
 					                </td>
 					              </tr>
+					              <tr><td colspan='2'></td></tr>
 					              <%} %>
 					              
 					     			<tr>
@@ -174,7 +301,28 @@
                                  
                                 </form>
                                 
-                             </div></div>   
+                             </div></div>
+                             
+ <div class="modal fade" id="questionsdialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="modaltitle"></h4>
+        <input type='hidden' id='hidbutton'>
+      </div>
+      <div class="modal-body">
+        <p>
+        <div class="alert alert-warning" role="alert" id="modalmsg" style="display:none;"></div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id='btn_qd_ok' class="btn btn-success btn-xs" style="float: left;" onclick="submitform();">OK</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
  <script language="JavaScript">
   
   $('document').ready(function(){

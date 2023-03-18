@@ -167,9 +167,10 @@
 	                                    		<br/>
 					                              
 					                              <div align="center" class="no-print">
-				                                  	<% if(StringUtils.isNotEmpty((String)request.getAttribute("comp_num_return"))) { %>
+				                                  	<% if(StringUtils.isNotEmpty((String)request.getAttribute("comp_num_return"))) { 
+				                                  		if(request.getAttribute("hideview") == null){%>
 				                                  		<button id='btn-list' type="button" class="btn btn-xs btn-primary" onclick="document.location='listInterviewSummaries.html?id=<%= summary.getCandidate().getUID() %>&comp_num=<%= (String)request.getAttribute("comp_num_return") %>';">View List</button>
-				                                  	<% } %>
+				                                  	<%} } %>
 				                                  	<esd:SecurityAccessRequired permissions='PERSONNEL-ADMIN-VIEW'>
 				                                    	<button id='btn-edit' type="button" class="btn btn-xs btn-warning" onclick="document.location='editInterviewSummary.html?id=<%= summary.getInterviewSummaryId() %>';">Edit</button>
 				                                    </esd:SecurityAccessRequired>

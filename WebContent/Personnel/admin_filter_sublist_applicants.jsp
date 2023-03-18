@@ -179,8 +179,8 @@ SubListBean list = (SubListBean) request.getAttribute("list");
 								  <div class="input-group">
 								    <span class="input-group-addon"># Science Courses</span>
 								    <input type="text" name="num_science" id="num_science" class="form-control" value="0">
-								  </div>        
-	                                    
+								  </div> 
+								    	                                    
 	                             <div class="panel-group">
 								  <div class="panel panel-default">
 								    <div class="panel-heading">

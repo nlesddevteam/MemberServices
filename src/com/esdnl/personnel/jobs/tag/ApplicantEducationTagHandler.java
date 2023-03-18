@@ -54,6 +54,9 @@ public class ApplicantEducationTagHandler extends TagSupport {
 				out.println("</tr></thead>");				
 				out.println("<tbody>");
 			for (int i = 0; i < beans.length; i++) {
+					if(beans[i].getProgramFacultyName().equals("Deemed Equivalent by HR")){
+						continue;
+					}
 					out.println("<tr>");
 					out.println("<td>" + beans[i].getInstitutionName());
 					out.println("<br/><i>" + sdf.format(beans[i].getFrom()) + " to " + sdf.format(beans[i].getTo()) + "</i></td>");				

@@ -299,6 +299,21 @@
 	    										<td width="20%">${sfilterparams.socialStudiesCourses }</td>    										
     										</tr>
     										<tr>
+    											<td width="30%">Delf Fully Qualified:</td>
+	    										<td width="20%">
+	    											<c:choose>
+	    												<c:when test="${sfilterparams.isDelfDocument()}">
+	    													Yes
+	    												</c:when>
+	    												<c:otherwise>
+	    													No
+	    												</c:otherwise>
+	    											</c:choose>
+	    										</td>
+    											<td width="30%"># Social Studies Courses:</td>
+	    										<td width="20%">${sfilterparams.socialStudiesCourses }</td>    										
+    										</tr>
+    										<tr>
 	    										<td width="30%"># Special Ed Courses:</td>
 	    										<td width="20%">${sfilterparams.specialEducationCourses}</td>
 	    										<td width="30%"># Art Courses:</td>

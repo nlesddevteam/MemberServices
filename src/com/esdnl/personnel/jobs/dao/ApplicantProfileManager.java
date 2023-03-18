@@ -17,7 +17,6 @@ import java.util.TreeMap;
 import java.util.Vector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import com.awsd.common.Utils;
 import com.awsd.mail.bean.AlertBean;
 import com.awsd.school.School;
@@ -28,7 +27,6 @@ import com.esdnl.personnel.jobs.bean.ApplicantFilterParametersSS;
 import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.ApplicantSubListAuditBean;
 import com.esdnl.personnel.jobs.bean.ApplicantVerificationBean;
-import com.esdnl.personnel.jobs.bean.Covid19SDSStatusBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
@@ -40,7 +38,6 @@ import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
 import com.esdnl.personnel.jobs.dao.comparator.IntegerReverseComparator;
 import com.esdnl.personnel.v2.model.sds.bean.EmployeeSeniorityBean;
 import com.esdnl.personnel.v2.utils.StringUtils;
-
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
@@ -1402,7 +1399,9 @@ public class ApplicantProfileManager {
 				}
 				sql.append(") ");
 			}
-
+			if ((params.isDelfDocument())) {
+				sql.append(" and APPLICANT.SIN in (select applicant_id delfid from applicant_document where document_type=4 group by applicant_id)");
+			}
 			sql.append(" ORDER BY SENORITY DESC, SURNAME, FIRSTNAME");
 
 			//in order for new fields on sub filter screen to work we to adjust the query
@@ -1420,7 +1419,7 @@ public class ApplicantProfileManager {
 						" from (select * from applicant_edu, subject where applicant_edu.MINOR_ID=subject.SUBJECT_ID) group by sin) test1 on slistdata.sin=test1.sin999");
 			}
 			v_opps = new Vector<ApplicantProfileBean>(5);
-
+			System.out.println(sql.toString());
 			con = DAOUtils.getConnection();
 			stat = con.prepareStatement(sql.toString());
 			rs = stat.executeQuery();
@@ -2566,7 +2565,6 @@ public class ApplicantProfileManager {
 		ApplicantProfileBean aBean = null;
 		try {
 			aBean = new ApplicantProfileBean();
-
 			aBean.setAddress1(rs.getString("ADDRESS1"));
 			aBean.setAddress2(rs.getString("ADDRESS2"));
 			aBean.setCellphone(rs.getString("CELLPHONE"));
@@ -2644,7 +2642,6 @@ public class ApplicantProfileManager {
 				}
 			}
 			catch (SQLException e) {}
-
 			//get most recent accepted recommendation if present
 			try {
 				if (rs.getInt("RECOMMENDATION_ID") > 0) {
@@ -2665,7 +2662,6 @@ public class ApplicantProfileManager {
 				}
 			}
 			catch (SQLException e) {}
-
 			//check sub prefs
 			try {
 				if (org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("sub_prefs"))) {

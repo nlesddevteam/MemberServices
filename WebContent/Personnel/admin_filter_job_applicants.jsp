@@ -198,6 +198,13 @@
 	                              	<label class="checkbox-inline"><input type="checkbox" name="tla_requirement" id="tla_requirement" /> Yes</label>                       
 									</div>
 								  </div>								  
+								  
+								  <div class="input-group">
+								    <span class="input-group-addon">Delf Fully Qualified?</span>
+								    <div class="form-control">        
+	                              	<label class="checkbox-inline"><input type="checkbox" name="delf" id="delf" /> Yes</label>                       
+									</div>
+								  </div>
 								  		
 	                              <div class="input-group">
 								    <span class="input-group-addon"># Special Ed. Courses</span>
@@ -240,7 +247,7 @@
 									<div class="form-control">
 									 <job:TrainingMethods id='trnmtds' cls='form-control'/>
 									 </div>
-									</div>  
+								 </div>   
 	                              
 <div class="panel-group">
   <div class="panel panel-default">

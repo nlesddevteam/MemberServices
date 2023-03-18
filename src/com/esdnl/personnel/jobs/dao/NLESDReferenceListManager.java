@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import com.esdnl.dao.DAOUtils;
+import com.esdnl.personnel.jobs.bean.ApplicantProfileBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.NLESDReferenceListBean;
 
@@ -85,6 +86,13 @@ public class NLESDReferenceListManager {
 			}else if (abean.getReferenceType().equals("SUPPORT")) {
 				abean.setEditUrl("");
 				abean.setViewUrl("viewNLESDSupportReference.html?id=" + abean.getId());
+				ApplicantProfileBean app = ApplicantProfileManager.getApplicantProfileBean(abean.getApplicantId());
+				//using support reference as tla/external for teaching
+				if(app.getProfileType().equals("S")) {
+					abean.setReferenceType("SUPPORT");
+				}else {
+					abean.setReferenceType("EXTERNAL/TLA");
+				}
 			}
 			else {
 				abean.setEditUrl("editApplicantReference.html?id=" + abean.getId());
@@ -93,6 +101,9 @@ public class NLESDReferenceListManager {
 		}
 		catch (SQLException e) {
 			abean = null;
+		} catch (JobOpportunityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return abean;
 	}

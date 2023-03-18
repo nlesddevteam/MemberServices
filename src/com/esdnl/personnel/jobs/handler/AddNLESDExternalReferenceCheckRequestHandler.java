@@ -71,6 +71,7 @@ public class AddNLESDExternalReferenceCheckRequestHandler extends RequestHandler
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<APPLICANT-PROFILE-LIST>");
 			try {
+				
 				profiles = ApplicantProfileManager.getApplicantProfileBeanByNameSearch(form.get("criteria"));
 				for (ApplicantProfileBean profile : profiles)
 					sb.append(profile.generateXML());
@@ -197,7 +198,10 @@ public class AddNLESDExternalReferenceCheckRequestHandler extends RequestHandler
 				request.setAttribute("FORM", form);
 				request.setAttribute("msg", StringUtils.encodeHTML(validator.getErrorString()));
 			}
-			path = "add_nlesd_external_reference.jsp";
+			//path = "add_nlesd_external_reference.jsp";
+			request.setAttribute("istlex", "Y");
+			System.out.println("here");
+			path = "add_nlesd_support_reference.jsp";
 		}
 		return path;
 	}

@@ -60,7 +60,12 @@ public class AddNLESDSupportReferenceCheckRequestHandler extends RequestHandlerI
 			StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
 			sb.append("<APPLICANT-PROFILE-LIST>");
 			try {
-				profiles = ApplicantProfileManager.getApplicantProfileBeanByNameSearchSS(form.get("criteria"));
+				if(form.get("istlex") == "") {
+					profiles = ApplicantProfileManager.getApplicantProfileBeanByNameSearchSS(form.get("criteria"));
+				}else {
+					profiles = ApplicantProfileManager.getApplicantProfileBeanByNameSearch(form.get("criteria"));
+				}
+				
 				for (ApplicantProfileBean profile : profiles)
 					sb.append(profile.generateXML());
 			}
