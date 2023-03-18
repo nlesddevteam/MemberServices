@@ -683,6 +683,9 @@ Link to the Training and Reference Materials can be <a href="/MemberServices/" t
 						<tbody>
 							<%
 								for (int i = 0; i < edu.length; i++) {
+									if(edu[i].getProgramFacultyName().equals("Deemed Equivalent by HR")){
+										continue;
+									}
 							%>
 							<tr>
 								<td><%=edu[i].getInstitutionName()%></td>
@@ -877,8 +880,17 @@ Link to the Training and Reference Materials can be <a href="/MemberServices/" t
 			<div class="panel-body">
 				<div class="table-responsive">
 
-<div class="alert alert-warning" style="margin-top:5px;"><b>NOTE:</b> Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference. 
-Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.  If an intern requires a reference from a teacher, they can select the TLA/External option in the reference type dropdown.</div>
+<div class="alert alert-warning" style="margin-top:5px;">
+<b>NOTE:</b> 
+<ul>
+<li>Only a Principal, Vice Principal, Director of Schools, Program Specialist, Itinerant and HR can complete an Admin, Guidance or Teaching reference.</li>
+<li>Please do not submit a reference to a fellow teacher as teachers cannot complete references for other teachers.</li>
+<li>If an intern requires a reference from a teacher, they can select the TLA/External option in the reference type dropdown.</li>
+<li>If the email address of the  referencer is not a <b>@nlesd.ca</b> email address then a External/TLA link will be sent.  You will only be prompted <br />
+to select a reference type for <b>@nlesd.ca</b> email addresses.
+  </li>
+</ul>
+</div>
 
 
 					<%
@@ -1354,7 +1366,7 @@ Please do not submit a reference to a fellow teacher as teachers cannot complete
 							<td><%= j.getPositionTitle() %></td>
 							<td><%= j.getJobLocation() %></td>
 							<td class="no-print">
-							<a class='btn btn-xs btn-info' href='view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>VIEW JOB</a>							
+							<a class='btn btn-xs btn-info' href='/employment/view_job_post.jsp?comp_num=<%= j.getCompetitionNumber() %>'>VIEW JOB</a>							
 							</td>
 							</tr>
 							<% } %>

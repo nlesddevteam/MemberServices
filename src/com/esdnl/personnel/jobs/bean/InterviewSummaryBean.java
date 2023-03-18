@@ -198,7 +198,7 @@ public class InterviewSummaryBean {
 
 		UNKNOWN(0, "INVALID"), PERMANENT(1, "Highly Recommended"), LONG_TERM_REPLACEMENT(2,
 				"Recommended"), SHORT_TERM_REPLACEMENT(3,
-						"Recommend for short-term Replacement"), NOT_RECOMMENDED(4, "Not Recommended");
+						"Recommend for short-term Replacement"), NOT_RECOMMENDED(4, "Not Recommended At This Time");
 
 		private int value;
 		private String text;

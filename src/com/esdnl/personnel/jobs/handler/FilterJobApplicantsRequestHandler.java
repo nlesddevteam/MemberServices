@@ -151,6 +151,12 @@ public class FilterJobApplicantsRequestHandler extends RequestHandlerImpl {
 
 					params.setMinorsSubjectGroup(form.getArray("minorsgroup"));
 				}
+				if (StringUtils.isEqual(form.get("delf"), "on")) {
+					params.setDelfDocument(true);
+				}	else {
+					params.setDelfDocument(false);
+				}
+				
 				profiles = ApplicantProfileManager.filterJobApplicantProfileBean(params);
 				request.setAttribute("filterparams", params);
 

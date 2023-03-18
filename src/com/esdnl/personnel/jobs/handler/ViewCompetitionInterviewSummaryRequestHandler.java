@@ -44,6 +44,9 @@ public class ViewCompetitionInterviewSummaryRequestHandler extends RequestHandle
 					request.setAttribute("guide", InterviewGuideManager.getInterviewGuideBean(isb.getCompetition()));
 
 					request.setAttribute("comp_num_return", form.get("comp_num_return"));
+					if(form.exists("vtype")) {
+						request.setAttribute("hideview", "Y");
+					}
 
 					path = "admin_view_job_interview_summary.jsp";
 				}

@@ -77,7 +77,7 @@
 				<li>You are required to upload the appropriate documents as part
 					of the application process. <br>
 				<br>
-			</c:if> 
+			</c:if>
 			
 			<li>When you have completed your profile you will be returned to
 				the employment page where you click "view" on the position(s) for
@@ -85,6 +85,11 @@
 				displayed here and you click "apply" to submit your application.
 				Your application is automatically submitted. <br>
 			<br>
+			<c:if test="${ param.ptype eq 'S' }"> 
+			<li><b>Please note in addition to screens for entering your profile data, you will be able to upload a current resume
+			 and/or cover letter under Section 10.</b><br>
+			<br>
+			</c:if>
 			<li>It is your responsibility to ensure your profile information
 				is correct and complete, and to update/edit your profile as needed
 				when changes occur in experience or education.

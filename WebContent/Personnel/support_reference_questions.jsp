@@ -4,7 +4,7 @@
 			  	<div class="alert alert-danger" style="text-align:center;"><%=(String)request.getAttribute("msg")%></div>
 		<%} %>
     <div class="panel panel-success">
-  	<div class="panel-heading">Support Staff Candidate Reference Check for <b><%= profile.getFullNameReverse() %>.</b></div>
+  	<div class="panel-heading">Candidate Reference Check for <b><%= profile.getFullNameReverse() %>.</b></div>
   	<div class="panel-body">
   	
   	<%

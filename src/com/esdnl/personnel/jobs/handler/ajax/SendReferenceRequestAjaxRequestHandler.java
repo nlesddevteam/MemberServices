@@ -73,6 +73,8 @@ public class SendReferenceRequestAjaxRequestHandler extends PersonnelApplication
 						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=support&refreq="+ apprefid;
 					}else if(reftype.equals("M")){
 						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=manage&refreq="+ apprefid;
+					}else if(reftype.equals("TE")){
+						refTypeUrl="https://www.nlesd.ca/MemberServices/Personnel/externalNLESDReferenceCheckRequestApp.html?reftype=tlex&refreq="+ apprefid;
 					}
 					
 					EmailBean ebean = new EmailBean();

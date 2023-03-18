@@ -146,7 +146,41 @@ public class ApplicantEducationManager {
 
 		return (ApplicantEducationBean[]) v_opps.toArray(new ApplicantEducationBean[0]);
 	}
+	public static void deleteApplicantEducationNLESDBean(int id) {
 
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.delete_edu_nlesd(?); end;");
+
+			stat.setInt(1, id);
+
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void deleteApplicantEducationNLESDBean(int id): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 	public static ApplicantEducationBean createApplicantEducationBean(ResultSet rs) {
 
 		ApplicantEducationBean aBean = null;

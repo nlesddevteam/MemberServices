@@ -68,6 +68,13 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 								new RequiredFormElement("id"), new RequiredFormElement("sin2"), new RequiredFormElement("dob"),
 						});
 						if (validate_form()) {
+							//get the value of special conditions checkbox
+							if(rec.getSpecialConditions().equals("Yes")) {
+								//can't leave screen without checking it
+								rec.setConfirmedSpecialConditions(true);
+							}else {
+								rec.setConfirmedSpecialConditions(false);
+							}
 							RecommendationManager.updateTeacherRecommendationStatus(rec, null, RecommendationStatus.OFFER_ACCEPTED);
 
 							profile.setSIN2(form.get("sin2"));
@@ -123,14 +130,15 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 											ebeanother.setBody(
 													VelocityUtils.mergeTemplateIntoString("personnel/position_filled_response.vm", model));
 											ebeanother.setFrom("ms@nlesd.ca");
-											ebeanother.send();
+											ebean.send();
 										}
 									}
 								}
 								
 
 							}
-							catch (EmailException e) {
+							//catch (EmailException e) {
+							catch (Exception e) {
 								e.printStackTrace();
 							}
 
@@ -180,7 +188,8 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 										}
 									}
 								}
-								catch (EmailException e) {
+								//catch (EmailException e) {
+								catch (Exception e) {
 									e.printStackTrace();
 								}
 							}
@@ -253,7 +262,8 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 									
 								}
 							}
-							catch (EmailException e) {
+							//catch (EmailException e) {
+							catch (Exception e) {
 								e.printStackTrace();
 							}
 							rec = RecommendationManager.getTeacherRecommendationBean(rec.getRecommendationId());

@@ -30,25 +30,18 @@
 
 	
 <%
-  JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
-  
-	JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
-	
+	JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+  	//JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
+	ArrayList<String> joblist = JobOpportunityManager.getJobOpportunityCompNums("CLOSED");
 	TeacherRecommendationBean[] rec = RecommendationManager.getTeacherRecommendationBean(job.getCompetitionNumber());
-  
 	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_SHORTLIST");
-  
 	HashMap<String, ApplicantProfileBean> declinedInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_DECLINES_MAP");
 	HashMap<String, ApplicantProfileBean> withdrawsInterviewMap = (HashMap<String, ApplicantProfileBean>) session.getAttribute("JOB_SHORTLIST_WITHDRAWS_MAP");
 	AdRequestBean ad = null;
-  
 	User usr = (User)session.getAttribute("usr");
-  
-  InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);
-  
+	InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);
   Map<String, ArrayList<InterviewSummaryBean>> interviewSummaryMap = (job.getJobType().equals(JobTypeConstant.TLA_REGULAR) || job.getJobType().equals(JobTypeConstant.TLA_REPLACEMENT)) 
   		? InterviewSummaryManager.getTLAInterviewSummaryBeansMapByShortlist(job) : InterviewSummaryManager.getInterviewSummaryBeansMapByShortlist(job);
-  
   Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
 		//permApplicants = ApplicantProfileManager.getCompetitionShortlistPermanentCandidates(job.getCompetitionNumber());
@@ -58,8 +51,7 @@
 		permApplicants = Arrays.stream(applicants).filter(a -> empBeans.values().stream().anyMatch(e -> e.is(a) && e.isPermanent()))
 				.collect(Collectors.toMap(a -> a.getSIN(), a -> a));
 	}
-	
-  Calendar rec_search_cal = Calendar.getInstance();
+	Calendar rec_search_cal = Calendar.getInstance();
   rec_search_cal.clear();
   rec_search_cal.set(2022, Calendar.MAY, 1);
   Date rec_search_date = rec_search_cal.getTime();
@@ -315,6 +307,7 @@
 									<% 
 									if(job.isSupport()){
 										EmployeeBean empbean = EmployeeManager.getEmployeeBeanByApplicantProfile(applicants[i]);
+										
 										if(empbean == null){ %>
 											<span style="color: DimGrey;">0</span>
 										<%}else{ 
@@ -374,6 +367,7 @@
 														<script>
 	                                        			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
 	                                        			</script>
+	                                        			
 	                                        		<%} %>
 
 											<%
@@ -388,6 +382,7 @@
 	    												<script>
 	    		                                        			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("WITHDREW AFTER INTERVIEW");
 	    		                                        </script>
+	    		                                        
 	    		                                        <%} %>	                                        		
 	                                        	<%
 	                                        		}
@@ -408,6 +403,7 @@
                                     			<script>
                                     			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("DECLINED INTERVIEW");
                                     			</script>
+                                    			
 												<%} %>
 											<%
                                     			}
@@ -422,6 +418,7 @@
                                     			<script>
                                     			$("#statusBlock<%=statusi%>").css("background-color","Red").css("color","White").html("WITHDREW AFTER INTERVIEW");
                                     			</script>
+                                    			
                                     			<%} %>
 
 											<%
@@ -471,6 +468,11 @@
 										<% if(!declinedInterview && !withdrawInterview) { %>
 										<a href="#" class="btn btn-xs btn-warning" title="Reference Request" onclick="OpenReferencePopUp('<%=applicants[i].getUID()%>');">Reference<br/>Request</a>
 										<% } %>
+										<% if(declinedInterview || withdrawInterview) { %>
+												<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-RESET-WITH-DECLINE">
+	                                        			<a id='btn-decline-withdraw' onclick="loadingData()" class='btn btn-xs btn-danger' href="resetWithdrawDecline.html?comp_num=<%=job.getCompetitionNumber()%>&sin=<%=applicants[i].getSIN()%>">Reset<br/>Status</a>
+	                                        			</esd:SecurityAccessRequired>
+	                                    <% } %>
 
 									</div>
 										
@@ -612,10 +614,11 @@
 							<td style='padding-bottom:10px;'>
 								<SELECT name='comp_num' id='comp_num' class='requiredInputBox' style='width:205px;height:23px;'>
 								<%
-									for(JobOpportunityBean j : jobs) {
-										if(j.getCompetitionNumber().equals(job.getCompetitionNumber()))
+									//for(JobOpportunityBean j : jobs) {
+										for(String cn  : joblist) {
+										if(cn.equals(job.getCompetitionNumber()))
 												continue;
-										out.println("<OPTION VALUE='" + j.getCompetitionNumber() + "'>" + j.getCompetitionNumber() + "</OPTION>");
+										out.println("<OPTION VALUE='" + cn + "'>" + cn + "</OPTION>");
 									}
 								%>
 								</SELECT> 

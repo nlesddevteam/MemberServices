@@ -81,6 +81,8 @@ public class AddExternalNLESDReferenceCheckAppRequestHandler extends PublicAcces
 					}
 					else if (referenceType.equals("manage")) {
 						path = "nlesd_manage_reference_checklist_app.jsp";
+					}else if (referenceType.equals("tlex")) {
+						path = "nlesd_support_reference_checklist_app.jsp";
 					}
 					else {
 						//TODO: SHOULD WE EVER GET HERE....YES QUERY PARAM COULD BE MANUALLY CHANGED!!!!!

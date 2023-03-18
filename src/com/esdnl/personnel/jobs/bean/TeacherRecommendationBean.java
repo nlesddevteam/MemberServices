@@ -38,7 +38,7 @@ public class TeacherRecommendationBean {
 	private String other_comments;
 	private String candidate_2;
 	private String candidate_3;
-
+	
 	private int recommended_by;
 	private Date recommended_date;
 
@@ -74,7 +74,7 @@ public class TeacherRecommendationBean {
 	private RTHPositionTypeConstant rth_position_type;
 
 	private JobOpportunityBean job;
-
+	private boolean confirmedSpecialConditions;
 	public TeacherRecommendationBean() {
 
 		recommendation_id = 0;
@@ -723,5 +723,22 @@ public class TeacherRecommendationBean {
 	public void setRth_position_type(RTHPositionTypeConstant rth_position_type) {
 
 		this.rth_position_type = rth_position_type;
+	}
+	public Boolean checkStopOffer() {
+		Boolean stopoffer=false;
+		Date today = new Date();	
+		//SimpleDateFormat sdformat = new SimpleDateFormat("mm/dd/yyyy");
+		if(today.before(offer_date)) {
+			stopoffer=true;
+		}
+		return stopoffer;
+	}
+
+	public boolean isConfirmedSpecialConditions() {
+		return confirmedSpecialConditions;
+	}
+
+	public void setConfirmedSpecialConditions(boolean confirmedSpecialConditions) {
+		this.confirmedSpecialConditions = confirmedSpecialConditions;
 	}
 }

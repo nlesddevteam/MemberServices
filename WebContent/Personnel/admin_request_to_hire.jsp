@@ -493,14 +493,15 @@ var pageWordCountConf = {
 	                                      	<c:when test="${empty rbean}">
 					                    		<select id='division' name='division' class='form-control'>
 					                    			<option value="-1" SELECTED>--- Select Division ---</option>
-					                    			<option value="1">Programs</option>
-					                    			<option value="2">Finance - Information Technology</option>
+					                    			<option value="5">Facilities</option>
 					                    			<option value="8">Finance - Financial Services</option>
+					                    			<option value="2">Finance - Information Technology</option>
 					                    			<option value="3">Finance - Procurement and Business Services</option>
 					                    			<option value="4">Finance - Student Transportation</option>
-					                    			<option value="5">Facilities</option>
+					                    			<option value="9">Finance - Student Transportation/Facilities</option>
 					                    			<option value="6">Human Resources</option>
 					                    			<option value="7">Human Resources - Casuals/Student Assistant/Teacher Aides</option>
+					                    			<option value="1">Programs</option>
 					                    		</select>
 					                    		<input type='hidden' name='hidd' id='hidd' value="-1">	                                      		
 	                                      	</c:when>
@@ -508,16 +509,17 @@ var pageWordCountConf = {
 	                                      		<c:choose>
 	                                      			<c:when test="${rbean.status.value eq 1 }">
 						                    		<select id='division' name='division' class='form-control'>
-						                    			<option value="-1">--- Select Division ---</option>
-						                    			<option value="1">Programs</option>
-						                    			<option value="2">Finance - Information Technology</option>
-						                    			<option value="8">Finance - Financial Services</option>
-						                    			<option value="3">Finance - Procurement and Business Services</option>
-						                    			<option value="4">Finance - Student Transportation</option>
-						                    			<option value="5">Facilities</option>
-						                    			<option value="6">Human Resources</option>
-						                    			<option value="7">Human Resources - Casuals/Student Assistant/Teacher Aides</option>
-						                    		</select>
+						                    			<option value="-1" SELECTED>--- Select Division ---</option>
+					                    				<option value="5">Facilities</option>
+					                    				<option value="8">Finance - Financial Services</option>
+					                    				<option value="2">Finance - Information Technology</option>
+					                    				<option value="3">Finance - Procurement and Business Services</option>
+					                    				<option value="4">Finance - Student Transportation</option>
+					                    				<option value="9">Finance - Student Transportation/Facilities</option>
+					                    				<option value="6">Human Resources</option>
+					                    				<option value="7">Human Resources - Casuals/Student Assistant/Teacher Aides</option>
+					                    				<option value="1">Programs</option>
+						                    			</select>
 						                    		<input type='hidden' name='hidd' id='hidd' value="${empty rbean ?'-1': rbean.division eq 0 ?'-1':rbean.division}">	                                      			
 	                                      			</c:when>
 	                                      			<c:otherwise>

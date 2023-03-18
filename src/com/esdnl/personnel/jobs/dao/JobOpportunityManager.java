@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -631,7 +632,7 @@ public class JobOpportunityManager {
 
 			con = DAOUtils.getConnection();
 
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_opps_loc(?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_opps_loc_n(?); end;");
 
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setInt(2, location_id);
@@ -1624,5 +1625,106 @@ public class JobOpportunityManager {
 			}
 			catch (Exception e) {}
 		}
+	}
+	public static void uncancelJobOpp(String comp_num) throws JobOpportunityException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			// get the opportunity info
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.uncancel_job_opp(?); end;");
+			stat.setString(1, comp_num);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("static void uncancelJobOpp(String comp_num): " + e);
+			throw new JobOpportunityException("Can not uncancel jobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void resetWithdrawDecline(String comp_num, String sin) throws JobOpportunityException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(false);
+
+			// get the opportunity info
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.reset_withdraw_decline(?,?); end;");
+			stat.setString(1, comp_num);
+			stat.setString(2, sin);
+			stat.execute();
+		}
+		catch (SQLException e) {
+			System.err.println("static void resetWithdrawDecline(String comp_num, String sin): " + e);
+			throw new JobOpportunityException("Can not uncancel jobOpportunityBean to DB.", e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static ArrayList<String> getJobOpportunityCompNums(String status) throws JobOpportunityException {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+		ArrayList<String> jlist = new ArrayList<String>();
+		try {
+			
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_closed_job_opps_cn; end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				jlist.add(rs.getString("comp_num"));
+				
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("JobOpportunityManager.getJobOpportunityBeans(boolean): " + e);
+			throw new JobOpportunityException("Can not extract JobOpportunityBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return jlist;
 	}
 }

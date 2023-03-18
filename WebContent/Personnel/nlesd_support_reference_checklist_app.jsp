@@ -106,7 +106,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="pageHeader">Support Staff Candidate <%= profile.getFullNameReverse() %> Reference</div>	
+		<div class="pageHeader">Candidate <%= profile.getFullNameReverse() %> Reference</div>	
 	
 			                            		<div class="alert alert-danger" id="divmessage" style="display:none;text-align:center;">
   													<span id="spanmessage"><strong></strong></span>

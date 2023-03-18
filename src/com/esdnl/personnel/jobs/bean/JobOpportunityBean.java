@@ -20,6 +20,7 @@ import com.esdnl.personnel.jobs.dao.AssignmentMajorMinorManager;
 import com.esdnl.personnel.jobs.dao.AssignmentTrainingMethodManager;
 import com.esdnl.personnel.jobs.dao.DegreeManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityAssignmentManager;
+import com.esdnl.personnel.jobs.dao.RequestToHireManager;
 
 public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 
@@ -59,7 +60,7 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 	public JobOpportunityBean() {
 
 		super();
-
+		
 		this.competition_number = null;
 		this.position_title = null;
 		this.employment_class = null;
@@ -499,6 +500,62 @@ public class JobOpportunityBean extends Vector<JobOpportunityAssignmentBean> {
 		}
 
 		return out.toString();
+	}
+	public String toHTMLNoAd(TeacherRecommendationBean rec) throws JobOpportunityException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<TABLE width='100%' cellpadding='0' cellspacing='0'>");
+		sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Competition #:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+				+ this.getCompetitionNumber() + "</TD></TR>");
+		if(this.isSupport()) {
+			RequestToHireBean rbean = RequestToHireManager.getRequestToHireByCompNum(this.competition_number);
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>School/Work Location:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (rbean.getWorkLocation() == null?"":rbean.getLocationDescription()) + "</TD></TR>");
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Position:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (rbean.getJobTitle() == null ? "": rbean.getJobTitle()) + "</TD></TR>");
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Hours/Week:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (rbean.getPositionHours() == null ? "":rbean.getPositionHours() ) + "</TD></TR>");
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>10 or 12 Month:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (rbean.getPositionTerm() == 0 ? "":rbean.getPositionTermString() ) + "</TD></TR>");
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Type:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (rbean.getPositionType() == 0 ? "":rbean.getPositionTypeString() ) + "</TD></TR>");
+			if(rbean.getStartDate() != null) {
+				sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Start Date:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+						+ (rbean.getStartDate() == null ? "":rbean.getStartDateFormatted() ) + "</TD></TR>");
+			}
+			if(rbean.getEndDate() != null) {
+				sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>End Date:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+						+ (rbean.getEndDate() == null ? "":rbean.getEndDateFormatted() ) + "</TD></TR>");
+			}
+			
+		}else {
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>School/Work Location:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (this.getJobLocation() == null?"":this.getJobLocation()) + "</TD></TR>");
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Position:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ (this.getPositionTitle() == null ? "": this.getPositionTitle()) + "</TD></TR>");
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Percentage:</b></TD><TD width='*' class='displayCompetitionNumber'> ");
+			if(rec.getTotalUnits() > 0){
+				sb.append(String.format("%.2f",rec.getTotalUnits()));
+			}else if(this.getAdRequest().getUnits() >0) {
+				sb.append(String.format("%.2f",this.getAdRequest().getUnits()));
+			}else {
+				sb.append("0.0");
+			}
+			sb.append("</TD></TR>");
+			
+			sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Type:</b></TD><TD width='*' class='displayCompetitionNumber'> "
+					+ rec.getEmploymentStatus().getDescription()  + "</TD></TR>");
+		
+			if(this.getAdRequest().getStartDate() != null) {
+				sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>Start Date (dd/mm/yyyy):</b></TD><TD width='*' class='displayCompetitionNumber'> "
+						+ this.getAdRequest().getFormatedStartDate() + "</TD></TR>");
+			}
+			if(this.getAdRequest().getEndDate() != null) {
+				sb.append("<TR style='padding-top:5px;'><TD width='125px' class='displayCompetitionNumber'><b>End Date (dd/mm/yyyy):</b></TD><TD width='*' class='displayCompetitionNumber'> "
+						+ this.getAdRequest().getFormatedEndDate() + "</TD></TR>");
+			}
+		}
+		sb.append("</TABLE>");
+		return sb.toString();
 	}
 
 	public String getIsSupport() {

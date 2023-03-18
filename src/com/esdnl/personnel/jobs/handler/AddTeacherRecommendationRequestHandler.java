@@ -8,11 +8,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.awsd.mail.bean.AlertBean;
 import com.awsd.mail.bean.EmailBean;
 import com.awsd.mail.bean.EmailException;
@@ -129,7 +127,6 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 
 		    response.setContentType("text/xml");
 		    response.setHeader("Cache-Control", "no-cache");
-
 		    out.write(xml);
 		    out.flush();
 		    out.close();
@@ -321,7 +318,6 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 
 	    e.printStackTrace();
 	    request.setAttribute("msg", e.getMessage());
-
 	    path = "admin_job_teacher_recommendation.jsp";
 	}
 

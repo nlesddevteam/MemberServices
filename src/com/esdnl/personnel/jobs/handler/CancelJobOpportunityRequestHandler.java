@@ -6,6 +6,7 @@ import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
+import com.nlesd.msauditlog.bean.MsAuditLogBean;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,6 +30,16 @@ public class CancelJobOpportunityRequestHandler  extends RequestHandlerImpl {
 				JobOpportunityBean jb = JobOpportunityManager.getJobOpportunityBean(comp_num);  
 				JobOpportunityManager.cancelJobOpportunityBean(comp_num);
 				request.setAttribute("msg", "SUCCESS: Job opportunity successfully cancelled.");
+				
+				MsAuditLogBean adbean = new MsAuditLogBean();
+				adbean.setMalAppName("MyHRP");
+				adbean.setMalAction("Cancel Job");
+				adbean.setMalBy(usr.getPersonnel().getPersonnelID());
+				adbean.setMalObjectKey(-1);
+				adbean.setMalNotes(usr.getLotusUserFullName() + " cancelled " + jb.getCompetitionNumber());
+				//add audit bean
+				add_audit_log(adbean);
+				
 				if(jb.getIsSupport().equals("N")){
 					path = "admin_view_job_posts.jsp?status=Open";
 				}else{

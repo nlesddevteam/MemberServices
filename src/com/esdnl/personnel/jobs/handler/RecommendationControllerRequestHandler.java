@@ -492,7 +492,7 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 
 			HashMap<String, Object> model = new HashMap<String, Object>();
 			// set values to be used in template
-			model.put("jobDetails", job.toHTML());
+			model.put("jobDetails", job.toHTMLNoAd(rec));
 			model.put("expiryDate", rec.getOfferValidDateFormatted());
 			ebean.setBody(VelocityUtils.mergeTemplateIntoString("personnel/position_offer_app.vm", model));
 			ebean.setFrom("ms@nlesd.ca");
@@ -511,10 +511,10 @@ public class RecommendationControllerRequestHandler extends RequestHandlerImpl {
 			else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 			}
-			else if (cal.get(Calendar.HOUR_OF_DAY) >= 12) {
+			else if (cal.get(Calendar.HOUR_OF_DAY) >= 8) {
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 			}
-			cal.set(Calendar.HOUR_OF_DAY, 12);
+			cal.set(Calendar.HOUR_OF_DAY, 8);
 
 			ebean.queue(cal.getTime());
 		}

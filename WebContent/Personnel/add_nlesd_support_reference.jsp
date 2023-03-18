@@ -161,7 +161,7 @@
 				$('#applicant_list').html("<option value='-1'>--- Select One ---</option>");
 				$.post('addNLESDSupportReference.html?op=APPLICANT_FILTER',
 						{
-					criteria : $('#applicant_filter').val()
+					criteria : $('#applicant_filter').val(),istlex:$('#hidtlex').val()
 				},
 				function(data){
 					var xmlDoc=data;
@@ -174,8 +174,9 @@
 				    	strUid = beans[i].getElementsByTagName('SIN')[0].childNodes[0].nodeValue;
 				    	strFirstname = beans[i].getElementsByTagName('FIRST-NAME')[0].childNodes[0].nodeValue;
 				    	strSurname = beans[i].getElementsByTagName('SURNAME')[0].childNodes[0].nodeValue;
-				    	
-			    		strOptions = strOptions + "<option value='" + strUid + "'>" + strSurname + ", " + strFirstname + "</option>";
+				    	strEmail = " (" + beans[i].getElementsByTagName('EMAIL')[0].childNodes[0].nodeValue +")";
+				    	strPT = " [" + beans[i].getElementsByTagName('PROFILE-TYPE')[0].childNodes[0].nodeValue +"]";
+			    		strOptions = strOptions + "<option value='" + strUid + "'>" + strSurname + ", " + strFirstname + strEmail + strPT +  "</option>";
 			    	}
 					$('#applicant_list').html(strOptions);						
 					$('#searchMsgSuccess').html('Results found. Please select from dropdown list.').css('display','block').delay(6000).fadeOut();
@@ -214,7 +215,7 @@
 	<body>
  	<esd:SecurityCheck />
 
-	<div class="pageHeader">Support Staff Candidate Reference</div>		                            		
+	<div class="pageHeader">Candidate Reference</div>		                            		
 												
 												
                		<div class="alert alert-warning" style="font-size:11px;">		
@@ -242,6 +243,7 @@
 	<form action="addNLESDSupportReference.html" method="POST" name="admin_nlesd_rec_form" id="admin_nlesd_rec_form">
 			                                	<input type='hidden' name="confirm" value="true" />
 			                                	<input type='hidden' name="hidesearch" id="hidesearch" value='${hidesearch}'>
+			                                	<input type="hidden" name="hidtlex" id="hidtlex" value="${istlex}">
 			                                	<c:if test="${ REFERENCE_BEAN ne null}">
 			                                		<input type='hidden' name='reference_id' value='${ REFERENCE_BEAN.id }' />
 			                                	</c:if>

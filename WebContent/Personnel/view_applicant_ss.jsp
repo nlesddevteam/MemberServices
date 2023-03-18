@@ -112,8 +112,15 @@ There are no registration steps, and instead you can just edit any section of yo
 
 <br/><br/><span style="color:Red;font-weight:bold;">Never create a second Support Staff/Management profile</span> if you forget your login to your previous profile. Having more than one profile may result in missed communications regarding any 
 employment positions and/or applications. 
+<br/>
+<br/>Sections with no information will display a red header. Those completed and/or with entries will display green.
+<br/>
+<br />
 
-<br/><br/>Sections with no information will display a red header. Those completed and/or with entries will display green.
+<div class="alert alert-info"  style="font-size:14px;">
+	Resume and Cover Letter can now be uploaded using Edit/Upload button on Section 10 below
+</div>
+<br /><br />
 <div class="panel-group" style="padding-top:10px;">                               
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>1. PROFILE INFORMATION</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_1_ss.jsp">EDIT</a></span></div>
@@ -481,7 +488,12 @@ employment positions and/or applications.
                                 <tbody>
                                 <c:set var="emailCheck" value="<%=profile.getEmail()%>" />
                                 <% for(ApplicantDocumentBean doc : docs) { 
-                                	//if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER) || !doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ %>
+                                	//if(!doc.getTypeSS().equals(DocumentTypeSS.LETTER) || !doc.getTypeSS().equals(DocumentTypeSS.COVID19_VAX)){ 
+                                		if(doc.getTypeSS() == DocumentTypeSS.COVER_LETTER || doc.getTypeSS() == DocumentTypeSS.RESUME ){
+                                		continue;
+                                	}
+                                			
+                                	%>
 	                             	<tr>		                            
 		                           		<td><%=doc.getTypeSS().getDescription() %>	                          
 		                         	<!-- if user has nlesd email, check if code of conduct, and if so, hide warning. If user has NON nlesd email, hide it anyways.-->
@@ -654,6 +666,43 @@ employment positions and/or applications.
                               
 </div></div></div></div> 
   
+    <!--10.  resume/coverletter ----------------------------------------------------------------------------------------->               
+                
+                
+  <div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section10b">   
+	               	<div class="panel-heading"><b>10. RESUME/COVER LETTER</b> <span class="no-print" style="float:right;padding-right:5px"><a class="btn btn-xs btn-primary" href="applicant_registration_step_9_ss.jsp">EDIT/UPLOAD</a></span></div>
+      			 	<div class="panel-body"> 
+					<div class="table-responsive"> 
+ 										<% if((docs != null) && (docs.size() > 0)) {
+	                                  	int i=0; %>
+	                                   <table class="table table-striped table-condensed" style="font-size:11px;">
+      							    <thead>
+      							    <tr>
+                                       <th width="25%">TITLE</th>
+                                       <th width="30%">UPLOAD DATE</th>
+                                       <th width="10%">OPTIONS</th>                                    
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+	                                   <% for(ApplicantDocumentBean doc : docs){ 
+	                                   		if(doc.getTypeSS().equals(DocumentTypeSS.COVER_LETTER) || doc.getTypeSS().equals(DocumentTypeSS.RESUME)){ %>
+	                                   		<tr>
+	                                      		<td><%=doc.getTypeSS().getDescription()%></td>
+	                                      		<td><%=sdf_long.format(doc.getCreatedDate())%></td>
+	                                      			<td><a class='btn btn-xs btn-info' href='viewDocument.html?id=<%=doc.getDocumentId()%>' target='_blank'>VIEW</a></td>
+	                                      				                                      
+	                                      	</tr>
+	                                      <% } %>
+	                                    <%} %>  
+	                                      </tbody>
+	                                      </table>	                                      
+	                                      <% } else {%>                                  
+	                                       <span style="color:Grey;">No Resume/Cover Letter currently on file.</span>
+	                                       <script>$("#section10b").removeClass("panel-success").addClass("panel-danger");</script>
+	                                    <% } %>
+                              
+</div></div></div></div> 
          
          <div align="center" class="no-print" style="padding-top:3px;padding-bottom:10px;"><a href="/employment/index.jsp?finished=true" class="btn btn-sm btn-danger">Back to Employment</a></div>
                                 

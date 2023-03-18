@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
@@ -413,8 +414,7 @@ public class RecommendationManager {
 		return abean;
 	}
 
-	public static void updateTeacherRecommendationStatus(TeacherRecommendationBean rec, Personnel p,
-																												RecommendationStatus new_status) throws JobOpportunityException {
+	public static void updateTeacherRecommendationStatus(TeacherRecommendationBean rec, Personnel p,RecommendationStatus new_status) throws JobOpportunityException {
 
 		Connection con = null;
 		CallableStatement stat = null;
@@ -423,7 +423,7 @@ public class RecommendationManager {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
 
-			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_tchr_rec_status(?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_tchr_rec_status(?,?,?,?); end;");
 
 			stat.setInt(1, rec.getRecommendationId());
 			if (p != null)
@@ -431,7 +431,12 @@ public class RecommendationManager {
 			else
 				stat.setNull(2, OracleTypes.NUMBER);
 			stat.setInt(3, new_status.getValue());
-
+			if(rec.isConfirmedSpecialConditions()) {
+				stat.setInt(4, 1);
+			}else {
+				stat.setInt(4, 0);
+			}
+			
 			stat.execute();
 
 		}
@@ -498,6 +503,241 @@ public class RecommendationManager {
 		}
 	}
 
+	public static void deleteOfferEmail(String email,String comp) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		StringBuilder sb = new StringBuilder();
+		//sb.append("Newfoundland and Labrador English School District - Position Offer - ");
+		sb.append("Newfoundland and Labrador English School District%Position Offer%" + comp);
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.delete_job_offer_email(?,?); end;");
+
+			stat.setString(1, email.toLowerCase());
+			stat.setString(2, sb.toString().toLowerCase());
+
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void deleteOfferEmail(String email,String comp): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void resetOfferStatus(int recid,int rstatus) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.reset_recommendation_status(?,?); end;");
+
+			stat.setInt(1, recid);
+			stat.setInt(2, rstatus);
+
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void resetOfferStatus(int recid,int rstatus): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void updateTeacherRecommendationEmpStatus(int rid,int newstatus,String jtype) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			if(jtype.equals("S")) {
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rth_pos_type(?,?); end;");
+			}else {
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rec_emp_sts(?,?); end;");
+			}
+			
+
+			stat.setInt(1, rid);
+			stat.setInt(2, newstatus);
+
+			stat.execute();
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void updateTeacherRecommendationEmpStatus(int rid,int newstatus,String jtype) "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void updateTeacherRecommendationStartDate(int rid,Date sdate,String jtype) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			if(jtype.equals("S")) {
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rec_sdate_s(?,?); end;");
+			}else {
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rec_sdate_t(?,?); end;");
+			}
+			stat.setInt(1, rid);
+			if(sdate == null) {
+				stat.setDate(2, null);
+			}else {
+				stat.setDate(2, new java.sql.Date(sdate.getTime()));
+			}
+			stat.execute();
+}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void updateTeacherRecommendationStartDate(int rid,Date sdate,String jtype) "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void updateTeacherRecommendationEndDate(int rid,Date sdate,String jtype) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			if(jtype.equals("S")) {
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rec_edate_s(?,?); end;");
+			}else {
+				stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rec_edate_t(?,?); end;");
+			}
+			stat.setInt(1, rid);
+			if(sdate == null) {
+				stat.setDate(2, null);
+			}else {
+				stat.setDate(2, new java.sql.Date(sdate.getTime()));
+			}
+			stat.execute();
+}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void updateTeacherRecommendationEndDate(int rid,Date sdate,String jtype) "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
+	public static void updateTeacherRecommendationSpecialConditions(int rid,String sc, String scc) {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.update_rec_spe_con(?,?,?); end;");
+			stat.setInt(1, rid);
+			stat.setString(2, sc);
+			stat.setString(3, scc);
+			stat.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void updateTeacherRecommendationSpecialConditions(int rid,String sc, String scc) "
+					+ e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 	public static TeacherRecommendationBean createTeacherRecommendationBean(ResultSet rs) {
 
 		TeacherRecommendationBean abean = null;
@@ -554,7 +794,11 @@ public class RecommendationManager {
 			abean.setCandidateComments(rs.getString("CANDIDATECOMMENTS"));
 			abean.setCandidateComments2(rs.getString("CANDIDATECOMMENTS2"));
 			abean.setCandidateComments3(rs.getString("CANDIDATECOMMENTS3"));
-
+			if(rs.getInt("APPSPECCON") == 1) {
+				abean.setConfirmedSpecialConditions(true);
+			}else {
+				abean.setConfirmedSpecialConditions(false);
+			}
 			try {
 				abean.setGSU(ReccommentationGSUManager.getGradeSubjectPercentUnitBeans(abean));
 			}

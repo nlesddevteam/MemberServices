@@ -34,7 +34,7 @@
 
 <%
 	User usr = (User)session.getAttribute("usr");
-	if(!usr.checkPermission("PERSONNEL-ADMIN-VIEW") && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
+	if(!(usr.checkPermission("PERSONNEL-ADMIN-VIEW") || usr.checkPermission("PERSONNEL-PRINCIPAL-VIEW") || usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW") )  && (session.getAttribute("SUBLIST") == null) && (session.getAttribute("JOB") == null)) {
 		//new AlertBean(new com.awsd.security.SecurityException("Applicant Profile Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse()));
 		
 		throw new com.awsd.security.SecurityException("Illegal Access Attempted By " + usr.getPersonnel().getFullNameReverse());
@@ -96,6 +96,10 @@
   School[] schools = null;
   HashMap<Integer, School> sel = ApplicantSubPrefManager.getApplicantSubPrefsMap(profile);  
   HashMap<Integer, ApplicantSubListInfoBean> sublists2  = ApplicantSubListInfoManager.getApplicantSubListInfoBeanMap(profile);
+  
+  Vector<Subject>subjectlist = SubjectDB.getSubjects();
+  DegreeBean[] degreelist = DegreeManager.getDegreeBeans();
+  Vector<Subject>subjectlist2 = SubjectDB.getSubjects();
 %>
 <!-- Clean up the code and use jstl vars. this should be moved after. -->
 <c:set var="nameDisplay" value="<%=profile.getSurname() + \", \" + profile.getFirstname()%>"/>
@@ -696,22 +700,31 @@ input {
 	
 <div class="panel-group" style="padding-top:5px;">                               
 	               	<div class="panel panel-success" id="section2">   
-	               	<div class="panel-heading"><b>University/College Education</b></div>
+	               	<div class="panel-heading">
+	            		<b>University/College Education</b>
+						<div style="float:right;">
+						<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-ADD-EDUCATION">
+							<a href="#" data-toggle="modal" data-target="#modaladdedu" id="btn_show_add_edu_dialog" class="btn btn-xs btn-primary" onclick="return false;"><span class="glyphicon glyphicon-plus"></span> Add Education</a>
+						</esd:SecurityAccessRequired>
+						</div>
+					</div>
+					</div>
       			 	<div class="panel-body"> 	
 								
 									    <% if((edu != null) && (edu.length > 0)) {
 									    	
 									    	%>
 									    	
-									    <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;">
+									    <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;" id="tabedu">
 									    <thead>
 									      <tr style="border-top:1px solid black;">
 									        <th width='20%'>INSTITUTION</th>
 									        <th width='10%'>DATES (M/Y)</th>
-									        <th width='25%'>PROGRAM &amp; FACULITY</th>								        
+									        <th width='20%'>PROGRAM &amp; FACULITY</th>								        
 									        <th width='17%'>MAJOR (#crs)</th>		
 									        <th width='17%'>MINOR (#crs)</th>							        
-									        <th width='11%'>DEGREE CONF.</th>								      
+									        <th width='5%'>DEGREE CONF.</th>
+									        <th width='10%'></th>								      
 									      </tr>
 									    </thead>
 									    
@@ -740,7 +753,15 @@ input {
 							                                   		<c:otherwise>N/A</c:otherwise>
 							                                   </c:choose>
 							                                   </td>
-							                                   		<td><%=((!StringUtils.isEmpty(edu[i].getDegreeConferred()))?DegreeManager.getDegreeBeans(edu[i].getDegreeConferred()).getAbbreviation():"&nbsp;")%></td> 
+							                                   <td><%=((!StringUtils.isEmpty(edu[i].getDegreeConferred()))?DegreeManager.getDegreeBeans(edu[i].getDegreeConferred()).getAbbreviation():"&nbsp;")%></td> 
+							                                   <%if(edu[i].getProgramFacultyName().equals("Deemed Equivalent by HR")){ %>
+							                                   <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-ADD-EDUCATION">
+							                                   		<td><button type="button" class="btn btn-danger btn-xs" onclick="deleteedu('<%=edu[i].getId()%>',this);">DEL</button></td>
+							                                   		</esd:SecurityAccessRequired>
+							                                   <%}else{ %>
+							                                   		<td></td>
+							                                   <%} %>
+							                                   
 							                                   </tr>
 							                                     <% } %>
 									    
@@ -1640,7 +1661,7 @@ input {
 		</div>
 	</esd:SecurityAccessRequired>              
  
- <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
+ <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,SCHOOL-ADMIN-VIEW-SUMMARIES">
  
  	<!-- INTERVIEW SUMMARIES ----------------------------------------------------------------------------------------->
 	<% if (interviewSummaries.size() > 0) { %>
@@ -1662,13 +1683,21 @@ input {
 								</tr>
 							</thead>
 							<tbody>
-								<% for (InterviewSummaryBean isb : interviewSummaries) { %>
+								<% for (InterviewSummaryBean isb : interviewSummaries) { 
+									if(usr.checkPermission("SCHOOL-ADMIN-VIEW-SUMMARIES") && (!isb.getCompetition().isSupport())){
+										if(!(isb.getCompetition().getJobType() == JobTypeConstant.REGULAR) && !(isb.getCompetition().getJobType() == JobTypeConstant.REPLACEMENT) 
+												&& !(isb.getCompetition().getJobType() == JobTypeConstant.TLA_REGULAR) && !(isb.getCompetition().getJobType() == JobTypeConstant.TLA_REPLACEMENT)
+												&& !(isb.getCompetition().getJobType() == JobTypeConstant.POOL)){
+											return;
+										}
+									}
+								%>
 									<tr>
 										<td><%= isb.getCompetition().getCompetitionNumber() %></td>
 										<td><%= isb.getCompetition().getPositionTitle( )%></td>
 										<td><%= sdf_medium.format(isb.getCreated()) %></td>
 										<td><a class="btn btn-xs btn-primary"
-											href="/MemberServices/Personnel/applicantViewCompetitionInterviewSummary.html?id=<%= isb.getInterviewSummaryId() %>">VIEW</a></td>
+											href="/MemberServices/Personnel/viewInterviewSummary.html?id=<%= isb.getInterviewSummaryId() %>&comp_num_return=<%= isb.getCompetition().getCompetitionNumber() %>&vtype=P " >VIEW</a></td>
 									</tr>
 								<% } %>
 							</tbody>
@@ -1804,12 +1833,13 @@ input {
 					}
 					
 					boolean isShortlisted = ApplicantProfileManager.getApplicantShortlistMap(job).containsKey(profile.getUID());
+					
 			%>
 					<a href='admin_view_job_applicants.jsp' class='btn btn-xs btn-info'><span class="glyphicon glyphicon-search"></span> View Applicants</a>
-					<% if (!job.isShortlistComplete() && job.isClosed() && !recInProgress) { %>
-						<% if (guide != null) { %>
-							<% if (validReference) { %>
-								<% if(!isShortlisted) { %>
+					<% if (!job.isShortlistComplete() && job.isClosed() && !recInProgress) {   %>
+						<% if (guide != null) {  %>
+							<% if (validReference) {  %>
+								<% if(!isShortlisted) {   %>
 									<a class="btn btn-xs btn-primary" id="btn_add_shortlist"><span class="glyphicon glyphicon-plus"></span> Add to Shortlist</a>
 								<% } else { %>
 									<br/>
@@ -2067,6 +2097,90 @@ input {
       <div class="modal-footer">
         <button type="button" id='btn_add_exemption_ok' class="btn btn-success btn-xs" style="float: left;" onclick="addCovid19Exemption('20');">ADD FILE</button>
 		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="modaladdedu">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Add Education</h4>
+        <input type='hidden' id='hidbutton'>
+      </div>
+      <div class="modal-body">
+
+      	<table style="width:100%;">
+      	<tr>
+      		<td style="width:40%;"><h4 class="modal-title"><span id="spandesc">Institution</span></h4></td>
+      		<td style="width:60%;"><h4 class="modal-title"><span id="spandesc" >NLESD</span></h4></td>
+      	</tr>
+      	<tr>
+      		<td style="width:40%;"><h4 class="modal-title"><span id="spandesc">Dates</span></h4></td>
+      		<td style="width:60%;"><h4 class="modal-title"><span id="spandesc" >N/A</span></h4></td>
+      	</tr>
+      	<tr>
+      		<td style="width:40%;"><h4 class="modal-title"><span id="spandesc">Program/Faculty</span></h4></td>
+      		<td style="width:60%;"><h4 class="modal-title"><span id="spandesc" >Deemed Equivalent by HR</span></h4></td>
+      	</tr>
+      	<tr>
+      		<td style="width:40%;"><h4 class="modal-title"><span id="spandesc">Major</span></h4></td>
+      		<td style="width:60%;">
+      			<select id="selmajor" name ="selmajor" style="width:75%;">
+        		<option value="-1">Please select</option>
+        		<%
+        			Iterator<Subject> i = subjectlist.iterator();
+        	      	while (i.hasNext()) {
+        	      		Subject b= i.next();
+        	         	out.println("<option value='" + b.getSubjectID() + "'>" + b.getSubjectName() + "</option>");
+        	      	}
+        		%>
+        		</select>
+        	</td>
+      	</tr>
+      	<tr>
+      		<td style="width:40%;"><h4 class="modal-title"><span id="spandesc">Minor</span></h4></td>
+      		<td style="width:60%;">
+      			<select id="selminor" name ="selminor" style="width:75%;">
+      				<option value="-1">Please select</option>
+        		<%
+        			Iterator<Subject> ii = subjectlist2.iterator();
+        	      	while (ii.hasNext()) {
+        	      		Subject b= ii.next();
+        	         	out.println("<option value='" + b.getSubjectID() + "'>" + b.getSubjectName() + "</option>");
+        	      	}
+        		%>
+        		</select>
+        	</td>
+      	</tr>
+      	<tr>
+      		<td style="width:40%;"><h4 class="modal-title"><span id="spandesc">Degree Conferred</span></h4></td>
+      		<td style="width:60%;">
+      			<select id="seldegree" name ="seldegree" style="width:75%;">
+      			<option value="-1">Please select</option>
+        		<%
+        			for(DegreeBean db: degreelist){
+        				out.println("<option value='" + db.getAbbreviation() + "'>" + db.getTitle() + "</option>");
+        			}
+        			
+        		%>
+        		</select>
+        	</td>
+      	</tr>
+      	<tr><td colspan="2">&nbsp;</td></tr>
+      	<tr>
+      		<td colspan='2' style="text-align: center; vertical-align: middle;">
+      		<div class="alert alert-danger" role="alert" id="erredu" style="display:none;">
+  				
+			</div>
+      		</td>
+      	</tr>        	
+      	</table>	
+		</div>
+      <div class="modal-footer">
+        <button type="button" id='btn_add_edu' class="btn btn-success btn-xs" style="float: left;" onclick="sumbitAddEdu();">Add</button>
+		<button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
