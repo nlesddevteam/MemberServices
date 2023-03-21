@@ -50,7 +50,13 @@
 		empbean = EmployeeManager.getEmployeeBeanBySIN(profile.getSIN2Unformatted());
 	}
 	Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
-	  
+	ApplicantSecurityBean security_question = null;
+    
+  	if(profile != null)
+  	{
+    	//create function to get values
+	  security_question = ApplicantSecurityManager.getApplicantSecurityBean(profile.getSIN());
+  	}  
 %>
 <c:set var="SDSID" value="<%=empbean != null?empbean.getEmpId():\"N/A\" %>"/>
 <c:set var="seniorityTotal" value="<%=empbean != null && empbean.getSeniority() != null ? empbean.getSeniority().getSeniorityTotal() :\"\"  %>"/>
@@ -97,15 +103,19 @@ Profiles are considered <b>incomplete</b> for existing staff if this certificate
 Link to the Training and Reference Materials can be <a href="/MemberServices/" target="_blank">found here</a> under Staff Training Modules icon.
 
 	</div>
+<%if(profile != null){%>
 
-<!-- 	
-	<div id="COVNotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b>NOTICE: COVID-19 Proof of Vaccination</b> ***<br/><br/>
-	Your profile is currently missing the proof of <b>Covid-19 Vaccination</b> documentation.  
-	Please upload this document as soon as possible. If you have already uploaded this documentation please make sure it is uploaded as the correct type as 
-	<i>Covid-19 Vaccination</i>. If you have been approved for exemption, please disregard this message. 
-	</div>
--->
+<%if(security_question == null){ %>
 
+<div class="alert alert-danger" style="text-align:center;"><span style="font-size:16px;font-weight:bold;">*** IMPORTANT NOTICE ***</span><br/>You have NOT completed your secure question/answer for password recovery. Please enter a secure question and answer that you will remember and ONLY you would know in case you need to reset your password. 
+If you fail to complete this, you will not be able to reset your password and will need to contact support if your login fails. Click link below to set this up now.<br/><br/>
+
+																									  
+<div align="center"><a href="/MemberServices/Personnel/applicant_security.jsp" class="btn ntn-sm btn-danger">PASSWORD RECOVERY SETUP</a></div>
+</div>
+
+<%}%>
+<%}%>
 
 Your current <b>Support Staff/SA/Management profile</b> information can be found below. If any changes are required, please select the proper menu item above and/or edit link found in each section below. 
 There are no registration steps, and instead you can just edit any section of your profile in any order. Please complete your profile as much as possible and ALWAYS keep it updated. 
