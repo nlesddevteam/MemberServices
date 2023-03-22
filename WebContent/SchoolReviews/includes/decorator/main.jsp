@@ -107,7 +107,15 @@
 		<script src="includes/js/schoolreview.js?ver=${todayVer}"></script>			 	
         <script src="includes/ckeditor/ckeditor.js"></script>
         
-
+<!-- GOOGLE ANALYTICS -->
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-S44S0R2BYK"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'G-S44S0R2BYK');
+		</script>
 		
 		<decorator:head />
 
