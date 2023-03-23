@@ -73,7 +73,7 @@
 	<body>	
 					<% if(rbean.isPpBlockSchools()) { %> 					
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
-					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED, it will reopen Thursday after 4 PM.
+					<b>NOTICE:</b>  Position Planner for School Administrators is currently DISABLED, it will reopen Wednesday March 29, 2023.
 					</div>  
 					<%} %>				
 
