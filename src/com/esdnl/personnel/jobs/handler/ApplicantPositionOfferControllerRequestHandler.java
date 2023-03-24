@@ -130,7 +130,7 @@ public class ApplicantPositionOfferControllerRequestHandler extends PersonnelApp
 											ebeanother.setBody(
 													VelocityUtils.mergeTemplateIntoString("personnel/position_filled_response.vm", model));
 											ebeanother.setFrom("ms@nlesd.ca");
-											ebean.send();
+											ebeanother.send();
 										}
 									}
 								}
