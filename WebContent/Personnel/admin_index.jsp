@@ -58,7 +58,7 @@ q<!-- MyHRP (C) 2018  -->
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					
 					<% if(rbean.isPpBlockSchools()) { %> 					
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
-					<b>NOTICE:</b> Position Planner for School Administrators is currently DISABLED, it will reopen Wednesday March 29, 2023.
+					<b>NOTICE:</b> Planners will be open for school administrators to edit until March 31 at 4:30 PM.
 					</div>  
 					<%} %>
 					<div class="pageHeader">Human Resources Administration</div>
