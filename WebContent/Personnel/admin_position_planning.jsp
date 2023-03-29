@@ -76,7 +76,9 @@
 					<b>NOTICE:</b>  Planners will be open for school administrators to edit until March 31 at 4:30 PM.
 					</div>  
 					<%}else{ %>
-					<b>NOTICE:</b> Planners will be open for school administrators to edit until March 31 at 4:30 PM.
+					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
+					<b>NOTICE:</b>  Planners will be open for school administrators to edit until March 31 at 4:30 PM.
+					</div>  
 					<%} %>			
 
 	<form id="frm-add-allocation" action="addTeacherAllocation.html" method="post">
