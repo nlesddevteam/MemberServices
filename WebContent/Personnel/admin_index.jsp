@@ -62,7 +62,7 @@ q<!-- MyHRP (C) 2018  -->
 					</div>  
 					<%}else{ %>
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
-					<b>NOTICE:</b>  Planners will be open for school administrators to edit until March 31 at 4:30 PM.
+					<b>NOTICE:</b>  Planners will be open for school administrators to edit until Monday, April 3 at 4 pm.
 					</div>  
 					<%} %>
 					<div class="pageHeader">Human Resources Administration</div>
