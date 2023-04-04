@@ -448,8 +448,12 @@
 													cssText = "Transfer";
 													position =  "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Transfer ("
 															+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
-												}
-											}
+												}												
+												else if(jtype.equal(JobTypeConstant.ADMINISTRATIVE)) {
+													cssClass="PermanentFullTimePosition";
+													cssText="School Administrative Position";
+													position=jobtype+" @ "+recs[0].getJob().getJobLocation();
+												}}
 			
 											if (position != null) {
 												cssText = "<span style='color:Green;'>Already Accepted a Position</span>";
