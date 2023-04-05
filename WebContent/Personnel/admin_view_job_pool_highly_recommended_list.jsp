@@ -211,6 +211,11 @@ input {
 											cssText = "Transfer";
 											position = rec.getJob().getCompetitionNumber() + ":Transfer (" + df.format(rec.getTotalUnits()) + ") @ "
 													+ rec.getJob().getJobLocation();
+										} 
+										else if(rec.getJob().getJobType().equal(JobTypeConstant.ADMINISTRATIVE)) {
+											cssClass="PermanentFullTimePosition";
+											cssText="Administrative";
+											position=rec.getJob().getCompetitionNumber()+" @ "+rec.getJob().getJobLocation();
 										}
 		
 										if (position != null) {
