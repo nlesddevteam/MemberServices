@@ -58,7 +58,7 @@
 
 <c:choose>
 <c:when test="${not empty ProfileImg}">
-<a href="https://myaccount.google.com" target="_blank"><img src="${ProfileImg}" border=0 title="Your Google Profile Picture" onerror="this.onerror=null; this.src='/MemberServices/StaffRoom/includes/img/nltopleftlogo.png'" style="max-height:120px;padding-right:10px;float:right;"/></a>
+<a href="https://myaccount.google.com" target="_blank"><img src="${ProfileImg}" border=0 title="Your Google Profile Picture" onerror="this.onerror=null; this.src='/MemberServices/StaffRoom/includes/img/nltopleftlogo.png'" style="display: block;-webkit-user-select: none;margin: auto;max-height:120px;padding-right:10px;float:right;"/></a>
 </c:when>
 <c:otherwise>
   <img src="/MemberServices/StaffRoom/includes/img/nltopleftlogo.png" onerror="this.onerror=null; this.src='/MemberServices/StaffRoom/includes/img/nltopleftlogo.png'" style="max-height:120px;padding-right:10px;float:right;"/>
