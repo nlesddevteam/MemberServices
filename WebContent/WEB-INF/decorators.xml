@@ -20,6 +20,17 @@
   	<pattern>/schools/registration/icfreg/registration/*</pattern>
   </decorator>
   
+  <decorator name="StaffRoom" page="StaffRoom/includes/decorator/main.jsp">
+  	<pattern>/StaffRoom/*</pattern>
+  	<pattern>/navigate.jsp</pattern>
+  	<pattern>/memberServices.html</pattern>
+  	
+  </decorator>
+  
+  <decorator name="MS-Registration" page="StaffRoom/includes/decorator/ms-register.jsp">  
+  		<pattern>/register.jsp</pattern>  
+ </decorator>
+ 
   <decorator name="fund3" page="Fund3/decorator/main.jsp">
   	<pattern>/Fund3/*</pattern>
   </decorator>

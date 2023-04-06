@@ -24,9 +24,6 @@ public class NewPostingsExportTimerTask extends TimerTask {
 	//FOR LIVE SERVER
 	private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../nlesdweb/WebContent/";
 
-	//FOR LOCAL HOST ONLY   
-	//private String nlesd_rootbasepath = ControllerServlet.CONTEXT_BASE_PATH + "/../../wtpwebapps/NLESDWEB/";	
-
 	public NewPostingsExportTimerTask() {
 
 		super();
@@ -62,20 +59,20 @@ public class NewPostingsExportTimerTask extends TimerTask {
 			for (NewsCategory type : NewsCategory.ALL) {
 				Vector<NewsPostingsBean> postings = null;
 				try {
-					postings = NewsPostingsManager.getNewsPostingsByCat(type.getValue(),
-							npsettings.get(type.getValue()).intValue(), 1);
+					//postings = NewsPostingsManager.getNewsPostingsByCat(type.getValue(),npsettings.get(type.getValue()).intValue(), 1);
+					postings = NewsPostingsManager.getNewsPostingsByCat(type.getValue(),8, 1);
 				}
 				catch (NewsPostingsException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				np_tmp = new File(nlesd_rootbasepath + "newspostings/newspostings_" + type.getValue() + ".tmp");
+				np_tmp = new File(nlesd_rootbasepath + "about/generated/newspostings_" + type.getValue() + ".tmp");
 				if (np_tmp.exists()) {
 					if (np_tmp.delete()) {
-						System.err.println("<<<<< " + np_tmp.getName() + " FILE DELETED >>>>>");
+						System.err.println("<<<<< " + np_tmp.getName() + " NEWS FILE DELETED >>>>>");
 					}
 					else {
-						System.err.println("<<<<< " + np_tmp.getName() + " FILE COULD NOT BE DELETED >>>>>");
+						System.err.println("<<<<< " + np_tmp.getName() + " NEWS FILE COULD NOT BE DELETED >>>>>");
 					}
 				}
 				if (!np_tmp.getParentFile().exists()) {
@@ -92,150 +89,159 @@ public class NewPostingsExportTimerTask extends TimerTask {
 				if (postings.size() > 0) {
 					for (NewsPostingsBean np : postings) {
 
-						if (counter == 1) {
+				
 
-							if (type.getValue() == 5) {
-								//Write format for Important Notice	(Type 5)
-								writer.println("<div class='importantNoticeBox siteBodyText'>");
-								writer.println("<div class='importantNoticeHeader siteSubHeaders'>IMPORTANT	NOTICE</div>");
-								writer.println("<div class='importantNoticeTitle siteSubHeaders'>" + np.getNewsTitle() + "</div>");
-								writer.println(
-										"<div class='importantNoticeDate siteFootNotes'>" + sdf.format(np.getNewsDate()) + "</div>");
+//Write format for Important Notice	(Type 5)
+							
+				if (type.getValue() == 5 && counter == 1) {								
+								writer.println("<div class=\"importantNoticeBox\" style='margin-bottom:3px;'>");
+								writer.println("<div class=\"importantNoticeHeader\"><span class='blink-me' style='float:left;font-size:20px;padding:3px;'><i class='fas fa-exclamation-triangle'></i></span><span class='blink-me' style='float:right;font-size:20px;padding:3px;'><i class='fas fa-exclamation-triangle'></i></span>IMPORTANT NOTICE</div>");
+								writer.println("<div class=\"importantNoticeTitle\"><i class=\"fas fa-exclamation-circle\"></i>&nbsp;" + np.getNewsTitle() + "&nbsp;<i class=\"fas fa-exclamation-circle\"></i></div>");
+								writer.println("<div class=\"importantNoticeDate\">" + sdf.format(np.getNewsDate()) + "</div>");
 								if (np.getNewsLocation() != null) {
 									if (!(StringUtils.isEmpty(np.getNewsLocation().getLocationDescription()))) {
-										writer.println("<div class='importantNoticeLocation siteFootNotes'>"
-												+ np.getNewsLocation().getLocationDescription() + "</div>");
+										writer.println("<div class=\"importantNoticeLocation\">" + np.getNewsLocation().getLocationDescription() + "</div>");
 									}
 								}
-								writer.println("<div class='newsFPBody siteBodyText'>");
+								writer.println("<div class=\"frontPageNewsItemBody\">");
 								if (!(StringUtils.isEmpty(np.getNewsPhoto()))) {
-									writer.println("<img src='/includes/files/news/img/" + np.getNewsPhoto()
-											+ "' class='newsFPIcon' border='0' title='" + np.getNewsPhotoCaption() + "' />");
+									writer.println("<img src='/includes/files/news/img/" + np.getNewsPhoto() + "' class='frontPageNewsPhoto thumbnail' border='0' title='" + np.getNewsPhotoCaption() + "' />");
 								}
 								writer.println(np.getNewsDescription());
 								writer.println("</div>");
+								
 								if (!(StringUtils.isEmpty(np.getNewsDocumentation()))) {
-									writer.println(
-											"<a href='/includes/files/news/doc/" + np.getNewsDocumentation() + "' title='View Attachment'>");
-									writer.println(
-											"<img src='/includes/img/mini-icons/attachment-off.png' title='View Attachment' border=0 />");
+									writer.println("<a href='/includes/files/news/doc/" + np.getNewsDocumentation() + "' title='View Attachment' class='btn btn-xs btn-warning'>");
+									writer.println("Attachment");
 									writer.println("</a>");
 								}
 								if (!(StringUtils.isEmpty(np.getNewsExternalLinkTitle()))) {
-									writer.println("<a href='" + np.getNewsExternalLink() + "' title='View External Link"
-											+ np.getNewsExternalLinkTitle() + "'>");
-									writer.println("<img src='/includes/img/mini-icons/weblink-off.png' border=0 title='"
-											+ np.getNewsExternalLinkTitle() + "' />");
+									writer.println("<a href='" + np.getNewsExternalLink() + "' title='View External Link" + np.getNewsExternalLinkTitle() + "' class='btn btn-xs btn-warning'>");
+									writer.println("External Link");
 									writer.println("</a>");
 								}
 								for (NewsPostingFileBean npfb : np.getOtherNewsFiles()) {
 									writer.println(
-											"<a href='/includes/files/news/doc/" + npfb.getNfDoc() + "' title='" + npfb.getNfTitle() + "'>");
+											"<a href='/includes/files/news/doc/" + npfb.getNfDoc() + "' title='" + npfb.getNfTitle() + "' class='btn btn-xs btn-primary'>");
 									if (npfb.getNfTitle().toLowerCase().contains("form")) {
-										writer.println("<img src='/includes/img/mini-icons/forms-off.png' title='" + npfb.getNfTitle()
-												+ "' border=0 />");
+										writer.println("Form");
 									}
 									else if (npfb.getNfTitle().toLowerCase().contains("presentation")) {
-										writer.println("<img src='/includes/img/mini-icons/presentation-off.png' title='"
-												+ npfb.getNfTitle() + "' border=0 />");
+										writer.println("Presentation");
 									}
 									else {
-										writer.println("<img src='/includes/img/mini-icons/doc-off.png' title='" + npfb.getNfTitle()
-												+ "' border=0 />");
+										writer.println("Document");
 									}
 									writer.println("</a>");
 								}
 
 								writer.println("</div>");
 
-							}
-							else {
-								//Write Format for other News Postings (Type 1,2,3,4,6)
+							} else {
 
-								writer.println("<div class='newsFPDate siteFootNotes'>" + sdf.format(np.getNewsDate()) + "</div>");
-								writer.println("<div class='newsFPTitle siteSubHeaders' style='font-weight: bold;'>" + np.getNewsTitle()
-										+ "</div>");
-								if (np.getNewsLocation() != null) {
-									if (!(StringUtils.isEmpty(np.getNewsLocation().getLocationDescription()))) {
-										writer.println("<div class='newsFPLocation siteFootNotes'>"
-												+ np.getNewsLocation().getLocationDescription() + "</div>");
-									}
-								}
-								writer.println("<div class='newsFPBody siteBodyText'>");
+//Write Format for other News Postings (Type 1,2,3,4,6)
+
+if (counter < 4) {					
+			writer.println("<div class='card bg-light frontPageNewsCard' style='margin-bottom:8px;'>");			
+			writer.println("<div class='card-header frontPageNewsCardHeader'>");
+			writer.println("<div class='frontPageNewsItemDate'>");
+			writer.print(sdf.format(np.getNewsDate()));			
+			
+			if (np.getNewsLocation() != null) {
+				if (!(StringUtils.isEmpty(np.getNewsLocation().getLocationDescription()))) {
+					writer.println(" - " + np.getNewsLocation().getLocationDescription());
+				}
+			}
+			
+			writer.println("</div>");
+			writer.println("<div class=\"frontPageNewsItemTitle\"><a onclick=\"loadingData();\" href='/about/news.jsp?Id="+ np.getId() +"' title=\"Read Full Story\">"+ np.getNewsTitle() + "</a></div>");
+			writer.println("</div>");
+			
+			
+								
+								writer.println("<div class='card-body frontPageNewsCardBody'>");
 								if (!(StringUtils.isEmpty(np.getNewsPhoto()))) {
-									writer.println("<img src='/includes/files/news/img/" + np.getNewsPhoto()
-											+ "' class='newsFPIcon' border='0' title='" + np.getNewsPhotoCaption() + "'  />");
+									writer.println("<img src='/includes/files/news/img/" + np.getNewsPhoto() + "' class='frontPageNewsPhoto thumbnail' border='0' title='" + np.getNewsPhotoCaption() + "'  />");
 								}
-
-								if (np.getNewsDescription().length() > 274) {
-									writer.println(np.getNewsDescription().substring(0, 274));
-									writer.println("...[<a href='/about/news/index.jsp?story=" + np.getNewsTitle() + "&NewsCategory="
-											+ type.getValue() + "' class='newsMenu'>more</a>]");
+								
+								writer.println("<div class=\"frontPageNewsItemBody \">");
+								
+								if (np.getNewsDescription().length() > 150) {
+									writer.println(np.getNewsDescription().substring(0, 150).replaceAll("\\<.*?\\>", ""));
+									writer.println("...");
 								}
 								else {
-									writer.println(np.getNewsDescription());
+									writer.println(np.getNewsDescription().replaceAll("\\<.*?\\>", ""));
 								}
 								writer.println("</div>");
-								writer.println("<a href='/about/news/index.jsp?story=" + np.getNewsTitle() + "&NewsCategory="
-										+ type.getValue() + "' title='Read Full Story'>");
-								writer.println(
-										"<img src='/includes/img/mini-icons/fullstory-off.png' border=0 title='Read Full Story' /></a>");
+								writer.println("</div>");
+								
+								
+								
+								writer.println("<div class=\"card-footer frontPageNewsItemFooter\">");
+								writer.println("<a href='/about/news.jsp?Id="+ np.getId() +"' class='btn btn-xs btn-light' title='Read Full Story'>");
+								writer.println("<i class=\"fab fa-readme\"></i> Full Story");
+								writer.println("</a>");
+								
 								if (!(StringUtils.isEmpty(np.getNewsDocumentation()))) {
-									writer.println(
-											"<a href='/includes/files/news/doc/" + np.getNewsDocumentation() + "' title='View Attachment'>");
-									writer.println(
-											"<img src='/includes/img/mini-icons/attachment-off.png' title='View Attachment' border=0 />");
+									writer.println("<a href='/includes/files/news/doc/" + np.getNewsDocumentation() + "' class='btn btn-xs btn-light' title='View Attachment'>");
+									writer.println("<i class=\"fas fa-paperclip\"></i> Attachment");
 									writer.println("</a>");
 								}
 								if (!(StringUtils.isEmpty(np.getNewsExternalLinkTitle()))) {
-									writer.println("<a href='" + np.getNewsExternalLink() + "' title='View External Link"
-											+ np.getNewsExternalLinkTitle() + "'>");
-									writer.println("<img src='/includes/img/mini-icons/weblink-off.png' border=0 title='"
-											+ np.getNewsExternalLinkTitle() + "' />");
+									writer.println("<a href='" + np.getNewsExternalLink() + "' class='btn btn-xs btn-light' title='View External Link" + np.getNewsExternalLinkTitle() + "'>");
+									writer.println("<i class=\"fas fa-link\"></i> External Link");
 									writer.println("</a>");
 								}
 								for (NewsPostingFileBean npfb : np.getOtherNewsFiles()) {
 									writer.println(
-											"<a href='/includes/files/news/doc/" + npfb.getNfDoc() + "' title='" + npfb.getNfTitle() + "'>");
+											"<a href='/includes/files/news/doc/" + npfb.getNfDoc() + "' class='btn btn-xs btn-light' title='" + npfb.getNfTitle() + "'>");
 									if (npfb.getNfTitle().toLowerCase().contains("form")) {
-										writer.println("<img src='/includes/img/mini-icons/forms-off.png' title='" + npfb.getNfTitle()
-												+ "' border=0 />");
+										writer.println("<i class=\"far fa-clipboard\"></i> Form");
 									}
 									else if (npfb.getNfTitle().toLowerCase().contains("presentation")) {
-										writer.println("<img src='/includes/img/mini-icons/presentation-off.png' title='"
-												+ npfb.getNfTitle() + "' border=0 />");
+										writer.println("<i class=\"far fa-file-powerpoint\"></i> Presentation");
 									}
 									else {
-										writer.println("<img src='/includes/img/mini-icons/doc-off.png' title='" + npfb.getNfTitle()
-												+ "' border=0 />");
+										writer.println("<i class=\"far fa-file-alt\"></i> Document");
 									}
 									writer.println("</a>");
 								}
-								writer.println("<img src='/includes/img/bar-silver.png' width=100% height=1 />");
-							}
-						}
-						else {
-
-							if (type.getValue() == 5) {
-								//No other notices allowed, only one important notice
-							}
-							else {
-
-								writer.println("<div class='newsFPDate siteFootNotes'>" + sdf.format(np.getNewsDate()) + "</div>");
-								writer.println("<div class='newsFPTitle siteBodyText'>");
-								writer.println("<a href=\"/about/news/index.jsp?story=" + np.getNewsTitle() + "&NewsCategory="
-										+ type.getValue() + "\" class='newsMenu'>");
-								writer.println(np.getNewsTitle() + "</a>");
-								if (np.getNewsLocation() != null) {
-									if (!(StringUtils.isEmpty(np.getNewsLocation().getLocationDescription()))) {
-										writer.println("<div class='newsFPLocation siteFootNotes'>"
-												+ np.getNewsLocation().getLocationDescription() + "</div>");
-									}
-								}
+								writer.println("</div>");				
 								writer.println("</div>");
-								writer.println("<img src='/includes/img/bar-silver.png' width=100% height=1 />");
+								
+								writer.println("<div class='frontPageItemSubBlockSmallScreen'>");
+								writer.println("<div class='frontPageNewsItemSubBlock'>");
+								writer.println("<div class='frontPageNewsItemDate'>");
+								writer.println(sdf.format(np.getNewsDate()));
+								writer.println("</div>");
+								writer.println("<div class=\"frontPageNewsItemSubTitle\"><a onclick=\"loadingData();\" href='/about/news.jsp?Id="+ np.getId() +"' title=\"Read Full Story\">"+ np.getNewsTitle() + "</a></div></div>");
+								writer.println("<hr>");
+								writer.println("</div>");
+								
+} else {
+	
+	
+	writer.println("<div class='frontPageNewsItemSubBlock'>");
+	
+	//if (!(StringUtils.isEmpty(np.getNewsPhoto()))) {
+	//	writer.println("<img src='/includes/files/news/img/" + np.getNewsPhoto() + "' class='frontPageSubNewsPhoto thumbnail' border='0' title='" + np.getNewsPhotoCaption() + "'  />");
+	//}
+	writer.println("<div class='frontPageNewsItemDate'>");
+	writer.println(sdf.format(np.getNewsDate()));
+	writer.println("</div>");
+	writer.println("<div class=\"frontPageNewsItemSubTitle\"><a onclick=\"loadingData();\" href='/about/news.jsp?Id="+ np.getId() +"' title=\"Read Full Story\">"+ np.getNewsTitle() + "</a></div></div>");
+	writer.println("<hr>");
+	
+	//if(counter==6) {
+	//	writer.println("<div style='margin-bottom:5px;'><a onclick=\"loadingData();\" href=\"/about/newslist.jsp\" class=\"btn btn-sm btn-light\" title=\"Complete News Archive\">More News</a></div>");
+	//}
+	
+}
+
+
 							}
-						}
+						
 						counter++;
 
 					}
@@ -249,17 +255,16 @@ public class NewPostingsExportTimerTask extends TimerTask {
 					}
 					else {
 						//Write infomation if nothing is found.
-						writer.println("<div class='announcement-item'><div class='item-body'>There are no " + type.getDescription()
-								+ " items to display at this time. Please check back again at a later time. </div></div>");
+						writer.println("<div class='announcement-item'><div class='item-body'>There are no " + type.getDescription() + " items to display at this time. Please check back again at a later time. </div></div>");
 					}
 
 				}
 				writer.flush();
 				writer.close();
-				np_real = new File(nlesd_rootbasepath + "newspostings/newspostings_" + type.getValue() + ".html");
+				np_real = new File(nlesd_rootbasepath + "about/generated/newspostings_" + type.getValue() + ".html");
 				if (np_real.exists()) {
 					np_real.delete();
-					System.err.println("<<<<<< EXISTING " + np_real.getName() + " FILE DELETED >>>>>>");
+					System.err.println("<<<<<< NEWS EXISTING " + np_real.getName() + " FILE DELETED >>>>>>");
 				}
 				np_tmp.renameTo(np_real);
 			}
