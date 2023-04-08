@@ -118,6 +118,21 @@ function parseCandidateSelection(data) {
 	$('#candidate_loading_msg').hide();
 	$('#candidate_info').show();
 	$('#btn-refresh-candidate-info').show();
+	
+	//now check to see if PTR is enable and if they are at the limit
+	//alert("S:" + $(data).find("PTRSTATUS").text());
+	//alert("S:" + $(data).find("PTRAPPLIMIT").text());
+	if($(data).find("PTRSTATUS").text() == "Y" && $(data).find("PTRAPPLIMIT").text() == "Y") {
+		//populate message
+		var msg = "<b>Warning</b>: Applicant currently at limit for recommendations/offers. ";
+		msg += "Current period started " + $(data).find("PTRSTART").text() + " and ends " + $(data).find("PTREND").text() + ". Limit currently set at " 
+		+ $(data).find("PTRLIMIT").text() +" offers/recommendations";
+		msg += "<br />Current recommendations/offers can be viewed on the applicant's profile.  <b>Recommendation can still be made</b>.";
+		$('#msgPTR').html(msg);
+		$('#msgPTR').show();
+	}else{
+		$('#msgPTR').hide();
+	}
 }
 
 function parseCurrentReferencesResponse(data) {
@@ -268,6 +283,7 @@ function onCandidateSelected(sin) {
 	$('#candidate-recommendation-info').hide();
 	$('#btn-refresh-candidate-info').hide();
 	$('#candidate_loading_msg').show();
+	$('#msgPTR').hide();
 	  
 	var data = {};
 	data.op = 'CANDIDATE_DETAILS';

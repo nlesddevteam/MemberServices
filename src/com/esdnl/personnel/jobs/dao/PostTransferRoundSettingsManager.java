@@ -4,10 +4,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-
+import java.util.ArrayList;
 import com.esdnl.dao.DAOUtils;
+import com.esdnl.personnel.jobs.bean.ApplicantRecListBean;
 import com.esdnl.personnel.jobs.bean.PostTransferRoundSettingsBean;
+import com.esdnl.personnel.jobs.constants.JobTypeConstant;
+import com.esdnl.personnel.jobs.constants.RTHPositionTypeConstant;
 import com.esdnl.personnel.jobs.constants.RecommendationStatus;
 
 import oracle.jdbc.OracleCallableStatement;
@@ -143,6 +145,114 @@ public class PostTransferRoundSettingsManager {
 		}
 
 		return canapply;
+	}
+	public static ArrayList<ApplicantRecListBean> getTeacherRecs(String aid) {
+
+		ArrayList<ApplicantRecListBean> recs = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+
+
+
+			recs = new ArrayList<ApplicantRecListBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_applicant_recs(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, aid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				//create the beans
+				ApplicantRecListBean abean = new ApplicantRecListBean();
+				abean.setCompNumber(rs.getString("COMP_NUM"));
+				abean.setRecStatus(RecommendationStatus.get(rs.getInt("REC_STATUS")).getDescription());
+				abean.setJobUnit(rs.getString("FUNIT"));
+				abean.setJobType(JobTypeConstant.get(rs.getInt("JOB_TYPE")).getDescription());
+				abean.setRecId(rs.getInt("RECOMMENDATION_ID"));
+				abean.setRecDate(rs.getString("RDATFOR"));
+				recs.add(abean);
+			}
+				
+
+		}
+		catch (SQLException e) {
+			System.err.println("ArrayList<ApplicantRecListBean> getTeacherRecs(String aid): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return recs;
+	}
+	public static ArrayList<ApplicantRecListBean> getTeacherRecsSS(String aid) {
+
+		ArrayList<ApplicantRecListBean> recs = null;
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+
+
+
+			recs = new ArrayList<ApplicantRecListBean>();
+
+			con = DAOUtils.getConnection();
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_applicant_recs_ss(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, aid);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				//create the beans
+				ApplicantRecListBean abean = new ApplicantRecListBean();
+				abean.setCompNumber(rs.getString("COMP_NUM"));
+				abean.setRecStatus(RecommendationStatus.get(rs.getInt("REC_STATUS")).getDescription());
+				abean.setJobUnit(rs.getString("FUNIT"));
+				abean.setJobType(RTHPositionTypeConstant.get(rs.getInt("POSITION_TYPE")).getDescription());
+				abean.setRecId(rs.getInt("RECOMMENDATION_ID"));
+				abean.setRecDate(rs.getString("RDATFOR"));
+				recs.add(abean);
+			}
+				
+
+		}
+		catch (SQLException e) {
+			System.err.println("ArrayList<ApplicantRecListBean> getTeacherRecsSS(String aid): " + e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return recs;
 	}
 	public static PostTransferRoundSettingsBean createPostTransferRoundSettingBean(ResultSet rs) {
 		PostTransferRoundSettingsBean abean = null;

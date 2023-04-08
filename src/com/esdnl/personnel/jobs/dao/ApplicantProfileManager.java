@@ -2979,4 +2979,40 @@ public class ApplicantProfileManager {
 
 		return (ApplicantProfileBean[]) v_opps.toArray(new ApplicantProfileBean[0]);
 	}
+	public static void switchProfileType(String sin, String ptype )  {
+
+		Connection con = null;
+		CallableStatement stat = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			con.setAutoCommit(true);
+
+			stat = con.prepareCall("begin awsd_user.personnel_jobs_pkg.switch_profile_type(?,?); end;");
+
+			stat.setString(1, sin);
+			stat.setString(2, ptype);
+
+			stat.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				con.rollback();
+			}
+			catch (Exception ex) {}
+
+			System.err.println("static void switchProfileType(String sin, String ptype ): " + e);
+		}
+		finally {
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+	}
 }

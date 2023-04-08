@@ -100,6 +100,7 @@
   Vector<Subject>subjectlist = SubjectDB.getSubjects();
   DegreeBean[] degreelist = DegreeManager.getDegreeBeans();
   Vector<Subject>subjectlist2 = SubjectDB.getSubjects();
+  ArrayList<ApplicantRecListBean> reclist = PostTransferRoundSettingsManager.getTeacherRecs(profile.getUID());
 %>
 <!-- Clean up the code and use jstl vars. this should be moved after. -->
 <c:set var="nameDisplay" value="<%=profile.getSurname() + \", \" + profile.getFirstname()%>"/>
@@ -207,6 +208,13 @@ $("#loadingSpinner").css("display","none");
   		$('#confirm_verify_dialog').modal('hide');
 	});
   	
+  	$('#btn_witch_profile').click(function(){
+  		var url="switchProfileType.html";
+  		$('#frmverify').attr('action',url);
+		$('#frmverify').submit();
+  		
+	});
+  	
   	$('#btn_confirm_letter').click(function(){
   		$('#dalertadds').hide();
   		$('#dalertadd').hide();
@@ -255,16 +263,21 @@ input {
 	               	<div class="panel panel-success">   
 	               	<div class="panel-heading"><b>DEMOGRAPHICS</b></div>
       			 	<div class="panel-body">      
-      			 	<span style="color:grey;">TEACHER/TLA/ADMIN PROFILE for:</span>			<br/>		 	
+      			 	<span style="color:grey;">TEACHER/TLA/ADMIN PROFILE for:</span>
+      			 			<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-SWITCH-PROFILE">			
+      			 	      		<br/><br/>
+      			 				<a href="#"  id="btn_witch_profile" class="btn btn-xs btn-primary"> Switch Profile to ${APPLICANT.profileType eq 'T' ? 'Support' : 'Teaching'} </a>
+      			 				<br/><br/>
+      			 			</esd:SecurityAccessRequired>		 	
       			 				<span style="font-size:20px;padding-top:10px;color:#007d01;font-weight:bold;">${nameDisplay}</span><br/>
       			 				<input type="hidden" id="hidshowsl" value="<%=session.getAttribute("sfilterparams") == null ? 'Y':'N'%>">
       			 				<input type="hidden" id="id" value="<%=profile.getSIN() %>">
       			 				<input type='hidden' id="appname" value="${fullName}">
+      			 				
       			 	 			<c:if test="${APPLICANT.modifiedDate ne null}">
                        				<span style="color:Silver;text-align:right;">Last Modified: <fmt:formatDate pattern='MMMM dd, yyyy' value='${APPLICANT.modifiedDate}'/></span>
                      			</c:if>
-      			 			<br/>
-      			 			
+<br/>
                     	<div class="table-responsive">       			 	       
       			 	       <table class="table table-striped table-condensed" style="font-size:12px;">							   
 							    <tbody>
@@ -432,6 +445,61 @@ input {
 	              </div>
   </div>
   </div>
+<!-- Current Recommendations/Offers ---------------------------------------------------------------> 
+<div class="panel-group" style="padding-top:5px;">                               
+	               	<div class="panel panel-success" id="section2">   
+	               	<div class="panel-heading">
+	            		<b>Recommendations/Offers Last 60 Days</b>
+					</div>
+					</div>
+      			 	<div class="panel-body"> 	
+								
+									    <% if((reclist != null) && (reclist.size() > 0)) {
+									    	
+									    	%>
+									    	
+									    <table class="table table-condensed table-striped" style="font-size:11px;background-color:#FFFFFF;margin-top:10px;" id="tabedu">
+									    <thead>
+									      <tr style="border-top:1px solid black;">
+									        <th width='18%'>REC DATE</th>
+									        <th width='18%'>COMP #</th>
+									        <th width='18%'>JOB TYPE</th>								        
+									        <th width='18%'>UNIT</th>		
+									        <th width='18%'>STATUS</th>	
+									        <th width='10%'></th>								      
+									      </tr>
+									    </thead>
+									    
+									    <tbody> 
+									    	
+									    <% for(ApplicantRecListBean rb: reclist) { %>
+							            	<tr>  
+			                                   <td><%= rb.getRecDate() %></td>
+			                                   <td><%= rb.getCompNumber() %></td>
+			                                   <td><%= rb.getJobType() %></td>
+			                                   <td><%= rb.getJobUnit() %></td> 
+			                                   <td><%= rb.getRecStatus() %></td>
+			                                   <td>
+			                                   		<esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-VIEW-SHORTLIST">
+														<a class="btn btn-xs btn-primary" href='viewJobTeacherRecommendation.html?id=<%=rb.getRecId()%>'>VIEW</a>
+													</esd:SecurityAccessRequired>
+												</td>    
+							                  <tr>                 
+									    <%} %>
+									    </tbody>
+							        </table>
+									    
+									    <% } else { %>
+							         <span style="color:Grey;">No recommendations/offers currently on file.</span>
+							         <script>$("#section2").removeClass("panel-success").addClass("panel-danger");</script>
+							          <% } %>
+							        	
+					</div>
+					</div>
+</div>
+
+
+
        			 
 <!-- SUBLIST APPLICATIONS --------------------------------------------------------------->   
 	
@@ -1883,6 +1951,7 @@ input {
 
    <form id="frmverify">
    	<input id="appid" name ="appid" type="hidden" value="<%=profile.getSIN()%>">
+   	<input type="hidden" name ="ptype" id="ptype" value="${APPLICANT.profileType}">
    </form>                        
 
 <!-- SUBLIST SELECT --------------------------------------------------------------->

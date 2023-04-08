@@ -72,19 +72,20 @@ public class UpdateRecommendationAjaxRequestHandler extends RequestHandlerImpl {
 				}else if(utype.equals("SD")) {
 					String ndate = form.get("dvalue");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat formatout = new SimpleDateFormat("dd/MM/yyyy");
 					Date newdate = format.parse(ndate);
 					if(rbean.getJob().isSupport()) {
 						RecommendationManager.updateTeacherRecommendationStartDate(rthbean.getId(), newdate, "S");
 						sbal.append("Updated Start Date value from: ");
 						sbal.append(rthbean.getStartDateFormattedRec());
-						sbal.append(" to " + ndate);
+						sbal.append(" to " + formatout.format(ndate));
 						adbean.setMalNotes(sbal.toString());
 					}else {
 						RecommendationManager.updateTeacherRecommendationStartDate(rbean.getJob().getAdRequest().getId(), newdate, "T");
 						sbal.append("Updated Start Date value from: ");
 						sbal.append(adrbean.getFormatedStartDate());
 						SimpleDateFormat formata = new SimpleDateFormat("dd/MM/yyyy");
-						sbal.append(" to " + formata.format(newdate));
+						sbal.append(" to " + formatout.format(ndate));
 						adbean.setMalNotes(sbal.toString());
 					}
 				}else if(utype.equals("ED")) {
@@ -126,7 +127,7 @@ public class UpdateRecommendationAjaxRequestHandler extends RequestHandlerImpl {
 						}else {
 							RecommendationManager.updateTeacherRecommendationEndDate(rbean.getJob().getAdRequest().getId(), newdate, "T");
 							sbal.append("Updated End Date value from: ");
-							if(adrbean.getFormatedEndDate() ==  null) {
+							if(adrbean.getEndDate() ==  null) {
 								sbal.append("");
 							}else{
 								sbal.append(adrbean.getFormatedEndDate());
