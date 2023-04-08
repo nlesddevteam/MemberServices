@@ -99,9 +99,9 @@
 		<p class="alert alert-success">This competition qualifies for a SENIORITY-BASED HIRE</p>
 	<% } %>
           
-  <div id="msgError" class="alert alert-danger" style="text-align:center;display:none;"></div>								
-	<div id="msgSuccess" class="alert alert-success" style="text-align:center;display:none;"></div>
-
+  	<div id="msgError" class="alert alert-danger" style="text-align:center;display:none;"></div>								
+  	<div id="msgSuccess" class="alert alert-success" style="text-align:center;display:none;"></div>
+	<div id="msgPTR" class="alert alert-warning" style="text-align:center;display:none;"></div>
 	<form action="" method="POST" name="admin_rec_form" id="admin_rec_form">
 		<input type='hidden' name='op' id='op' value='CONFIRM' /> 
 		<input type='hidden' name='comp_num' id='comp_num' value='<%=job.getCompetitionNumber()%>' /> 
