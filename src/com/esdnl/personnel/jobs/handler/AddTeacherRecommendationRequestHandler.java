@@ -27,6 +27,7 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityBean;
 import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.NLESDReferenceListBean;
 import com.esdnl.personnel.jobs.bean.NLESDRegionalMailHelperBean;
+import com.esdnl.personnel.jobs.bean.PostTransferRoundSettingsBean;
 import com.esdnl.personnel.jobs.bean.ReferenceCheckRequestBean;
 import com.esdnl.personnel.jobs.bean.TeacherRecommendationBean;
 import com.esdnl.personnel.jobs.constants.EmploymentConstant;
@@ -42,6 +43,7 @@ import com.esdnl.personnel.jobs.dao.InterviewSummaryManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityAssignmentManager;
 import com.esdnl.personnel.jobs.dao.JobOpportunityManager;
 import com.esdnl.personnel.jobs.dao.NLESDReferenceListManager;
+import com.esdnl.personnel.jobs.dao.PostTransferRoundSettingsManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.personnel.jobs.dao.ReferenceCheckRequestManager;
 import com.esdnl.personnel.v2.database.sds.EmployeeManager;
@@ -94,7 +96,7 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 		    }
 		    Collection<ReferenceCheckRequestBean> ref_chks = ReferenceCheckRequestManager
 			    .getReferenceCheckRequestBeans(job, profile);
-
+		   
 		    // generate XML for candidate details.
 		    String xml = null;
 		    StringBuffer sb = new StringBuffer("<?xml version='1.0' encoding='ISO-8859-1'?>");
@@ -120,6 +122,28 @@ public class AddTeacherRecommendationRequestHandler extends RequestHandlerImpl {
 			}
 			sb.append("</JOB-INTERVIEW-SUMMARIES>");
 		    }
+		    // now we check the Post Transfer Round Settings
+		    PostTransferRoundSettingsBean ptrbean = PostTransferRoundSettingsManager.getPostTransferRoundSettings();
+		    sb.append("<PTR>");
+		    
+		    if(ptrbean.IsActive() && (!job.isSupport())) {
+		    	sb.append("<PTRSTATUS>Y</PTRSTATUS>");
+		    	//get the total for the applicant
+		    	if(PostTransferRoundSettingsManager.getPostTransferRoundApplicant(profile.getSIN(), ptrbean)) {
+		    		//not at limit
+		    		sb.append("<PTRAPPLIMIT>N</PTRAPPLIMIT>");
+		    	}else {
+		    		sb.append("<PTRAPPLIMIT>Y</PTRAPPLIMIT>");
+		    		sb.append("<PTRSTART>"+ ptrbean.getPtrStartDateFormatted() + "</PTRSTART>");
+		    		sb.append("<PTREND>"+ ptrbean.getPtrEndDateFormatted() + "</PTREND>");
+		    		sb.append("<PTRLIMIT>"+ ptrbean.getPtrPositionLimit() + "</PTRLIMIT>");
+		    	}
+		    }else {
+		    	sb.append("<PTRSTATUS>N</PTRSTATUS>");
+		    }
+		    sb.append("</PTR>");
+		    
+		    
 		    sb.append("</APPLICANT>");
 		    xml = sb.toString().replaceAll("&", "&amp;");
 

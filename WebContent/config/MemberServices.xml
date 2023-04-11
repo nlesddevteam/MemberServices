@@ -4586,6 +4586,10 @@
     <Request-Handler>
     <Request-Handler-Class>com.esdnl.personnel.jobs.handler.ajax.DeleteNlesdEducationAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/Personnel/adminDeleteEducation.html</URL-Pattern>
-    </Request-Handler>                                
+    </Request-Handler>
+    <Request-Handler>
+    <Request-Handler-Class>com.esdnl.personnel.jobs.handler.SwitchProfileTypeRequestHandler</Request-Handler-Class>
+      <URL-Pattern>/Personnel/switchProfileType.html</URL-Pattern>
+    </Request-Handler>                                       
   </Request-Handlers>
 </Member-Services-Config>
