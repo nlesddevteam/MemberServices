@@ -263,8 +263,9 @@
                      <input type="text" class="form-control" value='<%= form != null ? form.get("emailaddr"): preload != null ? preload.get("email") : "" %>' disabled />
    </div>   
    <div class="col"> 
-   					<b>Classification/Status</b>
-                    <input type="text" id="job" name="job" class="form-control" value='NEW USER' readonly /> 
+   					<b>Classification/Status</b>   					
+                    <input type="hidden" id="job" name="job" class="form-control" value='117' /> 
+                    <input type="text" class="form-control" value='NEW USER' readonly />
    </div>
    </div>              
        <br/><br/>
