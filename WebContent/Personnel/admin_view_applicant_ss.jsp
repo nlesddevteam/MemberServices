@@ -411,7 +411,7 @@ input {
 							        	
 					</div>
 					</div>
-</div>
+
 <!-- 2. NLESD EXPERIENCE --------------------------------------------------------------->    
 	
 <div class="panel-group" style="padding-top:5px;">                               
