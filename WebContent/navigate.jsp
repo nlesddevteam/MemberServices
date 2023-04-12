@@ -445,15 +445,13 @@ Listed applications that you have permission to access and use.<br/><br/>
 						</div>
 					</esd:SecurityAccessRequired>
 
-
-					<!-- Maintenance Request System -->
-					<esd:SecurityAccessRequired permissions="MAINTENANCE-SCHOOL-VIEW,MAINTENANCE-ADMIN-VIEW,MAINTENANCE-WORKORDERS-VIEW">
+					
 						<div class="menuIconImage">
 							<a href="https://siems.nlesd.ca">
 							<img src="includes/img/menu/ems-off.png" class="img-swap menuImage" border=0 title="System Inspection Enterprise Management System allows you to submit and track school maintenance requests.">
 							</a>
 						</div>
-					</esd:SecurityAccessRequired>
+					
 
 					<!-- Weather Central 
 					<esd:SecurityAccessRequired
