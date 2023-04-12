@@ -168,7 +168,28 @@ Please give it time before attempting to change again. Also, any <span style="ba
 					</c:choose> 
 									   										
 	     			<td width="35%">${ contact.position }</td>
-	     			<td width="10%">${ not empty contact.telephone ? contact.telephone : "<span style='font-weight:normal;color:silver;'>N/A</span>" }</td> 
+	     			<td width="10%">
+	     			<c:choose>
+													<c:when test="${ not empty contact.telephone}">													
+														<c:choose>
+														<c:when test="${fn:length(contact.telephone) lt 10}">														
+														709-${contact.telephone}
+													</c:when>
+													<c:otherwise>
+													${contact.telephone}
+													</c:otherwise>
+													</c:choose>
+													</c:when>
+													<c:otherwise>
+													<span style='font-weight:normal;color:silver;'>N/A</span>
+													</c:otherwise>
+													</c:choose>	
+	     			
+	     			
+	     			
+	     			<!-- >${ not empty contact.telephone ? contact.telephone : "<span style='font-weight:normal;color:silver;'>N/A</span>" }-->
+	     			
+	     			</td> 
 	     			<c:choose>
 	     			<c:when test="${contact.division.id eq '1' or contact.division.id eq '4' or contact.division.id eq '5' }">
 	     			<td width="15%" class="divisionERROR divisions">*** NEED UPDATE ***</td>
