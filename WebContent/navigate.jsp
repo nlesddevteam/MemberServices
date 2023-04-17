@@ -239,7 +239,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 <!-- PowerSchool SmartFind -->
 					
 						<div class="menuIconImage">
-							<a href="https://nlesd.eschoolsolutions.com/logOnInitAction.do" target="_blank"> <img
+							<a href="https://nlesd.sfe.powerschool.com/homeAction.do" target="_blank"> <img
 								src="StaffRoom/includes/img/pssf-off.png"
 								class="img-swap menuImage" border=0
 								title="SmartFind">
