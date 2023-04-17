@@ -164,7 +164,7 @@ select option[disabled] { display: none;}
  							<a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>  
  							<%}%>						
  							
- 							<input class="btn btn-xs btn-success" type="submit" value="Save/Update" /></div>
+ 							<input class="btn btn-xs btn-success" type="submit" value="Save/Confirm/Update" /></div>
 
 
 
