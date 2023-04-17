@@ -137,7 +137,7 @@
     							<option value="${item.locationId}">${item.locationDescription}</option>
 							</c:forEach>
                         </select>                     
-                    <p>Title:<br/><input type="text" class="requiredinput" id="news_title"  name="news_title" style="width:350px;">
+                    <p>Title: (Max 60 characters)<br/><input type="text" class="requiredinput" id="news_title"  name="news_title" style="width:350px;" maxlength="60" >
                     <p>Details:<br/>
                     <textarea id="news_description" name="news_description"></textarea>
                   	<p>Photo:<br/><input type="file" id="news_photo" name="news_photo"  class="requiredinput">                   
