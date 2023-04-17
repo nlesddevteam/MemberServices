@@ -3,8 +3,7 @@
 	Registration Status: <b>INCOMPLETE - PROOF OF PHYSICAL ADDRESS AND MCP VERIFICATION REQUIRED.</b>
 </p>
 
-<p>
-Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year was received at <b>$kr.registrationDate</b>. </p>
+<p><b>IMPORTANT NOTE:</b> Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year was received at <b>$kr.registrationDate</b>. </p>
 
 <p>Your registration application is currently incomplete, proof of physical address and MCP verfication has not been provided.</p>
 <p> 

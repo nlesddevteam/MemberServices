@@ -175,7 +175,7 @@
 			<div align="center">
 			<div class="alert alert-danger">Sorry, we are current <b>not</b> accepting Kinderstart/Kindergarten registrations at this time. Please try again later, thank you.</div>
 					<br/><br/>
-					<a class='btn btn-danger btn-sm' href='/families/kindergartenregistration.jsp'><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
+					<a class='btn btn-danger btn-sm' href='/studentsfamilies/kindergartenregistration.jsp'><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
 			</div>
 			</c:otherwise>
 		</c:choose>

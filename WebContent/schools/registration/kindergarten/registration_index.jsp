@@ -71,7 +71,7 @@
 				<div style="float:right;font-size:24px;"><i class="fas fa-exclamation-circle"></i></div>
 					<b>****** IMPORTANT NOTICE ******</b><br/>					
 					We are currently NOT accepting Kinderstart/Kindergarten registrations at this time. <br/>
-					Official Kinderstart/Kindergarten registration dates and times will be displayed on the <a href="/families/kindergartenregistration.jsp">Kindergarten information page HERE</a> and/or below.
+					Official Kinderstart/Kindergarten registration dates and times will be displayed on the <a href="/studentsfamilies/kindergartenregistration.jsp">Kindergarten information page HERE</a> and/or below.
 					</div>	
 						
 						<c:if test="${fp ne null and fn:length(fp) gt 0}">							
@@ -85,7 +85,16 @@
 													<li style='text-transform: capitalize'>
 													<c:choose>
 													<c:when test="${ (z.zoneName eq 'eastern') or (z.zoneName eq 'avalon') }">
-													Avalon Region													
+													Avalon Region (Family of Schools 7, 8, 9, and 10)												
+													</c:when>
+													<c:when test="${ (z.zoneName eq 'central') }">
+													Central Region  (Family of Schools 5 and 6)
+													</c:when>
+													<c:when test="${ (z.zoneName eq 'western') }">
+													Western Region (Family of Schools 2, 3, and 4)
+													</c:when>
+													<c:when test="${ (z.zoneName eq 'labrador') }">
+													Labrador Region (Family of Schools 1)
 													</c:when>
 													<c:otherwise>
 													${z.zoneName} Region
@@ -109,7 +118,7 @@
 					</div>
 					<br/>
 		 			<div align="center">
-		 			<a href="/families/kindergartenregistration.jsp" class="no-print btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
+		 			<a href="/studentsfamilies/kindergartenregistration.jsp" class="no-print btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Exit Registration</a>
 					</div>
 				</c:when>
 				
