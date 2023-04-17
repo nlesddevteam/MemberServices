@@ -3,14 +3,15 @@
 Your application for Kindergarten registration for $kr.studentFirstName $kr.studentLastName at $kr.school.schoolName in the $kr.schoolStream.text program for the $kr.registration.schoolYear school year has been received at <b>$kr.registrationDate</b>. 
 </p>
 <p> 
-This registration is contingent upon validation of the following information for your child:
+To complete registration, the following information for your child/children must be verified: 
 <ul>
-<li>Name
-<li>Date of Birth
-<li>MCP Number
+<li>Name;
+<li>Date of Birth;
+<li>MCP Number; and
 <li>Current Address <i>(Preferred method for verifying address is a utility bill, e.g., power, cable, oil or phone. Other forms of proof of address may be accepted at the discretion of the school administrator.)</i>
+</ul>
 </p> 
-<p>Please ensure you present this information to the school on or before <u>$date.format('full_date', $kr.registration.addressConfirmationDeadline)</u> to complete the registration process.</p>
+<p>Please ensure you present this information to the school on or before <u>$date.format('full_date', $kr.registration.addressConfirmationDeadline)</u> to complete registration.</p>
 
 <p>Please note, this does not guarantee acceptance to the school or program, the District reserves the right to make the final decision regarding student acceptance and placement.</p>
  
