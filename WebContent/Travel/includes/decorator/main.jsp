@@ -214,7 +214,7 @@ Iterator p_iter = null;
     <div class="collapse navbar-collapse" id="navbarDD">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-                <a class="nav-link" href="../navigate.jsp" onclick="loadingData()"><i class="fa-sharp fa-solid fa-backward-step"></i> MS</a>
+                <a class="nav-link" href="../navigate.jsp" onclick="loadingData()" title="Back to Staff Room"><i class="fa-sharp fa-solid fa-backward-step"></i> SR</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="index.jsp" onclick="loadingData()"><i class="fas fa-home"></i> HOME <span class="sr-only">(current)</span></a>
@@ -484,7 +484,7 @@ Iterator p_iter = null;
 <!-- FOOTER AREA -->		
 
   <div align="center" class="no-print navBottom">
-  <div style="display:inline-block;margin-top:5px;"><a href="../navigate.jsp" class="btn btn-danger btn-sm" role="button" onclick="loadingData();">MS</a></div>
+  <div style="display:inline-block;margin-top:5px;"><a href="../navigate.jsp" class="btn btn-danger btn-sm" role="button" onclick="loadingData();">StaffRoom</a></div>
    		<div style="display:inline-block;margin-top:5px;"><a href="index.jsp" class="btn btn-primary btn-sm" role="button" onclick="loadingData();">Home</a></div>
     	
   <c:if test="${todayDate le expiredDate}">  	
@@ -493,7 +493,7 @@ Iterator p_iter = null;
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-success btn-sm" role="button" onclick="loadingData();loadMainDivPage('myclaims.jsp');return false;">My Claims</a></div>
     	<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-info btn-sm" role="button" onclick="loadingData();loadMainDivPage('myProfile.html');return false;">My Profile</a></div>
  		<esd:SecurityAccessRequired permissions="TRAVEL-CLAIM-SUPERVISOR-VIEW">	 
- 		<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Claims to Approve</a></div>
+ 		<div style="display:inline-block;margin-top:5px;"><a href="#" class="btn btn-warning btn-sm" role="button" onclick="loadingData();loadMainDivPage('supervisor_approval.jsp');return false;"><i class="fas fa-lock"></i> Approve Claims</a></div>
  	</esd:SecurityAccessRequired>
 		</div>
 		
@@ -521,7 +521,7 @@ Iterator p_iter = null;
  				<div style="display:inline-block;"><a title="Increase Page Font Size" href="#" class="btn btn-secondary btn-xs" id="btn-increase">A+</a></div>
          </span>
          </div>
-		  <div class="copyright">Travel Claim App 3.7 &copy; 2021 NLESD &middot; All Rights Reserved. &nbsp;&nbsp;</div>		
+		  <div class="copyright">Travel Claim App 3.8 &copy; 2023 NLESD &middot; All Rights Reserved. &nbsp;&nbsp;</div>		
 		 </div>		  
 		</div> 
 	 	

@@ -1558,7 +1558,7 @@ function getapprovedtravelclaimsbydate()
 
 		
 	ajaxRequestInfoApprovedDate(selectedvalue);
-	window.parent.$('#claim_details').css('height', $('#claims-table').height()+100);
+	$('#claim_details').css('height', $('#claims-table').height()+100);
 	
 }
 /************************************************
@@ -3333,13 +3333,45 @@ function deleteCurrentAttachment(fname,itemid,claimid){
 		refreshJquery(cm,cy,ldm);	
 }
 
+
+function checkFileExtensionsReset() {
+  $(".btnSaveClaimEdit,.btnAddClaim").removeClass("disabled");
+}
+
+function checkFileExtensions() {
+ 
+  var fileInputs = $(".fileType");  
+  fileInputs.each(function(index, element) {
+    var file = element.files[0]; 
+    if (file) {
+      var fileName = file.name;
+      var fileExtension = fileName.split('.').pop();
+     
+      if (fileExtension === 'pdf') {
+        $(".btnSaveClaimEdit,.btnAddClaim").removeClass("disabled");
+      } else {
+       $(".fileErrorWarning").css("display","block").delay(10000).fadeOut();
+       $(".btnSaveClaimEdit,.btnAddClaim").addClass("disabled");
+      }
+    }
+  });
+}
+
+
+
 function addattach(){	
 	$(".addFileTableBlock").css("display","block");	
-	var newrow ="<tr id='filerow1'><td width='40%'><div class='custom-file'><input class='form-control-file form-control-sm' type='file' id='filerow' name='filerow'></div></td>";
-	newrow = newrow +  "<td width='40%'><input maxlength='30' style='width:100%;' class='form-control-sm' type='text' id='filetext' name='filetext' placeholder='Enter a title for this receipt.'></td>";
-	newrow = newrow + "<td width='20%'><button type='button' class='btn btn-sm btn-danger' onclick='removefile(this);'>REMOVE</button> <button type='button' class='btn btn-sm btn-success' onclick='addattach();'>Add Another</button></td></tr>";
+	var newrow ="<tr id='filerow1'><td width='40%'><div class='custom-file'><input onclick='checkFileExtensions();' class='form-control-file form-control-sm fileType' type='file' accept='.pdf' id='filerow' name='filerow'></div></td>";
+	newrow = newrow +  "<td width='40%'><input maxlength='30' onclick='checkFileExtensions();' style='width:100%;' class='form-control-sm fileTitle' type='text' id='filetext' name='filetext' placeholder='Enter a title for this receipt.'></td>";
+	newrow = newrow + "<td width='20%'><button type='button' class='btn btn-sm btn-danger' onclick='removefile(this);checkFileExtensionsReset();'>REMOVE</button> <button type='button' class='btn btn-sm btn-success' onclick='addattach();checkFileExtensions();'>Add Another</button></td></tr>";
 	
-	$("#addtable tbody").append(newrow);	
+	$("#addtable tbody").append(newrow);
+	
+
+
+
+
+		
 }
 
 function removefile(but){
@@ -3359,6 +3391,7 @@ function deletefile(lin,fid){
 		$("#hidfiledelete").val(test);
 	}
 }
+
 
 
 
