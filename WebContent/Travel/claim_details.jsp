@@ -135,6 +135,14 @@
         		//clear spinner on load
     			$('#loadingSpinner').css("display","none");     
     			$('[data-toggle="popover"]').popover();
+    		
+    			
+    			
+    			
+    			
+    			
+    			
+    			
     			
     			
     		});	
@@ -248,7 +256,7 @@ dtable=$("#claimItemsTable").DataTable({
  });
  
  
-
+ 
  
  
 </script>
@@ -740,11 +748,15 @@ dtable=$("#claimItemsTable").DataTable({
 	<div style="float:right;"><a href="#" class="noJump btn btn-xs btn-primary" id="butaddb" onclick="addattach();"><i class="fas fa-paperclip"></i> Add Receipt(s)</a></div> 
 		<b>Current Receipts:</b><br/>
 		Below are a list of any receipt(s) for this claim item.<br/>
-		<b>NOTE:</b> If no value entered for lodging and other is less than or equal to $5, (or it is a ferry expense), no receipts are required.
+		<b>NOTE:</b> If no value entered for lodging and other is less than or equal to $5, (or it is a ferry expense), no receipts are required. <b>Only PDF files will be accepted for upload</b>.
+		
+		
 			<%if(failed_item == null || failed_item.getAttachments() == null || failed_item.getAttachments().isEmpty()){ %>
+			<br/><br/>
 			<ul>
-			<li><span style="color:green;">No receipt(s) on file for this item.</span>
+			<li><span style="color:red;">No receipt(s) on file for this item.</span>
 			</ul>
+			<div class="alert alert-danger fileErrorWarning" style="display:none;"><b>ERROR:</b> File must be a valid PDF file. No images, or word/google doc formats are accepted. Please try selecting a file again or cancel.</div>
 			<script>			
 			valueLodging = $("#item_lodging").val().replace(/[$,]+/g,"");
 			valueOther = $("#item_other").val().replace(/[$,]+/g,"");				
@@ -792,10 +804,10 @@ dtable=$("#claimItemsTable").DataTable({
                         <br/>
                         <div align="center" class="no-print">
                           <%if(request.getAttribute("EDIT") != null){%>
-                           			<a href="#" class="noJump btn-sm btn-success btn" title="<%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item." onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','UPDATE','<%=failed_item.getItemID()%>');"><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Claim Item</a>
+                           			<a href="#" class="noJump btn-sm btn-success btn btnSaveClaimEdit" title="<%=(request.getAttribute("EDIT")!=null)?"Submit Edited":"Add"%> Claim Item." onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','UPDATE','<%=failed_item.getItemID()%>');"><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Claim Item</a>
                           		 	<a href="#" class="noJump btn btn-danger btn-sm"  title="Cancel edit claim item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                           
                           <%} else {%>                          
-                          			<a href="#" class="noJump btn btn-sm btn-success" onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','ADD','0');"><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Item</a>      
+                          			<a href="#" class="noJump btn btn-sm btn-success btnAddClaim" onclick="loadingData();findTheInvalids();addnewtravelclaimitem('<%=claim.getClaimID()%>','ADD','0');"><%=(request.getAttribute("EDIT")!=null)?"Save Edited":"Add"%> Item</a>      
                           			<a href="#" class="noJump btn btn-danger btn-sm"  title="Cancel Add  item." onclick="loadingData();unloadEditItem('<%=claim.getClaimID()%>');"><i class="fas fa-times"></i> Cancel</a>                              
                           <%}%>     
                        </div>
@@ -1234,7 +1246,8 @@ dtable=$("#claimItemsTable").DataTable({
     			$( "#item_meals" ).blur();
     			$( "#item_lodging" ).blur();
     			$( "#item_other" ).blur();
-    			window.parent.$('#claim_details').css('height', $('#add_claim_item_form').height()+100);
+    			//window.parent.$('#claim_details').css('height', $('#add_claim_item_form').height()+100);
+    			$('#claim_details').css('height', $('#add_claim_item_form').height()+100);
 				//$("#glaccount").mask("9-9999-9-99-9999-99-999", {placeholder: "_-____-_-__-____-__-___"});
 				
 		});
