@@ -2935,7 +2935,7 @@ public class ApplicantProfileManager {
 					int x=0;
 					for(String s : splitlist) {
 						String[] rzsplit = s.split(":");
-						list.add(x, new ArrayList<>(Arrays.asList(rzsplit[0].toLowerCase().strip(),rzsplit[1].toLowerCase().strip())));
+						list.add(x, new ArrayList<>(Arrays.asList(rzsplit[0].toLowerCase(),rzsplit[1].toLowerCase())));
 						x++;
 					}
 					aBean.setRegionZoneList(list);
