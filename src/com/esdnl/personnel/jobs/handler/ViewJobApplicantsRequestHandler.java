@@ -68,7 +68,6 @@ public class ViewJobApplicantsRequestHandler extends RequestHandlerImpl {
 					}
 					else {
 						profiles = ApplicantProfileManager.getApplicantProfileBeanByJob(form.get("comp_num"));
-
 						session.setAttribute("JOB_APPLICANTS", profiles);
 						session.setAttribute("JOB", opp);
 						session.setAttribute("SHORTLISTMAP", ApplicantProfileManager.getApplicantShortlistMap(opp));

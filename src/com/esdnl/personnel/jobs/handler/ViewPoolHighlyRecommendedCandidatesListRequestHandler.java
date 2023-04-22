@@ -1,7 +1,6 @@
 package com.esdnl.personnel.jobs.handler;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,12 +42,11 @@ public class ViewPoolHighlyRecommendedCandidatesListRequestHandler extends Reque
 				opp = JobOpportunityManager.getJobOpportunityBean(form.get("comp_num"));
 				if ((opp != null) && opp.getJobType().equal(JobTypeConstant.POOL)) {
 					session.setAttribute("JOB", opp);
-					session.setAttribute("JOB_APPLICANTS",
-							ApplicantProfileManager.getApplicantProfileBeanByJob(form.get("comp_num")));
+					//session.setAttribute("JOB_APPLICANTS",ApplicantProfileManager.getApplicantProfileBeanByJob(form.get("comp_num")));
 					request.setAttribute("HIGHLY_RECOMMENDED_MAP",
 							ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(opp.getCompetitionNumber()));
+					 
 					request.setAttribute("AD_REQUEST", AdRequestManager.getAdRequestBean(form.get("comp_num")));
-
 					path = "admin_view_job_pool_highly_recommended_list.jsp";
 				}
 				else {

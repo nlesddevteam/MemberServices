@@ -26,6 +26,7 @@
 	redirectTo="/Personnel/admin_index.jsp" />
 
 <%
+
 	if(request.getMethod().equalsIgnoreCase("POST")) {
 		session.setAttribute("sfilterparams", null);
 	}
@@ -33,16 +34,25 @@
 	if(request.getAttribute("filterparams") != null){
 		session.setAttribute("sfilterparams",request.getAttribute("filterparams"));
 	}
-		
+	
 	User usr = (User) session.getAttribute("usr");
+	
 	JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
+	
 	ApplicantProfileBean[] applicants = (ApplicantProfileBean[]) session.getAttribute("JOB_APPLICANTS");
+	
 	Map<String, ApplicantProfileBean> shortlistMap = (Map<String, ApplicantProfileBean>) session.getAttribute("SHORTLISTMAP");
 	
-	Map<String, ApplicantProfileBean> highlyRecommendedMap = null;
+	
+	//Map<String, ApplicantProfileBean> highlyRecommendedMap = null;
+	Map<String, String> highlyRecommendedMap = null;
+	
 	if(job.getJobType().equals(JobTypeConstant.POOL)) {
-		highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
+		//highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
+		highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMapString(job.getCompetitionNumber());
+		
 	}
+	
 	
 	Map<String, ApplicantProfileBean> permApplicants = null;
 	if(job.getJobType().equal(JobTypeConstant.REGULAR)) {
@@ -388,7 +398,6 @@
 							</thead>
 							<tbody>
 								<%
-									TeacherRecommendationBean[] recs = null;
 									String cssClass = "NoPosition";
 									String cssText = "No Position";
 									String position = null;
@@ -403,13 +412,13 @@
 										position = null;
 										
 									  // TODO: RETURN ALL RECENTALLY ACCEPTED POSITIONS FOR ALL APPLICANTS IN THE COMPETITION. ONE DB CALL VERSION ONE PER APPLICANT!
-										recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
+										//recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
 		
-										if ((recs != null) && (recs.length > 0)) {
-											if (recs[0].getJob() != null) {
+										if ((applicants[i].getRecCompNum() != null)) {
+											if (applicants[i].getJobType() != null) {
 												String jobtype = "";
 												
-												jtype = recs[0].getJob().getJobType();
+												jtype = applicants[i].getJobType();
 												if (jtype.equal(JobTypeConstant.TLA_REGULAR) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
 													jobtype = " TLA";
 												}
@@ -424,40 +433,40 @@
 												}
 												
 												if (jtype.equal(JobTypeConstant.REGULAR) || jtype.equal(JobTypeConstant.TLA_REGULAR)) {
-													if (recs[0].getTotalUnits() < 1.0) {
+													if (applicants[i].getTotalUnits() < 1.0) {
 														cssClass = "PermanentPartTimePosition";
 														cssText = "Permanent/ Part Time";
-														position = jobtype + " " + recs[0].getEmploymentStatus() + " Part-time ("
-																+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+														position = jobtype + " " + applicants[1].getEmpStatus() + " Part-time ("
+																+ df.format(applicants[i].getTotalUnits()) + ") @ " + applicants[i].getJobLocation();
 													}
 													else {
 														cssClass = "PermanentFullTimePosition";
 														cssText = "Permanent/ Full Time";
-														position = jobtype + " " + recs[0].getEmploymentStatus() + " Full-time @ "
-																+ recs[0].getJob().getJobLocation();
+														position = jobtype + " " + applicants[i].getEmpStatus() + " Full-time @ "
+																+ applicants[i].getJobLocation();
 													}
 												}
 												else if (jtype.equal(JobTypeConstant.REPLACEMENT) || jtype.equal(JobTypeConstant.TLA_REPLACEMENT)) {
 													cssClass = "ReplacementPosition";
 													cssText = "Replacement";
-													position = "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+ recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Replacement ("
-															+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+													position = "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+ applicants[i].getRecCompNum() +"'>"+applicants[i].getRecCompNum() + "</a><br/>" + jobtype + " Replacement ("
+															+ df.format(applicants[i].getTotalUnits()) + ") @ " + applicants[i].getJobLocation();
 												}
 												else if (jtype.equal(JobTypeConstant.TRANSFER)) {
 													cssClass = "TransferPosition";
 													cssText = "Transfer";
-													position =  "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+recs[0].getJob().getCompetitionNumber() +"'>"+recs[0].getJob().getCompetitionNumber() + "</a><br/>" + jobtype + " Transfer ("
-															+ df.format(recs[0].getTotalUnits()) + ") @ " + recs[0].getJob().getJobLocation();
+													position =  "<b>Competition #:</b> <a href='/MemberServices/Personnel/view_job_post.jsp?comp_num="+applicants[i].getRecCompNum() +"'>"+applicants[i].getRecCompNum() + "</a><br/>" + jobtype + " Transfer ("
+															+ df.format(applicants[i].getTotalUnits()) + ") @ " + applicants[i].getJobLocation();
 												}												
 												else if(jtype.equal(JobTypeConstant.ADMINISTRATIVE)) {
 													cssClass="PermanentFullTimePosition";
 													cssText="School Administrative Position";
-													position=jobtype+" @ "+recs[0].getJob().getJobLocation();
+													position=jobtype+" @ "+applicants[i].getJobLocation();
 												}}
 			
 											if (position != null) {
 												cssText = "<span style='color:Green;'>Already Accepted a Position</span>";
-												position += "<br/><b>Accepted:</b> " + recs[0].getOfferAcceptedDateFormatted();
+												position += "<br/><b>Accepted:</b> " + applicants[i].getrecOfferAcceptedDateFormatted();
 											}
 										}
 		
@@ -475,9 +484,11 @@
 								
 									<!-- SENIORITY -->	
 									<td>
+									
 										<%if (applicants[i].getSenority() > 0) { %> <span style='color: red;'><%=applicants[i].getSenority()%></span>
 										<%} else {%> <span style="color: DimGrey;">0</span> 
 										<%}%>
+									
 									</td>
 								
 									<!-- HIGHLY RECOMMENDED -->
@@ -503,7 +514,6 @@
 									<% }
 									
 										if (applicants[i].getProfileType().equals("T") && job.getIsSupport().equals("N")) { 
-											Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(applicants[i]);
 											int coursesCompleted = 0;
 											int UT = 0; //University Transcripts 1
 											int TC = 0; //Teaching Certificates 2
@@ -511,42 +521,19 @@
 											int VC = 0; //Vunerable Sector Checks 6
 											int FP = 0; //French Proficiency (DELF) doc.getType().getDescription() 4
 											int EC = 0; //Level 2 Early Childhood Education Certificate   5
+											if(applicants[i].getApplicantDocs() != null){
+												UT = applicants[i].getApplicantDocs().get(1);
+												TC = applicants[i].getApplicantDocs().get(2);
+												CC = applicants[i].getApplicantDocs().get(3);
+												FP = applicants[i].getApplicantDocs().get(4);
+												EC = applicants[i].getApplicantDocs().get(5);
+												VC = applicants[i].getApplicantDocs().get(6);
 											
-											if ((docs != null) && (docs.size() > 0)) {
-												for (ApplicantDocumentBean doc : docs) {
-													if (doc.getType().getValue() == 1) {
-														UT++;
-													} 
-													else if (doc.getType().getValue() == 2) {
-														TC++;
-													} 
-													else if (doc.getType().getValue() == 3) {
-														CC++;															
-													} 
-													else if (doc.getType().getValue() == 4) {
-														FP++;
-													} 
-													else if (doc.getType().getValue() == 5) {
-														EC++;
-													} 
-													else if (doc.getType().getValue() == 6) {
-														VC++;	
-													} 
-													else {
-														// WHY?
-													}
-												}
+											
 											}
-		
-											// TODO: RETURN FOR ALL APPLICANTS IN COMPETITION. ONE DB CALL INSTEAD OF ONE PER APPLICANT IN COMPETITION
-											edu_other = ApplicantEducationOtherManager.getApplicantEducationOtherBean(applicants[i].getSIN());
-			
-											if (edu_other != null) {
-												coursesCompleted = edu_other.getTotalCoursesCompleted();
-											} 
-											else {
-												coursesCompleted = 0;
-											}
+										
+											coursesCompleted = applicants[i].getTotalCourses();
+											
 									%>
 									<!-- 
 										If the user has Level 2 Early Childhood Education Certificate only, or just 20 plus courses, and NO Teaching Certificate they can be flagged as a TLA only
