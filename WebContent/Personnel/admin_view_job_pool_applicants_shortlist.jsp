@@ -336,8 +336,8 @@
 												    <% //for(int rp=0; rp < regionPrefs.length; rp ++){%>
 												    <% int rp=0; 
 												    for(ArrayList<String> ss : applicants[i].getRegionZoneList()) { %>
-												    <c:set var="whatRegion" value="<%=ss.get(0)%>"/>
-			                                    	<c:set var="whatZone" value="<%=ss.get(1)%>"/>
+												    <c:set var="whatRegion" value="<%=ss.get(0).trim()%>"/>
+			                                    	<c:set var="whatZone" value="<%=ss.get(1).trim()%>"/>
 			                                    	
 			                                    	                                	
 			                                    	<c:choose>
@@ -354,7 +354,7 @@
 														<c:when test="${whatZone eq 'all western region'}"><i>(All Western Zone)</i></c:when>
 														<c:when test="${whatZone eq 'all central region'}"><i>(All Central Zone)</i></c:when>
 														<c:when test="${whatZone eq 'all eastern region' or whatZone eq 'all avalon region'}"><i>(All Avalon Zone)</i></c:when>							
-														<c:otherwise><span style="text-transform:Capitalize;"><i>(<%=ss.get(1)%> Regional Zone)</i></span></c:otherwise>
+														<c:otherwise><span style="text-transform:Capitalize;"><i>(<%=ss.get(1).trim()%> Regional Zone)</i></span></c:otherwise>
 													</c:choose>
 													<%if ((rp > (applicants[i].getRegionZoneList().size()-2))) {%>
 														<span style="margin-left:-3px;">.</span>
