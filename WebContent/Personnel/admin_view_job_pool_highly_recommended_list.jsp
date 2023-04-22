@@ -30,9 +30,10 @@
 
 <%
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
-	JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
+	ArrayList<String> jobs = JobOpportunityManager.getJobOpportunityBeansListString("CLOSED");
 	
 	Map<String, ApplicantProfileBean> applicants = (Map<String, ApplicantProfileBean>) request.getAttribute("HIGHLY_RECOMMENDED_MAP");
+	
   
 	AdRequestBean ad = (AdRequestBean) request.getAttribute("AD_REQUEST");
   
@@ -172,7 +173,6 @@ input {
 						<tbody>
 
 							<%
-							TeacherRecommendationBean rec = null;
 							String cssClass = "NoPosition";
 							String cssText = "No Position";
 							String position = null;
@@ -183,43 +183,42 @@ input {
 								cssClass = "NoPosition";
 								cssText = "No Position";
 								position = null;
-								rec = app.getMostRecentAcceptedRecommendation();
 								
 								try {
-									if (rec != null && rec.getOfferAcceptedDate().after(positionAcceptanceCutOffDate)) {
-										if (rec.getJob().getJobType().equal(JobTypeConstant.REGULAR)) {
-											if (rec.getTotalUnits() < 1.0) {
+									if (app.getRecCompNum() != null && app.getRecOfferAcceptedDate() !=null && app.getRecOfferAcceptedDate().after(positionAcceptanceCutOffDate)) {
+										if (app.getJobType().equal(JobTypeConstant.REGULAR)) {
+											if (app.getTotalUnits() < 1.0) {
 												cssClass = "PermanentPartTimePosition";
 												cssText = "Permanent/ Part Time";
-												position = rec.getEmploymentStatus() + " Part-time (" + df.format(rec.getTotalUnits()) + ") @ "
-														+ rec.getJob().getJobLocation();
+												position = app.getEmpStatus() + " Part-time (" + df.format(app.getTotalUnits()) + ") @ "
+														+ app.getJobLocation();
 											}
 											else {
 												cssClass = "PermanentFullTimePosition";
 												cssText = "Permanent/ Full Time";
-												position = rec.getEmploymentStatus() + " Full-time @ " + rec.getJob().getJobLocation();
+												position = app.getEmpStatus() + " Full-time @ " + app.getJobLocation();
 											}
 										}
-										else if (rec.getJob().getJobType().equal(JobTypeConstant.REPLACEMENT)) {
+										else if (app.getJobType().equal(JobTypeConstant.REPLACEMENT)) {
 											cssClass = "ReplacementPosition";
 											cssText = "Replacement";
-											position = rec.getJob().getCompetitionNumber() + ":Replacement (" + df.format(rec.getTotalUnits())
-													+ ") @ " + rec.getJob().getJobLocation();
+											position = app.getRecCompNum() + ":Replacement (" + df.format(app.getTotalUnits())
+													+ ") @ " + app.getJobLocation();
 										}
-										else if (rec.getJob().getJobType().equal(JobTypeConstant.TRANSFER)) {
+										else if (app.getJobType().equal(JobTypeConstant.TRANSFER)) {
 											cssClass = "TransferPosition";
 											cssText = "Transfer";
-											position = rec.getJob().getCompetitionNumber() + ":Transfer (" + df.format(rec.getTotalUnits()) + ") @ "
-													+ rec.getJob().getJobLocation();
+											position = app.getRecCompNum() + ":Transfer (" + df.format(app.getTotalUnits()) + ") @ "
+													+ app.getJobLocation();
 										} 
-										else if(rec.getJob().getJobType().equal(JobTypeConstant.ADMINISTRATIVE)) {
+										else if(app.getJobType().equal(JobTypeConstant.ADMINISTRATIVE)) {
 											cssClass="PermanentFullTimePosition";
 											cssText="Administrative";
-											position=rec.getJob().getCompetitionNumber()+" @ "+rec.getJob().getJobLocation();
+											position=app.getRecCompNum()+" @ "+app.getJobLocation();
 										}
 		
 										if (position != null) {
-											position += " - Accepted: " + rec.getOfferAcceptedDateFormatted();
+											position += " - Accepted: " + app.getrecOfferAcceptedDateFormatted();
 										}
 									}
 								}
@@ -260,51 +259,49 @@ input {
 										<%} %>
 										<br />
 
-										<% RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(app).values().toArray(new RegionBean[0]); %>
-										<%if((regionPrefs != null) && (regionPrefs.length > 0)) { %>
-										<span style="font-size: 9px; padding-top: 5px;"> <b>Preferred
-												Regions (Zones): </b> <% for(int rp=0; rp < regionPrefs.length; rp ++){%>
-											<c:set var="whatRegion"
-												value="<%=regionPrefs[rp].getZone()%>" /> <c:set
-												var="whatZone" value="<%=regionPrefs[rp].getName()%>" /> <c:choose>
-												<c:when
-													test="${whatRegion eq 'avalon' or whatRegion eq 'eastern' }">Avalon Region</c:when>
-												<c:when test="${whatRegion eq 'central'}">Central Region</c:when>
-												<c:when test="${whatRegion eq 'western'}">Western Region</c:when>
-												<c:when test="${whatRegion eq 'labrador'}">Labrador Region</c:when>
-												<c:when test="${whatRegion eq 'provincial'}">Provincial</c:when>
-												<c:otherwise>
-													<span style="color: Red;">ERROR: Unknown Region</span>
-												</c:otherwise>
-											</c:choose> <c:choose>
-												<c:when
-													test="${whatZone eq 'nlesd - provincal' or whatZone eq 'nlesd - provincial'}">
-													<i>(All Province)</i>
-												</c:when>
-												<c:when test="${whatZone eq 'all labrador region'}">
-													<i>(All Labrador)</i>
-												</c:when>
-												<c:when test="${whatZone eq 'all western region'}">
-													<i>(All Western Zone)</i>
-												</c:when>
-												<c:when test="${whatZone eq 'all central region'}">
-													<i>(All Central Zone)</i>
-												</c:when>
-												<c:when
-													test="${whatZone eq 'all eastern region' or whatZone eq 'all avalon region'}">
-													<i>(All Avalon Zone)</i>
-												</c:when>
-												<c:otherwise>
-													<span style="text-transform: Capitalize;"><i>(<%=regionPrefs[rp].getName()%>
-															Regional Zone)
-													</i></span>
-												</c:otherwise>
-											</c:choose> <%if (rp > (regionPrefs.length-2)) {%> <span
-											style="margin-left: -3px;">.</span> <%} else {%> <span
-											style="margin-left: -3px;">,</span> <%}%> <%}%>
-										</span>
-										<%}%>
-									</div>
+		                                        <% //RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(applicants[i]).values().toArray(new RegionBean[0]);
+						                          %>
+		                                           <%if((app.getRegionZoneList() != null) && (app.getRegionZoneList().size() > 0)) { 
+		                                           	
+		                                           %>
+		                                           
+		                                           
+												    <span style="font-size:9px;padding-top:5px;">
+												    <b>Preferred Regions (Zones): </b>												   							    
+												    <% //for(int rp=0; rp < regionPrefs.length; rp ++){%>
+												    <% int rp=0; 
+												    for(ArrayList<String> ss : app.getRegionZoneList()) { %>
+												    <c:set var="whatRegion" value="<%=ss.get(1)%>"/>
+			                                    	<c:set var="whatZone" value="<%=ss.get(0)%>"/>
+			                                    	
+			                                    	                                	
+			                                    	<c:choose>
+														<c:when test="${whatRegion eq 'avalon' or whatRegion eq 'eastern' }">Avalon Region</c:when>
+														<c:when test="${whatRegion eq 'central'}">Central Region</c:when>
+														<c:when test="${whatRegion eq 'western'}">Western Region</c:when>
+														<c:when test="${whatRegion eq 'labrador'}">Labrador Region</c:when>
+														<c:when test="${whatRegion eq 'provincial'}">Provincial</c:when>
+														<c:otherwise><span style="color:Red;">ERROR: Unknown Region</span></c:otherwise>
+													</c:choose>
+													<c:choose>
+														<c:when test="${whatZone eq 'nlesd - provincal' or whatZone eq 'nlesd - provincial'}"><i>(All Province)</i></c:when>
+														<c:when test="${whatZone eq 'all labrador region'}"><i>(All Labrador)</i></c:when>	
+														<c:when test="${whatZone eq 'all western region'}"><i>(All Western Zone)</i></c:when>
+														<c:when test="${whatZone eq 'all central region'}"><i>(All Central Zone)</i></c:when>
+														<c:when test="${whatZone eq 'all eastern region' or whatZone eq 'all avalon region'}"><i>(All Avalon Zone)</i></c:when>							
+														<c:otherwise><span style="text-transform:Capitalize;"><i>(<%=ss.get(0)%> Regional Zone)</i></span></c:otherwise>
+													</c:choose>
+													<%if ((rp > (app.getRegionZoneList().size()-2))) {%>
+														<span style="margin-left:-3px;">.</span>
+													<%} else {%>
+														<span style="margin-left:-3px;">,</span>
+													<%}
+														rp++;
+													%>
+													<%}%>
+													</span>
+													<%}%>
+												</div>
 
 								</td>
 							</tr>
@@ -370,10 +367,10 @@ input {
 								id='comp_num' class='requiredInputBox'
 								style='width: 205px; height: 23px;'>
 									<%
-										for (JobOpportunityBean j : jobs) {
-										if (j.getCompetitionNumber().equals(job.getCompetitionNumber()))
+										for (String j : jobs) {
+										if (j.equals(job.getCompetitionNumber()))
 											continue;
-										out.println("<OPTION VALUE='" + j.getCompetitionNumber() + "'>" + j.getCompetitionNumber() + "</OPTION>");
+										out.println("<OPTION VALUE='" + j + "'>" + j + "</OPTION>");
 									}
 									%>
 							</SELECT> <input type='button' id='btn_add_applicant'

@@ -1727,4 +1727,55 @@ public class JobOpportunityManager {
 
 		return jlist;
 	}
+	public static ArrayList<String> getJobOpportunityBeansListString(String status) throws JobOpportunityException {
+
+		ArrayList<String>v_opps = new ArrayList<String>();
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			con = DAOUtils.getConnection();
+			if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("OPEN"))
+				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_open_job_opps; end;");
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CLOSED"))
+				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_closed_job_opps; end;");
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("AWARDED"))
+				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_awarded_job_opps; end;");
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("CANCELLED"))
+				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_cancelled_job_opps; end;");
+			else if (!StringUtils.isEmpty(status) && status.equalsIgnoreCase("NOSHORTLIST"))
+				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_noshortlist_job_opps; end;");
+			else
+				stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_all_job_opps; end;");
+
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				v_opps.add(rs.getString("COMP_NUM"));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println("JobOpportunityManager.getJobOpportunityBeans(boolean): " + e);
+			throw new JobOpportunityException("Can not extract JobOpportunityBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return v_opps;
+	}
 }

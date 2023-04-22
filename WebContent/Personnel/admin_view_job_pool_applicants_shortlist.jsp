@@ -28,8 +28,10 @@
 <esd:SecurityCheck permissions="PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW" />
 
 <%
+
   JobOpportunityBean job = (JobOpportunityBean) session.getAttribute("JOB");
-	JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
+	//JobOpportunityBean jobs[] = JobOpportunityManager.getJobOpportunityBeans("CLOSED");
+	ArrayList<String> jobs = JobOpportunityManager.getJobOpportunityBeansListString("CLOSED");
 	TeacherRecommendationBean[] rec = RecommendationManager.getTeacherRecommendationBean(job.getCompetitionNumber());
 	
 	//@SuppressWarnings("unchecked")
@@ -59,11 +61,11 @@
   int totalregion = 0;
   int statusi=0;
   int regionNum=0;
-  TreeMap<String, ApplicantProfileBean> all_applicants = new TreeMap<String, ApplicantProfileBean>();  
+  TreeMap<String, ApplicantProfileBean> all_applicants = new TreeMap<String, ApplicantProfileBean>();
   InterviewGuideBean guide = InterviewGuideManager.getInterviewGuideBean(job);
   Map<String, InterviewSummaryBean> interviewSummaryMap = InterviewSummaryManager.getInterviewSummaryBeansMap(job);
-  
-  Map<String, ApplicantProfileBean> highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
+  //Map<String, ApplicantProfileBean> highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMap(job.getCompetitionNumber());
+  Map<String, String> highlyRecommendedMap = ApplicantProfileManager.getPoolCompetitionHighlyRecommendedCandidateMapString(job.getCompetitionNumber());
 %>
 
 
@@ -212,7 +214,7 @@
                                 	  
                                 	  
                                 	  
-                                  	<%TeacherRecommendationBean[] recs = null;                                  	
+                                  	<%
                                   	String cssClass = "NoPosition";
                                   	String cssText = "No Position";
                                   	String position = null;
@@ -223,43 +225,43 @@
                                     	cssClass = "NoPosition";
                                     	cssText = "No Position";
                                     	position = null;
-                                    	recs = applicants[i].getRecentlyAcceptedPositions(rec_search_date);
                                     	
                                     
                                     	try{
                                     		
                                     	
-                                    	if((recs != null) && (recs.length > 0)){
-                                    		if(recs[0].getJob().getJobType().equal(JobTypeConstant.REGULAR)){
-                                    			if(recs[0].getTotalUnits() < 1.0){
+                                    		if ((applicants[i].getRecCompNum() != null)) {
+    											if (applicants[i].getJobType() != null)
+                                    		if(applicants[i].getJobType().equal(JobTypeConstant.REGULAR)){
+                                    			if(applicants[i].getTotalUnits() < 1.0){
                                     				cssClass = "PermanentPartTimePosition";
                                     				cssText = "Permanent/ Part Time";
-                                    				position = recs[0].getEmploymentStatus() + " Part-time (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
+                                    				position = applicants[i].getEmpStatus() + " Part-time (" + df.format(applicants[i].getTotalUnits()) + ") @ "  + applicants[i].getJobLocation();
                                     			}
                                     			else{
                                     				cssClass = "PermanentFullTimePosition";
                                     				cssText = "Permanent/ Full Time";
-                                    				position = recs[0].getEmploymentStatus() + " Full-time @ " + recs[0].getJob().getJobLocation() ;
+                                    				position = applicants[i].getEmpStatus() + " Full-time @ " + applicants[i].getJobLocation() ;
                                     			}
                                     		}
-                                    		else if(recs[0].getJob().getJobType().equal(JobTypeConstant.REPLACEMENT)){
+                                    		else if(applicants[i].getJobType().equal(JobTypeConstant.REPLACEMENT)){
                                     			cssClass = "ReplacementPosition";
                                     			cssText = "Replacement";
-                                    			position = recs[0].getJob().getCompetitionNumber() + ":Replacement (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
+                                    			position = applicants[i].getRecCompNum() + ":Replacement (" + df.format(applicants[i].getTotalUnits()) + ") @ "  + applicants[i].getJobLocation();
                                     		}
-                                    		else if(recs[0].getJob().getJobType().equal(JobTypeConstant.TRANSFER)){
+                                    		else if(applicants[i].getJobType().equal(JobTypeConstant.TRANSFER)){
                                     			cssClass = "TransferPosition";
                                     			cssText = "Transfer";
-                                    			position = recs[0].getJob().getCompetitionNumber() + ":Transfer (" + df.format(recs[0].getTotalUnits()) + ") @ "  + recs[0].getJob().getJobLocation();
+                                    			position = applicants[i].getRecCompNum() + ":Transfer (" + df.format(applicants[i].getTotalUnits()) + ") @ "  + applicants[i].getJobLocation();
                                     		} 
-                                    		else if(recs[0].getJob().getJobType().equal(JobTypeConstant.ADMINISTRATIVE)) {
+                                    		else if(applicants[i].getJobType().equal(JobTypeConstant.ADMINISTRATIVE)) {
 												cssClass="PermanentFullTimePosition";
 												cssText="Administrative";
-												position=recs[0].getJob().getCompetitionNumber()+" @ "+recs[0].getJob().getJobLocation();
+												position=applicants[i].getRecCompNum()+" @ "+applicants[i].getJobLocation();
 											}
                                     		
                                     		if(position != null) {                                    			
-                                    			position += " - Accepted: " + recs[0].getOfferAcceptedDateFormatted();
+                                    			position += " - Accepted: " + applicants[i].getrecOfferAcceptedDateFormatted();
                                     		}
                                     		
                                     	}
@@ -322,13 +324,22 @@
 			                                    	<br/>
 				                                    	
 		                                        
-		                                        <% RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(applicants[i]).values().toArray(new RegionBean[0]); %>
-		                                           <%if((regionPrefs != null) && (regionPrefs.length > 0)) { %>
+		                                        <% //RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(applicants[i]).values().toArray(new RegionBean[0]);
+						                          %>
+		                                           <%if((applicants[i].getRegionZoneList() != null) && (applicants[i].getRegionZoneList().size() > 0)) { 
+		                                           	
+		                                           %>
+		                                           
+		                                           
 												    <span style="font-size:9px;padding-top:5px;">
 												    <b>Preferred Regions (Zones): </b>												   							    
-												    <% for(int rp=0; rp < regionPrefs.length; rp ++){%>                                    	
-			                                    	<c:set var="whatRegion" value="<%=regionPrefs[rp].getZone()%>"/>
-			                                    	<c:set var="whatZone" value="<%=regionPrefs[rp].getName()%>"/>                                  	
+												    <% //for(int rp=0; rp < regionPrefs.length; rp ++){%>
+												    <% int rp=0; 
+												    for(ArrayList<String> ss : applicants[i].getRegionZoneList()) { %>
+												    <c:set var="whatRegion" value="<%=ss.get(0)%>"/>
+			                                    	<c:set var="whatZone" value="<%=ss.get(1)%>"/>
+			                                    	
+			                                    	                                	
 			                                    	<c:choose>
 														<c:when test="${whatRegion eq 'avalon' or whatRegion eq 'eastern' }">Avalon Region</c:when>
 														<c:when test="${whatRegion eq 'central'}">Central Region</c:when>
@@ -343,13 +354,15 @@
 														<c:when test="${whatZone eq 'all western region'}"><i>(All Western Zone)</i></c:when>
 														<c:when test="${whatZone eq 'all central region'}"><i>(All Central Zone)</i></c:when>
 														<c:when test="${whatZone eq 'all eastern region' or whatZone eq 'all avalon region'}"><i>(All Avalon Zone)</i></c:when>							
-														<c:otherwise><span style="text-transform:Capitalize;"><i>(<%=regionPrefs[rp].getName()%> Regional Zone)</i></span></c:otherwise>
+														<c:otherwise><span style="text-transform:Capitalize;"><i>(<%=ss.get(1)%> Regional Zone)</i></span></c:otherwise>
 													</c:choose>
-													<%if (rp > (regionPrefs.length-2)) {%>
+													<%if ((rp > (applicants[i].getRegionZoneList().size()-2))) {%>
 														<span style="margin-left:-3px;">.</span>
 													<%} else {%>
 														<span style="margin-left:-3px;">,</span>
-													<%}%>
+													<%}
+														rp++;
+													%>
 													<%}%>
 													</span>
 													<%}%>
@@ -434,10 +447,10 @@
 							<td style='padding-bottom:10px;'>
 								<SELECT name='comp_num' id='comp_num' class='requiredInputBox' style='width:205px;height:23px;'>
 								<%
-									for(JobOpportunityBean j : jobs) {
-										if(j.getCompetitionNumber().equals(job.getCompetitionNumber()))
+									for(String j : jobs) {
+										if(j.equals(job.getCompetitionNumber()))
 												continue;
-										out.println("<OPTION VALUE='" + j.getCompetitionNumber() + "'>" + j.getCompetitionNumber() + "</OPTION>");
+										out.println("<OPTION VALUE='" + j + "'>" + j + "</OPTION>");
 									}
 								%>
 								</SELECT> 

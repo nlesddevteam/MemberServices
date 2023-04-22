@@ -2,11 +2,15 @@ package com.esdnl.personnel.jobs.bean;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import com.awsd.school.School;
+import com.esdnl.personnel.jobs.constants.EmploymentConstant;
+import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.dao.ApplicantProfileManager;
 import com.esdnl.personnel.jobs.dao.RecommendationManager;
 import com.esdnl.util.StringUtils;
@@ -58,6 +62,16 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	private String covid19VaxStatus;
 	//used for special status sds/covid19
 	private Covid19SDSStatusBean stBean;
+	//used for shortlist/applicant list
+	private TreeMap<Integer,Integer> applicantDocs;
+	private Integer totalCourses;
+	private double totalUnits;
+	private EmploymentConstant  empStatus;
+	private String jobLocation;
+	private String recCompNum;
+	private Date recOfferAcceptedDate;
+	private JobTypeConstant jobType;
+	private ArrayList<ArrayList<String>> regionZoneList;
 
 	private List<Integer> substituteSchoolIdPrefs;
 
@@ -578,4 +592,82 @@ public class ApplicantProfileBean implements Comparable<ApplicantProfileBean>, C
 	public void setStBean(Covid19SDSStatusBean stBean) {
 		this.stBean = stBean;
 	}
+
+	public TreeMap<Integer, Integer> getApplicantDocs() {
+		return applicantDocs;
+	}
+
+	public void setApplicantDocs(TreeMap<Integer, Integer> applicantDocs) {
+		this.applicantDocs = applicantDocs;
+	}
+
+	public Integer getTotalCourses() {
+		return totalCourses;
+	}
+
+	public void setTotalCourses(Integer totalCourses) {
+		this.totalCourses = totalCourses;
+	}
+
+	public double getTotalUnits() {
+		return totalUnits;
+	}
+
+	public void setTotalUnits(double totalUnits) {
+		this.totalUnits = totalUnits;
+	}
+
+	public EmploymentConstant getEmpStatus() {
+		return empStatus;
+	}
+
+	public void setEmpStatus(EmploymentConstant empStatus) {
+		this.empStatus = empStatus;
+	}
+
+	public String getJobLocation() {
+		return jobLocation;
+	}
+
+	public void setJobLocation(String jobLocation) {
+		this.jobLocation = jobLocation;
+	}
+
+	public String getRecCompNum() {
+		return recCompNum;
+	}
+
+	public void setRecCompNum(String recCompNum) {
+		this.recCompNum = recCompNum;
+	}
+
+	public Date getRecOfferAcceptedDate() {
+		return recOfferAcceptedDate;
+	}
+
+	public void setRecOfferAcceptedDate(Date recOfferAcceptedDate) {
+		this.recOfferAcceptedDate = recOfferAcceptedDate;
+	}
+
+	public JobTypeConstant getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(JobTypeConstant jobType) {
+		this.jobType = jobType;
+	}
+	public String getrecOfferAcceptedDateFormatted() {
+
+		return new SimpleDateFormat("dd/MM/yyyy").format(this.recOfferAcceptedDate);
+	}
+
+	public ArrayList<ArrayList<String>> getRegionZoneList() {
+		return regionZoneList;
+	}
+
+	public void setRegionZoneList(ArrayList<ArrayList<String>> regionZoneList) {
+		this.regionZoneList = regionZoneList;
+	}
+
+	
 }

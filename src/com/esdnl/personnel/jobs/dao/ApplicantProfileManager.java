@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,7 @@ import com.esdnl.personnel.jobs.bean.JobOpportunityException;
 import com.esdnl.personnel.jobs.bean.SubListBean;
 import com.esdnl.personnel.jobs.constants.DocumentType;
 import com.esdnl.personnel.jobs.constants.DocumentTypeSS;
+import com.esdnl.personnel.jobs.constants.EmploymentConstant;
 import com.esdnl.personnel.jobs.constants.JobTypeConstant;
 import com.esdnl.personnel.jobs.constants.SublistAuditTypeCostant;
 import com.esdnl.personnel.jobs.constants.TrainingMethodConstant;
@@ -431,14 +434,14 @@ public class ApplicantProfileManager {
 			v_opps = new Vector<ApplicantProfileBean>(5);
 
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_appls(?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_job_appls_n(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setString(2, comp_num);
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createApplicantProfileBean(rs);
+				eBean = createApplicantProfileBeanSLAP(rs);
 				v_opps.add(eBean);
 			}
 		}
@@ -521,18 +524,18 @@ public class ApplicantProfileManager {
 			v_opps = new Vector<ApplicantProfileBean>(5);
 
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_short_list(?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.personnel_jobs_pkg.get_short_list_n(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setString(2, opp.getCompetitionNumber());
 			stat.execute();
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createApplicantProfileBean(rs);
+				eBean = createApplicantProfileBeanSLAP(rs);
 				v_opps.add(eBean);
 			}
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			System.err.println("ApplicantProfileBean[] getApplicantShortlist(String comp_num): " + e);
 			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
 		}
@@ -574,7 +577,7 @@ public class ApplicantProfileManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				eBean = createApplicantProfileBean(rs);
+				eBean = createApplicantProfileBeanSLAP(rs);
 				v_opps.put(eBean.getSIN(), eBean);
 			}
 		}
@@ -2431,7 +2434,8 @@ public class ApplicantProfileManager {
 			apps = new HashMap<String, ApplicantProfileBean>();
 
 			con = DAOUtils.getConnection();
-			stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.GET_POOL_HIGHLY_REC_APPS(?); end;");
+			//stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.GET_POOL_HIGHLY_REC_APPS(?); end;");
+			  stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.GET_POOL_HIGHLY_REC_APPS2(?); end;");
 			stat.registerOutParameter(1, OracleTypes.CURSOR);
 			stat.setString(2, comp_num);
 
@@ -2439,12 +2443,60 @@ public class ApplicantProfileManager {
 			rs = ((OracleCallableStatement) stat).getCursor(1);
 
 			while (rs.next()) {
-				apps.put(rs.getString("sin"), createApplicantProfileBean(rs));
+				apps.put(rs.getString("sin"), createApplicantProfileBeanSLAP(rs));
 			}
 		}
 		catch (SQLException e) {
 			System.err.println(
 					"Map<String, ApplicantProfileBean> getPoolCompetitionHighlyRecommendedCandidateMap(String comp_num): " + e);
+			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
+		}
+		finally {
+			try {
+				rs.close();
+			}
+			catch (Exception e) {}
+			try {
+				stat.close();
+			}
+			catch (Exception e) {}
+			try {
+				con.close();
+			}
+			catch (Exception e) {}
+		}
+
+		return apps;
+	}
+	public static Map<String, String> getPoolCompetitionHighlyRecommendedCandidateMapString(String comp_num)
+			throws JobOpportunityException {
+
+		Map<String, String> apps = null;
+
+		Connection con = null;
+		CallableStatement stat = null;
+		ResultSet rs = null;
+
+		try {
+			apps = new HashMap<String, String>();
+
+			con = DAOUtils.getConnection();
+			//get_pool_highly_rec_appsn
+			//stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.GET_POOL_HIGHLY_REC_APPS(?); end;");
+			stat = con.prepareCall("begin ? := AWSD_USER.PERSONNEL_JOBS_2_PKG.get_pool_highly_rec_appsn(?); end;");
+			stat.registerOutParameter(1, OracleTypes.CURSOR);
+			stat.setString(2, comp_num);
+
+			stat.execute();
+			rs = ((OracleCallableStatement) stat).getCursor(1);
+
+			while (rs.next()) {
+				apps.put(rs.getString("sin"),rs.getString("sin") );
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(
+					"Map<String, String> getPoolCompetitionHighlyRecommendedCandidateMap(String comp_num): " + e);
 			throw new JobOpportunityException("Can not extract ApplicantProfileBean from DB.", e);
 		}
 		finally {
@@ -2715,6 +2767,191 @@ public class ApplicantProfileManager {
 			catch (Exception e) {
 				aBean.setStBean(null);
 			}
+
+		}
+		catch (SQLException e) {
+			aBean = null;
+
+			System.out.println("ERROR CREATING PROFILE BEAN: " + e.getMessage());
+
+			try {
+				new AlertBean(e);
+			}
+			catch (Exception ex) {}
+		}
+		return aBean;
+	}
+	public static ApplicantProfileBean createApplicantProfileBeanSLAP(ResultSet rs) {
+
+		ApplicantProfileBean aBean = null;
+		try {
+			aBean = new ApplicantProfileBean();
+			aBean.setAddress1(rs.getString("ADDRESS1"));
+			aBean.setAddress2(rs.getString("ADDRESS2"));
+			aBean.setCellphone(rs.getString("CELLPHONE"));
+			aBean.setCountry(rs.getString("COUNTRY"));
+			aBean.setEmail(rs.getString("EMAIL"));
+			aBean.setFirstname(rs.getString("FIRSTNAME"));
+			aBean.setHomephone(rs.getString("HOMEPHONE"));
+			aBean.setMaidenname(rs.getString("MAIDENNAME"));
+			aBean.setMiddlename(rs.getString("MIDDLENAME"));
+			aBean.setPassword(rs.getString("PASSWORD"));
+			aBean.setPostalcode(rs.getString("POSTALCODE"));
+			aBean.setProvince(rs.getString("PROVINCE"));
+			aBean.setSIN(rs.getString("SIN"));
+			aBean.setSIN2(rs.getString("SIN2"));
+			aBean.setSurname(rs.getString("SURNAME"));
+			aBean.setWorkphone(rs.getString("WORKPHONE"));
+
+			try {
+				if (rs.getTimestamp("DOB") != null) {
+
+					aBean.setDOB(new java.util.Date(rs.getDate("DOB").getTime()));
+				}
+
+			}
+			catch (SQLException e) {}
+
+			try {
+				if (rs.getTimestamp("APPLIED_DATE") != null)
+					aBean.setAppliedDate(new java.util.Date(rs.getTimestamp("APPLIED_DATE").getTime()));
+			}
+			catch (SQLException e) {}
+
+			try {
+				if (rs.getTimestamp("MODIFIED_DATE") != null)
+					aBean.setModifiedDate(new java.util.Date(rs.getTimestamp("MODIFIED_DATE").getTime()));
+			}
+			catch (SQLException e) {}
+
+			//used for filtering
+			try {
+				aBean.setSenority(rs.getDouble("SENORITY"));
+			}
+			catch (SQLException e) {}
+
+			//used for filtering
+			//aBean.setEsdExp(ApplicantEsdExperienceManager.createApplicantEsdExperienceBean(rs));
+			//populate sublist major and minors
+			//aBean.setMajorsList(getSubListMajors(aBean.getSIN()));
+			//aBean.setMinorsList(getSubListMinors(aBean.getSIN()));
+			try {
+				aBean.setMajorsList(rs.getString("majors"));
+			}
+			catch (java.sql.SQLException e) {
+				aBean.setMajorsList("");
+			}
+			try {
+				aBean.setMinorsList(rs.getString("minors"));
+			}
+			catch (java.sql.SQLException e) {
+				aBean.setMajorsList("");
+			}
+			aBean.setProfileType(rs.getString("PROFILETYPE"));
+
+			
+			
+			//added catch until all places this is called are checked
+			try {
+				if (rs.getInt("IS_DELETED") >= 0) {
+					aBean.setDeleted(rs.getInt("IS_DELETED") == 1 ? true : false);
+				}
+				else {
+					aBean.setDeleted(false);
+				}
+			}
+			catch (SQLException e) {}
+			
+			
+			//check sub prefs
+			try {
+				if (org.apache.commons.lang.StringUtils.isNotBlank(rs.getString("sub_prefs"))) {
+					aBean.setSubstititeSchoolIDPrefs(
+							Stream.of(rs.getString("sub_prefs").split(",")).map(String::trim).map(Integer::parseInt).collect(
+									Collectors.toList()));
+				}
+			}
+			catch (SQLException e) {}
+			
+			//see if the document count is included
+			try {
+				if (rs.getInt("T1") >= 0) {
+					TreeMap<Integer,Integer> dcount = new TreeMap<Integer,Integer>();
+					dcount.put(1, rs.getInt("T1"));
+					dcount.put(2, rs.getInt("T2"));
+					dcount.put(3, rs.getInt("T3"));
+					dcount.put(4, rs.getInt("T4"));
+					dcount.put(5, rs.getInt("T5"));
+					dcount.put(6, rs.getInt("T6"));
+					aBean.setApplicantDocs(dcount);
+					
+				}
+				else {
+					aBean.setApplicantDocs(null);
+				}
+			}
+			catch (SQLException e) {
+				aBean.setApplicantDocs(null);
+			}
+			
+			//see if education other total courses included in query
+			try {
+				if (rs.getInt("TOTAL_CRS_COMPLETED") >= 0) {
+					aBean.setTotalCourses(rs.getInt("TOTAL_CRS_COMPLETED"));
+				}
+				else {
+					aBean.setTotalCourses(0);
+				}
+			}
+			catch (SQLException e) {
+				aBean.setTotalCourses(0);
+			}
+			//see if latest rec included in query
+			try {
+				if (rs.getInt("UNIT_TIME") >= 0) {
+					
+					aBean.setTotalUnits(rs.getDouble("UNIT_TIME"));
+					aBean.setEmpStatus(EmploymentConstant.get(rs.getInt("EMP_STATUS")));
+					aBean.setJobLocation(rs.getString("LOCATION_ID"));
+					aBean.setRecCompNum(rs.getString("rcnum"));
+					if (rs.getTimestamp("OFFER_ACCEPTED_DATE") != null)
+							aBean.setRecOfferAcceptedDate(new java.util.Date(rs.getTimestamp("OFFER_ACCEPTED_DATE").getTime()));
+					}
+					aBean.setJobType(JobTypeConstant.get(rs.getInt("JOB_TYPE")));
+					
+				}
+			catch (SQLException e) {
+				
+			}
+			
+			//see if reg prefs list there
+			try {
+				if(rs.getString("RZLIST") == null) {
+					aBean.setRegionZoneList(null);
+				}else {
+					ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+					String test = rs.getString("RZLIST");
+					String [] splitlist = test.split(",");
+					int x=0;
+					for(String s : splitlist) {
+						String[] rzsplit = s.split(":");
+						list.add(x, new ArrayList<>(Arrays.asList(rzsplit[0].toLowerCase().strip(),rzsplit[1].toLowerCase().strip())));
+						x++;
+					}
+					aBean.setRegionZoneList(list);
+				}
+				
+				
+			}
+			catch (SQLException e) {
+				aBean.setTotalCourses(0);
+			}
+			
+			
+			
+			
+		
+
 
 		}
 		catch (SQLException e) {
