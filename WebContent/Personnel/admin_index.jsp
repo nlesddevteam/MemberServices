@@ -58,11 +58,11 @@ q<!-- MyHRP (C) 2018  -->
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">					
 					<% if(rbean.isPpBlockSchools()) { %> 					
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
-					<b>NOTICE:</b> Planners currently disabled please check back.
+					<b>NOTICE:</b> Planners open for viewing until May 7, 2023. Editing will be enabled after May 7, 2023.
 					</div>  
 					<%}else{ %>
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
-					<b>NOTICE:</b>  Planners will be open for school administrators to edit until Monday, April 3 at 4 pm.
+					<b>NOTICE:</b>  Planners open for viewing until May 7, 2023. Editing will be enabled after May 7, 2023.
 					</div>  
 					<%} %>
 					<div class="pageHeader">Human Resources Administration</div>
