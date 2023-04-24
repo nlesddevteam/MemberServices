@@ -532,7 +532,7 @@
 											
 											}
 										
-											coursesCompleted = applicants[i].getTotalCourses();
+											//coursesCompleted = applicants[i].getTotalCourses();
 											
 									%>
 									<!-- 
