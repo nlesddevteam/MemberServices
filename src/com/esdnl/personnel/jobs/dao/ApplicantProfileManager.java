@@ -1243,7 +1243,7 @@ public class ApplicantProfileManager {
 					"APPLICANT_ESD_EXP.PERM_SCHOOL,APPLICANT_ESD_EXP.PERM_POSITION,APPLICANT_ESD_EXP.REPL_TIME,APPLICANT_ESD_EXP.SUB_TIME,"
 							+ "APPLICANT_ESD_EXP.PK_ID,APPLICANT_ESD_EXP.CONTRACT_SCHOOL,APPLICANT_ESD_EXP.CONTRACT_ENDDATE,APPLICANT_ESD_EXP.PERM_TIME,");
 			//APPLICANT_ESD_EXP.*,
-			sql.append(" NVL(sen.\"SENORITY\", 0) SENORITY FROM AWSD_USER.APPLICANT LEFT JOIN ");
+			sql.append(" NVL(sen.\"SENORITY\", 0) SENORITY,doccount.*,eother.*,recs.* FROM AWSD_USER.APPLICANT LEFT JOIN ");
 			sql.append(
 					"(SELECT REPLACE(REPLACE(TRIM(mas.\"SIN\"),' ', ''), '-', '') \"SENSIN\", SEN.\"Seniority_Numeric\" \"SENORITY\", MAS.\"EMAIL\" \"SENEMAIL\" FROM AWSD_USER.SDS_PREMPMAS mas JOIN AWSD_USER.SDS_PRSENMAS sen ON trim(mas.EMP_ID) = trim(sen.\"Employee\")");
 			if (params.getJob() != null) {
@@ -1258,7 +1258,36 @@ public class ApplicantProfileManager {
 
 			sql.append(
 					") sen ON (REPLACE(REPLACE(TRIM(APPLICANT.SIN2),' ', ''), '-', '') = sen.\"SENSIN\" OR REPLACE(REPLACE(TRIM(APPLICANT.\"SIN\"),' ', ''), '-', '') = sen.\"SENSIN\" OR LOWER(APPLICANT.EMAIL) = LOWER(sen.\"SENEMAIL\")) ");
-			sql.append(" LEFT JOIN AWSD_USER.APPLICANT_ESD_EXP ON APPLICANT.SIN =  APPLICANT_ESD_EXP.SIN WHERE ");
+			sql.append(" LEFT JOIN AWSD_USER.APPLICANT_ESD_EXP ON APPLICANT.SIN =  APPLICANT_ESD_EXP.SIN ");
+			
+			//now we append extra fields that speed up pool loading page
+			sql.append(" inner join(\r\n" + 
+					"    select * from (\r\n" + 
+					"    select applicant_id, DOCUMENT_TYPE,DOCUMENT_ID\r\n" + 
+					"    from applicant_document where applicant_id in (select SIN from JOB_APPLICANT WHERE COMP_NUM='" + params.getJob().getCompetitionNumber() + "' )\r\n" + 
+					"    )\r\n" + 
+					"    pivot \r\n" + 
+					"    (\r\n" + 
+					"        count(DOCUMENT_ID) \r\n" + 
+					"        for DOCUMENT_TYPE in (1 as \"T1\",2 as \"T2\",3 as \"T3\",4 as \"T4\",5 as \"T5\",6 as \"T6\")\r\n" + 
+					"    )\r\n" + 
+					"    ) doccount on APPLICANT.SIN=doccount.applicant_id ");
+			sql.append("left outer join(\r\n" + 
+					"        select TOTAL_CRS_COMPLETED,sin from applicant_edu_other  where SIN in (select SIN from JOB_APPLICANT WHERE COMP_NUM='" + params.getJob().getCompetitionNumber() +
+					"')\r\n" + 
+					"    ) eother on APPLICANT.SIN=eother.sin ");
+			
+			sql.append(" left outer join(\r\n" + 
+					"    select * from (\r\n" + 
+					"        SELECT ad.unit_time,rec.emp_status,ad.location_id,rec.comp_num rcnum,rec.offer_accepted_date,rec.candidate_id,ad.job_type\r\n" + 
+					"        FROM AWSD_USER.JOB_APPL_REC rec\r\n" + 
+					"        JOIN AWSD_USER.JOB_AD_REQUEST ad on REC.COMP_NUM = ad.COMP_NUM \r\n" + 
+					"        join(SELECT max(RECOMMENDATION_ID) mrecid,candidate_id msin from AWSD_USER.JOB_APPL_REC group by candidate_id) lrec on rec.recommendation_id = lrec.mrecid\r\n" + 
+					"    where TRUNC(rec.OFFER_ACCEPTED_DATE) >= TRUNC(SYSDATE-273) AND (ad.END_DATE IS NULL OR ad.END_DATE >= SYSDATE))\r\n" + 
+					"        where CANDIDATE_ID in (select SIN from JOB_APPLICANT WHERE COMP_NUM='" + params.getJob().getCompetitionNumber() + "')\r\n" + 
+					"    ) recs on APPLICANT.SIN =recs.CANDIDATE_ID ");
+			
+			sql.append(" WHERE ");
 
 			if (params.getJob() != null)
 				sql.append("APPLICANT.SIN IN (SELECT DISTINCT SIN FROM AWSD_USER.JOB_APPLICANT WHERE COMP_NUM = '"
@@ -1428,7 +1457,7 @@ public class ApplicantProfileManager {
 			rs = stat.executeQuery();
 
 			while (rs.next()) {
-				eBean = createApplicantProfileBean(rs);
+				eBean = createApplicantProfileBeanSLAP(rs);
 				v_opps.add(eBean);
 			}
 		}
