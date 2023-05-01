@@ -136,20 +136,19 @@ if(${sch ne null}) {
 
   <body>
   
-  
   <div class="alert alert-danger noaccessMsg" style="display:none;text-align:center;"><b>USER ERROR:</b> You are not assigned to any school. Kindergarten Administration is disabled until you are properly assigned in MemberServices for your school.</div>
   <div class="disablePage">
   
 		<div align='center' style='font-size:14pt;font-weight:bold;color:#004178;;padding-bottom:15px;'>
 	  	${sch ne null ? sch.schoolName : ""} Kinderstart/Kindergarten Registrants
   	</div>
-  	
-       <c:if test="${krp ne null}">
+  	   <c:choose>  	   
+       <c:when test="${krp ne null}">
 <div class="card">
 							  <div class="card-header"><b>ADD REGISTRANT:</b></div>
 							  <div class="card-body">		
 									
-		You can add a new registrant to the most recent registration period by clicking the link below. Registrations for years past cannot be added as the data may have already been merged with PowerSchool.<br/><br/>
+		You can add a new registrant to the most recent registration period by clicking the link below.<br/><br/>
 		<div align="center">
 		<a onclick="loadingData();" href="/MemberServices/schools/registration/kindergarten/admin/school/addKindergartenRegistrant.html?id=${ krp.registrationId }" class='btn btn-sm btn-primary'>Add New Registrant</a>
 		</div>
@@ -158,9 +157,16 @@ if(${sch ne null}) {
 						</div>
 		</div>       
        <br/><br/>
-       </c:if>
+       </c:when>
+       <c:otherwise>
+       <div class="alert alert-danger" style="text-align:center;">   
+       <b>NOTICE RE ADDING OF STUDENTS:</b> Registrations for past/closed periods cannot be added as the student data may have already been merged with PowerSchool.
+       </div>       
+       </c:otherwise>
+       </c:choose>
        
 		
+	
 		<div class="card">
 							  <div class="card-header"><b>VIEW REGISTRANTS BY:</b></div>
 							  <div class="card-body">		
