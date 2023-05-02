@@ -62,7 +62,7 @@ public class GradeSubjectUnitPercentageTagHandler  extends TagSupport {
       {
         g = (Grade) iter.next();
         if((g.getGradeID()==1)||(g.getGradeID()==30)||(g.getGradeID()==31)
-        		||(g.getGradeID()==32)||(g.getGradeID()==33)||(g.getGradeID()==34))
+        		||(g.getGradeID()==32)||(g.getGradeID()==33)||(g.getGradeID()==34) ||(g.getGradeID()==35))
         	out.println("<OPTION VALUE=\"" + g.getGradeID() + "\">" + g.getGradeName() + "</OPTION>");
       }
       
