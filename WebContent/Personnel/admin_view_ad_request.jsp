@@ -349,6 +349,9 @@ var pageWordCountConfAd = {
      	<a href="#" class="btn btn-xs btn-primary" onclick="doPost('R','<%=req.getId()%>');">RE-POST AD</a>
                          
      <%}%>
+     <%if(req.getCurrentStatus().equals(RequestStatus.POSTED)){%>
+		 <a href="view_job_post.jsp?comp_num=<%=req.getCompetitionNumber() %>" class="btn btn-xs btn-success">VIEW JOB POST</a>		 
+	 <%} %>
       <a class="btn btn-xs btn-danger" href="javascript:history.go(-1);">Back</a>
 								    
 						</div>
