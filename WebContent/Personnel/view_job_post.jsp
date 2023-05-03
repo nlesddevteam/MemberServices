@@ -206,6 +206,9 @@ function parseAddApplicantResponse(data){
 
 					<tbody>
 						<tr>
+							<td class='tableTitle'>Listing Date:</td>
+							<td class='tableResult'><%=opp.getFormatedListingDate() %></td>
+						<tr>
 							<td class='tableTitle'>STATUS:</td>
 							<td class='tableResult'>
 								<% if ((opp != null) && (opp.isCandidateListPrivate())) { %> 
