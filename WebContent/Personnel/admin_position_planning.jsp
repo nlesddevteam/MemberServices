@@ -76,9 +76,11 @@
 					<b>NOTICE:</b> Planners open for viewing until May 7, 2023. Editing will be enabled after May 7, 2023.
 					</div>  
 					<%}else{ %>
+					<!--
 					<div class="alert alert-danger ppStatus" style="text-align:center;margin-top:10px;marging-bottom:10px;">
 					<b>NOTICE:</b> Planners open for viewing until May 7, 2023. Editing will be enabled after May 7, 2023.
 					</div>  
+					-->
 					<%} %>			
 
 	<form id="frm-add-allocation" action="addTeacherAllocation.html" method="post">
