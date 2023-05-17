@@ -20,7 +20,7 @@ if(request.getAttribute("PSDATA") != null){
 
 <html>
   <head>
-    <title>Member Services - PowerSchool Class Data</title>    
+    <title>Member Services - PowerSchool Class Data (testing new repo)</title>    
  		
 		
 		<script>		
