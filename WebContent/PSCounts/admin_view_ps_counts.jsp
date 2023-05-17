@@ -57,8 +57,7 @@ if(request.getAttribute("PSDATA") != null){
 <div class="container-fluid">		
 				<div class="row no-print">				  
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="font-size:12px;">
-				   (testing new repo)
-    Using the following screen you can select a school and view the class sizes that has been calculated from the current PowerSchool data.
+		Using the following screen you can select a school and view the class sizes that has been calculated from the current PowerSchool data.
     										The numbers indicate the number of students, unless otherwise noted. (Green is Nominal, Orange is Large, Red is at or above Capacity)
 										Only classes with 1 or more students will be listed.
     
