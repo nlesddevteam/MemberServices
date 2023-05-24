@@ -65,6 +65,8 @@
     		$("#modalmsg").show();
     		$("#btn_qd_ok").unbind("click").click(
 				function () {
+					$("#btnaccept").prop('disabled', true);
+					$("#btn_qd_ok").prop('disabled', true);
 					document.forms[0].op.value='accept'; 
         			document.forms[0].submit();
 				}
@@ -290,7 +292,7 @@
 									<br/> By clicking <b>Accept Offer</b>, I am confirming that all the information used by the Newfoundland and Labrador English School District in determining that I am the successful candidate 
                                     for this position is up to date and accurate.  I understand that should this not be the case, that the Newfoundland and Labrador English School District reserves the right to rescind this job offer.
                                     <br/><br/>                                   
-	                                        <a href="#" class="btn btn-sm btn-success" title="Accept Offer" value="ACCEPT" onclick="validateAcceptOffer();"><span class="glyphicon glyphicon-ok"></span> Accept Offer</a>                                    
+	                                        <a href="#" class="btn btn-sm btn-success" title="Accept Offer" value="ACCEPT" onclick="validateAcceptOffer();" id="btnaccept"><span class="glyphicon glyphicon-ok"></span> Accept Offer</a>                                    
 	                                        <a href="#" class="btn btn-sm btn-danger" title="Decline Offer" value="DECLINE" onclick="validateDeclineOffer();"><span class="glyphicon glyphicon-remove"></span> Decline Offer</a>
 	                               </div>
 	                              </div>                                     
