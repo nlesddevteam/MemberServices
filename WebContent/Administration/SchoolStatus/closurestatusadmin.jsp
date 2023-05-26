@@ -97,7 +97,7 @@ Preferably make changes ONLY when school is finished for the year between July 1
                             </td>
                            <td width="10%">                       
                             <a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to remove this status code? This cannot be undone.');" href="weatherStatusCodeAdmin.html?op=del&status_id=<%=stat.getClosureStatusID()%>">DEL</a>
-                           <a class="btn btn-xs btn-warning" href="closurestatusmodify.jsp?op=mod&status_id=<%=stat.getClosureStatusID()%>&status_desc=<%=stat.getClosureStatusDescription()%>">EDIT</a>
+                           <a class="btn btn-xs btn-warning" onclick="loadingData();" href="closurestatusmodify.jsp?op=mod&status_id=<%=stat.getClosureStatusID()%>&status_desc=<%=stat.getClosureStatusDescription()%>">EDIT</a>
                            </td>
                            </tr> 
                       <%}%>
@@ -117,8 +117,8 @@ Preferably make changes ONLY when school is finished for the year between July 1
 		<input type="text" class="form-control" name="status_desc" required/>													
 		<br/><br/>
         <div align="center">																
-		<a href="" onclick="document.addClosureStatusForm.submit();" class="btn btn-success btn-sm">Save</a> &nbsp; 		
-		<a href="../index.jsp" onclick="loadingData();" class="btn btn-sm btn-danger">Exit/Cancel</a>
+		<a href="" onclick="document.addClosureStatusForm.submit();loadingData();" class="btn btn-success btn-sm">Save</a> &nbsp; 		
+		<a href="/MemberServices/navigate.jsp" onclick="loadingData();" class="btn btn-sm btn-danger">Exit/Cancel</a>
        </div>  		
 														
 			</form>

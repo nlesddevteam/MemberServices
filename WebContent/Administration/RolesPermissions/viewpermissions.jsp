@@ -78,7 +78,8 @@ Below are the curent security permissions assigned in MemberServices. You can Ad
 Removing them may remove user access or functionality in any application on the system. 
 Make sure you are aware of the changes you make!</div>
 <br/>
-<div align="center"><a class="btn btn-sm btn-primary" href="addPermission.html?passthrough=true"><i class="fas fa-plus"></i> Add New Permission</a> &nbsp; <a class="btn btn-sm btn-danger" href="../index.jsp"><i class="fas fa-undo-alt"></i> Back to Administration</a></div>
+<div align="center"><a class="btn btn-sm btn-primary" href="addPermission.html?passthrough=true" onclick="loadingData();"><i class="fas fa-plus"></i> Add New Permission</a> &nbsp;
+<a class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp" onclick="loadingData();"><i class="fas fa-undo-alt"></i> Back to Administration</a></div>
   <br/>
 <table class="permissionsTable table table-sm table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
 					<thead class="thead-dark">

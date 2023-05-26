@@ -133,14 +133,14 @@ public class MSEditSchoolRequestHandler extends RequestHandlerImpl {
 			
 			if((usr.checkRole("BUSROUTE-POST"))) {
 				
-				path = "/WebUpdateSystem/BusRoutes/school_directory_bus_routes_edit.jsp";
+				path = "/StaffRoom/BusRoutes/school_directory_bus_routes_edit.jsp";
 				
 			} else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL")) || (usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY"))){			
-					path = "/SchoolDirectory/school_profile_edit.jsp";
+					path = "/StaffRoom/SchoolDirectory/school_profile_edit.jsp";
 				
 				
 			}  else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-ADMIN")) && (!usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL"))){				
-				path = "/SchoolDirectory/school_profile_edit.jsp";			
+				path = "/StaffRoom/SchoolDirectory/school_profile_edit.jsp";			
 				
 			} 
 			

@@ -49,7 +49,7 @@ public class DeletePolicyOtherFileRequestHandler extends RequestHandlerImpl {
 			request.setAttribute("statuslist", statuslist);
 			request.setAttribute("policy", PoliciesManager.getPolicyById(policyid));
 			request.setAttribute("otherfiles", PolicyFileManager.getPoliciesFiles(policyid));
-			request.setAttribute("msg", "File has been deleted");
+			request.setAttribute("msgOK", "File has been deleted");
 			path = "view_policy_details.jsp";
 		}
 		catch (Exception e) {

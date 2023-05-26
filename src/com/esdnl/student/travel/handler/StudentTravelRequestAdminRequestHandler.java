@@ -75,8 +75,8 @@ public class StudentTravelRequestAdminRequestHandler extends RequestHandlerImpl 
 										+ usr.getPersonnel().getFullNameReverse()
 										+ "<BR><BR>"
 										+ treq.toHTML()
-										+ "<BR><BR><B>This trip is approved under the condition that the Board Policy on Student Travel, "
-										+ "Policy IJOAB(A)  is followed.  Attached is a Student Travel Checklist to assist you in your planning.</B>"
+										+ "<BR><BR><B>This trip is approved under the condition that the <a href='https://www.nlesd.ca/about/policies.jsp?search=PROG-320' target='_blank'>Board Policy on Student Travel</a>, "
+										+ "Policy PROG-320 is followed.  Attached is a Student Travel Checklist to assist you in your planning.</B>"
 										+ "<BR><BR>PLEASE DO NOT RESPOND TO THIS MESSAGE. THANK YOU.<br><br>" + "Member Services",
 								EmailBean.CONTENTTYPE_HTML, "ms@nlesd.ca", new File[] {
 										new File(ROOT_DIR + "/student/travel/email/checklist.pdf"),

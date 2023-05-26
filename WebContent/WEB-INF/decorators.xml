@@ -23,8 +23,11 @@
   <decorator name="StaffRoom" page="StaffRoom/includes/decorator/main.jsp">
   	<pattern>/StaffRoom/*</pattern>
   	<pattern>/navigate.jsp</pattern>
+  	<pattern>/signin*</pattern>
+  	<pattern>/login.html</pattern>
   	<pattern>/memberServices.html</pattern>
-  	
+  	<pattern>/WebUpdateSystem/*</pattern>
+  	<pattern>/Administration/*</pattern>
   </decorator>
   
   <decorator name="MS-Registration" page="StaffRoom/includes/decorator/ms-register.jsp">  
@@ -43,26 +46,10 @@
   	<pattern>/EECD/*</pattern>
   </decorator>  
   
-   <decorator name="MemberAdministration" page="Administration/includes/decorator/main.jsp">
-  	<pattern>/Administration/*</pattern>
-  </decorator> 
-  
   <decorator name="SchoolStatus" page="SchoolStatus/includes/decorator/main.jsp">
   	<pattern>/SchoolStatus/*</pattern>
   </decorator> 
-  
-    <decorator name="StaffDirectory" page="StaffDirectory/includes/decorator/main.jsp">
-  	<pattern>/StaffDirectory/*</pattern>
-  </decorator> 
-  
-   <decorator name="SchoolDirectory" page="SchoolDirectory/includes/decorator/sd.jsp">
-  	<pattern>/SchoolDirectory/*</pattern>
-  </decorator> 
-    
-      <decorator name="BusRoutes" page="BusRoutes/includes/decorator/main.jsp">
-  	<pattern>/BusRoutes/*</pattern>
-  </decorator> 
-    
+ 
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
     <pattern>/Personnel/applicantlogin.html</pattern>
     <pattern>/Personnel/applicantRegistration*.html</pattern>
@@ -132,12 +119,6 @@
 	<pattern>/Tenders/*</pattern>
   </decorator> 
  
- 
- <!-- For Website CMS 
-   <decorator name="CMS" page="WebUpdateSystem/includes/decorator/main.jsp">
-	<pattern>/WebUpdateSystem/*</pattern>
-  </decorator>
- 	-->
   <decorator name="personnelExternal" page="Personnel/includes/decorator/external.jsp">
   	<pattern>/Personnel/add_nlesd_external*</pattern>
   	<pattern>/Personnel/addNLESDExternalReference.html</pattern>

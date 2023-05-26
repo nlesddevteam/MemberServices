@@ -75,6 +75,6 @@ public class MSDeleteRoleRequestHandler implements RequestHandler
       request.setAttribute("Role", r);
     }
     //return path;
-    return "deleterole.jsp";
+    return "viewroles.jsp";
   }
 }

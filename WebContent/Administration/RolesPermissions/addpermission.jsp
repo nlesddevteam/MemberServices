@@ -63,7 +63,7 @@ This will take a few moments!
    
     <br/><br/>                             
                     <div align="center"> 
-                    <input type="submit" class="btn btn-success btn-sm" value="Save">  &nbsp;
+                    <input type="submit" class="btn btn-success btn-sm" value="Save" onclick="loadingData();">  &nbsp;
                     <a href="viewpermissions.jsp" onclick="loadingData();" class="btn btn-sm btn-danger">Cancel</a>                         
                       </div>
     <br/><br/>

@@ -1,12 +1,13 @@
 package com.esdnl.webupdatesystem.banners.handler;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.esdnl.util.*;
 import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
@@ -57,7 +58,7 @@ public class AddNewBannerRequestHandler extends RequestHandlerImpl {
 
 				}
 				else {
-					request.setAttribute("msg", "Please Select Banner File For Upload");
+					request.setAttribute("msgERR", "Please Select Banner File For Upload");
 				}
 				if (validate_form() && fileok) {
 					//parse the fields
@@ -89,14 +90,24 @@ public class AddNewBannerRequestHandler extends RequestHandlerImpl {
 
 					bb.setBannerCode(form.get("banner_code"));
 					bb.setAddedBy(usr.getPersonnel().getFullNameReverse());
+					
+					bb.setbRepeat(form.get("brepeat").toString());
+					if(!StringUtils.isEmpty(form.get("bstartdate"))){
+						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+						bb.setbStartDate(formatter.parse(form.get("bstartdate")));
+					}
+					if(!StringUtils.isEmpty(form.get("benddate"))){
+						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+						bb.setbEndDate(formatter.parse(form.get("benddate")));
+					}
 					int id = BannersManager.addBanner(bb);
-					path = "add_new_banner.jsp";
-					request.setAttribute("msg", "Banner has been added");
+					path = "view_banners.jsp";
+					request.setAttribute("msgOK", "Banner has been added");
 				}
 				else {
 
 					if (!validate_form()) {
-						request.setAttribute("msg", validator.getErrorString());
+						request.setAttribute("msgERR", validator.getErrorString());
 					}
 					path = "add_new_banner.jsp";
 				}

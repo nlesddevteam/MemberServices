@@ -55,7 +55,7 @@ public class UpdatePolicyRequestHandler extends RequestHandlerImpl {
 			if (form.uploadFileExists("policy_documentation")) {
 				file = (UploadFile) form.getUploadFiles().get("policy_documentation");
 				if ((file.getFileName().indexOf(".pdf") < 0) && (file.getFileName().indexOf(".PDF") < 0)) {
-					request.setAttribute("msg", "Only PDF Tender Files Accepted");
+					request.setAttribute("msgERR", "Only PDF Files Accepted");
 				}
 				else {
 					//save the file
@@ -71,7 +71,7 @@ public class UpdatePolicyRequestHandler extends RequestHandlerImpl {
 			if (form.uploadFileExists("policy_admin_doc")) {
 				file = (UploadFile) form.getUploadFiles().get("policy_admin_doc");
 				if ((file.getFileName().indexOf(".pdf") < 0) && (file.getFileName().indexOf(".PDF") < 0)) {
-					request.setAttribute("msg", "Only PDF Tender Files Accepted");
+					request.setAttribute("msgERR", "Only PDF  Files Accepted");
 				}
 				else {
 					//save the file
@@ -118,7 +118,7 @@ public class UpdatePolicyRequestHandler extends RequestHandlerImpl {
 				request.setAttribute("statuslist", statuslist);
 				request.setAttribute("policy", PoliciesManager.getPolicyById(pb.getId()));
 				path = "view_policy_details.jsp";
-				request.setAttribute("msg", "Policy has been updated");
+				request.setAttribute("msgOK", "Policy has been updated");
 			}
 			else {
 				Map<Integer, String> categorylist = new HashMap<Integer, String>();

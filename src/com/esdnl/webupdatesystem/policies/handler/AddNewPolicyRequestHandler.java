@@ -67,7 +67,7 @@ public class AddNewPolicyRequestHandler extends RequestHandlerImpl {
 				if (form.uploadFileExists("policy_documentation")) {
 					file = (UploadFile) form.getUploadFiles().get("policy_documentation");
 					if ((file.getFileName().indexOf(".pdf") < 0) && (file.getFileName().indexOf(".PDF") < 0)) {
-						request.setAttribute("msg", "Only PDF Tender Files Accepted");
+						request.setAttribute("msgERR", "Only PDF Tender Files Accepted");
 					}
 					else {
 						//save the file
@@ -77,7 +77,7 @@ public class AddNewPolicyRequestHandler extends RequestHandlerImpl {
 					}
 				}
 				else {
-					request.setAttribute("msg", "Please Select Policy Documentation For Upload");
+					request.setAttribute("msgERR", "Please Select Policy Documentation For Upload");
 				}
 				if (form.uploadFileExists("policy_admin_doc")) {
 					//save the file
@@ -108,9 +108,9 @@ public class AddNewPolicyRequestHandler extends RequestHandlerImpl {
 					}
 					request.setAttribute("statuslist", statuslist);
 					path = "add_new_policy.jsp";
-					request.setAttribute("msg", "Policy has been added");
+					request.setAttribute("msgOK", "Success: Policy has been added");
 				}
-				path = "add_new_policy.jsp";
+				path = "view_policies.jsp";
 			}
 		}
 		catch (Exception e) {

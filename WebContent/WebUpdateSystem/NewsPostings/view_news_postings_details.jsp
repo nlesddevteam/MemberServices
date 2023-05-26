@@ -25,128 +25,166 @@
 <html>
 
 	<head>
-		<title>NLESD - Web Update Posting System</title>
+		<title>News Posting System</title>
 					
 
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta charset="utf-8">
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="../includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="../includes/css/ms.css" rel="stylesheet" type="text/css">	
-			<script src="../includes/js/jquery-1.10.2.js" type="text/javascript"></script>
-			<script src="../includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="../includes/js/common.js"></script>
-			<script src="../includes/js/nlesd.js"></script>
-			<link rel="stylesheet" href="../includes/css/jquery-ui.css" />
-			
-			<!-- Add mousewheel plugin (this is optional) -->
-		<script type="text/javascript" src="../fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
-		<!-- Add fancyBox main JS and CSS files -->
-		<script type="text/javascript" src="../fancybox/jquery.fancybox.js?v=2.1.5"></script>
-		<link rel="stylesheet" type="text/css" href="../fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
-		<!-- Add Button helper (this is optional) -->
-		<link rel="stylesheet" type="text/css" href="../fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
-		<script type="text/javascript" src="../fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-		<!-- Add Thumbnail helper (this is optional) -->
-		<link rel="stylesheet" type="text/css" href="../fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
-		<script type="text/javascript" src="../fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-		<!-- Add Media helper (this is optional) -->
-		<script type="text/javascript" src="../fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
-		<script type="text/javascript" src="../js/changepopup.js"></script>	
-		<script src="../js/jquery-ui.js"></script>
-			
-		<script >
+ 
+ 
+   <script>
+   
+   $(document).ready(function () {		 
+ 		  
+ 		    $( "#news_date" ).datepicker({
+ 		      changeMonth: true,
+ 		      changeYear: true, 
+ 		      dateFormat: "dd/mm/yy"
+ 		    });
+ 		  
+ 		  
+ 		 aTable = $(".newsTable").dataTable({
+ 			"order" : [[ 1, "asc" ]],			
+ 			  "paging":   false,
+ 			  "searching": true,			 
+ 				responsive: true,				
+ 				"columnDefs": [
+ 					 {
+ 			           "targets": [0,1,2],			               
+ 			                "sortable": true,
+ 			                "visible": true,
+ 			            },
+ 			        ]
+ 		});
+ 		  
+ 		  
+	 });
+
+   function OpenPopUp(pid)
+	{
+	$('#newsModal').modal('toggle');
+						
+}
+   
+   function sendnewsinfo()
+   {
+   	var test=checknewsfields();
+   	
+   	if(ajaxSendNewsInfo())
+   	{
+   		$.fancybox.close();
+   	}
+   }
+	function checknewsfields()
+	{
+		isvalid=true;
+		var btitle = $.trim($('#other_news_title').val());
+		var bfile = $.trim($('#other_news_file').val());
+		if(btitle == "")
+			{
+			alert("Please enter value for News Postings Title");
+			isvalid=false;
+			}
+		if(bfile == "")
+		{
+			alert("Please select News Postings file");
+			isvalid=false;
+		}
+		return isvalid;
+	}
+   function ajaxSendNewsInfo()
+   {
+   	var isvalid=false;
+		var btitle = $.trim($('#other_news_title').val());
+		var bfile = $('#other_news_file');
+		var bid = $.trim($('#id').val());
+		var ufile = $('#other_news_file')[0].files[0];
+		var requestd = new FormData();
+		requestd.append('npid',bid);
+		requestd.append('nptitle',btitle);
+		requestd.append('npfile',ufile);
+		//mimeType:"multipart/form-data",
+		$.ajax({
+           url: "addOtherNewsFile.html",
+           type: 'POST',
+           data:  requestd,
+           contentType: false,
+           cache: false,
+           processData:false,
+           success: function(xml)
+           {
+           	
+					var i=1;
+					cleartable();
+					$(xml).find('FILES').each(function(){
+							
+							if($(this).find("MESSAGE").text() == "SUCCESS")
+								{
+									
+									var newrow="";
+									if(i % 2 == 0)
+									{
+									newrow ="<tr style='background-color:#E5F2FF;' id='" + $(this).find("ID").text() + "'>";
+									}else{
+										newrow ="<tr style='background-color:#white;' id='" + $(this).find("ID").text() + "'>";
+									}
+									//alert("found");
+									//now we add each one to the table
+									newrow += "<td>" + $(this).find("NPFTITLE").text() + "</td>";
+									newrow += "<td>" + $(this).find("DATEADDED").text() + "</td>";
+									newrow += "<td>" + $(this).find("ADDEDBY").text() + "</td>";									
+									newrow += "<td></td>";									
+									newrow +="</tr>";
+									$('table#showlists tr:last').after(newrow);
+									i=i+1; 
+									isvalid=true;
+	                   				
+								}else{
+									alert($(this).find("MESSAGE").text()+ "1");
+									
+								}
+						});
+           },
+           error: function(jqXHR, textStatus, errorThrown) 
+           {
+           		alert("error");
+           },
+				dataType: "text",
+				async: false
+      });
+
+   	return isvalid;
+   }
+   
+   
+   </script>
+ 	
 		
-		
-		$(document).ready(function() {
-
-			$(function() {
-			    var images = ['0.jpg','1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg'];
-			    $('html').css({'background': 'url(../includes/img/bg/' + images[Math.floor(Math.random() * images.length)] + ') no-repeat center center fixed',
-			    	'-webkit-background-size':'cover',
-			    	'-moz-background-size':'cover',
-			    	'-o-background-size':'cover',
-			    	'background-size':'cover'});
-			   });
-
-
-		}); 
-		</script>
-		
-		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
-		});
-	 
-		
-		
-	</script>
-		<script>
-    $(document).ready(
-    		  
-    		  /* This is the function that will get executed after the DOM is fully loaded */
-    		  function () {
-    		    $( "#news_date" ).datepicker({
-    		      changeMonth: true,//this option for allowing user to select month
-    		      changeYear: true, //this option for allowing user to select from year range
-    		      dateFormat: "dd/mm/yy"
-    		    });
-    		  }
-
-	);
-
-</script>
-
-
-<script src="../includes/ckeditor/ckeditor.js"></script>
+	
    
 	
 	</head>
 
-  <body><br/>
+  <body>
+    <div class="row pageBottomSpace">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+<div class="siteBodyTextBlack">
+<div class="siteHeaderGreen">News Details for &quot;${newspostings.newsTitle}&quot;</div>
   
-  <div class="mainContainer">
-
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Welcome <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="../includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="../includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
-
-			<div class="col full_block content">
-				<div class="bodyText">	
-				<br/>
-				<form id="pol_cat_frm" action="updateNewsPostings.html" method="post" ENCTYPE="multipart/form-data">
-				<div class="pageTitleHeader siteHeaders">You Are Now Editing &quot;${newspostings.newsTitle}&quot; Item</div>
-                      <div class="pageBody">
-				
-				 <%if(request.getAttribute("msg") != null){%>                    
-                       
-                    
-                    <div class="messageText" align="center"><br>*** <%=(String)request.getAttribute("msg")%> ***</div><p>
-                        <div align="center">
-                      <a href="addNewNewsPostings.html"><img src="../includes/img/addnews-off.png" class="img-swap menuImage" title="Add News"></a> 
-                      <a href="viewNewsPostings.html"><img src="../includes/img/viewnews-off.png" class="img-swap menuImage" title="View News Postings"></a>
-                      <a href="../index.jsp"><img src="../includes/img/backtomenu-off.png" class="img-swap menuImage" title="Back to Web Update Menu"></a></div>
-                      
-                      <br/>&nbsp;<br/>
-                    
-                    
-                    <%} else {%>
-    
-      					<input type="hidden" id="op" name="op" value="CONFIRM">
-     					<input type="hidden" value="${newspostings.id}" id="id" name="id">
-                      <p>Date:<br/>
-                      <input type="text" class="requiredinput" id="news_date" name="news_date"  style="width:250px;"   value="${newspostings.newsDateFormatted}">   
-                      <p>Category:<br/>                     
- 						<select id="news_category" name="news_category" class="requiredinput">
+  
+  
+  
+				<form id="pol_cat_frm" action="updateNewsPostings.html" method="post" ENCTYPE="multipart/form-data" class="was-validated" autocomplete="off">
+				<input type="hidden" id="op" name="op" value="CONFIRM">
+     			<input type="hidden" value="${newspostings.id}" id="id" name="id">
+     			<div class="row">
+      			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+     				<b>Date:</b><br/>
+                      <input type="text" id="news_date" name="news_date" value="${newspostings.newsDateFormatted}" required class="form-control">   
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">      
+                      <b>Category:</b><br/>                     
+ 						<select id="news_category" name="news_category" class="form-control" required>
 								<c:forEach var="item" items="${categorylist}">
     								<c:choose>
     									<c:when test="${item.key eq newspostings.newsCategory.value}">
@@ -158,9 +196,10 @@
     							</c:choose>
 							</c:forEach>
                         </select>
-                      
-                      <p>Location:<br/> 
- 						<select id="news_location" name="news_location" class="requiredinput">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">                      
+                      <b>Location:</b><br/> 
+ 						<select id="news_location" name="news_location" class="form-control" required>
 							<c:choose>
     							<c:when test="${newspostings.newsLocation eq null }">
     								<option value="-1" selected="selected">NONE</option>
@@ -179,34 +218,11 @@
     								</c:otherwise>
     							</c:choose>
 							</c:forEach>
-                        </select>                        
-                      
-                      <p>Title:<br/> 
-                      <input type="text" class="requiredinput" id="news_title"  name="news_title" style="width:350px;"  value="${newspostings.newsTitle}">
-                      <p>Details:<br/> 
-                      <textarea id="news_description" name="news_description" rows="10" cols="10">${newspostings.newsDescription}</textarea>
-                      <p>Photo: <br/> 
-                       <c:if test="${ newspostings.newsPhoto ne null }">	
-						<img src="/includes/files/news/img/${newspostings.newsPhoto}" border=0 style="width:250px;"><p>
-						</c:if>	                     
-                      
-                      
-                      <input type="file" id="news_photo" name="news_photo"  class="requiredinput">
-                      <p>Photo Caption:<br/> 
-                      <input type="text" class="requiredinput" id="news_photo_caption"  name="news_photo_caption" style="width:350px;"  value="${newspostings.newsPhotoCaption}">
-                      <p>Documentation (PDF): ${newspostings.newsDocumentation}<br/> 
-                      
-                      <c:if test="${ newspostings.newsDocumentation ne null }">	
-                     <a href="/includes/files/news/doc/${newspostings.newsDocumentation}">${newspostings.newsDocumentation}</a><br/>
-                     </c:if>
-                      
-                      <input type="file" id="news_documentation" name="news_documentation"  class="requiredinput">
-                      <p>External Link:<br/> 
-                      <input type="text" class="requiredinput" id="news_external_link"  name="news_external_link" style="width:250px;"  value="${newspostings.newsExternalLink}">
-                      <p>External Link Title:<br/> 
-                      <input type="text" class="requiredinput" id="news_external_link_title" name="news_external_link_title"  style="width:250px;"  value="${newspostings.newsExternalLinkTitle}">
-                      <p>Status:<br/> 
- 						<select id="news_status" name="news_status" class="requiredinput">
+                        </select> 
+                </div>        
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">                               
+                       <b>Status:</b><br/> 
+ 						<select id="news_status" name="news_status" class="form-control" required>
 								<c:forEach var="item" items="${statuslist}">
     								<c:choose>
     									<c:when test="${item.key eq newspostings.newsStatus.value}">
@@ -217,95 +233,128 @@
     								</c:otherwise>
     							</c:choose>
 							</c:forEach>
-                        </select>                        
-                      
-                     <p>  
-                    <%if(request.getAttribute("msg") != null){%>
-                     <span style='color:#FF0000;font-weight:bold;'>*** <%=(String)request.getAttribute("msg")%> ***</span>
-                    <%}%>
-                    
-                  <p>
-                        <br><button id="butSave">Save Changes</button>
-                  </div>
+                        </select> 
+                </div>
+                </div> 
+                <br/><br/>
+                <div class="row">
+      			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">       
+                      <b>Title: (Max 60 characters)</b><br/> 
+                      <input type="text" class="form-control" id="news_title" required name="news_title" maxlength="60" value="${newspostings.newsTitle}">
+                </div>
+                </div>
+                 <br/><br/>
+                  <div class="row">
+      			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">      
+                      <b>Details:</b><br/> 
+                      <textarea id="news_description" name="news_description" class="form-control" required>${newspostings.newsDescription}</textarea>
+                </div>
+                </div>
+                <br/><br/>
+                <div class="row">
+      			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">        
+                      <b>Photo:</b> <br/> 
+                      <input type="file" id="news_photo" name="news_photo" class="form-control" accept=".jpg,.png">
+                       <c:if test="${ newspostings.newsPhoto ne null }">	
+						<img src="/includes/files/news/img/${newspostings.newsPhoto}" border=0 style="width:100%;max-width:600px;" class="thumbnail">
+						</c:if>	                     
+                       
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                     
+                      <b>Photo Caption:</b><br/> 
+                      <input type="text" class="form-control" id="news_photo_caption"  name="news_photo_caption" value="${newspostings.newsPhotoCaption}">
+                </div>
+                </div>
+                <br/><br/>
+                <div class="row">
+      			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">       
+                      <b>Documentation (PDF):</b><br/> 
+                      <input type="file" id="news_documentation" name="news_documentation" class="form-control" accept=".pdf">
+                      <c:if test="${ newspostings.newsDocumentation ne null }">	
+                     	<b>Current File: </b><a href="/includes/files/news/doc/${newspostings.newsDocumentation}">${newspostings.newsDocumentation}</a>
+                     </c:if>
+                </div>
+      			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">  
+                      <b>External Link:</b><br/> 
+                      <input type="text" class="form-control" id="news_external_link" name="news_external_link" value="${newspostings.newsExternalLink}">
+                 </div>     
+                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">     
+                      <b>External Link Title:</b><br/> 
+                      <input type="text" class="form-control" id="news_external_link_title" name="news_external_link_title" value="${newspostings.newsExternalLinkTitle}">
+                </div>                            
+                </div>
+                   
                   
                   
                     
-                    <p><img src="../includes/img/bar.png" height=1 width=100%>
+                  <hr>
 				 
-					<p><div class="pageSectionHeader siteSubHeaders">Other News Postings Files</div>
+<div class="siteSubHeaderGreen">Other Related Files to this Story</div>
 					
-					<div class="pageBody">	
-					
-					Other attachments such as documentation, forms, or presentations to add to this news item.<p>
-					
-					<a class="fancybox" href="#inline1" title="Add Other News Postings File" onclick="OpenPopUp('${newspostings.id}');">Add File</a>
-					
-					<p><table class="newsTable">
-
-									<tr class="tableHeader">
-																		
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">Document</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-									</tr>		
+				Other attachments such as documentation, forms, or presentations to add to this news item.
+		
 					
 					
-						
-							
-						
+					<p>
+					<table class="newsTable table table-sm responsive" style="font-size:11px;width:100%;">
+					<thead class="thead-dark">
+					<tr class="tableHeader">
+						<th width="50%">Title</th>							
+						<th width="10%">Added On</th>
+						<th width="30%">Added By</th>
+						<th width="10%">Options</th>
+					</tr>
+					</thead>
+					<tbody>
 						<c:forEach var="p" items="${newspostings.otherNewsFiles}" varStatus="counter">
 							<tr>
 								<td>${p.nfTitle}</td>
-								<td>${p.nfDoc}</td>								
 								<td>${p.dateAddedFormatted}</td>
+								<td style="text-transform:Capitalize;">${p.addedBy}</td>								
 								<td>
-									<a class="small" onclick="return confirm('Are you sure you want to DELETE this document?');" href='deleteOtherNewsFile.html?id=${p.id}&fid=${p.nfDoc}&npid=${p.newId}'>Delete File</a>
+								<a class="btn btn-xs btn-warning" href="/includes/files/news/doc/${p.nfDoc}" target="_blank">VIEW</a>
+								<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to DELETE this document?');" href='deleteOtherNewsFile.html?id=${p.id}&fid=${p.nfDoc}&npid=${p.newId}'>DEL</a>
 		                    	</td>
 							</tr>
 						</c:forEach>
+					</tbody>
 					</table>
 				
-				
-                  <div id="inline1" style="width:600px;display: none;">
-				<span class="headertitle">Add Other News Postings File</span>
-					<table width="500px;" cellpadding="0" cellspacing="3" align="center" border="0" style="padding: 5px;">
-						<tr>
-							<td class="subheader" valign="middle" width='125px'>
-								Other News Postings File Title:
-							</td>
-							<td>
-								<input type="text" class="requiredinput" id="other_news_title"  name="other_news_title" style="width:250px;" >
-							</td>
-						</tr>
-						<tr>
-							<td class="subheader" valign="middle" width='125px'>
-								Other News Postings File:
-							</td>
-							<td>
-								<input type="file"  id="other_news_file" name="other_news_file"  class="requiredinput">
-							</td>
-						</tr>				
-						<tr>
-							<td colspan="2" valign="middle" align="center">
-								<input type="button" value="Add File" onclick="sendnewsinfo();"/>
-								<input type="button" value="Cancel" onclick="closewindow();"/>
-
-							</td>
-						</tr>
-					</table>
-			</div>  
+	
+	
+<!-- MODAL -->				
+      <div class="modal" id="newsModal">
+      <div class="modal-dialog">
+      <div class="modal-content">
+			<div class="modal-header">
+	        <h4 class="modal-title">Add Other News File</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      	</div>			
+			<div class="modal-body">
+			Title:
+			<input type="text"  id="other_news_title"  name="other_news_title" class="form-control" >
+			File:
+			<input type="file"  id="other_news_file" name="other_news_file" class="form-control" accept=".pdf">
+			</div>
+			 <div class="modal-footer">	
+					<input type="button" class="btn btn-sm btn-primary" value="Add File" onclick="sendnewsinfo();"/>
+					 <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+			</div>
+					
+		</div> 
+	</div></div>	
+	
+ 
 			
 			<div align="center">
-					<A HREF='viewNewsPostings.html'><img src="../includes/img/back-off.png" border="0" class="img-swap"></a>
-								
-					</div>
-			
-			<%} %>       
+			<button id="butSave" class="btn btn-sm btn-success" onclick="loadingData();">SAVE CHANGES</button> &nbsp;
+			<a class="btn btn-sm btn-primary" href="#" title="Add Other News Postings File" onclick="OpenPopUp('${newspostings.id}');">ADD FILE</a> &nbsp;
+			<A class="btn btn-sm btn-danger" HREF='viewNewsPostings.html' onclick="loadingData();">CANCEL</a></div>
+			     
     </form>
     
-    
-    </div>
+
     
     
     
@@ -313,19 +362,10 @@
     CKEDITOR.replace( 'news_description' );
     </script>
 	
-	
-		<br/><br/>
+	</div>
+	</div>
+	</div>
 		
-			</div>
-			</div>
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../../navigate.jsp" title="Back to MemberServices Main Menu"><img src="../includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
-</div>
-  
-</div>
-    <br/>
   </body>
 
 </html>

@@ -129,8 +129,8 @@
                     
                     <br/><br/>
 						<div align="center">
-						  <a class="btn btn-sm btn-success" name="add" id="add" href="#" onclick="document.change.submit();">Update</a>
-						  <a class="btn btn-sm btn-danger" href="school_admin_view.jsp">Back</a>
+						  <a class="btn btn-sm btn-success" name="add" id="add" href="#" onclick="document.change.submit();loadingData();">Update</a>
+						  <a class="btn btn-sm btn-danger" href="school_admin_view.jsp" onclick="loadingData();">Back</a>
 						</div>
                     
                      

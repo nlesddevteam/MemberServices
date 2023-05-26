@@ -32,7 +32,7 @@ public class DeleteBannerRequestHandler extends RequestHandlerImpl {
 			delete_file(filelocation, bb.getBannerFile());
 			BannersManager.deleteBanner(bb.getId());
 
-			request.setAttribute("msg", "Banner has been deleted");
+			request.setAttribute("msgOK", "Banner has been deleted");
 
 			path = "viewBanners.html";
 		}

@@ -267,19 +267,19 @@ public class MSUpdateSchoolRequestHandler extends RequestHandlerImpl {
 
 			if ((usr.checkRole("BUSROUTE-POST"))) {
 				request.setAttribute("msgOK", "School Bus Route Document updated successfully.");
-				path = "/BusRoutes/school_directory_bus_routes.jsp";
+				path = "/StaffRoom/BusRoutes/school_directory_bus_routes.jsp";
 
 			}
 			else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL"))
 					|| (usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-SECRETARY"))) {
 				request.setAttribute("msgOK", "Your School profile has been updated successfully.");
-				path = "/SchoolDirectory/school_profile.jsp";
+				path = "/StaffRoom/SchoolDirectory/school_profile.jsp";
 
 			}
 			else if ((usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-ADMIN"))
 					&& (!usr.checkPermission("WEBMAINTENANCE-SCHOOLPROFILE-PRINCIPAL"))) {
 				request.setAttribute("msgOK", "School profile has been updated successfully.");
-				path = "/SchoolDirectory/school_profile.jsp";
+				path = "/StaffRoom/SchoolDirectory/school_profile.jsp";
 			}
 
 			else {

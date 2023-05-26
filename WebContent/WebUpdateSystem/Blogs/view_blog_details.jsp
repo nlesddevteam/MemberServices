@@ -8,151 +8,159 @@
 <html>
 
 	<head>
-		<title>NLESD - Web Update Posting System</title>
+		<title>BLOG Posting System</title>
 					
 
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <meta charset="utf-8">
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="../includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="../includes/css/ms.css" rel="stylesheet" type="text/css">	
-			<script src="../includes/js/jquery-1.7.2.min.js"></script>
-			<script src="../includes/js/jquery-1.9.1.js"></script>
-			<script src="../includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="../includes/js/common.js"></script>
-			<script src="../includes/js/nlesd.js"></script>
-			<link rel="stylesheet" href="../includes/css/jquery-ui.css" />
-			
-		<!-- Add mousewheel plugin (this is optional) -->
-		<script type="text/javascript" src="../fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
-		<!-- Add fancyBox main JS and CSS files -->
-		<script type="text/javascript" src="../fancybox/jquery.fancybox.js?v=2.1.5"></script>
-		<link rel="stylesheet" type="text/css" href="../fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
-		<!-- Add Button helper (this is optional) -->
-		<link rel="stylesheet" type="text/css" href="../fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
-		<script type="text/javascript" src="../fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-		<!-- Add Thumbnail helper (this is optional) -->
-		<link rel="stylesheet" type="text/css" href="../fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
-		<script type="text/javascript" src="../fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-		<!-- Add Media helper (this is optional) -->
-		<script type="text/javascript" src="../fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
-		<script type="text/javascript" src="../js/changepopup.js"></script>	<script src="../js/jquery-ui.js"></script>
-			
-			
-		<script >		
-		
-		$(document).ready(function() {
-
-			$(function() {
-			    var images = ['0.jpg','1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg'];
-			    $('html').css({'background': 'url(../includes/img/bg/' + images[Math.floor(Math.random() * images.length)] + ') no-repeat center center fixed',
-			    	'-webkit-background-size':'cover',
-			    	'-moz-background-size':'cover',
-			    	'-o-background-size':'cover',
-			    	'background-size':'cover'});
-			   });
-
-
-		}); 
-		</script>
-		
-		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
-		});
-	 
-		
-		
-	</script>
-	<script type="text/javascript">
-			$('document').ready(function(){
-				$('tr.datalist:odd').css('background-color', '#E0E0E0');
-			});
-		</script>
+   
+	
 	
 	<script>
-    $(document).ready(
-    		  
-    		  /* This is the function that will get executed after the DOM is fully loaded */
-    		  function () {
-    		    $( "#blog_date" ).datepicker({
-    		      changeMonth: true,//this option for allowing user to select month
-    		      changeYear: true, //this option for allowing user to select from year range
-    		      dateFormat: "dd/mm/yy"
-    		    });
-    		  }
+	 $(document).ready(function () {		 
+		  
+		    $( "#blog_date" ).datepicker({
+		      changeMonth: true,
+		      changeYear: true, 
+		      dateFormat: "dd/mm/yy"
+		    });
+		  
+		  
+		 aTable = $(".blogTable").dataTable({
+			"order" : [[ 1, "asc" ]],			
+			  "paging":   false,
+			  "searching": false,			 
+				responsive: true,				
+				"columnDefs": [
+					 {
+			           "targets": [0,1,2],			               
+			                "sortable": true,
+			                "visible": true,
+			            },
+			        ]
+		});
+		  
+		  
+	 });
 
-    		);
+function OpenPopUp(pid)
+	{
+	$('#blogModal').modal('toggle');
+						
+}
+	
+	function checkblogfields()
+	{
+		isvalid=true;
+		var btitle = $.trim($('#other_blog_title').val());
+		var bfile = $.trim($('#other_blog_file').val());
+		if(btitle == "")
+			{
+			alert("Please enter value for Blog Title");
+			isvalid=false;
+			}
+		if(bfile == "")
+		{
+			alert("Please select Blog file");
+			isvalid=false;
+		}
+		return isvalid;
+	}
+    function sendbloginfo()
+    {
+    	var test=checkblogfields();
+    	
+    	if(ajaxSendBlogInfo())
+    	{
+    		$('#blogModal').modal('toggle');
+    	}
+    }
+    function ajaxSendBlogInfo()
+    {
+    	var isvalid=false;
+		var btitle = $.trim($('#other_blog_title').val());
+		var bfile = $('#other_blog_file');
+		var bid = $.trim($('#id').val());
+		var ufile = $('#other_blog_file')[0].files[0];
+		var requestd = new FormData();
+		requestd.append('blogid',bid);
+		requestd.append('blogtitle',btitle);
+		requestd.append('blogfile',ufile);
+		//mimeType:"multipart/form-data",
+		$.ajax({
+            url: "addOtherBlogFile.html",
+            type: 'POST',
+            data:  requestd,
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(xml)
+            {
+            	
+					var i=1;
+					cleartable();
+ 					$(xml).find('FILES').each(function(){
+ 							
+ 							if($(this).find("MESSAGE").text() == "SUCCESS")
+ 								{
+ 									
+									var newrow="";
+									
+									newrow += "<td>" + $(this).find("BFTITLE").text() + "</td>";
+									newrow += "<td>" + $(this).find("BFDOC").text() + "</td>";
+									newrow += "<td>" + $(this).find("ADDEDBY").text() + "</td>";
+									newrow += "<td>" + $(this).find("DATEADDED").text() + "</td>";
+									newrow += "<td></td>";									
+									newrow +="</tr>";
+									$('table#showlists tr:last').after(newrow);
+									i=i+1;
+									isvalid=true;
+	                   				
+ 								}else{
+ 									alert($(this).find("MESSAGE").text()+ "1");
+ 									
+ 								}
+						});
+            },
+            error: function(jqXHR, textStatus, errorThrown) 
+            {
+            		alert("error");
+            },
+				dataType: "text",
+ 				async: false
+       });
+
+    	return isvalid;
+    }
+	
+    
+   
 
 	</script>
 
-	<script src="../includes/ckeditor/ckeditor.js"></script>
 	</head>
 
-  <body><br/>
-  
-  <div class="mainContainer">
-
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Welcome <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="../includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="../includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
-
-			<div class="col full_block content">
-				<div class="bodyText">						
-				<form id="pol_cat_frm" action="updateBlogDetails.html" method="post" ENCTYPE="multipart/form-data">
-				<div class="pageTitleHeader siteHeaders">Viewing Blog Details for &quot;${blog.blogTitle}&quot;</div>
-                      <div class="pageBody">
-
-						<%if(request.getAttribute("msg") != null){%>                    
-                       
-                    
-                    <div class="messageText" align="center"><br>*** <%=(String)request.getAttribute("msg")%> ***</div><p>
-                        <div align="center">
-                      <a href="addNewBlog.html"><img src="../includes/img/addblog-off.png" class="img-swap menuImage" title="Add Blog"></a> 
-                      <a href="viewBlogs.html"><img src="../includes/img/viewblogs-off.png" class="img-swap menuImage" title="View Blogs"></a>
-                      <a href="../index.jsp"><img src="../includes/img/backtomenu-off.png" class="img-swap menuImage" title="Back to Web Update Menu"></a></div>
-                      
-                      <br/>&nbsp;<br/>
-                    
-                    
-                    <%} else {%>
-
-      <input type="hidden" id="op" name="op" value="CONFIRM">      
-     <input type="hidden" value="${blog.id}" id="id" name="id">                     
-                     
-                     <p>Title:<br/>
-                     <input type="text" class="requiredinput" id="blog_title"  name="blog_title" style="width:250px;" value="${blog.blogTitle}">
-                     
-                     <p>Date:<br/>
-                     <input type="text" class="requiredinput" id="blog_date" name="blog_date"  style="width:250px;" value="${blog.blogDateFormatted}">
-                    <p>Content:<br/>
-                     <textarea id="blog_content" name="blog_content" rows="10" cols="10">${blog.blogContent}</textarea>
-                     
-                     <p>Photo:<br/>
-                     <c:if test="${ blog.blogPhoto ne null }">	
-										<img src="/includes/files/blog/img/${blog.blogPhoto}" border=0 style="width:250px;"><p>
-										</c:if>	
-                     <input type="file" size="60" id="blog_photo" name="blog_photo"  class="requiredinput">
-                     
-                     <p>Photo Caption:<br/>
-                     <input type="text" class="requiredinput" id="blog_photo_caption"  name="blog_photo_caption" style="width:250px;" value="${blog.blogPhotoCaption}">
-                     
-                     <p>Document: (${blog.blogDocument})<br/>
-                     <c:if test="${ blog.blogDocument ne null }">	
-                     <a href="/includes/files/blog/doc/${blog.blogDocument}">${blog.blogDocument}</a><br/>
-                     </c:if>
-                      <input type="file" size="60" id="blog_document" name="blog_document"  class="requiredinput">
-                     <p>Status:<br/>
-                      <select id="blog_status" name="blog_status" class="requiredinput">
+  <body>
+    <div class="row pageBottomSpace">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+<div class="siteBodyTextBlack">
+<div class="siteHeaderGreen">Edit Blog Details</div>
+  						
+				<form id="pol_cat_frm" action="updateBlogDetails.html" method="post" ENCTYPE="multipart/form-data" class="was-validated" autocomplete="off">
+				<input type="hidden" id="op" name="op" value="CONFIRM">
+				<input type="hidden" value="${blog.id}" id="id" name="id">                     
+                 
+                <div class="row">
+      			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">      
+                     <b>Title:</b><br/>
+                     <input type="text" id="blog_title" name="blog_title" value="${blog.blogTitle}" required class="form-control" maxlength="60">
+                </div> 
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">     
+                     <b>Date:</b><br/>
+                     <input type="text" id="blog_date" name="blog_date" value="${blog.blogDateFormatted}" required class="form-control">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">    
+                    <b>Status:</b><br/>
+                      <select id="blog_status" name="blog_status" required class="form-control">
 						<c:forEach var="item" items="${statuslist}">
     						
     						            				<c:choose>
@@ -166,107 +174,123 @@
     							</c:choose>
 						</c:forEach>
                         </select>
+                 </div>
+                 </div>   
+                 <br/><br/>
+                 <div class="row">
+      			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                   
+                      <b>Content:</b><br/>
+                     <textarea id="blog_content" name="blog_content" maxlength="2000" required class="form-control">${blog.blogContent}</textarea>
+                 
+                 </div>
+                 </div>
+                 <br/><br/>
+                <div class="row">
+      			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">     
+                     <b>Photo:</b><br/>
+                     <c:if test="${ blog.blogPhoto ne null }">	
+										<img src="/includes/files/blog/img/${blog.blogPhoto}" border=0 style="width:250px;" /><p>
+										</c:if>	
+                     <input type="file" id="blog_photo" name="blog_photo" accept=".jpg,.png" class="form-control">
+                </div>     
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">     
+                     <b>Photo Caption:</b><br/>
+                     <input type="text" id="blog_photo_caption"  name="blog_photo_caption" value="${blog.blogPhotoCaption}" maxlength="60" class="form-control">
+                
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">     
+                     <b>Document (PDF):</b><br/>
+                     <input type="file" id="blog_document" name="blog_document" accept=".pdf" class="form-control">
+                     <c:if test="${ blog.blogDocument ne null }">	
+                     	<br/><b>Current File:</b> <a href="/includes/files/blog/doc/${blog.blogDocument}" target="_blank">${blog.blogDocument}</a><br/>
+                     </c:if>
+                </div>
+                </div>      
+                     
                       
-                    <p>
-                    <%if(request.getAttribute("msg") != null){%>
-                     
-                        <span class="message_info"><br>*** <%=(String)request.getAttribute("msg")%> ***</span>
-                      
-                    <%}%>
-                    
-                   <p><button id="butSave">Update</button>
-                     
-               </div>      
                      
                      
-                  <p><img src="../includes/img/bar.png" height=1 width=100%>
+                     
+   <hr>             
 				 
-					<p><div class="pageSectionHeader siteSubHeaders">Other Blog Files</div>
+<div class="siteSubHeaderGreen"> Other BLOG Files</div>
+             
 					
-					<div class="pageBody">	
+Other attachments such as documentation, forms, or presentations to add to this BLOG item.
 					
-					Other attachments such as documentation, forms, or presentations to add to this blog item.<p>
-					
-					<a class="fancybox" href="#inline1" title="Add Other Blog File" onclick="OpenPopUp('${blog.id}');">Add File</a>
-					   
+							   
+   
+<br/><br/>                  
                      
-                     
-					<table class="newsTable" id="showlists">						
-						<tr class="tableHeader">
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">Document</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-						</tr>
+					<table class="blogTable table table-sm responsive" id="showlists" style="font-size:11px;width:100%;">
+					<thead class="thead-dark">
+					<tr class="tableHeader">
+						<th width="50%">Title</th>							
+						<th width="10%">Added On</th>
+						<th width="30%">Added By</th>
+						<th width="10%">Options</th>
+					</tr>
+					</thead>
+					<tbody>
 						<c:forEach var="p" items="${blog.otherBlogFiles}" varStatus="counter">
 							<tr>
 								<td>${p.bfTitle}</td>
-								<td>${p.bfDoc}</td>								
 								<td>${p.dateAddedFormatted}</td>
-								<td>
-									<a class="small" onclick="return confirm('Are you sure you want to DELETE this document?');" href='deleteOtherBlogFile.html?id=${p.id}&fid=${p.bfDoc}&bid=${p.blogId}'>Delete File</a>
+								<td style="text-transform:Capitalize;">${p.addedBy}</td>	
+								<td><a class="btn btn-xs btn-warning" href="/includes/files/blog/doc/${p.bfDoc}" target="_blank">VIEW</a> &nbsp; 
+									<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to DELETE this document?');" href='deleteOtherBlogFile.html?id=${p.id}&fid=${p.bfDoc}&bid=${p.blogId}'>DEL</a>
 		                    	</td>
 							</tr>
 						</c:forEach>
+						</tbody>
 					</table>
 				
-            <div id="inline1" style="width:600px;display: none;">
-				<span class="headertitle">Add Other Blog File</span>
-					<table width="500px;" cellpadding="0" cellspacing="3" align="center" border="0" style="padding: 5px;">
-						<tr>
-							<td class="subheader" valign="middle" width='125px'>
-								Other Blog File Title:
-							</td>
-							<td>
-								<input type="text" class="requiredinput" id="other_blog_title"  name="other_blog_title" style="width:250px;" >
-							</td>
-						</tr>
-						<tr>
-							<td class="subheader" valign="middle" width='125px'>
-								Other Blog File:
-							</td>
-							<td>
-								<input type="file"  id="other_blog_file" name="other_blog_file"  class="requiredinput">
-							</td>
-						</tr>				
-						<tr>
-							<td colspan="2" valign="middle" align="center">
-								<input type="button" value="Add File" onclick="sendbloginfo();"/>
-								<input type="button" value="Cancel" onclick="closewindow();"/>
-
-							</td>
-						</tr>
-					</table>
-			</div> 
+<!-- MODAL -->				
+      <div class="modal" id="blogModal">
+      <div class="modal-dialog">
+      <div class="modal-content">
+			<div class="modal-header">
+	        <h4 class="modal-title">Add Other BLOG File</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      	</div>			
+			<div class="modal-body">
+			<b>Title:</b><br/>
+			<input type="text"  id="other_blog_title"  name="other_blog_title" class="form-control" maxlength="60">
+			<b>File: (PDF)</b><br/>
+			<input type="file"  id="other_blog_file" name="other_blogm_file" class="form-control" accept=".pdf">
+			</div>
+			 <div class="modal-footer">	
+					<input type="button" class="btn btn-sm btn-primary" value="Add File" onclick="sendbloginfo();"/>
+					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+			</div>
+					
+		</div> 
+	</div></div>
+	<br/><br/>
+			
     
-  </div><p>
-    <div align="center">
-					<A HREF='viewBlogs.html'><img src="../includes/img/back-off.png" border="0" class="img-swap"></a>
-								
+    
+    
+    				<div align="center">				
+					<button class="btn btn-sm btn-success" id="butSave" onclick="loadingData();">SAVE CHANGES</button> &nbsp;
+					<a class="btn btn-sm btn-primary" href="#" title="Add Other Blog File" onclick="OpenPopUp('${blog.id}');">ADD FILE</a> &nbsp;
+					<A class="btn btn-sm btn-danger" HREF='viewBlogs.html' onclick="loadingData();">CANCEL</a>
 					</div>
-    <%} %>
+					
+					
+   
     
     </form>
     
     
     
-      <script>
-    CKEDITOR.replace( 'blog_content' );
-    </script>
-	
-	
-		<br/><br/>
-		
-			</div>
-			</div>
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../../navigate.jsp" title="Back to MemberServices Main Menu"><img src="../includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
+<script>
+CKEDITOR.replace( 'blog_content' );
+</script>
 </div>
-  
 </div>
-    <br/>
+</div>	
+	
   </body>
 
 </html>
