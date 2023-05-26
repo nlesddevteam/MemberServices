@@ -239,22 +239,7 @@
       <URL-Pattern>/MemberAdmin/Apps/setNextLoginApp.html</URL-Pattern>
     </Request-Handler>
     
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.school.site.handler.admin.ViewSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/Schools/viewSchool.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.school.site.handler.admin.AddSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/WebUpdateSystem/SchoolProfiles/addSchool.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.school.site.handler.admin.EditSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/Schools/editSchool.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.school.site.handler.admin.UpdateSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/Schools/updateSchool.html</URL-Pattern>
-    </Request-Handler>
+   
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.ajax.GetZoneRegionsAjaxRequestHandler</Request-Handler-Class>
       <URL-Pattern>/MemberAdmin/Apps/Schools/getZoneRegions.html</URL-Pattern>
@@ -276,26 +261,7 @@
       <URL-Pattern>/MemberAdmin/Apps/Schools/schoolSystemAdmin.html</URL-Pattern>
     </Request-Handler>
     
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.AddStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/StaffDirectory/addStaffDirectoryContact.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.EditStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/StaffDirectory/editStaffDirectoryContact.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.ajax.GetNextContactSortOrderAjaxRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/StaffDirectory/getNextContactSortOrder.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.UpdateStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/StaffDirectory/updateStaffDirectoryContact.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.DeleteStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/MemberAdmin/Apps/StaffDirectory/deleteDirectoryStaff.html</URL-Pattern>
-    </Request-Handler>
+   
     
     <Request-Handler>
       <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.PersonnelAdminChangeRequestHandler</Request-Handler-Class>
@@ -360,6 +326,36 @@
 			      <Request-Handler-Class>com.awsd.weather.handler.MSSchoolSystemAdminRequestHandler</Request-Handler-Class>
 			      <URL-Pattern>/Administration/SchoolAdmin/schoolSystemAdmin.html</URL-Pattern>
 			    </Request-Handler>
+			    
+			    
+			    
+	<!-- SECURITY CATEGORIES --> 		    
+				<Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.categories.handler.ViewJobCategoriesRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/StaffCategories/viewCategories.html</URL-Pattern>
+    			</Request-Handler>
+     			<Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.categories.handler.AddNewCategoryAjaxRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/StaffCategories/addNewPCategory.html</URL-Pattern>
+    			</Request-Handler>
+    			<Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.categories.handler.ViewJobCategoryRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/StaffCategories/viewCategory.html</URL-Pattern>
+    			</Request-Handler>
+    			<Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.categories.handler.RemoveCategoryRoleAjaxRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/StaffCategories/removeRoleFromCategory.html</URL-Pattern>
+    			</Request-Handler>
+    			<Request-Handler>
+      				<Request-Handler-Class>com.awsd.admin.apps.categories.handler.AddRoleToCategoryAjaxRequestHandler</Request-Handler-Class>
+     				 <URL-Pattern>/Administration/StaffCategories/addRoleToCategory.html</URL-Pattern>
+    			</Request-Handler>			    
+			    
+			    
+			    
+			    
+			    
+			    
    <!-- SECURITY PERMISSIONS --> 			
     			<Request-Handler>
 			      <Request-Handler-Class>com.awsd.security.handler.MSAddPermissionRequestHandler</Request-Handler-Class>
@@ -455,55 +451,55 @@
 			      <URL-Pattern>/Administration/setNextLoginApp.html</URL-Pattern>
 			    </Request-Handler>
 		
-	<!--  NEW STAFF DIRECTORY -->	
+	<!--  STAFF DIRECTORY -->	
 		
 		    	<Request-Handler>
 			      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSAddStaffDirectoryContactRequestHandler</Request-Handler-Class>
-			      <URL-Pattern>/StaffDirectory/addStaffDirectoryContact.html</URL-Pattern>
+			      <URL-Pattern>/StaffRoom/StaffDirectory/addStaffDirectoryContact.html</URL-Pattern>
 			    </Request-Handler>
 			    <Request-Handler>
 			      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSEditStaffDirectoryContactRequestHandler</Request-Handler-Class>
-			      <URL-Pattern>/StaffDirectory/editStaffDirectoryContact.html</URL-Pattern>
+			      <URL-Pattern>/StaffRoom/StaffDirectory/editStaffDirectoryContact.html</URL-Pattern>
 			    </Request-Handler>
 			       <Request-Handler>
 			     	<Request-Handler-Class>com.nlesd.webmaint.site.handler.ajax.MSGetNextContactSortOrderAjaxRequestHandler</Request-Handler-Class>
-			    	 <URL-Pattern>/StaffDirectory/getNextContactSortOrder.html</URL-Pattern>
+			    	 <URL-Pattern>/StaffRoom/StaffDirectory/getNextContactSortOrder.html</URL-Pattern>
 			   	</Request-Handler>
 			    <Request-Handler>
 			      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSUpdateStaffDirectoryContactRequestHandler</Request-Handler-Class>
-			      <URL-Pattern>/StaffDirectory/updateStaffDirectoryContact.html</URL-Pattern>
+			      <URL-Pattern>/StaffRoom/StaffDirectory/updateStaffDirectoryContact.html</URL-Pattern>
 			    </Request-Handler>
 			    <Request-Handler>
 			    	<Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.MSDeleteStaffDirectoryContactRequestHandler</Request-Handler-Class>
-			   	<URL-Pattern>/StaffDirectory/deleteDirectoryStaff.html</URL-Pattern>
+			   	<URL-Pattern>/StaffRoom/StaffDirectory/deleteDirectoryStaff.html</URL-Pattern>
 			    </Request-Handler>
 		
-	<!-- New School Directory -->	
+	<!-- School Directory -->	
 		
 
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.admin.MSAddSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/SchoolDirectory/addSchool.html</URL-Pattern>
+      <URL-Pattern>/StaffRoom/SchoolDirectory/addSchool.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.admin.MSEditSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/SchoolDirectory/editSchool.html</URL-Pattern>
+      <URL-Pattern>/StaffRoom/SchoolDirectory/editSchool.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.admin.MSUpdateSchoolRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/SchoolDirectory/updateSchool.html</URL-Pattern>
+      <URL-Pattern>/StaffRoom/SchoolDirectory/updateSchool.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       <Request-Handler-Class>com.nlesd.school.site.handler.ajax.MSGetZoneRegionsAjaxRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/SchoolDirectory/getZoneRegions.html</URL-Pattern>
+      <URL-Pattern>/StaffRoom/SchoolDirectory/getZoneRegions.html</URL-Pattern>
     </Request-Handler>
    <Request-Handler>
       	<Request-Handler-Class>com.nlesd.school.site.handler.ajax.MSGetZoneRegionsSchoolsAjaxRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/SchoolDirectory/getZoneRegionsSchools.html</URL-Pattern>
+      	<URL-Pattern>/StaffRoom/SchoolDirectory/getZoneRegionsSchools.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
       <Request-Handler-Class>com.awsd.admin.apps.personnel.handler.MSDeleteSchoolRequesthandler</Request-Handler-Class>
-      <URL-Pattern>/SchoolDirectory/deleteSchool.html</URL-Pattern>
+      <URL-Pattern>/StaffRoom/SchoolDirectory/deleteSchool.html</URL-Pattern>
     </Request-Handler>
    
 		
@@ -1967,6 +1963,10 @@
       	<Request-Handler-Class>com.nlesd.school.site.handler.ajax.GetZoneRegionsSchoolsAjaxRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/MemberAdmin/Apps/Schools/getZoneRegionsSchools.html</URL-Pattern>
     </Request-Handler>
+    
+    
+<!-- NEWS POSTINGS -->
+    
 	<Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.newspostings.handler.AddNewNewsPostingsRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/NewsPostings/addNewNewsPostings.html</URL-Pattern>
@@ -1991,8 +1991,17 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.handler.ViewWebUpdateSystemRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/viewWebUpdateSystem.html</URL-Pattern>
     </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.newspostings.handler.AddNewNewsPostingsFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/NewsPostings/addOtherNewsFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.newspostings.handler.DeleteNewsPostingsOtherFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/NewsPostings/deleteOtherNewsFile.html</URL-Pattern>
+    </Request-Handler> 
 
 
+<!-- TENDER POSTINGS -->
    	<Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.AddNewTenderRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/addNewTender.html</URL-Pattern>
@@ -2000,8 +2009,7 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewTenders.html</URL-Pattern>
-    </Request-Handler>
-    
+    </Request-Handler>    
      <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewClosedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewClosedTenders.html</URL-Pattern>
@@ -2037,8 +2045,7 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewArchivedClosedTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewArchivedClosedTenders.html</URL-Pattern>
-    </Request-Handler>
-    
+    </Request-Handler>    
         <Request-Handler>
      <Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewCurrentTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewCurrentTenders.html</URL-Pattern>
@@ -2046,8 +2053,7 @@
    <Request-Handler>
      <Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewUnsetTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewUnsetTenders.html</URL-Pattern>
-    </Request-Handler>
-    
+    </Request-Handler>    
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewTenderRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewTenderDetails.html</URL-Pattern>
@@ -2072,7 +2078,10 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.tenders.handler.ViewExceptionTendersRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/Tenders/viewExceptionTenders.html</URL-Pattern>
     </Request-Handler>   
-    
+
+
+<!-- MEETING MINUTES POSTINGS -->    
+ 
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.AddNewMeetingMinutesRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/addNewMeetingMinutes.html</URL-Pattern>
@@ -2092,7 +2101,19 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.DeleteMeetingMinutesRequestHandler</Request-Handler-Class>
      	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/deleteMeetingMinutes.html</URL-Pattern>
+    </Request-Handler> 
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.AddNewMeetingMinutesFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/addOtherMMFile.html</URL-Pattern>
     </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.DeleteMeetingMinutesOtherFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/deleteOtherMMFile.html</URL-Pattern>
+    </Request-Handler>   
+    
+    
+<!-- MEETING HIGHLIGHTS POSTINGS -->      
+
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.meetinghighlights.handler.AddNewMeetingHighlightsRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/MeetingHighlights/addNewMeetingHighlights.html</URL-Pattern>
@@ -2114,6 +2135,18 @@
       	<URL-Pattern>/WebUpdateSystem/MeetingHighlights/deleteMeetingHighlights.html</URL-Pattern>
     </Request-Handler>
     <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetinghighlights.handler.AddNewMeetingHighlightsFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/MeetingHighlights/addOtherMHFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetinghighlights.handler.DeleteMeetingHighlightsOtherFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/MeetingHighlights/deleteOtherMHFile.html</URL-Pattern>
+    </Request-Handler>
+
+
+<!-- BANNER POSTINGS -->    
+
+    <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.banners.handler.AddNewBannerRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/Banners/addNewBanner.html</URL-Pattern>
     </Request-Handler>
@@ -2133,6 +2166,10 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.banners.handler.DeleteBannerRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/Banners/deleteBanner.html</URL-Pattern>
     </Request-Handler>
+    
+    
+<!-- BLOG POSTINGS -->     
+        
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.blogs.handler.AddNewBlogRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/Blogs/addNewBlog.html</URL-Pattern>
@@ -2153,6 +2190,17 @@
       	<Request-Handler-Class>com.esdnl.webupdatesystem.blogs.handler.DeleteBlogRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/Blogs/deleteBlog.html</URL-Pattern>
     </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.blogs.handler.AddNewBlogFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/Blogs/addOtherBlogFile.html</URL-Pattern>
+    </Request-Handler>
+    <Request-Handler>
+      	<Request-Handler-Class>com.esdnl.webupdatesystem.blogs.handler.DeleteBlogOtherFileRequestHandler</Request-Handler-Class>
+      	<URL-Pattern>/WebUpdateSystem/Blogs/deleteOtherBlogFile.html</URL-Pattern>
+    </Request-Handler>
+    
+ <!-- POLICY POSTINGS -->    
+
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.policies.handler.AddNewPolicyRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/Policies/addNewPolicy.html</URL-Pattern>
@@ -2180,39 +2228,12 @@
     <Request-Handler>
       	<Request-Handler-Class>com.esdnl.webupdatesystem.policies.handler.DeletePolicyRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/WebUpdateSystem/Policies/deletePolicy.html</URL-Pattern>
-    </Request-Handler>     
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.blogs.handler.AddNewBlogFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Blogs/addOtherBlogFile.html</URL-Pattern>
     </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.blogs.handler.DeleteBlogOtherFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/Blogs/deleteOtherBlogFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.AddNewMeetingMinutesFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/addOtherMMFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetingminutes.handler.DeleteMeetingMinutesOtherFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/MeetingMinutes/deleteOtherMMFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetinghighlights.handler.AddNewMeetingHighlightsFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/MeetingHighlights/addOtherMHFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.meetinghighlights.handler.DeleteMeetingHighlightsOtherFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/MeetingHighlights/deleteOtherMHFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.newspostings.handler.AddNewNewsPostingsFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/NewsPostings/addOtherNewsFile.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      	<Request-Handler-Class>com.esdnl.webupdatesystem.newspostings.handler.DeleteNewsPostingsOtherFileRequestHandler</Request-Handler-Class>
-      	<URL-Pattern>/WebUpdateSystem/NewsPostings/deleteOtherNewsFile.html</URL-Pattern>
-    </Request-Handler>  
+         
+   
+   
+    
+     
     <Request-Handler>
     	<Request-Handler-Class>com.esdnl.payadvice.handler.ExportPayProcessErrorsCSVRequestHandler</Request-Handler-Class>
       	<URL-Pattern>/PayAdvice/exportProcessErrors.html</URL-Pattern>
@@ -3089,27 +3110,7 @@
       <Request-Handler-Class>com.nlesd.school.site.handler.admin.UpdateSchoolRequestHandler</Request-Handler-Class>
       <URL-Pattern>/WebUpdateSystem/SchoolProfiles/updateSchool.html</URL-Pattern>
     </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.AddStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/WebUpdateSystem/StaffDirectory/addStaffDirectoryContact.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.EditStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/WebUpdateSystem/StaffDirectory/editStaffDirectoryContact.html</URL-Pattern>
-    </Request-Handler>
-       <Request-Handler>
-     	<Request-Handler-Class>com.nlesd.webmaint.site.handler.ajax.GetNextContactSortOrderAjaxRequestHandler</Request-Handler-Class>
-    	 <URL-Pattern>/WebUpdateSystem/StaffDirectory/getNextContactSortOrder.html</URL-Pattern>
-   	</Request-Handler>
-    <Request-Handler>
-      <Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.UpdateStaffDirectoryContactRequestHandler</Request-Handler-Class>
-      <URL-Pattern>/WebUpdateSystem/StaffDirectory/updateStaffDirectoryContact.html</URL-Pattern>
-    </Request-Handler>
-    <Request-Handler>
-    	<Request-Handler-Class>com.nlesd.webmaint.site.handler.admin.DeleteStaffDirectoryContactRequestHandler</Request-Handler-Class>
-   	<URL-Pattern>/WebUpdateSystem/StaffDirectory/deleteDirectoryStaff.html</URL-Pattern>
-    </Request-Handler>
-	<Request-Handler>
+   	<Request-Handler>
     <Request-Handler-Class>com.nlesd.eecd.handler.ViewAllEECDAreasAdminRequestHandler</Request-Handler-Class>
       <URL-Pattern>/EECD/adminViewAreas.html</URL-Pattern>
     </Request-Handler>

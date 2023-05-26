@@ -1,23 +1,24 @@
 /* NLESD WEBSITE CSS FILE */
-/* Use of this code ONLY for (C) 2021 NLESD www.nlesd.ca by Geoff Taylor */
-/* Bootstrap 4, HTML5, DataTables, jQuery, Java, Javascript */
+/* Use of this code ONLY for (C) 2023 NLESD www.nlesd.ca/MemberServices by Geoff Taylor */
+/* Bootstrap 4, HTML5, DataTables, jQuery, Java, JavaScript */
 
 /* SET BODY AND MAX MIN SIZE */
-body { background-color:white; max-width:1420px; margin-left: auto;  margin-right: auto; font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;color: Black;-webkit-text-size-adjust: 100%;background:none;background-color:none;margin-bottom:100px;}
-/* html { background: radial-gradient(#ffffff,#ffffff,#FDF5E6) no-repeat center center fixed;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; } */ 
-html { 
-	background-color:White;
-/*background: url('../img/site-bak-1.png') no-repeat center center fixed; 
--webkit-background-size: cover; 
--moz-background-size: cover; 
--o-background-size: cover; 
-background-size: cover;*/
-}
+body { background:White; background-color:white; max-width:1420px; margin-left: auto; transition: filter 1s; margin-right: auto; font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;color: Black;-webkit-text-size-adjust: 100%;margin-bottom:100px;}
+html {background:White; background-color:White;}
 
-.menuIconImage {display:inline-block; height:130px; vertical-align:top;text-align:center;margin-left:3px;margin-top:5px;border:0px solid Silver;}
-.menuImage {max-width:100%;height:auto;max-height:120px;}
+body.grayscale {
+    /* gray scale(1) makes the web site gray scale */
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);   
+  }
+  body.contrast {   
+    -webkit-filter:contrast(1.5);
+    filter: contrast(1.5);
+  }
 
-.msgok,.msgerr,.msginfo,.msgOKd,.msgERRd,.msgd, msg {
+.menuIconImage {float:left;height:120px; vertical-align:top;text-align:center;border:0px solid Silver;}
+
+.msgok,.msgerr,.msginfo,.msgOKd,.msgERRd,.msgd,.msg {
 	position: fixed;
 	z-index:999999;
     top: 50%;left: 50%;
@@ -26,7 +27,6 @@ background-size: cover;*/
 	vertical-align:center;	text-align:center;
 	box-shadow: 0 0 0 100% rgba(0,0,0,0.6); box-shadow: 0 0 0 100vmax rgba(0,0,0,0.6);		
 	}
-
 
 .mainContainer {font-size:12px;max-width:1420px;min-width:300px;display: block;  margin-left: auto;  margin-right: auto;background-color:white; }
 #content browser { margin-right: -14px !important; overflow-y: scroll; overflow-x: hidden;}
@@ -366,28 +366,6 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 .faqQuestion {padding:6px;border:1px solid silver;background:rgba(255,255,255, 1);}
 .faqTitle {font-weight:bold;}
 
-.bullyHeader {font-size:14px;color:#ff00ff;font-weight:bold;text-transform:Uppercase;}
-	.bullyPanel1 {background-color:#ffe6e6;padding-top:2px;margin-top:2px;width:33%;min-width:200px;}
-	.bullyPanel2 {background-color:#e6e6ff;padding-top:2px;margin-top:2px;width:33%;min-width:200px;}
-	.bullyPanel3 {background-color:#e6ffe6;padding-top:2px;margin-top:2px;width:33%;min-width:200px;}
-	.bullyPanelH1 {padding-top:2px;background-color:Red;font-size:14px;font-weight:bold;text-align:center;color:White;white-space:nowrap;text-transform: uppercase;}
-	.bullyPanelH2 {padding-top:2px;background-color:Navy;font-size:14px;font-weight:bold;text-align:center;color:White;white-space:nowrap;text-transform: uppercase;}
-	.bullyPanelH3 {padding-top:2px;background-color:Green;font-size:14px;font-weight:bold;text-align:center;color:White;white-space:nowrap;text-transform: uppercase;}
-	.bullyPanelB1 {color:Black;background-color:#ffe6e6;font-size:11px;padding-top:5px;padding-bottom:2px;}
-	.bullyPanelB2 {color:Black;background-color:#e6e6ff;font-size:11px;padding-top:5px;padding-bottom:2px;}
-	.bullyPanelB3 {color:Black;background-color:#e6ffe6;font-size:11px;padding-top:5px;padding-bottom:2px;}
-
-.code2learnHeader {font-size:14px;color:#0080ff;font-weight:bold;text-transform:Uppercase;}
-	.ctlPanel1 {background-color:#ffe6e6;padding-top:2px;margin-top:2px;width:33%;min-width:200px;}
-	.ctlPanel2 {background-color:#e6e6ff;padding-top:2px;margin-top:2px;width:33%;min-width:200px;}
-	.ctlPanel3 {background-color:#e6ffe6;padding-top:2px;margin-top:2px;width:33%;min-width:200px;}
-	.ctlPanelH1 {padding-top:2px;background-color:Red;font-size:14px;font-weight:bold;text-align:center;color:White;white-space:nowrap;text-transform: uppercase;}
-	.ctlPanelH2 {padding-top:2px;background-color:Navy;font-size:14px;font-weight:bold;text-align:center;color:White;white-space:nowrap;text-transform: uppercase;}
-	.ctlPanelH3 {padding-top:2px;background-color:Green;font-size:14px;font-weight:bold;text-align:center;color:White;white-space:nowrap;text-transform: uppercase;}
-	.ctlPanelB1 {color:Black;background-color:#ffe6e6;font-size:11px;padding-top:5px;padding-bottom:2px;text-align:center;}
-	.ctlPanelB2 {color:Black;background-color:#e6e6ff;font-size:11px;padding-top:5px;padding-bottom:2px;text-align:center;}
-	.ctlPanelB3 {color:Black;background-color:#e6ffe6;font-size:11px;padding-top:5px;padding-bottom:2px;text-align:center;}
-
 
 /* SCHOOLS SECTION */
 .schoolDirectoryTable {width:100%;font-size:11px;}
@@ -398,27 +376,6 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 .schoolPhoto {width:100%;max-width:500px;padding:0px;}
 .schoolHeaderGreen {font-size:18px;color:#008001;font-weight:bold;text-transform:uppercase;}
 
-/* PROGRAMS SECTION */
-.td1 {color:#3c79d8;}
-.td2 {color:#37761d;}
-.td3 {color:#990000;}
-
-#mathM a.td1 { color:#3c79d8;  text-decoration: none;}
-#mathM a.td1:visited { color:#3c79d8;  text-decoration: none;}
-#mathM a.td1:hover {	color: #3c79d8;	text-decoration: underline;} 
-#mathM a.td1:active { color: #3c79d8; text-decoration: none;}
-
-#mathM a.td3 { color:#990000;  text-decoration: none;}
-#mathM a.td3:visited { color:#990000;  text-decoration: none;}
-#mathM a.td3:hover {	color:#990000;	text-decoration: underline;} 
-#mathM a.td3:active { color:#990000; text-decoration: none;}
-
-#mathM a.td2 { color:#37761d;  text-decoration: none;}
-#mathM a.td2:visited { color:#37761d;  text-decoration: none;}
-#mathM a.td2:hover {	color: #37761d;	text-decoration: underline;} 
-#mathM a.td2:active { color: #37761d; text-decoration: none;}
-
-.mathHeader {font-size:14px;color:#004178;font-weight:bold;text-transform:Uppercase;}
 
 
 
@@ -445,8 +402,18 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 
 
 /* MEDIA QUERIES */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #ffffff; /* Light background color */
+    color: #000000; /* Dark text color */
+  }
+  html {
+    background-color: #ffffff; /* Light background color */
+    color: #000000; /* Dark text color */
+  }
+}
 
-@media only screen and (max-width: 2596px) {    	
+@media only screen and (max-width: 5000px) {    	
     	.addressTopSmall {display:none;}
     	.searchBoxNavBar {display:block;padding-top:12px;} 
     	.searchBoxFooter {display:none;} 
@@ -490,6 +457,8 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 	.headerFull {display:none;}
 	.navbar-collapse { background-color: rgba(31, 66, 121, 0.5);padding:3px;}
 	.navbar-dark .navbar-nav .nav-link {color:White;}
+	.menuIconImage {width:33%;height:100px;}
+	.menuImage {width:80%;}
 }
 
   @media only screen and (max-width: 500px) {	
@@ -499,7 +468,11 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 	.headerSmall {display:block;}
 	.headerMedium {display:none;}
 	.headerFull {display:none;}
-
+	
 }
 
-	
+/*If FireFox, fix */
+@-moz-document url-prefix() {
+   .navBottom {position: fixed; bottom: 34px; right: 1px;z-index:9998;}
+	.navBottomFontSize {position: fixed; bottom: 34px; left: 1px;z-index:9998; }
+}

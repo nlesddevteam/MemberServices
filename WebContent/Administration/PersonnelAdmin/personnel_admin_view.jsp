@@ -123,7 +123,7 @@ You can update a persons MS Profile for school, permissions category, and name/e
 There is also an option to delete a user if the account is empty and not in use.
 
 <br/><br/>
- <div align="center"><a onclick="loadingData();" class="btn btn-sm btn-danger" href="../index.jsp">Back to Administration</a></div>
+ <div align="center"><a onclick="loadingData();" class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp">Back to StaffRoom</a></div>
 <br/><br/>
 <b>Total Members:</b> <span id="membersTotal"></span>
 
@@ -156,9 +156,9 @@ There is also an option to delete a user if the account is empty and not in use.
 					<td width="15%"><%=tmp.getPersonnelCategory().getPersonnelCategoryName()%></td>	
 					<td width="15%"><fmt:formatDate value="${test1}" pattern="yyyy/MM/dd @ h:mm a" /></td>							
 					<td width="15%">
-						  	<a class="btn btn-xs btn-primary" href="personnelAdminChange.html?pid=<%=tmp.getPersonnelID()%>" title="Change Profile"><i class="fas fa-user-alt"></i> PROFILE</a>
-                            <a class="btn btn-xs btn-warning" onclick="top.document.location.href='../../loginAs.html?pid=<%=tmp.getPersonnelID()%>';" href='#'><i class="fas fa-sign-in-alt"></i> LOGIN</a>
-                         	<a class="btn btn-xs btn-danger" onclick="return confirm('NOTICE: Are you sure you wish to remove this user? All data will be lost!')" href="personnelDelete.html?pid=<%=tmp.getPersonnelID()%>" title="Delete User"><i class="far fa-trash-alt"></i> DEL</a>
+						  	<a class="btn btn-xs btn-primary" onclick="loadingData();" href="personnelAdminChange.html?pid=<%=tmp.getPersonnelID()%>" title="Change Profile"><i class="fas fa-user-alt"></i> PROFILE</a>
+                            <a class="btn btn-xs btn-warning" onclick="top.document.location.href='../../loginAs.html?pid=<%=tmp.getPersonnelID()%>';loadingData();" href='#'><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+                         	<a class="btn btn-xs btn-danger" onclick="loadingData();return confirm('NOTICE: Are you sure you wish to remove this user? All data will be lost!')" href="personnelDelete.html?pid=<%=tmp.getPersonnelID()%>" title="Delete User"><i class="far fa-trash-alt"></i> DEL</a>
                          
 					</td>
 				 </tr>
@@ -167,7 +167,7 @@ There is also an option to delete a user if the account is empty and not in use.
 				</table>
 				
 				<br/><br/>
-				   <div align="center"><a onclick="loadingData();" class="btn btn-sm btn-danger" href="../index.jsp">Back to Administration</a></div>
+				   <div align="center"><a onclick="loadingData();" class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp">Back to StaffRoom</a></div>
 				
 </div> 
   

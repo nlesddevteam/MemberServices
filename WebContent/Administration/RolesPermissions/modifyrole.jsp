@@ -67,7 +67,7 @@
 				<br/><br/>                             
                 <div align="center">                      
                       		<input type="hidden" name="ouid" value="<%=r.getRoleUID()%>">                          		
-                      		<input type="submit" class="btn btn-success btn-sm" value="Save Changes">  &nbsp;
+                      		<input type="submit" class="btn btn-success btn-sm" value="Save Changes" onclick="loadingData();">  &nbsp;
                 			<a href="viewRole.html?uid=<%=r.getRoleUID()%>" onclick="loadingData();" class="btn btn-sm btn-danger">Cancel</a>                         
                </div>
 			   <br/><br/>

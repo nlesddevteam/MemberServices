@@ -2,16 +2,15 @@
          session="true"
          isThreadSafe="false"
          import="com.awsd.security.*,
-                 java.util.*,
-                 java.io.*,
-                 java.text.*"%>
+                java.util.*,
+                java.io.*,
+                java.text.*,
+                com.esdnl.webupdatesystem.newspostings.bean.*,
+			    com.esdnl.webupdatesystem.newspostings.dao.*,
+			 	com.esdnl.webupdatesystem.newspostings.constants.*,
+			 	com.esdnl.util.*"%>
                  
-<%@ page
-	import="java.util.*,
-					com.esdnl.webupdatesystem.newspostings.bean.*,
-					com.esdnl.webupdatesystem.newspostings.dao.*,
-					com.esdnl.webupdatesystem.newspostings.constants.*,
-					com.esdnl.util.*"%>                 
+            
                  
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <%@ taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt' %> 
@@ -22,830 +21,147 @@
 <%
   User usr = (User) session.getAttribute("usr");
 %>
-<html>
+<html> 
+<head>
+<title>News Posting System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-	<head>
-		<title>NLESD - Web Update Posting System</title>
-					
-
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <meta charset="utf-8">
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="../includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="../includes/css/ms.css" rel="stylesheet" type="text/css">	
-			<script src="../includes/js/jquery-1.10.2.js" type="text/javascript"></script>
-			<script src="../includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="../includes/js/common.js"></script>
-			<script src="../includes/js/nlesd.js"></script>
-			<link rel="stylesheet" href="../includes/css/jquery-ui.css" />
-		<script >
+<style>
+		input {border: 1px solid silver;}	
+		.dataTables_length,.dt-buttons {float:left;}
+		.choices__list--multiple .choices__item {background-color:#004178;border:1px solid #004178;}
+		td {vertical-align:middle;}
+		</style>
 		
+	<script>	
 		
-		$(document).ready(function() {
-
-			$(function() {
-			    var images = ['0.jpg','1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg'];
-			    $('html').css({'background': 'url(../includes/img/bg/' + images[Math.floor(Math.random() * images.length)] + ') no-repeat center center fixed',
-			    	'-webkit-background-size':'cover',
-			    	'-moz-background-size':'cover',
-			    	'-o-background-size':'cover',
-			    	'background-size':'cover'});
-			   });
-
-
-		}); 
-		</script>
-		
-		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
+	$('document').ready(function(){
+		aTable = $(".newsTable").dataTable({
+			"order" : [[ 2, "desc" ]],			
+			  "paging":   true,
+			  "searching": true,			 
+				responsive: true,
+				"pageLength": 25,
+				"lengthMenu": [[25, 50, 75, 100, -1], [25, 50, 75, 100, "All"]],
+				"lengthChange": true,
+				"columnDefs": [
+					 {
+			                "targets": [6],			               
+			                "searchable": false,
+			                "sortable": false,
+			                "visible": true,
+			            },
+			           
+			        ]
 		});
-	 
 		
+				
 		
-	</script>
-		<script>
-    $(document).ready(
-    		  
-    		  /* This is the function that will get executed after the DOM is fully loaded */
-    		  function () {
-    		    $( "#news_date" ).datepicker({
-    		      changeMonth: true,//this option for allowing user to select month
-    		      changeYear: true, //this option for allowing user to select from year range
-    		      dateFormat: "dd/mm/yy"
-    		    });
-    		  }
-
-	);
-
-</script>
-
-
-<script src="../includes/ckeditor/ckeditor.js"></script>
-   
 	
-	</head>
+		$(".loadPage").show();
+		$(".loadingTable").css("display","none");
+		$("#loadingSpinner").css("display","none");
+	});
 
-  <body><br/>
-  
-  <div class="mainContainer">
+	
+	
+	
+		
+		</script>
 
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Welcome <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="../includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="../includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
 
-			<div class="col full_block content">
-				<div class="bodyText">	
-				<br/>
-				<div class="pageTitleHeader siteHeaders">View School News and Announcements</div>
-				<div class="pageBody"> 
-				Listed below are all the school news and announcements categorized by status. To edit an item, simply click on the title of the story listed or use the options at right. Once you delete a item it is removed from the database permanently. If you wish to not remove a story, it is best to Archive or Disabled it. 
-				 If you add special documents (in the Other Files Section when editing a posting) to a Story or Announcement, please use keywords in their title like form or presentation, so the display icon will match the appropriate file on the public site. If no keyword, then a default doc icon will show for any doc attachments.
+
+
+
+</head>
+
+<body>
+<div class="loadingTable" align="center" style="margin-top:10px;margin-bottom:10px;">
+<img src="/MemberServices/StaffRoom/includes/img/loading4.gif" style="max-width:150px;" border=0/><br/>Loading and Sorting Staff Data, please wait.<br/>This will take a few moments!
+</div>		
+
+<div style="display:none;" class="loadPage"> 
+
+
+<div class="row pageBottomSpace">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+<div class="siteBodyTextBlack">
+<div class="siteHeaderGreen">School News and Announcements</div>
+		Listed below are all the school news and announcements sorted by NEWS DATE by default. To sort by any other category, click on the table header. You can also Search for a story.
+		 To edit an item use the options at right of each listed story. 
+		Once you delete a item it is removed from the database permanently. If you wish to not remove a story, it is best to Archive or Disabled it. 
+ 		If you add special documents (in the Other Files Section when editing a posting) to a Story or Announcement, please use keywords in their title like form or presentation, 
+ 		so the display icon will match the appropriate file on the public site. 
+ 		If no keyword, then a default doc icon will show for any doc attachments.
 				 
 				
-				<p><div align="center">
-					<a href="addNewNewsPostings.html"><img src="../includes/img/addnews-off.png" class="img-swap menuImage" title="Add News Item"></a>&nbsp;<a href="viewNewsPostings.html"><img src="../includes/img/viewnews-off.png" class="img-swap menuImage" title="View News"></a>&nbsp;<a href="../index.jsp"><img src="../includes/img/backtomenu-off.png" class="img-swap menuImage" title="Back to Web Update Menu"></a>
-					</div>
-				<p>
-			</div>
-					
-									<%if(request.getAttribute("msg")!=null){%>
-									<div class="messageText" align="center">
-										*** <%=(String)request.getAttribute("msg")%> ***
-									</div>	
-                             		 <%} else { %>   
-				
-				<p><div style="border:1px solid silver;" class="bgcolor3">
-  			<div class="pageTitleHeader siteHeaders">Announcements</div>	
-			
-  			<div class="pageSectionHeader siteSubHeaders">Active</div>
-				
-                      <div class="pageBody">  
-    								 
-    <c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(2,250,1) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td> <a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>	                                   
-		                                    <td>${g.newsDateFormatted}</td>		                                   
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                    <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                      <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                      </esd:SecurityAccessRequired>
-		                					</td>
-		                                    </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Archived</div>
-				
-                      <div class="pageBody">
-    
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(2,250,3) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Archived</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td> <a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> |  
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Disabled</div>
-				
-                      <div class="pageBody">
-    
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(2,250,2) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Disabled</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>-->		                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> |
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-  			</div>
-				
-				<br/>
-				<br/>										
-			<div style="border:1px solid silver;"  class="bgcolor2">	
-				<div class="pageTitleHeader siteHeaders">School News Stories (Good News / School News)</div>	
-			
-  			<div class="pageSectionHeader siteSubHeaders">Active</div>
-				
-                      <div class="pageBody">
-     
-    <c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(1,250,1) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>											
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  		                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>	                                   
-		                                    <td>${g.newsDateFormatted}</td>		                                   
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> |  
-		                                      <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                      </esd:SecurityAccessRequired>
-		                					</td>
-		                                    </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Archived</div>
-				
-                      <div class="pageBody">
-    
-    								
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(1,250,3) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>											
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Archived</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  		                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> |  
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Disabled</div>
-				
-                      <div class="pageBody">
-    
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(1,250,2) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>											
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Disabled</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  		                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-  			</div>
-  			<br/>
-  			
-  			
-				<br/>
-		<div style="border:1px solid silver;" class="bgcolor4">	
-  			
-  			<div class="pageTitleHeader siteHeaders">Staff News</div>	
-			
-  			<div class="pageSectionHeader siteSubHeaders">Active</div>
-				
-                      <div class="pageBody">
-    
-    								
-    <c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(6,250,1) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>	                                   
-		                                    <td>${g.newsDateFormatted}</td>		                                   
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> |  
-		                                      <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                      </esd:SecurityAccessRequired>
-		                					</td>
-		                                    </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Archived</div>
-				
-                      <div class="pageBody">
-    
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(6,250,3) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>											
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Archived</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Disabled</div>
-				
-                      <div class="pageBody">
-     
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(6,250,2) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Disabled</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-				
-				</div>
-				
-				<br/>
-				<br/>
-				
-				
-<div style="border:1px solid silver;" class="bgcolor5">
-  			<div class="pageTitleHeader siteHeaders">Media Releases</div>	
-			
-  			<div class="pageSectionHeader siteSubHeaders">Active</div>
-				
-                      <div class="pageBody">  
-    								 
-    <c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(3,250,1) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td> <a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>	                                   
-		                                    <td>${g.newsDateFormatted}</td>		                                   
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                      <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                      </esd:SecurityAccessRequired>
-		                					</td>
-		                                    </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No Media Release Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Archived</div>
-				
-                      <div class="pageBody">
-    
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(3,250,3) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Archived</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td> <a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No Media Release Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Disabled</div>
-				
-                      <div class="pageBody">
-    
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(3,250,2) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Disabled</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>-->		                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> |
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No Media Release Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-  			</div>				
-				
-				
-				
-				<br/>
-  			
-  			
-				<br/>
-				
-				
-				
-				
-				<div style="border:1px solid silver;" class="bgcolor1">	
-  			
-  			<div class="pageTitleHeader siteHeaders">Important Announcements</div>	
-			
-  			<div class="pageSectionHeader siteSubHeaders">Active</div>
-				
-                      <div class="pageBody">
-    
-    								
-    <c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(5,250,1) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>											
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Added</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  		                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>	                                   
-		                                    <td>${g.newsDateFormatted}</td>		                                   
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                      <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                      </esd:SecurityAccessRequired>
-		                					</td>
-		                                    </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Archived</div>
-				
-                      <div class="pageBody">
-    
-    								 
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(5,250,3) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Archived</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	  	                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-    					
-    					
-    					<div class="pageSectionHeader siteSubHeaders">Disabled</div>
-				
-                      <div class="pageBody">
-    
-    								   
-    								<c:set var='newspostings' value='<%= NewsPostingsManager.getNewsPostingsByCat(5,250,2) %>' />
-    								<table class="newsTable">
-
-									<tr class="tableHeader">
-									<!-- <td style="width:10%;">Category</td>-->										
-									<td style="width:65%;">Title</td>										
-									<td style="width:10%;">News Date</td>									
-									<td style="width:10%;">Disabled</td>
-									<td style="width:15%;">Options</td>
-									</tr>
-									<c:choose>
-	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
-                                  		<c:forEach items='${newspostings}' var='g'>
-                                  			<tr>
-                                  			<!-- <td>${g.newsCategory.description}</td>	-->	                                    
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">${g.newsTitle}</a></td>		                                   
-		                                    <td>${g.newsDateFormatted}</td>
-		                                    <td>${g.dateAddedFormatted}</td>
-		                                    <td><a href="viewNewsPostingsDetails.html?id=${g.id}">Edit</a>
-		                                     <esd:SecurityAccessRequired roles="ADMINISTRATOR"> | 
-		                                   <a class="small" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>Delete</a>
-		                                   </esd:SecurityAccessRequired>
-		                					</td>
-		                                   </tr>
-                                  		</c:forEach>
-                                  		</c:when>
-										<c:otherwise>
-											<tr><td colspan='5'>No News Postings Found.</td></tr>
-										</c:otherwise>
-									</c:choose>
-									
-
-									</table>
-    
-    
-    
-    					</div>
-				
-				</div>
-				
-				
-				
-				
-				
-				
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    
-     <script>
-    CKEDITOR.replace( 'news_description' );
-    </script>
+	<p><div align="center">
+		<a href="addNewNewsPostings.html" class="btn btn-sm btn-primary" onclick="loadingData();">Add News</a>&nbsp;		
+		<a href="/MemberServices/navigate.jsp" class="btn btn-sm btn-danger" onclick="loadingData();">Back to StaffRoom</a>
+		</div>
+	<p>
 		
-		<br/><br/>
-	<% } %>	
-			</div>
-			</div>
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../../navigate.jsp" title="Back to MemberServices Main Menu"><img src="../includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
-</div>
-  
-</div>
-    <br/>
-  </body>
+					
+    								 
+    <c:set var='newspostings' value='<%=NewsPostingsManager.getNewsPostings()%>' />
+    								<table class="newsTable table table-sm responsive" style="width:100%;">
+									<thead class="thead-dark">
+									<tr>
+									<th width="35%">TITLE</th>	
+									<th width="10%">CATEGORY</th>										
+									<th width="10%">NEWS DATE</th>									
+									<th width="10%">ADDED ON</th>
+									<th width="15%">ADDED BY</th>
+									<th width="10%">STATUS</th>
+									<th width="10%">OPTIONS</th>
+									</tr>
+									</thead>
+									<tbody>
+									<c:choose>
+	                                  	<c:when test='${fn:length(newspostings) gt 0}'>
+                                  		<c:forEach items='${newspostings}' var='g'>
+                                  			<tr>
+                                  			<td width="35%">${g.newsTitle}</td>	  
+		                                    <td width="10%">${g.newsCategory.description}</td>                                 
+		                                    <td width="10%"><fmt:formatDate pattern="yyyy/MM/dd" value="${g.newsDate}" /></td>
+		                                    <td width="10%"><fmt:formatDate pattern="yyyy/MM/dd" value="${g.dateAdded}" /></td>		                                   
+		                                   	<td  width="15%" style="text-transform:Capitalize;">${g.addedBy}</td>
+		                                    <c:choose>
+                                  			   <c:when test="${g.newsStatus eq 'DISABLED'}"><td width="10%" style="color:White;background-color:Red;text-align:Center;">${g.newsStatus}</td></c:when>
+                                  			   <c:when test="${g.newsStatus eq 'ENABLED'}"><td width="10%" style="color:White;background-color:Green;text-align:Center;">${g.newsStatus}</td></c:when>
+                                  			   <c:when test="${g.newsStatus eq 'ARCHIVED'}"><td width="10%" style="color:Black;background-color:Yellow;text-align:Center;">${g.newsStatus}</td></c:when>
+                                  			   <c:otherwise><td width="10%">${g.newsStatus}</td></c:otherwise>
+                                  			</c:choose>   
+		                                    
+		                                    <td width="10%"><a class="btn btn-xs btn-warning" href="viewNewsPostingsDetails.html?id=${g.id}" onclick="loadingData();">EDIT</a>
+		                                    <a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to DELETE this NEWS POSTINGS?');" href='deleteNewsPostings.html?pid=${g.id}'>DEL</a>
+		                                   	</td>
+		                                    </tr>
+                                  		</c:forEach>
+                                  		</c:when>
+										<c:otherwise>
+										<tr>
+										<td>No News Postings Found.</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>											
+										</tr>
+										</c:otherwise>
+									</c:choose>
+									</tbody>
+									</table>
+    
+ 
+    					
+    
+				
 
+</div> 
+</div>
+</div>
+
+</body>
 </html>

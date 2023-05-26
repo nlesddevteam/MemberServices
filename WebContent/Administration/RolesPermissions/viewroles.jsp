@@ -73,7 +73,8 @@ Below are the current security roles assigned in MemberServices. You can View, A
 Removing them may remove user access or functionality in any application on the system. 
 Make sure you are aware of the changes you make!</div>
 <br/>
-<div align="center"><a class="btn btn-sm btn-primary" href="addRole.html?passthrough=true"><i class="fas fa-plus"></i> Add New Role</a> &nbsp; <a class="btn btn-sm btn-danger" href="../index.jsp"><i class="fas fa-undo-alt"></i> Back to Administration</a></div>
+<div align="center"><a class="btn btn-sm btn-primary" onclick="loadingData();" href="addRole.html?passthrough=true"><i class="fas fa-plus"></i> Add New Role</a> &nbsp; 
+<a class="btn btn-sm btn-danger" onclick="loadingData();" href="/MemberServices/navigate.jsp"><i class="fas fa-undo-alt"></i> Back to Administration</a></div>
   <br/>
 <table class="rolesTable table table-sm table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
 					<thead class="thead-dark">

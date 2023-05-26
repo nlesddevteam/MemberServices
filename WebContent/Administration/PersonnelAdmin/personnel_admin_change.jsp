@@ -201,9 +201,9 @@
 						
 						<br/><br/>
 						<div align="center">
-						  <a class="btn btn-sm btn-success" name="add" id="add" href="#" onclick="document.change.submit();">Update</a>
-						   <a class="btn btn-sm btn-warning" href="/MemberServices/loginAs.html?pid=<%=p.getPersonnelID() %>" title="Login as this user"> Login As</a>
-						  <a class="btn btn-sm btn-danger" href="personnel_admin_view.jsp">Back to Member List</a>
+						  <a class="btn btn-sm btn-success" name="add" id="add" href="#" onclick="document.change.submit();loadingData();">Update</a>
+						   <a class="btn btn-sm btn-warning" onclick="loadingData();" href="/MemberServices/loginAs.html?pid=<%=p.getPersonnelID() %>" title="Login as this user"> Login As</a>
+						  <a class="btn btn-sm btn-danger" onclick="loadingData();" href="personnel_admin_view.jsp">Back to Member List</a>
 						</div>
 						
 						</div>
@@ -213,7 +213,7 @@
 <br/><br/>
 <div class="siteSubHeaderBlue">Currently Assigned Role(s)/Permission(s)</div>
 
-To change Roles and Permissions, please use the Security Roles/permissions options on <a href="/MemberServices/Administration/index.jsp">MS Administration Menu</a>.
+To change Roles and Permissions, please use the Security Roles/permissions options.
 
 <br/><br/>
 <%int cnt=0; %>

@@ -46,7 +46,7 @@ public class DeletePolicyRequestHandler extends RequestHandlerImpl {
 			delete_file(filelocation, pb.getPolicyDocumentation());
 			PoliciesManager.deletePolicy(policyid);
 			request.setAttribute("policies", PoliciesManager.getPolicies());
-			request.setAttribute("msg", "Policy has been deleted");
+			request.setAttribute("msgOK", "Policy has been deleted");
 			path = "view_policies.jsp";
 		}
 		catch (Exception e) {

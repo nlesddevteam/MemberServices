@@ -118,7 +118,7 @@ This will take a few moments!
 <div style="display:none;border:0px" class="loadPage"> 
   
   <div align="center">       
-       <a class="btn btn-sm btn-danger" href="../index.jsp">Back to Administration</a>
+       <a class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp">Back to Administration</a>
        </div>
   <br/><br/>
     <form name="schoolstatus" method="post" action="updateRegionalizedSchoolClosureStatus.html">
@@ -412,8 +412,8 @@ This will take a few moments!
 <br/><br/>
       
        <div align="center">
-       <input id='btnApply' class="btn btn-sm btn-primary" type='button' value='Apply Changes' /> &nbsp;
-       <a class="btn btn-sm btn-danger" href="../index.jsp">Back to Administration</a>
+       <input id='btnApply' class="btn btn-sm btn-primary" type='button' value='Apply Changes' onclick="loadingData();"/> &nbsp;
+       <a class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp" onclick="loadingData();">Back to Administration</a>
        </div>
        
   	</form>    

@@ -76,7 +76,7 @@
                     <br/><br/>
 						<div align="center">
 						  <a class="btn btn-sm btn-success" name="add" id="add" href="#" onclick="document.loginapp.submit();">Update</a>
-						  <a class="btn btn-sm btn-danger" href="index.jsp">Back</a>
+						  <a class="btn btn-sm btn-danger" href="../navigate.jsp">Back</a>
 						</div>
                         
                       

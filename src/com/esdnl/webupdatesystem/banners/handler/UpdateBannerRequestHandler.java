@@ -1,6 +1,7 @@
 package com.esdnl.webupdatesystem.banners.handler;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import com.esdnl.servlet.FormElement;
 import com.esdnl.servlet.FormValidator;
 import com.esdnl.servlet.RequestHandlerImpl;
 import com.esdnl.servlet.RequiredFormElement;
+import com.esdnl.util.StringUtils;
 import com.esdnl.webupdatesystem.banners.bean.BannersBean;
 import com.esdnl.webupdatesystem.banners.bean.BannersException;
 import com.esdnl.webupdatesystem.banners.dao.BannersManager;
@@ -89,6 +91,15 @@ public class UpdateBannerRequestHandler extends RequestHandlerImpl {
 				bb.setBannerCode(form.get("banner_code"));
 				bb.setAddedBy(usr.getPersonnel().getFullNameReverse());
 				bb.setId(form.getInt("id"));
+				bb.setbRepeat(form.get("brepeat").toString());
+				if(!StringUtils.isEmpty(form.get("bstartdate"))){
+					DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					bb.setbStartDate(formatter.parse(form.get("bstartdate")));
+				}
+				if(!StringUtils.isEmpty(form.get("benddate"))){
+					DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					bb.setbEndDate(formatter.parse(form.get("benddate")));
+				}
 				BannersManager.updateBanner(bb);
 				//now delete the old file if needed
 				if (deletedocfile) {
@@ -96,12 +107,12 @@ public class UpdateBannerRequestHandler extends RequestHandlerImpl {
 				}
 				path = "view_banner_details.jsp";
 				request.setAttribute("banner", BannersManager.getBannerById(bbo.getId()));
-				request.setAttribute("msg", "Banner has been updated");
+				request.setAttribute("msgOK", "Banner has been updated");
 
 			}
 			else {
 
-				request.setAttribute("msg", validator.getErrorString());
+				request.setAttribute("msgERR", validator.getErrorString());
 				path = "view_banner_details.jsp";
 				request.setAttribute("banner", BannersManager.getBannerById(bbo.getId()));
 			}

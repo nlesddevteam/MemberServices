@@ -84,7 +84,7 @@
 This will take a few moments!
 </div>		
 
-<div style="display:none;border:0px" class="loadPage"> 
+<div style="display:none;border:0px;" class="loadPage"> 
 	
 	 <form name="modfamily" id="modfamily" action="schoolFamilyAdmin.html" method="post" class="was-validated">
                           <input type="hidden" name="op" value="mod">
@@ -148,7 +148,7 @@ This will take a few moments!
 	
 	</div>
 						
-						
+					
 					
 								
 </body>

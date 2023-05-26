@@ -38,42 +38,41 @@
 		
 		<title><decorator:title default="StaffRoom" /></title>
 	
-	<!-- CSS STYLESHEET FILES -->	   
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
-		<link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
-		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">      
-  	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">		
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	<!-- CSS STYLESHEET FILES -->	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"/>	
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">	
+		<link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/b-print-2.3.6/cr-1.6.2/date-1.4.0/fc-4.2.2/fh-3.3.2/kt-2.8.2/r-2.4.1/rg-1.3.1/rr-1.3.3/sc-2.1.1/sb-1.4.2/sp-2.1.2/sl-1.6.2/sr-1.2.2/datatables.min.css"/>
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+	<!-- LOCAL CSS FILES -->	
   		<link rel="stylesheet" href="/MemberServices/StaffRoom/includes/css/staffroom.css?ver=${todayVer}">			
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
-		
+			
 	<!-- CDN JAVASCRIPT> -->	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>		
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>		
-		<script src="https://kit.fontawesome.com/053757fa2e.js" crossorigin="anonymous"></script>		
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>			
-	  	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>		
-		<script src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>		
-		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>	
-		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
-		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-		<script src="https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.min.js"></script>
-		<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-		<script src="https://cdn.datatables.net/rowreorder/1.2.6/js/dataTables.rowReorder.min.js"></script>			
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>			
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>				
-		<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/fnReloadAjax.js"></script>				
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>	
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/b-print-2.3.6/cr-1.6.2/date-1.4.0/fc-4.2.2/fh-3.3.2/kt-2.8.2/r-2.4.1/rg-1.3.1/rr-1.3.3/sc-2.1.1/sb-1.4.2/sp-2.1.2/sl-1.6.2/sr-1.2.2/datatables.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>	 	
-	 	<script src="https://cdn.jsdelivr.net/npm/jQuery.print@1.5.1/jQuery.print.min.js"></script> 
-	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js" integrity="sha512-wT7uPE7tOP6w4o28u1DN775jYjHQApdBnib5Pho4RB0Pgd9y7eSkAV1BTqQydupYDB9GBhTcQQzyNMPMV3cAew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	 <!-- LOCAL JAVASCRIPT FILES -->		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+		<script src="https://cdn.ckeditor.com/4.4.5.1/standard/ckeditor.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jQuery.print@1.5.1/jQuery.print.min.js"></script> 
+		<script src="https://kit.fontawesome.com/053757fa2e.js" crossorigin="anonymous"></script>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" crossorigin="anonymous"></script>
+	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.7/bootstrap-confirmation.min.js" crossorigin="anonymous"></script>
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.datatables.net/plug-ins/1.10.21/api/order.neutral().js"></script>		
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2/dist/Chart.min.js"></script>	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>	
+		<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+	<!-- LOCAL JAVASCRIPT FILES -->		
 		<script src="/MemberServices/StaffRoom/includes/js/staffroom.js?ver=${todayVer}"></script>	 	
 	 	
 		<!-- Google tag (gtag.js) -->
@@ -85,15 +84,27 @@
 		
 		  gtag('config', 'G-S44S0R2BYK');
 		</script>
+		
 		<decorator:head />	
 
 			
 
 	</head>
 
-	<body>
+	<body>	
 	<!-- Get the loading data animation ready, in front and hidden -->
-		
+	<div id="loadingSpinner" style="display:none;z-index:99999;">
+	<div id="spinner" style="text-align:center;padding:5px;">
+	<img src="/includes/img/nllogo-load.png" border="0" style="padding:5px;"/><br/>
+	<div class="spinner-grow text-primary"></div>
+		<div class="spinner-grow text-success"></div>
+		<div class="spinner-grow text-info"></div>
+		<div class="spinner-grow text-warning"></div>
+		<div class="spinner-grow text-danger"></div>
+		<br/>Loading. Please wait!
+
+	</div>
+	</div>	
 	<!-- TOP PANEL -->
 		<div class="mainContainer">	
 		
@@ -124,7 +135,18 @@
 
 			
 				<div class="container-fluid">				
-					
+					<c:if test="${ msgOK ne null }">  
+                  				<div class="alert alert-success msgOKd" style="display:none;">${ msgOK } </div>  
+                  				<script>$(".msgOKd").css("display","block").delay(3000).fadeOut();</script> 
+                  			</c:if>                  			
+							<c:if test="${ msgERR ne null }">  
+                  				<div class="alert alert-danger msgERRd" style="display:none;">${ msgERR } </div>   
+                  				<script>$(".msgERRd").css("display","block").delay(3000).fadeOut();</script> 
+                  			</c:if>
+                  			<c:if test="${ msg ne null }">  
+                  				<div class="alert alert-info msgd" style="display:none;">${ msg } </div>   
+                  				<script>$(".msgd").css("display","block").delay(3000).fadeOut();</script> 
+                  			</c:if>  
 					
 					<div id="printJob">			
 					<div class="row">				  

@@ -68,7 +68,7 @@ frmdesc=request.getParameter("status_desc");
 		<input type="text" class="form-control" name="status_desc" value="<%=frmdesc%>" required />													
 		<br/><br/>
         <div align="center">																
-		<a href="" onclick="document.modifyClosureStatusForm.submit();" class="btn btn-success btn-sm">Save</a> &nbsp; 		
+		<a onclick="document.modifyClosureStatusForm.submit();loadingData();" class="btn btn-success btn-sm">Save</a> &nbsp; 		
 		<a href="closurestatusadmin.jsp" onclick="loadingData();" class="btn btn-sm btn-danger">Cancel</a>
        </div>  		
 														

@@ -17,6 +17,9 @@ public class BannersBean implements Serializable {
 	private String bannerCode;
 	private String addedBy;
 	private Date dateAdded;
+	private Date bStartDate;
+	private Date bEndDate;
+	private String bRepeat;
 	public Integer getId() {
 		return id;
 	}
@@ -87,5 +90,30 @@ public class BannersBean implements Serializable {
 
 		return new SimpleDateFormat("dd/MM/yyyy").format(this.dateAdded);
 	}
-	
+	public Date getbStartDate() {
+		return bStartDate;
+	}
+	public void setbStartDate(Date bStartDate) {
+		this.bStartDate = bStartDate;
+	}
+	public Date getbEndDate() {
+		return bEndDate;
+	}
+	public void setbEndDate(Date bEndDate) {
+		this.bEndDate = bEndDate;
+	}
+	public String getbRepeat() {
+		return bRepeat;
+	}
+	public void setbRepeat(String bRepeat) {
+		this.bRepeat = bRepeat;
+	}
+	public String getbStartDateFormatted() {
+
+		return new SimpleDateFormat("yyyy-MM-dd").format(this.bStartDate);
+	}
+	public String getbEndDateFormatted() {
+
+		return new SimpleDateFormat("yyyy-MM-dd").format(this.bEndDate);
+	}
 }

@@ -338,8 +338,9 @@
 						  	<div class="card-body" style="background-color:#FFFFFF;"> 
 						  	<div class="row container-fluid" style="padding-top:5px;">
 							<div class="col-lg-2 col-12">
-								<b>Current Enrollment:</b>
+								<b>Current Enrollment:</b> 
 								   <input required type='text' id='schoolenrollment'  autocomplete="false" name='schoolenrollment' class="form-control" value='${ school.detailsOther.schoolEnrollment }' />
+			 				(PowerSchool overrides this)
 			 				</div>
 			 				<div class="col-lg-2 col-12">			
 								<b>Start Time:</b>

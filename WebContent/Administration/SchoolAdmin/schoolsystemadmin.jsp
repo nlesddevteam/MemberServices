@@ -111,6 +111,8 @@
 </div>		
 
 <div style="display:none;" class="loadPage"> 
+Below are the School Weather Closure Systems. Each system has a dedicated System Admin and Backup Admin for all schools in a particular system above the designated school principal and vice-principal of each school. 
+These assigned Admins can close all schools in a particular system.
 
         <form name="modsys" action="schoolSystemAdmin.html" method="post">
                             <input type="hidden" name="op" value="mod">
@@ -118,21 +120,19 @@
                             
 						<div align="center">				 
 					 <a  class="btn btn-sm btn-primary" href="schoolsystemcreate.jsp">Create New School System</a> &nbsp; 
-						  <a onclick="loadingData();" class="btn btn-sm btn-danger" href="../index.jsp">Back to Administration</a>
+						  <a onclick="loadingData();" class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp">Back to StaffRoom</a>
 						</div>		
        <br/><br/>
 
 
 <table class="sortAlphaTable table table-sm responsive" width="100%" style="font-size:11px;background-color:White;">
-<thead>
+<thead class="thead-dark">
 <tr>
-<th></th>
-</tr>
-</thead>
+ <th>SCHOOL SYSTEM NAME / ASSIGNED SYSTEM ADMIN &amp; BACKUP ADMIN</th>
+ </tr>
+ </thead>
  <tbody>     
  <div id="accordion">     
-
-
 
   <%
   int cnt=0;
@@ -148,8 +148,8 @@
    <div class="card-header">    
    <div style="float:right"> 
 		   	<a class="btn btn-xs btn-primary card<%=cnt%>" data-toggle="collapse" href="#collapse<%=cnt%>"><i class="far fa-eye"></i> VIEW</a>   
-		    <a class="btn btn-xs btn-warning" href="" onclick="document.forms[0].ss_id.value='<%=sys.getSchoolSystemID()%>';document.forms[0].submit();return false;"><i class="fas fa-users-cog"></i> EDIT</a>
-		    <a class="btn btn-xs btn-danger" href="" onclick="return confirm('Are you sure you want to remove this system? This cannot be undone.');loadingData();"><i class="far fa-trash-alt"></i> DEL</a>   
+		    <a class="btn btn-xs btn-warning" href="#" onclick="loadingData();document.forms[0].ss_id.value='<%=sys.getSchoolSystemID()%>';document.forms[0].submit();return false;"><i class="fas fa-users-cog"></i> EDIT</a>
+		    <a class="btn btn-xs btn-danger" href="#" onclick="return confirm('Are you sure you want to remove this system? This cannot be undone.');loadingData();"><i class="far fa-trash-alt"></i> DEL</a>   
    </div>                                      
                           
    <a class="card-link card<%=cnt%>"  data-toggle="collapse" href="#collapse<%=cnt%>"><span class="siteSubHeaderBlue"><span id="icon<%=cnt%>"><i class='fas fa-folder'></i></span>  <%=sys.getSchoolSystemName()%> (<span class="schoolCount<%=cnt%>"></span>)</span> </a><br/>                              
@@ -163,13 +163,14 @@
    </span></span>                               
    </div>                      
   <div id="collapse<%=cnt%>" class="collapse" data-parent="#accordion">       
-<div class="card-body">                                            
- <table class="schoolAdminTable table table-sm table-bordered responsive" width="100%" style="font-size:12px;background-color:White;">
+<div class="card-body">   
+Below are the school(s) associated with this school system. To make changes to this system, please use the EDIT link above right of this table.                                         
+ <table class="schoolAdminTable table table-sm table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
 					<thead class="thead-dark">
-					<tr style="color:Black;font-size:12px;">
-					<th width="50%">SCHOOL NAME</th>						
-					<th width="25%">PRINCIPAL</th>			
-					<th width="25%">ASSISTANT PRINCIPAL(s)</th>								
+					<tr style="color:Black;font-size:11px;">
+					<th>SCHOOL NAME</th>						
+					<th>PRINCIPAL</th>			
+					<th>ASSISTANT PRINCIPAL(s)</th>								
 				</tr>
 				</thead>
 				<tbody>                          
@@ -179,15 +180,15 @@
                                     schcnt++;
                                 %>   
                                 <tr>                             
-                 		<td width="50%"><%=school.getSchoolName()%> </td>
-                      	<td width="25%"><span style="text-transform:Capitalize;"><%=(school.getSchoolPrincipal()!= null)?school.getSchoolPrincipal().getFullNameReverse():"N/A"%></span></td>
-                        <td width="25%"><span style="text-transform:Capitalize;"><%
+                 		<td><%=school.getSchoolName()%> </td>
+                      	<td><span style="text-transform:Capitalize;"><%=(school.getSchoolPrincipal()!= null)?school.getSchoolPrincipal().getFullNameReverse():"N/A"%></span></td>
+                        <td><span style="text-transform:Capitalize;"><%
                                       	ap = school.getAssistantPrincipals();
                                       	if(ap != null && ap.length > 0){
                                       		for(int i=0; i < ap.length; i++) {%>
                                       			<%=ap[i].getFullNameReverse()%><br/>
                                       	<% }} else {%>
-                                      		N/A
+                                      		<span style="color:Silver;">N/A</span>
                                       <% }%></span>
                           </td>
                         </tr>            
@@ -222,8 +223,8 @@
   </form>                              
                          <br/><br/>		
 						<div align="center">
-										<a  class="btn btn-sm btn-primary" href="schoolsystemcreate.jsp">Create New  School System</a> &nbsp; 
-						  <a onclick="loadingData();" class="btn btn-sm btn-danger" href="../index.jsp">Back to Administration</a>
+										<a  class="btn btn-sm btn-primary" onclick="loadingData();" href="schoolsystemcreate.jsp">Create New  School System</a> &nbsp; 
+						  <a onclick="loadingData();" class="btn btn-sm btn-danger" href="MemberServices/navigate.jsp">Back to Administration</a>
 						</div>		
 				
 </div>               

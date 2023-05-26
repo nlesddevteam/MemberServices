@@ -167,6 +167,10 @@
     	//$("#showlists").remove("tr:gt(0)");
     	$("#showlists").find("tr:gt(0)").remove();
     }
+    
+    
+    
+    
 	function checkblogfields()
 	{
 		isvalid=true;
@@ -258,6 +262,11 @@
 
     	return isvalid;
     }
+    
+    
+    
+    
+    
     function sendmminfo()
     {
     	var test=checkmmfields();
@@ -348,7 +357,13 @@
        });
 
     	return isvalid;
-    }    
+    } 
+    
+    
+    
+    
+    
+       
     function sendmhinfo()
     {
     	var test=checkmhfields();
@@ -440,6 +455,10 @@
 
     	return isvalid;
     }
+    
+    
+    
+    
     function sendnewsinfo()
     {
     	var test=checknewsfields();

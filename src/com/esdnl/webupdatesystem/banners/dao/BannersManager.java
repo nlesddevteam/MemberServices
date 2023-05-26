@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -72,7 +73,7 @@ public class BannersManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.add_new_banner(?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin ? := awsd_user.web_update_system_pkg.add_new_banner(?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.registerOutParameter(1, OracleTypes.INTEGER);
 			stat.setString(2, ebean.getBannerFile());
 			stat.setInt(3, ebean.getBannerRotation());
@@ -83,6 +84,17 @@ public class BannersManager {
 			stat.setInt(8, ebean.getBannerShowBusiness());
 			stat.setString(9, ebean.getBannerCode());
 			stat.setString(10, ebean.getAddedBy());
+			if(ebean.getbStartDate() != null) {
+				stat.setTimestamp(11, new Timestamp(ebean.getbStartDate().getTime()));
+			}else {
+				stat.setTimestamp(11, null);
+			}
+			if(ebean.getbEndDate() != null) {
+				stat.setTimestamp(12, new Timestamp(ebean.getbEndDate().getTime()));
+			}else {
+				stat.setTimestamp(12, null);
+			}
+			stat.setString(13, ebean.getbRepeat());
 			stat.execute();
 			id = ((CallableStatement) stat).getInt(1);
 
@@ -220,7 +232,7 @@ public class BannersManager {
 		try {
 			con = DAOUtils.getConnection();
 			con.setAutoCommit(true);
-			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.update_banner(?,?,?,?,?,?,?,?,?,?); end;");
+			stat = con.prepareCall("begin awsd_user.web_update_system_pkg.update_banner(?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
 			stat.setString(1, ebean.getBannerFile());
 			stat.setInt(2, ebean.getBannerRotation());
 			stat.setString(3, ebean.getBannerLink());
@@ -231,6 +243,9 @@ public class BannersManager {
 			stat.setString(8, ebean.getBannerCode());
 			stat.setString(9, ebean.getAddedBy());
 			stat.setInt(10, ebean.getId());
+			stat.setTimestamp(11, new Timestamp(ebean.getbStartDate().getTime()));
+			stat.setTimestamp(12, new Timestamp(ebean.getbEndDate().getTime()));
+			stat.setString(13, ebean.getbRepeat());
 			stat.execute();
 
 			//UPDATE CACHE
@@ -307,6 +322,13 @@ public class BannersManager {
 			abean.setBannerCode(rs.getString("BANNER_CODE"));
 			abean.setAddedBy(rs.getString("ADDED_BY"));
 			abean.setDateAdded(new java.util.Date(rs.getTimestamp("DATE_ADDED").getTime()));
+			if(rs.getTimestamp("B_START_DATE") != null) {
+				abean.setbStartDate(new java.util.Date(rs.getTimestamp("B_START_DATE").getTime()));
+			}
+			if(rs.getTimestamp("B_END_DATE") != null) {
+				abean.setbEndDate(new java.util.Date(rs.getTimestamp("B_END_DATE").getTime()));
+			}
+			abean.setbRepeat(rs.getString("B_REPEAT"));
 		}
 		catch (SQLException e) {
 			abean = null;

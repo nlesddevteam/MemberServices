@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import com.awsd.admin.apps.categories.dao.CategoriesManager;
 import com.awsd.common.Utils;
 import com.awsd.financial.FinancialException;
 import com.awsd.financial.Report;
@@ -245,7 +246,7 @@ public class Personnel implements Serializable {
 
 		// if(oldcat == cat.getPersonnelCategoryID())
 		// return;
-
+		/** moved to store procedure
 		Role r = RoleDB.getRole(cat.getPersonnelCategoryName());
 		if (r == null) {
 			RoleDB.addRole(new Role(cat.getPersonnelCategoryName(), cat.getPersonnelCategoryName()));
@@ -258,6 +259,12 @@ public class Personnel implements Serializable {
 		RoleDB.deleteRoleMembership(
 				RoleDB.getRole(PersonnelCategoryDB.getPersonnelCategory(oldcat).getPersonnelCategoryName()), this);
 		RoleDB.addRoleMembership(r, this);
+		**/
+		//left here because other places calling this code so will remove once all fixed
+		this.categoryid = cat.getPersonnelCategoryID();
+		PersonnelDB.updatePersonnel(this);
+		//now call the new stored procedure
+		CategoriesManager.updateCategoryRolePersonnel(cat.getPersonnelCategoryID(), this.getPersonnelID());
 	}
 
 	public School getSchool() throws PersonnelException {

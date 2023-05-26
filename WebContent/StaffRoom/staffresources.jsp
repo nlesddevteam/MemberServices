@@ -32,7 +32,7 @@ Most of these links will open in a new tab or browser window. Documents will req
 			<li><a href="doc/TeacherResourcegr7-9sexualhealthandwellbeing.pdf" target="_blank">Teacher Resource: Grade 7-9 Sexual Health &amp; Wellness <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a></li>
 			<li><a href='doc/edleave_app.pdf' target="_blank">Educational Leave Form <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a></li>
 			<li><a href="doc/Eligible_Educators_School_Supply_Credit_Info.pdf" target="_blank">School Supply Credit for Educators <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a></li> 
-			<li><a href="teacherseniorityreports.jsp" >Teacher Seniority Reports</a></li>
+			<li><a href="staffseniorityreports.jsp" >Teacher (NLTA) Seniority Reports</a></li>
 			
 		</ul> 
       
@@ -69,6 +69,7 @@ Most of these links will open in a new tab or browser window. Documents will req
 		<li><a href='https://www.nlta.nl.ca/home' target="_blank">NLTA Website <i style="color:Green;" class="fas fa-external-link-alt"></i></a></li>
 		<li><a href='http://www.nape.nf.ca' target="_blank">NAPE Website <i style="color:Green;" class="fas fa-external-link-alt"></i></a></li>
 		<li><a href='http://nl.cupe.ca' target="_blank">CUPE Website <i style="color:Green;" class="fas fa-external-link-alt"></i></a></li>	
+		<li><a href="staffseniorityreports.jsp" >Staff (CUPE/NAPE) Seniority Reports</a></li>
 	</ul> 
       
       </p>
