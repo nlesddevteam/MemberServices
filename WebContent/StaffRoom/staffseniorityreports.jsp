@@ -30,7 +30,11 @@ Below you will find staff seniority report lists for unionized educational and s
      <h4 class="card-title text-center bg-primary">Teacher (NLTA) Seniority Reports</h4>
       <p class="card-text">
       <ul>
-      <li>Coming soon
+      <li><a href="doc/SLISTS/NLTA-Prov-Name.pdf" target="_blank">Provincial (NLTA) Teachers (by Name) <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a>
+      <li><a href="doc/SLISTS/NLTA-Prov-School.pdf" target="_blank">Provincial (NLTA) Teachers (by School) <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a>
+      <li><a href="doc/SLISTS/NLTA-Prov-TLA-School.pdf" target="_blank">Provincial (NLTA) TLA (by School) <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a>
+      <li><a href="doc/SLISTS/NLTA-LW-School.pdf" target="_blank">Labrador West (NLTA) Teachers (by School) <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a>
+      <li><a href="doc/SLISTS/NLTA-LW-TLA-School.pdf" target="_blank">Labrador West (NLTA) TLA (by School) <i style="color:Red;" class="fa-solid fa-file-pdf"></i></a>
       
       </ul>
       
