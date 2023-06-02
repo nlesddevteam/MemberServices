@@ -50,13 +50,13 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
 			      <b>Rotation Order (#):</b><br/>
 			      <select id="banner_rotation"  name="banner_rotation" class="form-control" required>
 			       <option value='1' ${ banner.bannerRotation eq "1" ? "SELECTED" : "" }>1</option>   
-			       <option value='1' ${ banner.bannerRotation eq "2" ? "SELECTED" : "" }>2</option> 
-			       <option value='1' ${ banner.bannerRotation eq "3" ? "SELECTED" : "" }>3</option> 
-			       <option value='1' ${ banner.bannerRotation eq "4" ? "SELECTED" : "" }>4</option> 
-			       <option value='1' ${ banner.bannerRotation eq "5" ? "SELECTED" : "" }>5</option> 
-			       <option value='1' ${ banner.bannerRotation eq "6" ? "SELECTED" : "" }>6</option> 
-			       <option value='1' ${ banner.bannerRotation eq "7" ? "SELECTED" : "" }>7</option> 
-			       <option value='1' ${ banner.bannerRotation eq "8" ? "SELECTED" : "" }>8</option> 
+			       <option value='2' ${ banner.bannerRotation eq "2" ? "SELECTED" : "" }>2</option> 
+			       <option value='3' ${ banner.bannerRotation eq "3" ? "SELECTED" : "" }>3</option> 
+			       <option value='4' ${ banner.bannerRotation eq "4" ? "SELECTED" : "" }>4</option> 
+			       <option value='5' ${ banner.bannerRotation eq "5" ? "SELECTED" : "" }>5</option> 
+			       <option value='6' ${ banner.bannerRotation eq "6" ? "SELECTED" : "" }>6</option> 
+			       <option value='7' ${ banner.bannerRotation eq "7" ? "SELECTED" : "" }>7</option> 
+			       <option value='8' ${ banner.bannerRotation eq "8" ? "SELECTED" : "" }>8</option> 
 			      </select>
 		      </div>
 		      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
@@ -89,8 +89,8 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
       	
       	
       	<select NAME="brepeat" ID="brepeat" class="form-control" required>
-			       	<option value="1" ${ banner.bRepeat eq "Y" ? "SELECTED" : "" }>YES</option>
-			      	<option value="0" ${ banner.bRepeat eq "N" ? "SELECTED" : "" }>NO</option>
+			       	<option value="Y" ${ banner.bRepeat eq "Y" ? "SELECTED" : "" }>YES</option>
+			      	<option value="N" ${ banner.bRepeat eq "N" ? "SELECTED" : "" }>NO</option>
 			      	</select>
       	
       						
