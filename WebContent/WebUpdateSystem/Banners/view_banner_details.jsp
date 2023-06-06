@@ -74,11 +74,11 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
        <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">                      
        <b>Start Date:</b><br/>
-       <input type="date" id="bstartdate" name="bstartdate" class="form-control" value="${banner.bStartDate eq null? '': banner.bStartDateFormatted }">
+       <input type="date" id="bstartdate" name="bstartdate" required class="form-control" value="${banner.bStartDate eq null? '': banner.bStartDateFormatted }">
        </div>
        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
       	<b>End Date:</b><br/>
-          <input type="date" id="benddate" name="benddate" class="form-control" value="${banner.bEndDate eq null? '': banner.bEndDateFormatted}">
+          <input type="date" id="benddate" name="benddate" required class="form-control" value="${banner.bEndDate eq null? '': banner.bEndDateFormatted}">
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">                     
       	<b>Repeat till Manually Disabled? (Ignore start/end dates)</b><br/>
@@ -136,7 +136,7 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
                    
                    <div align="center">
                    <button id="butSave" class="btn btn-sm btn-success" onclick="loadingData();">Update</button>
-                   <A HREF='viewBanners.html' class="btn btn-sm btn-danger" onclick="loadingData();">Cancel</a>
+                   <A HREF='viewBanners.html' class="btn btn-sm btn-danger" onclick="loadingData();">Exit/Cancel</a>
 					</div>
                    
                 
