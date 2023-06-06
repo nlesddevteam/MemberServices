@@ -25,21 +25,17 @@
 <div class="siteBodyTextBlack">
 <div class="siteHeaderGreen">Edit Banner Details</div>
 You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
-
-
-
-
-
-
+<br/><br/>
 <form id="pol_cat_frm" action="updateBanner.html" method="post" ENCTYPE="multipart/form-data" class="was-validated">
  <input type="hidden" id="op" name="op" value="CONFIRM">
  <input type="hidden" value="${banner.id}" id="id" name="id">
                      <div class="row">
-      					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    	<b>Current Banner:</b><br/>
+      					<div class="col-xs-12 col-sm-12 col-md-16 col-lg-6">
+                    	<b>The Current Banner:</b><br/>
                       		<c:if test="${banner.bannerFile ne null }">	
                    				<img src="/includes/files/banners/img/${banner.bannerFile}" style="max-width:900px;"><br/>
-                     		</c:if>    
+                     		</c:if> 
+                     		<br/><br/>   
                      		<b>New Banner File? (Select a .png or .jpg):</b><br/>
                      		<input type="file" id="banner_file" name="banner_file" class="form-control">
                      	</div>
@@ -85,7 +81,7 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
           <input type="date" id="benddate" name="benddate" class="form-control" value="${banner.bEndDate eq null? '': banner.bEndDateFormatted}">
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">                     
-      	<b>Repeat till Manually Disabled:</b><br/>
+      	<b>Repeat till Manually Disabled? (Ignore start/end dates)</b><br/>
       	
       	
       	<select NAME="brepeat" ID="brepeat" class="form-control" required>

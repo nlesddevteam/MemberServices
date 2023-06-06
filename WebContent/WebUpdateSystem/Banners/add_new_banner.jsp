@@ -71,11 +71,16 @@ Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
        <input type="date" id="benddate" name="benddate" class="form-control">
        </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">                     
-      	<b>Repeat:</b><br/>
-      <INPUT TYPE="radio" NAME="brepeat" ID="brepeat" VALUE="Y" > Yes &nbsp;  <INPUT TYPE="radio" NAME="brepeat" ID="brepeat" VALUE="N" CHECKED> No
+      	<b>Repeat till Manually Disabled? (Ignore start/end dates)</b><br/>
+      	
+      	<select NAME="brepeat" ID="brepeat" class="form-control" required>
+			       	<option value="Y">YES</option>
+			      	<option value="N">NO</option>
+			      	</select>     
           
       </div>
       </div>
+      
       
        <div style="display:none;">
       <INPUT TYPE="checkbox" NAME="banner_show_public" ID="banner_show_public" checked> 
@@ -85,7 +90,8 @@ Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
       <input type="text"  id="banner_code" name="banner_code">
       </div>                
         <br/><br/>                              
-        <div align="center"><button id="butSave" class="btn btn-sm btn-success" onclick="loadingData();">SAVE</button> &nbsp; <A HREF='viewBanners.html' class="btn btn-sm btn-danger" onclick="loadingData();">CANCEL</a></div>
+        <div align="center"><button id="butSave" class="btn btn-sm btn-success" onclick="loadingData();">SAVE</button> &nbsp; 
+        <A HREF='viewBanners.html' class="btn btn-sm btn-danger" onclick="loadingData();">CANCEL</a></div>
    
     </form>
     

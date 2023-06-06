@@ -429,8 +429,7 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 }
 
 
-@media only screen and (max-width: 1080px) {	
-	
+@media only screen and (max-width: 1080px) {		
 	.frontPageNewsPhoto {float:none;width:100%;}
 	.schoolConfigMenu,.staffConfigMenu {margin-bottom:10px;margin-top:10px;float:none;display:block;text-align:center;}
 	.searchBoxNavBar {display:none;padding-right:0px;}	
@@ -440,8 +439,7 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 	.headerSmall {display:none;}
 	.headerMedium {display:none;}
 	.headerLarge {display:Block;}
-	.headerFull {display:none;}
-	 
+	.headerFull {display:none;}	 
 }
 
 @media only screen and (max-width: 768px) {	
@@ -457,8 +455,8 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 	.headerFull {display:none;}
 	.navbar-collapse { background-color: rgba(31, 66, 121, 0.5);padding:3px;}
 	.navbar-dark .navbar-nav .nav-link {color:White;}
-	.menuIconImage {width:33%;height:100px;}
-	.menuImage {width:80%;}
+	.menuIconImage {width:33%;height:110px;max-width:110px;}
+	.menuImage {width:100%;max-width:110px;}
 }
 
   @media only screen and (max-width: 500px) {	
@@ -468,7 +466,7 @@ a.footerMenu:active { color: #FF0000; text-decoration: none;}
 	.headerSmall {display:block;}
 	.headerMedium {display:none;}
 	.headerFull {display:none;}
-	
+	.menuImage {width:100%;max-width:110px;}
 }
 
 /*If FireFox, fix */
