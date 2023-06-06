@@ -24,9 +24,6 @@
 <title>NLESD StaffRoom</title>
 
 
-
-
-
 <script>
 $(document).ready(function () {	
 	
@@ -40,10 +37,10 @@ $(document).ready(function () {
 });		
 		
 
-
 </script>
 <style>
-.appcnt {font-size:10;color:Silver;}
+.appcnt {font-size:10;color:Red;}
+ .menuIconImage {padding-bottom:15px;}
 </style>
 
 
@@ -62,7 +59,6 @@ $(document).ready(function () {
 <b>LOGGED IN AS:</b> <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%> &nbsp;&nbsp;
 <b>CLASSIFIED AS:</b> <%=usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName()%> &nbsp;&nbsp; 
 <b>LOCATION:</b> <%=(usr.getPersonnel().getSchool() != null ? usr.getPersonnel().getSchool().getSchoolName() : "<span style='color:Red;'>NO LOCATION</span>")%>
-<br/><i>Information incorrect? Please use the <a href="https://forms.gle/rpYgeZfm81Wt5c138" target="_blank">StaffRoom HelpDesk</a> to send a support request.</i>
 </div>
 </div>
 </div>
@@ -83,18 +79,41 @@ In this StaffRoom, depending on your District classification, you have access to
 
 Most of the links and pages found on the old web site under the old StaffRoom section can be found below and are still accessible via icons below.
 
-Some applications/links may open in a new tab and/or require a secondary login depending on their access requirements.
- 
-<i>Please note that this is a temporary access portal while we update our back-end systems and applications so there will be ongoing changes.</i>
+Some applications/links may open in a new tab and/or require a secondary login depending on their access requirements. 
 
+<b>Extra applications are available by selecting the checkboxes at <a href="#checkSettings">bottom of this page</a></b>. 
+
+Also, the more you use a application, a <b>Favorites group</b> will be listed for easier finding displaying your most used apps.
 
 </div>
 <br/>
+
+<div class="alert alert-success alert-dismissible" id="theCookieMSG1" style="text-align:center;font-size:14px;">
+	<button type="button" class="close" data-dismiss="alert" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>CookieMessage1');">&times;</button>
+	<b>****** NEW ITEMS ******</b><br/>
+	Below are your applications. There have been some changes to the system. You now have new options at bottom of this page where you can turn on more applications for easier access in this portal. 
+	Also, the more you use an application now, the system will detect the high usage and display the icon in a Favorites section at top of the rest. 
+	You need to use an app <b>more than 10 times</b> before it will display as a favorite and remain so unless it is not used within <b>5 days</b>.
+	You can dismiss this message clicking the X at right.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="theCookieMSG2" style="text-align:center;font-size:14px;">
+	<button type="button" class="close" data-dismiss="alert" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>CookieMessage2');">&times;</button>
+	<b>****** COOKIE USE NOTICE ******</b><br/>
+	This page uses cookies to save your application usage and page settings for your assistance. 
+	These cookies are stored for this page, in this browser, for this device only. 
+	No personal information is collected, saved, or transmitted using these cookies. 
+	Using another browser and/or device, your settings will be different and only relate to the browser/device you are using.
+	These cookies can be cleared at any time by cleaning your browser cache/history and temp files. You can close this message by clicking on the X at right.
+</div>
+
 <div class="favoriteBlock" style="display:none;">
 <hr>
-<a href="#/" id="clearFavorites" class="btn btn-sm btn-danger favBtn" style="float:right;">Clear List</a>
+<a href="#/" id="clearFavorites" class="btn btn-sm btn-danger favBtn" style="float:right;">Clear Favorites</a>
 <div class="siteHeaderGreen">Your Favorites</div>
-Your most used applications will display here after a few uses. You can clear these favorites from the list if they fill up or if you like to reset. 
+Your most used applications  are displayed in this section. Settings are saved in this 
+  <span class="userBrowser"></span> browser on this <span class="userDevice"></span> only for your account. You can always clear these favorites to refresh your list by using the link above right. 
+  (Please note, that clearing this browser's cached cookies will also remove your listed favorites.)
 <br/><br/>
 <div id="myFavorites"></div>
 </div>
@@ -102,9 +121,8 @@ Your most used applications will display here after a few uses. You can clear th
 <div style="clear:both;"></div>
 <div id="links">
 <esd:SecurityAccessRequired	permissions="MEMBERADMIN-VIEW">
-<hr>
 <div class="siteHeaderGreen">Staff/Member Administration Applications</div>
-Special applications for administering staff, permissions, roles, and categories.<br/><br/>
+Special applications for administering staff, permissions, roles, and categories. <span style="color:red;">System Admin Access ONLY</span>.<br/><br/>
 </esd:SecurityAccessRequired>
 
 <div id="<%=usr.getPersonnel().getPersonnelID()%>app1">
@@ -135,7 +153,6 @@ Special applications for administering staff, permissions, roles, and categories
 		<a href="/MemberServices/Administration/SchoolAdmin/schoolfamilyadmin.jsp" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app3');loadingData();">
 		<img src="StaffRoom/includes/img/fos-off.png" class="img-swap menuImage" border=0 title="School Family (DOS) Assignment"/>
 		</a>
-		
 		</div>
 </esd:SecurityAccessRequired>
 </div>
@@ -185,7 +202,7 @@ Special applications for administering staff, permissions, roles, and categories
 		<div class="menuIconImage">
 		<a href="/MemberServices/Administration/viewNextLoginApp.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app8');loadingData();">
 		<img src="StaffRoom/includes/img/startup-off.png" class="img-swap menuImage" border=0 title="Group Startup App"/>
-		</a>
+		</a>		
 		</div>
 </esd:SecurityAccessRequired>
 </div>		
@@ -206,6 +223,7 @@ Special applications for administering staff, permissions, roles, and categories
 		<a href="/MemberServices/Administration/SchoolStatus/regionalized_school_admin.jsp" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app10');loadingData();">
 		<img src="StaffRoom/includes/img/statusadmin-off.png" class="img-swap menuImage" border=0 title="School Closure Administration"/>
 		</a>
+		
 		</div>
 </esd:SecurityAccessRequired>
 </div>
@@ -222,6 +240,7 @@ Links under this section provide general information on a given topic and/or lin
 				<a href="https://myaccount.google.com" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app11');">
 				<img src="StaffRoom/includes/img/gaccount-off.png" class="img-swap menuImage" border=0 title="Your Google Account">
 				</a>
+				
 		</div>	
 	</div>		
 <!-- ATIPP information -->	
@@ -341,7 +360,17 @@ Links under this section provide general information on a given topic and/or lin
 				</div>
 		
 		</esd:SecurityAccessRequired>		
-	</div>	
+	</div>
+	
+
+<!-- District School Map -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app54">
+			<div class="menuIconImage">
+				<a href="https://www.google.com/maps/d/u/0/viewer?mid=1R5VvnRw7O2HyleZerwnEih2pfJngXxA&ll=51.25470996626324%2C-53.88959315085279&z=5" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app54');"> 
+					<img src="StaffRoom/includes/img/smap-off.png" class="img-swap menuImage" border=0 title="District Schools Location Map">
+				</a>
+			</div>
+	</div>		
 	
 <div style="clear:both;"></div>	
 <hr>
@@ -464,7 +493,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 				<div class="menuIconImage">                              
 					<a href="schools/registration/icfreg/admin/schoolindex.html"  onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app40');loadingData();">
 						<img src="includes/img/menu/icfs-on.png" class="img-swap menuImage" border=0 title="ICF REGISTRATION SCHOOL">
-					</a>                                                         
+					</a>                                                       
 				</div>
 			</esd:SecurityAccessRequired>
 	</div>		
@@ -573,7 +602,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 				<div class="menuIconImage">                              	
 					<a href="EECD/schoolAdminViewApprovals.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app50');loadingData();">
 					<img src="includes/img/menu/eecdp-off.png" class="img-swap menuImage" border=0 title="EECD SCHOOL ADMIN">
-					</a>                                                         
+					</a>                                                       
 				</div>
 			</esd:SecurityAccessRequired>
 	</div>	
@@ -584,7 +613,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 				<div class="menuIconImage">                              
 					<a href="EECD/viewEECD.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app51');loadingData();">
 					<img src="includes/img/menu/eecd-off.png" class="img-swap menuImage" border=0 title="EECD">
-					</a>                                                         
+					</a>                                                        
 				</div>
 			</esd:SecurityAccessRequired>
 	</div>	
@@ -595,11 +624,24 @@ Listed applications that you have permission to access and use.<br/><br/>
 				<div class="menuIconImage">                              
 					<a href="EECD/adminViewAreas.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app52');loadingData();">
 					<img src="includes/img/menu/eecda-off.png" class="img-swap menuImage" border=0 title="EECD ADMIN">
-					</a>                                                         
+					</a>                                                      
 				</div>
 			</esd:SecurityAccessRequired>
 	</div>	
 	
+
+				
+
+	
+<!-- OTHER APPLICATIONS -->
+
+<div id="otherAppsDiv" style="display: none;">
+<div style="clear:both;"></div>	
+<hr>
+<a href="#/" id="closeOther" class="btn btn-sm btn-danger favBtn" style="float:right;">Hide This Group</a>
+<div class="siteHeaderGreen">Other Applications</div>					
+Quick access to some of the other District Web applications (also available in the Google Waffle). These links will open in a new tab or browser window.<br/><br/>	
+
 <!-- Canva -->
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app53">					
 			<div class="menuIconImage">
@@ -607,36 +649,63 @@ Listed applications that you have permission to access and use.<br/><br/>
 					<img src="StaffRoom/includes/img/canva-off.png" class="img-swap menuImage" border=0 title="Canva Design">
 				</a>
 			</div>
-	</div>	
-				
-<!-- District School Map -->
-	<div id="<%=usr.getPersonnel().getPersonnelID()%>app54">
+	</div>
+		
+<!-- Professional Learning K-12 Provincial -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app200">
 			<div class="menuIconImage">
-				<a href="https://www.google.com/maps/d/u/0/viewer?mid=1R5VvnRw7O2HyleZerwnEih2pfJngXxA&ll=51.25470996626324%2C-53.88959315085279&z=5" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app54');"> 
-					<img src="StaffRoom/includes/img/smap-off.png" class="img-swap menuImage" border=0 title="District Schools Location Map">
+				<a href="https://accounts.google.com/o/saml2/initsso?idpid=C02xs5zes&spid=72759342206&forceauthn=false" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app200');">
+					<img src="StaffRoom/includes/img/k12pl-off.png" class="img-swap menuImage" border=0 title="Provincial Professional learning K-12">
+				</a>
+			</div>			
+	</div>
+			
+<!-- LUMIO -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app201">
+			<div class="menuIconImage">
+				<a href="https://apis.google.com/additnow/l?applicationid=1033792558652&__ls=ogb&__lu=https%3A%2F%2Fsuite.smarttech.com%2Fgd%3Freferrer%3Dgd" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app201');">
+					<img src="StaffRoom/includes/img/lumio-off.png" class="img-swap menuImage" border=0 title="Lumio">
 				</a>
 			</div>
-	</div>	
-				
+	</div>
 	
-<!-- Microsoft Office -->
-	<div id="<%=usr.getPersonnel().getPersonnelID()%>app55">
-		<div class="menuIconImage">
-			<a href="https://portal.office.com/" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app55');">
-			<img src="StaffRoom/includes/img/msoffice-off.png" class="img-swap menuImage" border=0 title="Microsoft Office 365">
-			</a>
-		</div>
-	</div>	
+<!-- MyViewBoard -->			
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app202">			
+			<div class="menuIconImage">
+				<a href="https://apis.google.com/additnow/l?applicationid=11040883588&__ls=ogb&__lu=https%3A%2F%2Fapi.myviewboard.com%2Fauth%2Fgoogle" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app202');">
+					<img src="StaffRoom/includes/img/myview-off.png" class="img-swap menuImage" border=0 title="MyViewBoard">
+				</a>
+			</div>			
+	</div>
+
+<!-- Sketch Up for Schools -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app203">	
+			<div class="menuIconImage">
+				<a href="https://apis.google.com/additnow/l?applicationid=260457348581&__ls=ogb&__lu=https%3A%2F%2Fedu.sketchup.com%2Fapp%2F%3Fauth%3Dgoog" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app203');">
+					<img src="StaffRoom/includes/img/sketch-off.png" class="img-swap menuImage" border=0 title="Sketch Up for Schools">
+				</a>
+			</div>
+	</div>
 	
-<!-- Teams -->	
-	<div id="<%=usr.getPersonnel().getPersonnelID()%>app56">	
-		<div class="menuIconImage">
-			<a href="https://teams.microsoft.com" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app56');">
-			<img src="StaffRoom/includes/img/msteams-off.png" class="img-swap menuImage" border=0 title="Microsoft Teams">
-			</a>
-		</div>
-	</div>	
+<!-- SORA -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app204">		
+			<div class="menuIconImage">
+				<a href="https://apis.google.com/additnow/l?applicationid=589397033355&__ls=ogb&__lu=https%3A%2F%2Flink.overdrive.com%2Fgoogle-domain-nlesd.ca" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app204');">
+					<img src="StaffRoom/includes/img/sora-off.png" class="img-swap menuImage" border=0 title="Sora by OverDrive">
+				</a>
+			</div>	
+	</div>
 	
+</div>				
+	
+<!-- GOOGLE APPLICATIONS -->
+
+<div id="googleDiv" style="display: none;">
+<div style="clear:both;"></div>	
+<hr>
+<a href="#/" id="closeGoogle" class="btn btn-sm btn-danger favBtn" style="float:right;">Hide This Group</a>
+<div class="siteHeaderGreen">Google Applications</div>					
+Quick access to some of the Google applications you may use. These links will open in a new tab or browser window. These are also available in the Google Waffle.<br/><br/>			
 <!-- GMail -->	
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app57">
 		<div class="menuIconImage">
@@ -709,9 +778,279 @@ Listed applications that you have permission to access and use.<br/><br/>
 		</div>
 	</div>
 
+<!-- Google Classroom -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app300">	
+		<div class="menuIconImage">
+				<a href="https://classroom.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app300');">
+				<img src="StaffRoom/includes/img/gclass-off.png" class="img-swap menuImage" border=0 title="Google Classroom">
+				</a>
+		</div>		
+	</div>
+	
+<!-- Google Docs -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app301">	
+		<div class="menuIconImage">
+				<a href="https://docs.google.com/document/?usp=docs_ald&authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app301');">
+				<img src="StaffRoom/includes/img/gdocs-off.png"	class="img-swap menuImage" border=0 title="Google Docs">
+				</a>
+		</div>	
+	</div>
+
+<!-- Google Sheets -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app302">
+		<div class="menuIconImage">
+			<a href="https://docs.google.com/spreadsheets/?usp=sheets_ald&authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app302');">
+			<img src="StaffRoom/includes/img/gsheets-off.png" class="img-swap menuImage" border=0 title="Google Sheets">
+			</a>
+		</div>	
+	</div>
+	
+<!-- Google Slides -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app303">		
+		<div class="menuIconImage">
+			<a href="https://docs.google.com/presentation/?usp=slides_ald&authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app303');">
+			<img src="StaffRoom/includes/img/gslides-off.png" class="img-swap menuImage" border=0 title="Google Slides">
+			</a>
+		</div>	
+	</div>
+	
+<!-- Google Forms -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app304">
+		<div class="menuIconImage">
+			<a href="https://docs.google.com/forms/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app304');">
+			<img src="StaffRoom/includes/img/gforms-off.png" class="img-swap menuImage" border=0 title="Google Forms">
+			</a>
+		</div>		
+	</div>
+	
+<!-- Google Groups -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app305">
+		<div class="menuIconImage">
+			<a href="https://groups.google.com/d/homeredir?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app305');">
+			<img src="StaffRoom/includes/img/ggroups-off.png" class="img-swap menuImage" border=0 title="Google Groups">
+			</a>
+		</div>	
+	</div>
+	
+<!-- Google Takeout -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app306">	
+		<div class="menuIconImage">
+			<a href="https://takeout.google.com/transfer" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app306');">
+			<img src="StaffRoom/includes/img/gtakeout-off.png" class="img-swap menuImage" border=0 title="Google Takeout">
+			</a>
+		</div>	
+	</div>
+	
+<!-- Your Youtube -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app307">	
+		<div class="menuIconImage">
+			<a href="https://www.youtube.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app307');"> 
+			<img src="StaffRoom/includes/img/yt-off.png" class="img-swap menuImage" border=0 title="YouTube">
+			</a>
+		</div>	
+	</div>
+			
+<!-- Google Contacts -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app308">	
+		<div class="menuIconImage">
+				<a href="https://contacts.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app308');">
+				<img src="StaffRoom/includes/img/gcontacts-off.png" class="img-swap menuImage" border=0 title="Google Contacts">
+				</a>
+		</div>		
+	</div>
+	
+<!-- Google Chat -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app309">	
+		<div class="menuIconImage">
+				<a href="https://chat.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app309');">
+				<img src="StaffRoom/includes/img/gchat-off.png" class="img-swap menuImage" border=0 title="Google Chat">
+				</a>
+		</div>	
+	</div>
+	
+<!-- Google Translate -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app310">
+		<div class="menuIconImage">
+				<a href="https://translate.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app310');">
+				<img src="StaffRoom/includes/img/gtranslate-off.png" class="img-swap menuImage" border=0 title="Google Translate">
+				</a>
+		</div>	
+	</div>
+	
+<!-- Google Photos -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app311">
+		<div class="menuIconImage">
+				<a href="https://photos.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app311');">
+				<img src="StaffRoom/includes/img/gphotos-off.png" class="img-swap menuImage" border=0 title="Google Photos">
+				</a>
+		</div>
+	</div>
+		
+<!-- Google Keep -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app312">
+		<div class="menuIconImage">
+				<a href="https://keep.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app312');">
+				<img src="StaffRoom/includes/img/gkeep-off.png" class="img-swap menuImage" border=0 title="Google Keep">
+				</a>
+		</div>
+	</div>
+		
+<!-- Google Saved -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app313">
+		<div class="menuIconImage">
+				<a href="https://www.google.com/save?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app313');">
+				<img src="StaffRoom/includes/img/gsaved-off.png" class="img-swap menuImage" border=0 title="Google Saved">
+				</a>
+		</div>
+	</div>	
+		
+<!-- Google Jamboard -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app314">	
+		<div class="menuIconImage">
+				<a href="https://jamboard.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app314');">
+				<img src="StaffRoom/includes/img/gjam-off.png" class="img-swap menuImage" border=0 title="Google JamBoard">
+				</a>
+		</div>
+	</div>
+	
+<!-- Google Hangouts -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app315">	
+		<div class="menuIconImage">
+				<a href="https://hangouts.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app315');">
+				<img src="StaffRoom/includes/img/ghang-off.png" class="img-swap menuImage" border=0 title="Google Hangouts">
+				</a>
+		</div>
+	</div>
+	
+<!-- Google News -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app316">
+		<div class="menuIconImage">
+				<a href="https://news.google.com/?authuser=0" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app316');">
+				<img src="StaffRoom/includes/img/gnews-off.png" class="img-swap menuImage" border=0 title="Google News">
+				</a>
+		</div>	
+	</div>
+</div>
+
+
+
+
+
+<!-- MICROSOFT APPLICATIONS -->
+
+<div id="microsoftDiv" style="display: none;">
 <div style="clear:both;"></div>	
 <hr>
+<a href="#/" id="closeMicrosoft" class="btn btn-sm btn-danger favBtn" style="float:right;">Hide This Group</a>
+<div class="siteHeaderGreen">Microsoft Applications</div>					
+Quick access to some of the Microsoft Office Web applications. Recommend if you use office, you download the desktop application. These links will open in a new tab or browser window.<br/><br/>	
+<!-- Microsoft Office -->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app55">
+		<div class="menuIconImage">
+			<a href="https://portal.office.com/" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app55');">
+			<img src="StaffRoom/includes/img/msoffice-off.png" class="img-swap menuImage" border=0 title="Microsoft Office 365">
+			</a>
+		</div>
+	</div>	
+	
+<!-- Teams -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app56">	
+		<div class="menuIconImage">
+			<a href="https://teams.microsoft.com" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app56');">
+			<img src="StaffRoom/includes/img/msteams-off.png" class="img-swap menuImage" border=0 title="Microsoft Teams">
+			</a>
+		</div>
+	</div>	
 
+<!-- OneDrive -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app400">
+		<div class="menuIconImage">
+			<a href="https://nf-my.sharepoint.com/" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app400');">
+			<img src="StaffRoom/includes/img/msonedrive-off.png" class="img-swap menuImage" border=0 title="Microsoft OneDrive">
+			</a>
+		</div>
+	</div>	
+
+<!-- Outlook (Hide) -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app401" style="display:none;">	
+		 <div class="menuIconImage">
+			<a href="https://outlook.office.com/mail/" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app401');">
+			<img src="StaffRoom/includes/img/msoutlook-off.png" class="img-swap menuImage" border=0 title="Microsoft Outlook">
+			</a>
+		</div>
+	</div>	
+
+<!-- Word -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app402">		
+		<div class="menuIconImage">
+			<a href="https://www.office.com/launch/word?auth=2" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app402');">
+			<img src="StaffRoom/includes/img/msword-off.png" class="img-swap menuImage" border=0 title="Microsoft Word">
+			</a>
+		</div>
+	</div>	
+	
+<!-- Excel -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app403">			
+		<div class="menuIconImage">
+			<a href="https://www.office.com/launch/excel?auth=2" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app403');">
+			<img src="StaffRoom/includes/img/msexcel-off.png" class="img-swap menuImage" border=0 title="Microsoft Excel">
+			</a>
+		</div>
+	</div>	
+	
+<!-- PowerPoint -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app404">		
+		<div class="menuIconImage">
+			<a href="https://www.office.com/launch/powerpoint?auth=2" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app404');">
+			<img src="StaffRoom/includes/img/msppoint-off.png" class="img-swap menuImage" border=0 title="Microsoft PowerPoint">
+			</a>
+		</div>
+	</div>	
+	
+<!-- Forms -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app405">		
+		<div class="menuIconImage">
+			<a href="https://www.office.com/launch/forms?auth=2" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app405');">
+			<img src="StaffRoom/includes/img/msforms-off.png" class="img-swap menuImage" border=0 title="Microsoft Forms">
+			</a>
+		</div>
+	</div>	
+	
+<!-- SharePoint 
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app406">		
+		<div class="menuIconImage">
+			<a href="https://nf.sharepoint.com/" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app406');">
+			<img src="StaffRoom/includes/img/mssharepoint-off.png" class="img-swap menuImage" border=0 title="Microsoft Sharepoint">
+			</a>
+		</div>
+	</div>	
+	-->	
+<!-- Visio -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app407">		
+		<div class="menuIconImage">
+			<a href="https://www.office.com/launch/visio?auth=2" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app407');">
+			<img src="StaffRoom/includes/img/msvisio-off.png" class="img-swap menuImage" border=0 title="Microsoft Visio">
+			</a>
+		</div>
+	</div>	
+	
+<!-- OneNote -->	
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app408">		
+		<div class="menuIconImage">
+			<a href="https://www.office.com/launch/onenote?auth=2" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app408');">
+			<img src="StaffRoom/includes/img/msonenote-off.png" class="img-swap menuImage" border=0 title="Microsoft OneNote">
+			</a>
+		</div>
+	</div>	
+</div>
+
+
+<!-- SOCIAL MEDIA APPS -->
+
+<div id="smediaDiv" style="display: none;">
+<div style="clear:both;"></div>	
+<hr>
+<a href="#/" id="closeSmedia" class="btn btn-sm btn-danger favBtn" style="float:right;">Hide This Group</a>
 <div class="siteHeaderGreen">District Social Media Accounts</div>
 Our current public social media accounts.<br/><br/>
 
@@ -750,12 +1089,17 @@ Our current public social media accounts.<br/><br/>
 				</a>
 			</div>
 	</div>
+</div>
+
+
+
+<!-- WEBSITE ADMIN APPS -->
 <div style="clear:both;"></div>	
 <div class="adminApps">	
 		
 <hr>
 
-<div class="siteHeaderGreen">Website Administration Applications (<span id="adminApps"></span>)</div>
+<div class="siteHeaderGreen">Website Administration Applications</div>
 Special applications for updating and posting information, depending on your level of access.<br/><br/>
 <% int cnt=0; %>
 					
@@ -777,6 +1121,7 @@ Special applications for updating and posting information, depending on your lev
 			<div class="menuIconImage">
 				<a href="Tenders/viewTenders.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app81');loadingData();">
 				<img src="StaffRoom/includes/img/tender-off.png" class="img-swap menuImage" title="Tender Posting System" border=0></a>
+				
 			</div>
 			<%cnt++; %>
 		</esd:SecurityAccessRequired>
@@ -812,7 +1157,7 @@ Special applications for updating and posting information, depending on your lev
 			<div class="menuIconImage">                              	
 				<a href="SchoolReviews/viewSchoolReviews.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>pp84');loadingData();">
 				<img src="StaffRoom/includes/img/schoolreview-off.png" class="img-swap menuImage" border=0 title="SCHOOL REVIEW PROCESS ADMIN">
-				</a>                                                         
+				</a>                                                   
 			</div>
 			<%cnt++; %>
 		</esd:SecurityAccessRequired>
@@ -906,9 +1251,9 @@ Special applications for updating and posting information, depending on your lev
 </div>
 
 
-<div style="clear:both;"></div>	
-<hr>	
-
+<!-- HELP DESKS -->
+<div style="clear:both;"></div>
+<hr>
 <div class="siteHeaderGreen">Help Desks</div>						
 Here are listed access to a variety of application and district level HelpDesks.<br/><br/>
 
@@ -984,23 +1329,36 @@ Here are listed access to a variety of application and district level HelpDesks.
 		</div>	
 	</div>	
 
-	
-	
-
-
 
 <div style="clear:both;"></div>	
-<hr>	
-	
+<br/>
+<br/>
+<br/>
 
-	
+
+
+<a name="checkSettings"></a>
+<div class="alert alert-warning" style="text-align:center;">
+<img src="StaffRoom/includes/img/gear.png" border=0 style="float:left;max-width:90px;"/>
+<b>You can configure what extra applications you like to display on this page above for easy access. They will display in their own groups below the Applications Group when selected. 
+<br/>Your settings will be saved in your browser automatically. Changes here will not effect any apps listed in your favorites.</b><br/><br/>
+<input type="checkbox" id="googleCheckbox"> Show Google Apps &nbsp; &nbsp; &nbsp; 
+<input type="checkbox" id="microsoftCheckbox"> Show Microsoft Apps &nbsp; &nbsp; &nbsp; 
+<input type="checkbox" id="otherCheckbox"> Show Other Apps &nbsp; &nbsp; &nbsp; 
+<input type="checkbox" id="smediaCheckbox"> Show Social Media Apps
+
+ </div>	
+		
+<div class="alert alert-danger">
+<b>SUPPORT NOTICE:</b> Information incorrect? Missing icons? Classification and/or Location incorrect? Please use the <a href="https://forms.gle/rpYgeZfm81Wt5c138" target="_blank">StaffRoom HelpDesk</a> 
+to send a support request. You can also email <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">geofftaylor@nlesd.ca</a>. For any individual application support, please use the contacts for support within the application.
+</div>
 					
 <%
 if(cnt > 0) {
 %>
 <script>
 $(".adminApps").css("display","block");
-$("#adminApps").text("<%=cnt%>");
 </script>	
 <%} else { %>
 <script>
@@ -1013,32 +1371,185 @@ $(".adminApps").css("display","none");
 </div>
 </div>
 	</div>
-	
+
+<!-- The Favorites Confirm Modal -->
+<div class="modal fade" id="fav-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Remove Application Icon Favorites?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+         <img src="StaffRoom/includes/img/question_mark.gif" border=0 style="float:left;">
+         Are you sure you want to remove your application icon favorites? <br/><br/>
+         Doing so will reset them and will start a new application favorite list for this browser on this device. <b>This cannot be undone</b>.
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btn-yes">Yes</button>
+        <button type="button" class="btn btn-danger" id="btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
+// Check if the checkbox status is saved in the cookie
+
+var isGoogleChecked = $.cookie('googleStatus');
+var isMicrosoftChecked = $.cookie('microsoftStatus');
+var isSmediaChecked = $.cookie('smediaStatus');
+var isOtherChecked = $.cookie('otherStatus');
+
+if (isGoogleChecked === 'true') {
+  $('#googleDiv').show();
+  $('#googleCheckbox').prop('checked', true);
+}
+
+if (isMicrosoftChecked === 'true') {
+	  $('#microsoftDiv').show();
+	  $('#microsoftCheckbox').prop('checked', true);
+	}
+	
+if (isSmediaChecked === 'true') {
+	  $('#smediaDiv').show();
+	  $('#smediaCheckbox').prop('checked', true);
+	}	
+
+if (isOtherChecked === 'true') {
+	  $('#otherAppsDiv').show();
+	  $('#otherCheckbox').prop('checked', true);
+	}
+
+
+// Toggle the div visibility on checkbox change
+$('#googleCheckbox').change(function() {
+  if ($(this).is(':checked')) {
+    $('#googleDiv').show();
+    $.cookie('googleStatus', true); // Save checkbox status in cookie
+  } else {
+    $('#googleDiv').hide();
+    $.cookie('googleStatus', false); // Save checkbox status in cookie
+  }
+});
+
+$('#microsoftCheckbox').change(function() {
+	  if ($(this).is(':checked')) {
+	    $('#microsoftDiv').show();
+	    $.cookie('microsoftStatus', true); // Save checkbox status in cookie
+	  } else {
+	    $('#microsoftDiv').hide();
+	    $.cookie('microsoftStatus', false); // Save checkbox status in cookie
+	  }
+	});
+
+$('#smediaCheckbox').change(function() {
+	  if ($(this).is(':checked')) {
+	    $('#smediaDiv').show();
+	    $.cookie('smediaStatus', true); // Save checkbox status in cookie
+	  } else {
+	    $('#smediaDiv').hide();
+	    $.cookie('smediaStatus', false); // Save checkbox status in cookie
+	  }
+	});
+
+$('#otherCheckbox').change(function() {
+	  if ($(this).is(':checked')) {
+	    $('#otherAppsDiv').show();
+	    $.cookie('otherStatus', true); // Save checkbox status in cookie
+	  } else {
+	    $('#otherAppsDiv').hide();
+	    $.cookie('otherStatus', false); // Save checkbox status in cookie
+	  }
+	});
+
+
+
+$("#closeMicrosoft").on("click", function(){
+	 $('#microsoftDiv').hide();
+	    $.cookie('microsoftStatus', false);
+	    $('#microsoftCheckbox').prop('checked', false);
+  });
+
+$("#closeGoogle").on("click", function(){
+	 $('#googleDiv').hide();
+	    $.cookie('googleStatus', false);
+	    $('#googleCheckbox').prop('checked', false);
+ });
+ 
+$("#closeOther").on("click", function(){
+	 $('#otherAppsDiv').hide();
+	    $.cookie('otherStatus', false);
+	    $('#otherCheckbox').prop('checked', false);
+});
+
+$("#closeSmedia").on("click", function(){
+	 $('#smediaDiv').hide();
+	    $.cookie('smediaStatus', false);
+	    $('#smediaCheckbox').prop('checked', false);
+});
+
+
+// Modal to remove favories and clear cookies they are stored in.
+
+var favConfirm = function(callback){
+	  
+	  $("#clearFavorites").on("click", function(){
+	    $("#fav-modal").modal('show');
+	  });
+
+	  $("#btn-yes").on("click", function(){
+	    callback(true);
+	    $("#fav-modal").modal('hide');
+	  });
+	  
+	  $("#btn-no").on("click", function(){
+	    callback(false);
+	    $("#fav-modal").modal('hide');
+	  });
+	};
+
+	favConfirm(function(confirm){
+	  if(confirm){	   
+		  clearFavorites();		
+	  }else{	    
+	   return;
+	  }
+	});
 
 // Cookie will expire after 10 days if not used. If used, will reset to 10 days.
 // Number of Clicks before it gets recognized as a Favorite
 
+// Disply the cookies message, hide it if closed.
+
+var theCookieUser1 = '<%=usr.getPersonnel().getPersonnelID()%>CookieMessage1';
+if ($.cookie(theCookieUser1) > 0) {
+	$("#theCookieMSG1").css("display","none");
+} else {
+	$("#theCookieMSG1").css("display","block");
+}
+
+var theCookieUser2 = '<%=usr.getPersonnel().getPersonnelID()%>CookieMessage2';
+if ($.cookie(theCookieUser2) > 0) {
+	$("#theCookieMSG2").css("display","none");
+} else {
+	$("#theCookieMSG2").css("display","block");
+}
+
 var cookiePrefix = '<%=usr.getPersonnel().getPersonnelID()%>app';
 var allCookies = $.cookie();
-var numClicks = 3;
+var numClicks = 10;
 var cookieExpiryDays = 5; 
-
-$('#clearFavorites').click(function() {
-	  var answer = confirm("Are you sure you want to remove your favorites? Doing so will reset them and will start a new list. This cannot be undone.");
-
-	  if (answer) {
-		  clearFavorites();		  
-	  } else {
-	    return;
-	  }
-	  
-	});
 
 for (var cookieName in allCookies) {
 	  if (cookieName.startsWith(cookiePrefix)) {
 	    var cookieValue = allCookies[cookieName];	
-	    //var theIconCountName = "." + cookieName + "cnt";
+	  //  var theIconCountName = "." + cookieName + "cnt";
     	//$(theIconCountName).text($.cookie(cookieName));
 	    if ($.cookie(cookieName) > numClicks) {	
 	    	$(".favoriteBlock").css("display","block");
