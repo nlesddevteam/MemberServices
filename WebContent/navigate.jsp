@@ -60,6 +60,17 @@ $(document).ready(function () {
 <b>CLASSIFIED AS:</b> <%=usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName()%> &nbsp;&nbsp; 
 <b>LOCATION:</b> <%=(usr.getPersonnel().getSchool() != null ? usr.getPersonnel().getSchool().getSchoolName() : "<span style='color:Red;'>NO LOCATION</span>")%>
 </div>
+
+<% if(usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName().equals("NEW USER")) {%>
+
+<div class="alert alert-danger" style="text-align:center;font-size:14px;"><b>***** NEW USER NOTICE *****</b><br/>
+Your classification states <b>NEW USER</b>. 
+Please contact <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">StaffRoom Support</a> as soon as possible, listing your current job position/title or classification, 
+and your main school or office location, in order to have access to the proper applications below. You will have limited access until this is complete. Thank you.
+</div>
+
+<%}%>
+
 </div>
 </div>
 <div style="font-size:14px;" id="welcomeBlock">

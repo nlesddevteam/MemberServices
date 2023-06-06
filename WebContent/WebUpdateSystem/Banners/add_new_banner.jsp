@@ -64,18 +64,18 @@ Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
       <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
       <b>Start Date:</b><br/>
-        <input type="date" id="bstartdate" name="bstartdate" class="form-control">
+        <input type="date" id="bstartdate" name="bstartdate" required class="form-control">
        </div>
        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">  
      	<b>End Date:</b><br/>
-       <input type="date" id="benddate" name="benddate" class="form-control">
+       <input type="date" id="benddate" name="benddate" required class="form-control">
        </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">                     
       	<b>Repeat till Manually Disabled? (Ignore start/end dates)</b><br/>
       	
-      	<select NAME="brepeat" ID="brepeat" class="form-control" required>
-			       	<option value="Y">YES</option>
+      	<select NAME="brepeat" ID="brepeat" class="form-control" required>			       	
 			      	<option value="N">NO</option>
+			      	<option value="Y">YES</option>
 			      	</select>     
           
       </div>
@@ -91,7 +91,7 @@ Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
       </div>                
         <br/><br/>                              
         <div align="center"><button id="butSave" class="btn btn-sm btn-success" onclick="loadingData();">SAVE</button> &nbsp; 
-        <A HREF='viewBanners.html' class="btn btn-sm btn-danger" onclick="loadingData();">CANCEL</a></div>
+        <A HREF='viewBanners.html' class="btn btn-sm btn-danger" onclick="loadingData();">EXIT/CANCEL</a></div>
    
     </form>
     
