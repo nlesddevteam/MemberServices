@@ -518,14 +518,14 @@ employment positions and/or applications.
 								if(doc.getTypeSS().equals(DocumentTypeSS.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
-								//$("#COENotice").css("display","none");
+								$("#COENotice").css("display","none");
 								</script>
 								
 								<% } %>
 								</c:when>
 								<c:otherwise>
 								<script>
-								//$("#COENotice").css("display","none");
+								$("#COENotice").css("display","none");
 								</script>
 								
 								</c:otherwise>
