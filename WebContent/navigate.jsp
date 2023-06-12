@@ -1352,13 +1352,16 @@ Here are listed access to a variety of application and district level HelpDesks.
 <div class="alert alert-warning" style="text-align:center;">
 <img src="StaffRoom/includes/img/gear.png" border=0 style="float:left;max-width:90px;"/>
 <b>You can configure what extra applications you like to display on this page above for easy access. They will display in their own groups below the Applications Group when selected. 
-<br/>Your settings will be saved in your browser automatically. Changes here will not effect any apps listed in your favorites.</b><br/><br/>
-<input type="checkbox" id="googleCheckbox"> Show Google Apps &nbsp; &nbsp; &nbsp; 
-<input type="checkbox" id="microsoftCheckbox"> Show Microsoft Apps &nbsp; &nbsp; &nbsp; 
-<input type="checkbox" id="otherCheckbox"> Show Other Apps &nbsp; &nbsp; &nbsp; 
-<input type="checkbox" id="smediaCheckbox"> Show Social Media Apps
+Your settings will be saved in your browser automatically. Changes here will not effect any apps listed in your favorites.</b><br/><br/>
 
+
+ <div class="row">
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3"><input type="checkbox" id="googleCheckbox"> Google Apps &nbsp;</div>
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3"><input type="checkbox" id="microsoftCheckbox"> Microsoft Apps &nbsp;</div>
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3"><input type="checkbox" id="otherCheckbox"> Other Apps &nbsp;</div>
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3"><input type="checkbox" id="smediaCheckbox"> Social Media Apps &nbsp;</div>
  </div>	
+ </div>
 		
 <div class="alert alert-danger">
 <b>SUPPORT NOTICE:</b> Information incorrect? Missing icons? Classification and/or Location incorrect? Please use the <a href="https://forms.gle/rpYgeZfm81Wt5c138" target="_blank">StaffRoom HelpDesk</a> 
