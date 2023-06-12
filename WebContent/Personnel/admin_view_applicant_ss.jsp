@@ -14,7 +14,8 @@
                   com.esdnl.personnel.jobs.constants.*,
                   com.awsd.security.crypto.*,
                  com.esdnl.personnel.v2.model.sds.bean.*,
-                 com.esdnl.personnel.v2.database.sds.*" 
+                 com.esdnl.personnel.v2.database.sds.*,
+                 java.util.stream.*" 
          isThreadSafe="false"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -41,7 +42,9 @@
     if(chks.length == 0 || refs == null){
     	validReference = false;
     }
-    Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+    //Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+    Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getTypeSS() != null).collect(Collectors.toList());
+    
     User usr = (User)session.getAttribute("usr");
     //if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD"))
       session.setAttribute("APPLICANT", profile); 

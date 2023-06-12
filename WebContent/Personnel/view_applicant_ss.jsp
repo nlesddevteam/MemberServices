@@ -11,7 +11,8 @@
                  com.esdnl.personnel.jobs.dao.*,
                  com.esdnl.personnel.jobs.constants.*,
                  com.esdnl.personnel.v2.model.sds.bean.*,
-                 com.esdnl.personnel.v2.database.sds.*"
+                 com.esdnl.personnel.v2.database.sds.*,
+                 java.util.stream.*"
          isThreadSafe="false"%>
 
 		<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
@@ -43,7 +44,7 @@
 			new RegionBean[0]);
 	//hmap = ApplicantRegionalJobPoolSSManager.getApplicantRegionalJobPoolPreferencesMap(profile.getSIN());
 	refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
-	docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+	docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getTypeSS() != null).collect(Collectors.toList());
 	hmapcur = ApplicantCurrentPositionManager.getApplicantCurrentPositionBeanMap(profile.getSIN());
 	EmployeeBean empbean = null;
 	if (!StringUtils.isEmpty(profile.getSIN2())) {
