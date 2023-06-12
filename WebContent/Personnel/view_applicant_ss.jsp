@@ -45,6 +45,8 @@
 	//hmap = ApplicantRegionalJobPoolSSManager.getApplicantRegionalJobPoolPreferencesMap(profile.getSIN());
 	refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
 	docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getTypeSS() != null).collect(Collectors.toList());
+	boolean hasCOE = false;
+	
 	hmapcur = ApplicantCurrentPositionManager.getApplicantCurrentPositionBeanMap(profile.getSIN());
 	EmployeeBean empbean = null;
 	if (!StringUtils.isEmpty(profile.getSIN2())) {
@@ -91,7 +93,7 @@ input {
 <span style="color:Grey;font-weight:bold;">SUPPORT STAFF/STUDENT ASSISTANT/MANAGEMENT PROFILE</span><br/><br/>
 
 
-<div id="COENotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b style="font-size:16px;">NOTICE: Missing Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
+<div id="COENotice" class="alert alert-warning" style="display:none;text-align:center;">*** <b style="font-size:16px;">NOTICE: Missing Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
 	Your profile is currently missing the <b>Code of Ethics and Conduct Training Declaration Certificate</b>. 
 	
 	This training is <b>mandatory for all staff</b> and new hires as communicated in a memo on February 8, 2022. 
@@ -516,14 +518,14 @@ employment positions and/or applications.
 								if(doc.getTypeSS().equals(DocumentTypeSS.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
-								$("#COENotice").css("display","none");
+								//$("#COENotice").css("display","none");
 								</script>
 								
 								<% } %>
 								</c:when>
 								<c:otherwise>
 								<script>
-								$("#COENotice").css("display","none");
+								//$("#COENotice").css("display","none");
 								</script>
 								
 								</c:otherwise>

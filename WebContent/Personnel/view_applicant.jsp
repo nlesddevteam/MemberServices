@@ -127,7 +127,7 @@ input {
 	<p>
 	<span style="color:Grey;font-weight:bold;">TEACHING/TLA/EDUCATIONAL ADMIN PROFILE</span><br/>
 	
-	<div id="COENotice" class="alert alert-warning" style="display:block;text-align:center;">*** <b style="font-size:16px;">NOTICE: Missing Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
+	<div id="COENotice" class="alert alert-warning" style="display:none;text-align:center;">*** <b style="font-size:16px;">NOTICE: Missing Code of Ethics and Conduct Declaration Certificate</b> ***<br/><br/>
 	Your profile is currently missing the <b>Code of Ethics and Conduct Training Declaration Certificate</b>. 
 	
 	This training is <b>mandatory for all staff</b> and new hires as communicated in a memo on February 8, 2022. 
@@ -1113,7 +1113,7 @@ to select a reference type for <b>@nlesd.ca</b> email addresses.
 								if(doc.getType().equals(DocumentType.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
-								$("#COENotice").css("display","none");
+								//$("#COENotice").css("display","none");
 								</script>
 								
 								<% }%>		
@@ -1121,7 +1121,7 @@ to select a reference type for <b>@nlesd.ca</b> email addresses.
 							   </c:when>							  
 								<c:otherwise>
 								<script>
-								$("#COENotice").css("display","none");
+								//$("#COENotice").css("display","none");
 								</script>
 								
 								</c:otherwise>
