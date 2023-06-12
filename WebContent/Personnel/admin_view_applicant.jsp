@@ -68,7 +68,8 @@
   }
   
   RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
-  Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
+  Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getType() != null).collect(Collectors.toList());
+  
   Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
   
   if(usr.getUserPermissions().containsKey("PERSONNEL-ADMIN-VIEW-PWD")) {

@@ -18,7 +18,8 @@
                   com.esdnl.personnel.jobs.constants.*,
                   com.awsd.security.crypto.*,
                  com.esdnl.personnel.v2.model.sds.bean.*,
-                 com.esdnl.personnel.v2.database.sds.*" 
+                 com.esdnl.personnel.v2.database.sds.*,
+                 java.util.stream.*" 
          isThreadSafe="false"%>
 
 
@@ -39,8 +40,13 @@
   	if(profile != null){
   		empbean = (EmployeeBean) request.getAttribute("EMPBEAN");
   	}
+  	Collection<ApplicantDocumentBean> docs = null;
+  	if(profile.getProfileType().equals("T")){
+  		docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getType() != null).collect(Collectors.toList());
+  	}else{
+  		docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getTypeSS() != null).collect(Collectors.toList());
+  	}
   	
-  	Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile);
   	SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
     SimpleDateFormat sdf_long = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 %>
