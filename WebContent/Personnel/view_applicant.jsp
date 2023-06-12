@@ -40,7 +40,7 @@
   ApplicantOtherInformationBean other_info = ApplicantOtherInfoManager.getApplicantOtherInformationBean(profile.getSIN());
   ApplicantSupervisorBean[] refs = ApplicantSupervisorManager.getApplicantSupervisorBeans(profile.getSIN());
   RegionBean[] regionPrefs = ApplicantRegionalPreferenceManager.getApplicantRegionalPreferencesMap(profile).values().toArray(new RegionBean[0]);
-  Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getTypeSS() != null).collect(Collectors.toList());
+  Collection<ApplicantDocumentBean> docs = ApplicantDocumentManager.getApplicantDocumentBean(profile).stream().filter(dd -> dd.getType() != null).collect(Collectors.toList());
   Collection<ApplicantCriminalOffenceDeclarationBean> cods = ApplicantCriminalOffenceDeclarationManager.getApplicantCriminalOffenceDeclarationBeans(profile);
   ApplicantNLESDPermanentExperienceBean[] per = ApplicantNLESDPermExpManager.getApplicantNLESDPermanentExperienceBeans(profile.getSIN());
   Map<String, JobOpportunityBean> highlyRecommendedPools = JobOpportunityManager.getApplicantHighlyRecommendedPoolCompetitionsMap(profile.getSIN());
@@ -1113,7 +1113,7 @@ to select a reference type for <b>@nlesd.ca</b> email addresses.
 								if(doc.getType().equals(DocumentType.CODE_OF_ETHICS_CONDUCT)) {%>
 								
 								<script>
-								//$("#COENotice").css("display","none");
+								$("#COENotice").css("display","none");
 								</script>
 								
 								<% }%>		
@@ -1121,7 +1121,7 @@ to select a reference type for <b>@nlesd.ca</b> email addresses.
 							   </c:when>							  
 								<c:otherwise>
 								<script>
-								//$("#COENotice").css("display","none");
+								$("#COENotice").css("display","none");
 								</script>
 								
 								</c:otherwise>
