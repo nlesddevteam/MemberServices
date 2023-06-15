@@ -69,8 +69,8 @@
 </div>		
 
 <div style="display:none;" class="loadPage"> 
-   
-  
+   Below are the banners currently displayed or timed to display based on date. Banner will display based on start date and be hidden on main page after the end date. You can override this by disabling the banner at any time.
+  <br/><br/>
                       <div align="center">
 					<a class="btn btn-sm btn-primary" href="addNewBanner.html" onclick="loadingData();">Add Banner</a>&nbsp;					
 					<a class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp" onclick="loadingData();">Back to StaffRoom</a>
@@ -104,7 +104,7 @@
 								<td style="text-align:center;">${g.bRepeat eq null?"<span style='color:Silver;'>N/A</span>":g.bRepeat eq "N"? "<span style='color:Red;'>NO</span>":"<span style='color:Green;'>YES</span>"}</td>								
 								<c:choose>
 								<c:when test="${g.bannerStatus eq '0'}"><td style="text-align:center;color:white;background-color:Red;">DISABLED</td></c:when>
-								<c:when test="${g.bannerStatus eq '1'}"><td style="text-align:center;color:white;background-color:Green;">ENABLED</td></c:when>
+								<c:when test="${g.bannerStatus eq '1'}"><td style="text-align:center;color:white;background-color:Green;">ACTIVE</td></c:when>
 								<c:otherwise><td style="text-align:center;color:Silver;">N/A</td></c:otherwise>
 								</c:choose>
 								

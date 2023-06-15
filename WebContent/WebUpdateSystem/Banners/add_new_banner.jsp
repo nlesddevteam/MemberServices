@@ -48,7 +48,7 @@ Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
 		      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			      <b>Status:</b><br/>
 			      	<select NAME="banner_status" ID="banner_status" class="form-control" required>
-			       	<option value="1" selected>ENABLED</option>
+			       	<option value="1" selected>ACTIVE</option>
 			      	<option value="0">DISABLED</option>
 			      	</select>
 		      </div>
