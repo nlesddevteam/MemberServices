@@ -846,7 +846,7 @@ Quick access to some of the Google applications you may use. These links will op
 <!-- Google Takeout -->	
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app306">	
 		<div class="menuIconImage">
-			<a href="https://takeout.google.com/transfer" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app306');">
+			<a href="https://takeout.google.com/" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app306');">
 			<img src="StaffRoom/includes/img/gtakeout-off.png" class="img-swap menuImage" border=0 title="Google Takeout">
 			</a>
 		</div>	
