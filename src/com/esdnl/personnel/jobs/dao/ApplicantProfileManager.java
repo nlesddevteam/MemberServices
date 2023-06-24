@@ -1282,7 +1282,7 @@ public class ApplicantProfileManager {
 					"        SELECT ad.unit_time,rec.emp_status,ad.location_id,rec.comp_num rcnum,rec.offer_accepted_date,rec.candidate_id,ad.job_type\r\n" + 
 					"        FROM AWSD_USER.JOB_APPL_REC rec\r\n" + 
 					"        JOIN AWSD_USER.JOB_AD_REQUEST ad on REC.COMP_NUM = ad.COMP_NUM \r\n" + 
-					"        join(SELECT max(RECOMMENDATION_ID) mrecid,candidate_id msin from AWSD_USER.JOB_APPL_REC group by candidate_id) lrec on rec.recommendation_id = lrec.mrecid\r\n" + 
+					"        join(SELECT max(RECOMMENDATION_ID) mrecid,candidate_id msin from AWSD_USER.JOB_APPL_REC where rec_status=4 group by candidate_id) lrec on rec.recommendation_id = lrec.mrecid\r\n" + 
 					"    where TRUNC(rec.OFFER_ACCEPTED_DATE) >= TRUNC(SYSDATE-273) AND (ad.END_DATE IS NULL OR ad.END_DATE >= SYSDATE))\r\n" + 
 					"        where CANDIDATE_ID in (select SIN from JOB_APPLICANT WHERE COMP_NUM='" + params.getJob().getCompetitionNumber() + "')\r\n" + 
 					"    ) recs on APPLICANT.SIN =recs.CANDIDATE_ID ");
