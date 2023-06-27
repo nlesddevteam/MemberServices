@@ -23,7 +23,9 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
 <div class="siteBodyTextBlack">
 <div class="siteHeaderGreen">Add Banner</div>
-Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
+Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format. 
+Setting a banner as DISABLED overrides all display options and prevent the banner from being displayed. 
+The Repeat option will override the start and end dates and display the banner live upon adding and will remain on display until manually DISABLED.
 <br/><br/>
     <form id="pol_cat_frm" action="addNewBanner.html" method="post" ENCTYPE="multipart/form-data" class="was-validated"  autocomplete="off">
       <input type="hidden" id="op" name="op" value="CONFIRM">
@@ -48,7 +50,7 @@ Banner file MUST BE 900 x 200 pixels in size and a PNG or JPG format.
 		      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			      <b>Status:</b><br/>
 			      	<select NAME="banner_status" ID="banner_status" class="form-control" required>
-			       	<option value="1" selected>ACTIVE</option>
+			       	<option value="1" selected>ENABLED</option>
 			      	<option value="0">DISABLED</option>
 			      	</select>
 		      </div>

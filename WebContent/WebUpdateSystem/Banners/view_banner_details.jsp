@@ -10,6 +10,10 @@
 <%
   User usr = (User) session.getAttribute("usr");
 %>
+
+<c:set var="now" value="<%=new java.util.Date()%>" /> 								
+<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate" />
+
 <html>
 
 	<head>
@@ -58,7 +62,7 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
 		      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			      <b>Status:</b><br/>
 			      	<select NAME="banner_status" ID="banner_status" class="form-control" required>
-			       	<option value="1" ${ banner.bannerStatus eq "1" ? "SELECTED" : "" }>ACTIVE</option>
+			       	<option value="1" ${ banner.bannerStatus eq "1" ? "SELECTED" : "" }>ENABLED</option>
 			      	<option value="0" ${ banner.bannerStatus eq "0" ? "SELECTED" : "" }>DISABLED</option>
 			      	</select>
 		      </div>
