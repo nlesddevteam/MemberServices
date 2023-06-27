@@ -11,6 +11,9 @@
   User usr = (User) session.getAttribute("usr");
 %>
 
+<c:set var="now" value="<%=new java.util.Date()%>" /> 								
+<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate" />
+
 <html>
 
 	<head>
@@ -69,7 +72,9 @@
 </div>		
 
 <div style="display:none;" class="loadPage"> 
-   Below are the banners currently displayed or timed to display based on date. Banner will display based on start date and be hidden on main page after the end date. You can override this by disabling the banner at any time.
+   Below are the banners currently displayed or timed to display based on date. 
+   Banner will display based on start date and be hidden on main page after the end date. 
+   You can override this by disabling the banner at any time. If a banner will no longer be used again, it is recommended that it be deleted.
   <br/><br/>
                       <div align="center">
 					<a class="btn btn-sm btn-primary" href="addNewBanner.html" onclick="loadingData();">Add Banner</a>&nbsp;					
@@ -83,7 +88,7 @@
 					<tr>
 						<th>BANNER</th>						
 						<th>ORDER</th>		
-						<th>DATE DISPLAY</th>	
+						<th>DISPLAY PERIOD</th>	
 						<th>REPEAT?</th>					
 						<th>STATUS</th>																
 						<th>OPTIONS</th>
@@ -102,9 +107,14 @@
 								</c:choose>
 								<td style="text-align:center;">${g.bStartDate eq null? 'N/A': g.bStartDateFormatted } to ${g.bEndDate eq null? 'N/A': g.bEndDateFormatted}</td>
 								<td style="text-align:center;">${g.bRepeat eq null?"<span style='color:Silver;'>N/A</span>":g.bRepeat eq "N"? "<span style='color:Red;'>NO</span>":"<span style='color:Green;'>YES</span>"}</td>								
+								<fmt:formatDate value="${g.bStartDate}" pattern="yyyyMMdd" var="theStartDate" />
+								<fmt:formatDate value="${g.bEndDate}" pattern="yyyyMMdd" var="theEndDate" />
+								
 								<c:choose>
-								<c:when test="${g.bannerStatus eq '0'}"><td style="text-align:center;color:white;background-color:Red;">DISABLED</td></c:when>
-								<c:when test="${g.bannerStatus eq '1'}"><td style="text-align:center;color:white;background-color:Green;">ACTIVE</td></c:when>
+								<c:when test="${g.bannerStatus eq '0'}"><td style="vertical-align:middle;text-align:center;color:white;background-color:Red;"><b>DISABLED</b><br/>Banner Disabled.</td></c:when>
+								<c:when test="${g.bannerStatus eq '1' and nowDate ge theStartDate and nowDate le theEndDate}"><td style="vertical-align:middle;text-align:center;color:white;background-color:Green;"><b>CURRENTLY ACTIVE/DISPLAYING</b><br/>Display period is active.</td></c:when>
+								<c:when test="${g.bannerStatus eq '1' and nowDate lt theStartDate}"><td style="vertical-align:middle;text-align:center;color:white;background-color:Blue;"><b>PENDING DISPLAY</b><br/>Awaiting display start date of ${g.bStartDateFormatted}.</td></c:when>
+								<c:when test="${g.bannerStatus eq '1' and nowDate gt theEndDate}"><td style="vertical-align:middle;text-align:center;color:black;background-color:yellow;"><b>EXPIRED</b><br/>Display date of ${g.bEndDateFormatted} has passed.</td></c:when>
 								<c:otherwise><td style="text-align:center;color:Silver;">N/A</td></c:otherwise>
 								</c:choose>
 								
