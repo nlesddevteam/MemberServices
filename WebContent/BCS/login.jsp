@@ -73,10 +73,8 @@
 										
 						<div id="printJob">
 							<div id="pageContentBody" style="width:100%;">
-							<div class="alert alert-success" id="body_success_message_top" style="margin-top:10px;margin-bottom:10px;padding:5px;">
-								Site is Currently Down for End of Year Maintenance. The District will advise all Contractors by email when the system is back up and running
-							</div>
-							<div style="margin-top:10px;float:right;width:25%;min-width:300px;padding-left:10px;padding-right:10px;border:1px dotted #007F01;margin-bottom:5px;background-color:#FFFFE0;display:none;">
+							
+							<div style="margin-top:10px;float:right;width:25%;min-width:300px;padding-left:10px;padding-right:10px;border:1px dotted #007F01;margin-bottom:5px;background-color:#FFFFE0;">
     <form class="form-signin" id="form-signin" action="contractorSubmitLogin.html" method='POST'>       
       	<div class="BCSHeaderText">Operator Login</div>
       	<input type="text" class="form-control" name="username" id="username" placeholder="Enter your Email Address" required autofocus />      	
