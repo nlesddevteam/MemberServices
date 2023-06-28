@@ -15,8 +15,8 @@
 <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 <%
 
-	//BussingContractorBean bcbean = (BussingContractorBean) session.getAttribute("CONTRACTOR");
-	session.setAttribute("CONTRACTOR",null) ;
+	BussingContractorBean bcbean = (BussingContractorBean) session.getAttribute("CONTRACTOR");
+	
 
 %>
 <script src="includes/js/menu.js"></script>
