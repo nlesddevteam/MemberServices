@@ -27,28 +27,15 @@
 
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta charset="utf-8">
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="/MemberServices/includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="includes/css/ms.css" rel="stylesheet" type="text/css">				
-			<script src="/MemberServices/includes/js/jquery-1.9.1.js"></script>
-			<script src="/MemberServices/includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="/MemberServices/includes/js/common.js"></script>
-		
-		
-		
+  
+  
+  <style>
+  	input {border: 1px solid silver;}
+		.btn-group {float:left;}	
+  
+  </style>
 		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
-		});
-			
-		
-	</script>
-<script type="text/javascript">
-			$('document').ready(function(){
-				$('tr.datalist:odd').css('background-color', '#E0E0E0');
-			});
+	
 			function checkfiles()
 			{
 				var checkboxes = [];
@@ -68,55 +55,92 @@
 				$("#strfileids").val(strids);
 				
 			}
+			
+			$(document).ready(function() {
+				
+			
+			$(".payrollFilesTable").DataTable({ 					
+				  "order": [[ 1, "asc" ]],				   
+				  dom: 'Blfrtip',
+			        buttons: [			        	
+			        	//'colvis',
+			        	//'copy', 
+			        	//'csv', 
+			        	'excel', 
+			        	{
+			                extend: 'pdfHtml5',
+			                footer:true,
+			                //orientation: 'landscape',
+			               messageTop: 'PayAdvice System',
+			                messageBottom: null,
+			                exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4, 5 ]
+			                }
+			            },
+			        	{
+			                extend: 'print',
+			                //orientation: 'landscape',
+			                footer:true,
+			                messageTop: 'PayAdvice System',
+			                messageBottom: null,
+			                exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4, 5]
+			                }
+			            }
+			        ],
+			        
+			        "columnDefs": [
+						 {
+				             "targets": [0,6],			               
+				                "sortable": false,
+				                "visible": true,
+				            },
+				        ],
+				  "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "All"]]							
+			}); 
+			
+			});
+			
+			
 		</script>
 
 	
 	</head>
 
 	<body>
-	<br/>
-  <div class="mainContainer">
+	 <div class="row pageBottomSpace">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+<div class="siteBodyTextBlack">
+<jsp:include page="menu.jsp" />
+<div class="siteHeaderGreen">Unprocessed Payroll Files</div>
 
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Logged in as <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="/MemberServices/includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
-			<div class="col full_block content">
-				<div class="bodyText">	
-				<jsp:include page="menu.jsp" />
-				<br/><div align="center"><img src="/MemberServices/includes/img/bar.png" width=99% height=1></div><br/>	
-				<div class="pageHeader" align="center">Unprocessed Payroll Files</div>
-			<p>
+
+	
+	
 	
 		<form onsubmit="checkfiles();" action="processNLESDPayrollDocument.html">	
 		<input type='hidden' id='strfileids' name='strfileids'>
 		
 									
-									
-									
-								<c:if test="${msg ne null}">
-                					<p class="messageText" style="padding-top:8px;padding-bottom:8px;text-align:center;">${msg}</p>
-                				</c:if>
-								<table align="center" class="payrollFilesTable">
-									<tr class="header">
-										<th class="checkBox"></th>
-										<th class="fileName">File Name</th>
-										<th class="fileUp">Uploaded</th>
-										<th class="fileUpBy">Uploaded By</th>
-										<th class="fileNotes">Notes</th>
-										<th class="fileType">Type</th>
-										<th class="fileDel">Del</th>
+    				
+                				
+                				<table class="payrollFilesTable table table-sm table-border table-striped" style="font-size:11px;">	
+                				<thead class="thead-dark">							
+									<tr>
+										<th>CHK</th>
+										<th>FILE NAME</th>
+										<th>UPLOADED</th>
+										<th>UPLOADED BY</th>
+										<th>NOTES</th>
+										<th>TYPE</th>
+										<th>OPTIONS</th>
 									</tr>
+								</thead>	
+								<tbody>
 								<c:choose>
 	                                  	<c:when test='${fn:length(documents) gt 0}'>
                                   		<c:forEach items='${documents}' var='g'>
-                                  			<tr class="datalist">
+                                  			<tr>
                                   			<c:choose>
                                   			<c:when test="${g.documentType == 'Payroll Data'}">
                                   				<td><input type='checkbox' id='${g.documentId}'></td>
@@ -134,7 +158,7 @@
 		                                    <c:choose>
                                   			<c:when test="${g.documentType == 'Payroll Data'}">
                                   			<td>
-		                                      <a onclick="return confirm('Are you sure you want to DELETE these documents?');" href='deleteNLESDPayrollDocument.html?fn=${g.filename}&fid=${g.documentId}'><img src="includes/img/delete.png" border=0></a>
+		                                      <a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to DELETE these documents?');loadingData();" href='deleteNLESDPayrollDocument.html?fn=${g.filename}&fid=${g.documentId}'>DEL</a>
 		                                      </td>
 		                                    </c:when>
                                   			<c:otherwise>
@@ -145,27 +169,32 @@
                                   		</c:forEach>
                                   		</c:when>
 										<c:otherwise>
-											<tr><td colspan='5'>No unprocessed documents found.</td></tr>
+											<tr>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											</tr>
+											<script>
+											$(".msgERR").append("<b>NOTE:</b> No unprocessed documents found.").css("display","block");
+											</script>
 										</c:otherwise>
 									</c:choose>
+								</tbody>
 								</table>
 								<p>
-								<div align="center"><input type='Submit' value='Process Files'></div>
+								<div align="center" class="no-print"><input type='Submit' value='Process Files' class="btn btn-sm btn-danger"></div>
 		
 		</form>
-								
-	</div>
-</div>
-			</div>
-
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../navigate.jsp" title="Back to MemberServices Main Menu"><img src="/MemberServices/includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
-</div>
+				
+	
+  </div>
+  </div>
+  </div>   
   
-<br/>
-    
   </body>
 
 </html>				

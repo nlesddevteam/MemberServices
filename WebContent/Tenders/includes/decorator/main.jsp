@@ -119,7 +119,8 @@
 	</head>
 
 	<body>			
-			
+	
+    <jsp:include page="/StaffRoom/includes/topmenu.jsp" />		
 	<!-- Get the loading data animation ready, in front and hidden -->
 	<div id="loadingSpinner" style="display:none;z-index:99999;"><div id="spinner"><img src="/MemberServices/Tenders/includes/img/tenderanimated.gif" width="300" border=0><br/>Loading data, please wait...</div></div>
 	
@@ -146,6 +147,13 @@
                   			</c:if>  
 				 		
 				 		<br/><br/>
+				 		
+				 		<div class="alert alert-warning" style="text-align:center;"><b>NOTICE:</b> Tenders are now posted via the MERX system. Please click on the links below for more information.<br/><br/>
+				 		
+				 		<a class="btn btn-primary btn-sm" href="http://www.merx.com/newfoundlandlabradorenglishschooldistrict" target="_blank">NLESD TENDERS</a> 
+				 		<a class="btn btn-primary btn-sm" href="/business/" target="_blank">BUSINESS WITH NLESD</a> 
+				 		</div>
+				 		
 				 		 Welcome to the Tender posting/review system. Current list of ${todayYear} tenders and options are listed below. Archived tenders for ${todayYear -1} and previous can be found under the Archived options.
 				 			
 				 			<div class="menuFooter">

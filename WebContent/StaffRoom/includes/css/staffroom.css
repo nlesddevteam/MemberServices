@@ -155,9 +155,13 @@ body.grayscale {
 .regionStyle {padding:0px 0px 0px 0px;float:left;width:20%;}
 
 
-/*Fix Bootsrap 4 missing stuff! */
 
-.btn-group-xs > .btn, .btn-xs { padding: .25rem .25rem; text-transform:uppercase; margin:2px; font-size: .65rem; line-height: .3; border-radius: .2rem;}
+/* MAIN STAFFROOM HEADER MENU */
+.srTopMenu {z-index:500;position:fixed;top:0;left:0;padding-top:2px;text-align:center;width:100%;white-space: nowrap;height:32px;background-color: rgba(31, 66, 121, 0.9);}
+.btn-group-xs > .btn, .btn-xs { padding: .25rem .25rem; text-transform:uppercase; margin:2px; font-size: .75rem; line-height: 1; border-radius: .2rem;}
+.mainContainer {margin-top:32px;}
+
+
 p {margin-top: 10px;margin-bottom: 10px;}
 
 .btn-pos-left {float:left;margin-left:5px;}
@@ -234,7 +238,7 @@ a.dropdown-item {font-size:12px;}
 .topLogoImg {width:100%;}
 .topAddress {font-size:12px;float:left;margin-top:5px;padding-left:10px;border-left:1px solid silver;}
 .nav-link {font-size:12px;}
-.navbar {background-color: rgba(31, 66, 121, 0.9);color: white; z-index:999;}
+.navbar {background-color: rgba(31, 66, 121, 0.8);color: white; z-index:999;}
 .navbar-img {width:100%;max-width:37px;min-width:30px;padding:0px;margin:0px;}
 .sticky-offset {top: 16px;}
 .dropdown-item {padding:.1rem 1.25rem .1rem;}
@@ -252,9 +256,7 @@ a.dropdown-item {font-size:12px;}
 
 
 /* FOOTER CONTENT */
-.mainFooter {position: fixed; left:0px; bottom: 0px; width: 100%;padding-top:1px;padding-bottom:2px; border-top:1px solid white; background-color: rgba(31, 66, 121, 0.9);color: white;text-align: center; font-size:10px;}
-
-
+.mainFooter {position: fixed; left:0px; bottom: 0px; width: 100%;padding-top:1px;padding-bottom:2px; border-top:1px solid white; background-color: rgba(31, 66, 121, 0.8);color: white;text-align: center; font-size:10px;}
 
 .showMenu:hover  ~ .hideMenu {display:block;z-index:999;}
 a.footerMenu { font-size:11px; color:#FFFFFF;  text-decoration: none;}

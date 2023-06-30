@@ -437,9 +437,9 @@ If this event is for a particular Family of Schools, select the Family from the 
 </div>
 
 <div id="adgendarowfileinput">                        
-	<div class="formTitle">AGENDA:</div>
+	<div class="formTitle">AGENDA: (PDF or DOC Only)</div>
 	<div class="formBody">	
-	<input type="file" name="agendafile"  class="form-control" title="Please Enter your agenda file." />
+	<input type="file" name="agendafile"  class="form-control" title="Please Enter your agenda file." accept=".doc,.docx,.pdf"/>
 	</div>   								
 </div>     
              

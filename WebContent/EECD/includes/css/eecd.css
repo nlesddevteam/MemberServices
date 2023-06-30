@@ -60,7 +60,9 @@ input { border:1px solid silver;}
 .regionStyle {padding:0px 0px 0px 0px;float:left;width:25%;}
 
 
-
+/* MAIN STAFFROOM HEADER MENU */
+.srTopMenu {z-index:500;position:fixed;top:0;left:0;padding-top:2px;text-align:center;width:100%;white-space: nowrap;height:32px;background-color: rgba(31, 66, 121, 0.9);}
+.mainContainer {margin-top:32px;}
 
 
 /* FOOTER CONTENT */

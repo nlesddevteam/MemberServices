@@ -36,14 +36,12 @@
 <c:set var='zones' value='<%=zones%>' />
 <c:set var='statuses' value='<%=statuses%>' />
 
+
 <html>
   <head>
  
     <title>School Status -  Global Admin</title>
-    <!-- HAVE TO LOAD THESE HERE AS THEY WILL NOT WORK USING DECORATOR LOAD for date-->
-     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>   
+  
     <script>
     	$('document').ready(function(){
     		
@@ -117,11 +115,17 @@ This will take a few moments!
 
 <div style="display:none;border:0px" class="loadPage"> 
   
-  <div align="center">       
-       <a class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp">Back to Administration</a>
-       </div>
+  Here on this page you are a global administrator for either all or a select list of schools. Schools are listed by provincial regions and zones.
+  
+  
   <br/><br/>
-    <form name="schoolstatus" method="post" action="updateRegionalizedSchoolClosureStatus.html">
+  <div class="alert alert-info">
+	<b>PLEASE NOTE:</b> Live Updates to school status are delayed up to 5 minutes after you submit your change here. 
+	Please wait 5 minutes to reload/refresh the NLESD school status web site to see your changes. If your change does not display within 30 minutes, please contact support.
+	</div>
+ Click on the select area header to open the list of school for that area of the province. Each provincial area has schools broken down again into area zones, then by systems. 
+   <br/><br/>
+      <form name="schoolstatus" method="post" action="updateRegionalizedSchoolClosureStatus.html">
 
 
 
@@ -157,7 +161,7 @@ This will take a few moments!
 <div class="card-header ${regionColor}">
 <div style="font-size:18px;font-weight:bold;text-transform:Capitalize;">
 
-<a class="card-link card<%=cntR%>" data-toggle="collapse" href="#collapseR<%=cntR%>"><span id="icon<%=cntR%>"><i class='fas fa-folder'></i></span> ${zentry.key.zoneName} Region Schools</a>
+<a class="card-link card<%=cntR%>" data-toggle="collapse" href="#collapseR<%=cntR%>"><span id="icon<%=cntR%>"><i class='fas fa-folder'></i></span> ${zentry.key.zoneName} Area Schools</a>
 
 </div>
 
@@ -180,7 +184,7 @@ This will take a few moments!
  <div class="card-body">
 			   
 		                	<input zone-id='${zentry.key.zoneId}' class='chk-zone-id' type="checkbox" id="zone-id-${zentry.key.zoneId}" name="zone-id-${zentry.key.zoneId}" />
-		                	<span style="text-transform:Capitalize;">Set Status for All ${zentry.key.zoneName} Regional Schools</span>
+		                	<span style="text-transform:Capitalize;">Set Status for All ${zentry.key.zoneName} Area Schools</span>
 		                	   <br/><br/>
 		                	        <div id='zone-status-${zentry.key.zoneId}' style='display:none;'>
 		                			<select id='lst-zone-status-${zentry.key.zoneId}' name='lst-zone-status-${zentry.key.zoneId}' class='form-control form-control-sm' required>
@@ -216,13 +220,13 @@ This will take a few moments!
 			                	  <div class="card">           
 			                	<div class="card-header">
 									<div style="font-size:14px;font-weight:bold;text-transform:Capitalize;">
-									<a class="card-link" data-toggle="collapse" href="#collapse<%=cnt%>">${entry.key.name} Zone Schools</a>
+									<a class="card-link" data-toggle="collapse" href="#collapse<%=cnt%>">${entry.key.name} Schools</a>
 									</div>		
 									</div>
 									<div id="collapse<%=cnt%>" class="collapse" data-parent="#accordionZone">
 									<div class="card-body">               		
 				                	<input region-id='${entry.key.id}' class='chk-region-id' type="checkbox" id="region-id-${entry.key.id}" name="region-id-${entry.key.id}" />
-				                	<span style="text-transform:Capitalize;">Set Status for All ${entry.key.name} Zone Schools</span>
+				                	<span style="text-transform:Capitalize;">Set Status for All ${entry.key.name} Schools</span>
 				                	<br/>
 				                	<div id='region-status-${entry.key.id}' style='display:none;'>		
 				                					<br/><b>Status:</b>		                				
@@ -369,14 +373,16 @@ This will take a few moments!
 							<br/>
 							</c:forEach>
       </div>
-      
 
+<br/><br/>
 <!-- ALL PROVINCIAL SCHOOLS -->
 <div class="card">
-<div class="card-header bgcolor5">
-<div style="font-size:18px;font-weight:bold;text-transform:Capitalize;">Provincial School System</div>
+<div class="card-header bg-danger" style="color:White;">
+<div style="font-size:18px;font-weight:bold;text-transform:Capitalize;"><i class="fa-solid fa-shield-exclamation"></i> SET ALL PROVINCIAL SCHOOLS</div>
 </div>
 <div class="card-body">
+
+This will set ALL provincial schools to the status you set below. <br/><br/>
 <input zone-id='99' class='chk-zone-id' type="checkbox" id="zone-id-99" name="zone-id-99" />	 All Provincial Schools
 		           							
 		           			<div id='zone-status-99' style='padding-left: 25px;display:none;'>
@@ -412,8 +418,8 @@ This will take a few moments!
 <br/><br/>
       
        <div align="center">
-       <input id='btnApply' class="btn btn-sm btn-primary" type='button' value='Apply Changes' onclick="loadingData();"/> &nbsp;
-       <a class="btn btn-sm btn-danger" href="/MemberServices/navigate.jsp" onclick="loadingData();">Back to Administration</a>
+       <input id='btnApply' class="btn btn-sm btn-primary" type='button' value='Apply Changes' /> &nbsp;
+       <a class="btn btn-sm btn-danger" href="/MemberServices/memberServices.html">Back to MS</a>
        </div>
        
   	</form>    

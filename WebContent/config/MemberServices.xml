@@ -50,6 +50,9 @@
   <Persistent-Mail-Service-Config>
   	<Service-Status>OFF</Service-Status>
   </Persistent-Mail-Service-Config>
+  
+  
+  
   <Request-Handlers>
     <Request-Handler>
       <Request-Handler-Class>com.awsd.pdreg.handler.ViewDistrictCalendarRequestHandler</Request-Handler-Class>
@@ -430,15 +433,15 @@
     			
     			<Request-Handler>
 			      <Request-Handler-Class>com.awsd.weather.handler.MSViewWeatherCentralPrincipalAdminRequestHandler</Request-Handler-Class>
-			      <URL-Pattern>/SchoolStatus/viewWeatherCentralAdmin.html</URL-Pattern>
+			      <URL-Pattern>/Administration/SchoolStatus/viewWeatherCentralAdmin.html</URL-Pattern>
 			    </Request-Handler>
 			    <Request-Handler>
 			      <Request-Handler-Class>com.awsd.weather.handler.MSUpdateSchoolSystemStatusRequestHandler</Request-Handler-Class>
-			      <URL-Pattern>/SchoolStatus/updateSchoolClosureStatus.html</URL-Pattern>
+			      <URL-Pattern>/Administration/SchoolStatus/updateSchoolClosureStatus.html</URL-Pattern>
 			    </Request-Handler>
 			    <Request-Handler>
 			      <Request-Handler-Class>com.awsd.weather.handler.MSUserUpdateRegionalizedSchoolSystemStatusRequestHandler</Request-Handler-Class>
-			      <URL-Pattern>/SchoolStatus/updateRegionalizedSchoolClosureStatus.html</URL-Pattern>
+			      <URL-Pattern>/Administration/SchoolStatus/updateRegionalizedSchoolClosureStatus.html</URL-Pattern>
 			    </Request-Handler>
 			    
 	<!-- APP LOGIN ON START  -->		    

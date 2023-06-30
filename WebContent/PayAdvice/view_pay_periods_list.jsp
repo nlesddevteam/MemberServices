@@ -27,106 +27,110 @@
 
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta charset="utf-8">
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="/MemberServices/includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="includes/css/ms.css" rel="stylesheet" type="text/css">				
-			<script src="/MemberServices/includes/js/jquery-1.9.1.js"></script>
-			<script src="/MemberServices/includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="/MemberServices/includes/js/common.js"></script>		
+    
+      <style>
+  	input {border: 1px solid silver;}
+		.btn-group {float:left;}	
+  
+  </style>	
+    
+   <script>
+	$(document).ready(function() {
 		
-		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
+		
+		$(".payrollPeriodsTable").DataTable({ 					
+			  "order": [[ 0, "desc" ]],			  
+			  dom: 'Blfrtip',
+		        buttons: [			        	
+		        	//'colvis',
+		        	//'copy', 
+		        	//'csv', 
+		        	'excel', 
+		        	{
+		                extend: 'pdfHtml5',
+		                footer:true,
+		                //orientation: 'landscape',
+		                messageTop: 'PayAdvice System',
+		                messageBottom: null,
+		                exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4]
+		                }
+		            },
+		        	{
+		                extend: 'print',
+		                //orientation: 'landscape',
+		                footer:true,
+		                messageTop: 'PayAdvice System',
+		                messageBottom: null,
+		                exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4]
+		                }
+		            }
+		        ],		        
+		        
+			  "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "All"]]							
+		}); 
+		
 		});
-			
-		
-	</script>
-<script type="text/javascript">
-			$('document').ready(function(){
-				$('tr.datalist:odd').css('background-color', '#E0E0E0');
-			});
-		</script>
+  	
+  	</script>	
 	
 	</head>
 
 	<body>
-	<br/>
-  <div class="mainContainer">
-
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Logged in as <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="/MemberServices/includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
-			<div class="col full_block content">
-				<div class="bodyText">	
-			<jsp:include page="menu.jsp" />
-				<br/><div align="center"><img src="/MemberServices/includes/img/bar.png" width=99% height=1></div><br/>	
-				<div class="pageHeader" align="center">View Pay Periods</div>
-			<p>	
-			
-
-<span class="messageText">
-									<%if(request.getAttribute("msg")!=null){%>
-										<%=(String)request.getAttribute("msg")%>
-                             		 <%} %>   
-									</span>
+	<div class="row pageBottomSpace">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+<div class="siteBodyTextBlack">
+<jsp:include page="menu.jsp" />
+<div class="siteHeaderGreen">View Pay Periods</div>
+	
 									
 									
-									
-<table align="center" class="payrollPeriodsTable">
-									<tr class="header ">
-										<th class="startP">Start</th>
-										<th class="endP">End</th>
-										<th class="statImp">Import Status</th>
-										<th class="stubStat">Stub &amp; Email Status</th>
-										<th class="perStat">Period Status</th>
-										<th class="perDetails">View</th>
+<table align="center" class="payrollPeriodsTable table table-small" style="font-size:12px;width:100%;">
+									<thead class="thead-dark">
+									<tr>
+										<th>START</th>
+										<th>END</th>
+										<th>IMPORT STATUS</th>
+										<th>STUB &amp; EMAIL STATUS</th>
+										<th>PERIOD STATUS</th>
+										<th>OPTIONS</th>
 									</tr>
-																		<c:choose>
+									</thead>
+									<tbody>
+									<c:choose>
 	                                  	<c:when test='${fn:length(periods) gt 0}'>
                                   		<c:forEach items='${periods}' var='g'>
-                                  			<tr class='datalist'>
-                                  			
-                                  			<td>${g.bgDate}</td>
+                                  			<tr>                                  			
+                                  			  <td>${g.bgDate}</td>
 		                                      <td>${g.endDate}</td>
 		                                      <td>${g.importStatus}</td>
 		                                      <td>${g.stubCreationStatus}</td>
 		                                      <td>${g.closedStatus}</td>
-		                                      
 		                                      <td>
-		                                      <a title="View Details" class="small" href='viewNLESDPayAdvicePayPeriodDetails.html?id=${g.payGroupId}'><img src='includes/img/details.png' border='0'></a>
+		                                      <a title="View Details" class="btn btn-xs btn-primary" href='viewNLESDPayAdvicePayPeriodDetails.html?id=${g.payGroupId}'>VIEW</a>
 		                                      </td>
 		                                      </tr>
                                   		</c:forEach>
                                   		</c:when>
 										<c:otherwise>
-											<tr><td colspan='6'>No Pay Periods found.</td></tr>
+											<tr>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>
+											<td>N/A</td>											
+											</tr>
+											<script>
+											$(".msgERR").append("<b>NOTE:</b> No pay periods found/listed.").css("display","block");
+											</script>
 										</c:otherwise>
 									</c:choose>
+								</tbody>	
 								</table>
 					
-<br/>
-					
-	</div>
-</div>
-			</div>
 
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../navigate.jsp" title="Back to MemberServices Main Menu"><img src="/MemberServices/includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
-</div>
-  
-<br/>
-    
+   </div></div></div> 
   </body>
 
 </html>												

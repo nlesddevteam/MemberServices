@@ -28,28 +28,9 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta charset="utf-8">
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="/MemberServices/includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="includes/css/ms.css" rel="stylesheet" type="text/css">				
-			<script src="/MemberServices/includes/js/jquery-1.9.1.js"></script>
-			<script src="/MemberServices/includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="/MemberServices/includes/js/common.js"></script>		
-		
-		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
-		});
 			
+		<script>
 		
-	</script>
-<script type="text/javascript">
-			$('document').ready(function(){
-				$('tr.datalist:odd').css('background-color', '#E0E0E0');
-			});
-		</script>
-		
-		<script type="text/javascript">
 		$(document).ready(function() {
 			setOptions(); // on load
 		    $('#searchby').change(setOptions); // on change
@@ -74,13 +55,14 @@
 		            }
 		    } 
 		});
-		</script>
-		<script type="text/javascript">
+		
 
 			function search()
 			{
 				cleartable();
+				$(".payrollSearchTable").DataTable().clear().destroy();
 				ajaxRequestInfo();
+								
 			}
 			function cleartable()
 			{
@@ -105,51 +87,92 @@
 			 				}, 
 			 				success: function(xml){
 			 					var i=1;
+			 					var newrow="";
 			 					$(xml).find('EMPLOYEE').each(function(){
 			 							
 			 							if($(this).find("MESSAGE").text() == "LISTFOUND")
 			 								{
 			 								
-			 									var color="FFFFFF";
-			 									if(i % 2 == 0){
-			 										color="#E0E0E0";
-			 									}
-												var newrow="<tr style='background-color:" + color + ";'>";
-			                                    newrow += "<td class='displayText'>" + $(this).find("EMPNAME").text() + "</td>";
-			                                    newrow += "<td class='displayText'>" + $(this).find("SCHOOL").text() + "</td>";
-			                                    newrow += "<td class='displayText'>" + $(this).find("SIN").text() + "</td>";
-			                                    newrow += "<td class='displayText'>" + $(this).find("ID").text() +"</td>";
-												newrow += "<td class='displayText' align='center'>";										
-												newrow += "<a title='View Employee' style='text-decoration:none;' "
+			 								
+												newrow +="<tr>";
+			                                    newrow += "<td>" + $(this).find("EMPNAME").text() + "</td>";
+			                                    newrow += "<td>" + $(this).find("SCHOOL").text() + "</td>";
+			                                    newrow += "<td>" + $(this).find("SIN").text() + "</td>";
+			                                    newrow += "<td>" + $(this).find("ID").text() +"</td>";
+												newrow += "<td align='center'>";										
+												newrow += "<a title='View Employee' class='btn btn-xs btn-primary' "
 												newrow += "href='viewNLESDPayAdviceTeacherListAdmin.html?empnumber=" ;
-												newrow +=  $(this).find("ID").text() + "'><img src='includes/img/viewemp.png' border='0'></a></td>";
-												newrow += "<td class='displayText' align='center'>";										
-												newrow += "<a href='#' title='Reset Password' style='text-decoration:none;' ";
-												newrow += " onclick='updatePassword(\"" + $(this).find("ID").text() + "\");'><img src='includes/img/resetpass.png' border='0'></a></td>";
-												newrow += "<td class='displayText' align='center'>";										
-												newrow += "<a href='#' title='Resend Password' style='text-decoration:none;' ";
-												newrow += " onclick='resendPassword(\"" + $(this).find("ID").text() + "\");'><img src='includes/img/resendpass.png' border='0'></a></td></tr>";
+												newrow +=  $(this).find("ID").text() + "'>VIEW</a>";																						
+												newrow += "<a href='#' title='Reset Password' class='btn btn-xs btn-danger' ";
+												newrow += " onclick='updatePassword(\"" + $(this).find("ID").text() + "\");'>RESET PWD</a>";																						
+												newrow += "<a href='#' title='Resend Password' class='btn btn-xs btn-warning' ";
+												newrow += " onclick='resendPassword(\"" + $(this).find("ID").text() + "\");'>RESEND PWD</a></td></tr>";
 												
-												$('table#showlists tr:last').after(newrow);
+												//$('table#showlists tr:last').after(newrow);
 												i=i+1;
 												isvalid=true;
-				                   				
-			 								}else{
-			 									alert($(this).find("MESSAGE").text());
-			 									
+												
+			 								}else{			 									
+			 									 $(".msgERR").css("display","block").append($(this).find("MESSAGE").text()); 
 			 								}
+			 							
 									});
+			 					
+			 					$(".payrollSearchTable tbody").append(newrow);
+			 					
+			 					$(".payrollSearchTable").DataTable({ 					
+									  "order": [[ 0, "asc" ]],
+									   "responsive": true,
+									  dom: 'Blfrtip',
+								        buttons: [			        	
+								        	//'colvis',
+								        	//'copy', 
+								        	//'csv', 
+								        	'excel', 
+								        	{
+								                extend: 'pdfHtml5',
+								                footer:true,
+								                //orientation: 'landscape',
+								                messageTop: 'PayAdvice System',
+								                messageBottom: null,
+								                exportOptions: {
+								                    columns: [ 0, 1, 2, 3 ]
+								                }
+								            },
+								        	{
+								                extend: 'print',
+								                //orientation: 'landscape',
+								                footer:true,
+								                messageTop: 'PayAdvice System',
+								                messageBottom: null,
+								                exportOptions: {
+								                    columns: [ 0, 1, 2, 3]
+								                }
+								            }
+								        ],
+								        
+								        "columnDefs": [
+											 {
+									             "targets": [4],			               
+									                "sortable": false,
+									                "visible": true,
+									            },
+									        ],
+									  "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "All"]]							
+								}); 
+			 					
 								},
 			 				  error: function(xhr, textStatus, error){
-			 				      alert(xhr.statusText);
-			 				      alert(textStatus);
-			 				      alert(error);
+			 					 $(".msgERR").css("display","block").append(xhr.statusText); 
+			 					 $(".msgERR").css("display","block").append(textStatus); 
+			 					 $(".msgERR").css("display","block").append(error); 
 			 				  },
 			 				dataType: "text",
 			 				async: false
 			 			}
 			 		);
 				return isvalid;
+				
 				}
 			function updatePassword(testing)
 			{
@@ -168,20 +191,18 @@
 			 							
 			 							if($(this).find("MESSAGE").text() == "SUCCESS")
 			 								{
-			 								
-			 									alert("Password has been reset and email sent");
+			 								$(".msgOK").css("display","block").append("SUCCESS: Password has been reset and email sent."); 			 									
 												isvalid=true;
 				                   				
 			 								}else{
-			 									alert($(this).find("MESSAGE").text());
-			 									
+			 									$(".msgERR").css("display","block").append($(this).find("MESSAGE").text()); 
 			 								}
 									});
 								},
 			 				  error: function(xhr, textStatus, error){
-			 				      alert(xhr.statusText);
-			 				      alert(textStatus);
-			 				      alert(error);
+			 					 $(".msgERR").css("display","block").append(xhr.statusText); 
+			 					 $(".msgERR").css("display","block").append(textStatus); 
+			 					 $(".msgERR").css("display","block").append(error); 
 			 				  },
 			 				dataType: "text",
 			 				async: false
@@ -206,21 +227,20 @@
 			 					$(xml).find('EMPLOYEE').each(function(){
 			 							
 			 							if($(this).find("MESSAGE").text() == "SUCCESS")
-			 								{
-			 								
-			 									alert("Password has been resent");
+			 								{	 								
+			 									
+			 									$(".msgOK").css("display","block").append("SUCCESS: Password has been resent."); 
 												isvalid=true;
 				                   				
-			 								}else{
-			 									alert($(this).find("MESSAGE").text());
-			 									
+			 								}else{			 									
+			 									$(".msgERR").css("display","block").append($(this).find("MESSAGE").text()); 
 			 								}
 									});
 								},
 			 				  error: function(xhr, textStatus, error){
-			 				      alert(xhr.statusText);
-			 				      alert(textStatus);
-			 				      alert(error);
+			 					 $(".msgERR").css("display","block").append(xhr.statusText); 
+			 					 $(".msgERR").css("display","block").append(textStatus); 
+			 					 $(".msgERR").css("display","block").append(error); 			 				     
 			 				  },
 			 				dataType: "text",
 			 				async: false
@@ -231,99 +251,83 @@
 			}			
 </script>
 		
+	 <style>
+		input {border: 1px solid silver;}	
+		.dataTables_length,.dt-buttons {float:left;}
+		.choices__list--multiple .choices__item {background-color:#004178;border:1px solid #004178;}
+		td {vertical-align:middle;}
+		</style>
 		
+	
 	
 	</head>
 
 	<body>
-	<br/>
-  <div class="mainContainer">
-
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Logged in as <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="/MemberServices/includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
-			<div class="col full_block content">
-				<div class="bodyText">	
-				<jsp:include page="menu.jsp" />
-				<br/><div align="center"><img src="/MemberServices/includes/img/bar.png" width=99% height=1></div><br/>	
-				<div class="pageHeader" align="center">Search Employees</div>
-			
+<div class="row pageBottomSpace">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+<div class="siteBodyTextBlack">
+<jsp:include page="menu.jsp" />
+<div class="siteHeaderGreen">Search Employees</div>
 		
-<p>
-
-
-		
-	
-	
-	
-	<span class="messageText">
-									<%if(request.getAttribute("msg")!=null){%>
-										<%=(String)request.getAttribute("msg")%>
-                             		 <%} %>   
-									</span>
 									
+Search the PayAdvice system by Employee name, school, or SIN.									
 									
+<hr>					
 									
-		<div class="pageSectionHeader siteSubHeaders">Search by:</div>
-		<div class="pageBody">							
-									
-					 
-										<select id="searchby">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> 
+<b>SEARCH BY:</b><br/>				 
+										<select id="searchby" class="form-control" required>
 										<option value="SELECT">Please Select Search By</option>
-										<option value="NAME">Name</option>
+										<option value="NAME">Employee Name</option>
 										<option value="SCHOOL">School</option>
 										<option value="SIN">SIN</option>
 										</select>
 					
-										
-										<div id="divtext" style="display:none">
-										<p>For:<br/> 
-										<input type="text" id="txtsearch"><br/>
-										</div>
-										<div id="divselect"  style="display:none">
-										<p><select id="school">
-										<option value="SELECT">Select School</option>
-										<c:forEach var="test" items="${list}" >
-
-										<option value="<c:out value='${test}'/>"><c:out value="${test}"/></option>
-										</c:forEach>
-										</select><br/>
-										</div>
-										
-										<p><input type="button" value="Search Employees" onclick="search()"><p>
-		</div>						
+</div>	
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">								
+		<div id="divtext" style="display:none">
+		<b>FOR:</b><br/> 
+		<input type="text" id="txtsearch" class="form-control" placeholder="Enter Name, partial Name, or SIN"><br/>
+		</div>									
+		<div id="divselect"  style="display:none">
+		<b>SELECT SCHOOL:</b><br/>
+		<select id="school" class="form-control">
+		<option value="SELECT">*** Select School ***</option>
+		<c:forEach var="test" items="${list}" >
+		<option value="<c:out value='${test}'/>"><c:out value="${test}"/></option>
+		</c:forEach>
+		</select>
+		</div>
+</div>	
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+&nbsp;<br/>									
+<input type="button" value="SEARCH" class="btn btn-sm btn-primary" onclick="search()">
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">						
 					<br>
-					<table align="center" id="showlists" class="payrollSearchTable">
-					<tr class="header">
-					<th class="searchEmp">EMPLOYEE</th>
-					<th class="searchSch">SCHOOL</th>
-					<th class="searchSin">SIN</th>
-					<th class="searchID">PAYROLL ID</th>
-					<th class="options">View</th>
-					<th class="options">Reset</th>
-					<th class="options">Resend</th>
+					<table align="center" id="showlists" class="payrollSearchTable table table-sm responsive table-striped" style="font-size:12px;width:100%;">
+					<thead class="thead-dark">
+					<tr>
+					<th>EMPLOYEE</th>
+					<th>SCHOOL</th>
+					<th>SIN</th>
+					<th>PAYROLL ID</th>
+					<th>OPTIONS</th>
 					</tr>
-					</table>
+					</thead>
+					<tbody>
 					
-					<br/><br/>
+					</tbody>
+					</table>
+</div>					
+</div> 
 </div>
+</div>		
 </div>
-			</div>
-
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../navigate.jsp" title="Back to MemberServices Main Menu"><img src="/MemberServices/includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
-</div>
-  
-<br/>
     
   </body>
 

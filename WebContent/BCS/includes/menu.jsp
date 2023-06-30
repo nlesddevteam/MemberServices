@@ -54,7 +54,7 @@ if(usr.checkPermission("BCS-VIEW-WESTERN")){
            <li><a href="index.jsp"><i class="fa fa-fw fa-home"></i> Home</a></li>
            <li><a href="#" class="menuBCS" onclick="closeMenu();loadMainDivPage('admimViewSystemDocuments.html');"><i class="fa fa-fw fa-copy"></i> Policies &amp; Procedures</a></li>
            <li><a href="#" class="menuBCS1" title='Print this page (pre-formatted)' onclick="closeMenu();jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png></div><br/><br/>'});"><i class="fa fa-fw fa-print"></i> Print</a></li>
-           <li><a href="/navigate.jsp"><i class="fa fa-fw fa-mail-reply-all"></i> Exit to MS</a></li>
+           <li><a href="/MemberServices/navigate.jsp"><i class="fa fa-fw fa-mail-reply-all"></i> Exit to MS</a></li>
         </ul>
      </li>
      <esd:SecurityAccessRequired permissions="BCS-VIEW-CONTRACTORS">

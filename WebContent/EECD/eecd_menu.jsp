@@ -26,6 +26,6 @@
 <esd:SecurityAccessRequired permissions="EECD-VIEW-ADMIN"> 
 	<a href='#' class="btn btn-xs btn-success" style="color:White;" title="Add New Area" onclick="openaddnewdialog();">+ Add New Area</a> 					 
 </esd:SecurityAccessRequired>  
-
+<a href='/MemberServices/navigate.jsp' class="btn btn-xs btn-danger" style="color:White;" title="Exit">Exit to StaffRoom</a> 	
 </div>
 		 	

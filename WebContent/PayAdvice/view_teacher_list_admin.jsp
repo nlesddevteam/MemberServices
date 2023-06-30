@@ -27,180 +27,166 @@
 
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta charset="utf-8">
-    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		 <link rel="stylesheet" href="/MemberServices/includes/css/jquery-ui-1.10.3.custom.css" >
-		<link href="includes/css/ms.css" rel="stylesheet" type="text/css">				
-			<script src="/MemberServices/includes/js/jquery-1.9.1.js"></script>
-			<script src="/MemberServices/includes/js/jquery-ui-1.10.3.custom.js"></script>
-			<script type="text/javascript" src="/MemberServices/includes/js/common.js"></script>		
-		
-		<script>
-		jQuery(function(){
-	     $(".img-swap").hover(
-	          function(){this.src = this.src.replace("-off","-on");},
-	          function(){this.src = this.src.replace("-on","-off");});
-		});
+    <script>
+  $(document).ready(function() {			
 			
-		
-	</script>
-<script type="text/javascript">
-			$('document').ready(function(){
-				$('tr.datalist:odd').css('background-color', '#E0E0E0');
+			$(".payrollTeacherTable").DataTable({ 					
+				  "order": [[ 0, "asc" ]],			  
+				  dom: 'Blfrtip',
+			        buttons: [			        	
+			        	//'colvis',
+			        	//'copy', 
+			        	//'csv', 
+			        	'excel', 
+			        	{
+			                extend: 'pdfHtml5',
+			                footer:true,
+			                //orientation: 'landscape',
+			                messageTop: 'PayAdvice System',
+			                messageBottom: null,
+			                exportOptions: {
+			                    columns: [ 0, 1, 2, 3]
+			                }
+			            },
+			        	{
+			                extend: 'print',
+			                //orientation: 'landscape',
+			                footer:true,
+			                messageTop: 'PayAdvice System',
+			                messageBottom: null,
+			                exportOptions: {
+			                    columns: [ 0, 1, 2, 3]
+			                }
+			            }
+			        ],		        
+			        
+				  "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "All"]]							
+			}); 
+			
 			});
+		
 		</script>
-	<!-- Add mousewheel plugin (this is optional) -->
-	<script type="text/javascript" src="includes/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
-	<!-- Add fancyBox main JS and CSS files -->
-	<script type="text/javascript" src="includes/fancybox/jquery.fancybox.js?v=2.1.5"></script>
-	<link rel="stylesheet" type="text/css" href="includes/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
-	<!-- Add Button helper (this is optional) -->
-	<link rel="stylesheet" type="text/css" href="includes/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
-	<script type="text/javascript" src="includes/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-	<!-- Add Thumbnail helper (this is optional) -->
-	<link rel="stylesheet" type="text/css" href="includes/fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
-	<script type="text/javascript" src="includes/fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-	<!-- Add Media helper (this is optional) -->
-	<script type="text/javascript" src="includes/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
-	<script type="text/javascript" src="includes/js/changepopup.js"></script>
+	
+	
+	  <style>
+  	input {border: 1px solid silver;}
+		.btn-group {float:left;}	
+  
+  </style>	
 	</head>
 
 	<body>
-	<br/>
-  <div class="mainContainer">
-
-  	   	<div class="section group">
-	   		
-	   		<div class="col full_block topper">
-	   		<div class="toppertextleft">Logged in as <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></div>
-	   		<div class="toppertextright"><script src="/MemberServices/includes/js/date.js"></script></div>	   		
-			</div>
-			
-			<div class="full_block center">
-				<img src="includes/img/header.png" alt="" width="90%" border="0"><br/>				
-			</div>
-			<div class="col full_block content">
-				<div class="bodyText">	
-			<jsp:include page="menu.jsp" />
-				<br/><div align="center"><img src="/MemberServices/includes/img/bar.png" width=99% height=1></div><br/>	
-				<div class="pageHeader" align="center">View Employee Information</div>
-			<p>	
-				
+	<div class="row pageBottomSpace">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+	<div class="siteBodyTextBlack">
+	<jsp:include page="menu.jsp" />
+	<div class="siteHeaderGreen">View Employee Information</div>
 
 
 
-
-<span class="messageText">
-									<%if(request.getAttribute("msg")!=null){%>
-										<%=(String)request.getAttribute("msg")%>
-                             		 <%} %>   
-</span>
-
-
-					<table class="payrollTeacherTable">
-									<tr class="header">
-										<th class="ppname">NAME</th>
-										<th class="ppstart">PAY BEGIN DATE</th>
-										<th class="ppend">PAY END DATE</th>
-										<th class="ppcheck">CHECK DATE</th>
-										<th class="ppdetail">Details</th>
-										<th class="pphistory">History</th>
-										<th class="ppemail">Email</th>
-										
+					<table class="payrollTeacherTable table table-sm" style="width:100%;font-size:12px;">
+							<thead class="thead-dark">
+									<tr>
+										<th>NAME</th>
+										<th>PAY BEGIN DATE</th>
+										<th>PAY END DATE</th>
+										<th>CHECK DATE</th>
+										<th>DETAILS</th>
+										<th>HISTORY</th>
+										<th>EMAIL</th>
 									</tr>
+							</thead>
+							<tbody>
 										<c:choose>
 	                                  	<c:when test='${fn:length(employees) gt 0}'>
                                   		<c:forEach items='${employees}' var='g'>
-                                  			<tr class='datalist'>
-                                  			<td align='left'>${g.empName}</td>
-		                                      <td align='center'>${g.payBgDt}</td>
-		                                      <td align='center'>${g.payEndDt}</td>
-		                                      <td align='center'>${g.checkDt}</td>
-		                                      <td><a title="View Details" href="viewNLESDPayAdviceTestStub.html?id=${g.id}&emp=${g.empNumber}" target="_blank"><img src="includes/img/details.png" border=0></a></td>
+                                  			<tr>
+                                  				<td>${g.empName}</td>
+		                                      	<td>${g.payBgDt}</td>
+		                                     	<td>${g.payEndDt}</td>
+		                                      	<td>${g.checkDt}</td>
+		                                      	<td><a class="btn btn-xs btn-info" title="View Details" href="viewNLESDPayAdviceTestStub.html?id=${g.id}&emp=${g.empNumber}" target="_blank">VIEW</a></td>
 		                                      
 		                                      <c:choose>
 		                                      <c:when test='${g.hisCount gt 0}'>
-		                                      	<td><a title="View History" href="viewNLESDPayAdviceWorkHistory.html?id=${g.id}&emp=${g.empNumber}" target="_blank"><img src="includes/img/history.png" border=0></a></td>
+		                                      	<td><a class="btn btn-xs btn-info" title="View History" href="viewNLESDPayAdviceWorkHistory.html?id=${g.id}&emp=${g.empNumber}" target="_blank">VIEW</a></td>
 		                                       </c:when>
 												<c:otherwise>
 												<td>N/A</td>
 		                                       </c:otherwise>
 												</c:choose>
-												<td>
-												
-												<a class="fancybox" href="#inline1" title="Email Employee Pay Advice Information" onclick="OpenPopUp(${g.id},'${g.empNumber}');"><img src="includes/img/resendpass.png" border=0></a>
+												<td>												
+												<a class="btn btn-xs btn-danger" href="#" title="Email Employee Pay Advice Information" onclick="OpenPopUp(${g.id},'${g.empNumber}');">EMAIL</a>
 												</td>
 		                                      </tr>
                                   		</c:forEach>
                                   		</c:when>
 										<c:otherwise>
-											<tr><td colspan='7' align='center'>No information found for employee</td></tr>
+											<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											</tr>
+											
+											<script>
+											$(".msgERR").append("<b>ERROR:</b> No information found.").css("display","block");
+											</script>
+											
 										</c:otherwise>
 									</c:choose>
+									</tbody>		
 								</table>
 					
 			<br/><br/>
-				
-				
-			<div id="inline1" style="width:400px;display: none;">
-		
-			<span class="headertitle">Email Employee Pay Advice Information</span>
-			<table width="300px;" cellpadding="0" cellspacing="3" align="center" border="0" style="padding: 5px;">
-				<tr>
-					<td class="subheader" valign="middle" width='125px'>
-						Employee:
-					</td>
-					<td>
-						<span id="empname"></span>
-					</td>
-				</tr>
-				<tr>
-					<td class="subheader" valign="middle" width='125px'>
-						Email:
-					</td>
-					<td>
-						<span id="empemail"></span>
-					</td>
-				</tr>
-				<tr>
-					<td class="subheader" valign="middle" width='125px'>
-						Pay Period:
-					</td>
-					<td>
-						<span id="payperiod"></span>
-					</td>
-				</tr>				
+	
+	
+<!-- The Modal -->
+<div class="modal" id="emailPayInfo">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-								<tr>
-					<td class="subheader" valign="middle" width='125px'>
-						
-					</td>
-					<td>
-						
-						<input type="hidden" id='hidPID'>
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Email Employee Pay Advice Information</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+      
+      <b>Employee:</b> <span id="empname"></span><br/>
+      <b>Email:</b> <span id="empemail"></span>
+      <b>Pay Period:</b> <span id="payperiod"></span>
+      
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      
+      <input type="hidden" id='hidPID'>
 						<input type="hidden" id='hidEID'>
 						<input type="hidden" id='hidEMAIL'>
-					</td>
-				</tr>				
-				<tr>
-					<td colspan="2" valign="middle" align="center">
-						<input type="button" value="Email" onclick="sendinfo();"/>
-						<input type="button" value="Cancel" onclick="closewindow();"/>
+      					<input class="btn btn-sm btn-primary" type="button" value="Email" onclick="sendinfo();"/>
+						<input class="btn btn-sm btn-danger" type="button" value="Cancel" onclick="closewindow();"/>
+     
+      
+      </div>
 
-					</td>
-				</tr>
-		</table>
-	</div>
+    </div>
+  </div>
+</div>	
+	
+			
+
 	
 </div>
 </div>
-			</div>
-
-<div style="float:right;padding-right:3px;width:25%;text-align:right;"><a href="../navigate.jsp" title="Back to MemberServices Main Menu"><img src="/MemberServices/includes/img/ms-footerlogo.png" border=0></a></div>
-		<div class="section group">
-			<div class="col full_block copyright">&copy; 2016 Newfoundland and Labrador English School District</div>
-		</div>	
 </div>
-  
+
 
     
   </body>

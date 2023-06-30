@@ -32,7 +32,7 @@ The Repeat option will override the start and end dates and display the banner l
      <div class="row">
       		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4"> 
       			<b>Banner File (Must be a .png or .jpg):</b><br/>
-      			<input type="file" id="banner_file" name="banner_file" class="form-control" required>
+      			<input type="file" id="banner_file" name="banner_file" class="form-control" required accept=".jpg,.png">
       		</div>
       		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			      <b>Rotation Order (#):</b><br/>

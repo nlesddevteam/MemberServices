@@ -7,6 +7,11 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 	  <meta charset="utf-8">
 	  <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	  
+	  <style>	  
+	  .srTopMenuOpt {display:none;}
+	  </style>
+	  
 	</head>
 
 	<body>	

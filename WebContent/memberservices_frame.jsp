@@ -12,20 +12,18 @@
     <meta charset="utf-8">
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <meta name="description" content="MemberServices Navigation Menu Page">
-   
-		<script  type="text/javascript" src="https://accounts.google.com/gsi/client?onload=appStart" async defer></script>
+    <meta http-equiv="refresh" content="5; URL=navigate.jsp">
+	<script  type="text/javascript" src="https://accounts.google.com/gsi/client?onload=appStart" async defer></script>
 
-	
+	<script>
+	window.onload = function() {
+		  window.location.href = "navigate.jsp"; //Go to Navigate page. If javascript dont work, meta refresh above will redirect in 5 seconds.
+		};	
+	</script>
   </head>
+    
+  <body>
   
-  <frameset rows="32,*" framespacing="0" frameborder="0" name="memberservicesframe">
-    <frame src="mservices_menu.jsp" name="memberservicesmenu" id="memberservicesmenu" frameborder="0" noresize marginwidth="0" marginheight="0" scrolling="no">
-  	<frame src="navigate.jsp" name="memberservicesmain" id="memberservicesmain" frameborder="0" scrolling="Auto" marginwidth="0" marginheight="0">
-    <noframes>
-      <body>
-        <p>This page uses frames, but your browser doesn't support them.</p>
-      </body>
-    </noframes>
-  </frameset>
-
+  </body>
+ 
 </html>
