@@ -82,7 +82,7 @@ The essential components of this process by the individual include:
 				<%} %>
 											<a onclick="loadingData()" class="btn btn-xs btn-primary" title="Search All Learning Plan Summaries" href="searchPGP.html">Search Summaries</a>
 				<%} %>
-					<a class="no-print btn btn-xs btn-danger" title="Back to MemberServices" href="/MemberServices/">Exit</a>
+					<a class="no-print btn btn-xs btn-danger" title="Back to MemberServices" href="/MemberServices/navigate.jsp">Exit</a>
 </div>
 
 </div></div></div>

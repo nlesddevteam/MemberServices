@@ -41,7 +41,7 @@ You cane edit the banner below. Banner file MUST BE 900 x 200 pixels in size and
                      		</c:if> 
                      		<br/><br/>   
                      		<b>New Banner File? (Select a .png or .jpg):</b><br/>
-                     		<input type="file" id="banner_file" name="banner_file" class="form-control">
+                     		<input type="file" id="banner_file" name="banner_file" class="form-control" accept=".jpg,.png">
                      	</div>
                      </div>	 
             <br/><br/>          

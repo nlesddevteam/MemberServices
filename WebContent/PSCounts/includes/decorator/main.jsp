@@ -90,6 +90,7 @@
 	</head>
 
 	<body>
+	<jsp:include page="/StaffRoom/includes/topmenu.jsp" />
 	<!-- Get the loading data animation ready, in front and hidden -->
 	<div id="loadingSpinner" style="display:none;z-index:9999;"><div id="spinner"><img src="/MemberServices/PSCounts/includes/img/loading4.gif" width="200" border=0><br/>Loading data, please wait...</div></div>
 		

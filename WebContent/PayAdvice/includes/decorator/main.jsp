@@ -1,4 +1,4 @@
-<!-- STAFF TRAINING DECORATOR FILE (C) 2022  -->	
+<!-- DECORATOR FILE (C) 2023  -->	
 <!-- APPLICATION FOR NLESD STAFF (MEMBER) SERVICES -->
 <!-- HTML 5 BOOTSTRAP 3.3.7 JQUERY 3.3.1 -->
 
@@ -16,10 +16,6 @@
 		<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
         <%@ taglib uri="/WEB-INF/memberservices.tld" prefix="esd" %>
 
-<!-- PREVENT CACHE OF LOCAL JS AND CSS FROM AGING TOO LONG -->		
-		<c:set var="cacheBuster" value="<%=new java.util.Date()%>" />				 								
-		<fmt:formatDate value="${cacheBuster}" pattern="MMddyyyyHms" var="todayVer" />
-
 
 <html>
   
@@ -32,11 +28,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">				
     	<meta name="generator" content="Eclipse Java EE IDE for Web Developers. Version: Oxygen.3 Release (4.7.3)">
-	    <meta name="dcterms.created" content="September 18, 2020">    	     				
-		<meta name="description" content="Staff Training Modules" />	
-		<meta name="keywords" content="Staff TrainingNLESD,Newfoundland and Labrador English School District,Eastern School District,English School District,Avalon School District,Vista School District,Burin School District,NOVA Central School District,Western School District,Labrador School District,Newfoundland Education,Education newfoundland,Schools in Newfoundland,Newfoundland Schools,St. John's,Corner Brook,Gander,Happy Valley-Goose Bay,School Board,School Board Trustees,Newfoundland School Board">  
+	    <meta name="dcterms.created" content="March 26, 2020">    	     				
+		<meta name="description" content="School Allocations Data" />	
+		<meta name="keywords" content="NLESD,Newfoundland and Labrador English School District,Eastern School District,English School District,Avalon School District,Vista School District,Burin School District,NOVA Central School District,Western School District,Labrador School District,Newfoundland Education,Education newfoundland,Schools in Newfoundland,Newfoundland Schools,St. John's,Corner Brook,Gander,Happy Valley-Goose Bay,School Board,School Board Trustees,Newfoundland School Board">  
 		
-		<title><decorator:title default="Staff Training" /></title>
+		<title><decorator:title default="PayAdvice System" /></title>
 	
 	<!-- CSS STYLESHEET FILES -->	   
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
@@ -46,7 +42,8 @@
   	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">		
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  		<link rel="stylesheet" href="/MemberServices/Training/includes/css/training.css?ver=${todayVer}">			
+  		<link rel="stylesheet" href="/MemberServices/PayAdvice/includes/css/payadvice.css">			
+		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 		
 	<!-- CDN JAVASCRIPT> -->	
@@ -71,9 +68,9 @@
 		<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/fnReloadAjax.js"></script>				
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>	 	
-	 	 <script src="https://cdn.jsdelivr.net/npm/jQuery.print@1.5.1/jQuery.print.min.js"></script> 
+	 	 <script src="https://cdn.datatables.net/plug-ins/1.11.3/sorting/natural.js"></script>
 	 <!-- LOCAL JAVASCRIPT FILES -->		
-		<script src="/MemberServices/Training/includes/js/training.js?ver=${todayVer}"></script>	 	
+		<script src="/MemberServices/PayAdvice/includes/js/payadvice.js"></script>	 	
 	 	
 <!-- GOOGLE ANALYTICS -->
 		<!-- Google tag (gtag.js) -->
@@ -84,8 +81,8 @@
 		  gtag('js', new Date());
 		  gtag('config', 'G-S44S0R2BYK');
 		</script>
-		
-		
+
+
 		<decorator:head />	
 
 			
@@ -94,8 +91,8 @@
 
 	<body>
 	<jsp:include page="/StaffRoom/includes/topmenu.jsp" />
-	
 	<!-- Get the loading data animation ready, in front and hidden -->
+	<div id="loadingSpinner" style="display:none;z-index:9999;"><div id="spinner"><img src="/MemberServices/StaffRoom/includes/img/loading4.gif" width="200" border=0><br/>Loading data, please wait...</div></div>
 		
 	<!-- TOP PANEL -->
 		<div class="mainContainer">	
@@ -105,7 +102,19 @@
 			<div class="container-fluid">		
 				<div class="row">				  
 				  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
-				   	<img class="topLogoImg" src="/MemberServices/Training/includes/img/header.png" title="Newfoundland and Labrador English School District">
+				  
+				  
+				  <div class="headerLarge">
+				   			<img class="topLogoImg" src="/MemberServices/PayAdvice/includes/img/pa-header.png" title="PayAdvice">
+				   	</div>
+				   	<div class="headerMedium">
+				   			<img class="topLogoImg" src="/MemberServices/PayAdvice/includes/img/pa-header-med.png" title="PayAdvice">
+				   	</div>
+				   	<div class="headerSmall">
+				   			<img class="topLogoImg" src="/MemberServices/PayAdvice/includes/img/pa-header-sm.png" title="PayAdvice">
+				   	</div>
+				   	
+				   	
 				  </div>				  
 				</div>		
 			</div>
@@ -116,7 +125,21 @@
 
 			
 				<div class="container-fluid">				
-					
+							<c:if test="${ msgOK ne null }">  
+                  				<div class="alert alert-success msgOKd alert-dismissible" style="display:none;"><button type="button" class="close" data-dismiss="alert">&times;</button>${ msgOK } </div>  
+                  				<script>$(".msgOKd").css("display","block");</script> 
+                  			</c:if>                  			
+							<c:if test="${ msgERR ne null }">  
+                  				<div class="alert alert-danger msgERRd alert-dismissible" style="display:none;"><button type="button" class="close" data-dismiss="alert">&times;</button>${ msgERR } </div>   
+                  				<script>$(".msgERRd").css("display","block");</script> 
+                  			</c:if>
+                  			<c:if test="${ msg ne null }">  
+                  				<div class="alert alert-info msgd alert-dismissible" style="display:none;"><button type="button" class="close" data-dismiss="alert">&times;</button>${ msg } </div>   
+                  				<script>$(".msgd").css("display","block");</script> 
+                  			</c:if>  
+					<div class="alert alert-success msgOK alert-dismissible" style="display:none;"><button type="button" class="close" data-dismiss="alert">&times;</button></div>  
+					<div class="alert alert-danger msgERR alert-dismissible" style="display:none;"><button type="button" class="close" data-dismiss="alert">&times;</button></div> 
+					<div class="alert alert-info msg alert-dismissible" style="display:none;"><button type="button" class="close" data-dismiss="alert">&times;</button></div>
 					
 					<div id="printJob">			
 					
@@ -128,15 +151,14 @@
 
 
 
-
 <!-- FOOTER AREA -->		
 	
 	<div class="mainFooter no-print"> 
 	 
 	
 		<div class="row" >
-		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">NLESD Staff Training Modules
-		 &copy; 2022 Newfoundland and Labrador English School District &middot; All Rights Reserved 
+		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">		
+		 &copy; 2016-2023 Newfoundland and Labrador English School District &middot; All Rights Reserved 
 		 </div>
 		  
 		</div> 
@@ -148,7 +170,7 @@
 </div>
 
 <!-- ENABLE PRINT FORMATTING -->		
-		<script src="/MemberServices/Training/includes/js/jQuery.print.js"></script> 
+		<script src="/MemberServices/PSCounts/includes/js/jQuery.print.js"></script> 
 		<script>
 		function loadingData() {
 			$("#loadingSpinner").css("display","block");

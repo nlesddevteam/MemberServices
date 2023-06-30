@@ -17,6 +17,10 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 .printOnly {display:none;}
 .page-break { display: none; }
 
+/* MAIN STAFFROOM HEADER MENU */
+.srTopMenu {z-index:500;position:fixed;top:0;left:0;padding-top:2px;text-align:center;width:100%;white-space: nowrap;height:32px;background-color: rgba(31, 66, 121, 0.9);}
+
+.mainContainer {margin-top:32px;}
 
 .selectWidth {width:auto !important;display: inline-block;}
 

@@ -165,12 +165,13 @@
 									
   					
   					</div>			
-							
+							<div align="center"><a href="/MemberServices/navigate.jsp" class="btn btn-sm btn-danger">EXIT TO STAFFROOM</a><br/><br/></div>
 						</div>
 					</div>
 					<div class="section group">
-						<div class="col full_block copyright">NLBusingApp 1.0 &copy; 2017 Newfoundland and Labrador English School District</div>
+						<div class="col full_block copyright">NLBusingApp 1.0 &copy; 2017-2023 Newfoundland and Labrador English School District</div>
 					</div>
+					
 			</div>
 		</div>
 	</div>

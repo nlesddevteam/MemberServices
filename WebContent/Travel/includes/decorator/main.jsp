@@ -174,6 +174,7 @@ Iterator p_iter = null;
 	</head>
 
 	<body>	
+	<jsp:include page="/StaffRoom/includes/topmenu.jsp" />
 	<div class="mainContainer">
 	
 <!-- TOP PANEL -->
@@ -206,7 +207,9 @@ Iterator p_iter = null;
 </div>
 	
 <!-- START NLESD MAIN NAVIGATION BAR navbar-fixed-top-->
-<nav class="navbar navbar-expand-md navbar-dark sticky-top" id="main_navbar">
+
+
+<nav class="navbar navbar-expand-md navbar-dark sticky-top" id="main_navbar" data-spy="affix" data-offset-top="32">
      <a class="navbar-brand" href="#" title="Newfoundland and labrador English School District"><img src="/MemberServices/Travel/includes/img/nltopleftlogo.png" id="logoTag" class="navbar-img" border=0 /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDD" aria-controls="navbarDD" aria-expanded="false" aria-label="Navigation">
         <span class="navbar-toggler-icon"></span>

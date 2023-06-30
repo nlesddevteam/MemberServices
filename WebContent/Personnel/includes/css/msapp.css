@@ -29,6 +29,12 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 
 .selectWidth {width:auto !important;display: inline-block;}
 
+/* MAIN STAFFROOM HEADER MENU */
+.srTopMenu {z-index:500;position:fixed;top:0;left:0;padding-top:2px;text-align:center;width:100%;white-space: nowrap;height:32px;background-color: rgba(31, 66, 121, 0.9);}
+.mainContainer {margin-top:32px;}
+
+
+
 /* REGION COLORS */
 .regionDefault {background-color: #1F4279;}
 .region1 {background-color:rgba(191, 0, 0, 0.1);}
@@ -75,8 +81,8 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 .dropdown-submenu.pull-left>.dropdown-menu {left: -100%;margin-left: 10px;-webkit-border-radius: 6px 0 6px 6px;-moz-border-radius: 6px 0 6px 6px;border-radius: 6px 0 6px 6px;}
 /*Main Nav Background - Blue*/
 .navbar {font-size:12px;text-transform:Capitalize;min-height:25px !important;z-index:1000;margin-bottom:0px;background: rgba(0,64,124,1); background-image:none;background-color: rgba(0,64,124,1); box-shadow:none;border:0px;}
-.affix {top: 0;width: 100%;z-index: 9999 !important;}
-.affix + .container-fluid {padding-top: 70px;}
+.affix {top: 32;width: 100%;z-index: 9999 !important;}
+
 .dropdown-menu {background: Cornsilk;}
 .dropdown-menu > li > a:hover,a:focus {color: White; background-color: rgba(0, 64, 124,0.5);}
 

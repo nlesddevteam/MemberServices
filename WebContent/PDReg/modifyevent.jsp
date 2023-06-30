@@ -716,14 +716,14 @@ If this event is for a particular Family of Schools, select the Family from the 
                               <% if(!modified) { %>                            
                       
 <div id="adgendarowfileinput"> 
-<div class="formTitle">AGENDA:</div>   
+<div class="formTitle">AGENDA (PDF or DOC Only):</div>   
  <div class="formBody">	 							 							
     							<%if(f_agenda != null){%>
 				            	<span style="color:Green;"> <span class="glyphicon glyphicon-ok"></span> Agenda attached. To change, select new file. </span><a class="btn btn-xs btn-primary" href="/MemberServices/PDReg/agendas/<%=f_agenda.getName()%>" target="_blank" style="float:right;margin-bottom:5px;">VIEW</a>
 				          		<%}else{%>
 				           		 <span style="color:#FF0000;font-weight:bold;"> <span class="glyphicon glyphicon-remove"></span> Agenda not available at this time.</span>
 				          		<%}%>
-    							<input type="file" name="agendafile"  class="form-control" title="Please Enter your agenda file." />
+    							<input type="file" name="agendafile"  class="form-control" accept=".pdf,.doc,.docx" title="Please Enter your agenda file." />
 </div>
 </div>
     							<%}%>

@@ -28,6 +28,7 @@
   	<pattern>/memberServices.html</pattern>
   	<pattern>/WebUpdateSystem/*</pattern>
   	<pattern>/Administration/*</pattern>
+  	<pattern>/SchoolStatus/*</pattern>
   </decorator>
   
   <decorator name="MS-Registration" page="StaffRoom/includes/decorator/ms-register.jsp">  
@@ -45,11 +46,16 @@
   <decorator name="EECD" page="EECD/includes/decorator/main.jsp">
   	<pattern>/EECD/*</pattern>
   </decorator>  
-  
+
+   <decorator name="PayAdvice" page="PayAdvice/includes/decorator/main.jsp">
+  	<pattern>/PayAdvice/*</pattern>
+  </decorator>
+
+  <!--     
   <decorator name="SchoolStatus" page="SchoolStatus/includes/decorator/main.jsp">
   	<pattern>/SchoolStatus/*</pattern>
   </decorator> 
- 
+ -->
   <decorator name="applicanttheme" page="Personnel/includes/decorator/applicant.jsp">          
     <pattern>/Personnel/applicantlogin.html</pattern>
     <pattern>/Personnel/applicantRegistration*.html</pattern>
@@ -142,7 +148,10 @@
 <!-- MyHR -->    
     <pattern>/Personnel/apply*</pattern>
     <pattern>/Personnel/unapply*</pattern>  
- 
+
+<!-- STAFFROOM -->
+    <pattern>/StaffRoom/includes/topmenu.jsp</pattern>
+     
 
 <!-- Travel Claim App -->       
     <pattern>/Travel/add*</pattern>   

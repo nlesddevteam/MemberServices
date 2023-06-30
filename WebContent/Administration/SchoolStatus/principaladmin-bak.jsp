@@ -74,8 +74,8 @@ $('document').ready(function(){
 	  });
 	  
 	  $( ".datefield" ).datepicker({
-		      changeMonth: true,//this option for allowing user to select month
-		      changeYear: true, //this option for allowing user to select from year range
+		      changeMonth: true,
+		      changeYear: true, 
 		      dateFormat: "dd/mm/yy",
 		      maxDate: '+2y',
 		      minDate: '-14d'
@@ -95,13 +95,15 @@ This will take a few moments!
   
   <form name="schoolstatus" method="post" action="updateSchoolClosureStatus.html">
   <input type="hidden" name="apply_all" value="0">
-  
   <%if(request.getParameter("pid") != null){%>
     <input type="hidden" name="pid" value="<%=prec.getPersonnelID()%>">
   <%}%>
 	
 	
-	
+	<div class="alert alert-danger">
+	<b>PLEASE NOTE:</b> Live Updates to school status are delayed up to 5 minutes after you submit your change here. 
+	Please wait 5 minutes to reload/refresh the NLESD school status website to see your changes.
+	</div>
 	
   
   
@@ -112,7 +114,7 @@ This will take a few moments!
   						<b>System Name:</b> <%=systems[i].getSchoolSystemName()%><br/>
   						<b>Current Administrator(s):</b>
   						<span style="text-transform:capitalize;">
-  							<%=(systems[i].getSchoolSystemAdmin() != null)?systems[i].getSchoolSystemAdmin().getFullNameReverse():"UNASSIGNED"%>
+  						<%=(systems[i].getSchoolSystemAdmin() != null)?systems[i].getSchoolSystemAdmin().getFullNameReverse():"UNASSIGNED"%>
   							
   							<%
 									Personnel[] tmp = systems[i].getSchoolSystemAdminBackup();
@@ -124,12 +126,6 @@ This will take a few moments!
   						</span>	
   							
   				<br/><br/>
-  				
-  				<div class="alert alert-info">
-	<b>PLEASE NOTE:</b> Live Updates to school status are delayed up to 5 minutes after you submit your change here. 
-	Please wait 5 minutes to reload/refresh the NLESD school status web site to see your changes. If your change does not display within 30 minutes, please contact support.
-	</div>
-  				
   				Below are the list of school(s) in your school system. Click on the school name to update status details.
   				
   				<br/><br/>
@@ -233,8 +229,6 @@ This will take a few moments!
                <%cnt=0;%>
               <%}%>
               <%} else {
-            	  
-            	if((systems != null) && (systems.length > 0)){%> 
                 sys = (SchoolSystem) prec.getSchool().getSchoolSystem();
                 school = prec.getSchool();
                 sstat = school.getSchoolClosureStatus();%>
@@ -305,20 +299,14 @@ This will take a few moments!
               </div>
                   
                   
-              <%} else { %>
-            	<br/>
-              <div class="alert alert-warning"><b>NOTICE:</b> You are not currently assigned to any school and/or school system as a principal/vice principal, or school closure administrator. If you believe this to be in error, please contact support.</div>
-              
-               <div align="center"><a class="btn btn-danger btn-sm" href="/MemberServices/memberServices.html">Exit</a></div>
-              <% }}%>
+              <%}%>
               
               <br/><br/>
-              <%if((systems != null) && (systems.length > 0)){ %>
               <div align="center">
               <input class="btn btn-success btn-sm" type="submit" onClick="document.schoolstatus.submit();" />              
               <a class="btn btn-danger btn-sm" href="/MemberServices/memberServices.html">Cancel</a>
               </div>
-            <%}%>
+           
 	</form>
 	
 	</div>

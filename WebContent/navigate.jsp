@@ -11,6 +11,7 @@
 
 <%
 	User usr = (User) session.getAttribute("usr");
+   
 %>
 
 <c:set var="ProfileImg" value='<%=session.getAttribute("gmailicon")%>'/>
@@ -18,8 +19,6 @@
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
 
 <title>NLESD StaffRoom</title>
 
@@ -34,27 +33,26 @@ $(document).ready(function () {
 			this.src = this.src.replace("-on", "-off");
 		});
 	});
-});		
-		
-
+	
+});
 </script>
 <style>
 .appcnt {font-size:10;color:Red;}
  .menuIconImage {padding-bottom:15px;}
+.srTopMenuOpt {display:inline;}
+
 </style>
+
 
 
 </head>
 
 <body>
-
 <div class="row pageBottomSpace">
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
 <div class="siteBodyTextBlack">
-
 <div class="row">
-<div class="col-lg-12">
-
+<div class="col-lg-12"> 
 <div class="alert alert-success" id="logInDetailBlock"  style="font-size:12px;margin-top:5px;text-align:center;">
 <b>LOGGED IN AS:</b> <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%> &nbsp;&nbsp;
 <b>CLASSIFIED AS:</b> <%=usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName()%> &nbsp;&nbsp; 
@@ -62,21 +60,25 @@ $(document).ready(function () {
 </div>
 
 <% if(usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName().equals("NEW USER")) {%>
-
+Welcome <span style="text-transform: capitalize;font-weight:bold;"><%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></span> to your NLESD StaffRoom Portal. (Formally MemberServices).<br/><br/>
 <div class="alert alert-danger" style="text-align:center;font-size:14px;"><b>***** NEW USER NOTICE *****</b><br/>
 Your classification states <b>NEW USER</b>. 
-Please contact <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">StaffRoom Support</a> as soon as possible, listing your current job position/title or classification, 
-and your main school or office location, in order to have access to the proper applications below. You will have limited access until this is complete. Thank you.
+Please contact <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">StaffRoom Support</a> or email email <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">geofftaylor@nlesd.ca</a> as soon as possible, listing your current job position/title or classification, 
+and your main school or office location, in order to have access to the proper applications. 
+You will have limited access until this is complete. 
+However, if you already had an StaffRoom/MS account, and getting this notice, you may have changed your email address. If so, please contact us with old email and your new email, and we will update your account. Thank you.
 </div>
-
+<div align="center"><a class="btn btn-xs btn-danger" href="/MemberServices/logout.html" title="Sign out of StaffRoom">SIGN OUT</a></div>
 <%}%>
 
 </div>
 </div>
+<% if(!usr.getPersonnel().getPersonnelCategory().getPersonnelCategoryName().equals("NEW USER")) {%>
+
 <div style="font-size:14px;" id="welcomeBlock">
 <c:choose>
 <c:when test="${not empty ProfileImg}">
-<a href="https://myaccount.google.com" target="_blank"><img src="${ProfileImg}" border=0 title="Your Google Profile Picture" onerror="this.onerror=null; this.src='/MemberServices/StaffRoom/includes/img/nltopleftlogo.png'" style="display: block;-webkit-user-select: none;margin: auto;max-height:150px;padding-right:10px;float:right;"/></a>
+<a href="https://myaccount.google.com" target="_blank"><img src="${ProfileImg}" border=0 title="Your Google Profile Picture" onerror="this.onerror=null; this.src='/MemberServices/StaffRoom/includes/img/nltopleftlogo.png'" style="display: block;-webkit-user-select: none;margin: auto;max-height:180px;padding-right:10px;float:right;"/></a>
 </c:when>
 <c:otherwise>
   <img src="/MemberServices/StaffRoom/includes/img/nltopleftlogo.png" onerror="this.onerror=null; this.src='/MemberServices/StaffRoom/includes/img/nltopleftlogo.png'" style="max-height:150px;padding-right:10px;float:right;"/>
@@ -98,6 +100,9 @@ Also, the more you use a application, a <b>Favorites group</b> will be listed fo
 
 </div>
 <br/>
+
+
+
 
 <div class="alert alert-success alert-dismissible" id="theCookieMSG1" style="text-align:center;font-size:14px;">
 	<button type="button" class="close" data-dismiss="alert" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>CookieMessage1');">&times;</button>
@@ -342,14 +347,15 @@ Links under this section provide general information on a given topic and/or lin
 			</a>
 		</div>	
 	</div>		
-<!-- COVID 19-UPDATES - ALL STAFF -->
+<!-- COVID 19-UPDATES - ALL STAFF
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app22">					
 		<div class="menuIconImage">
 			<a href="covid19/index.jsp" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app22');loadingData();">
 			<img src="includes/img/menu/covid19-off.png" class="img-swap menuImage" border=0 title="Covid-19 Information Shared with Schools and District Staff">
 			</a>
 		</div>		
-	</div>
+	</div> -->
+	
 <!-- Professional Learning Series -->
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app23">		
 		<esd:SecurityAccessRequired permissions="PPGP-VIEW">	
@@ -537,7 +543,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 			<esd:SecurityAccessRequired permissions="PAY-ADVICE-ADMIN">
 				<div class="menuIconImage">
 					<a href="PayAdvice/index.jsp" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app43');loadingData();">
-					<img src="includes/img/menu/payadvice-off.png" class="img-swap menuImage" title="Pay Advice Admin System" border=0>
+					<img src="StaffRoom/includes/img/payadviceadmin-off.png" class="img-swap menuImage" title="Pay Advice Admin System" border=0>
 					</a>
 				</div>
 			</esd:SecurityAccessRequired>
@@ -548,7 +554,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 			<esd:SecurityAccessRequired permissions="PAY-ADVICE-NORMAL">
 				<div class="menuIconImage">
 					<a href="PayAdvice/viewTeacherPaystubs.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app44');loadingData();">
-					<img src="includes/img/menu/payadviceteacher-off.png" class="img-swap menuImage" title="Pay Advice for Teachers" border=0>
+					<img src="StaffRoom/includes/img/payadvice-off.png" class="img-swap menuImage" title="Pay Advice" border=0>
 					</a>
 				</div>
 			</esd:SecurityAccessRequired>
@@ -1178,7 +1184,7 @@ Special applications for updating and posting information, depending on your lev
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app85">
 		<esd:SecurityAccessRequired permissions="WEATHERCENTRAL-PRINCIPAL-ADMINVIEW">
 			<div class="menuIconImage">
-				<a href="SchoolStatus/viewWeatherCentralAdmin.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app85');loadingData();">
+				<a href="/MemberServices/Administration/SchoolStatus/viewWeatherCentralAdmin.html" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app85');loadingData();">
 				<img src="StaffRoom/includes/img/schoolstatus-off.png" class="img-swap menuImage" border=0 title="The School Status application allows a principal to set the closure status for schools in their school system.">
 				</a>
 			</div>
@@ -1348,6 +1354,7 @@ Here are listed access to a variety of application and district level HelpDesks.
 
 
 
+
 <a name="checkSettings"></a>
 <div class="alert alert-warning" style="text-align:center;">
 <img src="StaffRoom/includes/img/gear.png" border=0 style="float:left;max-width:90px;"/>
@@ -1382,6 +1389,8 @@ $(".adminApps").css("display","none");
 
 				
 </div>
+
+<% } %>
 </div>
 </div>
 	</div>
@@ -1546,6 +1555,7 @@ if ($.cookie(theCookieUser1) > 0) {
 	$("#theCookieMSG1").css("display","none");
 } else {
 	$("#theCookieMSG1").css("display","block");
+	
 }
 
 var theCookieUser2 = '<%=usr.getPersonnel().getPersonnelID()%>CookieMessage2';
@@ -1553,6 +1563,7 @@ if ($.cookie(theCookieUser2) > 0) {
 	$("#theCookieMSG2").css("display","none");
 } else {
 	$("#theCookieMSG2").css("display","block");
+	
 }
 
 var cookiePrefix = '<%=usr.getPersonnel().getPersonnelID()%>app';
@@ -1606,6 +1617,6 @@ function clearFavorites() {
 
 
 </script>
-			
+		
 </body>
 </html>

@@ -69,7 +69,7 @@ Below you can add new Minutes to the web site. To add other files to this meetin
              <div class="row">
       		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                      <b>Minutes Doc: (PDF Files ONLY)</b><br/>
-                     <input type="file" id="mm_doc" name="mm_doc" required class="form-control"/>
+                     <input type="file" id="mm_doc" name="mm_doc" required class="form-control" accept=".pdf"/>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<b>Presentation Title:</b><br/>

@@ -28,6 +28,11 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 .addContactFormHeaderBody {background-color: #FFFFF0;font-size:12px;color:Black;text-align:center;width:100%;padding:3px;}
 .addContactLogoImg {float:left;}
 
+/* MAIN STAFFROOM HEADER MENU */
+.srTopMenu {z-index:500;position:fixed;top:0;left:0;padding-top:2px;text-align:center;width:100%;white-space: nowrap;height:32px;background-color: rgba(31, 66, 121, 0.9);}
+.mainContainer {margin-top:32px;}
+
+
 .selectWidth {width:auto !important;display: inline-block;}
 
  	.cke_skin_v2 input.cke_dialog_ui_input_text, .cke_skin_v2 input.cke_dialog_ui_input_password {
@@ -81,8 +86,7 @@ body {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;color: Black;-w
 .navbar-inverse .navbar-nav>li>a {color:white;font-size: 11px !important;}
 .navbar-inverse .navbar-nav>li>a:hover {color:yellow;font-size: 11px !important;}
 .navbar-inverse {border-radius: 0px;border:0px;}
-.affix {top: 0;width: 100%;z-index: 9999 !important;}
-.affix + .container-fluid {padding-top: 70px;}
+.affix {top: 32;width: 100%;z-index: 9999 !important;}
 .dropdown-menu {background: rgba(255, 255, 255, 0.9);}
 .scrollable-menu {height: auto;max-height: 200px;overflow-x: hidden;background-color: rgba(255, 248, 220, 0.8);}
 .scrollable-menu > li > a:hover,.navbar-inverse .navbar-nav > li > 
