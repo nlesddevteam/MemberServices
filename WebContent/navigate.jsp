@@ -28,8 +28,10 @@ $(document).ready(function () {
 	
 	jQuery(function() {
 		$(".img-swap").hover(function() {
+			$(this).css("background-color","#F0FFF0")
 			this.src = this.src.replace("-off", "-on");
 		}, function() {
+			$(this).css("background-color","#FFFFFF")
 			this.src = this.src.replace("-on", "-off");
 		});
 	});
@@ -399,11 +401,20 @@ Listed applications that you have permission to access and use.<br/><br/>
 		<esd:SecurityAccessRequired permissions="PERSONNEL-PROFILE-TEACHER-VIEW,PERSONNEL-PROFILE-SECRETARY-VIEW">
 			<div class="menuIconImage">
 				<a href="Profile/Teacher/" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app30');loadingData();">
-				<img src="includes/img/menu/userprofile-off.png" class="img-swap menuImage" border=0 title="User Profile Manager allows a Teacher/Support Staff employee to modify their current name and school assignment."/>
+				<img src="StaffRoom/includes/img/msprofile-off.png" class="img-swap menuImage" border=0 title="User Profile Manager allows a Teacher/Support Staff employee to modify their current name and school assignment."/>
 				</a>
 			</div>
 		</esd:SecurityAccessRequired>
 	</div>		
+
+<!-- MyHR Profile.-->
+	<div id="<%=usr.getPersonnel().getPersonnelID()%>app66">			
+			<div class="menuIconImage">
+				<a href="/employment/index.jsp" target="_blank" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app66');">
+				<img src="StaffRoom/includes/img/myhr-off.png" class="img-swap menuImage" border=0 title="Your MyHR Profile.">
+				</a>
+			</div>				
+	</div>	
 			
 <!-- Cayenta Connect May need to create a permission here and add it to people.-->
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app31">			
@@ -476,7 +487,7 @@ Listed applications that you have permission to access and use.<br/><br/>
 				permissions="PERSONNEL-IT-VIEW-SCHOOL-EMPLOYEES,PERSONNEL-ADMIN-VIEW,PERSONNEL-PRINCIPAL-VIEW,PERSONNEL-VICEPRINCIPAL-VIEW,RTH-NEW-REQUEST,PERSONNEL-RTH-VIEW-APPROVALS,PERSONNEL-VIEW-SUBMITTED-REFERENCES,PERSONNEL-SEARCH-APPLICANTS-NON">
 				<div class="menuIconImage">
 					<a href="Personnel/admin_index.jsp" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app37');loadingData();"> 
-					<img src="includes/img/menu/myhrp-off.png" class="img-swap menuImage" border=0 title="Human Resources Profile System">
+					<img src="StaffRoom/includes/img/myhradmin-off.png" class="img-swap menuImage" border=0 title="Human Resources Profile Administration System">
 					</a>
 				</div>
 			</esd:SecurityAccessRequired> 
