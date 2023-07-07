@@ -167,7 +167,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 			
 <!-- START NAVIGATION BAR navbar-fixed-top-->
 
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="transform:translateZ(0);max-width:1250px;">
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="font-size:12px;transform:translateZ(0);max-width:1420px;">
   <div class="container-fluid">
 		    <div class="navbar-header">
 				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -183,20 +183,15 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 			<ul class="nav navbar-nav">
 
 <!-- HOME MENU-->
-					    	<li class="dropdown" id="menuNormal">
-					    	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-file"></span> File <span class="caret"></span></a>
-					    	 <ul class="dropdown-menu multi-level">
 
-					          <li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_index.jsp">Home</a></li>
-					          <li><a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});">Print Page</a></li>
-                              <li class="divider"></li>
-                               <li><a onclick="loadingData()" href="/MemberServices/navigate.jsp">Back to MS</a></li>
-					          	</ul>
-					        </li>
+		<li><a href="/MemberServices/navigate.jsp"  onclick="loadingData()" title="Back to StaffRoom"><span class="glyphicon glyphicon-step-backward"></span> SR</a></li>
+		<li><a href="/MemberServices/Personnel/admin_index.jsp"  onclick="loadingData()" title="HR Home"><span class="glyphicon glyphicon-home"></span>&nbsp;</a></li>
+		<li><a href='#' title='Print this page (pre-formatted)' title="Print this page" onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span>&nbsp;</a></li>
+                       
 
 <esd:SecurityAccessRequired permissions="PERSONNEL-IT-VIEW-SCHOOL-EMPLOYEES">
     <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> IT Access<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">IT ACCESS <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin_pp_school_employees.jsp">View School Employees</a></li>
 					          	</ul>
@@ -215,7 +210,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 	-->
 	<esd:SecurityAccessRequired permissions="PERSONNEL-SEARCH-APPLICANTS-NON">
 									<li class="dropdown" id="menuNormal">
-					          		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Reports<span class="caret"></span></a>
+					          		<a class="dropdown-toggle" data-toggle="dropdown" href="#">REPORTS <span class="caret"></span></a>
 					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-SEARCH-APPLICANTS-NON">
 					          	 	<ul class="dropdown-menu multi-level">					          	
 									<li class="dropdown-submenu">
@@ -272,7 +267,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 							<esd:SecurityAccessRequired roles="ADMINISTRATOR">
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span> Admin<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ADMIN <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 									
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/admin/viewSubjectGroups.html">Subject Groups</a></li>
@@ -295,7 +290,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 					   <esd:SecurityAccessRequired permissions="PERSONNEL-EMP-OPPS-VIEW">
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-folder-open"></span> Guides<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">GUIDES <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-INTERVIEW-GUIDES-VIEW">
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/addInterviewGuide.html">Add Interview Guide</a></li>
@@ -308,7 +303,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 					     	<esd:SecurityAccessRequired permissions="PERSONNEL-ADREQUEST-VIEW">
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-modal-window"></span> Advertisements<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ADS <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
                                      <li class="dropdown-submenu">
 					          	 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Educational</a>
@@ -363,7 +358,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 
 							 <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Positions<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POSITIONS <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 
 					          	 	<esd:SecurityAccessRequired permissions="PERSONNEL-POSITION-PLANNING-VIEW">
@@ -453,7 +448,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 							 <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW-JOBS">
 							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Applicant List<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">APPLICANT LISTS <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu scrollable-menu">
 
 
@@ -491,7 +486,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 					        <esd:SecurityAccessRequired permissions="PERSONNEL-ADMIN-VIEW">
 							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> References<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">REFERENCES <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
 
 					          	  				<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDAdminReference.html">Add Administrator Reference</a></li>
@@ -522,7 +517,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
  				<%if(usr.checkRole("PRINCIPAL")){%>
  							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Positions<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POSITIONS <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
    
      
@@ -536,7 +531,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					        </li>
 				<%}%>
  							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> References<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">REFERENCES <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 					          	<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDAdminReference.html">Add Administrator Reference</a></li>
                           		<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDGuideReference.html">Add Guidance Reference</a></li>
@@ -552,7 +547,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
  				<%}%>
 
  							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-th-list"></span> Short Lists<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SHORT LISTS <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 					    <%if(isPrincipal){%>
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/principalJobShortlists.html">Job Short List(s)</a></li>
@@ -572,7 +567,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
  <%} else if(usr.checkPermission("PERSONNEL-VICEPRINCIPAL-VIEW")){ %>
 
 							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Positions<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POSITIONS <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 							<% if(!rbean.isPpBlockSchools()) { %>  
 								<li><a onclick="loadingData()" href="/MemberServices/Personnel/viewPositionPlanning.html">Position Planning</a></li>
@@ -582,7 +577,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					         	</ul>
 					        </li>
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> References<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">REFERENCES <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 					          		<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDAdminReference.html">Add Administrator Reference</a></li>
                          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/addNLESDGuideReference.html">Add Guidance Reference</a></li>
@@ -593,7 +588,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					        </li>
 
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-th-list"></span> Short Lists<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SHORT LISTS <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 
 										<li><a onclick="loadingData()" href="/MemberServices/Personnel/principalJobShortlists.html">Job Short Lists</a></li>
@@ -606,7 +601,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
  <%} else if(usr.checkPermission("RTH-NEW-REQUEST")){%>
  					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-modal-window"></span> Advertisements<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ADVERTISEMENTS <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
                                      <li class="dropdown-submenu">
 					          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support/Management</a>
@@ -634,7 +629,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
  
  <%} else if(usr.checkPermission("PERSONNEL-RTH-VIEW-APPROVALS")){%>
  						<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-modal-window"></span> Advertisements<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ADVERTISEMENTS <span class="caret"></span></a>
 					          	 <ul class="dropdown-menu multi-level">
                                      <li class="dropdown-submenu">
 					          	 	  		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Support/Management</a>
@@ -647,7 +642,7 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 					        </li>
 <%} else if(usr.checkPermission("PERSONNEL-VIEW-SUBMITTED-REFERENCES")){%>
 						<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> References<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">REFERENCES <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 					          		<li><a onclick="loadingData()" href="/MemberServices/Personnel/principalNLESDCompletedReferences.html">Completed Reference(s)</a></li>
 					    		</ul>
@@ -659,12 +654,12 @@ MyHrpSettingsBean rbean=MyHrpSettingsManager.getMyHrpSettings();
 
 <!-- HELP MENU -->
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Help<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">HELP <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 										<li><a href="https://sites.google.com/nlesd.ca/myhrphelp/home" target="_blank">MyHRP Help Guide</a></li>
-										<li><a href="/contact/stafffinderresults.jsp?pos=Human+Resources&region=" target="_blank">HR Contacts</a></li>
+										<li><a href="/contact/districtstaffdirectory.jsp?search=Human Resources" target="_blank">HR Contacts</a></li>
 										<li><a href="https://forms.gle/zudb87zxbJW9QTVg8" target="_blank">Technical Support</a></li>
-										<li><a href="/MemberServices/" onclick="loadingData()">Exit to MS</a></li>
+										<li><a href="/MemberServices/" onclick="loadingData()">Exit to StaffRoom</a></li>
 
 					         	</ul>
 					        </li>

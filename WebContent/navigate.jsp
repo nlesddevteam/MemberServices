@@ -90,7 +90,8 @@ However, if you already had an StaffRoom/MS account, and getting this notice, yo
 Welcome <span style="text-transform: capitalize;font-weight:bold;">
 <%=usr.getPersonnel().getFirstName()%> <%=usr.getPersonnel().getLastName()%></span> to your NLESD StaffRoom Portal. (Formally MemberServices).<br/><br/>
 
-In this StaffRoom, depending on your District classification, you have access to a variety of staff web applications, resources, and support services via the icons below under various sections. 
+In this StaffRoom, depending on your District classification, you have access to a variety of staff web applications, resources, and support services 
+via the icons below under various sections. 
 
 Most of the links and pages found on the old web site under the old StaffRoom section can be found below and are still accessible via icons below.
 
@@ -109,9 +110,10 @@ Also, the more you use a application, a <b>Favorites group</b> will be listed fo
 <div class="alert alert-success alert-dismissible" id="theCookieMSG1" style="text-align:center;font-size:14px;">
 	<button type="button" class="close" data-dismiss="alert" onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>CookieMessage1');">&times;</button>
 	<b>****** NEW ITEMS ******</b><br/>
-	Below are your applications. There have been some changes to the system. You now have new options at bottom of this page where you can turn on more applications for easier access in this portal. 
+	Below are your applications. There have been some changes to the system. You now have new options at bottom of this page where you can turn on more applications 
+	for easier access in this portal. 
 	Also, the more you use an application now, the system will detect the high usage and display the icon in a Favorites section at top of the rest. 
-	You need to use an app <b>more than 10 times</b> before it will display as a favorite and remain so unless it is not used within <b>5 days</b>.
+	You need to use an app <b>more than 10 times</b> before it will display as a favorite and remain so unless it is not used within <b>10 days</b>.
 	You can dismiss this message clicking the X at right.
 </div>
 
@@ -130,7 +132,8 @@ Also, the more you use a application, a <b>Favorites group</b> will be listed fo
 <a href="#/" id="clearFavorites" class="btn btn-sm btn-danger favBtn" style="float:right;">Clear Favorites</a>
 <div class="siteHeaderGreen">Your Favorites</div>
 Your most used applications  are displayed in this section. Settings are saved in this 
-  <span class="userBrowser"></span> browser on this <span class="userDevice"></span> only for your account. You can always clear these favorites to refresh your list by using the link above right. 
+  <span class="userBrowser"></span> browser on this <span class="userDevice"></span> only for your account. You can always clear these favorites to refresh your 
+  list by using the link above right. 
   (Please note, that clearing this browser's cached cookies will also remove your listed favorites.)
 <br/><br/>
 <div id="myFavorites"></div>
@@ -1348,7 +1351,7 @@ Here are listed access to a variety of application and district level HelpDesks.
 		</div>			
 	</div>			
 													
-<!-- Staff HelpCentre-->
+<!-- Staff HelpCentre
 	<div id="<%=usr.getPersonnel().getPersonnelID()%>app107">
 		<div class="menuIconImage">
 			<a href="https://forms.gle/rpYgeZfm81Wt5c138" target="_blank"  onclick="checkCookie('<%=usr.getPersonnel().getPersonnelID()%>app107');">
@@ -1356,7 +1359,7 @@ Here are listed access to a variety of application and district level HelpDesks.
 			</a>
 		</div>	
 	</div>	
-
+-->
 
 <div style="clear:both;"></div>	
 <br/>
@@ -1382,8 +1385,9 @@ Your settings will be saved in your browser automatically. Changes here will not
  </div>
 		
 <div class="alert alert-danger">
-<b>SUPPORT NOTICE:</b> Information incorrect? Missing icons? Classification and/or Location incorrect? Please use the <a href="https://forms.gle/rpYgeZfm81Wt5c138" target="_blank">StaffRoom HelpDesk</a> 
-to send a support request. You can also email <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">geofftaylor@nlesd.ca</a>. For any individual application support, please use the contacts for support within the application.
+<b>SUPPORT NOTICE:</b> Information incorrect? Missing icons? Classification and/or Location incorrect? 
+Please email <a href="mailto:geofftaylor@nlesd.ca?subject=StaffRoom Support Request">geofftaylor@nlesd.ca</a> for assistance. 
+For any individual application support, please use the contact(s) for support within that application first.
 </div>
 					
 <%
@@ -1580,7 +1584,7 @@ if ($.cookie(theCookieUser2) > 0) {
 var cookiePrefix = '<%=usr.getPersonnel().getPersonnelID()%>app';
 var allCookies = $.cookie();
 var numClicks = 10;
-var cookieExpiryDays = 5; 
+var cookieExpiryDays = 10; 
 
 for (var cookieName in allCookies) {
 	  if (cookieName.startsWith(cookiePrefix)) {
