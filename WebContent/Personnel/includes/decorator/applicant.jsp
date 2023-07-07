@@ -405,7 +405,7 @@ If you are experiencing difficulties with this system, check out the Help Guide 
 
 		<div class="row" >
 		  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		 MyHR Career Application System Portal 1.7 &copy; 2019-2021 Newfoundland and Labrador English School District &middot; All Rights Reserved
+		 MyHR Career Application System Portal 1.8 &copy; 2019-2023 Newfoundland and Labrador English School District &middot; All Rights Reserved
 		 </div>
 
 		</div>
