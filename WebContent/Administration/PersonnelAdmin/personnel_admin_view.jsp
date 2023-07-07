@@ -46,6 +46,7 @@
 				  "lengthMenu": [[25,50,100, 250, 500, 1000, -1], [25,50,100, 250, 500, 1000, "All"]],	
 				responsive: true,
 				dom: 'Blfrtip',
+				"search": {regex: true},
 		        buttons: [			        	
 		        	//'colvis',
 		        	{
@@ -132,13 +133,13 @@ There is also an option to delete a user if the account is empty and not in use.
 <table class="membershipTable table table-sm table-bordered responsive" width="100%" style="font-size:11px;background-color:White;">
 					<thead class="thead-dark">
 					<tr style="color:Black;font-size:12px;">
-					<th width="5%">ID</th>
-					<th width="15%">NAME</th>
-					<th width="15%">EMAIL (LOGIN)</th>
-					<th width="15%">LOCATION</th>
-					<th width="15%">CATEGORY</th>	
-					<th width="15%">LAST LOGIN</th>					
-					<th width="15%">OPTIONS</th>					
+					<th>ID</th>
+					<th>NAME</th>
+					<th>EMAIL (LOGIN)</th>
+					<th>LOCATION</th>
+					<th>CATEGORY</th>	
+					<th>LAST LOGIN</th>					
+					<th>OPTIONS</th>					
 				</tr>
 				</thead>
 				<tbody>
@@ -149,19 +150,18 @@ There is also an option to delete a user if the account is empty and not in use.
          %>
          <c:set var="test1" value="<%=date %>"/>
         			 <tr>                        
-         			<td width="5%"><%=tmp.getPersonnelID()%></td>            
-					<td width="15%"><%=tmp.getFullName()%></td>
-					<td width="15%"><%=tmp.getUserName()%></td>
-					<td width="15%"><%=tmp.getSchoolName() == null ? "N/A": tmp.getSchoolName()%></td>
-					<td width="15%"><%=tmp.getPersonnelCategory().getPersonnelCategoryName()%></td>	
-					<td width="15%"><fmt:formatDate value="${test1}" pattern="yyyy/MM/dd @ h:mm a" /></td>							
-					<td width="15%">
+         			<td><%=tmp.getPersonnelID()%></td>            
+					<td style="white-space:nowrap;"><%=tmp.getFullName()%></td>
+					<td><%=tmp.getUserName()%></td>
+					<td style="white-space:nowrap;"><%=tmp.getSchoolName() == null ? "N/A": tmp.getSchoolName()%></td>
+					<td style="white-space:nowrap;"><%=tmp.getPersonnelCategory().getPersonnelCategoryName()%></td>	
+					<td style="white-space:nowrap;"><fmt:formatDate value="${test1}" pattern="yyyy/MM/dd @ h:mm a" /></td>							
+					<td style="white-space:nowrap;">
 						  	<a class="btn btn-xs btn-primary" onclick="loadingData();" href="personnelAdminChange.html?pid=<%=tmp.getPersonnelID()%>" title="Change Profile"><i class="fas fa-user-alt"></i> PROFILE</a>
                             <a class="btn btn-xs btn-warning" onclick="top.document.location.href='../../loginAs.html?pid=<%=tmp.getPersonnelID()%>';loadingData();" href='#'><i class="fas fa-sign-in-alt"></i> LOGIN</a>
                          	<a class="btn btn-xs btn-danger" onclick="loadingData();return confirm('NOTICE: Are you sure you wish to remove this user? All data will be lost!')" href="personnelDelete.html?pid=<%=tmp.getPersonnelID()%>" title="Delete User"><i class="far fa-trash-alt"></i> DEL</a>
-                         
-					</td>
-				 </tr>
+                    </td>
+                    </tr>
          <% }%>
 				</tbody>
 				</table>
@@ -175,7 +175,10 @@ There is also an option to delete a user if the account is empty and not in use.
   
         
         <script>
-        $("#membersTotal").html(<%=totalCnt%>);          
+        $("#membersTotal").html(<%=totalCnt%>);    
+               
+       
+        
         </script>
         
   </body>

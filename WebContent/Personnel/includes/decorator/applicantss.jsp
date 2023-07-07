@@ -70,12 +70,14 @@
 
   <style>
  .ui-button {background-color:none;}
+.affix {top: 0;width: 100%;z-index: 9999 !important;}
+.mainContainer {margin-top:0px;}
 
   </style>
 	</head>
 
 	<body>
-	<jsp:include page="/StaffRoom/includes/topmenu.jsp" />
+	
 	<!-- Get the loading data animation ready, in front and hidden -->
 	<div id="loadingSpinner" style="display:none;z-index:9999;"><div id="spinner"><img src="includes/img/loading4.gif" width="200" border=0><br/>Loading data, please wait...</div></div>
 
@@ -91,7 +93,7 @@
 
 <!-- START NAVIGATION BAR navbar-fixed-top-->
 
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="transform:translateZ(0);max-width:1250px;">
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="200" style="transform:translateZ(0);max-width:1420px;">
   <div class="container-fluid">
 		    <div class="navbar-header">
 				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -108,16 +110,16 @@
 
 <!-- HOME MENU-->
 					    	<li class="dropdown" id="menuNormal">
-					    	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-file"></span> File <span class="caret"></span></a>
+					    	<a class="dropdown-toggle" data-toggle="dropdown" href="#">FILE <span class="caret"></span></a>
 					    	 <ul class="dropdown-menu multi-level">
 					          <li><a href="/MemberServices/Personnel/view_applicant_ss.jsp">Home</a></li>
-					          <li><a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});"><span class="glyphicon glyphicon-print"></span> Print Page</a></li>
+					          <li><a href='#' title='Print this page (pre-formatted)' onclick="jQuery('#printJob').print({prepend : '<div align=center style=margin-bottom:15px;><img width=400 src=includes/img/nlesd-colorlogo.png><br/><br/><b>Human Resources Profile System</b></div><br/><br/>'});">Print Page</a></li>
                                 <li><a href="/employment/sspositions.jsp">Back to Positions</a></li>
 					          	</ul>
 					        </li>
 
 							<li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Profile<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">PROFILE <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 					          	        <li><a onclick="loadingData()" href="/MemberServices/Personnel/applicant_registration_instructions.jsp?type=S">Instructions</a></li>
 										<li><a onclick="loadingData()" href="/MemberServices/Personnel/view_applicant_ss.jsp">View/Edit Profile</a></li>
@@ -128,7 +130,7 @@
 					        </li>
 
 		                    <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Experience/References<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">EXPERIENCE/REFERENCES <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 
 										<li><a onclick="loadingData()" href="/MemberServices/Personnel/applicant_registration_step_2_ss.jsp">Experience</a></li>
@@ -139,7 +141,7 @@
 					        </li>
 
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Education/Preferences<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">EDUCATION/PREFERENCES <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 
 										<li><a onclick="loadingData()" href="/MemberServices/Personnel/applicant_registration_step_5.jsp">University/College</a></li>
@@ -152,7 +154,7 @@
 					        </li>
 
 				        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Documents/Other<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">DOCUMENTS/OTHER <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 					          			<li><a onclick="loadingData()" href="/MemberServices/Personnel/applicant_registration_step_10.jsp">Documents/Declarations</a></li>
 					          			<li class="divider"></li>
@@ -165,10 +167,10 @@
 
 <!-- HELP MENU -->
 					        <li class="dropdown" id="menuNormal">
-					          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> Help<span class="caret"></span></a>
+					          <a class="dropdown-toggle" data-toggle="dropdown" href="#">HELP <span class="caret"></span></a>
 					          	<ul class="dropdown-menu multi-level">
 										<li><a href="https://sites.google.com/nlesd.ca/myhrphelp/home" target="_blank">MyHRP Help Guide</a></li>
-										<li><a href="/contact/stafffinderresults.jsp?pos=Human+Resources&region=" target="_blank">HR Contacts</a></li>
+										<li><a href="/contact/districtstaffdirectory.jsp?search=Human Resources" target="_blank">HR Contacts</a></li>
 										<li><a href="https://forms.gle/zudb87zxbJW9QTVg8" target="_blank">Technical Support</a></li>
 
 					         	</ul>
