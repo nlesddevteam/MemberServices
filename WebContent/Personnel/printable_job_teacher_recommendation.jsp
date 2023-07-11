@@ -1005,6 +1005,12 @@ input {border:1px solid silver;}
 			request.setAttribute("mref", mref);
 		%>
 		<jsp:include page="printable_rec_nlesd_external_ref.jsp" />
+		<%}else if(nlesdref.getReferenceType().equals("EXTERNAL/TLA"))
+		{
+			NLESDReferenceSSSupportBean mref = NLESDReferenceSSSupportManager.getNLESDReferenceSSSupportBean(rec.getReferenceId());
+			request.setAttribute("mref", mref);
+		%>
+			<jsp:include page="printable_rec_nlesd_support_ref.jsp" />
 		<%}else{
 			ReferenceBean mref = ReferenceManager.getReferenceBean(rec.getReferenceId());
 			request.setAttribute("mref", mref);
