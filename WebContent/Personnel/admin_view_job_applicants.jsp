@@ -436,7 +436,7 @@
 													if (applicants[i].getTotalUnits() < 1.0) {
 														cssClass = "PermanentPartTimePosition";
 														cssText = "Permanent/ Part Time";
-														position = jobtype + " " + applicants[1].getEmpStatus() + " Part-time ("
+														position = jobtype + " " + applicants[i].getEmpStatus() + " Part-time ("
 																+ df.format(applicants[i].getTotalUnits()) + ") @ " + applicants[i].getJobLocation();
 													}
 													else {
